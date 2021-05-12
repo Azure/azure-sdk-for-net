@@ -471,6 +471,10 @@ namespace Azure.Storage.Files.DataLake
             _uri = pathUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
+            if (authentication is StorageBearerTokenChallengeAuthorizationPolicy policy)
+            {
+                policy.DisableTenantDiscovery = options.DisableTenantDiscovery;
+            }
 
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),

@@ -114,6 +114,11 @@ namespace Azure.Storage.Files.DataLake
         public Uri GeoRedundantSecondaryUri { get; set; }
 
         /// <summary>
+        /// Disables tenant discovery for the storage service.
+        /// </summary>
+        public bool DisableTenantDiscovery { get; set; }
+
+        /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>
         /// </summary>
         private void AddHeadersAndQueryParameters()

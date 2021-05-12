@@ -15,7 +15,11 @@ namespace Azure.Storage.Shared
     /// </summary>
     public class StorageBearerTokenChallengeAuthorizationPolicy : BearerTokenAuthenticationPolicy
     {
-        private readonly bool _disableTenantDiscovery;
+        /// <summary>
+        /// Disables tenant discovery through challenge responses.
+        /// </summary>
+        public bool DisableTenantDiscovery { get; set; }
+
         private readonly string[] _scopes;
         private volatile string tenantId;
 
@@ -24,9 +28,8 @@ namespace Azure.Storage.Shared
         /// </summary>
         /// <param name="credential"></param>
         /// <param name="scope"></param>
-        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, string scope, bool disableTenantDiscovery) : base(credential, scope)
+        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, string scope) : base(credential, scope)
         {
-            _disableTenantDiscovery = disableTenantDiscovery;
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             _scopes = new[] { scope };
         }
@@ -36,7 +39,7 @@ namespace Azure.Storage.Shared
         /// </summary>
         /// <param name="credential"></param>
         /// <param name="scopes"></param>
-        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, IEnumerable<string> scopes, bool disableTenantDiscovery) : base(credential, scopes)
+        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, IEnumerable<string> scopes) : base(credential, scopes)
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
             _scopes = scopes.ToArray();
@@ -45,7 +48,7 @@ namespace Azure.Storage.Shared
         /// <inheritdoc />
         protected override void AuthorizeRequest(HttpMessage message)
         {
-            if (tenantId != null || disab)
+            if (tenantId != null || DisableTenantDiscovery)
             {
                 base.AuthorizeRequest(message);
             }
@@ -54,11 +57,11 @@ namespace Azure.Storage.Shared
         /// <inheritdoc />
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
-            return tenantId switch
+            if (tenantId != null || DisableTenantDiscovery)
             {
-                null => default,
-                _ => base.AuthorizeRequestAsync(message)
-            };
+                return base.AuthorizeRequestAsync(message);
+            }
+            return default;
         }
 
         /// <inheritdoc />
@@ -74,7 +77,7 @@ namespace Azure.Storage.Shared
                 var authUri = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "authorization_uri");
 
                 // tenantId should be the guid as seen in this example: https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize
-                 tenantId = new Uri(authUri).Segments[1].Trim('/');
+                tenantId = new Uri(authUri).Segments[1].Trim('/');
 
                 var context = new TokenRequestContext(
                     new TokenRequestContextOptions { Scopes = _scopes, TenantIdHint = tenantId, ParentRequestId = message.Request.ClientRequestId });

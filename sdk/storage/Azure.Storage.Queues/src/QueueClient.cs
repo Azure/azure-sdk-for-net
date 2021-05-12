@@ -13,6 +13,7 @@ using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -338,6 +339,10 @@ namespace Azure.Storage.Queues
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
+            if (authentication is StorageBearerTokenChallengeAuthorizationPolicy policy)
+            {
+                policy.DisableTenantDiscovery = options.DisableTenantDiscovery;
+            }
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,

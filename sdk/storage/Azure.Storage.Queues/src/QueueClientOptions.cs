@@ -124,6 +124,11 @@ namespace Azure.Storage.Queues
         public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.None;
 
         /// <summary>
+        /// Disables tenant discovery for the storage service.
+        /// </summary>
+        public bool DisableTenantDiscovery { get; set; }
+
+        /// <summary>
         /// Optional. Performs the tasks needed when a message is received or peaked from the queue but cannot be decoded.
         ///
         /// <para>Such message can be received or peaked when <see cref="QueueClient"/> is expecting certain <see cref="QueueMessageEncoding"/>

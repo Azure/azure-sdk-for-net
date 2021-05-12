@@ -366,6 +366,10 @@ namespace Azure.Storage.Blobs.Specialized
                     _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
                 }
             }
+            if (authentication is StorageBearerTokenChallengeAuthorizationPolicy policy)
+            {
+                policy.DisableTenantDiscovery = options.DisableTenantDiscovery;
+            }
 
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),

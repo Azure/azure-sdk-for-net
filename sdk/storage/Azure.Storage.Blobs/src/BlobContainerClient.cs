@@ -14,6 +14,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -199,6 +200,10 @@ namespace Azure.Storage.Blobs
                 encryptionScope: options.EncryptionScope);
 
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
+            if (_authenticationPolicy is StorageBearerTokenChallengeAuthorizationPolicy policy)
+            {
+                policy.DisableTenantDiscovery = options.DisableTenantDiscovery;
+            }
             _containerRestClient = BuildContainerRestClient(_uri);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
