@@ -27,7 +27,7 @@ namespace Azure.Communication.Calling.Server.Tests
 
         public CallClient CreateServerCallingClient()
         {
-            var connectionString = TestEnvironment.LiveTestConnectionString;
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
             CallClient client = new CallClient(connectionString, CreateServerCallingClientOptions());
 
             #region Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient

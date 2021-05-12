@@ -147,7 +147,7 @@ namespace Azure.Communication.Calling.Server.Tests
         #region Snippet:Azure_Communication_ServerCalling_Tests_CreateCallOperation
         private async Task<Response<CreateCallResponse>> CreateCallOperation(CallClient client)
         {
-            var sourceIdentity = await CreateUserAsync(TestEnvironment.LiveTestConnectionString).ConfigureAwait(false);
+            var sourceIdentity = await CreateUserAsync(TestEnvironment.LiveTestStaticConnectionString).ConfigureAwait(false);
             var source = new CommunicationUserIdentifier(sourceIdentity.Id);
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
