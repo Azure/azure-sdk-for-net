@@ -1,12 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Communication.Calling.Server
+namespace Azure.Communication
 {
+    using Azure.Core;
+
     /// <summary>
-    /// Base type for all notification events.
+    /// Test event.
     /// </summary>
-    public abstract class CallEventBase
+    [CodeGenModel("TestEvent")]
+    public partial class TestEvent
     {
     }
 }

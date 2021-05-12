@@ -15,20 +15,20 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Calling.Server
 {
-    internal partial class RecordingRestClient
+    internal partial class ConversationRestClient
     {
         private string endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of RecordingRestClient. </summary>
+        /// <summary> Initializes a new instance of ConversationRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RecordingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-04-15-preview1")
+        public ConversationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-04-15-preview1")
         {
             if (endpoint == null)
             {
@@ -45,6 +45,235 @@ namespace Azure.Communication.Calling.Server
             _pipeline = pipeline;
         }
 
+        internal HttpMessage CreateJoinCallRequest(string conversationId, JoinCallRequestInternal callRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/conversations/", false);
+            uri.AppendPath(conversationId, true);
+            uri.AppendPath("/Join", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(callRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Join a call. </summary>
+        /// <param name="conversationId"> The conversation id which can be guid or encoded cs url. </param>
+        /// <param name="callRequest"> The join call request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="callRequest"/> is null. </exception>
+        public async Task<Response<JoinCallResponse>> JoinCallAsync(string conversationId, JoinCallRequestInternal callRequest, CancellationToken cancellationToken = default)
+        {
+            if (conversationId == null)
+            {
+                throw new ArgumentNullException(nameof(conversationId));
+            }
+            if (callRequest == null)
+            {
+                throw new ArgumentNullException(nameof(callRequest));
+            }
+
+            using var message = CreateJoinCallRequest(conversationId, callRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        JoinCallResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = JoinCallResponse.DeserializeJoinCallResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Join a call. </summary>
+        /// <param name="conversationId"> The conversation id which can be guid or encoded cs url. </param>
+        /// <param name="callRequest"> The join call request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="callRequest"/> is null. </exception>
+        public Response<JoinCallResponse> JoinCall(string conversationId, JoinCallRequestInternal callRequest, CancellationToken cancellationToken = default)
+        {
+            if (conversationId == null)
+            {
+                throw new ArgumentNullException(nameof(conversationId));
+            }
+            if (callRequest == null)
+            {
+                throw new ArgumentNullException(nameof(callRequest));
+            }
+
+            using var message = CreateJoinCallRequest(conversationId, callRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        JoinCallResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = JoinCallResponse.DeserializeJoinCallResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateInviteParticipantsRequest(string conversationId, InviteParticipantsRequestInternal inviteParticipantsRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/conversations/", false);
+            uri.AppendPath(conversationId, true);
+            uri.AppendPath("/participants", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(inviteParticipantsRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Invite participants to the call. </summary>
+        /// <param name="conversationId"> Conversation id. </param>
+        /// <param name="inviteParticipantsRequest"> Invite participant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="inviteParticipantsRequest"/> is null. </exception>
+        public async Task<Response> InviteParticipantsAsync(string conversationId, InviteParticipantsRequestInternal inviteParticipantsRequest, CancellationToken cancellationToken = default)
+        {
+            if (conversationId == null)
+            {
+                throw new ArgumentNullException(nameof(conversationId));
+            }
+            if (inviteParticipantsRequest == null)
+            {
+                throw new ArgumentNullException(nameof(inviteParticipantsRequest));
+            }
+
+            using var message = CreateInviteParticipantsRequest(conversationId, inviteParticipantsRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Invite participants to the call. </summary>
+        /// <param name="conversationId"> Conversation id. </param>
+        /// <param name="inviteParticipantsRequest"> Invite participant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="inviteParticipantsRequest"/> is null. </exception>
+        public Response InviteParticipants(string conversationId, InviteParticipantsRequestInternal inviteParticipantsRequest, CancellationToken cancellationToken = default)
+        {
+            if (conversationId == null)
+            {
+                throw new ArgumentNullException(nameof(conversationId));
+            }
+            if (inviteParticipantsRequest == null)
+            {
+                throw new ArgumentNullException(nameof(inviteParticipantsRequest));
+            }
+
+            using var message = CreateInviteParticipantsRequest(conversationId, inviteParticipantsRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateRemoveParticipantRequest(string conversationId, string participantId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/conversations/", false);
+            uri.AppendPath(conversationId, true);
+            uri.AppendPath("/participants/", false);
+            uri.AppendPath(participantId, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Remove participant from the call. </summary>
+        /// <param name="conversationId"> Conversation id. </param>
+        /// <param name="participantId"> Participant id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="participantId"/> is null. </exception>
+        public async Task<Response> RemoveParticipantAsync(string conversationId, string participantId, CancellationToken cancellationToken = default)
+        {
+            if (conversationId == null)
+            {
+                throw new ArgumentNullException(nameof(conversationId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+
+            using var message = CreateRemoveParticipantRequest(conversationId, participantId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Remove participant from the call. </summary>
+        /// <param name="conversationId"> Conversation id. </param>
+        /// <param name="participantId"> Participant id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="participantId"/> is null. </exception>
+        public Response RemoveParticipant(string conversationId, string participantId, CancellationToken cancellationToken = default)
+        {
+            if (conversationId == null)
+            {
+                throw new ArgumentNullException(nameof(conversationId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+
+            using var message = CreateRemoveParticipantRequest(conversationId, participantId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateStartRecordingRequest(string conversationId, StartCallRecordingRequest request)
         {
             var message = _pipeline.CreateMessage();
@@ -52,9 +281,9 @@ namespace Azure.Communication.Calling.Server
             request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/conversations/", false);
+            uri.AppendPath("/calling/conversations/", false);
             uri.AppendPath(conversationId, true);
-            uri.AppendPath("/Recordings", false);
+            uri.AppendPath("/recordings", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
@@ -136,7 +365,7 @@ namespace Azure.Communication.Calling.Server
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/conversations/", false);
+            uri.AppendPath("/calling/conversations/", false);
             uri.AppendPath(conversationId, true);
             uri.AppendPath("/recordings/", false);
             uri.AppendPath(recordingId, true);
@@ -223,7 +452,7 @@ namespace Azure.Communication.Calling.Server
             request0.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/conversations/", false);
+            uri.AppendPath("/calling/conversations/", false);
             uri.AppendPath(conversationId, true);
             uri.AppendPath("/recordings/", false);
             uri.AppendPath(recordingId, true);
@@ -308,7 +537,7 @@ namespace Azure.Communication.Calling.Server
             request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/conversations/", false);
+            uri.AppendPath("/calling/conversations/", false);
             uri.AppendPath(conversationId, true);
             uri.AppendPath("/recordings/", false);
             uri.AppendPath(recordingId, true);
@@ -394,7 +623,7 @@ namespace Azure.Communication.Calling.Server
             request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/conversations/", false);
+            uri.AppendPath("/calling/conversations/", false);
             uri.AppendPath(conversationId, true);
             uri.AppendPath("/recordings/", false);
             uri.AppendPath(recordingId, true);

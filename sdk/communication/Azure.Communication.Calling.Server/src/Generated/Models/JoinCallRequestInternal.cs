@@ -12,22 +12,17 @@ using Azure.Communication;
 
 namespace Azure.Communication.Calling.Server
 {
-    /// <summary> The request payload for create call. </summary>
-    internal partial class CreateCallRequestInternal
+    /// <summary> The request payload for join call. </summary>
+    internal partial class JoinCallRequestInternal
     {
-        /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>
-        /// <param name="targets"> The targets of the call. </param>
+        /// <summary> Initializes a new instance of JoinCallRequestInternal. </summary>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="requestedModalities"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents)
+        /// <exception cref="ArgumentNullException"> <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
+        public JoinCallRequestInternal(CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents)
         {
-            if (targets == null)
-            {
-                throw new ArgumentNullException(nameof(targets));
-            }
             if (source == null)
             {
                 throw new ArgumentNullException(nameof(source));
@@ -45,17 +40,12 @@ namespace Azure.Communication.Calling.Server
                 throw new ArgumentNullException(nameof(requestedCallEvents));
             }
 
-            Targets = targets.ToList();
             Source = source;
             CallbackUri = callbackUri;
             RequestedModalities = requestedModalities.ToList();
             RequestedCallEvents = requestedCallEvents.ToList();
         }
 
-        /// <summary> The alternate identity of the source of the call if dialing out to a pstn number. </summary>
-        public PhoneNumberIdentifierModel SourceAlternateIdentity { get; set; }
-        /// <summary> The targets of the call. </summary>
-        public IList<CommunicationIdentifierModel> Targets { get; }
         /// <summary> The source of the call. </summary>
         public CommunicationIdentifierModel Source { get; }
         /// <summary> The subject. </summary>

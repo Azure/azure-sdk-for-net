@@ -6,7 +6,7 @@ namespace Azure.Communication.Calling.Server
     /// <summary>
     /// The play audio result event.
     /// </summary>
-    public class PlayAudioResultEvent : CallEventBase
+    public partial class PlayAudioResultEvent : CallEventBase
     {
         /// <summary>
         /// The event type.
@@ -14,7 +14,7 @@ namespace Azure.Communication.Calling.Server
         public const string EventType = "Microsoft.Communication.PlayAudioResult";
 
         /// <summary>
-        /// The tone info.
+        /// The result info.
         /// </summary>
         public ResultInfo ResultInfo { get; set; }
 
@@ -33,7 +33,7 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         public string CallLegId { get; set; }
 
-        /// <summary> Initializes a new instance of CallLegStateChangedEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayAudioResultEvent"/>. </summary>
         /// <param name="resultInfo"> The result info. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status. </param>

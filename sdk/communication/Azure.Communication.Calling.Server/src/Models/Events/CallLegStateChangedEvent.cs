@@ -4,9 +4,9 @@
 namespace Azure.Communication.Calling.Server
 {
     /// <summary>
-    /// The call state change event.
+    /// The call leg state change event.
     /// </summary>
-    public class CallLegStateChangedEvent : CallEventBase
+    public partial class CallLegStateChangedEvent : CallEventBase
     {
         /// <summary>
         /// The event type.

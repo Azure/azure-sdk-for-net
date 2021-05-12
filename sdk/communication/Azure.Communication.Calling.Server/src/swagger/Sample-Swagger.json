@@ -14,7 +14,7 @@
         "application/json"
     ],
     "paths": {
-        "/calls": {
+        "/calling/calls": {
             "post": {
                 "tags": [
                     "Call"
@@ -73,7 +73,7 @@
                 }
             }
         },
-        "/calls/{callId}/Hangup": {
+        "/calling/calls/{callId}/Hangup": {
             "post": {
                 "tags": [
                     "Call"
@@ -127,7 +127,7 @@
                 }
             }
         },
-        "/calls/{callId}": {
+        "/calling/calls/{callId}": {
             "delete": {
                 "tags": [
                     "Call"
@@ -181,7 +181,7 @@
                 }
             }
         },
-        "/calls/{callId}/PlayAudio": {
+        "/calling/calls/{callId}/PlayAudio": {
             "post": {
                 "tags": [
                     "Call"
@@ -247,7 +247,7 @@
                 }
             }
         },
-        "/calls/{callId}/CancelMediaProcessing": {
+        "/calling/calls/{callId}/CancelMediaProcessing": {
             "post": {
                 "tags": [
                     "Call"
@@ -313,7 +313,197 @@
                 }
             }
         },
-        "/calls/{callId}/participants": {
+        "/calling/conversations/{conversationId}/Join": {
+            "post": {
+                "tags": [
+                    "Call"
+                ],
+                "summary": "Join a call.",
+                "description": "Join a call.",
+                "operationId": "Conversation_JoinCall",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "conversationId",
+                        "in": "path",
+                        "description": "The conversation id which can be guid or encoded cs url",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "callRequest",
+                        "in": "body",
+                        "description": "The join call request.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/JoinCallRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Returns the join call response.",
+                        "schema": {
+                            "$ref": "#/definitions/JoinCallResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "500": {
+                        "description": "Internal server error.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    }
+                }
+            }
+        },
+        "/calling/conversations/{conversationId}/participants": {
+            "post": {
+                "tags": [
+                    "Participant"
+                ],
+                "summary": "Invite participants to the call.",
+                "description": "Invite participants to the call.",
+                "operationId": "Conversation_InviteParticipants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "conversationId",
+                        "in": "path",
+                        "description": "Conversation id.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "inviteParticipantsRequest",
+                        "in": "body",
+                        "description": "Invite participant request.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InviteParticipantsRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Returns the invite participants response."
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "500": {
+                        "description": "Internal server error.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    }
+                }
+            }
+        },
+        "/calling/conversations/{conversationId}/participants/{participantId}": {
+            "delete": {
+                "tags": [
+                    "Participant"
+                ],
+                "summary": "Remove participant from the call.",
+                "description": "Remove participant from the call.",
+                "operationId": "Conversation_RemoveParticipant",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "conversationId",
+                        "in": "path",
+                        "description": "Conversation id.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "participantId",
+                        "in": "path",
+                        "description": "Participant id.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Returns the remove participant response."
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "500": {
+                        "description": "Internal server error.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    }
+                }
+            }
+        },
+        "/calling/calls/{callId}/participants": {
             "post": {
                 "tags": [
                     "Participant"
@@ -376,7 +566,7 @@
                 }
             }
         },
-        "/calls/{callId}/participants/{participantId}": {
+        "/calling/calls/{callId}/participants/{participantId}": {
             "delete": {
                 "tags": [
                     "Participant"
@@ -437,13 +627,13 @@
                 }
             }
         },
-        "/conversations/{conversationId}/Recordings": {
+        "/calling/conversations/{conversationId}/recordings": {
             "post": {
                 "tags": [
                     "Recording"
                 ],
                 "summary": "Start call recording request",
-                "operationId": "Recording_StartRecording",
+                "operationId": "Conversation_StartRecording",
                 "consumes": [
                     "application/json"
                 ],
@@ -502,13 +692,13 @@
                 }
             }
         },
-        "/conversations/{conversationId}/recordings/{recordingId}": {
+        "/calling/conversations/{conversationId}/recordings/{recordingId}": {
             "get": {
                 "tags": [
                     "Recording"
                 ],
                 "summary": "Get call recording state.",
-                "operationId": "Recording_RecordingState",
+                "operationId": "Conversation_RecordingState",
                 "consumes": [
                     "application/json"
                 ],
@@ -576,7 +766,7 @@
                     "Recording"
                 ],
                 "summary": "Stop recording a call.",
-                "operationId": "Recording_StopRecording",
+                "operationId": "Conversation_StopRecording",
                 "consumes": [
                     "application/json"
                 ],
@@ -632,13 +822,13 @@
                 }
             }
         },
-        "/conversations/{conversationId}/recordings/{recordingId}/Pause": {
+        "/calling/conversations/{conversationId}/recordings/{recordingId}/Pause": {
             "post": {
                 "tags": [
                     "Recording"
                 ],
                 "summary": "Pause recording a call.",
-                "operationId": "Recording_PauseRecording",
+                "operationId": "Conversation_PauseRecording",
                 "consumes": [
                     "application/json"
                 ],
@@ -694,13 +884,13 @@
                 }
             }
         },
-        "/conversations/{conversationId}/recordings/{recordingId}/Resume": {
+        "/calling/conversations/{conversationId}/recordings/{recordingId}/Resume": {
             "post": {
                 "tags": [
                     "Recording"
                 ],
                 "summary": "Resume recording a call.",
-                "operationId": "Recording_ResumeRecording",
+                "operationId": "Conversation_ResumeRecording",
                 "consumes": [
                     "application/json"
                 ],
@@ -781,20 +971,16 @@
             }
         },
         "CreateCallRequest": {
-            "description": "The request payload for creating a call.",
+            "description": "The request payload for create call.",
             "required": [
-                "source",
                 "targets",
+                "source",
                 "callbackUri",
                 "requestedModalities",
                 "requestedCallEvents"
             ],
             "type": "object",
             "properties": {
-                "source": {
-                    "$ref": "#/definitions/CommunicationIdentifier",
-                    "description": "The source of the call."
-                },
                 "sourceAlternateIdentity": {
                     "$ref": "#/definitions/PhoneNumberIdentifier",
                     "description": "The alternate identity of the source of the call if dialing out to a pstn number"
@@ -805,6 +991,10 @@
                     "items": {
                         "$ref": "#/definitions/CommunicationIdentifier"
                     }
+                },
+                "source": {
+                    "$ref": "#/definitions/CommunicationIdentifier",
+                    "description": "The source of the call."
                 },
                 "subject": {
                     "description": "The subject.",
@@ -830,11 +1020,11 @@
                 }
             }
         },
-        "CommunicationIdentifier": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationIdentifierModel"
-        },
         "PhoneNumberIdentifier": {
             "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/PhoneNumberIdentifierModel"
+        },
+        "CommunicationIdentifier": {
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationIdentifierModel"
         },
         "CommunicationUserIdentifier": {
             "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationUserIdentifierModel"
@@ -966,6 +1156,54 @@
                 }
             }
         },
+        "JoinCallRequest": {
+            "description": "The request payload for join call.",
+            "required": [
+                "source",
+                "callbackUri",
+                "requestedModalities",
+                "requestedCallEvents"
+            ],
+            "type": "object",
+            "properties": {
+                "source": {
+                    "$ref": "#/definitions/CommunicationIdentifier",
+                    "description": "The source of the call."
+                },
+                "subject": {
+                    "description": "The subject.",
+                    "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback URI.",
+                    "type": "string"
+                },
+                "requestedModalities": {
+                    "description": "The requested modalities.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CallModality"
+                    }
+                },
+                "requestedCallEvents": {
+                    "description": "The requested call events to subscribe to.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/EventSubscriptionType"
+                    }
+                }
+            }
+        },
+        "JoinCallResponse": {
+            "description": "The response payload of the join call operation.",
+            "type": "object",
+            "properties": {
+                "callLegId": {
+                    "description": "Call leg id of the call.",
+                    "type": "string"
+                }
+            }
+        },
         "InviteParticipantsRequest": {
             "description": "The invite participants request.",
             "required": [
@@ -986,6 +1224,10 @@
                 },
                 "operationContext": {
                     "description": "The operation context.",
+                    "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback URI.",
                     "type": "string"
                 }
             }
