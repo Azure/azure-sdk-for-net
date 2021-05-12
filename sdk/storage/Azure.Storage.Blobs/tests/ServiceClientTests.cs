@@ -746,7 +746,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContainerClient> response = await service.UndeleteBlobContainerAsync(
                 containerItem.Name,
                 containerItem.VersionId,
-                GetNewContainerName());
+                containerItem.Name);
 
             // Assert
             await response.Value.GetPropertiesAsync();
