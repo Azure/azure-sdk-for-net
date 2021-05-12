@@ -14,11 +14,20 @@ namespace Azure.ResourceManager.Core
         where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
+        /// Initializes an empty instance of <see cref="TrackedResource{TIdentifier}"/> for mocking.
+        /// </summary>
+        protected TrackedResource()
+        {
+            Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+        }
+
+        /// <summary>
         /// Initializes an empty instance of <see cref="TrackedResource{TIdentifier}"/>.
         /// </summary>
         [InitializationConstructor]
         protected TrackedResource(LocationData location)
         {
+            Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             Location = location;
         }
 
@@ -31,7 +40,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tags"> The tags for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
         [SerializationConstructor]
-        protected TrackedResource(TIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, LocationData location)
+        protected internal TrackedResource(TIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags)
             : base(id, name, type)
         {
             Tags = tags ?? new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
@@ -46,6 +55,6 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets or sets the location the resource is in.
         /// </summary>
-        public virtual LocationData Location { get; }
+        public virtual LocationData Location { get; set; }
     }
 }

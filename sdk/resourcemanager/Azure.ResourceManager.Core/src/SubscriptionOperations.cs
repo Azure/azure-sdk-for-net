@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<Subscription> Get(CancellationToken cancellationToken = default)
+        public override Response<Subscription> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
                 SubscriptionsClient.Get(Id.Name, cancellationToken),
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<Subscription>> GetAsync(CancellationToken cancellationToken = default)
+        public override async Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
                 await SubscriptionsClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
@@ -116,6 +116,15 @@ namespace Azure.ResourceManager.Core
         private Func<ResourceManager.Resources.Models.Subscription, Subscription> Converter()
         {
             return s => new Subscription(this, new SubscriptionData(s));
+        }
+
+        /// <summary>
+        /// Gets a container representing all resources as generic objects in the current tenant.
+        /// </summary>
+        /// <returns> GenericResource container. </returns>
+        public GenericResourceContainer GetGenericResources()
+        {
+            return new GenericResourceContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }
     }
 }

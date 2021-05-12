@@ -70,31 +70,31 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse Delete(CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
-            return ArmResponse.FromResponse(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return ArmResponse.FromResponse((await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return (await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public ArmOperation StartDelete(CancellationToken cancellationToken = default)
+        public Operation StartDelete(CancellationToken cancellationToken = default)
         {
             return new PhVoidArmOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             return new PhVoidArmOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<VirtualMachineScaleSet> Get(CancellationToken cancellationToken = default)
+        public override Response<VirtualMachineScaleSet> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
                 Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken),
@@ -102,7 +102,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<VirtualMachineScaleSet>> GetAsync(CancellationToken cancellationToken = default)
+        public override async Task<Response<VirtualMachineScaleSet>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
                 await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
@@ -113,8 +113,8 @@ namespace Proto.Compute
         ///  The operation to update a virtual machine. Please note some properties can be set only during virtual machine creation. 
         /// </summary>
         /// <param name="patchable"> The parameters to update. </param>
-        /// <returns> An <see cref="ArmOperation{VirtualMachineScaleSet}"/> that allows polling for completion of the operation. </returns>
-        public ArmOperation<VirtualMachineScaleSet> StartUpdate(VirtualMachineScaleSetUpdate patchable, CancellationToken cancellationToken = default)
+        /// <returns> An <see cref="Operation{VirtualMachineScaleSet}"/> that allows polling for completion of the operation. </returns>
+        public Operation<VirtualMachineScaleSet> StartUpdate(VirtualMachineScaleSetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
                 Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -126,8 +126,8 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="patchable"> The parameters to update. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{VirtualMachineScaleSet}"/> that allows polling for completion of the operation. </returns>
-        public async Task<ArmOperation<VirtualMachineScaleSet>> StartUpdateAsync(VirtualMachineScaleSetUpdate patchable, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{VirtualMachineScaleSet}"/> that allows polling for completion of the operation. </returns>
+        public async Task<Operation<VirtualMachineScaleSet>> StartUpdateAsync(VirtualMachineScaleSetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
                 await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -135,7 +135,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<VirtualMachineScaleSet> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSet> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var vm = GetResource();
             var patchable = new VirtualMachineScaleSetUpdate();
@@ -148,7 +148,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<VirtualMachineScaleSet>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSet>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var vm = await GetResourceAsync(cancellationToken);
             var patchable = new VirtualMachineScaleSetUpdate();
@@ -161,7 +161,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmOperation<VirtualMachineScaleSet> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Operation<VirtualMachineScaleSet> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var vm = GetResource();
             var patchable = new VirtualMachineScaleSetUpdate();
@@ -174,7 +174,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<VirtualMachineScaleSet>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Operation<VirtualMachineScaleSet>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var vm = await GetResourceAsync(cancellationToken);
             var patchable = new VirtualMachineScaleSetUpdate();
@@ -187,7 +187,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<VirtualMachineScaleSet> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSet> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new VirtualMachineScaleSetUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -198,7 +198,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<VirtualMachineScaleSet>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSet>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new VirtualMachineScaleSetUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -209,7 +209,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmOperation<VirtualMachineScaleSet> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Operation<VirtualMachineScaleSet> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new VirtualMachineScaleSetUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -220,7 +220,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<VirtualMachineScaleSet>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Operation<VirtualMachineScaleSet>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new VirtualMachineScaleSetUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -231,7 +231,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<VirtualMachineScaleSet> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSet> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var vm = GetResource();
             var patchable = new VirtualMachineScaleSetUpdate();
@@ -244,7 +244,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<VirtualMachineScaleSet>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSet>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var vm = await GetResourceAsync(cancellationToken);
             var patchable = new VirtualMachineScaleSetUpdate();
@@ -257,7 +257,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmOperation<VirtualMachineScaleSet> StartRemoveTag(string key, CancellationToken cancellationToken = default)
+        public Operation<VirtualMachineScaleSet> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var vm = GetResource();
             var patchable = new VirtualMachineScaleSetUpdate();
@@ -270,7 +270,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<VirtualMachineScaleSet>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Operation<VirtualMachineScaleSet>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var vm = await GetResourceAsync(cancellationToken);
             var patchable = new VirtualMachineScaleSetUpdate();

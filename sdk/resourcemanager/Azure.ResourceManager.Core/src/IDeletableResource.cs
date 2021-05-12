@@ -16,37 +16,37 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> The status of the delete operation. </returns>
-        ArmResponse Delete(CancellationToken cancellationToken = default);
+        Response Delete(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete the resource.
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
-        Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default);
+        Task<Response> DeleteAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete the resource.
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
-        /// <returns> A <see cref="ArmOperation{Response}"/> which allows the caller to control polling and waiting for resource deletion.
+        /// <returns> A <see cref="Operation{Response}"/> which allows the caller to control polling and waiting for resource deletion.
         /// The operation yields the final http response to the delete request when complete. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        ArmOperation StartDelete(CancellationToken cancellationToken = default);
+        Operation StartDelete(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete the resource.  This call returns a Task that blocks until the delete operation is accepted on the service.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ArmOperation{Response}"/> which
+        /// <returns> A <see cref="Task"/> that on completion returns a <see cref="Operation{Response}"/> which
         /// allows the caller to control polling and waiting for resource deletion.
         /// The operation yields the final http response to the delete request when complete. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default);
+        Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default);
     }
 }
