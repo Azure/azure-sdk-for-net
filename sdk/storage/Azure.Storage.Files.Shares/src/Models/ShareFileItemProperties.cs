@@ -10,6 +10,8 @@ namespace Azure.Storage.Files.Shares.Models
     /// </summary>
     public class ShareFileItemProperties
     {
+        internal ShareFileItemProperties() { }
+
         /// <summary>
         /// The time this item was created.
         /// </summary>

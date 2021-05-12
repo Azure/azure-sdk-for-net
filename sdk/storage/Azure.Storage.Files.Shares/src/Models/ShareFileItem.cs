@@ -13,6 +13,8 @@ namespace Azure.Storage.Files.Shares.Models
     /// </summary>
     public class ShareFileItem
     {
+        internal ShareFileItem() { }
+
         /// <summary>
         /// Gets a value indicating whether this item is a directory.
         /// </summary>
