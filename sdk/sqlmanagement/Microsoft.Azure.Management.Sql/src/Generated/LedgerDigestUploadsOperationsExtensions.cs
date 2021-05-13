@@ -17,145 +17,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ServerVulnerabilityAssessmentsOperations.
+    /// Extension methods for LedgerDigestUploadsOperations.
     /// </summary>
-    public static partial class ServerVulnerabilityAssessmentsOperationsExtensions
+    public static partial class LedgerDigestUploadsOperationsExtensions
     {
             /// <summary>
-            /// Gets the server's vulnerability assessment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server for which the vulnerability assessment is defined.
-            /// </param>
-            public static ServerVulnerabilityAssessment Get(this IServerVulnerabilityAssessmentsOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.GetAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the server's vulnerability assessment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server for which the vulnerability assessment is defined.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerVulnerabilityAssessment> GetAsync(this IServerVulnerabilityAssessmentsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates the server's vulnerability assessment. Learn more about
-            /// setting SQL vulnerability assessment with managed identity -
-            /// https://docs.microsoft.com/azure/azure-sql/database/sql-database-vulnerability-assessment-storage
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server for which the vulnerability assessment is defined.
-            /// </param>
-            /// <param name='parameters'>
-            /// The requested resource.
-            /// </param>
-            public static ServerVulnerabilityAssessment CreateOrUpdate(this IServerVulnerabilityAssessmentsOperations operations, string resourceGroupName, string serverName, ServerVulnerabilityAssessment parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the server's vulnerability assessment. Learn more about
-            /// setting SQL vulnerability assessment with managed identity -
-            /// https://docs.microsoft.com/azure/azure-sql/database/sql-database-vulnerability-assessment-storage
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server for which the vulnerability assessment is defined.
-            /// </param>
-            /// <param name='parameters'>
-            /// The requested resource.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerVulnerabilityAssessment> CreateOrUpdateAsync(this IServerVulnerabilityAssessmentsOperations operations, string resourceGroupName, string serverName, ServerVulnerabilityAssessment parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Removes the server's vulnerability assessment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server for which the vulnerability assessment is defined.
-            /// </param>
-            public static void Delete(this IServerVulnerabilityAssessmentsOperations operations, string resourceGroupName, string serverName)
-            {
-                operations.DeleteAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Removes the server's vulnerability assessment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server for which the vulnerability assessment is defined.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this IServerVulnerabilityAssessmentsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Lists the vulnerability assessment policies associated with a server.
+            /// Gets the current ledger digest upload configuration for a database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -167,13 +34,16 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IPage<ServerVulnerabilityAssessment> ListByServer(this IServerVulnerabilityAssessmentsOperations operations, string resourceGroupName, string serverName)
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            public static LedgerDigestUploads Get(this ILedgerDigestUploadsOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
-                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the vulnerability assessment policies associated with a server.
+            /// Gets the current ledger digest upload configuration for a database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -185,19 +55,174 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ServerVulnerabilityAssessment>> ListByServerAsync(this IServerVulnerabilityAssessmentsOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LedgerDigestUploads> GetAsync(this ILedgerDigestUploadsOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists the vulnerability assessment policies associated with a server.
+            /// Enables upload ledger digests to an Azure Storage account or an Azure
+            /// Confidential Ledger instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='parameters'>
+            /// </param>
+            public static LedgerDigestUploads CreateOrUpdate(this ILedgerDigestUploadsOperations operations, string resourceGroupName, string serverName, string databaseName, LedgerDigestUploads parameters)
+            {
+                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Enables upload ledger digests to an Azure Storage account or an Azure
+            /// Confidential Ledger instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='parameters'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<LedgerDigestUploads> CreateOrUpdateAsync(this ILedgerDigestUploadsOperations operations, string resourceGroupName, string serverName, string databaseName, LedgerDigestUploads parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all ledger digest upload settings on a database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            public static IPage<LedgerDigestUploads> ListByDatabase(this ILedgerDigestUploadsOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return operations.ListByDatabaseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all ledger digest upload settings on a database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<LedgerDigestUploads>> ListByDatabaseAsync(this ILedgerDigestUploadsOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Disables uploading ledger digests to an Azure Storage account or an Azure
+            /// Confidential Ledger instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            public static LedgerDigestUploads Disable(this ILedgerDigestUploadsOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return operations.DisableAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disables uploading ledger digests to an Azure Storage account or an Azure
+            /// Confidential Ledger instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<LedgerDigestUploads> DisableAsync(this ILedgerDigestUploadsOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DisableWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all ledger digest upload settings on a database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -205,13 +230,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ServerVulnerabilityAssessment> ListByServerNext(this IServerVulnerabilityAssessmentsOperations operations, string nextPageLink)
+            public static IPage<LedgerDigestUploads> ListByDatabaseNext(this ILedgerDigestUploadsOperations operations, string nextPageLink)
             {
-                return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the vulnerability assessment policies associated with a server.
+            /// Gets all ledger digest upload settings on a database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -222,9 +247,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ServerVulnerabilityAssessment>> ListByServerNextAsync(this IServerVulnerabilityAssessmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<LedgerDigestUploads>> ListByDatabaseNextAsync(this ILedgerDigestUploadsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
