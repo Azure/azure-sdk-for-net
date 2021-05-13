@@ -184,13 +184,13 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.GetDateTimeOffset("DateTime"));
             Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.GetDateTimeOffset(0));
-            Assert.AreEqual("2015-12-31T23:59:59.9Z", row.GetObject("DateTime"));
+            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.GetObject("DateTime"));
             Assert.AreEqual(false, row.GetBoolean("Bool"));
             Assert.AreEqual(false, row.GetBoolean(1));
             Assert.AreEqual(false, row.GetObject("Bool"));
             Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetGuid("Guid"));
             Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetGuid(2));
-            Assert.AreEqual("74be27de-1e4e-49d9-b579-fe0b331d3642", row.GetObject("Guid"));
+            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetObject("Guid"));
             Assert.AreEqual(12345, row.GetInt32("Int"));
             Assert.AreEqual(12345, row.GetInt32(3));
             Assert.AreEqual(12345, row.GetObject("Int"));
@@ -205,10 +205,10 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("string value", row.GetObject("String"));
             Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetTimeSpan("Timespan"));
             Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetTimeSpan(7));
-            Assert.AreEqual("00:00:10", row.GetObject("Timespan"));
+            Assert.AreEqual(TimeSpan.FromSeconds(10),  row.GetObject("Timespan"));
             Assert.AreEqual(0.10101m, row.GetDecimal("Decimal"));
             Assert.AreEqual(0.10101m, row.GetDecimal(8));
-            Assert.AreEqual("0.10101", row.GetObject("Decimal"));
+            Assert.AreEqual(0.10101m, row.GetObject("Decimal"));
             Assert.True(row.IsNull("NullBool"));
             Assert.True(row.IsNull(9));
             Assert.IsNull(row.GetObject("NullBool"));
