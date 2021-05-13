@@ -4142,9 +4142,18 @@ namespace Azure.Storage.Files.Shares
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(UploadRangeFromUri)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<FileUploadRangeFromURLHeaders> response;
+
+                    if (sourceBearerToken != null)
+                    {
+                        sourceBearerToken = $"Bearer {sourceBearerToken}";
+                    }
 
                     if (async)
                     {
@@ -4177,11 +4186,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }

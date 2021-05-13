@@ -2939,6 +2939,57 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task UploadRangeFromUriAsync_SourceBearerTokenFail()
+        {
+            // Arrange
+            BlobServiceClient blobServiceClient = InstrumentClient(new BlobServiceClient(
+                new Uri(TestConfigOAuth.BlobServiceEndpoint),
+                GetOAuthCredential(TestConfigOAuth),
+                GetBlobOptions()));
+            BlobContainerClient containerClient = InstrumentClient(blobServiceClient.GetBlobContainerClient(GetNewShareName()));
+
+            try
+            {
+                await containerClient.CreateIfNotExistsAsync();
+                AppendBlobClient appendBlobClient = InstrumentClient(containerClient.GetAppendBlobClient(GetNewFileName()));
+                await appendBlobClient.CreateAsync();
+                byte[] data = GetRandomBuffer(Constants.KB);
+                using Stream stream = new MemoryStream(data);
+                await appendBlobClient.AppendBlockAsync(stream);
+
+                ShareServiceClient serviceClient = GetServiceClient_OAuth();
+                await using DisposingShare test = await GetTestShareAsync(
+                    service: serviceClient,
+                    shareName: GetNewShareName());
+                ShareDirectoryClient directoryClient = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+                await directoryClient.CreateAsync();
+                ShareFileClient fileClient = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
+                await fileClient.CreateAsync(Constants.KB);
+
+                ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
+                {
+                    SourceBearerToken = string.Empty
+                };
+
+                HttpRange range = new HttpRange(0, Constants.KB);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    fileClient.UploadRangeFromUriAsync(
+                        sourceUri: appendBlobClient.Uri,
+                        range: range,
+                        sourceRange: range,
+                        options: options),
+                    e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+            }
+            finally
+            {
+                await containerClient.DeleteIfExistsAsync();
+            }
+        }
+
         private BlobClientOptions GetBlobOptions(bool parallelRange = false)
         {
             var options = new BlobClientOptions()
