@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             SeriesKey = new DimensionKey(dimension);
             Severity = property.AnomalySeverity;
             Status = property.AnomalyStatus;
-            Value = property.Value.Value;
+            Value = property.Value;
             ExpectedValue = property.ExpectedValue;
         }
 

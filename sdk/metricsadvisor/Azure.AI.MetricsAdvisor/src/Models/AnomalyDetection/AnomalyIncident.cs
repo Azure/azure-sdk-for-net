@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionKey = new DimensionKey(rootNode.Dimension);
             Severity = property.MaxSeverity;
             Status = property.IncidentStatus;
-            ValueOfRootNode = property.ValueOfRootNode.Value;
+            ValueOfRootNode = property.ValueOfRootNode;
             ExpectedValueOfRootNode = property.ExpectedValueOfRootNode;
         }
 
