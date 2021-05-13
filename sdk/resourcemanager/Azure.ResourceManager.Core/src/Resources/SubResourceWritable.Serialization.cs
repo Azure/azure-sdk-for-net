@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing a sub-resource that contains only the ID.
     /// </summary>
-    public partial class SubResourceReadOnly : IUtf8JsonSerializable
+    public partial class SubResourceWritable : IUtf8JsonSerializable
     {
         /// <summary>
         /// Serialize the input SubResourceReadOnly object.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="element">The JSON element to be deserialized.</param>
         /// <returns>Deserialized SubResourceReadOnly object.</returns>
-        internal static SubResourceReadOnly DeserializeSubResourceReadOnly(JsonElement element)
+        internal static SubResourceWritable DeserializeSubResourceReadOnly(JsonElement element)
         {
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new SubResourceReadOnly(id.Value);
+            return new SubResourceWritable(id.Value);
         }
     }
 }

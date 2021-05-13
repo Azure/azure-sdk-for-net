@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContainerBase{TOperations, TIdentifier}"/> class.
+        /// Initializes a new instance of the <see cref="ContainerBase{TOperations}"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected SingletonOperationsBase(OperationsBase parent)

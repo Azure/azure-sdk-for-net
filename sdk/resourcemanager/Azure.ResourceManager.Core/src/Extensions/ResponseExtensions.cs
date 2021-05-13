@@ -6,7 +6,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Extension methods for Response class that apply to management use cases.
     /// </summary>
-    public static class ArmResponseExtensions
+    public static class ResponseExtensions
     {
         /// <summary>
         /// Gets the correlation id from x-ms-correlation-id.

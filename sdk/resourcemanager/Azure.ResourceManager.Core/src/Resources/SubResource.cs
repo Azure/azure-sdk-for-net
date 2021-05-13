@@ -10,10 +10,12 @@ namespace Azure.ResourceManager.Core
     public partial class SubResource
     {
         /// <summary>
-        /// Initializes an empty instance of <see cref="SubResource"/>.
+        /// Initializes an empty instance of <see cref="SubResource"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        protected SubResource() { }
+        public SubResource()
+        {
+        }
 
         /// <summary> Initializes a new instance of SubResource. </summary>
         /// <param name="id"> ARM resource Id. </param>
@@ -24,12 +26,9 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// ARM resource identifier.
+        /// Gets the ARM resource identifier.
         /// </summary>
         /// <value></value>
-        public virtual ResourceIdentifier Id { get; set; }
+        public virtual ResourceIdentifier Id { get; }
     }
 }
-
-// Todo: we want to make the default one (SubResource) to represent read-only data,
-// that is the pattern we used in Resource and TrackedResource
