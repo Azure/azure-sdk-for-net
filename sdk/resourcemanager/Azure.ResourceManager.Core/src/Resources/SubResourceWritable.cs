@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Core
         /// <summary> Initializes a new instance of SubResourceReadOnly. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
-        internal SubResourceWritable(string id)
+        protected internal SubResourceWritable(string id)
         {
             Id = id;
         }
 
         /// <summary>
-        /// ARM resource identifier (read-only).
+        /// Gets or sets the ARM resource identifier.
         /// </summary>
         /// <value></value>
         public virtual ResourceIdentifier Id { get; set; }
