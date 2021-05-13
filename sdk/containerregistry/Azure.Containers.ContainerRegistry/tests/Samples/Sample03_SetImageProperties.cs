@@ -7,15 +7,19 @@ using Azure.Core.TestFramework;
 using Azure.Containers.ContainerRegistry;
 using Azure.Identity;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
-    public partial class SetPropertiesSample : SamplesBase<ContainerRegistryTestEnvironment>
+    public partial class SetPropertiesSample : ContainerRegistrySamplesBase
     {
         [Test]
         [SyncOnly]
         public void SetImageProperties()
         {
+            // Set up
+            ImportImage(TestEnvironment.Registry, "library/hello-world", new List<string>() { "v1", "latest" });
+
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             // Get the service endpoint from the environment
@@ -23,7 +27,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Create a new ContainerRegistryClient and RegistryArtifact to access image operations
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
-            RegistryArtifact image = client.GetArtifact("hello-world", "v1");
+            RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
             // Set permissions on the v1 image's "latest" tag
             image.SetTagProperties("latest", new ContentProperties()
@@ -31,12 +35,24 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 CanWrite = false,
                 CanDelete = false
             });
+
+            // Reset registry state
+            image.SetTagProperties("latest", new ContentProperties()
+            {
+                CanRead = true,
+                CanList = true,
+                CanWrite = true,
+                CanDelete = true
+            });
         }
 
-        [Test]
+        [Test, NonParallelizable]
         [AsyncOnly]
         public async Task SetImagePropertiesAsync()
         {
+            // Set up
+            await ImportImageAsync(TestEnvironment.Registry, "library/hello-world", new List<string>() { "v1", "latest" });
+
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             // Get the service endpoint from the environment
@@ -44,13 +60,22 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Create a new ContainerRegistryClient and RegistryArtifact to access image operations
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
-            RegistryArtifact image = client.GetArtifact("hello-world", "v1");
+            RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
             // Set permissions on the image's "latest" tag
             await image.SetTagPropertiesAsync("latest", new ContentProperties()
             {
                 CanWrite = false,
                 CanDelete = false
+            });
+
+            // Reset registry state
+            await image.SetTagPropertiesAsync("latest", new ContentProperties()
+            {
+                CanRead = true,
+                CanList = true,
+                CanWrite = true,
+                CanDelete = true
             });
         }
     }

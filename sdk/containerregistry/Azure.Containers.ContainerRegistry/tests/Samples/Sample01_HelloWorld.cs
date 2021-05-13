@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
-    public partial class HelloWorld : SamplesBase<ContainerRegistryTestEnvironment>
+    public partial class HelloWorld : ContainerRegistrySamplesBase
     {
         [Test]
         [SyncOnly]

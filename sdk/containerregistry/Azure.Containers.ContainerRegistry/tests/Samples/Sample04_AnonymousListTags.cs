@@ -10,13 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
-    public partial class AnonymousClientSample : SamplesBase<ContainerRegistryTestEnvironment>
+    public partial class AnonymousClientSample : ContainerRegistrySamplesBase
     {
         [Test]
         [SyncOnly]
         public void AnonymouslyListTags()
         {
-            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
+            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.AnonymousAccessEndpoint);
 
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
@@ -25,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
 
             // List the set of tags on the hello_world image tagged as "latest"
-            RegistryArtifact image = client.GetArtifact("hello_world", "latest");
+            RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
             Pageable<ArtifactTagProperties> tags = image.GetTags();
 
@@ -41,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         [AsyncOnly]
         public async Task AnonymouslyListTagsAsync()
         {
-            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
+            Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.AnonymousAccessEndpoint);
 
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
@@ -50,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
 
             // List the set of tags on the hello_world image tagged as "latest"
-            RegistryArtifact image = client.GetArtifact("hello_world", "latest");
+            RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
             AsyncPageable<ArtifactTagProperties> tags = image.GetTagsAsync();
 

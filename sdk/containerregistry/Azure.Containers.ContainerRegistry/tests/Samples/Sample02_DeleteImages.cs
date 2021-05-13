@@ -10,9 +10,9 @@ using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
-    public partial class DeleteImagesSample : SamplesBase<ContainerRegistryTestEnvironment>
+    public partial class DeleteImagesSample : ContainerRegistrySamplesBase
     {
-        [Test]
+        [Test, NonParallelizable]
         [SyncOnly]
         public void DeleteImages()
         {
@@ -54,7 +54,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             }
         }
 
-        [Test]
+        [Test, NonParallelizable]
         [AsyncOnly]
         public async Task DeleteImagesAsync()
         {
