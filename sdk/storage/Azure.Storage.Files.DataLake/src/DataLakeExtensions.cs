@@ -383,16 +383,16 @@ namespace Azure.Storage.Files.DataLake
 
                 return dataLakeQueryArrowOptions.ToBlobQueryArrowOptions();
             }
-            // TODO https://github.com/Azure/azure-sdk-for-net/issues/20758
-            //if (textConfiguration is DataLakeQueryParquetTextOptions dataLakeQueryParquetOptions)
-            //{
-            //    if (!isInput)
-            //    {
-            //        throw new ArgumentException($"{nameof(DataLakeQueryParquetTextOptions)} can only be used for input serialization.");
-            //    }
 
-            //    return dataLakeQueryParquetOptions.ToBlobQueryParquetTextOptions();
-            //}
+            if (textConfiguration is DataLakeQueryParquetTextOptions dataLakeQueryParquetOptions)
+            {
+                if (!isInput)
+                {
+                    throw new ArgumentException($"{nameof(DataLakeQueryParquetTextOptions)} can only be used for input serialization.");
+                }
+
+                return dataLakeQueryParquetOptions.ToBlobQueryParquetTextOptions();
+            }
 
             throw new ArgumentException("Invalid text configuration type");
         }
@@ -425,16 +425,15 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/20758
-        //internal static BlobQueryParquetTextOptions ToBlobQueryParquetTextOptions (this DataLakeQueryParquetTextOptions options)
-        //{
-        //    if (options == null)
-        //    {
-        //        return null;
-        //    }
+        internal static BlobQueryParquetTextOptions ToBlobQueryParquetTextOptions(this DataLakeQueryParquetTextOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
 
-        //    return new BlobQueryParquetTextOptions();
-        //}
+            return new BlobQueryParquetTextOptions();
+        }
 
         internal static IList<BlobQueryArrowField> ToBlobQueryArrowFields(this IList<DataLakeQueryArrowField> arrowFields)
         {
