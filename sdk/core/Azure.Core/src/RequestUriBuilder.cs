@@ -228,13 +228,14 @@ namespace Azure.Core
             }
             if (HasQuery)
             {
-                string substring = value.Substring(startIndex, value.Length - startIndex);
-                if (escape)
-                {
-                    substring = Uri.EscapeDataString(substring);
-                }
-                _pathAndQuery.Insert(_queryIndex, substring);
-                _queryIndex += substring.Length;
+                throw new Exception("Uri already has a Query");
+                // string substring = value.Substring(startIndex, value.Length - startIndex);
+                // if (escape)
+                // {
+                //     substring = Uri.EscapeDataString(substring);
+                // }
+                // _pathAndQuery.Insert(_queryIndex, substring);
+                // _queryIndex += substring.Length;
             }
             else
             {
