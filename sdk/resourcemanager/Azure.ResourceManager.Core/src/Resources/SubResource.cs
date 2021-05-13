@@ -13,20 +13,20 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="SubResource"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        protected SubResource()
+        public SubResource()
         {
         }
 
         /// <summary> Initializes a new instance of SubResource. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
-        internal SubResource(string id)
+        protected internal SubResource(string id)
         {
             Id = id;
         }
 
         /// <summary>
-        /// ARM resource identifier.
+        /// Gets the ARM resource identifier.
         /// </summary>
         /// <value></value>
         public virtual ResourceIdentifier Id { get; }
