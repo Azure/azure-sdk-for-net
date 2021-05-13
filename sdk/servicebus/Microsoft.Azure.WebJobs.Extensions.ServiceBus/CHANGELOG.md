@@ -1,6 +1,7 @@
 # Release History
 
 ## 5.0.0-beta.3 (2021-05-13)
+
 ### Key Bug Fixes
 - The web proxy specified in configuration is now respected.
 
