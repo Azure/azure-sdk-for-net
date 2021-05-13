@@ -332,12 +332,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal AnomalyIncident() { }
         public string DetectionConfigurationId { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey DimensionKey { get { throw null; } }
+        public double? ExpectedValueOfRootNode { get { throw null; } }
         public string Id { get { throw null; } }
         public System.DateTimeOffset LastTime { get { throw null; } }
         public string MetricId { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.AnomalySeverity Severity { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus Status { get { throw null; } }
+        public double ValueOfRootNode { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AnomalyIncidentStatus : System.IEquatable<Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus>
@@ -751,12 +753,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal DataPointAnomaly() { }
         public string AnomalyDetectionConfigurationId { get { throw null; } }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
+        public double? ExpectedValue { get { throw null; } }
         public string MetricId { get { throw null; } }
         public System.DateTimeOffset? ModifiedTime { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey SeriesKey { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.AnomalySeverity Severity { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.AnomalyStatus? Status { get { throw null; } }
         public System.DateTimeOffset Timestamp { get { throw null; } }
+        public double Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DetectionConditionsOperator : System.IEquatable<Azure.AI.MetricsAdvisor.Models.DetectionConditionsOperator>
