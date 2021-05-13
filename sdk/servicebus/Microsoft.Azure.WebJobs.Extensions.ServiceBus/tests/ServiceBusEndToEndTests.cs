@@ -806,15 +806,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // TODO decide whether it makes sense to still default error handler when there is a custom provider
                 // currently user needs to set it.
                 processor.ProcessErrorAsync += args => Task.CompletedTask;
-                return new CustomMessageProcessor(processor, receiver, _logger);
+                return new CustomMessageProcessor(processor, _logger);
             }
 
             private class CustomMessageProcessor : MessageProcessor
             {
                 private readonly ILogger _logger;
 
-                public CustomMessageProcessor(ServiceBusProcessor processor, ServiceBusReceiver receiver, ILogger logger)
-                    : base(processor, receiver)
+                public CustomMessageProcessor(ServiceBusProcessor processor, ILogger logger)
+                    : base(processor)
                 {
                     _logger = logger;
                 }
