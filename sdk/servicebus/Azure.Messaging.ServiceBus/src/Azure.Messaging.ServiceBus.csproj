@@ -7,7 +7,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>
       <!-- TODO: Investigate and remove suppressions https://github.com/Azure/azure-sdk-for-net/issues/17154 -->
-      $(NoWarn);CA1816;CA2016;CA2213
+      $(NoWarn);CA2213
     </NoWarn>
   </PropertyGroup>
 
