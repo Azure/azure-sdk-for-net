@@ -23,7 +23,6 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 ### Using statements
 ```C# Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
-using System.Collections.Generic;
 using Azure.Communication.Sms;
 ```
 
