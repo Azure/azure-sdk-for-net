@@ -179,27 +179,41 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expectedResult, uriBuilder.ToUri().ToString());
         }
 
-        [TestCase(null, new[] {""}, "http://localhost/?q")]
-        [TestCase("/", new[] {"/"}, "http://localhost/?q")]
-        [TestCase(null, new[] {"p"}, "http://localhost/p?q")]
-        [TestCase("/", new[] {"p"}, "http://localhost/p?q")]
-        [TestCase("/", new[] {"ā","p"}, "http://localhost/%C4%81p?q", true)]
-        [TestCase("/", new[] {"ā","p"}, "http://localhost/āp?q", false)]
-        [TestCase("/", new[] {"/p"}, "http://localhost/p?q")]
-        [TestCase("", new[] {"\u1234"}, "http://localhost/\u1234?q", false)]
-        [TestCase("", new[] {"%E1%88%B4"}, "http://localhost/%E1%88%B4?q", false)]
-        [TestCase("", new[] {"\u1234"}, "http://localhost/%E1%88%B4?q", true)]
-        [TestCase("", new[] {"%E1%88%B4"}, "http://localhost/%25E1%2588%25B4?q", true)]
-        public void AppendPathWorks(string initialPath, string[] appends, string expectedResult, bool escape = false)
+        [TestCase(null, new[] {""}, "q", "http://localhost/?q")]
+        [TestCase("/", new[] {"/"}, "q", "http://localhost/?q")]
+        [TestCase(null, new[] {"p"}, "q", "http://localhost/p?q")]
+        [TestCase("/", new[] {"p"}, "q", "http://localhost/p?q")]
+        [TestCase("/", new[] {"ā","p"}, "q", "http://localhost/%C4%81p?q", true)]
+        [TestCase("/", new[] {"ā","p"}, "q", "http://localhost/āp?q", false)]
+        [TestCase("/", new[] {"/p"}, "q", "http://localhost/p?q")]
+        [TestCase("", new[] {"\u1234"}, "q", "http://localhost/\u1234?q", false)]
+        [TestCase("", new[] {"%E1%88%B4"}, "q", "http://localhost/%E1%88%B4?q", false)]
+        [TestCase("", new[] {"\u1234"}, "q", "http://localhost/%E1%88%B4?q", true)]
+        [TestCase("", new[] {"%E1%88%B4"}, "q", "http://localhost/%25E1%2588%25B4?q", true)]
+        [TestCase(null, new[] {""}, "", "http://localhost/")]
+        [TestCase("/", new[] {"/"}, "", "http://localhost/")]
+        [TestCase(null, new[] {"p"}, "", "http://localhost/p")]
+        [TestCase("/", new[] {"p"}, "", "http://localhost/p")]
+        [TestCase("/", new[] {"ā","p"}, "", "http://localhost/%C4%81p", true)]
+        [TestCase("/", new[] {"ā","p"}, "", "http://localhost/āp", false)]
+        [TestCase("/", new[] {"/p"}, "", "http://localhost/p")]
+        [TestCase("", new[] {"\u1234"}, "", "http://localhost/\u1234", false)]
+        [TestCase("", new[] {"%E1%88%B4"}, "", "http://localhost/%E1%88%B4", false)]
+        [TestCase("", new[] {"\u1234"}, "", "http://localhost/%E1%88%B4", true)]
+        [TestCase("", new[] {"%E1%88%B4"}, "", "http://localhost/%25E1%2588%25B4", true)]
+        public void AppendPathWorks(string initialPath, string[] appends, string query, string expectedResult, bool escape = false)
         {
             var uriBuilder = new RequestUriBuilder
             {
                 Scheme = "http",
                 Host = "localhost",
                 Port = 80,
-                Path = initialPath,
-                Query = "q"
+                Path = initialPath
             };
+            if (!string.IsNullOrEmpty(query))
+            {
+                uriBuilder.Query = query;
+            }
 
             if (escape)
             {
