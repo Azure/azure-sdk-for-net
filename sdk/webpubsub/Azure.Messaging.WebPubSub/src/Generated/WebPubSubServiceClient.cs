@@ -147,7 +147,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ConnectionExistsAsync(string connectionId, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> ConnectionExistsAsync(string connectionId, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
@@ -188,7 +188,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response ConnectionExists(string connectionId, RequestOptions requestOptions = null)
+        internal virtual Response ConnectionExists(string connectionId, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
@@ -909,7 +909,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UserExistsAsync(string userId, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> UserExistsAsync(string userId, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
@@ -950,7 +950,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="userId"> Target user Id. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response UserExists(string userId, RequestOptions requestOptions = null)
+        internal virtual Response UserExists(string userId, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();

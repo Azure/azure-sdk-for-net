@@ -100,6 +100,7 @@
                 ],
                 "summary": "Check if the connection with the given connectionId exists.",
                 "operationId": "WebPubSubService_ConnectionExists",
+                "x-accessibility": "internal",
                 "parameters": [
                     {
                         "in": "path",
@@ -480,6 +481,7 @@
                 ],
                 "summary": "Check if there are any client connections connected for the given user.",
                 "operationId": "WebPubSubService_UserExists",
+                "x-accessibility": "internal",
                 "parameters": [
                     {
                         "in": "path",

@@ -213,24 +213,64 @@ namespace Azure.Messaging.WebPubSub
             return SendToGroup(group, JsonContent, RequestContent.Create(message), excluded, options);
         }
 
-        ///// <summary> Check if there are any client connections inside the given group. </summary>
-        ///// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        ///// <param name="cancellationToken"> The cancellation token to use. </param>
-        //public virtual async Task<Response<bool>> GroupExistsAsync(string group, CancellationToken cancellationToken = default)
-        //{
-        //    var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-        //    var response = await GroupExistsAsync(group, options).ConfigureAwait(false);
-        //    return Response.FromValue(response.Status == 200, response);
-        //}
+        /// <summary> Check if there are any client connections inside the given group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<bool>> GroupExistsAsync(string group, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = await GroupExistsAsync(group, options).ConfigureAwait(false);
+            return Response.FromValue(response.Status == 200, response);
+        }
 
-        ///// <summary> Check if there are any client connections inside the given group. </summary>
-        ///// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        ///// <param name="cancellationToken"> The cancellation token to use. </param>
-        //public virtual Response<bool> GroupExists(string group, CancellationToken cancellationToken = default)
-        //{
-        //    var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
-        //    var response = GroupExists(group, options);
-        //    return Response.FromValue(response.Status == 200, response);
-        //}
+        /// <summary> Check if there are any client connections inside the given group. </summary>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<bool> GroupExists(string group, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = GroupExists(group, options);
+            return Response.FromValue(response.Status == 200, response);
+        }
+
+        /// <summary> Check if there are any client connections connected for the given user. </summary>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<bool>> UserExistsAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = await UserExistsAsync(userId, options).ConfigureAwait(false);
+            return Response.FromValue(response.Status == 200, response);
+        }
+
+        /// <summary> Check if there are any client connections connected for the given user. </summary>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<bool> UserExists(string userId, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = UserExists(userId, options);
+            return Response.FromValue(response.Status == 200, response);
+        }
+
+        /// <summary> Check if the connection with the given connectionId exists. </summary>
+        /// <param name="connectionId"> The connection Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<bool>> ConnectionExistsAsync(string connectionId, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = await ConnectionExistsAsync(connectionId, options).ConfigureAwait(false);
+            return Response.FromValue(response.Status == 200, response);
+        }
+
+        /// <summary> Check if the connection with the given connectionId exists. </summary>
+        /// <param name="connectionId"> The connection Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<bool> ConnectionExists(string connectionId, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = ConnectionExists(connectionId, options);
+            return Response.FromValue(response.Status == 200, response);
+        }
     }
 }

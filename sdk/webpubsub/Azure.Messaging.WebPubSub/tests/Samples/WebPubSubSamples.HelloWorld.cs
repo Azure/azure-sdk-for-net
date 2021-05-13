@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.WebPubSub;
@@ -89,7 +90,7 @@ namespace Azure.Template.Tests.Samples
             client.AddUserToGroup("some_group", "some_user");
 
             // Avoid sending messages to users who do not exist.
-            if (client.UserExists("some_user").Content.ToObjectFromJson<bool>())
+            if (client.UserExists("some_user", CancellationToken.None).Value)
             {
                 client.SendToUser("some_user", "Hi, I am glad you exist!");
             }
