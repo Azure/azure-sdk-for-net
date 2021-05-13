@@ -30,6 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
+            TimeSeriesInsightsInstances instancesClient = client.GetInstancesClient();
 
             // Create a Time Series Id with 3 keys. Middle key is a null
             var idWithNull = new TimeSeriesId(
@@ -46,8 +47,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             try
             {
                 // Create TSI instances
-                Response<TimeSeriesOperationError[]> createInstancesResult = await client
-                    .Instances
+                Response<TimeSeriesOperationError[]> createInstancesResult = await instancesClient
                     .CreateOrReplaceAsync(timeSeriesInstances)
                     .ConfigureAwait(false);
 
@@ -58,8 +58,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
                 {
                     // Get the instance with a null item in its Id
-                    Response<InstancesOperationResult[]> getInstanceWithNullInId = await client
-                        .Instances
+                    Response<InstancesOperationResult[]> getInstanceWithNullInId = await instancesClient
                         .GetAsync(new List<TimeSeriesId> { idWithNull })
                         .ConfigureAwait(false);
 
@@ -78,8 +77,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // clean up
                 try
                 {
-                    Response<TimeSeriesOperationError[]> deleteInstancesResponse = await client
-                        .Instances
+                    Response<TimeSeriesOperationError[]> deleteInstancesResponse = await instancesClient
                         .DeleteAsync(timeSeriesInstances.Select((instance) => instance.TimeSeriesId))
                         .ConfigureAwait(false);
 
@@ -153,6 +151,33 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
             // Assert
             idAsArray.Should().Equal(new string[] { key1, key2, key3 });
+        }
+
+        [Test]
+        public void TimeSeriesId_IdsEqual()
+        {
+            // Arrange
+            var tsiId1 = new TimeSeriesId("B17", "F1");
+            var tsiId2 = new TimeSeriesId("B17", "F1");
+            tsiId1.Equals(tsiId2).Should().BeTrue();
+        }
+
+        [Test]
+        public void TimeSeriesId_IdsNotEqual()
+        {
+            // Arrange
+            var tsiId1 = new TimeSeriesId("B17", "F1");
+            var tsiId2 = new TimeSeriesId("B17", "F2");
+            tsiId1.Equals(tsiId2).Should().BeFalse();
+        }
+
+        [Test]
+        public void TimeSeriesId_IdsWithNullEqual()
+        {
+            // Arrange
+            var tsiId1 = new TimeSeriesId("B17", null, "R1");
+            var tsiId2 = new TimeSeriesId("B17", null, "R1");
+            tsiId1.Equals(tsiId2).Should().BeTrue();
         }
     }
 }
