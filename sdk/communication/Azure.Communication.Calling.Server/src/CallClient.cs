@@ -20,15 +20,14 @@ namespace Azure.Communication.Calling.Server
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CallRestClient RestClient { get; }
 
+        #region public constructors - all arguments need null check
+
         /// <summary> Initializes a new instance of <see cref="CallClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
-        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallClient(Uri endpoint, AzureKeyCredential keyCredential, CallClientOptions? options = default)
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        public CallClient(string connectionString)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)),
-                options ?? new CallClientOptions(),
-                AssertNotNull(keyCredential, nameof(keyCredential)))
+                  ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                  new CallClientOptions())
         { }
 
         /// <summary> Initializes a new instance of <see cref="CallClient"/>.</summary>
@@ -36,8 +35,19 @@ namespace Azure.Communication.Calling.Server
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CallClient(string connectionString, CallClientOptions? options = default)
             : this(
-                  options ?? new CallClientOptions(),
-                  ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))))
+                  ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                  options ?? new CallClientOptions())
+        { }
+
+        /// <summary> Initializes a new instance of <see cref="CallClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallClient(Uri endpoint, AzureKeyCredential keyCredential, CallClientOptions? options = default)
+            : this(
+                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                AssertNotNull(keyCredential, nameof(keyCredential)),
+                options ?? new CallClientOptions())
         { }
 
         /// <summary> Initializes a new instance of <see cref="CallClient"/>.</summary>
@@ -46,50 +56,40 @@ namespace Azure.Communication.Calling.Server
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CallClient(Uri endpoint, TokenCredential tokenCredential, CallClientOptions? options = default)
             : this(
-                  endpoint,
-                  options ?? new CallClientOptions(),
-                  tokenCredential)
+                  AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                  AssertNotNull(tokenCredential, nameof(tokenCredential)),
+                  options ?? new CallClientOptions())
         { }
+
+        #endregion
+
+        #region private constructors
+
+        private CallClient(ConnectionString connectionString, CallClientOptions options)
+            : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+        { }
+
+        private CallClient(string endpoint, TokenCredential tokenCredential, CallClientOptions options)
+            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
+        { }
+
+        private CallClient(string endpoint, AzureKeyCredential keyCredential, CallClientOptions options)
+            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
+        { }
+
+        private CallClient(string endpoint, HttpPipeline httpPipeline, CallClientOptions options)
+        {
+            _clientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new CallRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+        }
+
+        #endregion
 
         /// <summary>Initializes a new instance of <see cref="CallClient"/> for mocking.</summary>
         protected CallClient()
         {
             _clientDiagnostics = null!;
             RestClient = null!;
-        }
-
-        private CallClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
-        {
-            RestClient = new CallRestClient(clientDiagnostics, pipeline, endpointUrl);
-            _clientDiagnostics = clientDiagnostics;
-        }
-
-        private CallClient(CallClientOptions options, ConnectionString connectionString)
-            : this(
-                  clientDiagnostics: new ClientDiagnostics(options),
-                  pipeline: options.BuildHttpPipeline(connectionString),
-                  endpointUrl: connectionString.GetRequired("endpoint"))
-        { }
-
-        private CallClient(Uri endpoint, CallClientOptions options, TokenCredential tokenCredential)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
-
-            _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new CallRestClient(
-                _clientDiagnostics,
-                options.BuildHttpPipeline(tokenCredential),
-                endpoint.AbsoluteUri);
-        }
-
-        private CallClient(Uri endpoint, CallClientOptions options, AzureKeyCredential credential)
-        {
-            _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new CallRestClient(
-                _clientDiagnostics,
-                options.BuildHttpPipeline(credential),
-                endpoint.AbsoluteUri);
         }
 
         /// Create a Call Requestion from source identity to targets identity asynchronously.
@@ -184,7 +184,6 @@ namespace Azure.Communication.Calling.Server
             try
             {
                 Argument.AssertNotNullOrEmpty(callLegId, nameof(callLegId));
-
                 return await RestClient.DeleteCallAsync(callLegId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -206,7 +205,6 @@ namespace Azure.Communication.Calling.Server
             try
             {
                 Argument.AssertNotNullOrEmpty(callLegId, nameof(callLegId));
-
                 return RestClient.DeleteCall(callLegId, cancellationToken);
             }
             catch (Exception ex)
@@ -257,52 +255,6 @@ namespace Azure.Communication.Calling.Server
                 throw;
             }
         }
-
-        /*
-
-        /// <summary> Subscribe to tone.</summary>
-        /// <param name="callLegId"> The call leg id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="callLegId"/> is null.</exception>
-        public virtual async Task<Response> SubscribeToToneAsync(string callLegId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(SubscribeToTone)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(callLegId, nameof(callLegId));
-                return await RestClient.SubscribeToToneAsync(callLegId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Subscribe to tone.</summary>
-        /// <param name="callLegId"> The call leg id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="callLegId"/> is null.</exception>
-        public virtual Response SubscribeToTone(string callLegId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(SubscribeToTone)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(callLegId, nameof(callLegId));
-                return RestClient.SubscribeToTone(callLegId, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        */
 
         /// <summary> Cancel Media Processing. </summary>
         /// <param name="callLegId"> The call leg id. </param>
