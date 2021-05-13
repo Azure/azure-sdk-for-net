@@ -12,13 +12,14 @@ namespace Microsoft.Azure.Management.SignalR.Models
 {
 
     /// <summary>
-    /// Defines values for FeatureFlags.
+    /// Defines values for SharedPrivateLinkResourceStatus.
     /// </summary>
-    public static class FeatureFlags
+    public static class SharedPrivateLinkResourceStatus
     {
-        public const string ServiceMode = "ServiceMode";
-        public const string EnableConnectivityLogs = "EnableConnectivityLogs";
-        public const string EnableMessagingLogs = "EnableMessagingLogs";
-        public const string EnableLiveTrace = "EnableLiveTrace";
+        public const string Pending = "Pending";
+        public const string Approved = "Approved";
+        public const string Rejected = "Rejected";
+        public const string Disconnected = "Disconnected";
+        public const string Timeout = "Timeout";
     }
 }

@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.SignalR
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SignalRPrivateEndpointConnectionsOperations operations.
+    /// SignalRSharedPrivateLinkResourcesOperations operations.
     /// </summary>
-    internal partial class SignalRPrivateEndpointConnectionsOperations : IServiceOperations<SignalRManagementClient>, ISignalRPrivateEndpointConnectionsOperations
+    internal partial class SignalRSharedPrivateLinkResourcesOperations : IServiceOperations<SignalRManagementClient>, ISignalRSharedPrivateLinkResourcesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SignalRPrivateEndpointConnectionsOperations class.
+        /// Initializes a new instance of the SignalRSharedPrivateLinkResourcesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SignalR
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SignalRPrivateEndpointConnectionsOperations(SignalRManagementClient client)
+        internal SignalRSharedPrivateLinkResourcesOperations(SignalRManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.SignalR
         public SignalRManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List private endpoint connections
+        /// List shared private link resources
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.SignalR
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SharedPrivateLinkResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.SignalR
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.SignalR
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<PrivateEndpointConnection>>();
+            var _result = new AzureOperationResponse<IPage<SharedPrivateLinkResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.SignalR
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PrivateEndpointConnection>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SharedPrivateLinkResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -243,10 +243,10 @@ namespace Microsoft.Azure.Management.SignalR
         }
 
         /// <summary>
-        /// Get the specified private endpoint connection
+        /// Get the specified shared private link resource
         /// </summary>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection
+        /// <param name='sharedPrivateLinkResourceName'>
+        /// The name of the shared private link resource
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -276,11 +276,11 @@ namespace Microsoft.Azure.Management.SignalR
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string privateEndpointConnectionName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SharedPrivateLinkResource>> GetWithHttpMessagesAsync(string sharedPrivateLinkResourceName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (privateEndpointConnectionName == null)
+            if (sharedPrivateLinkResourceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sharedPrivateLinkResourceName");
             }
             if (Client.ApiVersion == null)
             {
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.SignalR
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("privateEndpointConnectionName", privateEndpointConnectionName);
+                tracingParameters.Add("sharedPrivateLinkResourceName", sharedPrivateLinkResourceName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -313,8 +313,8 @@ namespace Microsoft.Azure.Management.SignalR
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}").ToString();
-            _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}").ToString();
+            _url = _url.Replace("{sharedPrivateLinkResourceName}", System.Uri.EscapeDataString(sharedPrivateLinkResourceName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
@@ -411,7 +411,7 @@ namespace Microsoft.Azure.Management.SignalR
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PrivateEndpointConnection>();
+            var _result = new AzureOperationResponse<SharedPrivateLinkResource>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.SignalR
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PrivateEndpointConnection>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SharedPrivateLinkResource>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -444,13 +444,68 @@ namespace Microsoft.Azure.Management.SignalR
         }
 
         /// <summary>
-        /// Update the state of specified private endpoint connection
+        /// Create or update a shared private link resource
         /// </summary>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection
+        /// <param name='sharedPrivateLinkResourceName'>
+        /// The name of the shared private link resource
         /// </param>
         /// <param name='parameters'>
-        /// The resource of private endpoint and its properties
+        /// The shared private link resource
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<SharedPrivateLinkResource>> CreateOrUpdateWithHttpMessagesAsync(string sharedPrivateLinkResourceName, SharedPrivateLinkResource parameters, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<SharedPrivateLinkResource> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(sharedPrivateLinkResourceName, parameters, resourceGroupName, resourceName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete the specified shared private link resource
+        /// </summary>
+        /// <param name='sharedPrivateLinkResourceName'>
+        /// The name of the shared private link resource
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string sharedPrivateLinkResourceName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(sharedPrivateLinkResourceName, resourceGroupName, resourceName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create or update a shared private link resource
+        /// </summary>
+        /// <param name='sharedPrivateLinkResourceName'>
+        /// The name of the shared private link resource
+        /// </param>
+        /// <param name='parameters'>
+        /// The shared private link resource
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -480,15 +535,19 @@ namespace Microsoft.Azure.Management.SignalR
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string privateEndpointConnectionName, PrivateEndpointConnection parameters, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SharedPrivateLinkResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string sharedPrivateLinkResourceName, SharedPrivateLinkResource parameters, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (privateEndpointConnectionName == null)
+            if (sharedPrivateLinkResourceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sharedPrivateLinkResourceName");
             }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (parameters != null)
+            {
+                parameters.Validate();
             }
             if (Client.ApiVersion == null)
             {
@@ -513,17 +572,17 @@ namespace Microsoft.Azure.Management.SignalR
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("privateEndpointConnectionName", privateEndpointConnectionName);
+                tracingParameters.Add("sharedPrivateLinkResourceName", sharedPrivateLinkResourceName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}").ToString();
-            _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}").ToString();
+            _url = _url.Replace("{sharedPrivateLinkResourceName}", System.Uri.EscapeDataString(sharedPrivateLinkResourceName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
@@ -596,7 +655,7 @@ namespace Microsoft.Azure.Management.SignalR
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -626,7 +685,7 @@ namespace Microsoft.Azure.Management.SignalR
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PrivateEndpointConnection>();
+            var _result = new AzureOperationResponse<SharedPrivateLinkResource>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -639,7 +698,25 @@ namespace Microsoft.Azure.Management.SignalR
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PrivateEndpointConnection>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SharedPrivateLinkResource>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SharedPrivateLinkResource>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -659,36 +736,10 @@ namespace Microsoft.Azure.Management.SignalR
         }
 
         /// <summary>
-        /// Delete the specified private endpoint connection
+        /// Delete the specified shared private link resource
         /// </summary>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can obtain
-        /// this value from the Azure Resource Manager API or the portal.
-        /// </param>
-        /// <param name='resourceName'>
-        /// The name of the resource.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string privateEndpointConnectionName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(privateEndpointConnectionName, resourceGroupName, resourceName, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Delete the specified private endpoint connection
-        /// </summary>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection
+        /// <param name='sharedPrivateLinkResourceName'>
+        /// The name of the shared private link resource
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -715,11 +766,11 @@ namespace Microsoft.Azure.Management.SignalR
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string privateEndpointConnectionName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string sharedPrivateLinkResourceName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (privateEndpointConnectionName == null)
+            if (sharedPrivateLinkResourceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sharedPrivateLinkResourceName");
             }
             if (Client.ApiVersion == null)
             {
@@ -744,7 +795,7 @@ namespace Microsoft.Azure.Management.SignalR
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("privateEndpointConnectionName", privateEndpointConnectionName);
+                tracingParameters.Add("sharedPrivateLinkResourceName", sharedPrivateLinkResourceName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -752,8 +803,8 @@ namespace Microsoft.Azure.Management.SignalR
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}").ToString();
-            _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}").ToString();
+            _url = _url.Replace("{sharedPrivateLinkResourceName}", System.Uri.EscapeDataString(sharedPrivateLinkResourceName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
@@ -865,7 +916,7 @@ namespace Microsoft.Azure.Management.SignalR
         }
 
         /// <summary>
-        /// List private endpoint connections
+        /// List shared private link resources
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -891,7 +942,7 @@ namespace Microsoft.Azure.Management.SignalR
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SharedPrivateLinkResource>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1000,7 +1051,7 @@ namespace Microsoft.Azure.Management.SignalR
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<PrivateEndpointConnection>>();
+            var _result = new AzureOperationResponse<IPage<SharedPrivateLinkResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1013,7 +1064,7 @@ namespace Microsoft.Azure.Management.SignalR
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PrivateEndpointConnection>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SharedPrivateLinkResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
