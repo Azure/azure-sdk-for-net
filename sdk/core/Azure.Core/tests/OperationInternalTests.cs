@@ -369,8 +369,8 @@ namespace Azure.Core.Tests
 
             // Algorithm must choose the longest delay between the two.
             Assert.AreEqual(2, passedDelays.Count);
-            Assert.AreEqual(originalDelay, passedDelays[0]);
-            Assert.AreEqual(longDelay, passedDelays[1]);
+            Assert.AreEqual(Max(originalDelay, shortDelay), passedDelays[0]);
+            Assert.AreEqual(Max(originalDelay, longDelay), passedDelays[1]);
         }
 
         [Test]
@@ -415,8 +415,8 @@ namespace Azure.Core.Tests
 
             // Algorithm must choose the longest delay between the two.
             Assert.AreEqual(2, passedDelays.Count);
-            Assert.AreEqual(originalDelay, passedDelays[0]);
-            Assert.AreEqual(longDelay, passedDelays[1]);
+            Assert.AreEqual(Max(originalDelay, shortDelay), passedDelays[0]);
+            Assert.AreEqual(Max(originalDelay, longDelay), passedDelays[1]);
         }
 
         [Test]
@@ -472,6 +472,8 @@ namespace Azure.Core.Tests
                 : Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionAsync(TimeSpan.Zero, cancellationToken));
         }
 
+        private TimeSpan Max(TimeSpan t1, TimeSpan t2) => t1 > t2 ? t1 : t2;
+
         private class TestOperation : IOperation<int>
         {
             public TestOperation(Response rawResponse = null, string operationTypeName = null, IEnumerable<KeyValuePair<string, string>> scopeAttributes = null)
@@ -506,7 +508,7 @@ namespace Azure.Core.Tests
             protected override async Task WaitAsync(TimeSpan delay, CancellationToken cancellationToken)
             {
                 OnWait?.Invoke(delay);
-                await base.WaitAsync(delay, cancellationToken);
+                await base.WaitAsync(TimeSpan.Zero, cancellationToken);
             }
         }
 
