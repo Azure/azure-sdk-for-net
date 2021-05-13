@@ -24,6 +24,34 @@ namespace Microsoft.Azure.Management.SqlVirtualMachine
     public partial interface ISqlVirtualMachinesOperations
     {
         /// <summary>
+        /// Gets the list of sql virtual machines in a SQL virtual machine
+        /// group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='sqlVirtualMachineGroupName'>
+        /// Name of the SQL virtual machine group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<SqlVirtualMachineModel>>> ListBySqlVmGroupWithHttpMessagesAsync(string resourceGroupName, string sqlVirtualMachineGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets all SQL virtual machines in a subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -264,6 +292,29 @@ namespace Microsoft.Azure.Management.SqlVirtualMachine
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<SqlVirtualMachineModel>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string sqlVirtualMachineName, SqlVirtualMachineUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the list of sql virtual machines in a SQL virtual machine
+        /// group.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<SqlVirtualMachineModel>>> ListBySqlVmGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all SQL virtual machines in a subscription.
         /// </summary>

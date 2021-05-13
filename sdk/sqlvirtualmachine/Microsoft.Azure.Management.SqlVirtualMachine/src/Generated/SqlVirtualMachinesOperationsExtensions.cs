@@ -22,6 +22,48 @@ namespace Microsoft.Azure.Management.SqlVirtualMachine
     public static partial class SqlVirtualMachinesOperationsExtensions
     {
             /// <summary>
+            /// Gets the list of sql virtual machines in a SQL virtual machine group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group that contains the resource. You can obtain this
+            /// value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='sqlVirtualMachineGroupName'>
+            /// Name of the SQL virtual machine group.
+            /// </param>
+            public static IPage<SqlVirtualMachineModel> ListBySqlVmGroup(this ISqlVirtualMachinesOperations operations, string resourceGroupName, string sqlVirtualMachineGroupName)
+            {
+                return operations.ListBySqlVmGroupAsync(resourceGroupName, sqlVirtualMachineGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of sql virtual machines in a SQL virtual machine group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group that contains the resource. You can obtain this
+            /// value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='sqlVirtualMachineGroupName'>
+            /// Name of the SQL virtual machine group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SqlVirtualMachineModel>> ListBySqlVmGroupAsync(this ISqlVirtualMachinesOperations operations, string resourceGroupName, string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySqlVmGroupWithHttpMessagesAsync(resourceGroupName, sqlVirtualMachineGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all SQL virtual machines in a subscription.
             /// </summary>
             /// <param name='operations'>
@@ -398,6 +440,40 @@ namespace Microsoft.Azure.Management.SqlVirtualMachine
             public static async Task<SqlVirtualMachineModel> BeginUpdateAsync(this ISqlVirtualMachinesOperations operations, string resourceGroupName, string sqlVirtualMachineName, SqlVirtualMachineUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, sqlVirtualMachineName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of sql virtual machines in a SQL virtual machine group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SqlVirtualMachineModel> ListBySqlVmGroupNext(this ISqlVirtualMachinesOperations operations, string nextPageLink)
+            {
+                return operations.ListBySqlVmGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of sql virtual machines in a SQL virtual machine group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SqlVirtualMachineModel>> ListBySqlVmGroupNextAsync(this ISqlVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySqlVmGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
