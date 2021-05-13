@@ -87,10 +87,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         public double ValueOfRootNode { get; }
 
         /// <summary>
-        /// The value the data point at the root node of this incident was expected to have according to
-        /// the service's smart detector. The root node is defined as the data point at the root of this
+        /// The expected value of the data point at the root node of this incident, according to the
+        /// service's smart detector. The root node is defined as the data point at the root of this
         /// incident's root-cause analysis tree. <c>null</c> if the quantity of historical points is not
-        /// enough to make a prediction.
+        /// enough to make a prediction, or if the anomaly was not detected by a <see cref="SmartDetectionCondition"/>.
         /// </summary>
         public double? ExpectedValueOfRootNode { get; }
     }

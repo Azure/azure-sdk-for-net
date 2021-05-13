@@ -94,7 +94,8 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The expected value of the data point that generated this anomaly, according to the service's
-        /// smart detector. <c>null</c> if the quantity of historical points is not enough to make a prediction.
+        /// smart detector. <c>null</c> if the quantity of historical points is not enough to make a prediction,
+        /// or if this anomaly was not detected by a <see cref="SmartDetectionCondition"/>.
         /// </summary>
         public double? ExpectedValue { get; }
     }
