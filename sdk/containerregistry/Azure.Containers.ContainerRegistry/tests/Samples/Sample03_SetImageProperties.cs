@@ -22,6 +22,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
+            #region Snippet:ContainerRegistry_Tests_Samples_SetArtifactProperties
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -35,6 +36,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 CanWrite = false,
                 CanDelete = false
             });
+            #endregion
 
             // Reset registry state
             image.SetTagProperties("latest", new ContentProperties()
@@ -55,6 +57,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
+            #region Snippet:ContainerRegistry_Tests_Samples_SetArtifactPropertiesAsync
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -68,6 +71,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 CanWrite = false,
                 CanDelete = false
             });
+            #endregion
 
             // Reset registry state
             await image.SetTagPropertiesAsync("latest", new ContentProperties()

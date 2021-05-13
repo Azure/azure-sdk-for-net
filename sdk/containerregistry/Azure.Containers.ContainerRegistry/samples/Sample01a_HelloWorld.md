@@ -17,7 +17,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 // Create a new ContainerRegistryClient
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
-// Perform an operation
+// Get the collection of repository names from the registry
 Pageable<string> repositories = client.GetRepositoryNames();
 foreach (string repository in repositories)
 {

@@ -18,15 +18,17 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.AnonymousAccessEndpoint);
 
+            #region Snippet:ContainerRegistry_Tests_Samples_ListTagsAnonymous
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             // Create a new ContainerRegistryClient for anonymous access
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
 
-            // List the set of tags on the hello_world image tagged as "latest"
+            // Obtain a RegistryArtifact object to get access to image operations
             RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
+            // List the set of tags on the hello_world image tagged as "latest"
             Pageable<ArtifactTagProperties> tags = image.GetTags();
 
             // Iterate through the image's tags, listing the tagged alias for the image
@@ -35,6 +37,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             {
                 Console.WriteLine($"    {image.RegistryUri.Host}/{image.RepositoryName}:{tag}");
             }
+            #endregion
         }
 
         [Test]
@@ -43,15 +46,17 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.AnonymousAccessEndpoint);
 
+            #region Snippet:ContainerRegistry_Tests_Samples_ListTagsAnonymousAsync
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             // Create a new ContainerRegistryClient for anonymous access
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
 
-            // List the set of tags on the hello_world image tagged as "latest"
+            // Obtain a RegistryArtifact object to get access to image operations
             RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
+            // List the set of tags on the hello_world image tagged as "latest"
             AsyncPageable<ArtifactTagProperties> tags = image.GetTagsAsync();
 
             // Iterate through the image's tags, listing the tagged alias for the image
@@ -60,6 +65,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             {
                 Console.WriteLine($"    {image.RegistryUri.Host}/{image.RepositoryName}:{tag}");
             }
+            #endregion
         }
     }
 }

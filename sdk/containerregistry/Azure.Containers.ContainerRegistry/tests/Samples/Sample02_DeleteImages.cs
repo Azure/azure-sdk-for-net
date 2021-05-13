@@ -18,6 +18,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
+            #region Snippet:ContainerRegistry_Tests_Samples_DeleteImage
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -52,6 +53,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                     }
                 }
             }
+            #endregion
         }
 
         [Test, NonParallelizable]
@@ -60,6 +62,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         {
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
+            # region Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -94,6 +97,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                     }
                 }
             }
+            #endregion
         }
     }
 }
