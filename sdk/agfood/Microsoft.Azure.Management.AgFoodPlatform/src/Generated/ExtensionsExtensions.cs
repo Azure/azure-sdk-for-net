@@ -7,6 +7,8 @@
 namespace Microsoft.Azure.Management.AgFoodPlatform
 {
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -208,11 +210,11 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
             /// <param name='farmBeatsResourceName'>
             /// FarmBeats resource name.
             /// </param>
-            /// <param name='extensionId'>
-            /// Id of extension resource.
+            /// <param name='extensionIds'>
+            /// Installed extension ids.
             /// </param>
-            /// <param name='extensionCategory'>
-            /// Category of extension (weather/sensor/satellite etc.).
+            /// <param name='extensionCategories'>
+            /// Installed extension categories.
             /// </param>
             /// <param name='maxPageSize'>
             /// Maximum number of items needed (inclusive).
@@ -221,9 +223,9 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
             /// <param name='skipToken'>
             /// Skip token for getting next set of results.
             /// </param>
-            public static ExtensionListResponse ListByFarmBeats(this IExtensions operations, string resourceGroupName, string farmBeatsResourceName, string extensionId = default(string), string extensionCategory = default(string), int? maxPageSize = 50, string skipToken = default(string))
+            public static ExtensionListResponse ListByFarmBeats(this IExtensions operations, string resourceGroupName, string farmBeatsResourceName, IList<string> extensionIds = default(IList<string>), IList<string> extensionCategories = default(IList<string>), int? maxPageSize = 50, string skipToken = default(string))
             {
-                return operations.ListByFarmBeatsAsync(resourceGroupName, farmBeatsResourceName, extensionId, extensionCategory, maxPageSize, skipToken).GetAwaiter().GetResult();
+                return operations.ListByFarmBeatsAsync(resourceGroupName, farmBeatsResourceName, extensionIds, extensionCategories, maxPageSize, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -238,11 +240,11 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
             /// <param name='farmBeatsResourceName'>
             /// FarmBeats resource name.
             /// </param>
-            /// <param name='extensionId'>
-            /// Id of extension resource.
+            /// <param name='extensionIds'>
+            /// Installed extension ids.
             /// </param>
-            /// <param name='extensionCategory'>
-            /// Category of extension (weather/sensor/satellite etc.).
+            /// <param name='extensionCategories'>
+            /// Installed extension categories.
             /// </param>
             /// <param name='maxPageSize'>
             /// Maximum number of items needed (inclusive).
@@ -254,9 +256,9 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExtensionListResponse> ListByFarmBeatsAsync(this IExtensions operations, string resourceGroupName, string farmBeatsResourceName, string extensionId = default(string), string extensionCategory = default(string), int? maxPageSize = 50, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ExtensionListResponse> ListByFarmBeatsAsync(this IExtensions operations, string resourceGroupName, string farmBeatsResourceName, IList<string> extensionIds = default(IList<string>), IList<string> extensionCategories = default(IList<string>), int? maxPageSize = 50, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByFarmBeatsWithHttpMessagesAsync(resourceGroupName, farmBeatsResourceName, extensionId, extensionCategory, maxPageSize, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByFarmBeatsWithHttpMessagesAsync(resourceGroupName, farmBeatsResourceName, extensionIds, extensionCategories, maxPageSize, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

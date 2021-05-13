@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/ff57165d-e71f-4a0e-8e9b-3cd461dc0f38/resourceGroups/prjayasw-resource-group?api-version=2014-04-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlZ3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",

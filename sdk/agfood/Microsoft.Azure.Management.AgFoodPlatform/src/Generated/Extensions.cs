@@ -862,11 +862,11 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
         /// <param name='farmBeatsResourceName'>
         /// FarmBeats resource name.
         /// </param>
-        /// <param name='extensionId'>
-        /// Id of extension resource.
+        /// <param name='extensionIds'>
+        /// Installed extension ids.
         /// </param>
-        /// <param name='extensionCategory'>
-        /// Category of extension (weather/sensor/satellite etc.).
+        /// <param name='extensionCategories'>
+        /// Installed extension categories.
         /// </param>
         /// <param name='maxPageSize'>
         /// Maximum number of items needed (inclusive).
@@ -896,7 +896,7 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ExtensionListResponse>> ListByFarmBeatsWithHttpMessagesAsync(string resourceGroupName, string farmBeatsResourceName, string extensionId = default(string), string extensionCategory = default(string), int? maxPageSize = 50, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ExtensionListResponse>> ListByFarmBeatsWithHttpMessagesAsync(string resourceGroupName, string farmBeatsResourceName, IList<string> extensionIds = default(IList<string>), IList<string> extensionCategories = default(IList<string>), int? maxPageSize = 50, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -943,17 +943,6 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "farmBeatsResourceName");
             }
-            if (extensionCategory != null)
-            {
-                if (extensionCategory.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "extensionCategory", 50);
-                }
-                if (extensionCategory.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "extensionCategory", 0);
-                }
-            }
             if (maxPageSize != null)
             {
                 if (maxPageSize > 1000)
@@ -974,8 +963,8 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("farmBeatsResourceName", farmBeatsResourceName);
-                tracingParameters.Add("extensionId", extensionId);
-                tracingParameters.Add("extensionCategory", extensionCategory);
+                tracingParameters.Add("extensionIds", extensionIds);
+                tracingParameters.Add("extensionCategories", extensionCategories);
                 tracingParameters.Add("maxPageSize", maxPageSize);
                 tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -992,13 +981,33 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (extensionId != null)
+            if (extensionIds != null)
             {
-                _queryParameters.Add(string.Format("extensionId={0}", System.Uri.EscapeDataString(extensionId)));
+                if (extensionIds.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("extensionIds={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in extensionIds)
+                    {
+                        _queryParameters.Add(string.Format("extensionIds={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
-            if (extensionCategory != null)
+            if (extensionCategories != null)
             {
-                _queryParameters.Add(string.Format("extensionCategory={0}", System.Uri.EscapeDataString(extensionCategory)));
+                if (extensionCategories.Count == 0)
+                {
+                    _queryParameters.Add(string.Format("extensionCategories={0}", System.Uri.EscapeDataString(string.Empty)));
+                }
+                else
+                {
+                    foreach (var _item in extensionCategories)
+                    {
+                        _queryParameters.Add(string.Format("extensionCategories={0}", System.Uri.EscapeDataString("" + _item)));
+                    }
+                }
             }
             if (maxPageSize != null)
             {

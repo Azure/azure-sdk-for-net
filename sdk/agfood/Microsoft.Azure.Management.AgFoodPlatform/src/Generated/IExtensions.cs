@@ -136,11 +136,11 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
         /// <param name='farmBeatsResourceName'>
         /// FarmBeats resource name.
         /// </param>
-        /// <param name='extensionId'>
-        /// Id of extension resource.
+        /// <param name='extensionIds'>
+        /// Installed extension ids.
         /// </param>
-        /// <param name='extensionCategory'>
-        /// Category of extension (weather/sensor/satellite etc.).
+        /// <param name='extensionCategories'>
+        /// Installed extension categories.
         /// </param>
         /// <param name='maxPageSize'>
         /// Maximum number of items needed (inclusive).
@@ -164,6 +164,6 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<ExtensionListResponse>> ListByFarmBeatsWithHttpMessagesAsync(string resourceGroupName, string farmBeatsResourceName, string extensionId = default(string), string extensionCategory = default(string), int? maxPageSize = 50, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ExtensionListResponse>> ListByFarmBeatsWithHttpMessagesAsync(string resourceGroupName, string farmBeatsResourceName, IList<string> extensionIds = default(IList<string>), IList<string> extensionCategories = default(IList<string>), int? maxPageSize = 50, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

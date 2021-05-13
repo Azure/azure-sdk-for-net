@@ -7,8 +7,6 @@
 namespace Microsoft.Azure.Management.AgFoodPlatform.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,7 +27,7 @@ namespace Microsoft.Azure.Management.AgFoodPlatform.Models
         /// </summary>
         /// <param name="type">The additional info type.</param>
         /// <param name="info">The additional info.</param>
-        public ErrorAdditionalInfo(string type = default(string), IDictionary<string, string> info = default(IDictionary<string, string>))
+        public ErrorAdditionalInfo(string type = default(string), object info = default(object))
         {
             Type = type;
             Info = info;
@@ -51,7 +49,7 @@ namespace Microsoft.Azure.Management.AgFoodPlatform.Models
         /// Gets the additional info.
         /// </summary>
         [JsonProperty(PropertyName = "info")]
-        public IDictionary<string, string> Info { get; private set; }
+        public object Info { get; private set; }
 
     }
 }

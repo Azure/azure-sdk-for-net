@@ -12,27 +12,27 @@ namespace Microsoft.Azure.Management.AgFoodPlatform.Models
     using System.Linq;
 
     /// <summary>
-    /// The resource management error response.
+    /// The error detail.
     /// </summary>
-    public partial class ErrorResponseBody
+    public partial class ErrorDetail
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponseBody class.
+        /// Initializes a new instance of the ErrorDetail class.
         /// </summary>
-        public ErrorResponseBody()
+        public ErrorDetail()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponseBody class.
+        /// Initializes a new instance of the ErrorDetail class.
         /// </summary>
         /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
         /// <param name="target">The error target.</param>
         /// <param name="details">The error details.</param>
         /// <param name="additionalInfo">The error additional info.</param>
-        public ErrorResponseBody(string code = default(string), string message = default(string), string target = default(string), IList<ErrorResponseBody> details = default(IList<ErrorResponseBody>), IList<ErrorAdditionalInfo> additionalInfo = default(IList<ErrorAdditionalInfo>))
+        public ErrorDetail(string code = default(string), string message = default(string), string target = default(string), IList<ErrorDetail> details = default(IList<ErrorDetail>), IList<ErrorAdditionalInfo> additionalInfo = default(IList<ErrorAdditionalInfo>))
         {
             Code = code;
             Message = message;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.AgFoodPlatform.Models
         /// Gets the error details.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public IList<ErrorResponseBody> Details { get; private set; }
+        public IList<ErrorDetail> Details { get; private set; }
 
         /// <summary>
         /// Gets the error additional info.

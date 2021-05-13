@@ -46,6 +46,11 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
         IExtensions Extensions { get; }
 
         /// <summary>
+        /// Gets the IFarmBeatsExtensions.
+        /// </summary>
+        IFarmBeatsExtensions FarmBeatsExtensions { get; }
+
+        /// <summary>
         /// Gets the IFarmBeatsModels.
         /// </summary>
         IFarmBeatsModels FarmBeatsModels { get; }

@@ -10,8 +10,13 @@ namespace Microsoft.Azure.Management.AgFoodPlatform.Models
     using System.Linq;
 
     /// <summary>
-    /// An error response from the service.
+    /// Error response
     /// </summary>
+    /// <remarks>
+    /// Common error response for all Azure Resource Manager APIs to return
+    /// error details for failed operations. (This also follows the OData error
+    /// response format.).
+    /// </remarks>
     public partial class ErrorResponse
     {
         /// <summary>
@@ -25,8 +30,8 @@ namespace Microsoft.Azure.Management.AgFoodPlatform.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="error">The error object</param>
-        public ErrorResponse(ErrorResponseBody error = default(ErrorResponseBody))
+        /// <param name="error">The error object.</param>
+        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
         {
             Error = error;
             CustomInit();
@@ -38,10 +43,10 @@ namespace Microsoft.Azure.Management.AgFoodPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error object
+        /// Gets or sets the error object.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorResponseBody Error { get; set; }
+        public ErrorDetail Error { get; set; }
 
     }
 }

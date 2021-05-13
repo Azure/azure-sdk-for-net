@@ -51,6 +51,11 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
         public virtual IExtensions Extensions { get; private set; }
 
         /// <summary>
+        /// Gets the IFarmBeatsExtensions.
+        /// </summary>
+        public virtual IFarmBeatsExtensions FarmBeatsExtensions { get; private set; }
+
+        /// <summary>
         /// Gets the IFarmBeatsModels.
         /// </summary>
         public virtual IFarmBeatsModels FarmBeatsModels { get; private set; }
@@ -158,6 +163,7 @@ namespace Microsoft.Azure.Management.AgFoodPlatform
         private void Initialize()
         {
             Extensions = new Extensions(this);
+            FarmBeatsExtensions = new FarmBeatsExtensions(this);
             FarmBeatsModels = new FarmBeatsModels(this);
             Locations = new Locations(this);
             Operations = new Operations(this);

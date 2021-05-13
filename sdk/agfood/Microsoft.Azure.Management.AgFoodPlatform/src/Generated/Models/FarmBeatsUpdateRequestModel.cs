@@ -29,9 +29,12 @@ namespace Microsoft.Azure.Management.AgFoodPlatform.Models
         /// Initializes a new instance of the FarmBeatsUpdateRequestModel
         /// class.
         /// </summary>
+        /// <param name="location">Geo-location where the resource
+        /// lives.</param>
         /// <param name="tags">Resource tags.</param>
-        public FarmBeatsUpdateRequestModel(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public FarmBeatsUpdateRequestModel(string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Location = location;
             Tags = tags;
             CustomInit();
         }
@@ -40,6 +43,12 @@ namespace Microsoft.Azure.Management.AgFoodPlatform.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets geo-location where the resource lives.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.
