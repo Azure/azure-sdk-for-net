@@ -30,6 +30,7 @@ namespace Azure.Monitor.Query.Tests
         private LogsClient CreateClient()
         {
             return InstrumentClient(new LogsClient(
+                TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new LogsClientOptions())
             ));

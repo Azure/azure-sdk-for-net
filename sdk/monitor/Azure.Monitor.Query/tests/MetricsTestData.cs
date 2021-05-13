@@ -41,7 +41,7 @@ namespace Azure.Monitor.Query.Tests
             }
 
             _initialized = true;
-            var metricClient = new MetricsClient(_testEnvironment.Credential);
+            var metricClient = new MetricsClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
 
             while (!await MetricsPropagated(metricClient))
             {
