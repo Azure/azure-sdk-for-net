@@ -110,20 +110,18 @@ namespace Azure.ResourceManager.Core.Tests.Scenario
             }
         }
 
-        [TestCase ("List")]
-        [TestCase ("Single")]
-        public void GetGenericResourceOperationNullTests(string type)
+        [TestCase]
+        public void GetGenericResourceOperationWithNullSetOfIds()
         {
-            if(type == "List")
-            {
-                List<string> x = null;
-                Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResourceOperations(x); });
-            }
-            else
-            {
+            string[] x = null;
+            Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResourceOperations(x); });
+        }
+
+        [TestCase]
+        public void GetGenericResourceOperationWithNullId()
+        {
                 string x = null;
                 Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResourceOperations(x); });
-            }
         }
 
         [TestCase]

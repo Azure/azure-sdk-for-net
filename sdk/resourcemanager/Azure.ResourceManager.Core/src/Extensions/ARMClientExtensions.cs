@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Core
         /// <param name="client"></param>
         /// <param name="ids">A list of the IDs of the resources to retrieve.</param>
         /// <returns></returns>
-        public static List<GenericResourceOperations> GetGenericResourceOperations(this ArmClient client, List<string> ids)
+        public static IList<GenericResourceOperations> GetGenericResourceOperations(this ArmClient client, IEnumerable<string> ids)
         {
             if (ids == null)
             {
                 throw new ArgumentNullException(nameof(ids));
             }
 
-            var genericRespirceOperations = new List<GenericResourceOperations>();
+            IList<GenericResourceOperations> genericRespirceOperations = new List<GenericResourceOperations>();
             foreach (string id in ids)
             {
                 genericRespirceOperations.Add(new GenericResourceOperations(client.DefaultSubscription, id));
