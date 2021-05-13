@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// resource.</param>
         /// <param name="sku">The SKU of the resource.</param>
         /// <param name="identity">The identity of the resource.</param>
-        public GenericResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
-            : this(id, name, type, location, default(ExtendedLocation), tags)
+        public GenericResource(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
+            : this(id, name, type, location, default(ExtendedLocation), tags, plan, properties, kind, managedBy, sku, identity)
         {
         }
     }

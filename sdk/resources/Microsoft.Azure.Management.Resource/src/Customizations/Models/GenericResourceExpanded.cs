@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="provisioningState">The provisioning state of the
         /// resource. This is only present if requested via the $expand query
         /// parameter.</param>
-        public GenericResourceExpanded(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? changedTime = default(System.DateTime?), string provisioningState = default(string))
-            : this(id, name, type, location, default(ExtendedLocation), tags, plan, properties, kind, managedBy, sku, identity)
+        public GenericResourceExpanded(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? changedTime = default(System.DateTime?), string provisioningState = default(string))
+            : this(id, name, type, location, default(ExtendedLocation), tags, plan, properties, kind, managedBy, sku, identity, createdTime, changedTime, provisioningState)
         {
         }
     }
