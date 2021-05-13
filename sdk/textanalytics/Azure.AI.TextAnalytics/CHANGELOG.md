@@ -1,7 +1,12 @@
 # Release History
 
 ## 5.1.0-beta.7 (Unreleased)
+### New features
+- Added property `DisableServiceLogs` to `TextAnalyticsRequestOptions`.
 
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `3.1-preview.5`.
+- Renamed type `TextElementsV8` to `TextElementV8` in model `StringIndexType`.
 
 ## 5.1.0-beta.6 (2021-04-06)
 ### New features

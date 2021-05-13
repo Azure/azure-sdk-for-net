@@ -22,6 +22,50 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class VirtualClustersOperationsExtensions
     {
             /// <summary>
+            /// Synchronizes the DNS server settings used by the managed instances inside
+            /// the given virtual cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='virtualClusterName'>
+            /// The name of the virtual cluster.
+            /// </param>
+            public static UpdateManagedInstanceDnsServersOperation UpdateDnsServers(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName)
+            {
+                return operations.UpdateDnsServersAsync(resourceGroupName, virtualClusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Synchronizes the DNS server settings used by the managed instances inside
+            /// the given virtual cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='virtualClusterName'>
+            /// The name of the virtual cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UpdateManagedInstanceDnsServersOperation> UpdateDnsServersAsync(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateDnsServersWithHttpMessagesAsync(resourceGroupName, virtualClusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of all virtualClusters in the subscription.
             /// </summary>
             /// <param name='operations'>
@@ -180,7 +224,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the virtual cluster.
             /// </param>
             /// <param name='parameters'>
-            /// The requested managed instance resource state.
+            /// The requested virtual cluster resource state.
             /// </param>
             public static VirtualCluster Update(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName, VirtualClusterUpdate parameters)
             {
@@ -201,7 +245,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the virtual cluster.
             /// </param>
             /// <param name='parameters'>
-            /// The requested managed instance resource state.
+            /// The requested virtual cluster resource state.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -267,7 +311,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the virtual cluster.
             /// </param>
             /// <param name='parameters'>
-            /// The requested managed instance resource state.
+            /// The requested virtual cluster resource state.
             /// </param>
             public static VirtualCluster BeginUpdate(this IVirtualClustersOperations operations, string resourceGroupName, string virtualClusterName, VirtualClusterUpdate parameters)
             {
@@ -288,7 +332,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the virtual cluster.
             /// </param>
             /// <param name='parameters'>
-            /// The requested managed instance resource state.
+            /// The requested virtual cluster resource state.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

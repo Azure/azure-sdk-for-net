@@ -24,6 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<EntityRecognitionPiiTasksItem>> entityRecognitionPiiTasks = default;
             Optional<IReadOnlyList<KeyPhraseExtractionTasksItem>> keyPhraseExtractionTasks = default;
             Optional<IReadOnlyList<EntityLinkingTasksItem>> entityLinkingTasks = default;
+            Optional<IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("details"))
@@ -116,8 +117,23 @@ namespace Azure.AI.TextAnalytics.Models
                     entityLinkingTasks = array;
                     continue;
                 }
+                if (property.NameEquals("sentimentAnalysisTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<TasksStateTasksSentimentAnalysisTasksItem> array = new List<TasksStateTasksSentimentAnalysisTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TasksStateTasksSentimentAnalysisTasksItem.DeserializeTasksStateTasksSentimentAnalysisTasksItem(item));
+                    }
+                    sentimentAnalysisTasks = array;
+                    continue;
+                }
             }
-            return new AnalyzeTasks(details.Value, completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks));
+            return new AnalyzeTasks(details.Value, completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks));
         }
     }
 }

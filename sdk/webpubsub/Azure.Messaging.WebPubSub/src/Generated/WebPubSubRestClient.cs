@@ -39,7 +39,7 @@ namespace Azure.Messaging.WebPubSub
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSendToAllRequest(string hub, ContentType contentType, RequestContent message, IEnumerable<string> excluded)
+        internal HttpMessage CreateSendToAllRequest(string hub, Models.ContentType contentType, RequestContent message, IEnumerable<string> excluded)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -70,7 +70,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="message"/> is null. </exception>
-        public async Task<Response> SendToAllAsync(string hub, ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public async Task<Response> SendToAllAsync(string hub, Models.ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -99,7 +99,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="message"/> is null. </exception>
-        public Response SendToAll(string hub, ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public Response SendToAll(string hub, Models.ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -355,7 +355,7 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal HttpMessage CreateSendToConnectionRequest(string hub, string connectionId, ContentType contentType, RequestContent message)
+        internal HttpMessage CreateSendToConnectionRequest(string hub, string connectionId, Models.ContentType contentType, RequestContent message)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -384,7 +384,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="message"> The payload body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="connectionId"/>, or <paramref name="message"/> is null. </exception>
-        public async Task<Response> SendToConnectionAsync(string hub, string connectionId, ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
+        public async Task<Response> SendToConnectionAsync(string hub, string connectionId, Models.ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -417,7 +417,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="message"> The payload body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="connectionId"/>, or <paramref name="message"/> is null. </exception>
-        public Response SendToConnection(string hub, string connectionId, ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
+        public Response SendToConnection(string hub, string connectionId, Models.ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -604,7 +604,7 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal HttpMessage CreateSendToGroupRequest(string hub, string group, ContentType contentType, RequestContent message, IEnumerable<string> excluded)
+        internal HttpMessage CreateSendToGroupRequest(string hub, string group, Models.ContentType contentType, RequestContent message, IEnumerable<string> excluded)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -638,7 +638,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/>, or <paramref name="message"/> is null. </exception>
-        public async Task<Response> SendToGroupAsync(string hub, string group, ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public async Task<Response> SendToGroupAsync(string hub, string group, Models.ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -672,7 +672,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/>, or <paramref name="message"/> is null. </exception>
-        public Response SendToGroup(string hub, string group, ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public Response SendToGroup(string hub, string group, Models.ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -1037,7 +1037,7 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal HttpMessage CreateSendToUserRequest(string hub, string userId, ContentType contentType, RequestContent message)
+        internal HttpMessage CreateSendToUserRequest(string hub, string userId, Models.ContentType contentType, RequestContent message)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -1066,7 +1066,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="message"> The payload body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/>, or <paramref name="message"/> is null. </exception>
-        public async Task<Response> SendToUserAsync(string hub, string userId, ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
+        public async Task<Response> SendToUserAsync(string hub, string userId, Models.ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -1099,7 +1099,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="message"> The payload body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/>, or <paramref name="message"/> is null. </exception>
-        public Response SendToUser(string hub, string userId, ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
+        public Response SendToUser(string hub, string userId, Models.ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {

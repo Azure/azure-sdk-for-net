@@ -15,7 +15,7 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static EventSchema DeserializeEventSchema(JsonElement element)
         {
-            Optional<IReadOnlyList<EventProperty>> properties = default;
+            Optional<IReadOnlyList<TimeSeriesInsightsEventProperty>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -25,10 +25,10 @@ namespace Azure.IoT.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EventProperty> array = new List<EventProperty>();
+                    List<TimeSeriesInsightsEventProperty> array = new List<TimeSeriesInsightsEventProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventProperty.DeserializeEventProperty(item));
+                        array.Add(TimeSeriesInsightsEventProperty.DeserializeTimeSeriesInsightsEventProperty(item));
                     }
                     properties = array;
                     continue;

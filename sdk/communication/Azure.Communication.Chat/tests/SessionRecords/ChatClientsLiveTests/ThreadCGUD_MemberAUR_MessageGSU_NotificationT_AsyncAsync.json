@@ -1874,7 +1874,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://azurecommunicationservices.communication.azure.com/;accesskey=Kg==;",
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://azurecommunicationservices.communication.azure.com/;accesskey=Kg==;",
     "RandomSeed": "2028853980"
   }
 }
