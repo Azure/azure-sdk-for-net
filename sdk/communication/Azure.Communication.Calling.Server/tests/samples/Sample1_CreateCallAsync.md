@@ -1,4 +1,4 @@
-# Send SMS Message
+# Create Call
 
 This sample demonstrates how to make a call to a recipient phone number.
 

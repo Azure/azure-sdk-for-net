@@ -4,11 +4,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="samples\**" />
-    <EmbeddedResource Remove="samples\**" />
-    <None Remove="samples\**" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />

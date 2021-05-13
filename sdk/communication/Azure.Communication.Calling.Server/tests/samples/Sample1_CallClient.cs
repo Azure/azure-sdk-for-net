@@ -22,7 +22,7 @@ namespace Azure.Communication.Calling.Server.Tests.samples
         [AsyncOnly]
         public async Task CreateCallAsync()
         {
-            var sourceIdentity = await ServerCallingClientsLiveTests.CreateUserAsync(TestEnvironment.LiveTestConnectionString).ConfigureAwait(false);
+            var sourceIdentity = await ServerCallingClientsLiveTests.CreateUserAsync(TestEnvironment.LiveTestStaticConnectionString).ConfigureAwait(false);
             var source = new CommunicationUserIdentifier(sourceIdentity.Id);
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
@@ -48,7 +48,7 @@ namespace Azure.Communication.Calling.Server.Tests.samples
         [SyncOnly]
         public void CreateCall()
         {
-            var sourceIdentity = ServerCallingClientsLiveTests.CreateUser(TestEnvironment.LiveTestConnectionString);
+            var sourceIdentity = ServerCallingClientsLiveTests.CreateUser(TestEnvironment.LiveTestStaticConnectionString);
             var source = new CommunicationUserIdentifier(sourceIdentity.Id);
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
