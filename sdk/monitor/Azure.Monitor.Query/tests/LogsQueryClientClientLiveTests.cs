@@ -182,9 +182,10 @@ namespace Azure.Monitor.Query.Tests
 
             LogsQueryResultRow row = results.Value.PrimaryTable.Rows[0];
 
-            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.GetDateTimeOffset("DateTime"));
-            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.GetDateTimeOffset(0));
-            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.GetObject("DateTime"));
+            var expectedDate = DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00");
+            Assert.AreEqual(expectedDate, row.GetDateTimeOffset("DateTime"));
+            Assert.AreEqual(expectedDate, row.GetDateTimeOffset(0));
+            Assert.AreEqual(expectedDate, row.GetObject("DateTime"));
             Assert.AreEqual(false, row.GetBoolean("Bool"));
             Assert.AreEqual(false, row.GetBoolean(1));
             Assert.AreEqual(false, row.GetObject("Bool"));
