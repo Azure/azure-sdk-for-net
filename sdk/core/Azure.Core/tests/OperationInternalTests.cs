@@ -24,8 +24,6 @@ namespace Azure.Core.Tests
             MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
-            Assert.IsNotNull(operationInternal.ScopeAttributes);
-            Assert.IsEmpty(operationInternal.ScopeAttributes);
 
             Assert.IsNull(operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
@@ -41,8 +39,6 @@ namespace Azure.Core.Tests
             MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
-            Assert.IsNotNull(operationInternal.ScopeAttributes);
-            Assert.IsEmpty(operationInternal.ScopeAttributes);
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
@@ -171,16 +167,11 @@ namespace Azure.Core.Tests
             };
 
             MockResponse mockResponse = new MockResponse(200);
-            TestOperation testOperation = new TestOperation(operationTypeName: useDefaultTypeName ? null : customTypeName)
+            TestOperation testOperation = new TestOperation(operationTypeName: useDefaultTypeName ? null : customTypeName, scopeAttributes: expectedAttributes)
             {
                 OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
             };
             MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
-
-            foreach (KeyValuePair<string, string> kvp in expectedAttributes)
-            {
-                operationInternal.ScopeAttributes.Add(kvp);
-            }
 
             _ = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
@@ -483,11 +474,11 @@ namespace Azure.Core.Tests
 
         private class TestOperation : IOperation<int>
         {
-            public TestOperation(Response rawResponse = null, string operationTypeName = null)
+            public TestOperation(Response rawResponse = null, string operationTypeName = null, IEnumerable<KeyValuePair<string, string>> scopeAttributes = null)
             {
-                MockOperationInternal = operationTypeName is null
+                MockOperationInternal = operationTypeName is null && scopeAttributes is null
                     ? new MockOperationInternal<int>(ClientDiagnostics, this, rawResponse)
-                    : new MockOperationInternal<int>(ClientDiagnostics, this, rawResponse, operationTypeName);
+                    : new MockOperationInternal<int>(ClientDiagnostics, this, rawResponse, operationTypeName, scopeAttributes);
             }
 
             public MockOperationInternal<int> MockOperationInternal { get; }
@@ -505,8 +496,8 @@ namespace Azure.Core.Tests
             {
             }
 
-            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse, string operationTypeName)
-                : base(clientDiagnostics, operation, rawResponse, operationTypeName)
+            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse, string operationTypeName, IEnumerable<KeyValuePair<string, string>> scopeAttributes)
+                : base(clientDiagnostics, operation, rawResponse, operationTypeName, scopeAttributes)
             {
             }
 

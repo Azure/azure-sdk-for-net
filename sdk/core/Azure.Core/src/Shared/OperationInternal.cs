@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -21,23 +22,23 @@ namespace Azure.Core
 
         private readonly string _updateStatusScopeName;
 
+        private readonly IReadOnlyDictionary<string, string> _scopeAttributes;
+
         private TResult _value;
 
         private RequestFailedException _operationFailedException;
 
-        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse, string operationTypeName = null)
+        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse, string operationTypeName = null, IEnumerable<KeyValuePair<string, string>> scopeAttributes = null)
         {
             operationTypeName ??= operation.GetType().Name;
 
             _operation = operation;
             _diagnostics = clientDiagnostics;
             _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
+            _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             RawResponse = rawResponse;
             DefaultPollingInterval = TimeSpan.FromSeconds(1);
-            ScopeAttributes = new Dictionary<string, string>();
         }
-
-        public IDictionary<string, string> ScopeAttributes { get; }
 
         public bool HasValue { get; private set; }
 
@@ -112,9 +113,12 @@ namespace Azure.Core
         {
             using DiagnosticScope scope = _diagnostics.CreateScope(_updateStatusScopeName);
 
-            foreach (KeyValuePair<string, string> attribute in ScopeAttributes)
+            if (_scopeAttributes != null)
             {
-                scope.AddAttribute(attribute.Key, attribute.Value);
+                foreach (KeyValuePair<string, string> attribute in _scopeAttributes)
+                {
+                    scope.AddAttribute(attribute.Key, attribute.Value);
+                }
             }
 
             scope.Start();
