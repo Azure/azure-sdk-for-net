@@ -1,139 +1,112 @@
 namespace Azure.Analytics.Purview.Scanning
 {
-    public partial class AzureKeyVaultsClient
+    public partial class PurviewClassificationRuleClient
     {
-        protected AzureKeyVaultsClient() { }
-        public AzureKeyVaultsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.ScanningClientOptions options = null) { }
+        protected PurviewClassificationRuleClient() { }
+        public PurviewClassificationRuleClient(System.Uri endpoint, string classificationRuleName, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateAzureKeyVault(string azureKeyVaultName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateAzureKeyVaultAsync(string azureKeyVaultName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteAzureKeyVault(string azureKeyVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAzureKeyVaultAsync(string azureKeyVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetAzureKeyVault(string azureKeyVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAzureKeyVaultAsync(string azureKeyVaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ListByAccount(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListByAccountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response Delete(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetProperties(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetPropertiesAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetVersions(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetVersionsAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response TagVersion(int classificationRuleVersion, string action, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TagVersionAsync(int classificationRuleVersion, string action, Azure.RequestOptions requestOptions = null) { throw null; }
     }
-    public partial class ClassificationRulesClient
+    public partial class PurviewDataSourceClient
     {
-        protected ClassificationRulesClient() { }
-        public ClassificationRulesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.ScanningClientOptions options = null) { }
+        protected PurviewDataSourceClient() { }
+        public PurviewDataSourceClient(System.Uri endpoint, string dataSourceName, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string classificationRuleName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string classificationRuleName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Delete(string classificationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string classificationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Get(string classificationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string classificationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ListAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ListVersionsByClassificationRuleName(string classificationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListVersionsByClassificationRuleNameAsync(string classificationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response TagClassificationVersion(string classificationRuleName, int classificationRuleVersion, string action, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> TagClassificationVersionAsync(string classificationRuleName, int classificationRuleVersion, string action, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response Delete(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetChildren(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetChildrenAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetProperties(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetPropertiesAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public Azure.Analytics.Purview.Scanning.PurviewScanClient GetScanClient(string scanName) { throw null; }
+        public virtual Azure.Response GetScans(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetScansAsync(Azure.RequestOptions requestOptions = null) { throw null; }
     }
-    public partial class DataSourceClient
+    public partial class PurviewScanClient
     {
-        protected DataSourceClient() { }
-        public DataSourceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.ScanningClientOptions options = null) { }
+        protected PurviewScanClient() { }
+        public PurviewScanClient(System.Uri endpoint, string dataSourceName, string scanName, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response ListUnparentedDataSourcesByAccount(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListUnparentedDataSourcesByAccountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CancelScan(string runId, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelScanAsync(string runId, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdateFilter(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateFilterAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdateTrigger(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateTriggerAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response Delete(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response DeleteTrigger(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTriggerAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetFilter(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetFilterAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetProperties(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetPropertiesAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetRuns(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetRunsAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetTrigger(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTriggerAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response RunScan(string runId, string scanLevel = null, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RunScanAsync(string runId, string scanLevel = null, Azure.RequestOptions requestOptions = null) { throw null; }
     }
-    public partial class DataSourcesClient
+    public partial class PurviewScanningServiceClient
     {
-        protected DataSourcesClient() { }
-        public DataSourcesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.ScanningClientOptions options = null) { }
+        protected PurviewScanningServiceClient() { }
+        public PurviewScanningServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string dataSourceName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string dataSourceName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Delete(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Get(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ListByAccount(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListByAccountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ListChildrenByCollection(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListChildrenByCollectionAsync(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateOrUpdateKeyVaultReference(string azureKeyVaultName, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateKeyVaultReferenceAsync(string azureKeyVaultName, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdateScanRuelset(string scanRulesetName, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateScanRuelsetAsync(string scanRulesetName, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response DeleteKeyVaultReference(string azureKeyVaultName, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteKeyVaultReferenceAsync(string azureKeyVaultName, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response DeleteScanRuleset(string scanRulesetName, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteScanRulesetAsync(string scanRulesetName, Azure.RequestOptions requestOptions = null) { throw null; }
+        public Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient GetClassificationRuleClient(string classificationRuleName) { throw null; }
+        public virtual Azure.Response GetClassificationRules(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationRulesAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public Azure.Analytics.Purview.Scanning.PurviewDataSourceClient GetDataSourceClient(string dataSourceName) { throw null; }
+        public virtual Azure.Response GetDataSources(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDataSourcesAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetKeyVaultReference(string azureKeyVaultName, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetKeyVaultReferenceAsync(string azureKeyVaultName, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetKeyVaultReferences(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetKeyVaultReferencesAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetLatestSystemRulestes(string dataSourceType = null, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetLatestSystemRulestesAsync(string dataSourceType = null, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetScanRuleset(string scanRulesetName, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetScanRulesetAsync(string scanRulesetName, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetScanRulesets(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetScanRulesetsAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetSystemRulesets(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSystemRulesetsAsync(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetSystemRulesetsForDataSource(string dataSourceType, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSystemRulesetsForDataSourceAsync(string dataSourceType, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetSystemRulesetsForVersion(int version, string dataSourceType = null, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSystemRulesetsForVersionAsync(int version, string dataSourceType = null, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetSystemRulesetsVersions(string dataSourceType = null, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSystemRulesetsVersionsAsync(string dataSourceType = null, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response GetUnparentedDataSources(Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetUnparentedDataSourcesAsync(Azure.RequestOptions requestOptions = null) { throw null; }
     }
-    public partial class FiltersClient
+    public partial class PurviewScanningServiceClientOptions : Azure.Core.ClientOptions
     {
-        protected FiltersClient() { }
-        public FiltersClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.ScanningClientOptions options = null) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string dataSourceName, string scanName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string dataSourceName, string scanName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Get(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ScanningClientOptions : Azure.Core.ClientOptions
-    {
-        public ScanningClientOptions(Azure.Analytics.Purview.Scanning.ScanningClientOptions.ServiceVersion version = Azure.Analytics.Purview.Scanning.ScanningClientOptions.ServiceVersion.V2018_12_01_preview) { }
+        public PurviewScanningServiceClientOptions(Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion version = Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview) { }
         public enum ServiceVersion
         {
             V2018_12_01_preview = 1,
         }
-    }
-    public partial class ScanRulesetsClient
-    {
-        protected ScanRulesetsClient() { }
-        public ScanRulesetsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.ScanningClientOptions options = null) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string scanRulesetName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string scanRulesetName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Delete(string scanRulesetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string scanRulesetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Get(string scanRulesetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string scanRulesetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ListAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ScansClient
-    {
-        protected ScansClient() { }
-        public ScansClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.ScanningClientOptions options = null) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CancelScan(string dataSourceName, string scanName, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CancelScanAsync(string dataSourceName, string scanName, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CreateOrUpdate(string dataSourceName, string scanName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string dataSourceName, string scanName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Delete(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Get(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ListByDataSource(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListByDataSourceAsync(string dataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ListScanHistory(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListScanHistoryAsync(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RunScan(string dataSourceName, string scanName, string runId, string scanLevel = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RunScanAsync(string dataSourceName, string scanName, string runId, string scanLevel = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SystemScanRulesetsClient
-    {
-        protected SystemScanRulesetsClient() { }
-        public SystemScanRulesetsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.ScanningClientOptions options = null) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response Get(string dataSourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string dataSourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetByVersion(int version, string dataSourceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetByVersionAsync(int version, string dataSourceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetLatest(string dataSourceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLatestAsync(string dataSourceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ListAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ListVersionsByDataSource(string dataSourceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListVersionsByDataSourceAsync(string dataSourceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class TriggersClient
-    {
-        protected TriggersClient() { }
-        public TriggersClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.ScanningClientOptions options = null) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateTrigger(string dataSourceName, string scanName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateTriggerAsync(string dataSourceName, string scanName, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteTrigger(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTriggerAsync(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetTrigger(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetTriggerAsync(string dataSourceName, string scanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }

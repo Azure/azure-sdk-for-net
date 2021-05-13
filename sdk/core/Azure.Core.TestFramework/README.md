@@ -66,7 +66,7 @@ public class AppConfigurationTestEnvironment : TestEnvironment
     // Argument is the output name in the test-resources.json
     public string Endpoint => GetRecordedVariable("APPCONFIGURATION_ENDPOINT");
     // Variables retrieved using GetVariable will not be recorded but the method will throw if the variable is not set
-    public string SystemAssignedVault => GetVariable("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT");
+    public string SystemAssignedVault => GetVariable("IDENTITYTEST_TEST_SYSTEMASSIGNEDVAULT");
     // Variables retrieved using GetOptionalVariable will not be recorded and the method will return null if variable is not set
     public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
 }
@@ -265,7 +265,8 @@ For example:
     }
 ```
 
-Another sanitizer property that is available for sanitizing Json payloads is the `JsonPathSanitizers`. This property contains a list of [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) format strings that will be validated against the body. If a match exists, the value will be sanitized.
+Another sanitizer feature that is available for sanitizing Json payloads is the `AddJsonPathSanitizer`.
+This method allows adding a [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) format strings that will be validated against the body. If a match exists, the value will be sanitized.
 
 ```c#
     public class FormRecognizerRecordedTestSanitizer : RecordedTestSanitizer
@@ -273,11 +274,19 @@ Another sanitizer property that is available for sanitizing Json payloads is the
         public FormRecognizerRecordedTestSanitizer()
             : base()
         {
-            JsonPathSanitizers.Add("$..accessToken");
-            JsonPathSanitizers.Add("$..source");
+            AddJsonPathSanitizer("$..accessToken");
+            AddJsonPathSanitizer("$..source");
         }
     }
 ```
+
+Sometimes it's useful to be able to have a custom replacement values for JsonPath-based sanitization (connection strings, JWT tokens).
+To enable this the `AddJsonPathSanitizer` provides an additional callback that would be called for every match.
+
+```C#
+AddJsonPathSanitizer("$..jwt_token", token => SanitizeJwt(token));
+```
+
 
 ### Matching
 
@@ -459,7 +468,7 @@ Some bindings require code on the customized side to access fields that are gene
     }
 ```
 
-For this to work with tests, your test class must have an `InternalsVisisbleTo` in your `AssemblyInfo.cs`:
+For this to work with tests, your test class must have an `InternalsVisibleTo` in your `AssemblyInfo.cs`:
 
 ```csharp
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2, PublicKey=0024000004800000940000000602000000240000525341310004000001000100c547cac37abd99c8db225ef2f6c8a3602f3b3606cc9891605d02baa56104f4cfc0734aa39b93bf7852f7d9266654753cc297e7d2edfe0bac1cdcf9f717241550e0a7b191195b7667bb4f64bcb8e2121380fd1d9d46ad2d92d2d15605093924cceaf74c4861eff62abf69b9291ed0a340e113be11e6a7d3113e92484cf7045cc7")]

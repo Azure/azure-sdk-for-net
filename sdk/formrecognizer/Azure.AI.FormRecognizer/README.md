@@ -20,6 +20,16 @@ Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 dotnet add package Azure.AI.FormRecognizer
 ``` 
 
+> Note: This version of the client library defaults to the `v2.1` version of the service.
+
+This table shows the relationship between SDK versions and supported API versions of the service:
+
+|SDK version|Supported API version of service
+|-|-
+|3.0.0 | 2.0
+|3.0.1 | 2.0
+|3.1.0 | 2.0, 2.1
+
 ### Prerequisites
 * An [Azure subscription][azure_sub].
 * An existing Cognitive Services or Form Recognizer resource.
@@ -237,8 +247,9 @@ Recognize and extract form fields and other content from your custom forms, usin
 ```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 string modelId = "<modelId>";
 Uri formUri = <formUri>;
+var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
 
-RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri);
+RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri, options);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
 RecognizedFormCollection forms = operationResponse.Value;
 
@@ -259,6 +270,33 @@ foreach (RecognizedForm form in forms)
 
         Console.WriteLine($"  Value: '{field.ValueData.Text}'");
         Console.WriteLine($"  Confidence: '{field.Confidence}'");
+    }
+
+    // Iterate over tables, lines, and selection marks on each page
+    foreach (var page in form.Pages)
+    {
+        for (int i = 0; i < page.Tables.Count; i++)
+        {
+            Console.WriteLine($"Table {i + 1} on page {page.Tables[i].PageNumber}");
+            foreach (var cell in page.Tables[i].Cells)
+            {
+                Console.WriteLine($"  Cell[{cell.RowIndex}][{cell.ColumnIndex}] has text '{cell.Text}' with confidence {cell.Confidence}");
+            }
+        }
+        Console.WriteLine($"Lines found on page {page.PageNumber}");
+        foreach (var line in page.Lines)
+        {
+            Console.WriteLine($"  Line {line.Text}");
+        }
+
+        if (page.SelectionMarks.Count != 0)
+        {
+            Console.WriteLine($"Selection marks found on page {page.PageNumber}");
+            foreach (var selectionMark in page.SelectionMarks)
+            {
+                Console.WriteLine($"  Selection mark is '{selectionMark.State}' with confidence {selectionMark.Confidence}");
+            }
+        }
     }
 }
 ```

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -46,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Tests
             "111000025"
         };
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -55,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -64,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -73,7 +74,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithDomainTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -84,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com", "Microsoft" });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithCategoriesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -103,7 +104,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(0, entities.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithResultCategoriesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -120,7 +121,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(newEntities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -142,7 +143,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -157,7 +158,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -172,7 +173,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -187,7 +188,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -202,7 +203,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWithDomainTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -218,7 +219,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWitCategoryTest()
         {
             TextAnalyticsClient client = GetClient();

@@ -27,6 +27,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionKey = new DimensionKey(rootNode.Dimension);
             Severity = property.MaxSeverity;
             Status = property.IncidentStatus;
+            ValueOfRootNode = property.ValueOfRootNode;
+            ExpectedValueOfRootNode = property.ExpectedValueOfRootNode;
         }
 
         /// <summary>
@@ -77,5 +79,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         [CodeGenMember("IncidentStatus")]
         public AnomalyIncidentStatus Status { get; }
+
+        /// <summary>
+        /// The value of the data point at the root node of this incident. The root node is defined as
+        /// the data point at the root of this incident's root-cause analysis tree.
+        /// </summary>
+        public double ValueOfRootNode { get; }
+
+        /// <summary>
+        /// The expected value of the data point at the root node of this incident, according to the
+        /// service's smart detector. The root node is defined as the data point at the root of this
+        /// incident's root-cause analysis tree. <c>null</c> if the quantity of historical points is not
+        /// enough to make a prediction, or if the anomaly was not detected by a <see cref="SmartDetectionCondition"/>.
+        /// </summary>
+        public double? ExpectedValueOfRootNode { get; }
     }
 }

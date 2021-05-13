@@ -176,6 +176,22 @@ directive:
     $.properties.query["x-nullable"] = true;
 ```
 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AnomalyProperty
+  transform: >
+    $.properties.expectedValue["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IncidentProperty
+  transform: >
+    $.properties.expectedValueOfRootNode["x-nullable"] = true;
+```
+
 ### Add required properties
 
 ``` yaml
@@ -223,7 +239,15 @@ directive:
   from: swagger-document
   where: $.definitions.IncidentProperty
   transform: >
-    $["required"] = ["maxSeverity", "incidentStatus"]
+    $["required"] = ["maxSeverity", "incidentStatus", "valueOfRootNode"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AnomalyProperty
+  transform: >
+    $["required"] = ["anomalySeverity", "value"]
 ```
 
 ### Add x-ms-paths section if not exists

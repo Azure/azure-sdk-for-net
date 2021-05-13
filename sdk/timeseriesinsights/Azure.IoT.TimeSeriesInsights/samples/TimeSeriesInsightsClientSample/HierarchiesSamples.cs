@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.IoT.TimeSeriesInsights.Models;
 using static Azure.IoT.TimeSeriesInsights.Samples.SampleLogger;
 
 namespace Azure.IoT.TimeSeriesInsights.Samples
@@ -22,13 +21,15 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS HIERARCHIES SAMPLE");
 
             #region Snippet:TimeSeriesInsightsSampleCreateHierarchies
-            var tsiHierarchyName = "sampleHierarchy";
-            var tsiInstanceField1 = "hierarchyLevel1";
-            var hierarchySource = new TimeSeriesHierarchySource();
-            hierarchySource.InstanceFieldNames.Add(tsiInstanceField1);
+            TimeSeriesInsightsHierarchies hierarchiesClient = client.GetHierarchiesClient();
 
-            var tsiHierarchy = new TimeSeriesHierarchy(tsiHierarchyName, hierarchySource);
-            tsiHierarchy.Id = "sampleHierarchyId";
+            var hierarchySource = new TimeSeriesHierarchySource();
+            hierarchySource.InstanceFieldNames.Add("hierarchyLevel1");
+
+            var tsiHierarchy = new TimeSeriesHierarchy("sampleHierarchy", hierarchySource)
+            {
+                Id = "sampleHierarchyId"
+            };
 
             var timeSeriesHierarchies = new List<TimeSeriesHierarchy>
             {
@@ -36,10 +37,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             };
 
             // Create Time Series hierarchies
-            Response<TimeSeriesHierarchyOperationResult[]> createHierarchiesResult = await client
-                .Hierarchies
-                .CreateOrReplaceAsync(timeSeriesHierarchies)
-                .ConfigureAwait(false);
+            Response<TimeSeriesHierarchyOperationResult[]> createHierarchiesResult = await hierarchiesClient
+                .CreateOrReplaceAsync(timeSeriesHierarchies);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -58,7 +57,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsSampleGetAllHierarchies
             // Get all Time Series hierarchies in the environment
-            AsyncPageable<TimeSeriesHierarchy> getAllHierarchies = client.Hierarchies.GetAsync();
+            AsyncPageable<TimeSeriesHierarchy> getAllHierarchies = hierarchiesClient.GetAsync();
             await foreach (TimeSeriesHierarchy hierarchy in getAllHierarchies)
             {
                 Console.WriteLine($"Retrieved Time Series Insights hierarchy with Id: '{hierarchy.Id}' and Name: '{hierarchy.Name}'.");
@@ -67,16 +66,13 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsSampleReplaceHierarchies
             // Update hierarchies with adding a new instance field
-            var tsiInstanceField2 = "hierarchyLevel2";
             foreach (TimeSeriesHierarchy hierarchy in timeSeriesHierarchies)
             {
-                hierarchy.Source.InstanceFieldNames.Add(tsiInstanceField2);
+                hierarchy.Source.InstanceFieldNames.Add("hierarchyLevel2");
             }
 
-            Response<TimeSeriesHierarchyOperationResult[]> updateHierarchiesResult = await client
-                    .Hierarchies
-                    .CreateOrReplaceAsync(timeSeriesHierarchies)
-                    .ConfigureAwait(false);
+            Response<TimeSeriesHierarchyOperationResult[]> updateHierarchiesResult = await hierarchiesClient
+                    .CreateOrReplaceAsync(timeSeriesHierarchies);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -99,10 +95,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 "sampleHierarchyId"
             };
 
-            Response<TimeSeriesHierarchyOperationResult[]> getHierarchiesByIdsResult = await client
-                        .Hierarchies
-                        .GetByIdAsync(tsiHierarchyIds)
-                        .ConfigureAwait(false);
+            Response<TimeSeriesHierarchyOperationResult[]> getHierarchiesByIdsResult = await hierarchiesClient
+                        .GetByIdAsync(tsiHierarchyIds);
 
             // The response of calling the API contains a list of hieararchy or error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -129,10 +123,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                     "sampleHiearchyId"
                 };
 
-                Response<TimeSeriesOperationError[]> deleteHierarchiesResponse = await client
-                        .Hierarchies
-                        .DeleteByIdAsync(tsiHierarchyIdsToDelete)
-                        .ConfigureAwait(false);
+                Response<TimeSeriesOperationError[]> deleteHierarchiesResponse = await hierarchiesClient
+                        .DeleteByIdAsync(tsiHierarchyIdsToDelete);
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
                 // array in the request. If the error object is set to null, this means the operation was a success.

@@ -74,7 +74,7 @@
 
 # ServiceLabel: %Attestation %Service Attention
 /sdk/attestation/            @anilba06 @larryosterman
-/sdk/attestation/azure-security-attestation                          @azure/ @larryosterman @Azure/azure-sdk-write-attestation @anilba06
+/sdk/attestation/azure-security-attestation                          @larryosterman @Azure/azure-sdk-write-attestation @anilba06
 
 # ServiceLabel: %Authorization %Service Attention
 /sdk/authorization/Microsoft.Azure.Management.Authorization/            @darshanhs90 @AshishGargMicrosoft
@@ -123,7 +123,7 @@
 /sdk/cognitiveservices/Vision.ComputerVision/            @ryogok @TFR258 @tburns10 @areddish @toothache
 
 # ServiceLabel: %Cognitive - Face %Service Attention
-/sdk/cognitiveservices/Vision.Face/            @JinyuID @dipidoo @SteveMSFT @TFR258 
+/sdk/cognitiveservices/Vision.Face/            @JinyuID @dipidoo @SteveMSFT @TFR258
 
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
@@ -200,6 +200,9 @@
 
 # ServiceLabel: %Compute - VMSS %Service Attention
 #/<NotInRepo>/            @Drewm3 @avirishuv
+
+# PRLabel: %Confidential Ledger
+/sdk/confidentialledger/  @christothes
 
 # ServiceLabel: %Consumption %Service Attention
 /sdk/consumption/Microsoft.Azure.Management.Consumption/            @ms-premp
@@ -280,11 +283,17 @@
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS @jfggdl @JoshLove-msft
 
+# PRLabel: %Event Grid %Functions
+/sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/  @pakrym @jsquire
+
 # PRLabel: %Event Hubs
 /sdk/eventhub/                                  @serkantkaraca @jsquire
 
+# PRLabel: %Event Hubs %Functions
+/sdk/eventhub/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/ @pakrym @JoshLove-msft
+
 # ServiceLabel: %Event Hubs %Service Attention
-/sdk/eventhub/Microsoft.*/           @serkantkaraca @samuelkoppes
+/sdk/eventhub/Microsoft.*/           @serkantkaraca @sjkwak
 
 # ServiceLabel: %Functions %Service Attention
 #/<NotInRepo>/            @ahmedelnably @fabiocav
@@ -516,6 +525,9 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # PRLabel: %Service Bus
 /sdk/servicebus/                                @JoshLove-msft @jsquire
 
+# PRLabel: %Service Bus %Functions
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/ @pakrym
+
 # ServiceLabel: %Service Bus %Service Attention
 /sdk/servicebus/Microsoft.*/                    @axisc
 
@@ -597,6 +609,15 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ServiceLabel: %Web Apps %Service Attention
 #/<NotInRepo>/            @AzureAppServiceCLI @antcp
+
+# PRLabel: %WebPubSub
+/sdk/webpubsub/  @KrzysztofCwalina
+
+# PRLabel: %WebPubSub %Functions
+/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/  @vicancy
+
+# ServiceLabel: %WebPubSub %Service Attention
+/sdk/webpubsub/  @vicancy @JialinXin
 
 # ######## Management Plane ########
 

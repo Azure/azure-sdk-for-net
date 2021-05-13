@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.Security.Attestation.Tests
 {
@@ -241,7 +243,7 @@ namespace Azure.Security.Attestation.Tests
                     });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
-               CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
@@ -337,6 +339,48 @@ namespace Azure.Security.Attestation.Tests
 
                 Assert.IsTrue(callbackInvoked);
             }
+        }
+
+        private class TpmInit
+        {
+            [JsonPropertyName("type")]
+            public string Type { get; set; }
+        }
+
+        // TpmAttest requires a TpmPayload object.
+        private class TpmPayload
+        {
+            [JsonPropertyName("payload")]
+            public object Payload { get; set; }
+        }
+
+        [RecordedTest]
+        public async Task AttestTpmMinimalAad()
+        {
+            // TPM attestation requires that there be an attestation policy applied before it can succeed.
+            string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
+            var adminClient = TestEnvironment.GetAadAdministrationClient(this);
+
+            var setResult = await adminClient.SetPolicyAsync(AttestationType.Tpm, attestationPolicy);
+
+            var tpmPayload = new TpmPayload
+            {
+                Payload = new TpmInit
+                {
+                    Type = "aikcert"
+                },
+            };
+
+            var client = TestEnvironment.GetAadAttestationClient(this);
+            Response<TpmAttestationResponse> tpmResponse = null;
+            tpmResponse = await client.AttestTpmAsync(new TpmAttestationRequest { Data = BinaryData.FromObjectAsJson(tpmPayload) });
+
+            // Make sure that the response from the service looks like it's supposed to look.
+            var parsedValue = JsonDocument.Parse(tpmResponse.Value.Data);
+            Assert.IsNotNull(parsedValue.RootElement.GetProperty("payload"));
+            var payload = parsedValue.RootElement.GetProperty("payload");
+            Assert.IsNotNull(payload.GetProperty("challenge"));
+            Assert.IsNotNull(payload.GetProperty("service_context"));
         }
     }
 }

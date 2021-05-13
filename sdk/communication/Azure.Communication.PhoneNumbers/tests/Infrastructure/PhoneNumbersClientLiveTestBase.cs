@@ -7,7 +7,6 @@ using Azure.Communication.Pipeline;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using NUnit.Framework;
 
 namespace Azure.Communication.PhoneNumbers.Tests
 {
@@ -19,16 +18,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public bool SkipPhoneNumberLiveTests
             => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_PHONENUMBER_LIVE_TESTS") == "TRUE";
 
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            if (TestEnvironment.ShouldIgnoreTests)
-            {
-                Assert.Ignore("Phone number tests are skipped " +
-                    "because phonenumbers package is not included in the TEST_PACKAGES_ENABLED variable");
-            }
-        }
-
         /// <summary>
         /// Creates a <see cref="PhoneNumbersClient" /> with the connectionstring via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
@@ -37,7 +26,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithConnectionString(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestConnectionString,
+                    TestEnvironment.LiveTestStaticConnectionString,
                     CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             // We always create the instrumented client to suppress the instrumentation check
@@ -53,8 +42,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestEndpoint,
-                     new AzureKeyCredential(TestEnvironment.LiveTestAccessKey),
+                    TestEnvironment.LiveTestStaticEndpoint,
+                     new AzureKeyCredential(TestEnvironment.LiveTestStaticAccessKey),
                     CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             return isInstrumented ? InstrumentClient(client) : client;
@@ -68,7 +57,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestEndpoint,
+                    TestEnvironment.LiveTestStaticEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 

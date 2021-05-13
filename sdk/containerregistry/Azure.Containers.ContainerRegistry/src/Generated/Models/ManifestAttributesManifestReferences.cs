@@ -14,34 +14,26 @@ namespace Azure.Containers.ContainerRegistry
     {
         /// <summary> Initializes a new instance of ManifestAttributesManifestReferences. </summary>
         /// <param name="digest"> Manifest digest. </param>
-        /// <param name="cpuArchitecture"> CPU architecture. </param>
+        /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="digest"/>, <paramref name="cpuArchitecture"/>, or <paramref name="operatingSystem"/> is null. </exception>
-        internal ManifestAttributesManifestReferences(string digest, string cpuArchitecture, string operatingSystem)
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        internal ManifestAttributesManifestReferences(string digest, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem)
         {
             if (digest == null)
             {
                 throw new ArgumentNullException(nameof(digest));
             }
-            if (cpuArchitecture == null)
-            {
-                throw new ArgumentNullException(nameof(cpuArchitecture));
-            }
-            if (operatingSystem == null)
-            {
-                throw new ArgumentNullException(nameof(operatingSystem));
-            }
 
             Digest = digest;
-            CpuArchitecture = cpuArchitecture;
+            Architecture = architecture;
             OperatingSystem = operatingSystem;
         }
 
         /// <summary> Manifest digest. </summary>
         public string Digest { get; }
         /// <summary> CPU architecture. </summary>
-        public string CpuArchitecture { get; }
+        public ArtifactArchitecture Architecture { get; }
         /// <summary> Operating system. </summary>
-        public string OperatingSystem { get; }
+        public ArtifactOperatingSystem OperatingSystem { get; }
     }
 }

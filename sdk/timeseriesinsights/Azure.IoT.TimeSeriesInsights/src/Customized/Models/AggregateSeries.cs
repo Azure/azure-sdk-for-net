@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// </summary>
     [CodeGenModel("AggregateSeries")]
     [CodeGenSuppress("AggregateSeries", typeof(IEnumerable<object>), typeof(DateTimeRange), typeof(TimeSpan))]
-    public partial class AggregateSeries
+    internal partial class AggregateSeries
     {
         // Autorest does not support changing type for properties. In order to turn TimeSeriesId
         // from a list of objects to a strongly typed object, TimeSeriesId has been renamed to
@@ -47,12 +47,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Interval size used to group events by.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="timeSeriesId"/> or <paramref name="searchSpan"/> is null.
+        /// <paramref name="searchSpan"/> is null.
         /// </exception>
         public AggregateSeries(TimeSeriesId timeSeriesId, DateTimeRange searchSpan, TimeSpan interval)
         {
-            TimeSeriesId = timeSeriesId ?? throw new ArgumentNullException(nameof(timeSeriesId));
             SearchSpan = searchSpan ?? throw new ArgumentNullException(nameof(searchSpan));
+            TimeSeriesId = timeSeriesId;
             Interval = interval;
             ProjectedVariables = new ChangeTrackingList<string>();
             InlineVariables = new ChangeTrackingDictionary<string, TimeSeriesVariable>();

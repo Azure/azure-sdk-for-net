@@ -111,20 +111,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="entityPath">The name of the Service Bus entity from which events will be consumed.</param>
-        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
+        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="identifier">The identifier for the sender.</param>
         /// <param name="sessionId">The session ID to receive messages for.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
         /// open link operation. Only applicable for session receivers.</param>
         ///
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
         /// is assumed that callers are trusted and have performed deep validation.
-        ///
         /// Any parameters passed are assumed to be owned by this instance and safe to mutate or dispose;
         /// creation of clones or otherwise protecting the parameters is assumed to be the purview of the
         /// caller.
@@ -138,6 +138,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string identifier,
             string sessionId,
             bool isSessionReceiver,
+            bool isProcessor,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
@@ -160,6 +161,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
                         isSessionReceiver: isSessionReceiver,
+                        isProcessor: isProcessor,
                         identifier: identifier,
                         // The cancellationToken will always be CancellationToken.None for non-session receivers
                         // it is okay to register the user provided cancellationToken from the AcceptNextSessionAsync call in
@@ -189,6 +191,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             uint prefetchCount,
             ServiceBusReceiveMode receiveMode,
             bool isSessionReceiver,
+            bool isProcessor,
             string identifier,
             CancellationToken cancellationToken)
         {
@@ -208,8 +211,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (isSessionReceiver)
                 {
                     SessionLockedUntil = link.Settings.Properties.TryGetValue<long>(
-                        AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks) ?
-                        new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
+                        AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
+                        ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
                         : DateTime.MinValue;
 
                     var source = (Source)link.Settings.Source;
@@ -231,6 +234,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceBusEventSource.Log.CreateReceiveLinkComplete(_identifier, SessionId);
                 link.Closed += OnReceiverLinkClosed;
                 return link;
+            }
+            catch (TimeoutException)
+                when (isSessionReceiver)
+            {
+                // When this occurs during accepting a session, it will be logged from
+                // ServiceBusSessionReceiver.CreateSessionReceiverAsync so it would be redundant
+                // to log here.
+                throw;
+            }
+            catch (TaskCanceledException)
+                when (isProcessor)
+            {
+                // do not log this as the processor is shutting down
+                throw;
             }
             catch (Exception ex)
             {
@@ -254,15 +271,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Receives a list of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ServiceBusReceiveMode"/> mode.
         /// </summary>
-        ///
         /// <param name="maxMessages">The maximum number of messages that will be received.</param>
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.</param>
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public override async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
             int maxMessages,
             TimeSpan? maxWaitTime,
+            bool isProcessor,
             CancellationToken cancellationToken)
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
@@ -285,12 +302,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="maxMessages">The maximum number of messages to receive.</param>
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.
-        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
+        ///     If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>The list of <see cref="ServiceBusMessage" /> from the Service Bus entity this receiver is associated with. If no messages are present, an empty list is returned.</returns>
-        ///
         private async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsyncInternal(
             int maxMessages,
             TimeSpan? maxWaitTime,
@@ -895,7 +910,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Each subsequent call fetches the subsequent message in the entity.
         /// Unlike a received message, peeked message will not have lock token associated with it,
         /// and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
-        /// Also, unlike <see cref="ReceiveMessagesAsync(int, TimeSpan?, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
+        /// Also, unlike <see cref="ReceiveMessagesAsync"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns></returns>
         public override async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
@@ -1391,11 +1406,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
-        ///
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public override async Task OpenLinkAsync(CancellationToken cancellationToken)
+        public override async Task OpenLinkAsync(bool isProcessor, CancellationToken cancellationToken)
         {
             _ = await _retryPolicy.RunOperation(
                 static async (receiveLink, timeout, _) =>

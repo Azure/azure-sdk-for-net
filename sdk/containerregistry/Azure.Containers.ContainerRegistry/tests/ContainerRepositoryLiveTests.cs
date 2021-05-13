@@ -18,20 +18,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
         }
 
-        #region Setup methods
-
-        private ContainerRegistryClient CreateClient()
-        {
-            return InstrumentClient(new ContainerRegistryClient(
-                new Uri(TestEnvironment.Endpoint),
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new ContainerRegistryClientOptions())
-            ));
-        }
-
-        #endregion
-
-        #region Repository Tests
         [RecordedTest]
         public async Task CanGetRepositoryProperties()
         {
@@ -84,6 +70,25 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest, NonParallelizable]
+        public void CanSetRepositoryProperties_Anonymous()
+        {
+            // Arrange
+            var client = CreateClient(anonymousAccess: true);
+            var repository = client.GetRepository(_repositoryName);
+
+            // Act
+            Assert.ThrowsAsync<RequestFailedException>(() =>
+                repository.SetPropertiesAsync(
+                    new ContentProperties()
+                    {
+                        CanList = false,
+                        CanRead = false,
+                        CanWrite = false,
+                        CanDelete = false,
+                    }));
+        }
+
+        [RecordedTest, NonParallelizable]
         public async Task CanDeleteRepository()
         {
             // Arrange
@@ -103,7 +108,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(_repositoryName, tags);
+                    await ImportImage(TestEnvironment.Registry, _repositoryName, tags);
                 }
 
                 // Act
@@ -124,16 +129,18 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Clean up - put the repository with tags back.
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(_repositoryName, tags);
+                    await ImportImage(TestEnvironment.Registry, _repositoryName, tags);
                 }
             }
         }
 
         [RecordedTest]
-        public async Task CanGetManifests()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetManifests(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             var repository = client.GetRepository(_repositoryName);
 
             // Act
@@ -155,10 +162,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetManifestsWithCustomPageSize()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetManifestsWithCustomPageSize(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             var repository = client.GetRepository(_repositoryName);
             int pageSize = 2;
             int minExpectedPages = 2;
@@ -179,10 +188,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetArtifactsStartingMidCollection()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetArtifactsStartingMidCollection(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             var repository = client.GetRepository(_repositoryName);
             int pageSize = 1;
             int minExpectedPages = 2;
@@ -244,7 +255,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(repositoryName, tag);
+                    await ImportImage(TestEnvironment.Registry, repositoryName, tag);
                 }
 
                 // Act
@@ -270,8 +281,5 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 await artifact.DeleteAsync();
             }
         }
-
-        #endregion
-
     }
 }
