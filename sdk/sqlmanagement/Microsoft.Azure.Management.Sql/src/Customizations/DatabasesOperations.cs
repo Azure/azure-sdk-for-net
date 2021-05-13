@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Sql
         public async Task<AzureOperationResponse<IPage<Database>>> ListByServerWithHttpMessagesAsync(
             string resourceGroupName, 
             string serverName, 
-            Dictionary<string, List<string>> customHeaders = null, 
+            Dictionary<string, List<string>> customHeaders, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.ListByServerWithHttpMessagesAsync(
