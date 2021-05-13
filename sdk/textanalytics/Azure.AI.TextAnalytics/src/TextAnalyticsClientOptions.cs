@@ -16,10 +16,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V3_1_Preview_4;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V3_1_Preview_5;
         private const string AzurePublicCloud = "https://login.microsoftonline.com/";
         private const string AzureChina = "https://login.microsoftonline.cn/";
         private const string AzureGovernment = "https://login.microsoftonline.us/";
+
         /// <summary>
         /// The versions of the Text Analytics service supported by this client library.
         /// </summary>
@@ -32,9 +33,9 @@ namespace Azure.AI.TextAnalytics
             V3_0 = 1,
 
             /// <summary>
-            /// Version 3.1-preview.4
+            /// Version 3.1-preview.5
             /// </summary>
-            V3_1_Preview_4 = 2,
+            V3_1_Preview_5 = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -76,7 +77,7 @@ namespace Azure.AI.TextAnalytics
             return Version switch
             {
                 ServiceVersion.V3_0 => "v3.0",
-                ServiceVersion.V3_1_Preview_4 => "v3.1-preview.4",
+                ServiceVersion.V3_1_Preview_5 => "v3.1-preview.5",
 
                 _ => throw new ArgumentException($"Version {Version} not supported."),
             };

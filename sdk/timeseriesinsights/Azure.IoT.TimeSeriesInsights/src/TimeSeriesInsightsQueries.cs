@@ -49,8 +49,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// DateTimeOffset endTime = DateTime.UtcNow;
         /// DateTimeOffset startTime = endTime.AddMinutes(-10);
         ///
-        /// QueryAnalyzer temperatureEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
-        /// await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResultsAsync())
+        /// QueryAnalyzer temperatureEventsQuery = queriesClient.CreateEventsQuery(tsId, startTime, endTime);
+        /// await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync())
         /// {
         ///     TimeSeriesValue temperatureValue = point.GetValue(&quot;Temperature&quot;);
         ///
@@ -60,11 +60,11 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     // too familiar with the property type.
         ///     if (temperatureValue.Type == typeof(double?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {(double?)temperatureValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {point.GetNullableDouble(&quot;Temperature&quot;)}&quot;);
         ///     }
         ///     else if (temperatureValue.Type == typeof(int?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {(int?)temperatureValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {point.GetNullableInt(&quot;Temperature&quot;)}&quot;);
         ///     }
         ///     else
         ///     {
@@ -73,7 +73,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// }
         /// </code>
         /// </example>
-        public virtual QueryAnalyzer CreateEventsQueryAnalyzer(
+        public virtual QueryAnalyzer CreateEventsQuery(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,
             DateTimeOffset endTime,
@@ -93,7 +93,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildEventsRequestOptions(options, queryRequest);
 
-                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.StoreType?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -115,8 +115,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan">
         /// Console.WriteLine(&quot;\n\nQuery for raw humidity events over the past 30 seconds.\n&quot;);
         ///
-        /// QueryAnalyzer humidityEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
-        /// await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
+        /// QueryAnalyzer humidityEventsQuery = queriesClient.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
+        /// await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
         /// {
         ///     TimeSeriesValue humidityValue = point.GetValue(&quot;Humidity&quot;);
         ///
@@ -126,11 +126,11 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     // too familiar with the property type.
         ///     if (humidityValue.Type == typeof(double?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {(double?)humidityValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {point.GetNullableDouble(&quot;Humidity&quot;)}&quot;);
         ///     }
         ///     else if (humidityValue.Type == typeof(int?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {(int?)humidityValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {point.GetNullableInt(&quot;Humidity&quot;)}&quot;);
         ///     }
         ///     else
         ///     {
@@ -139,7 +139,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// }
         /// </code>
         /// </example>
-        public virtual QueryAnalyzer CreateEventsQueryAnalyzer(
+        public virtual QueryAnalyzer CreateEventsQuery(
             TimeSeriesId timeSeriesId,
             TimeSpan timeSpan,
             DateTimeOffset? endTime = null,
@@ -161,7 +161,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildEventsRequestOptions(options, queryRequest);
 
-                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.StoreType?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -187,22 +187,22 @@ namespace Azure.IoT.TimeSeriesInsights
         ///
         /// DateTimeOffset endTime = DateTime.UtcNow;
         /// DateTimeOffset startTime = endTime.AddMinutes(-10);
-        /// QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
+        /// QueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
         ///     tsId,
         ///     startTime,
         ///     endTime);
         ///
-        /// await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+        /// await foreach (TimeSeriesPoint point in seriesQuery.GetResultsAsync())
         /// {
-        ///     double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
-        ///     double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
+        ///     double? tempInCelsius = point.GetNullableDouble(celsiusVariableName);
+        ///     double? tempInFahrenheit = point.GetNullableDouble(fahrenheitVariableName);
         ///
         ///     Console.WriteLine($&quot;{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. &quot; +
         ///         $&quot;Average temperature in Fahrenheit: {tempInFahrenheit}.&quot;);
         /// }
         /// </code>
         /// </example>
-        public virtual QueryAnalyzer CreateSeriesQueryAnalyzer(
+        public virtual QueryAnalyzer CreateSeriesQuery(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,
             DateTimeOffset endTime,
@@ -222,7 +222,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildSeriesRequestOptions(options, queryRequest);
 
-                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.StoreType?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -255,13 +255,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// querySeriesRequestOptions.InlineVariables[&quot;TemperatureInCelsius&quot;] = celsiusVariable;
         /// querySeriesRequestOptions.InlineVariables[&quot;TemperatureInFahrenheit&quot;] = fahrenheitVariable;
         ///
-        /// QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
+        /// QueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
         ///     tsId,
         ///     TimeSpan.FromMinutes(10),
         ///     null,
         ///     querySeriesRequestOptions);
         ///
-        /// await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+        /// await foreach (TimeSeriesPoint point in seriesQuery.GetResultsAsync())
         /// {
         ///     double? tempInCelsius = (double?)point.GetValue(&quot;TemperatureInCelsius&quot;);
         ///     double? tempInFahrenheit = (double?)point.GetValue(&quot;TemperatureInFahrenheit&quot;);
@@ -270,7 +270,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// }
         /// </code>
         /// </example>
-        public virtual QueryAnalyzer CreateSeriesQueryAnalyzer(
+        public virtual QueryAnalyzer CreateSeriesQuery(
             TimeSeriesId timeSeriesId,
             TimeSpan timeSpan,
             DateTimeOffset? endTime = null,
@@ -292,7 +292,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildSeriesRequestOptions(options, queryRequest);
 
-                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.StoreType?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -326,23 +326,23 @@ namespace Azure.IoT.TimeSeriesInsights
         ///
         /// var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
         /// aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
-        /// aggregateSeriesRequestOptions.ProjectedVariables.Add(countVariableName);
+        /// aggregateSeriesRequestOptions.ProjectedVariableNames.Add(countVariableName);
         ///
-        /// QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Queries.CreateAggregateSeriesQueryAnalyzer(
+        /// QueryAnalyzer query = queriesClient.CreateAggregateSeriesQuery(
         ///     tsId,
         ///     startTime,
         ///     endTime,
         ///     TimeSpan.FromSeconds(60),
         ///     aggregateSeriesRequestOptions);
         ///
-        /// await foreach (TimeSeriesPoint point in aggregateSeriesQueryAnalyzer.GetResultsAsync())
+        /// await foreach (TimeSeriesPoint point in query.GetResultsAsync())
         /// {
         ///     long? temperatureCount = (long?)point.GetValue(countVariableName);
         ///     Console.WriteLine($&quot;{point.Timestamp} - Temperature count: {temperatureCount}&quot;);
         /// }
         /// </code>
         /// </example>
-        public virtual QueryAnalyzer CreateAggregateSeriesQueryAnalyzer(
+        public virtual QueryAnalyzer CreateAggregateSeriesQuery(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,
             DateTimeOffset endTime,
@@ -350,7 +350,7 @@ namespace Azure.IoT.TimeSeriesInsights
             QueryAggregateSeriesRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateAggregateSeriesQueryAnalyzer)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateAggregateSeriesQuery)}");
             scope.Start();
 
             try
@@ -363,7 +363,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildAggregateSeriesRequestOptions(options, queryRequest);
 
-                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.StoreType?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -392,18 +392,18 @@ namespace Azure.IoT.TimeSeriesInsights
         ///
         /// var requestOptions = new QueryAggregateSeriesRequestOptions();
         /// requestOptions.InlineVariables[&quot;Temperature&quot;] = numericVariable;
-        /// requestOptions.ProjectedVariables.Add(&quot;Temperature&quot;);
+        /// requestOptions.ProjectedVariableNames.Add(&quot;Temperature&quot;);
         ///
-        /// QueryAnalyzer queryAggregateSeriesAnalyzer = client.Queries.CreateAggregateSeriesQueryAnalyzer(
+        /// QueryAnalyzer aggregateSeriesQuery = queriesClient.CreateAggregateSeriesQuery(
         ///     tsId,
         ///     TimeSpan.FromSeconds(2),
         ///     TimeSpan.FromSeconds(30),
         ///     null,
         ///     requestOptions);
         ///
-        /// await foreach (TimeSeriesPoint point in queryAggregateSeriesAnalyzer.GetResultsAsync())
+        /// await foreach (TimeSeriesPoint point in aggregateSeriesQuery.GetResultsAsync())
         /// {
-        ///     double? averageTemperature = (double?)point.GetValue(&quot;Temperature&quot;);
+        ///     double? averageTemperature = point.GetNullableDouble(&quot;Temperature&quot;);
         ///     if (averageTemperature != null)
         ///     {
         ///         Console.WriteLine($&quot;{point.Timestamp} - Average temperature: {averageTemperature}.&quot;);
@@ -411,7 +411,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// }
         /// </code>
         /// </example>
-        public virtual QueryAnalyzer CreateAggregateSeriesQueryAnalyzer(
+        public virtual QueryAnalyzer CreateAggregateSeriesQuery(
             TimeSeriesId timeSeriesId,
             TimeSpan interval,
             TimeSpan timeSpan,
@@ -419,7 +419,7 @@ namespace Azure.IoT.TimeSeriesInsights
             QueryAggregateSeriesRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateAggregateSeriesQueryAnalyzer)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateAggregateSeriesQuery)}");
             scope.Start();
 
             try
@@ -434,7 +434,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildAggregateSeriesRequestOptions(options, queryRequest);
 
-                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.StoreType?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -449,18 +449,18 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 if (options.Filter != null)
                 {
-                    queryRequest.GetEvents.Filter = new TimeSeriesExpression(options.Filter);
+                    queryRequest.GetEvents.Filter = options.Filter;
                 }
 
                 if (options.ProjectedProperties != null)
                 {
-                    foreach (EventProperty projectedProperty in options.ProjectedProperties)
+                    foreach (TimeSeriesInsightsEventProperty projectedProperty in options.ProjectedProperties)
                     {
                         queryRequest.GetEvents.ProjectedProperties.Add(projectedProperty);
                     }
                 }
 
-                queryRequest.GetEvents.Take = options.MaximumNumberOfEvents;
+                queryRequest.GetEvents.Take = options.MaxNumberOfEvents;
             }
         }
 
@@ -470,12 +470,12 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 if (options.Filter != null)
                 {
-                    queryRequest.GetSeries.Filter = new TimeSeriesExpression(options.Filter);
+                    queryRequest.GetSeries.Filter = options.Filter;
                 }
 
-                if (options.ProjectedVariables != null)
+                if (options.ProjectedVariableNames != null)
                 {
-                    foreach (string projectedVariable in options.ProjectedVariables)
+                    foreach (string projectedVariable in options.ProjectedVariableNames)
                     {
                         queryRequest.GetSeries.ProjectedVariables.Add(projectedVariable);
                     }
@@ -489,7 +489,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     }
                 }
 
-                queryRequest.GetSeries.Take = options.MaximumNumberOfEvents;
+                queryRequest.GetSeries.Take = options.MaxNumberOfEvents;
             }
         }
 
@@ -499,12 +499,12 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 if (options.Filter != null)
                 {
-                    queryRequest.AggregateSeries.Filter = new TimeSeriesExpression(options.Filter);
+                    queryRequest.AggregateSeries.Filter = options.Filter;
                 }
 
-                if (options.ProjectedVariables != null)
+                if (options.ProjectedVariableNames != null)
                 {
-                    foreach (string projectedVariable in options.ProjectedVariables)
+                    foreach (string projectedVariable in options.ProjectedVariableNames)
                     {
                         queryRequest.AggregateSeries.ProjectedVariables.Add(projectedVariable);
                     }

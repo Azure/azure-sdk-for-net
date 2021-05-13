@@ -5,7 +5,7 @@
 ## Logging
 
 Azure SDKs produce various log messages that include information about:
-1. Requests and reponses
+1. Requests and responses
 2. Authentication attempts
 3. Retries
 
