@@ -50,6 +50,7 @@ namespace Azure.Messaging.WebPubSub
             endpoint ??= new Uri("");
 
             options ??= new WebPubSubServiceClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
             Pipeline = HttpPipelineBuilder.Build(options, new WebPubSubAuthenticationPolicy(credential));
             this.hub = hub;
             this.endpoint = endpoint;
@@ -93,7 +94,11 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToAllAsync(string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
-            return await SendToAllAsync(JsonContent, RequestContent.Create(message), excluded, cancellationToken).ConfigureAwait(false);
+            RequestOptions options = default;
+            if (cancellationToken != default)
+                options = new RequestOptions() { CancellationToken = cancellationToken };
+
+            return await SendToAllAsync(JsonContent, RequestContent.Create(message), excluded, options).ConfigureAwait(false);
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
@@ -103,7 +108,11 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToAll(string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
-            return SendToAll(JsonContent, RequestContent.Create(message), excluded, cancellationToken);
+            RequestOptions options = default;
+            if (cancellationToken != default)
+                options = new RequestOptions() { CancellationToken = cancellationToken };
+
+            return SendToAll(JsonContent, RequestContent.Create(message), excluded, options);
         }
 
         /// <summary>
@@ -115,7 +124,11 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToUserAsync(string userId, string message, CancellationToken cancellationToken = default)
         {
-            return await SendToUserAsync(userId, JsonContent, RequestContent.Create(message), cancellationToken).ConfigureAwait(false);
+            RequestOptions options = default;
+            if (cancellationToken != default)
+                options = new RequestOptions() { CancellationToken = cancellationToken };
+
+            return await SendToUserAsync(userId, JsonContent, RequestContent.Create(message), options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -127,7 +140,11 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToUser(string userId, string message, CancellationToken cancellationToken = default)
         {
-            return SendToUser(userId, JsonContent, RequestContent.Create(message), cancellationToken);
+            RequestOptions options = default;
+            if (cancellationToken != default)
+                options = new RequestOptions() { CancellationToken = cancellationToken };
+
+            return SendToUser(userId, JsonContent, RequestContent.Create(message), options);
         }
 
         /// <summary>
@@ -139,7 +156,11 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, string message, CancellationToken cancellationToken = default)
         {
-            return await SendToConnectionAsync(connectionId, JsonContent, RequestContent.Create(message), cancellationToken).ConfigureAwait(false);
+            RequestOptions options = default;
+            if (cancellationToken != default)
+                options = new RequestOptions() { CancellationToken = cancellationToken };
+
+            return await SendToConnectionAsync(connectionId, JsonContent, RequestContent.Create(message), options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -151,7 +172,11 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToConnection(string connectionId, string message, CancellationToken cancellationToken = default)
         {
-            return SendToConnection(connectionId, JsonContent, RequestContent.Create(message), cancellationToken);
+            RequestOptions options = default;
+            if (cancellationToken != default)
+                options = new RequestOptions() { CancellationToken = cancellationToken };
+
+            return SendToConnection(connectionId, JsonContent, RequestContent.Create(message), options);
         }
 
         /// <summary>
@@ -164,7 +189,11 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToGroupAsync(string group, string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
-            return await SendToGroupAsync(group, JsonContent, RequestContent.Create(message), excluded, cancellationToken).ConfigureAwait(false);
+            RequestOptions options = default;
+            if (cancellationToken != default)
+                options = new RequestOptions() { CancellationToken = cancellationToken };
+
+            return await SendToGroupAsync(group, JsonContent, RequestContent.Create(message), excluded, options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -177,7 +206,11 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToGroup(string group, string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
-            return SendToGroup(group, JsonContent, RequestContent.Create(message), excluded, cancellationToken);
+            RequestOptions options = default;
+            if (cancellationToken != default)
+                options = new RequestOptions() { CancellationToken = cancellationToken };
+
+            return SendToGroup(group, JsonContent, RequestContent.Create(message), excluded, options);
         }
 
         ///// <summary> Check if there are any client connections inside the given group. </summary>

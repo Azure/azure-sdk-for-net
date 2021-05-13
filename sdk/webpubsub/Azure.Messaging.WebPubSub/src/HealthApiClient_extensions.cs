@@ -32,7 +32,9 @@ namespace Azure.Messaging.WebPubSub
             endpoint ??= new Uri("");
 
             options ??= new WebPubSubServiceClientOptions();
-            Pipeline = HttpPipelineBuilder.Build(options, new WebPubSubAuthenticationPolicy(credential));
+            _clientDiagnostics = new ClientDiagnostics(options);
+            var authPolicy = new WebPubSubAuthenticationPolicy(credential);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
