@@ -10,7 +10,7 @@ using System.Text;
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
-    /// Initializes a new instance of the MediaGraphPemCertificateList class.
+    /// Initializes a new instance of the PemCertificateList class.
     /// </summary>
     public partial class PemCertificateList
     {
@@ -47,7 +47,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
 
             Certificates = certificates.Select(ConvertToPemString).ToList();
-            Type = "#Microsoft.Media.MediaGraphPemCertificateList";
+            Type = "#Microsoft.VideoAnalyzer.PemCertificateList";
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
 
             Certificates = certificates.Select(ConvertToPemString).ToList();
-            Type = "#Microsoft.Media.MediaGraphPemCertificateList";
+            Type = "#Microsoft.VideoAnalyzer.PemCertificateList";
         }
 
         private static string ConvertToPemString(X509Certificate2 certificate)

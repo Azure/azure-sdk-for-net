@@ -1,6 +1,6 @@
 # Azure Video Analyzer for IoT Edge client library for .NET
 
-Azure Video Analyzer on IoT Edge provides a platform to build intelligent video applications that span the edge and the cloud. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services in the cloud or the edge. It is designed to be an extensible platform, enabling you to connect different video analysis edge modules (such as Cognitive services containers, custom edge modules built by you with open-source machine learning models or custom models trained with your own data) to it and use them to analyze live video without worrying about the complexity of building and running a live video pipeline.
+Azure Video Analyzer on IoT Edge provides a platform to build intelligent video applications that span the edge and the cloud. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services in the cloud or the edge. It is designed to be an extensible platform, enabling you to connect different video analysis edge modules such as Cognitive services containers, custom edge modules built by you with open source machine learning models or custom models trained with your own data. You can then use them to analyze live video without worrying about the complexity of building and running a live video pipeline.
 
 Use the client library for Video Analyzer on IoT Edge to:
 
@@ -11,11 +11,11 @@ Use the client library for Video Analyzer on IoT Edge to:
 
 ## Getting started
 
-This is a models-only sdk. All client operations are done using the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks). This sdk provides models you can use to interact with the Azure Iot SDKs.
+This is a models-only SDK. All client operations are done using the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks). This SDK provides models you can use to interact with the Azure IoT SDKs.
 
 ### Authenticate the client
 
-As mentioned above the client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
+The client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
 
 ```C# Snippet:Azure_VideoAnalyzer_Samples_ConnectionString
 var connectionString = "connectionString";
@@ -26,21 +26,22 @@ this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString)
 
 Install the Video Analyzer client library for .NET with NuGet:
 
-`dotnet add package Azure.Media.VideoAnalyzer.Edge --version 1.0.0-beta.1`
+```bash
+dotnet add package Azure.Media.VideoAnalyzer.Edge --version 1.0.0-beta.1
+```
 
-Install the Azure IoT Hub SDk for .Net with NuGet:
+Install the Azure IoT Hub SDk for .NET with NuGet:
 
-`dotnet add package Microsoft.Azure.Devices --version 1.28.1`
+`dotnet add package Microsoft.Azure.Devices`
 
 ### Prerequisites
 
-- C# is required to use this package.
 - You need an active [Azure subscription][azure_sub] and an [IoT device connection string][iot_device_connection_string] to use this package.
 - You will need to use the version of the SDK that corresponds to the version of the Video Analyzer Edge module you are using.
 
     | SDK  | Video Analyzer Edge Module  |
     |---|---|
-    | 1.0.0b1  | 2.0  |
+    | 1.0.0-beta.2  | 2.0  |
 
 ### Creating a pipeline topology and making requests
 
@@ -54,9 +55,9 @@ A _pipeline topology_ is a blueprint or template for instantiating live pipeline
 
 ### CloudToDeviceMethod
 
-The `CloudToDeviceMethod` is part of the [azure-iot-hub SDk][iot-hub-sdk]. This method allows you to communicate one way notifications to a device in your IoT hub. In our case, we want to communicate various methods such as `PipelineTopologySetRequest` and `PipelineTopologyGetRequest`. To use `CloudToDeviceMethod` you need to pass in one parameter: `method_name` and then set the Json payload of that method.
+The `CloudToDeviceMethod` is part of the [azure-iot-hub SDk][iot-hub-sdk]. This method allows you to communicate one way notifications to a device in your IoT hub. In our case, we want to communicate various methods such as `PipelineTopologySetRequest` and `PipelineTopologyGetRequest`. To use `CloudToDeviceMethod` you need to pass in one parameter: `methodName` and then set the JSON payload of that method.
 
-The parameter `method_name` is the name of the request you are sending. Make sure to use each method's predefined `method_name` property. For example, `PipelineTopologySetRequest.method_name`.
+The parameter `methodName` is the name of the request you are sending. Make sure to use each method's predefined `methodName` property. For example, `PipelineTopologySetRequest.methodName`.
 
 To set the Json payload of the cloud method, use the pipeline request method's `GetPayloadAsJson()` function. For example, `directCloudMethod.SetPayloadJson(PipelineTopologySetRequest.GetPayloadAsJson())`
 
@@ -81,68 +82,60 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 To create a pipeline topology you need to define parameters, sources, and sinks.
 
-```C# Snippet:Azure_VideoAnalyzerces_Samples_SetParameters
-// Add parameters to Topology
-private void SetParameters(PipelineTopologyProperties pipelineTopologyProperties)
+### Define Parameters
+
+```C# Snippet:Azure_VideoAnalyzerSamples_SetParameters
+pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUserName", ParameterType.String)
 {
-    pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUserName", ParameterType.String)
-    {
-        Description = "rtsp source user name.",
-        Default = "dummyUserName"
-    });
-    pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspPassword", ParameterType.SecretString)
-    {
-        Description = "rtsp source password.",
-        Default = "dummyPassword"
-    });
-    pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUrl", ParameterType.String)
-    {
-        Description = "rtsp Url"
-    });
-    pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("hubSinkOutputName", ParameterType.String)
-    {
-        Description = "hub sink output"
-    });
-}
+    Description = "rtsp source user name.",
+    Default = "dummyUserName"
+});
+pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspPassword", ParameterType.SecretString)
+{
+    Description = "rtsp source password.",
+    Default = "dummyPassword"
+});
+pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUrl", ParameterType.String)
+{
+    Description = "rtsp Url"
+});
+pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("hubSinkOutputName", ParameterType.String)
+{
+    Description = "hub sink output"
+});
 ```
 
-```C# Snippet:Azure_VideoAnalyzers_Samples_SetSourcesSinks
-// Add sources to Topology
-private void SetSources(PipelineTopologyProperties pipelineTopologyProps)
+### Define a Source
+```C# Snippet:Azure_VideoAnalyzerSamples_SetSourcesSinks1
+pipelineTopologyProps.Sources.Add(new RtspSource("rtspSource", new UnsecuredEndpoint("${rtspUrl}")
 {
-    pipelineTopologyProps.Sources.Add(new RtspSource("rtspSource", new UnsecuredEndpoint("${rtspUrl}")
-    {
-        Credentials = new UsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
-    })
-    );
-}
-
-// Add sinks to Topology
-private void SetSinks(PipelineTopologyProperties pipelineTopologyProps)
-{
-    var nodeInput = new List<NodeInput>
-    {
-        new NodeInput("rtspSource")
-    };
-    pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${hubSinkOutputName}"));
-}
+    Credentials = new UsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
+})
+);
 ```
 
-```C# Snippet:Azure_VideoAnalyzerles_BuildPipelineTopology
-private PipelineTopology BuildPipelineTopology()
+### Define a Sink
+```C# Snippet:Azure_VideoAnalyzerSamples_SetSourcesSinks2
+var nodeInput = new List<NodeInput>
 {
-    var pipelineTopologyProps = new PipelineTopologyProperties
-    {
-        Description = "Continuous video recording to an Azure Media Services Asset",
-    };
-    SetParameters(pipelineTopologyProps);
-    SetSources(pipelineTopologyProps);
-    SetSinks(pipelineTopologyProps);
-    return new PipelineTopology("ContinuousRecording")
-    {
-        Properties = pipelineTopologyProps
-    };
-}
+    new NodeInput("rtspSource")
+};
+pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${hubSinkOutputName}"));
+```
+
+### Set the topology properties and create a topology
+```C# Snippet:Azure_VideoAnalyzerSamples_BuildPipelineTopology
+var pipelineTopologyProps = new PipelineTopologyProperties
+{
+    Description = "Continuous video recording to an Azure Media Services Asset",
+};
+SetParameters(pipelineTopologyProps);
+SetSources(pipelineTopologyProps);
+SetSinks(pipelineTopologyProps);
+return new PipelineTopology("ContinuousRecording")
+{
+    Properties = pipelineTopologyProps
+};
 ```
 
 ### Creating a live pipeline
@@ -150,28 +143,25 @@ private PipelineTopology BuildPipelineTopology()
 To create a live pipeline, you need to have an existing pipeline topology.
 
 ```C# Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
-private LivePipeline BuildLivePipeline(string topologyName)
+var livePipelineProps = new LivePipelineProperties
 {
-    var livePipelineProps = new LivePipelineProperties
-    {
-        Description = "Sample description",
-        TopologyName = topologyName,
-    };
+    Description = "Sample description",
+    TopologyName = topologyName,
+};
 
-    livePipelineProps.Parameters.Add(new ParameterDefinition("rtspUrl", "rtsp://sample.com"));
+livePipelineProps.Parameters.Add(new ParameterDefinition("rtspUrl", "rtsp://sample.com"));
 
-    return new LivePipeline("livePIpeline")
-    {
-        Properties = livePipelineProps
-    };
-}
+return new LivePipeline("livePIpeline")
+{
+    Properties = livePipelineProps
+};
 ```
 
 ### Invoking a direct method request
 
 To invoke a direct method on your device you need to first define the request using the Video Analyzer SDK, then send that method request using the IoT SDK's `CloudToDeviceMethod`.
 
-```C# Snippet:Azure_VideoAnalyzeramples_InvokeDirectMethod
+```C# Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
 var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
 
 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
@@ -184,7 +174,7 @@ To try different pipeline topologies with the SDK, please see the official [Samp
 
 ## Troubleshooting
 
-- When sending a method request using the IoT Hub's `CloudToDeviceMethod` remember to not type in the method request name directly. Instead use `[MethodRequestName.method_name]`
+- When sending a method request using the IoT Hub's `CloudToDeviceMethod` remember to not type in the method request name directly. Instead use `[MethodRequestName.methodName]`
 - Make sure to serialize the entire method request before passing it to `CloudToDeviceMethod`
 
 ## Next steps
@@ -211,6 +201,9 @@ This project has adopted the
 [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information,
 see the Code of Conduct FAQ or contact opencode@microsoft.com with any
 additional questions or comments.
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fvideoanalyzer%2Fazure-media-videoanalyzer-edge%2FREADME.png)
+
 
 <!-- LINKS -->
 [azure_cli]: https://docs.microsoft.com/cli/azure

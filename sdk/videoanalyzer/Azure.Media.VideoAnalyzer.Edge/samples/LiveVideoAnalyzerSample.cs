@@ -24,10 +24,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
 
         public LiveVideoAnalyzerSample()
         {
-            #region Snippet:Azure_VideoAnalyzer_Samples_ConnectionString
+            #region Snippet:Azure_VideoAnalyzerSamples_ConnectionString
             var connectionString = "connectionString";
             this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
-            #endregion Snippet:Azure_VideoAnalyzer_Samples_ConnectionString
+            #endregion Snippet:Azure_VideoAnalyzerSamples_ConnectionString
 
         }
 
@@ -41,14 +41,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 var livePipeline = BuildLivePipeline(pipelineTopology.Name);
 
                 //set topology without using helper function
-                #region Snippet:Azure_VideoAnalyzeramples_InvokeDirectMethod
+                #region Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
                 var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
 
                 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
                 directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
 
                 var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
-                #endregion Snippet:Azure_VideoAnalyzeramples_InvokeDirectMethod
+                #endregion Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
 
                 // get a topology using helper function
                 var getPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyGetRequest(pipelineTopology.Name));
@@ -83,6 +83,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                Assert.Fail();
             }
         }
 
@@ -94,9 +95,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             return await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
         }
 
-        #region Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
         private LivePipeline BuildLivePipeline(string topologyName)
         {
+        #region Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
             var livePipelineProps = new LivePipelineProperties
             {
                 Description = "Sample description",
@@ -109,12 +110,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             {
                 Properties = livePipelineProps
             };
-        }
         #endregion Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
+        }
 
-        #region Snippet:Azure_VideoAnalyzerles_BuildPipelineTopology
         private PipelineTopology BuildPipelineTopology()
         {
+        #region Snippet:Azure_VideoAnalyzerSamples_BuildPipelineTopology
             var pipelineTopologyProps = new PipelineTopologyProperties
             {
                 Description = "Continuous video recording to an Azure Media Services Asset",
@@ -126,22 +127,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             {
                 Properties = pipelineTopologyProps
             };
+            #endregion Snippet:Azure_VideoAnalyzerSamples_BuildPipelineTopology
         }
-        #endregion Snippet:Azure_VideoAnalyzerles_BuildPipelineTopology
 
-        #region Snippet:Azure_VideoAnalyzerces_Samples_SetParameters
         // Add parameters to Topology
         private void SetParameters(PipelineTopologyProperties pipelineTopologyProperties)
         {
+            #region Snippet:Azure_VideoAnalyzerSamples_SetParameters
             pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUserName", ParameterType.String)
             {
                 Description = "rtsp source user name.",
-                Default = "dummyUserName"
+                Default = "exampleUserName"
             });
             pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspPassword", ParameterType.SecretString)
             {
                 Description = "rtsp source password.",
-                Default = "dummyPassword"
+                Default = "examplePassword"
             });
             pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUrl", ParameterType.String)
             {
@@ -151,29 +152,31 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             {
                 Description = "hub sink output"
             });
+            #endregion Snippet:Azure_VideoAnalyzerSamples_SetParameters
         }
-        #endregion Snippet:Azure_VideoAnalyzerces_Samples_SetParameters
 
-        #region Snippet:Azure_VideoAnalyzers_Samples_SetSourcesSinks
         // Add sources to Topology
         private void SetSources(PipelineTopologyProperties pipelineTopologyProps)
         {
+            #region Snippet:Azure_VideoAnalyzerSamples_SetSourcesSinks1
             pipelineTopologyProps.Sources.Add(new RtspSource("rtspSource", new UnsecuredEndpoint("${rtspUrl}")
             {
                 Credentials = new UsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
             })
             );
+            #endregion Snippet:Azure_VideoAnalyzerSamples_SetSourcesSinks1
         }
 
         // Add sinks to Topology
         private void SetSinks(PipelineTopologyProperties pipelineTopologyProps)
         {
+            #region Snippet:Azure_VideoAnalyzerSamples_SetSourcesSinks2
             var nodeInput = new List<NodeInput>
             {
                 new NodeInput("rtspSource")
             };
             pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${hubSinkOutputName}"));
+            #endregion Snippet:Azure_VideoAnalyzerSamples_SetSourcesSinks2
         }
-        #endregion Snippet:Azure_VideoAnalyzers_Samples_SetSourcesSinks
     }
 }

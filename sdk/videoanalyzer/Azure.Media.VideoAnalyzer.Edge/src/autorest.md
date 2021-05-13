@@ -14,11 +14,8 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/55b3e2d075398ec62f93
 azure-arm: false
 payload-flattening-threshold: 2
 license-header: MICROSOFT_MIT_NO_VERSION
-namespace: Microsoft.Azure.Media.VideoAnalyzer.Edge
-output-folder: $(csharp-sdks-folder)/videoanalyzer/Microsoft.Azure.Media.VideoAnalyzer.Edge/src/Generated
 clear-output-folder: true
 use-internal-constructors: true
-override-client-name: LiveVideoAnalyticsEdgeClient
 use-datetimeoffset: true
 ```
 
