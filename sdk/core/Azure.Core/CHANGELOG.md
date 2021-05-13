@@ -1,7 +1,13 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.15.0-beta.1 (Unreleased)
 
+
+## 1.14.0 (2021-05-11)
+
+### Added
+
+- Added additional methods to `BearerTokenAuthenticationPolicy`, which enables creation of authentication policies that can handle challenges.
 
 ## 1.13.0 (2021-04-07)
 

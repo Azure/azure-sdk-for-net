@@ -139,7 +139,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 PrefetchCount = 5,
                 ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
-                MaxReceiveWaitTime = TimeSpan.FromSeconds(10)
+                MaxReceiveWaitTime = TimeSpan.FromSeconds(10),
+                SubQueue = SubQueue.DeadLetter
             };
             var processor = client.CreateProcessor("queueName", options);
             Assert.AreEqual(options.AutoCompleteMessages, processor.AutoCompleteMessages);
@@ -149,6 +150,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
             Assert.AreEqual(options.MaxReceiveWaitTime, processor.MaxReceiveWaitTime);
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
+            Assert.AreEqual(EntityNameFormatter.FormatDeadLetterPath("queueName"), processor.EntityPath);
             Assert.IsFalse(processor.IsClosed);
             Assert.IsFalse(processor.IsProcessing);
         }
@@ -423,6 +425,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
 
             await processor.DisposeAsync();
+        }
+
+        [Test]
+        public async Task CloseRespectsCancellationToken()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};
+            mockProcessor.Setup(
+                p => p.IsProcessing).Returns(true);
+            var cts = new CancellationTokenSource();
+
+            // mutate the cancellation token to distinguish it from CancellationToken.None
+            cts.CancelAfter(100);
+
+            await mockProcessor.Object.CloseAsync(cts.Token);
+            mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }
     }
 

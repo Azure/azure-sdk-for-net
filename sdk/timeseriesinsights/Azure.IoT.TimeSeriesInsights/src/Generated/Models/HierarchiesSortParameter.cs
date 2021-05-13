@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.IoT.TimeSeriesInsights.Models;
-
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Definition of sorting of hierarchy nodes. </summary>

@@ -4,7 +4,6 @@
 using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using NUnit.Framework;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -12,16 +11,6 @@ namespace Azure.Communication.Identity.Tests
     {
         public CommunicationIdentityClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new CommunicationIdentityClientRecordedTestSanitizer();
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            if (TestEnvironment.ShouldIgnoreTests)
-            {
-                Assert.Ignore("Identity tests are skipped " +
-                    "because identity package is not included in the TEST_PACKAGES_ENABLED variable");
-            }
-        }
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
@@ -31,20 +20,20 @@ namespace Azure.Communication.Identity.Tests
         protected CommunicationIdentityClient CreateClientWithConnectionString()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestDynamicConnectionString,
                     CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
         protected CommunicationIdentityClient CreateClientWithAzureKeyCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.Endpoint,
-                    new AzureKeyCredential(TestEnvironment.AccessKey),
+                    TestEnvironment.LiveTestDynamicEndpoint,
+                    new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey),
                     CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
         protected CommunicationIdentityClient CreateClientWithTokenCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.Endpoint,
+                    TestEnvironment.LiveTestDynamicEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 

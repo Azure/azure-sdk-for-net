@@ -2057,7 +2057,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task GetDeletedPathsAsync()
         {
             // Arrange
@@ -2099,7 +2099,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task GetDeletedPathsAsync_Path()
         {
             // Arrange
@@ -2128,7 +2128,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task GetDeletedPathsAsync_Error()
         {
             // Arrange
@@ -2143,7 +2143,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task UndeletePathAsync()
         {
             // Arrange
@@ -2169,7 +2169,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task UndeletePathAsync_Error()
         {
             // Arrange
@@ -2190,7 +2190,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [TestCase(" my cool directory ")]
         [TestCase("directory")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task UndeletePathAsync_SpecialCharacters(string directoryName)
         {
             // Arrange

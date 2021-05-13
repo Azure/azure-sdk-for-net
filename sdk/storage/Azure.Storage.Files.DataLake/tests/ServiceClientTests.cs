@@ -377,8 +377,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Response<DataLakeFileSystemClient> response = await service.UndeleteFileSystemAsync(
                 fileSystemItem.Name,
-                fileSystemItem.VersionId,
-                GetNewFileSystemName());
+                fileSystemItem.VersionId);
 
             // Assert
             await response.Value.GetPropertiesAsync();
@@ -432,7 +431,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [NonParallelizable]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task SetPropertiesAsync_DeleteRetentionPolicy()
         {
             // Arrange

@@ -210,10 +210,10 @@ namespace Azure.Data.Tables.Sas
                 RowKeyEnd);
             var signature = TableSharedKeyCredential.ComputeSasSignature(sharedKeyCredential, stringToSign);
             var p = new TableSasQueryParameters(
-                version: Version,
-                resourceTypes: default,
-                tableName: TableName,
-                partitionKeyStart: PartitionKeyStart,
+                Version,
+                default,
+                TableName,
+                PartitionKeyStart,
                 partitionKeyEnd: PartitionKeyEnd,
                 rowKeyStart: RowKeyStart,
                 rowKeyEnd: RowKeyEnd,
