@@ -5,7 +5,7 @@ Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/videoanalyzer/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --opt-in-extensible-enums --tag=package-2021-05-01-preview --csharp-sdks-folder=D:\GitHub\giakasRepros\azure-sdk-for-net-2\sdk
 Autorest CSharp Version: 2.3.82
-2021-05-13 18:04:35 UTC
+2021-05-14 00:57:22 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master

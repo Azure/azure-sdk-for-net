@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// Initializes a new instance of the VideoAnalyzerCollection class.
         /// </summary>
         /// <param name="value">A collection of VideoAnalyzer items.</param>
-        public VideoAnalyzerCollection(IList<VideoAnalyzerModel> value = default(IList<VideoAnalyzerModel>))
+        public VideoAnalyzerCollection(IList<VideoAnalyzerAccount> value = default(IList<VideoAnalyzerAccount>))
         {
             Value = value;
             CustomInit();
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// Gets or sets a collection of VideoAnalyzer items.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<VideoAnalyzerModel> Value { get; set; }
+        public IList<VideoAnalyzerAccount> Value { get; set; }
 
     }
 }

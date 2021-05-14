@@ -28,16 +28,5 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@1.9.1";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/videoanalyzer/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --opt-in-extensible-enums --tag=package-2021-05-01-preview --csharp-sdks-folder=D:\\GitHub\\giakasRepros\\azure-sdk-for-net-2\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "7d4caa5e1c9996a25300b0b23ef426667e4a7bde";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-

@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VideoAnalyzerModel>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VideoAnalyzerAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update a Video Analyzer account
         /// </summary>
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VideoAnalyzerModel>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, VideoAnalyzerModel parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VideoAnalyzerAccount>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, VideoAnalyzerAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Video Analyzer account.
         /// </summary>
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VideoAnalyzerModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, VideoAnalyzerUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VideoAnalyzerAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, VideoAnalyzerUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Synchronizes Storage Account Keys
         /// </summary>

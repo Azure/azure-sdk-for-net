@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VideoAnalyzerModel>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VideoAnalyzerAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -455,7 +455,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VideoAnalyzerModel>();
+            var _result = new AzureOperationResponse<VideoAnalyzerAccount>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -468,7 +468,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VideoAnalyzerModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VideoAnalyzerAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -523,7 +523,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VideoAnalyzerModel>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, VideoAnalyzerModel parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VideoAnalyzerAccount>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, VideoAnalyzerAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -696,7 +696,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VideoAnalyzerModel>();
+            var _result = new AzureOperationResponse<VideoAnalyzerAccount>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -709,7 +709,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VideoAnalyzerModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VideoAnalyzerAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -727,7 +727,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VideoAnalyzerModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VideoAnalyzerAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -984,7 +984,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VideoAnalyzerModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, VideoAnalyzerUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VideoAnalyzerAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, VideoAnalyzerUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1153,7 +1153,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VideoAnalyzerModel>();
+            var _result = new AzureOperationResponse<VideoAnalyzerAccount>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1166,7 +1166,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VideoAnalyzerModel>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VideoAnalyzerAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -21,18 +21,18 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
     /// A Video Analyzer account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VideoAnalyzerModel : TrackedResource
+    public partial class VideoAnalyzerAccount : TrackedResource
     {
         /// <summary>
-        /// Initializes a new instance of the VideoAnalyzerModel class.
+        /// Initializes a new instance of the VideoAnalyzerAccount class.
         /// </summary>
-        public VideoAnalyzerModel()
+        public VideoAnalyzerAccount()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VideoAnalyzerModel class.
+        /// Initializes a new instance of the VideoAnalyzerAccount class.
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer.Models
         /// account.</param>
         /// <param name="identity">The set of managed identities associated
         /// with the Video Analyzer resource.</param>
-        public VideoAnalyzerModel(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), IList<Endpoint> endpoints = default(IList<Endpoint>), AccountEncryption encryption = default(AccountEncryption), SystemData systemData = default(SystemData), VideoAnalyzerIdentity identity = default(VideoAnalyzerIdentity))
+        public VideoAnalyzerAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), IList<Endpoint> endpoints = default(IList<Endpoint>), AccountEncryption encryption = default(AccountEncryption), SystemData systemData = default(SystemData), VideoAnalyzerIdentity identity = default(VideoAnalyzerIdentity))
             : base(location, id, name, type, tags)
         {
             StorageAccounts = storageAccounts;

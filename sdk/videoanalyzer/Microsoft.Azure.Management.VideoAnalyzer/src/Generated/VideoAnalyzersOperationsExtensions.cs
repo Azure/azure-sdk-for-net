@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// <param name='accountName'>
             /// The Video Analyzer account name.
             /// </param>
-            public static VideoAnalyzerModel Get(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName)
+            public static VideoAnalyzerAccount Get(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName)
             {
                 return operations.GetAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VideoAnalyzerModel> GetAsync(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VideoAnalyzerAccount> GetAsync(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// <param name='parameters'>
             /// The request parameters
             /// </param>
-            public static VideoAnalyzerModel CreateOrUpdate(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerModel parameters)
+            public static VideoAnalyzerAccount CreateOrUpdate(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerAccount parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VideoAnalyzerModel> CreateOrUpdateAsync(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerModel parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VideoAnalyzerAccount> CreateOrUpdateAsync(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// <param name='parameters'>
             /// The request parameters
             /// </param>
-            public static VideoAnalyzerModel Update(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerUpdate parameters)
+            public static VideoAnalyzerAccount Update(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerUpdate parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.VideoAnalyzer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VideoAnalyzerModel> UpdateAsync(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VideoAnalyzerAccount> UpdateAsync(this IVideoAnalyzersOperations operations, string resourceGroupName, string accountName, VideoAnalyzerUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
