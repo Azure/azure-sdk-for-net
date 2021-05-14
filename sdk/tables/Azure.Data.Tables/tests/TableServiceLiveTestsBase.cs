@@ -50,7 +50,7 @@ namespace Azure.Data.Tables.Tests
         protected string ServiceUri;
         protected string AccountName;
         protected string AccountKey;
-        protected string ConnectionString;
+
         private readonly Dictionary<string, string> _cosmosIgnoreTests = new()
         {
             {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},

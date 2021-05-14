@@ -51,9 +51,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     }
     public partial class MessageProcessor
     {
-        public MessageProcessor(Azure.Messaging.ServiceBus.ServiceBusProcessor processor, Azure.Messaging.ServiceBus.ServiceBusReceiver receiver) { }
-        protected internal Azure.Messaging.ServiceBus.ServiceBusProcessor Processor { get { throw null; } set { } }
-        protected internal Azure.Messaging.ServiceBus.ServiceBusReceiver Receiver { get { throw null; } set { } }
+        public MessageProcessor(Azure.Messaging.ServiceBus.ServiceBusProcessor processor) { }
+        protected internal Azure.Messaging.ServiceBus.ServiceBusProcessor Processor { get { throw null; } }
         public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions messageActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions messageActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -108,9 +107,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     }
     public partial class SessionMessageProcessor
     {
-        public SessionMessageProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, Azure.Messaging.ServiceBus.ServiceBusSessionProcessor processor) { }
-        protected internal Azure.Messaging.ServiceBus.ServiceBusClient Client { get { throw null; } set { } }
-        protected internal Azure.Messaging.ServiceBus.ServiceBusSessionProcessor Processor { get { throw null; } set { } }
+        public SessionMessageProcessor(Azure.Messaging.ServiceBus.ServiceBusSessionProcessor processor) { }
+        protected internal Azure.Messaging.ServiceBus.ServiceBusSessionProcessor Processor { get { throw null; } }
         public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusSessionMessageActions sessionActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusSessionMessageActions sessionActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
     }

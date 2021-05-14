@@ -426,6 +426,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
             await processor.DisposeAsync();
         }
+
+        [Test]
+        public async Task CloseRespectsCancellationToken()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};
+            mockProcessor.Setup(
+                p => p.IsProcessing).Returns(true);
+            var cts = new CancellationTokenSource();
+
+            // mutate the cancellation token to distinguish it from CancellationToken.None
+            cts.CancelAfter(100);
+
+            await mockProcessor.Object.CloseAsync(cts.Token);
+            mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
+        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type

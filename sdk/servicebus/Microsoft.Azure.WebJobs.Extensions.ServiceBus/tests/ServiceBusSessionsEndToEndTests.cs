@@ -717,7 +717,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);
             }
 
-            public override SessionMessageProcessor CreateSessionMessageProcessor(ServiceBusClient client,
+            public override SessionMessageProcessor CreateSessionMessageProcessor(
+                ServiceBusClient client,
                 string entityPath)
             {
                 ServiceBusSessionProcessor processor;
@@ -732,17 +733,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
 
                 processor.ProcessErrorAsync += args => Task.CompletedTask;
-                return new CustomSessionMessageProcessor(client, processor, _logger);
+                return new CustomSessionMessageProcessor(processor, _logger);
             }
 
             private class CustomSessionMessageProcessor : SessionMessageProcessor
             {
                 private readonly ILogger _logger;
 
-                public CustomSessionMessageProcessor(ServiceBusClient client,
+                public CustomSessionMessageProcessor(
                     ServiceBusSessionProcessor sessionProcessor,
                     ILogger logger)
-                    : base(client, sessionProcessor)
+                    : base(sessionProcessor)
                 {
                     _logger = logger;
                 }
@@ -757,7 +758,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 public override async Task CompleteProcessingMessageAsync(
                     ServiceBusSessionMessageActions sessionActions,
-                    ServiceBusReceivedMessage message, Executors.FunctionResult result,
+                    ServiceBusReceivedMessage message,
+                    Executors.FunctionResult result,
                     CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor End called!" + message.Body.ToString());

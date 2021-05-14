@@ -14,8 +14,7 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Sources" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
-<!--    Uncomment once ServiceBus version containing https://github.com/Azure/azure-sdk-for-net/pull/20940 is released-->
-<!--    <PackageReference Include="Azure.Messaging.ServiceBus" />-->
+    <PackageReference Include="Azure.Messaging.ServiceBus" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,10 +27,5 @@
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Resources.Designer.cs" LinkBase="Shared" />
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\WebJobsConfigurationExtensions.cs" LinkBase="Shared" />
 
-  </ItemGroup>
-
-  <ItemGroup>
-<!--    Remove once ServiceBus version containing https://github.com/Azure/azure-sdk-for-net/pull/20940 is released-->
-    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
 </Project>
