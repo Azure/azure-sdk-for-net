@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TasksStateTasksSentimentAnalysisTasksItem
+    internal partial class SentimentAnalysisTasksItem
     {
-        internal static TasksStateTasksSentimentAnalysisTasksItem DeserializeTasksStateTasksSentimentAnalysisTasksItem(JsonElement element)
+        internal static SentimentAnalysisTasksItem DeserializeSentimentAnalysisTasksItem(JsonElement element)
         {
             Optional<SentimentResponse> results = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new TasksStateTasksSentimentAnalysisTasksItem(lastUpdateDateTime, name.Value, status, results.Value);
+            return new SentimentAnalysisTasksItem(lastUpdateDateTime, name.Value, status, results.Value);
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class EntityLinkingTasksItemsProperties
+    internal partial class ComponentsIfu7BjSchemasTasksstatePropertiesTasksPropertiesEntitylinkingtasksItemsAllof1
     {
-        internal static EntityLinkingTasksItemsProperties DeserializeEntityLinkingTasksItemsProperties(JsonElement element)
+        internal static ComponentsIfu7BjSchemasTasksstatePropertiesTasksPropertiesEntitylinkingtasksItemsAllof1 DeserializeComponentsIfu7BjSchemasTasksstatePropertiesTasksPropertiesEntitylinkingtasksItemsAllof1(JsonElement element)
         {
             Optional<EntityLinkingResult> results = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntityLinkingTasksItemsProperties(results.Value);
+            return new ComponentsIfu7BjSchemasTasksstatePropertiesTasksPropertiesEntitylinkingtasksItemsAllof1(results.Value);
         }
     }
 }
