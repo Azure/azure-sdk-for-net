@@ -8,6 +8,10 @@
 
 - The web proxy specified in configuration is now respected.
 
+#### New Features
+
+- Added support for specifying `accountName` or `blobServiceUri` for the checkpoint connection.
+
 ## 5.0.0-beta.4 (2021-04-06)
 
 ### Changes

@@ -377,8 +377,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Response<DataLakeFileSystemClient> response = await service.UndeleteFileSystemAsync(
                 fileSystemItem.Name,
-                fileSystemItem.VersionId,
-                GetNewFileSystemName());
+                fileSystemItem.VersionId);
 
             // Assert
             await response.Value.GetPropertiesAsync();

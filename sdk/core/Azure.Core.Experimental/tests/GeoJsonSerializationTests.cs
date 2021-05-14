@@ -32,6 +32,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanRoundripBBox()
         {
+            // cspell:ignore bbox
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}], \"bbox\": [ {PS(1)}, {PS(2)} ] }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);

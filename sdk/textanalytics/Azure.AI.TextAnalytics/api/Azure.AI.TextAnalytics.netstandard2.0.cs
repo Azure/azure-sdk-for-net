@@ -925,6 +925,7 @@ namespace Azure.AI.TextAnalytics
     public partial class TextAnalyticsRequestOptions
     {
         public TextAnalyticsRequestOptions() { }
+        public bool? DisableServiceLogs { get { throw null; } set { } }
         public bool IncludeStatistics { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.StringIndexType StringIndexType { get { throw null; } set { } }

@@ -2,7 +2,7 @@
   "version": "0.1",
   "language": "en_US",
   "languageId": "csharp",
-  "dictionaries": ["powershell"],
+  "dictionaries": ["powershell", "softwareTerms", "csharp"],
   "ignorePaths": [
     "**/SessionRecords/**",
     "**/packages/**",
@@ -21,13 +21,51 @@
     "*.sha512",
     "*.ico",
     "*.pri",
+    "*.trx",
+    "*.binlog",
+    "*.log",
+    "*.sln",
+    "*.user",
     ".vscode/cspell.json"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
-  "words": ["azsdk", "pwsh"],
+  "words": [
+    "apos",
+    "azsdk",
+    "blazor",
+    "contoso",
+    "deserializes",
+    "diagnoser",
+    "epsg",
+    "expando",
+    "finalizer",
+    "finalizers",
+    "ints",
+    "lucene",
+    "mgmt",
+    "nunit",
+    "odata",
+    "otel",
+    "overridden",
+    "parallelization",
+    "pkcs",
+    "pwsh",
+    "referer",
+    "renormalize",
+    "retriable",
+    "structs",
+    "uints",
+    "unformattable",
+    "uninstrumented",
+    "westus",
+    "xunit"
+  ],
   "overrides": [
-    { "filename": "**/sdk/formrecognizer/**/*.cs", "words": ["ZhHant"] },
+    {
+      "filename": "**/sdk/formrecognizer/**/*.cs",
+      "words": ["ZhHant"]
+    },
     {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
