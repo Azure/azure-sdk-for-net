@@ -10,14 +10,14 @@ using System;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
-    internal partial class ManifestAttributesManifestReferences
+    public partial class ArtifactManifestReference
     {
-        /// <summary> Initializes a new instance of ManifestAttributesManifestReferences. </summary>
+        /// <summary> Initializes a new instance of ArtifactManifestReference. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
-        internal ManifestAttributesManifestReferences(string digest, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem)
+        internal ArtifactManifestReference(string digest, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem)
         {
             if (digest == null)
             {

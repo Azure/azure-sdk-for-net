@@ -33,7 +33,7 @@ namespace Azure.Containers.ContainerRegistry
                 attributesBase.LastUpdatedOn,
                 attributesBase.Architecture,
                 attributesBase.OperatingSystem,
-                attributesBase.References,
+                attributesBase.ManifestReferences,
                 attributesBase.Tags,
                 attributesBase.WriteableProperties);
         }
