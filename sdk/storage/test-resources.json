@@ -458,10 +458,6 @@
         "type": "string",
         "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('premiumAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob)]"
     },
-    "PREMIUM_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX": {
-        "type": "string",
-        "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('premiumAccountName')), variables('mgmtApiVersion')).primaryEndpoints.queue)]"
-    },
     "DATALAKE_STORAGE_ACCOUNT_NAME": {
       "type": "string",
       "value": "[variables('dataLakeAccountName')]"
@@ -517,6 +513,10 @@
     "PREMIUM_FILE_STORAGE_ACCOUNT_KEY": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('premiumFileAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+    },
+    "PREMIUM_FILE_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX": {
+        "type": "string",
+        "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('premiumFileAccountName')), variables('mgmtApiVersion')).primaryEndpoints.file)]"
     },
     "AZUREWEBJOBSSTORAGE": {
       "type": "string",

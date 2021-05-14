@@ -29,7 +29,6 @@ $SecondaryAccountTableEndpointSuffix = $DeploymentOutputs['SECONDARY_STORAGE_ACC
 $PremiumAccountName = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_NAME']
 $PremiumAccountKey = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_KEY']
 $PremiumAccountBlobEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
-$PremiumAccountQueueEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
 $DataLakeAccountName = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_NAME']
 $DataLakeAccountKey = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_KEY']
 $DataLakeAccountBlobEndpointSuffix = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
@@ -44,6 +43,7 @@ $SoftDeleteAccountFileEndpointSuffix = $DeploymentOutputs['SOFT_DELETE_STORAGE_A
 $SoftDeleteAccountTableEndpointSuffix = $DeploymentOutputs['SOFT_DELETE_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $PremiumFileAccountName = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_NAME']
 $PremiumFileAccountKey = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_KEY']
+$PremiumFileAccountEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
 $KeyVaultUri = $DeploymentOutputs['KEYVAULT_URI']
 
 # Construct the content of the configuration file that the Storage tests expect
@@ -81,10 +81,8 @@ $content =
       <AccountName>$PremiumAccountName</AccountName>
       <AccountKey>$PremiumAccountKey</AccountKey>
       <BlobServiceEndpoint>https://$PremiumAccountName.$PremiumAccountBlobEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PremiumAccountName.$PremiumAccountQueueEndpointSuffix</QueueServiceEndpoint>
       <BlobServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
-      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PremiumAccountName;AccountKey=$PremiumAccountKey;BlobEndpoint=https://$PremiumAccountName.$PremiumAccountBlobEndpointSuffix;QueueEndpoint=https://$PremiumAccountName.$PremiumAccountQueueEndpointSuffix</ConnectionString>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PremiumAccountName;AccountKey=$PremiumAccountKey;BlobEndpoint=https://$PremiumAccountName.$PremiumAccountBlobEndpointSuffix</ConnectionString>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>ProductionTenant2</TenantName>
@@ -156,14 +154,8 @@ $content =
       <TenantType>Cloud</TenantType>
       <AccountName>$PremiumFileAccountName</AccountName>
       <AccountKey>$PremiumFileAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$PremiumFileAccountName.blob.core.windows.net</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PremiumFileAccountName.queue.core.windows.net</QueueServiceEndpoint>
-      <FileServiceEndpoint>https://$PremiumFileAccountName.file.core.windows.net</FileServiceEndpoint>
-      <TableServiceEndpoint>https://$PremiumFileAccountName.table.core.windows.net</TableServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
+      <FileServiceEndpoint>https://$PremiumFileAccountName.$PremiumFileAccountEndpointSuffix</FileServiceEndpoint>
+      <FileServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.$PremiumFileAccountEndpointSuffix</FileServiceSecondaryEndpoint>
     </TenantConfiguration>
   </TenantConfigurations>
   <KeyVaultConfigurations>
