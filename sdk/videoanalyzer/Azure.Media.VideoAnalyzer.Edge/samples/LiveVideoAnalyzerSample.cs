@@ -25,7 +25,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
         public LiveVideoAnalyzerSample()
         {
             #region Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-            String connectionString = "HostName=lvasamplehubnpctns45jvoji.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=dburWgVNqX+/xuOpSfXMKQdkr4nypY7HbwmwduL3mbs=";
+            String connectionString = "connectionString";
             ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
             #endregion Snippet:Azure_VideoAnalyzerSamples_ConnectionString
             this.serviceClient = serviceClient;

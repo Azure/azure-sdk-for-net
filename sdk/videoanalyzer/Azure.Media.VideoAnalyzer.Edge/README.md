@@ -18,7 +18,7 @@ This is a models-only SDK. All client operations are done using the [Microsoft A
 The client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
 
 ```C# Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-String connectionString = "HostName=lvasamplehubnpctns45jvoji.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=dburWgVNqX+/xuOpSfXMKQdkr4nypY7HbwmwduL3mbs=";
+String connectionString = "connectionString";
 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
 ```
 
