@@ -368,6 +368,12 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content.Message);
             Assert.AreEqual(ChatMessageType.Text, message.Type);
 
+            Assert.AreEqual(ChatMessageType.Html, message2.Type);
+            Assert.AreEqual(ChatMessageType.Text, message3.Type);
+            Assert.AreEqual(ChatMessageType.Html, message4.Type);
+            Assert.AreEqual(ChatMessageType.Text, message5.Type);
+            Assert.AreEqual(ChatMessageType.Html, message6.Type);
+
             Assert.AreEqual(messageContent2, message2.Content.Message);
             Assert.AreEqual(messageContent3, message3.Content.Message);
             Assert.AreEqual(messageContent4, message4.Content.Message);

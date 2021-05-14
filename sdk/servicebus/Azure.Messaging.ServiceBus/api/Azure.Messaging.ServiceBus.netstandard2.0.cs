@@ -228,6 +228,7 @@ namespace Azure.Messaging.ServiceBus
         public int MaxConcurrentCalls { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
+        public Azure.Messaging.ServiceBus.SubQueue SubQueue { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -278,7 +279,6 @@ namespace Azure.Messaging.ServiceBus
         public virtual bool IsClosed { get { throw null; } }
         public virtual int PrefetchCount { get { throw null; } }
         public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
-        public virtual string TransactionGroup { get { throw null; } }
         public virtual System.Threading.Tasks.Task AbandonMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -371,7 +371,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual bool AutoCompleteMessages { get { throw null; } }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
-        protected virtual Azure.Messaging.ServiceBus.ServiceBusProcessor InnerProcessor { get { throw null; } }
+        protected internal virtual Azure.Messaging.ServiceBus.ServiceBusProcessor InnerProcessor { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
         public virtual bool IsProcessing { get { throw null; } }
         public virtual System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }

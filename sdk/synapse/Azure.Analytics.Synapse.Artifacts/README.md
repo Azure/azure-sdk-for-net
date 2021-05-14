@@ -109,7 +109,7 @@ foreach (NotebookResource notebook in notebooks)
 
 ```C# Snippet:DeleteNotebook
 NotebookDeleteNotebookOperation deleteNotebookOperation = client.StartDeleteNotebook(notebookName);
-await deleteNotebookOperation.WaitForCompletionAsync();
+await deleteNotebookOperation.WaitForCompletionResponseAsync();
 ```
 
 ## To build

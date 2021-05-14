@@ -19,10 +19,31 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// 
         /// only return for alerting incident result.
         /// </param>
-        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus)
+        /// <param name="valueOfRootNode"> value of the root node. </param>
+        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus, double valueOfRootNode)
         {
             MaxSeverity = maxSeverity;
             IncidentStatus = incidentStatus;
+            ValueOfRootNode = valueOfRootNode;
+        }
+
+        /// <summary> Initializes a new instance of IncidentProperty. </summary>
+        /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>
+        /// <param name="incidentStatus">
+        /// incident status
+        /// 
+        /// 
+        /// 
+        /// only return for alerting incident result.
+        /// </param>
+        /// <param name="valueOfRootNode"> value of the root node. </param>
+        /// <param name="expectedValueOfRootNode"> expected value of the root node given by smart detector. </param>
+        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus, double valueOfRootNode, double? expectedValueOfRootNode)
+        {
+            MaxSeverity = maxSeverity;
+            IncidentStatus = incidentStatus;
+            ValueOfRootNode = valueOfRootNode;
+            ExpectedValueOfRootNode = expectedValueOfRootNode;
         }
 
         /// <summary> max severity of latest anomalies in the incident. </summary>
@@ -35,5 +56,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// only return for alerting incident result.
         /// </summary>
         public AnomalyIncidentStatus IncidentStatus { get; }
+        /// <summary> value of the root node. </summary>
+        public double ValueOfRootNode { get; }
+        /// <summary> expected value of the root node given by smart detector. </summary>
+        public double? ExpectedValueOfRootNode { get; }
     }
 }

@@ -27,9 +27,8 @@ finally
         }
         catch
         {
-            // This should not be considered a critical failure that results in a test run failure.  Due
-            // to ARM being temperamental, some management operations may be rejected.  Throwing here
-            // does not help to ensure resource cleanup.
+            // This should not be considered a critical failure.  Due to ARM being temperamental, some
+            // management operations may be rejected.  Throwing here does not help to ensure resource cleanup.
             //
             // Assume the standard orphan resource cleanup is being run and will take responsibility
             // for cleaning up any orphans.

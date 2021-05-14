@@ -632,6 +632,30 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ProducerCannotSendWhenSharedConnectionIsClosed()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var connection = new EventHubConnection(connectionString))
+                await using (var producer = new EventHubProducerClient(connection))
+                {
+                    EventData[] events = new[] { new EventData(Encoding.UTF8.GetBytes("Dummy event")) };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+
+                    await connection.CloseAsync();
+                    Assert.That(async () => await producer.SendAsync(events), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         [TestCase("XYZ")]
         [TestCase("-1")]
         [TestCase("1000")]

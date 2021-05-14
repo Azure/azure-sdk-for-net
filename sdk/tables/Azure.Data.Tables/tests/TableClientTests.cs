@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Sas;
@@ -20,15 +22,23 @@ namespace Azure.Data.Tables.Tests
         private const string AccountName = "someaccount";
         private readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
+        private MockTransport _transport;
         private TableClient client { get; set; }
+        private const string Secret = "Kg==";
         private TableEntity entityWithoutPK = new TableEntity { { TableConstants.PropertyNames.RowKey, "row" } };
         private TableEntity entityWithoutRK = new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" } };
-        private TableEntity validEntity = new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" }, { TableConstants.PropertyNames.RowKey, "row" } };
+
+        private TableEntity validEntity =
+            new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" }, { TableConstants.PropertyNames.RowKey, "row" } };
+
+        private const string signature = "sv=2019-12-12&ss=t&srt=s&sp=rwdlacu&se=2020-08-28T23:45:30Z&st=2020-08-26T15:45:30Z&spr=https&sig=mySig&tn=someTableName";
 
         [SetUp]
         public void TestSetup()
         {
-            var service_Instrumented = InstrumentClient(new TableServiceClient(new Uri("https://example.com"), new AzureSasCredential("sig"), new TableClientOptions()));
+            _transport = new MockTransport(request => new MockResponse(204));
+            var service_Instrumented = InstrumentClient(
+                new TableServiceClient(new Uri($"https://example.com?{signature}"), new AzureSasCredential("sig"), new TablesClientOptions { Transport = _transport }));
             client = service_Instrumented.GetTableClient(TableName);
         }
 
@@ -38,21 +48,76 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void ConstructorValidatesArguments()
         {
-            Assert.That(() => new TableClient(_url, null, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the tableName.");
+            Assert.Catch<ArgumentException>(
+                () => new TableClient(_url, null, new TableSharedKeyCredential(AccountName, string.Empty)),
+                "The constructor should validate the tableName.");
 
-            Assert.That(() => new TableClient(null, TableName, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
+            Assert.That(
+                () => new TableClient(null, TableName, new TableSharedKeyCredential(AccountName, string.Empty)),
+                Throws.InstanceOf<ArgumentNullException>(),
+                "The constructor should validate the url.");
 
-            Assert.That(() => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions()), Throws.Nothing, "The constructor should accept valid arguments.");
+            Assert.That(
+                () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TablesClientOptions()),
+                Throws.Nothing,
+                "The constructor should accept valid arguments.");
 
-            Assert.That(() => new TableClient(_url, TableName, credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the TablesSharedKeyCredential.");
+            Assert.That(
+                () => new TableClient(_url, TableName, null),
+                Throws.InstanceOf<ArgumentNullException>(),
+                "The constructor should validate the TablesSharedKeyCredential.");
 
-            Assert.That(() => new TableClient(_urlHttp, TableName, new AzureSasCredential("sig")), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
+            Assert.That(
+                () => new TableClient(_urlHttp, new AzureSasCredential(signature)),
+                Throws.InstanceOf<ArgumentException>(),
+                "The constructor should validate the Uri is https when using a SAS token.");
 
-            Assert.That(() => new TableClient(_urlHttp, TableName, null), Throws.InstanceOf<ArgumentException>(), "The constructor should not accept a null credential");
+            Assert.That(
+                () => new TableClient(_urlHttp, TableName, null),
+                Throws.InstanceOf<ArgumentException>(),
+                "The constructor should not accept a null credential");
 
-            Assert.That(() => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.Nothing, "The constructor should accept valid arguments.");
+            Assert.That(
+                () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty)),
+                Throws.Nothing,
+                "The constructor should accept valid arguments.");
 
-            Assert.That(() => new TableClient(_urlHttp, TableName, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.Nothing, "The constructor should accept an http url.");
+            Assert.That(
+                () => new TableClient(_urlHttp, TableName, new TableSharedKeyCredential(AccountName, string.Empty)),
+                Throws.Nothing,
+                "The constructor should accept an http url.");
+        }
+
+        public static IEnumerable<object[]> ValidConnStrings()
+        {
+            yield return new object[]
+            {
+                $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;"
+            };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret}" };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret}" };
+        }
+
+        [Test]
+        [TestCaseSource(nameof(ValidConnStrings))]
+        public void AccountNameAndNameForConnStringCtor(string connString)
+        {
+            var client = new TableClient(connString, TableName, new TablesClientOptions());
+
+            Assert.AreEqual(AccountName, client.AccountName);
+            Assert.AreEqual(TableName, client.Name);
+        }
+
+        [Test]
+        public void AccountNameAndNameForUriCtor()
+        {
+            var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TablesClientOptions());
+
+            Assert.AreEqual(AccountName, client.AccountName);
+            Assert.AreEqual(TableName, client.Name);
         }
 
         /// <summary>
@@ -61,19 +126,43 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void ServiceMethodsValidateArguments()
         {
-            Assert.That(async () => await client.AddEntityAsync<TableEntity>(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
+            Assert.That(
+                async () => await client.AddEntityAsync<TableEntity>(null),
+                Throws.InstanceOf<ArgumentNullException>(),
+                "The method should validate the entity is not null.");
 
-            Assert.That(async () => await client.UpsertEntityAsync<TableEntity>(null, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
-            Assert.That(async () => await client.UpsertEntityAsync(new TableEntity { PartitionKey = null, RowKey = "row" }, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
+            Assert.That(
+                async () => await client.UpsertEntityAsync<TableEntity>(null, TableUpdateMode.Replace),
+                Throws.InstanceOf<ArgumentNullException>(),
+                "The method should validate the entity is not null.");
+            Assert.That(
+                async () => await client.UpsertEntityAsync(new TableEntity { PartitionKey = null, RowKey = "row" }, TableUpdateMode.Replace),
+                Throws.InstanceOf<ArgumentException>(),
+                $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
-            Assert.That(async () => await client.UpsertEntityAsync(new TableEntity { PartitionKey = "partition", RowKey = null }, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(
+                async () => await client.UpsertEntityAsync(new TableEntity { PartitionKey = "partition", RowKey = null }, TableUpdateMode.Replace),
+                Throws.InstanceOf<ArgumentException>(),
+                $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
 
-            Assert.That(async () => await client.UpdateEntityAsync<TableEntity>(null, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the entity is not null.");
-            Assert.That(async () => await client.UpdateEntityAsync(validEntity, default, TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), "The method should validate the eTag is not null.");
+            Assert.That(
+                async () => await client.UpdateEntityAsync<TableEntity>(null, new ETag("etag"), TableUpdateMode.Replace),
+                Throws.InstanceOf<ArgumentNullException>(),
+                "The method should validate the entity is not null.");
+            Assert.That(
+                async () => await client.UpdateEntityAsync(validEntity, default, TableUpdateMode.Replace),
+                Throws.InstanceOf<ArgumentException>(),
+                "The method should validate the eTag is not null.");
 
-            Assert.That(async () => await client.UpdateEntityAsync(entityWithoutPK, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
+            Assert.That(
+                async () => await client.UpdateEntityAsync(entityWithoutPK, new ETag("etag"), TableUpdateMode.Replace),
+                Throws.InstanceOf<ArgumentException>(),
+                $"The method should validate the entity has a {TableConstants.PropertyNames.PartitionKey}.");
 
-            Assert.That(async () => await client.UpdateEntityAsync(entityWithoutRK, new ETag("etag"), TableUpdateMode.Replace), Throws.InstanceOf<ArgumentException>(), $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
+            Assert.That(
+                async () => await client.UpdateEntityAsync(entityWithoutRK, new ETag("etag"), TableUpdateMode.Replace),
+                Throws.InstanceOf<ArgumentException>(),
+                $"The method should validate the entity has a {TableConstants.PropertyNames.RowKey}.");
         }
 
         [Test]
@@ -155,7 +244,15 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void CreatedEnumPropertiesAreSerializedProperly()
         {
-            var entity = new EnumEntity { PartitionKey = "partitionKey", RowKey = "01", Timestamp = DateTime.Now, MyFoo = Foo.Two, MyNullableFoo = null, ETag = ETag.All };
+            var entity = new EnumEntity
+            {
+                PartitionKey = "partitionKey",
+                RowKey = "01",
+                Timestamp = DateTime.Now,
+                MyFoo = Foo.Two,
+                MyNullableFoo = null,
+                ETag = ETag.All
+            };
 
             // Create the new entities.
             var dictEntity = entity.ToOdataAnnotatedDictionary();
@@ -170,7 +267,16 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void EnumPropertiesAreDeSerializedProperly()
         {
-            var entity = new EnumEntity { PartitionKey = "partitionKey", RowKey = "01", Timestamp = DateTime.Now, MyFoo = Foo.Two, MyNullableFoo = null, MyNullableFoo2 = NullableFoo.Two, ETag = ETag.All };
+            var entity = new EnumEntity
+            {
+                PartitionKey = "partitionKey",
+                RowKey = "01",
+                Timestamp = DateTime.Now,
+                MyFoo = Foo.Two,
+                MyNullableFoo = null,
+                MyNullableFoo2 = NullableFoo.Two,
+                ETag = ETag.All
+            };
 
             // Create the new entities.
             var dictEntity = entity.ToOdataAnnotatedDictionary();
@@ -238,6 +344,13 @@ namespace Azure.Data.Tables.Tests
             Assert.That(actual, Is.EqualTo(expected));
         }
 
+        [Test]
+        public async Task ValidateUri()
+        {
+            await client.UpdateEntityAsync(new TableEntity("pkā", "rk"), ETag.All).ConfigureAwait(false);
+            Assert.AreEqual($"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata", _transport.Requests[0].Uri.ToString());
+        }
+
         public class EnumEntity : ITableEntity
         {
             public string PartitionKey { get; set; }
@@ -248,11 +361,13 @@ namespace Azure.Data.Tables.Tests
             public NullableFoo? MyNullableFoo { get; set; }
             public NullableFoo? MyNullableFoo2 { get; set; }
         }
+
         public enum Foo
         {
             One,
             Two
         }
+
         public enum NullableFoo
         {
             One,

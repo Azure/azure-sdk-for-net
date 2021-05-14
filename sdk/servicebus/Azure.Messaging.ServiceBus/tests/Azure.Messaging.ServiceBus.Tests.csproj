@@ -12,8 +12,6 @@
     <ProjectReference Include="..\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />

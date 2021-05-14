@@ -23,6 +23,9 @@ namespace Azure.Storage.Test
         public const int DataLakeRetryDelay = 70000;
         public const int RetryDelay = 10000;
 
+        // quick query fails with with connection reset, retry until it's solved properly https://github.com/Azure/azure-sdk-for-net/issues/17403
+        public const int QuickQueryRetryCount = 5;
+
         public string CacheControl { get; private set; }
         public string ContentDisposition { get; private set; }
         public string ContentEncoding { get; private set; }
@@ -30,6 +33,10 @@ namespace Azure.Storage.Test
         public string ContentType { get; private set; }
         public byte[] ContentMD5 { get; private set; }
         public SasConstants Sas { get; private set; }
+
+        private TestConstants()
+        {
+        }
 
         public class SasConstants
         {
@@ -40,7 +47,6 @@ namespace Azure.Storage.Test
             public string KeyValue { get; } = Convert.ToBase64String(Encoding.UTF8.GetBytes("value"));
             public SasProtocol Protocol { get; } = SasProtocol.Https;
 
-            public string Version { get; protected internal set; }
             public string Account { get; protected internal set; }
             public string Identifier { get; protected internal set; }
             public string CacheControl { get; protected internal set; }
@@ -59,35 +65,38 @@ namespace Azure.Storage.Test
             public StorageSharedKeyCredential SharedKeyCredential { get; protected internal set; }
         }
 
-        public TestConstants(StorageTestBase test)
+        public static TestConstants Create<TStorageTestEnvironment>(StorageTestBase<TStorageTestEnvironment> test) where TStorageTestEnvironment : StorageTestEnvironment, new()
         {
-            CacheControl = test.GetNewString();
-            ContentDisposition = test.GetNewString();
-            ContentEncoding = test.GetNewString();
-            ContentLanguage = test.GetNewString();
-            ContentType = test.GetNewString();
-            ContentMD5 = MD5.Create().ComputeHash(test.GetRandomBuffer(16));
-
-            Sas = new SasConstants
+            var testConstants = new TestConstants()
             {
-                Version = test.GetNewString(),
-                Account = test.GetNewString(),
-                Identifier = test.GetNewString(),
                 CacheControl = test.GetNewString(),
                 ContentDisposition = test.GetNewString(),
                 ContentEncoding = test.GetNewString(),
                 ContentLanguage = test.GetNewString(),
                 ContentType = test.GetNewString(),
-                AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(test.GetNewString())),
-                StartTime = test.GetUtcNow().AddHours(-1),
-                ExpiryTime = test.GetUtcNow().AddHours(+1),
-                StartAddress = test.GetIPAddress(),
-                EndAddress = test.GetIPAddress(),
-                KeyStart = test.GetUtcNow().AddHours(-1),
-                KeyExpiry = test.GetUtcNow().AddHours(+1)
+                ContentMD5 = MD5.Create().ComputeHash(test.GetRandomBuffer(16)),
+
+                Sas = new SasConstants
+                {
+                    Account = test.GetNewString(),
+                    Identifier = test.GetNewString(),
+                    CacheControl = test.GetNewString(),
+                    ContentDisposition = test.GetNewString(),
+                    ContentEncoding = test.GetNewString(),
+                    ContentLanguage = test.GetNewString(),
+                    ContentType = test.GetNewString(),
+                    AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(test.GetNewString())),
+                    StartTime = test.GetUtcNow().AddHours(-1),
+                    ExpiryTime = test.GetUtcNow().AddHours(+1),
+                    StartAddress = test.GetIPAddress(),
+                    EndAddress = test.GetIPAddress(),
+                    KeyStart = test.GetUtcNow().AddHours(-1),
+                    KeyExpiry = test.GetUtcNow().AddHours(+1),
+                },
             };
-            Sas.IPRange = new SasIPRange(Sas.StartAddress, Sas.EndAddress);
-            Sas.SharedKeyCredential = new StorageSharedKeyCredential(Sas.Account, Sas.AccountKey);
+            testConstants.Sas.IPRange = new SasIPRange(testConstants.Sas.StartAddress, testConstants.Sas.EndAddress);
+            testConstants.Sas.SharedKeyCredential = new StorageSharedKeyCredential(testConstants.Sas.Account, testConstants.Sas.AccountKey);
+            return testConstants;
         }
     }
 }

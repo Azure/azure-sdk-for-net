@@ -3,6 +3,12 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 
+## 1.0.1 (2021-05-11)
+
+### Bug Fixes
+- Changed DateTime.MinValue to DateTimeOffset.MinValue in sample code
+- Fixed the bug where Message type is defaulting to text
+
 ## 1.0.0 (2021-03-29)
 
 ### Breaking Changes

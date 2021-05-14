@@ -15,8 +15,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new PhoneNumbersClientRecordedTestSanitizer();
 
-        public bool IncludePhoneNumberLiveTests
-            => TestEnvironment.Mode == RecordedTestMode.Playback || Environment.GetEnvironmentVariable("INCLUDE_PHONENUMBER_LIVE_TESTS") == "True";
+        public bool SkipPhoneNumberLiveTests
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_PHONENUMBER_LIVE_TESTS") == "TRUE";
 
         /// <summary>
         /// Creates a <see cref="PhoneNumbersClient" /> with the connectionstring via environment
@@ -26,8 +26,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithConnectionString(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestConnectionString,
-                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
+                    TestEnvironment.LiveTestStaticConnectionString,
+                    CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             // We always create the instrumented client to suppress the instrumentation check
             var instrumentedClient = InstrumentClient(client);
@@ -42,9 +42,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestEndpoint,
-                     new AzureKeyCredential(TestEnvironment.LiveTestAccessKey),
-                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
+                    TestEnvironment.LiveTestStaticEndpoint,
+                     new AzureKeyCredential(TestEnvironment.LiveTestStaticAccessKey),
+                    CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
@@ -57,9 +57,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestEndpoint,
+                    TestEnvironment.LiveTestStaticEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
-                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
+                    CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
@@ -91,6 +91,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             if (TestEnvironment.Mode != RecordedTestMode.Playback)
                 Thread.Sleep(2000);
+        }
+
+        private PhoneNumbersClientOptions CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs()
+        {
+            PhoneNumbersClientOptions phoneNumbersClientOptions = new PhoneNumbersClientOptions();
+            phoneNumbersClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
+            return InstrumentClientOptions(phoneNumbersClientOptions);
         }
     }
 }

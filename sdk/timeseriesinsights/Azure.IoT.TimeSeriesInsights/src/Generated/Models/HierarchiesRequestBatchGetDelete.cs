@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to get or delete multiple time series hierarchies. Exactly one of &quot;hierarchyIds&quot; or &quot;names&quot; must be set. </summary>
-    public partial class HierarchiesRequestBatchGetDelete
+    internal partial class HierarchiesRequestBatchGetDelete
     {
         /// <summary> Initializes a new instance of HierarchiesRequestBatchGetDelete. </summary>
         public HierarchiesRequestBatchGetDelete()

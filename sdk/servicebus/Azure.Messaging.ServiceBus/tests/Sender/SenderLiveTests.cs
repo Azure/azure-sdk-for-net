@@ -430,5 +430,89 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 Assert.That(async () => await sender.CreateMessageBatchAsync(), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
             }
         }
+
+        [Test]
+        public async Task CreateBatchReactsToClosingTheClient()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var sender = client.CreateSender(scope.QueueName);
+
+                using var batch = await sender.CreateMessageBatchAsync();
+
+                // Close the client and attempt to create another batch.
+
+                await client.DisposeAsync();
+
+                Assert.That(async () => await sender.CreateMessageBatchAsync(),
+                    Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+            }
+        }
+
+        [Test]
+        public async Task SendMessagesReactsToClosingTheClient()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var sender = client.CreateSender(scope.QueueName);
+
+                using var batch = AddMessages((await sender.CreateMessageBatchAsync()), 5);
+                await sender.SendMessagesAsync(batch);
+
+                // Close the client and attempt to send another message batch.
+
+                using var anotherBatch = AddMessages((await sender.CreateMessageBatchAsync()), 5);
+                await client.DisposeAsync();
+
+                Assert.That(async () => await sender.SendMessagesAsync(anotherBatch),
+                    Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+            }
+        }
+
+        [Test]
+        public async Task ScheduleMessagesReactsToClosingTheClient()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
+
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var sender = client.CreateSender(scope.QueueName);
+
+                await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+
+                // Close the client and attempt to schedule another set of messages.
+
+                await client.DisposeAsync();
+
+                Assert.That(async () => await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime),
+                    Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+            }
+        }
+
+        [Test]
+        public async Task CancelScheduledMessagesReactsToClosingTheClient()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
+
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var sender = client.CreateSender(scope.QueueName);
+
+                var sequenceNumbers = await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+                await sender.CancelScheduledMessagesAsync(sequenceNumbers);
+
+                // Close the client and attempt to cancel another set of scheduled messages.
+
+                sequenceNumbers = await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+                await client.DisposeAsync();
+
+                Assert.That(async () => await sender.CancelScheduledMessagesAsync(sequenceNumbers),
+                    Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+            }
+        }
     }
 }

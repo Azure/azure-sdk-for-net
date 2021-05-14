@@ -24,22 +24,22 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Time when the operation was created on.
         /// </summary>
-        public DateTimeOffset CreatedOn => _createdOn;
+        public virtual DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
         /// Time when the operation will expire.
         /// </summary>
-        public DateTimeOffset? ExpiresOn => _expiresOn;
+        public virtual DateTimeOffset? ExpiresOn => _expiresOn;
 
         /// <summary>
         /// Time when the operation was last modified on
         /// </summary>
-        public DateTimeOffset LastModified => _lastModified;
+        public virtual DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
         /// Gets the status of the operation.
         /// </summary>
-        public TextAnalyticsOperationStatus Status => _status;
+        public virtual TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
         /// Gets the final result of the long-running operation asynchronously.
@@ -152,6 +152,14 @@ namespace Azure.AI.TextAnalytics
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
             Id = operationLocation.Split('/').Last();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected AnalyzeHealthcareEntitiesOperation()
+        {
         }
 
         /// <summary>
@@ -326,7 +334,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(nextLink, _showStats).ConfigureAwait(false);
+                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(RemoveExtraInformationFromNextLink(nextLink)).ConfigureAwait(false);
 
                     AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -355,7 +363,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(nextLink, _showStats);
+                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(RemoveExtraInformationFromNextLink(nextLink));
 
                     AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -376,5 +384,8 @@ namespace Azure.AI.TextAnalytics
             if (!HasValue)
                 throw _requestFailedException;
         }
+
+        // Service bug https://github.com/Azure/azure-sdk-for-net/issues/20991
+        private static string RemoveExtraInformationFromNextLink(string nextlink) => nextlink.Split('/').Last();
     }
 }

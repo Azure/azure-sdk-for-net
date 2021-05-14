@@ -13,8 +13,6 @@ using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.ServiceBus;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -359,16 +357,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-1", _resultMessage1);
             Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-2", _resultMessage2);
 
-            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
-                .GetAllLogMessages();
+            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
+            Assert.False(logMessages.Any(p => p.Level == LogLevel.Error));
 
-            Assert.False(logMessages.Where(p => p.Level == LogLevel.Error).Any());
+            // Filter out Azure SDK and custom processor logs for easier validation.
+            logMessages = logMessages.Where(
+                m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture) &&
+                     m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
-            // filter out anything from the custom processor for easier validation.
-            IEnumerable<LogMessage> consoleOutput = logMessages
-               .Where(m => m.Category != CustomMessagingProvider.CustomMessagingCategory);
-
-            string[] consoleOutputLines = consoleOutput
+            string[] consoleOutputLines = logMessages
                 .Where(p => p.FormattedMessage != null)
                 .SelectMany(p => p.FormattedMessage.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
                 .OrderBy(p => p)
@@ -428,7 +425,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"MaxConcurrentSessions\": 8,",
                 "  \"MaxMessages\": 1000,",
                 "  \"SessionIdleTimeout\": \"\"",
-                "  \"RetryOptions\": {",
+                "  \"ClientRetryOptions\": {",
                 "       \"Mode\": \"Exponential\",",
                 "       \"TryTimeout\": \"00:00:10\",",
                 "       \"Delay\": \"00:00:00.8000000\",",
@@ -809,15 +806,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // TODO decide whether it makes sense to still default error handler when there is a custom provider
                 // currently user needs to set it.
                 processor.ProcessErrorAsync += args => Task.CompletedTask;
-                return new CustomMessageProcessor(processor, receiver, _logger);
+                return new CustomMessageProcessor(processor, _logger);
             }
 
             private class CustomMessageProcessor : MessageProcessor
             {
                 private readonly ILogger _logger;
 
-                public CustomMessageProcessor(ServiceBusProcessor processor, ServiceBusReceiver receiver, ILogger logger)
-                    : base(processor, receiver)
+                public CustomMessageProcessor(ServiceBusProcessor processor, ILogger logger)
+                    : base(processor)
                 {
                     _logger = logger;
                 }
