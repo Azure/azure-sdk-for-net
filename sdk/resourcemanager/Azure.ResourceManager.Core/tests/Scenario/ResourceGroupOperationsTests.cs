@@ -80,20 +80,6 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckExistence()
-        {
-            var rgName = Recording.GenerateAssetName("testrg");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
-            bool existence = await rg.CheckExistenceAsync();
-            Assert.IsTrue(existence);
-            var deleteOp = await rg.StartDeleteAsync();
-            await deleteOp.WaitForCompletionResponseAsync();
-            existence = await rg.CheckExistenceAsync();
-            Assert.IsFalse(existence);
-        }
-
-        [TestCase]
-        [RecordedTest]
         public async Task StartExportTemplate()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));

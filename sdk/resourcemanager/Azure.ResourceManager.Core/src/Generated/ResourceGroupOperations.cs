@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -74,40 +75,6 @@ namespace Azure.ResourceManager.Core
             BaseUri);
 
         private ResourcesRestOperations GenericRestClient => new ResourcesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Checks whether a resource group exists. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> CheckExistence(CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.CheckExistence");
-            scope.Start();
-            try
-            {
-                return RestClient.CheckExistence(Id.Name, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Checks whether a resource group exists. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> CheckExistenceAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.CheckExistence");
-            scope.Start();
-            try
-            {
-                return await RestClient.CheckExistenceAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
 
         /// <summary>
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
@@ -257,10 +224,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceGroupData>(RestClient.Get(Id.Name, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, g);
-                });
+                var result = RestClient.Get(Id.Name, cancellationToken);
+                return Response.FromValue(new ResourceGroup(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -277,12 +242,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
-                await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
-                g =>
-                {
-                    return new ResourceGroup(this, g);
-                });
+                var result = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
