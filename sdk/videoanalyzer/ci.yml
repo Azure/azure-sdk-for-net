@@ -9,7 +9,7 @@ trigger:
       - release/*
   paths:
     include:
-      - sdk/mediaservices/
+      - sdk/videoanalyzer/
 
 pr:
   branches:
@@ -21,15 +21,13 @@ pr:
       - release/*
   paths:
     include:
-      - sdk/mediaservices/
+      - sdk/videoanalyzer/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: mediaservices
+    ServiceDirectory: videoanalyzer
     ArtifactName: packages
     Artifacts:
-      - name: Microsoft.Azure.Media.VideoAnalyzer.Edge
-        safeName: MicrosoftAzureMediaVideoAnalyzerEdge
       - name: Azure.Media.VideoAnalyzer.Edge
         safeName: AzureMediaVideoAnalyzerEdge

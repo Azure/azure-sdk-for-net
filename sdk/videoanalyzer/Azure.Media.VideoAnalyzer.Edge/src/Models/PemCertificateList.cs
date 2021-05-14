@@ -7,12 +7,12 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace Azure.Media.Analytics.Edge.Models
+namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
-    /// Initializes a new instance of the MediaGraphPemCertificateList class.
+    /// Initializes a new instance of the PemCertificates class.
     /// </summary>
-    public partial class MediaGraphPemCertificateList
+    public partial class PemCertificates
     {
         /// <summary>
         /// How long the base 64 lines should be.
@@ -36,10 +36,10 @@ namespace Azure.Media.Analytics.Edge.Models
         private const string PemCertificateFooter = "-----END CERTIFICATE-----";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediaGraphPemCertificateList"/> class.
+        /// Initializes a new instance of the <see cref="PemCertificates"/> class.
         /// </summary>
         /// <param name="certificates"> The list of certificates.</param>
-        public MediaGraphPemCertificateList(IList<X509Certificate2> certificates)
+        public PemCertificates(IList<X509Certificate2> certificates)
         {
             if (certificates == null)
             {
@@ -47,14 +47,14 @@ namespace Azure.Media.Analytics.Edge.Models
             }
 
             Certificates = certificates.Select(ConvertToPemString).ToList();
-            Type = "#Microsoft.Media.MediaGraphPemCertificateList";
+            Type = "#Microsoft.VideoAnalyzer.PemCertificateList";
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediaGraphPemCertificateList"/> class.
+        /// Initializes a new instance of the <see cref="PemCertificates"/> class.
         /// </summary>
         /// <param name="certificates"> The certificates params.</param>
-        public MediaGraphPemCertificateList(params X509Certificate2[] certificates)
+        public PemCertificates(params X509Certificate2[] certificates)
         {
             if (certificates == null)
             {
@@ -62,7 +62,7 @@ namespace Azure.Media.Analytics.Edge.Models
             }
 
             Certificates = certificates.Select(ConvertToPemString).ToList();
-            Type = "#Microsoft.Media.MediaGraphPemCertificateList";
+            Type = "#Microsoft.VideoAnalyzer.PemCertificateList";
         }
 
         private static string ConvertToPemString(X509Certificate2 certificate)

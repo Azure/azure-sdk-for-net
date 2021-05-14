@@ -18,17 +18,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
 {
     public class LiveVideoAnalyzerSample
     {
-        private ServiceClient _serviceClient;
-        private String _deviceId = "lva-sample-device";
-        private String _moduleId = "mediaEdge";
+        private ServiceClient serviceClient;
+        private String deviceId = "lva-sample-device";
+        private String moduleId = "mediaEdge";
 
         public LiveVideoAnalyzerSample()
         {
             #region Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-            var connectionString = "connectionString";
-            this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+            String connectionString = "HostName=lvasamplehubnpctns45jvoji.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=dburWgVNqX+/xuOpSfXMKQdkr4nypY7HbwmwduL3mbs=";
+            ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
             #endregion Snippet:Azure_VideoAnalyzerSamples_ConnectionString
-
+            this.serviceClient = serviceClient;
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
                 directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
 
-                var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+                var setPipelineTopResponse = await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, directMethod);
                 #endregion Snippet:Azure_VideoAnalyzerSamples_InvokeDirectMethod
 
                 // get a topology using helper function
@@ -92,7 +92,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             var directMethod = new CloudToDeviceMethod(bc.MethodName);
             directMethod.SetPayloadJson(bc.GetPayloadAsJson());
 
-            return await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+            return await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, directMethod);
         }
 
         private LivePipeline BuildLivePipeline(string topologyName)
