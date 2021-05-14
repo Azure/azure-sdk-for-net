@@ -13,18 +13,18 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ArtifactTagProperties
     {
         /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
-        /// <param name="repository"> Image name. </param>
+        /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="repository"/>, <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="writeableProperties"/> is null. </exception>
-        internal ArtifactTagProperties(string repository, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ContentProperties writeableProperties)
+        /// <exception cref="ArgumentNullException"> <paramref name="repositoryName"/>, <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="writeableProperties"/> is null. </exception>
+        internal ArtifactTagProperties(string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, TagWriteableProperties writeableProperties)
         {
-            if (repository == null)
+            if (repositoryName == null)
             {
-                throw new ArgumentNullException(nameof(repository));
+                throw new ArgumentNullException(nameof(repositoryName));
             }
             if (name == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(writeableProperties));
             }
 
-            Repository = repository;
+            RepositoryName = repositoryName;
             Name = name;
             Digest = digest;
             CreatedOn = createdOn;
@@ -48,7 +48,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Image name. </summary>
-        public string Repository { get; }
+        public string RepositoryName { get; }
         /// <summary> Tag name. </summary>
         public string Name { get; }
         /// <summary> Tag digest. </summary>
@@ -58,6 +58,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Tag last update time. </summary>
         public DateTimeOffset LastUpdatedOn { get; }
         /// <summary> Writeable properties of the resource. </summary>
-        public ContentProperties WriteableProperties { get; }
+        public TagWriteableProperties WriteableProperties { get; }
     }
 }

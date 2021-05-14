@@ -20,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
             DateTimeOffset lastUpdateTime = default;
             int manifestCount = default;
             int tagCount = default;
-            ContentProperties changeableAttributes = default;
+            RepositoryWriteableProperties changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageName"))
@@ -50,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("changeableAttributes"))
                 {
-                    changeableAttributes = ContentProperties.DeserializeContentProperties(property.Value);
+                    changeableAttributes = RepositoryWriteableProperties.DeserializeRepositoryWriteableProperties(property.Value);
                     continue;
                 }
             }

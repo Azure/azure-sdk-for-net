@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="references"> List of manifest attributes details. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
+        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ManifestWriteableProperties writeableProperties)
         {
             Digest = digest;
             Size = size;
@@ -69,6 +69,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
         /// <summary> Writeable properties of the resource. </summary>
-        public ContentProperties WriteableProperties { get; }
+        public ManifestWriteableProperties WriteableProperties { get; }
     }
 }

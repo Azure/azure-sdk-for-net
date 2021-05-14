@@ -15,8 +15,16 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ArtifactManifestProperties
     {
         /// <summary> Initializes a new instance of ArtifactManifestProperties. </summary>
-        internal ArtifactManifestProperties()
+        /// <param name="digest"> Manifest. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        internal ArtifactManifestProperties(string digest)
         {
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+
+            Digest = digest;
             References = new ChangeTrackingList<ManifestAttributesManifestReferences>();
             Tags = new ChangeTrackingList<string>();
         }
@@ -32,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="references"> List of manifest attributes details. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        internal ArtifactManifestProperties(string repositoryName, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
+        internal ArtifactManifestProperties(string repositoryName, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ManifestWriteableProperties writeableProperties)
         {
             RepositoryName = repositoryName;
             Digest = digest;
@@ -63,6 +71,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
         /// <summary> Writeable properties of the resource. </summary>
-        public ContentProperties WriteableProperties { get; }
+        public ManifestWriteableProperties WriteableProperties { get; }
     }
 }

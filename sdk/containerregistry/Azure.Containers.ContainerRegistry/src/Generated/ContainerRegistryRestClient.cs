@@ -536,7 +536,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(string name, ContentProperties value)
+        internal HttpMessage CreateSetPropertiesRequest(string name, RepositoryWriteableProperties value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -562,7 +562,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<Response<RepositoryProperties>> SetPropertiesAsync(string name, ContentProperties value = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RepositoryProperties>> SetPropertiesAsync(string name, RepositoryWriteableProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -590,7 +590,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Response<RepositoryProperties> SetProperties(string name, ContentProperties value = null, CancellationToken cancellationToken = default)
+        public Response<RepositoryProperties> SetProperties(string name, RepositoryWriteableProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -788,7 +788,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateUpdateTagAttributesRequest(string name, string reference, ContentProperties value)
+        internal HttpMessage CreateUpdateTagAttributesRequest(string name, string reference, TagWriteableProperties value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -814,10 +814,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Update tag attributes. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
-        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="value"> Tag attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public async Task<Response<ArtifactTagProperties>> UpdateTagAttributesAsync(string name, string reference, ContentProperties value = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ArtifactTagProperties>> UpdateTagAttributesAsync(string name, string reference, TagWriteableProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -847,10 +847,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Update tag attributes. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
-        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="value"> Tag attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public Response<ArtifactTagProperties> UpdateTagAttributes(string name, string reference, ContentProperties value = null, CancellationToken cancellationToken = default)
+        public Response<ArtifactTagProperties> UpdateTagAttributes(string name, string reference, TagWriteableProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -1116,7 +1116,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateUpdateManifestPropertiesRequest(string name, string digest, ContentProperties value)
+        internal HttpMessage CreateUpdateManifestPropertiesRequest(string name, string digest, ManifestWriteableProperties value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1142,10 +1142,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Update properties of a manifest. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
-        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="value"> Manifest attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public async Task<Response<ArtifactManifestProperties>> UpdateManifestPropertiesAsync(string name, string digest, ContentProperties value = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ArtifactManifestProperties>> UpdateManifestPropertiesAsync(string name, string digest, ManifestWriteableProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -1175,10 +1175,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Update properties of a manifest. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
-        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="value"> Manifest attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public Response<ArtifactManifestProperties> UpdateManifestProperties(string name, string digest, ContentProperties value = null, CancellationToken cancellationToken = default)
+        public Response<ArtifactManifestProperties> UpdateManifestProperties(string name, string digest, ManifestWriteableProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
