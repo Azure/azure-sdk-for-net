@@ -3979,8 +3979,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobSasQueryParameters blobSasQueryParameters = GetContainerSas(
                 containerName: test.Container.Name,
-                permissions: BlobContainerSasPermissions.Read,
-                sasVersion: ToSasVersion(_serviceVersion));
+                permissions: BlobContainerSasPermissions.Read);
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {
@@ -4303,8 +4302,7 @@ namespace Azure.Storage.Blobs.Test
                 snapshot: snapshotResponse.Value.Snapshot,
                 permissions: SnapshotSasPermissions.Read,
                 userDelegationKey: userDelegationKey,
-                accountName: TestConfigOAuth.AccountName,
-                sasVersion: ToSasVersion(BlobClientOptions.LatestVersion));
+                accountName: TestConfigOAuth.AccountName);
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {

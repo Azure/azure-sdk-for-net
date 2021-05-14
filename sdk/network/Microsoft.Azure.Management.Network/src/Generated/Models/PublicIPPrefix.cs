@@ -61,11 +61,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// public IP prefix resource. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="natGateway">NatGateway of Public IP Prefix.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="zones">A list of availability zones denoting the IP
         /// allocated for the resource needs to come from.</param>
-        public PublicIPPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), PublicIPPrefixSku sku = default(PublicIPPrefixSku), string publicIPAddressVersion = default(string), IList<IpTag> ipTags = default(IList<IpTag>), int? prefixLength = default(int?), string ipPrefix = default(string), IList<ReferencedPublicIpAddress> publicIPAddresses = default(IList<ReferencedPublicIpAddress>), SubResource loadBalancerFrontendIpConfiguration = default(SubResource), SubResource customIPPrefix = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
+        public PublicIPPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), PublicIPPrefixSku sku = default(PublicIPPrefixSku), string publicIPAddressVersion = default(string), IList<IpTag> ipTags = default(IList<IpTag>), int? prefixLength = default(int?), string ipPrefix = default(string), IList<ReferencedPublicIpAddress> publicIPAddresses = default(IList<ReferencedPublicIpAddress>), SubResource loadBalancerFrontendIpConfiguration = default(SubResource), SubResource customIPPrefix = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string), NatGateway natGateway = default(NatGateway), string etag = default(string), IList<string> zones = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
@@ -79,6 +80,7 @@ namespace Microsoft.Azure.Management.Network.Models
             CustomIPPrefix = customIPPrefix;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            NatGateway = natGateway;
             Etag = etag;
             Zones = zones;
             CustomInit();
@@ -161,6 +163,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets natGateway of Public IP Prefix.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.natGateway")]
+        public NatGateway NatGateway { get; set; }
+
+        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
@@ -174,18 +182,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "zones")]
         public IList<string> Zones { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ExtendedLocation != null)
-            {
-                ExtendedLocation.Validate();
-            }
-        }
     }
 }

@@ -1610,6 +1610,74 @@ namespace Azure.Storage.Blobs
         /// <param name="deletedContainerVersion">
         /// The version of the previously deleted container.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContainerClient> UndeleteBlobContainer(
+            string deletedContainerName,
+            string deletedContainerVersion,
+            CancellationToken cancellationToken = default)
+            => UndeleteBlobContainerInternal(
+                deletedContainerName,
+                deletedContainerVersion,
+                deletedContainerName,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Restores a previously deleted container.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the container.
+        /// </summary>
+        /// <param name="deletedContainerName">
+        /// The name of the previously deleted container.
+        /// </param>
+        /// <param name="deletedContainerVersion">
+        /// The version of the previously deleted container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
+            string deletedContainerName,
+            string deletedContainerVersion,
+            CancellationToken cancellationToken = default)
+            => await UndeleteBlobContainerInternal(
+                deletedContainerName,
+                deletedContainerVersion,
+                deletedContainerName,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Restores a previously deleted container.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the container.
+        /// </summary>
+        /// <param name="deletedContainerName">
+        /// The name of the previously deleted container.
+        /// </param>
+        /// <param name="deletedContainerVersion">
+        /// The version of the previously deleted container.
+        /// </param>
         /// <param name="destinationContainerName">
         /// Optional.  Use this parameter if you would like to restore the container
         /// under a different name.
@@ -1625,10 +1693,11 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContainerClient> UndeleteBlobContainer(
             string deletedContainerName,
             string deletedContainerVersion,
-            string destinationContainerName = default,
+            string destinationContainerName,
             CancellationToken cancellationToken = default)
             => UndeleteBlobContainerInternal(
                 deletedContainerName,
@@ -1664,10 +1733,11 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
             string deletedContainerName,
             string deletedContainerVersion,
-            string destinationContainerName = default,
+            string destinationContainerName,
             CancellationToken cancellationToken = default)
             => await UndeleteBlobContainerInternal(
                 deletedContainerName,

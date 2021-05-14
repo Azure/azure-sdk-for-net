@@ -25,10 +25,16 @@ In order to interact with the Azure Time Series Insights service, you will need 
 
 ## Key concepts
 
-Coming soon.
+The main concepts of Time Series Insights client include:
+
+- Instances client: To perform operations such as creating, listing, replacing and deleting Time Series instances.
+- Types client: To perform operations such as creating, listing, replacing and deleting Time Series types.
+- Hierarchies client: To perform operations such as creating, listing, replacing and deleting Time Series hierarchies.
+- Model Settings client: To perform operations such as getting and updating Time Series Model configuration settings.
+- Query client: To query for events, series and aggregate series on Time Series Insights.
 
 ### Thread safety
-We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that reusing client instances is always safe, even across threads.
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
@@ -43,7 +49,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-Coming soon.
+You can familiarize yourself with different APIs using [samples for Time Series Insights](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples).
 
 ## Source code folder structure
 
@@ -78,7 +84,33 @@ Assembly properties required for running unit tests.
 
 ## Troubleshooting
 
-Coming soon.
+Time Series Insights service operation failures are usually returned to the user as [TimeSeriesOperationError](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/Generated/Models/TimeSeriesOperationError.cs). The TimeSeriesOperationError response is either returned directly by the client library API, or as a nested property within the actual response for the client library API. For example, the DeleteByName API that is part of the hierarchies client returns a TimeSeriesOperationError directly. Whereas, the Replace API that is part of the instances client returns a [InstancesOperationResult](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/Generated/Models/InstancesOperationResult.cs), which has a TimeSeriesOperationError property nested within it.
+
+Example below shows use of TimeSeriesInsightsSampleGetTypeById operation, iterate through response error to find out if a type does not exist.
+
+```C# Snippet:TimeSeriesInsightsSampleGetTypeById
+// Code snippet below shows getting a default Type using Id
+// The default type Id can be obtained programmatically by using the ModelSettings client.
+
+TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
+Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await typesClient
+    .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });
+
+// The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
+// If the error object is set to null, this means the operation was a success.
+for (int i = 0; i < getTypeByIdResults.Value.Length; i++)
+{
+    if (getTypeByIdResults.Value[i].Error == null)
+    {
+        Console.WriteLine($"Retrieved Time Series type with Id: '{getTypeByIdResults.Value[i].TimeSeriesType.Id}'.");
+    }
+    else
+    {
+        Console.WriteLine($"Failed to retrieve a Time Series type due to '{getTypeByIdResults.Value[i].Error.Message}'.");
+    }
+}
+```
 
 ## Next steps
 

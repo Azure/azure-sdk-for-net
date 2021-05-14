@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,49 +15,34 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Values))
+            if (Optional.IsDefined(ValuesInternal))
             {
                 writer.WritePropertyName("values");
-                writer.WriteStartArray();
-                foreach (var item in Values)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                ValuesInternal.WriteTo(writer);
             }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(PropertyValueType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(PropertyValueType.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static PropertyValues DeserializePropertyValues(JsonElement element)
         {
-            Optional<IList<object>> values = default;
+            Optional<JsonElement> values = default;
             Optional<string> name = default;
-            Optional<PropertyTypes> type = default;
+            Optional<TimeSeriesPropertyType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<object> array = new List<object>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetObject());
-                    }
-                    values = array;
+                    values = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -73,11 +57,11 @@ namespace Azure.IoT.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new PropertyTypes(property.Value.GetString());
+                    type = new TimeSeriesPropertyType(property.Value.GetString());
                     continue;
                 }
             }
-            return new PropertyValues(name.Value, Optional.ToNullable(type), Optional.ToList(values));
+            return new PropertyValues(name.Value, Optional.ToNullable(type), values);
         }
     }
 }

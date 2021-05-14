@@ -31,7 +31,7 @@ extends:
     ServiceDirectory: purview
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Data.Purview.Catalog
-      safeName: AzureDataPurviewCatalog
-    - name: Azure.Data.Purview.Scanning
-      safeName: AzureDataPurviewScanning
+    - name: Azure.Analytics.Purview.Catalog
+      safeName: AzureAnalyticsPurviewCatalog
+    - name: Azure.Analytics.Purview.Scanning
+      safeName: AzureAnalyticsPurviewScanning

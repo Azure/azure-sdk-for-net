@@ -55,11 +55,11 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.IsNull(searchOptions.QueryAnswerRaw);
 
             searchOptions.QueryAnswer = QueryAnswer.None;
-            Assert.AreEqual($"{QueryAnswer.None}", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"{QueryAnswer.None}|count-1", searchOptions.QueryAnswerRaw);
             Assert.IsNull(searchOptions.QueryAnswerCount);
 
             searchOptions.QueryAnswer = QueryAnswer.Extractive;
-            Assert.AreEqual($"{QueryAnswer.Extractive}", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"{QueryAnswer.Extractive}|count-1", searchOptions.QueryAnswerRaw);
             Assert.IsNull(searchOptions.QueryAnswerCount);
 
             searchOptions.QueryAnswerRaw = "none";
@@ -77,11 +77,11 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.IsNull(searchOptions.QueryAnswerRaw);
 
             searchOptions.QueryAnswerCount = 0;
-            Assert.AreEqual($"|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
+            Assert.IsNull(searchOptions.QueryAnswerRaw);
             Assert.IsNull(searchOptions.QueryAnswer);
 
             searchOptions.QueryAnswerCount = 100;
-            Assert.AreEqual($"|count-{searchOptions.QueryAnswerCount}", searchOptions.QueryAnswerRaw);
+            Assert.IsNull(searchOptions.QueryAnswerRaw);
             Assert.IsNull(searchOptions.QueryAnswer);
 
             searchOptions.QueryAnswerRaw = "|count-3";
