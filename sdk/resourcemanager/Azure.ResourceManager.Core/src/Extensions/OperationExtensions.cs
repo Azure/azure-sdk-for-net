@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Extension methods for Operation class that apply to management use cases.
     /// </summary>
-    public static class ArmOperationExtensions
+    public static class OperationExtensions
     {
         /// <summary>
         /// Waits for the completion of the long running operations.

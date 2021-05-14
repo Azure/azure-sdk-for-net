@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The <see cref="ResourceType"/> of the resource. </param>
         [SerializationConstructor]
-        protected Resource(TIdentifier id, string name, ResourceType type)
+        protected internal Resource(TIdentifier id, string name, ResourceType type)
         {
             Id = id;
             Name = name;

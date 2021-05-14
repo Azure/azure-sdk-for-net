@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing collection of Subscription and their operations
     /// </summary>
-    public class SubscriptionContainer : ContainerBase<SubscriptionResourceIdentifier, Subscription>
+    public class SubscriptionContainer : ResourceContainerBase<SubscriptionResourceIdentifier, Subscription, SubscriptionData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class for mocking.
@@ -133,6 +133,22 @@ namespace Azure.ResourceManager.Core
         {
             if (!(identifier is null))
                 throw new ArgumentException("Invalid parent for subscription container", nameof(identifier));
+        }
+
+        /// <inheritdoc />
+        public override Response<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
+        {
+            return new SubscriptionOperations(
+                    new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
+                    subscriptionGuid).Get(cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public override Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        {
+            return new SubscriptionOperations(
+                new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
+                subscriptionGuid).GetAsync(cancellationToken);
         }
 
         /// <summary>
