@@ -837,6 +837,7 @@ namespace Azure.Storage.Blobs.Test
                 accountName: _tenantConfiguration.AccountName,
                 containerName: Container.Name,
                 new Microsoft.Azure.Management.Storage.Models.BlobContainer(
+                    publicAccess: Microsoft.Azure.Management.Storage.Models.PublicAccess.Container,
                     immutableStorageWithVersioning: new Microsoft.Azure.Management.Storage.Models.ImmutableStorageWithVersioning(true)));
         }
 
