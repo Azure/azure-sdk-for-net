@@ -10,20 +10,20 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>20.4.0</Version>
+		<Version>20.5.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added new api version 2020-11-01
-			- Fixed property names for Vpn Gateway
-            - No Snat firewall policy
-            - Added insights property for Firewall policy
-            - Support for Listing IKE Security Associations for VPN Link Connections
-            - Added subnet property for Load Balancer Backend Address
-            - Support for ResetConnection for VNG and VPN Link connections
-            - Added support for Traffic selector param in VpnConnection for virtualWan
-            - Added auth type property to vng config
-            - Fixed mistyping in App Gw property
+            - Added new api version 2021-02-01
+			- Swagger change for CustomIpPrefix. Adding four new attributes
+			- VPN NAT for Virtual Network Gateway feature changes
+			- Added a new feature FlowTimeoutInMinutes under Virtual Network Property
+			- Added new failedMessage property for CustomIpPrefix
+			- Added Preferred Routing Gateway Support 
+			- Feature: Address space update in peered vNets
+			- Removed max file size limit enforcement as it is done in NRP
+			- Hotfix extended location parameter hierarchy
+			- Added bastion SKU
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
