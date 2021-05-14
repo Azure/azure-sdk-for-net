@@ -32,8 +32,10 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// Initializes a new instance of the DirectLineSpeechChannelProperties
         /// class.
         /// </summary>
-        /// <param name="cognitiveServicesSubscriptionId">The cognitive service
-        /// subscription ID to use with this channel registration.</param>
+        /// <param name="cognitiveServiceRegion">The cognitive service region
+        /// with this channel registration.</param>
+        /// <param name="cognitiveServiceSubscriptionKey">The cognitive service
+        /// subscription key to use with this channel registration.</param>
         /// <param name="isEnabled">Whether this channel is enabled or
         /// not.</param>
         /// <param name="customVoiceDeploymentId">Custom speech model id
@@ -42,9 +44,10 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// (optional).</param>
         /// <param name="isDefaultBotForCogSvcAccount">Make this a default bot
         /// for chosen cognitive service account.</param>
-        public DirectLineSpeechChannelProperties(string cognitiveServicesSubscriptionId, bool? isEnabled = default(bool?), string customVoiceDeploymentId = default(string), string customSpeechModelId = default(string), bool? isDefaultBotForCogSvcAccount = default(bool?))
+        public DirectLineSpeechChannelProperties(string cognitiveServiceRegion, string cognitiveServiceSubscriptionKey, bool? isEnabled = default(bool?), string customVoiceDeploymentId = default(string), string customSpeechModelId = default(string), bool? isDefaultBotForCogSvcAccount = default(bool?))
         {
-            CognitiveServicesSubscriptionId = cognitiveServicesSubscriptionId;
+            CognitiveServiceRegion = cognitiveServiceRegion;
+            CognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
             IsEnabled = isEnabled;
             CustomVoiceDeploymentId = customVoiceDeploymentId;
             CustomSpeechModelId = customSpeechModelId;
@@ -58,11 +61,18 @@ namespace Microsoft.Azure.Management.BotService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the cognitive service subscription ID to use with this
-        /// channel registration.
+        /// Gets or sets the cognitive service region with this channel
+        /// registration.
         /// </summary>
-        [JsonProperty(PropertyName = "cognitiveServicesSubscriptionId")]
-        public string CognitiveServicesSubscriptionId { get; set; }
+        [JsonProperty(PropertyName = "cognitiveServiceRegion")]
+        public string CognitiveServiceRegion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cognitive service subscription key to use with
+        /// this channel registration.
+        /// </summary>
+        [JsonProperty(PropertyName = "cognitiveServiceSubscriptionKey")]
+        public string CognitiveServiceSubscriptionKey { get; set; }
 
         /// <summary>
         /// Gets or sets whether this channel is enabled or not.
@@ -97,9 +107,13 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (CognitiveServicesSubscriptionId == null)
+            if (CognitiveServiceRegion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CognitiveServicesSubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "CognitiveServiceRegion");
+            }
+            if (CognitiveServiceSubscriptionKey == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CognitiveServiceSubscriptionKey");
             }
         }
     }

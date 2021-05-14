@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.BotService
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/botservice/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.output-folder=D:\\work\\azure-sdk-for-net\\sdk\\botservice\\Microsoft.Azure.Management.BotService\\src\\Generated";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "60be518b4fa1a9fb011a0cb69ae7ca3e1cee06b1";
+      public static readonly String GithubCommidId = "7d4caa5e1c9996a25300b0b23ef426667e4a7bde";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
