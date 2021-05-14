@@ -36,12 +36,19 @@ namespace Azure.Containers.ContainerRegistry
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Digest { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Containers.ContainerRegistry.ArtifactManifestProperties> Manifests { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Containers.ContainerRegistry.ArtifactManifestReference> ManifestReferences { get { throw null; } }
         public Azure.Containers.ContainerRegistry.ArtifactOperatingSystem? OperatingSystem { get { throw null; } }
         public string RepositoryName { get { throw null; } }
         public long? Size { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tags { get { throw null; } }
         public Azure.Containers.ContainerRegistry.ManifestWriteableProperties WriteableProperties { get { throw null; } }
+    }
+    public partial class ArtifactManifestReference
+    {
+        internal ArtifactManifestReference() { }
+        public Azure.Containers.ContainerRegistry.ArtifactArchitecture Architecture { get { throw null; } }
+        public string Digest { get { throw null; } }
+        public Azure.Containers.ContainerRegistry.ArtifactOperatingSystem OperatingSystem { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArtifactOperatingSystem : System.IEquatable<Azure.Containers.ContainerRegistry.ArtifactOperatingSystem>

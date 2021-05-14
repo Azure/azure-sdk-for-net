@@ -32,14 +32,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             Assert.Contains(tag, properties.Tags.ToList());
             Assert.AreEqual(_repositoryName, properties.RepositoryName);
-            Assert.GreaterOrEqual(helloWorldManifestReferences, properties.Manifests.Count);
+            Assert.GreaterOrEqual(helloWorldManifestReferences, properties.ManifestReferences.Count);
 
-            Assert.IsTrue(properties.Manifests.Any(
+            Assert.IsTrue(properties.ManifestReferences.Any(
                 artifact =>
                     artifact.Architecture == "arm64" &&
                     artifact.OperatingSystem == "linux"));
 
-            Assert.IsTrue(properties.Manifests.Any(
+            Assert.IsTrue(properties.ManifestReferences.Any(
                 artifact =>
                     artifact.Architecture == "amd64" &&
                     artifact.OperatingSystem == "windows"));
@@ -55,7 +55,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             ArtifactManifestProperties manifestListProperties = await artifact.GetManifestPropertiesAsync();
-            var arm64LinuxImage = manifestListProperties.Manifests.First(
+            var arm64LinuxImage = manifestListProperties.ManifestReferences.First(
                 artifact =>
                     artifact.Architecture == "arm64" &&
                     artifact.OperatingSystem == "linux");

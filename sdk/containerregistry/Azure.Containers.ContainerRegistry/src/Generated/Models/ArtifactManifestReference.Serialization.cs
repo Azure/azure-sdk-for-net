@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestAttributesManifestReferences
+    public partial class ArtifactManifestReference
     {
-        internal static ManifestAttributesManifestReferences DeserializeManifestAttributesManifestReferences(JsonElement element)
+        internal static ArtifactManifestReference DeserializeArtifactManifestReference(JsonElement element)
         {
             string digest = default;
             ArtifactArchitecture architecture = default;
@@ -35,7 +35,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestAttributesManifestReferences(digest, architecture, os);
+            return new ArtifactManifestReference(digest, architecture, os);
         }
     }
 }
