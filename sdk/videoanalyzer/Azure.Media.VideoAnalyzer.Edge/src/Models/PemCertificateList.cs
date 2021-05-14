@@ -12,7 +12,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary>
     /// Initializes a new instance of the PemCertificates class.
     /// </summary>
-    public partial class PemCertificates
+    public partial class PemCertificateList
     {
         /// <summary>
         /// How long the base 64 lines should be.
@@ -36,10 +36,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         private const string PemCertificateFooter = "-----END CERTIFICATE-----";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PemCertificates"/> class.
+        /// Initializes a new instance of the <see cref="PemCertificateList"/> class.
         /// </summary>
         /// <param name="certificates"> The list of certificates.</param>
-        public PemCertificates(IList<X509Certificate2> certificates)
+        public PemCertificateList(IList<X509Certificate2> certificates)
         {
             if (certificates == null)
             {
@@ -51,10 +51,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PemCertificates"/> class.
+        /// Initializes a new instance of the <see cref="PemCertificateList"/> class.
         /// </summary>
         /// <param name="certificates"> The certificates params.</param>
-        public PemCertificates(params X509Certificate2[] certificates)
+        public PemCertificateList(params X509Certificate2[] certificates)
         {
             if (certificates == null)
             {

@@ -218,12 +218,12 @@ additional questions or comments.
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mediaservices
 [samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
 
-[doc_direct_methods]: TODO
-[doc_pipelines]: TODO
-[doc_product]: TODO
+[doc_direct_methods]: TODO://link-to-published-doc
+[doc_pipelines]: TODO://link-to-published-doc
+[doc_product]: TODO://link-to-published-doc
 
 [iot-device-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices.Client/
 [iot-hub-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices/
-[iot_device_connection_string]: TODO
+[iot_device_connection_string]: TODO://link-to-published-doc
 
 [github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues
