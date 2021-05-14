@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,22 +17,24 @@ namespace Azure.Analytics.Synapse.Spark
     /// <see cref="SparkSessionClient.StartCreateSparkSession(SparkSessionOptions, bool?, CancellationToken)"/>,
     /// <see cref="SparkSessionClient.StartCreateSparkSessionAsync(SparkSessionOptions, bool?, CancellationToken)"/>,
     /// </summary>
-    public class SparkSessionOperation : Operation<SparkSession>, IOperation<SparkSession>
+    public class SparkSessionOperation : Operation<SparkSession>
     {
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(5);
 
-        private readonly OperationInternal<SparkSession> _operationInternal;
+        private readonly ClientDiagnostics _diagnostics;
+
         private readonly SparkSessionClient _client;
         private readonly SparkSession _value;
+        private Response<SparkSession> _response;
+        private bool _completed;
+        private RequestFailedException _requestFailedException;
 
         internal SparkSessionOperation(SparkSessionClient client, ClientDiagnostics diagnostics, Response<SparkSession> response)
         {
             _client = client;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(diagnostics, this, response.GetRawResponse())
-            {
-                DefaultPollingInterval = s_defaultPollingInterval
-            };
+            _response = response;
+            _diagnostics = diagnostics;
         }
 
         /// <summary> Initializes a new instance of <see cref="SparkSessionOperation" /> for mocking. </summary>
@@ -47,67 +50,89 @@ namespace Azure.Analytics.Synapse.Spark
         /// <remarks>
         /// Azure Synapse will return a <see cref="SparkSession"/> immediately but may take time to the session to be ready.
         /// </remarks>
-        public override SparkSession Value => _operationInternal.Value;
-
-        /// <inheritdoc/>
-        public override bool HasCompleted => _operationInternal.HasCompleted;
-
-        /// <inheritdoc/>
-        public override bool HasValue => _operationInternal.HasValue;
-
-        /// <inheritdoc/>
-        public override Response GetRawResponse() => _operationInternal.RawResponse;
-
-        /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
+        public override SparkSession Value
         {
-            try
+            get
             {
-                return _operationInternal.UpdateStatus(cancellationToken);
-            }
-            catch (Exception e) when (e is not RequestFailedException)
-            {
-                throw new RequestFailedException("Unexpected failure", e);
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                if (!HasCompleted)
+                {
+                    throw new InvalidOperationException("The operation is not complete.");
+                }
+                if (_requestFailedException != null)
+                {
+                    throw _requestFailedException;
+                }
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                return _value;
             }
         }
 
         /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                return await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e) when (e is not RequestFailedException)
-            {
-                throw new RequestFailedException("Unexpected failure", e);
-            }
-        }
+        public override bool HasCompleted => _completed;
+
+        /// <inheritdoc/>
+        public override bool HasValue => !_responseHasError && HasCompleted;
+
+        private bool _responseHasError => StringComparer.OrdinalIgnoreCase.Equals ("error", _response?.Value?.State);
+
+        /// <inheritdoc/>
+        public override Response GetRawResponse() => _response.GetRawResponse();
+
+        /// <inheritdoc/>
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) => UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
+
+        /// <inheritdoc/>
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
-        public override async ValueTask<Response<SparkSession>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                return await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e) when (e is not RequestFailedException)
-            {
-                throw new RequestFailedException("Unexpected failure", e);
-            }
-        }
+        public override ValueTask<Response<SparkSession>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+            this.DefaultWaitForCompletionAsync(s_defaultPollingInterval, cancellationToken);
 
         /// <inheritdoc />
-        public override async ValueTask<Response<SparkSession>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public override ValueTask<Response<SparkSession>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
-            try
+            if (!_completed)
             {
-                return await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(SparkSessionOperation)}.{nameof(UpdateStatus)}");
+                scope.Start();
+
+                try
+                {
+                    if (async)
+                    {
+                        _response = await _client.RestClient.GetSparkSessionAsync(_value.Id, true, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        _response = _client.RestClient.GetSparkSession(_value.Id, true, cancellationToken);
+                    }
+                    _completed = IsJobComplete(_response.Value.Result.ToString(), _response.Value.State);
+                }
+                catch (RequestFailedException e)
+                {
+                    _requestFailedException = e;
+                    scope.Failed(e);
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    _requestFailedException = new RequestFailedException("Unexpected failure", e);
+                    scope.Failed(e);
+                    throw _requestFailedException;
+                }
+                if (_responseHasError)
+                {
+                    _requestFailedException = new RequestFailedException("SparkBatchOperation ended in state error");
+                    scope.Failed(_requestFailedException);
+                    throw _requestFailedException;
+                }
             }
-            catch (Exception e) when (e is not RequestFailedException)
-            {
-                throw new RequestFailedException("Unexpected failure", e);
-            }
+
+            return GetRawResponse();
         }
 
         private static bool IsJobComplete(string jobState, string livyState)
@@ -131,29 +156,6 @@ namespace Azure.Analytics.Synapse.Spark
             }
 
             return false;
-        }
-
-        async ValueTask<OperationState<SparkSession>> IOperation<SparkSession>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
-        {
-            Response<SparkSession> response = async
-                ? await _client.RestClient.GetSparkSessionAsync(_value.Id, true, cancellationToken).ConfigureAwait(false)
-                : _client.RestClient.GetSparkSession(_value.Id, true, cancellationToken);
-
-            Response rawResponse = response.GetRawResponse();
-
-            if (IsJobComplete(response.Value.Result.ToString(), response.Value.State))
-            {
-                if (StringComparer.OrdinalIgnoreCase.Equals("error", response?.Value?.State))
-                {
-                    return OperationState<SparkSession>.Failure(rawResponse, new RequestFailedException("SparkBatchOperation ended in state error"));
-                }
-                else
-                {
-                    return OperationState<SparkSession>.Success(rawResponse, _value);
-                }
-            }
-
-            return OperationState<SparkSession>.Pending(rawResponse);
         }
     }
 }
