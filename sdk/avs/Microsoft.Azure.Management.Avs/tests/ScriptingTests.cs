@@ -61,6 +61,9 @@ namespace Avs.Tests
                 });
 
             avsClient.ScriptExecutions.Get(rgName, cloudName, executionName);
+
+            string[] outputStream = { "Output"};
+            avsClient.ScriptExecutions.GetExecutionLogs(rgName, cloudName, executionName, outputStream);
             
             avsClient.ScriptExecutions.List(rgName, cloudName);
             
