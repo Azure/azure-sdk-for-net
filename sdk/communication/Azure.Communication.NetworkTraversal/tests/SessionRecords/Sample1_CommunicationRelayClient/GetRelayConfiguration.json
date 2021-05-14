@@ -1,0 +1,6 @@
+{
+  "Entries": [],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://anpearesource1.communication.azure.com/;accesskey=Kg=="
+  }
+}
