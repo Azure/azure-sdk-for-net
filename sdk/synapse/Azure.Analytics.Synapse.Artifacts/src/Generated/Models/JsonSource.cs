@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of JsonSource. </summary>
         public JsonSource()
         {
+            AdditionalColumns = new ChangeTrackingList<AdditionalColumns>();
             Type = "JsonSource";
         }
 
@@ -25,13 +27,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> . </param>
         /// <param name="storeSettings"> Json store settings. </param>
-        internal JsonSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, StoreReadSettings storeSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="formatSettings"> Json format settings. </param>
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
+        internal JsonSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, StoreReadSettings storeSettings, JsonReadSettings formatSettings, IList<AdditionalColumns> additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             StoreSettings = storeSettings;
+            FormatSettings = formatSettings;
+            AdditionalColumns = additionalColumns;
             Type = type ?? "JsonSource";
         }
 
         /// <summary> Json store settings. </summary>
         public StoreReadSettings StoreSettings { get; set; }
+        /// <summary> Json format settings. </summary>
+        public JsonReadSettings FormatSettings { get; set; }
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </summary>
+        public IList<AdditionalColumns> AdditionalColumns { get; }
     }
 }

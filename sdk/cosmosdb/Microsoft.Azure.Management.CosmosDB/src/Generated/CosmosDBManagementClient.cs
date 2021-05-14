@@ -21,9 +21,6 @@ namespace Microsoft.Azure.Management.CosmosDB
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// Azure Cosmos DB Database Service Resource Provider REST API
-    /// </summary>
     public partial class CosmosDBManagementClient : ServiceClient<CosmosDBManagementClient>, ICosmosDBManagementClient, IAzureClient
     {
         /// <summary>
@@ -442,7 +439,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-01-15";
+            ApiVersion = "2021-04-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

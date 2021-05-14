@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.CosmosDB
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Azure Cosmos DB Database Service Resource Provider REST API
     /// </summary>
     public partial interface ICosmosDBManagementClient : System.IDisposable
     {

@@ -21,6 +21,8 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 To recognize receipts from a URI, use the `StartRecognizeReceiptsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
+For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/receiptfields).
+
 ```C# Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
 Uri receiptUri = <receiptUri>;
 
@@ -104,6 +106,8 @@ foreach (RecognizedForm receipt in receipts)
 ## Recognize receipts from a given file
 
 To recognize receipts from a given file, use the `StartRecognizeReceipts` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
+
+For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/receiptfields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeReceiptFileStream
 string receiptPath = "<receiptPath>";

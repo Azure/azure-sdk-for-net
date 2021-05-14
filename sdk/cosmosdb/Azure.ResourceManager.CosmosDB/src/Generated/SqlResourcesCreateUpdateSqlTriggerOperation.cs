@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class SqlResourcesCreateUpdateSqlTriggerOperation : Operation<SqlTriggerGetResults>, IOperationSource<SqlTriggerGetResults>
     {
         private readonly ArmOperationHelpers<SqlTriggerGetResults> _operation;
+
+        /// <summary> Initializes a new instance of SqlResourcesCreateUpdateSqlTriggerOperation for mocking. </summary>
+        protected SqlResourcesCreateUpdateSqlTriggerOperation()
+        {
+        }
+
         internal SqlResourcesCreateUpdateSqlTriggerOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<SqlTriggerGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlResourcesCreateUpdateSqlTriggerOperation");

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Certificates client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Certificates client library</AssemblyTitle>
-    <Version>4.2.0-beta.5</Version>
+    <Version>4.2.0-beta.7</Version>
     <ApiCompatVersion>4.1.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Key Vault Certificates;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -17,6 +17,7 @@
   <Import Project="..\..\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
@@ -38,11 +39,4 @@
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
   </ItemGroup>
 
-  <!-- Import the Azure.Core project
-  TODO: revert this when Azure.Core ships the TokenCredential updates
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-  -->
-  <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
 </Project>

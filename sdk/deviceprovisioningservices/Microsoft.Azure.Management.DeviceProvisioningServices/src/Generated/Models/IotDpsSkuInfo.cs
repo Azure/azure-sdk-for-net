@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
     using System.Linq;
 
     /// <summary>
-    /// List of possible provisoning service SKUs.
+    /// List of possible provisioning service SKUs.
     /// </summary>
     public partial class IotDpsSkuInfo
     {

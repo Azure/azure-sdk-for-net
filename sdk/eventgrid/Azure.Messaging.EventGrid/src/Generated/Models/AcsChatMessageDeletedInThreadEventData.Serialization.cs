@@ -24,6 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> composeTime = default;
             Optional<string> type = default;
             Optional<long> version = default;
+            Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,20 +83,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("transactionId"))
+                {
+                    transactionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("threadId"))
                 {
                     threadId = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsChatMessageDeletedInThreadEventData(threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), Optional.ToNullable(deleteTime));
+            return new AcsChatMessageDeletedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), Optional.ToNullable(deleteTime));
         }
 
         internal partial class AcsChatMessageDeletedInThreadEventDataConverter : JsonConverter<AcsChatMessageDeletedInThreadEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsChatMessageDeletedInThreadEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                throw new NotImplementedException();
             }
             public override AcsChatMessageDeletedInThreadEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

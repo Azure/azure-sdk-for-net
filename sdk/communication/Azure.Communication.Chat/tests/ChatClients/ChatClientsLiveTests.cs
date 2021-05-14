@@ -57,10 +57,11 @@ namespace Azure.Communication.Chat.Tests
             var displayNameMessage = "DisplayName sender message 1";
             var participants = new[]
             {
-                new ChatParticipant(user1),
-                new ChatParticipant(user2),
-                new ChatParticipant(user3)
+                new ChatParticipant(user1) { DisplayName = "user1" },
+                new ChatParticipant(user2) { DisplayName = "user2" },
+                new ChatParticipant(user3) { DisplayName = "user3" }
             };
+
             ChatClient chatClient = CreateInstrumentedChatClient(token1);
             ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
 
@@ -79,20 +80,20 @@ namespace Azure.Communication.Chat.Tests
             string updatedTopic = "Launch meeting";
             chatThreadClient.UpdateTopic(topic: "Launch meeting");
 
-            ChatThread chatThread = chatClient.GetChatThread(threadId);
+            ChatThreadProperties chatThread = chatThreadClient.GetProperties();
 
             string messageContent = "Let's meet at 11am";
-            string messageId = chatThreadClient.SendMessage("Let's meet at 11am");
+            string messageId = chatThreadClient.SendMessage("Let's meet at 11am").Value.Id;
             string messageContent2 = "Content for message 2";
-            string messageId2 = chatThreadClient2.SendMessage(messageContent2, ChatMessageType.Text, displayNameMessage);
+            string messageId2 = chatThreadClient2.SendMessage(messageContent2, ChatMessageType.Text, displayNameMessage).Value.Id;
             string messageContent3 = "Content for message 3";
-            string messageId3 = chatThreadClient3.SendMessage(messageContent3, ChatMessageType.Html, displayNameMessage);
+            string messageId3 = chatThreadClient3.SendMessage(messageContent3, ChatMessageType.Html, displayNameMessage).Value.Id;
             string messageContent4 = "Content for message 4";
-            string messageId4 = chatThreadClient3.SendMessage(messageContent4, ChatMessageType.Text, displayNameMessage);
+            string messageId4 = chatThreadClient3.SendMessage(messageContent4, ChatMessageType.Text, displayNameMessage).Value.Id;
             string messageContent5 = "Content for message 5";
-            string messageId5 = chatThreadClient3.SendMessage(messageContent5, ChatMessageType.Html, displayNameMessage);
+            string messageId5 = chatThreadClient3.SendMessage(messageContent5, ChatMessageType.Html, displayNameMessage).Value.Id;
             string messageContent6 = "Content for message 6";
-            string messageId6 = chatThreadClient3.SendMessage(messageContent6, ChatMessageType.Text, displayNameMessage);
+            string messageId6 = chatThreadClient3.SendMessage(messageContent6, ChatMessageType.Text, displayNameMessage).Value.Id;
 
             ChatMessage message = chatThreadClient.GetMessage(messageId);
             ChatMessage message2 = chatThreadClient2.GetMessage(messageId2);
@@ -120,24 +121,30 @@ namespace Azure.Communication.Chat.Tests
             Pageable<ChatParticipant> chatParticipants = chatThreadClient.GetParticipants();
             var chatParticipantsCount = chatParticipants.Count();
 
-            var newParticipant = new ChatParticipant(user4);
-            var newParticipant2 = new ChatParticipant(user5);
+            var newParticipant = new ChatParticipant(user4) { DisplayName = "user4" };
+            var newParticipant2 = new ChatParticipant(user5) { DisplayName = "user5" };
             chatThreadClient.AddParticipants(participants: new[] { newParticipant });
-            AddChatParticipantsResult addChatParticipantsResult = chatThreadClient.AddParticipant(newParticipant2);
+            Response addChatParticipantsResult = chatThreadClient.AddParticipant(newParticipant2);
 
             Pageable<ChatParticipant> chatParticipantsAfterTwoAdded = chatThreadClient.GetParticipants();
             PageableTester<ChatParticipant>.AssertPagination(enumerableResource: chatParticipantsAfterTwoAdded, expectedPageSize: 2, expectedTotalResources: 5);
             var chatParticipantsAfterTwoAddedCount = chatParticipantsAfterTwoAdded.Count();
 
+            Pageable<ChatMessage> messagesAfterParticipantsAdded = chatThreadClient.GetMessages();
+            ChatMessage participantAddedMessage = messagesAfterParticipantsAdded.First(x => x.Type == ChatMessageType.ParticipantAdded);
+
             CommunicationUserIdentifier participantToBeRemoved = user4;
-            chatThreadClient.RemoveParticipant(user: participantToBeRemoved);
+            chatThreadClient.RemoveParticipant(identifier: participantToBeRemoved);
             Pageable<ChatParticipant> chatParticipantAfterOneDeleted = chatThreadClient.GetParticipants();
             var chatParticipantAfterOneDeletedCount = chatParticipantAfterOneDeleted.Count();
+
+            Pageable<ChatMessage> messagesAfterParticipantRemoved = chatThreadClient.GetMessages();
+            ChatMessage participantRemovedMessage = messagesAfterParticipantRemoved.First(x => x.Type == ChatMessageType.ParticipantRemoved);
 
             Response typingNotificationResponse = chatThreadClient.SendTypingNotification();
             chatThreadClient.SendTypingNotification();
 
-            Pageable<ChatThreadInfo> threads = chatClient.GetChatThreadsInfo();
+            Pageable<ChatThreadItem> threads = chatClient.GetChatThreads();
             var threadsCount = threads.Count();
 
             chatClient.DeleteChatThread(threadId);
@@ -160,11 +167,19 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(8, getMessagesCount); //Including all types : 5 text message, 3 control messages
             Assert.AreEqual(3, getMessagesCount2); //Including all types : 1 text message, 2 control messages
 
+            Assert.AreEqual(1, participantAddedMessage.Content.Participants.Count);
+            Assert.AreEqual(user5.Id, CommunicationIdentifierSerializer.Serialize(participantAddedMessage.Content.Participants[0].User).CommunicationUser.Id);
+            Assert.AreEqual("user5", participantAddedMessage.Content.Participants[0].DisplayName);
+
+            Assert.AreEqual(1, participantRemovedMessage.Content.Participants.Count);
+            Assert.AreEqual(user4.Id, CommunicationIdentifierSerializer.Serialize(participantRemovedMessage.Content.Participants[0].User).CommunicationUser.Id);
+            Assert.AreEqual("user4", participantRemovedMessage.Content.Participants[0].DisplayName);
+
             Assert.IsTrue(deletedChatMessage.DeletedOn.HasValue);
             Assert.AreEqual(3, chatParticipantsCount);
             Assert.AreEqual(5, chatParticipantsAfterTwoAddedCount);
             Assert.AreEqual(4, chatParticipantAfterOneDeletedCount);
-            Assert.IsNull(addChatParticipantsResult.Errors);
+            Assert.AreEqual((int)HttpStatusCode.Created, addChatParticipantsResult.Status);
             Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
         }
 
@@ -195,8 +210,8 @@ namespace Azure.Communication.Chat.Tests
             var threadId = chatThreadClient.Id;
             ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient2, threadId);
 
-            var messageId2 = chatThreadClient.SendMessage("This is message 1 content");
-            var messageId = chatThreadClient2.SendMessage("This is message 2 content");
+            var messageId2 = chatThreadClient.SendMessage("This is message 1 content").Value.Id;
+            var messageId = chatThreadClient2.SendMessage("This is message 2 content").Value.Id;
 
             chatThreadClient.SendReadReceipt(messageId);
             chatThreadClient2.SendReadReceipt(messageId2);
@@ -239,9 +254,9 @@ namespace Azure.Communication.Chat.Tests
             var displayNameMessage = "DisplayName sender message 1";
             var participants = new List<ChatParticipant>
             {
-                new ChatParticipant(user1),
-                new ChatParticipant(user2),
-                new ChatParticipant(user3)
+                new ChatParticipant(user1) { DisplayName = "user1" },
+                new ChatParticipant(user2) { DisplayName = "user2" },
+                new ChatParticipant(user3) { DisplayName = "user3" }
             };
             ChatClient chatClient = CreateInstrumentedChatClient(token1);
             ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
@@ -259,21 +274,31 @@ namespace Azure.Communication.Chat.Tests
 
             var updatedTopic = "Updated topic - C# sdk";
             await chatThreadClient.UpdateTopicAsync(updatedTopic);
-
-            ChatThread chatThread = await chatClient.GetChatThreadAsync(threadId);
+            ChatThreadProperties chatThread = await chatThreadClient.GetPropertiesAsync();
 
             string messageContent = "Content for message 1";
-            string messageId = await chatThreadClient.SendMessageAsync(messageContent, ChatMessageType.Text, displayNameMessage);
+            SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync(messageContent, ChatMessageType.Text, displayNameMessage);
+            string messageId = sendChatMessageResult.Id;
+
             string messageContent2 = "Content for message 2";
-            string messageId2 = await chatThreadClient2.SendMessageAsync(messageContent2, ChatMessageType.Html, displayNameMessage);
+            SendChatMessageResult sendChatMessageResult2 = await chatThreadClient2.SendMessageAsync(messageContent2, ChatMessageType.Html, displayNameMessage);
+            string messageId2 = sendChatMessageResult2.Id;
+
             string messageContent3 = "Content for message 3";
-            string messageId3 = await chatThreadClient3.SendMessageAsync(messageContent3, ChatMessageType.Text, displayNameMessage);
+            SendChatMessageResult sendChatMessageResult3 = await chatThreadClient3.SendMessageAsync(messageContent3, ChatMessageType.Text, displayNameMessage);
+            string messageId3 = sendChatMessageResult3.Id; ;
+
             string messageContent4 = "Content for message 4";
-            string messageId4 = await chatThreadClient3.SendMessageAsync(messageContent4, ChatMessageType.Html, displayNameMessage);
+            SendChatMessageResult sendChatMessageResult4 = await chatThreadClient3.SendMessageAsync(messageContent4, ChatMessageType.Html, displayNameMessage);
+            string messageId4 = sendChatMessageResult4.Id;
+
             string messageContent5 = "Content for message 5";
-            string messageId5 = await chatThreadClient3.SendMessageAsync(messageContent5, ChatMessageType.Text, displayNameMessage);
+            SendChatMessageResult sendChatMessageResult5 = await chatThreadClient3.SendMessageAsync(messageContent5, ChatMessageType.Text, displayNameMessage);
+            string messageId5 = sendChatMessageResult5.Id;
+
             string messageContent6 = "Content for message 6";
-            string messageId6 = await chatThreadClient3.SendMessageAsync(messageContent6, ChatMessageType.Html, displayNameMessage);
+            SendChatMessageResult sendChatMessageResult6 = await chatThreadClient3.SendMessageAsync(messageContent6, ChatMessageType.Html, displayNameMessage);
+            string messageId6 = sendChatMessageResult6.Id;
 
             ChatMessage message = await chatThreadClient.GetMessageAsync(messageId);
             ChatMessage message2 = await chatThreadClient2.GetMessageAsync(messageId2);
@@ -305,24 +330,32 @@ namespace Azure.Communication.Chat.Tests
             var chatParticipantsCount = chatParticipants.ToEnumerableAsync().Result.Count;
             #endregion
 
-            var newParticipant = new ChatParticipant(user4);
-            var newParticipant2 = new ChatParticipant(user5);
+            var newParticipant = new ChatParticipant(user4) { DisplayName = "user4" };
+            var newParticipant2 = new ChatParticipant(user5) { DisplayName = "user5" };
             AddChatParticipantsResult addChatParticipantsResult = await chatThreadClient.AddParticipantsAsync(participants: new[] { newParticipant });
-            AddChatParticipantsResult addChatParticipantsResult2 = await chatThreadClient.AddParticipantAsync(newParticipant2);
+            Response addChatParticipantResult = await chatThreadClient.AddParticipantAsync(newParticipant2);
 
             AsyncPageable<ChatParticipant> chatParticipantsAfterTwoOneAdded = chatThreadClient.GetParticipantsAsync();
             await PageableTester<ChatParticipant>.AssertPaginationAsync(enumerableResource: chatParticipantsAfterTwoOneAdded, expectedPageSize: 2, expectedTotalResources: 5);
             var chatParticipantsAfterTwoOneAddedCount = chatParticipantsAfterTwoOneAdded.ToEnumerableAsync().Result.Count;
 
+            List<ChatMessage> messagesAfterParticipantsAdded = chatThreadClient.GetMessagesAsync().ToEnumerableAsync().Result;
+            ChatMessage participantAddedMessage = messagesAfterParticipantsAdded.First(x => x.Type == ChatMessageType.ParticipantAdded);
+
             CommunicationUserIdentifier participantToBeRemoved = user4;
-            await chatThreadClient.RemoveParticipantAsync(user: participantToBeRemoved);
+            await chatThreadClient.RemoveParticipantAsync(identifier: participantToBeRemoved);
             AsyncPageable<ChatParticipant> chatParticipantAfterOneDeleted = chatThreadClient.GetParticipantsAsync();
             var chatParticipantAfterOneDeletedCount = chatParticipantAfterOneDeleted.ToEnumerableAsync().Result.Count;
+
+            List<ChatMessage> messagesAfterParticipantRemoved = chatThreadClient.GetMessagesAsync().ToEnumerableAsync().Result;
+            ChatMessage participantRemovedMessage = messagesAfterParticipantRemoved.First(x => x.Type == ChatMessageType.ParticipantRemoved);
+
+            ChatMessage participantRemovedMessage2 = await chatThreadClient.GetMessageAsync(participantRemovedMessage.Id);
 
             Response typingNotificationResponse = await chatThreadClient.SendTypingNotificationAsync();
             await chatThreadClient.SendTypingNotificationAsync();
 
-            AsyncPageable<ChatThreadInfo> threads = chatClient.GetChatThreadsInfoAsync();
+            AsyncPageable<ChatThreadItem> threads = chatClient.GetChatThreadsAsync();
             var threadsCount = threads.ToEnumerableAsync().Result.Count;
 
             await chatClient.DeleteChatThreadAsync(threadId);
@@ -335,6 +368,12 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(updatedMessageContent, actualUpdateMessage.Value.Content.Message);
             Assert.AreEqual(ChatMessageType.Text, message.Type);
 
+            Assert.AreEqual(ChatMessageType.Html, message2.Type);
+            Assert.AreEqual(ChatMessageType.Text, message3.Type);
+            Assert.AreEqual(ChatMessageType.Html, message4.Type);
+            Assert.AreEqual(ChatMessageType.Text, message5.Type);
+            Assert.AreEqual(ChatMessageType.Html, message6.Type);
+
             Assert.AreEqual(messageContent2, message2.Content.Message);
             Assert.AreEqual(messageContent3, message3.Content.Message);
             Assert.AreEqual(messageContent4, message4.Content.Message);
@@ -345,12 +384,20 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(8, getMessagesCount); //Including all types : 5 text message, 3 control messages
             Assert.AreEqual(3, getMessagesCount2); //Including all types : 1 text message, 2 control messages
 
+            Assert.AreEqual(1, participantAddedMessage.Content.Participants.Count);
+            Assert.AreEqual(user5.Id, CommunicationIdentifierSerializer.Serialize(participantAddedMessage.Content.Participants[0].User).CommunicationUser.Id);
+            Assert.AreEqual("user5", participantAddedMessage.Content.Participants[0].DisplayName);
+
+            Assert.AreEqual(1, participantRemovedMessage.Content.Participants.Count);
+            Assert.AreEqual(user4.Id, CommunicationIdentifierSerializer.Serialize(participantRemovedMessage.Content.Participants[0].User).CommunicationUser.Id);
+            Assert.AreEqual("user4", participantRemovedMessage.Content.Participants[0].DisplayName);
+
             Assert.IsTrue(deletedChatMessage.DeletedOn.HasValue);
             Assert.AreEqual(3, chatParticipantsCount);
             Assert.AreEqual(5, chatParticipantsAfterTwoOneAddedCount);
             Assert.AreEqual(4, chatParticipantAfterOneDeletedCount);
-            Assert.IsNull(addChatParticipantsResult.Errors);
-            Assert.IsNull(addChatParticipantsResult2.Errors);
+            Assert.AreEqual(0, addChatParticipantsResult.InvalidParticipants.Count);
+            Assert.AreEqual((int)HttpStatusCode.Created, addChatParticipantResult.Status);
             Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
         }
 
@@ -381,8 +428,11 @@ namespace Azure.Communication.Chat.Tests
             var threadId = chatThreadClient.Id;
             ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient2, threadId);
 
-            string messageId2 = await chatThreadClient.SendMessageAsync("This is message 1 content");
-            string messageId = await chatThreadClient2.SendMessageAsync("This is message 2 content");
+            SendChatMessageResult sendChatMessageResult2 = await chatThreadClient.SendMessageAsync("This is message 1 content");
+            string messageId2 = sendChatMessageResult2.Id;
+
+            SendChatMessageResult sendChatMessageResult = await chatThreadClient2.SendMessageAsync("This is message 2 content");
+            string messageId = sendChatMessageResult.Id;
 
             await chatThreadClient.SendReadReceiptAsync(messageId);
             await chatThreadClient2.SendReadReceiptAsync(messageId2);
@@ -400,7 +450,7 @@ namespace Azure.Communication.Chat.Tests
         }
 
         #region Support functions
-        private (CommunicationUserIdentifier user, string token) CreateUserAndToken(CommunicationIdentityClient communicationIdentityClient)
+        private (CommunicationUserIdentifier User, string Token) CreateUserAndToken(CommunicationIdentityClient communicationIdentityClient)
         {
             Response<CommunicationUserIdentifier> user = communicationIdentityClient.CreateUser();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
@@ -409,7 +459,7 @@ namespace Azure.Communication.Chat.Tests
             return (user, tokenResponseUser.Value.Token);
         }
 
-        private async Task<(CommunicationUserIdentifier user, string token)> CreateUserAndTokenAsync(CommunicationIdentityClient communicationIdentityClient)
+        private async Task<(CommunicationUserIdentifier User, string Token)> CreateUserAndTokenAsync(CommunicationIdentityClient communicationIdentityClient)
         {
             Response<CommunicationUserIdentifier> user = await communicationIdentityClient.CreateUserAsync();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };

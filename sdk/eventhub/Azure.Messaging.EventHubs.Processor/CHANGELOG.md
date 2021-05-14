@@ -1,6 +1,51 @@
 # Release History
 
-## 5.4.0-beta.1 (2021-03-09)
+## 5.5.0-beta.1 (Unreleased)
+
+
+## 5.4.1 (2021-05-11)
+
+### Changes
+
+#### New Features
+
+- The processor will now perform validation of core configuration and permissions at startup, in order to attempt to detect unrecoverable problems more deterministically.  Validation is non-blocking and will not delay claiming of partitions.  One important note is that validation should be considered point-in-time and best effort; it is not meant to replace monitoring of error handler activity.
+
+- Partition initialization has been moved to a background operation.  This will allow partitions to be more efficiently managed and speed up ownership claims, especially when using the `LoadBalancingStrategy.Greedy` configuration or when the processor is recovering from some error conditions.
+
+#### Key Bug Fixes
+
+- Dependencies have been updated to resolve security warnings for CVE-2021-26701. _(The Event Hubs client library does not make use of the vulnerable components, directly or indirectly)_
+
+- The processor will no longer inappropriately determine that it should attempt to steal partitions from itself or when the load is balanced but there is an uneven ownership distribution.  Previously, stealing was attempted but no candidates were found, leading to log spam but no interruption in processing.
+
+## 5.4.0 (2021-04-05)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### New Features
+
+- The `EventProcessorClient` now supports shared key and shared access signature authentication using the `AzureNamedKeyCredential` and `AzureSasCredential` types in addition to the connection string.  Use of the credential allows the shared key or SAS to be updated without the need to create a new processor.
+
+- Multiple enhancements were made to the AMQP transport paths for reading events to reduce memory allocations and increase performance.  (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+
+#### Key Bug Fixes
+
+- The AMQP library used for transport has been updated, fixing several issues including a potential unobserved   `ObjectDisposedException` that could cause the host process to crash.  _(see: [release notes](https://github.com/Azure/azure-amqp/releases/tag/v2.4.13))_
+
+## 5.4.0-beta.1 (2021-03-17)
+
+### Changes
+
+- Updating package bindings for `Azure.Messaging.EventHubs` to synchronize on v5.4.0-beta.1.
+
+## 5.3.1 (2021-03-09)
 
 ### Changes
 

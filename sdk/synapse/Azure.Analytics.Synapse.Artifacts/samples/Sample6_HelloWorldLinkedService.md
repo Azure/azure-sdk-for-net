@@ -9,7 +9,7 @@ string serviceName = "Test-LinkedService";
 ```
 
 ```C# Snippet:CreateLinkedServiceClient
-LinkedServiceClient client = new LinkedServiceClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+LinkedServiceClient client = new LinkedServiceClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
 
 ```C# Snippet:CreateLinkedService
@@ -32,5 +32,5 @@ foreach (LinkedServiceResource linkedService in linkedServices)
 
 ```C# Snippet:DeleteLinkedService
 LinkedServiceDeleteLinkedServiceOperation deleteLinkedServiceOperation = client.StartDeleteLinkedService(serviceName);
-await deleteLinkedServiceOperation.WaitForCompletionAsync();
+await deleteLinkedServiceOperation.WaitForCompletionResponseAsync();
 ```

@@ -57,9 +57,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets statistics about the operation executed and how it was processed
-        /// by the service. This property currently won't return a value even if
-        /// <see cref="AnalyzeBatchActionsOptions.IncludeStatistics"/> is set to true.
-        /// More information https://github.com/Azure/azure-sdk-for-net/issues/19268
+        /// by the service.
         /// </summary>
         public TextDocumentBatchStatistics Statistics { get; }
     }

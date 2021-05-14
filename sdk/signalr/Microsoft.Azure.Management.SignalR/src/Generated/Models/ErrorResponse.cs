@@ -14,8 +14,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains information about an API error.
+    /// Error response
     /// </summary>
+    /// <remarks>
+    /// Common error response for all Azure Resource Manager APIs to return
+    /// error details for failed operations. (This also follows the OData error
+    /// response format.).
+    /// </remarks>
     public partial class ErrorResponse
     {
         /// <summary>
@@ -29,9 +34,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="error">Describes a particular API error with an error
-        /// code and a message.</param>
-        public ErrorResponse(ErrorResponseBody error = default(ErrorResponseBody))
+        /// <param name="error">The error object.</param>
+        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
         {
             Error = error;
             CustomInit();
@@ -43,24 +47,10 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes a particular API error with an error code
-        /// and a message.
+        /// Gets or sets the error object.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorResponseBody Error { get; set; }
+        public ErrorDetail Error { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Error != null)
-            {
-                Error.Validate();
-            }
-        }
     }
 }

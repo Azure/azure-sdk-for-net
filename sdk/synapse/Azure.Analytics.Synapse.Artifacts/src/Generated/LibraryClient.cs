@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public LibraryClient(string endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
+        public LibraryClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal LibraryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        internal LibraryClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
         {
             RestClient = new LibraryRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -137,15 +137,15 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
         /// <param name="content"> Library file chunk. </param>
-        /// <param name="xMsBlobConditionAppendpos"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
+        /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> AppendAsync(string libraryName, Stream content, long? xMsBlobConditionAppendpos = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AppendAsync(string libraryName, Stream content, long? blobConditionAppendPosition = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LibraryClient.Append");
             scope.Start();
             try
             {
-                return await RestClient.AppendAsync(libraryName, content, xMsBlobConditionAppendpos, cancellationToken).ConfigureAwait(false);
+                return await RestClient.AppendAsync(libraryName, content, blobConditionAppendPosition, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -157,15 +157,15 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
         /// <param name="content"> Library file chunk. </param>
-        /// <param name="xMsBlobConditionAppendpos"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
+        /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Append(string libraryName, Stream content, long? xMsBlobConditionAppendpos = null, CancellationToken cancellationToken = default)
+        public virtual Response Append(string libraryName, Stream content, long? blobConditionAppendPosition = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LibraryClient.Append");
             scope.Start();
             try
             {
-                return RestClient.Append(libraryName, content, xMsBlobConditionAppendpos, cancellationToken);
+                return RestClient.Append(libraryName, content, blobConditionAppendPosition, cancellationToken);
             }
             catch (Exception e)
             {

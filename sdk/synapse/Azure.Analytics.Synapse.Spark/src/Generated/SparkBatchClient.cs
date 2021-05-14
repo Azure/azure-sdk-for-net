@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="livyApiVersion"> Valid api-version for the request. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public SparkBatchClient(string endpoint, string sparkPoolName, TokenCredential credential, string livyApiVersion = "2019-11-01-preview", SparkClientOptions options = null)
+        public SparkBatchClient(Uri endpoint, string sparkPoolName, TokenCredential credential, string livyApiVersion = "2019-11-01-preview", SparkClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="sparkPoolName"> Name of the spark pool. </param>
         /// <param name="livyApiVersion"> Valid api-version for the request. </param>
-        internal SparkBatchClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
+        internal SparkBatchClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
         {
             RestClient = new SparkBatchRestClient(clientDiagnostics, pipeline, endpoint, sparkPoolName, livyApiVersion);
             _clientDiagnostics = clientDiagnostics;

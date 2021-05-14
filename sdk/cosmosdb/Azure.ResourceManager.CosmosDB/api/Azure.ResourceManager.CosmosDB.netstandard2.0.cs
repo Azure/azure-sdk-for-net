@@ -2,7 +2,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CassandraResourcesCreateUpdateCassandraKeyspaceOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceGetResults>
     {
-        internal CassandraResourcesCreateUpdateCassandraKeyspaceOperation() { }
+        protected CassandraResourcesCreateUpdateCassandraKeyspaceOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class CassandraResourcesCreateUpdateCassandraTableOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.CassandraTableGetResults>
     {
-        internal CassandraResourcesCreateUpdateCassandraTableOperation() { }
+        protected CassandraResourcesCreateUpdateCassandraTableOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class CassandraResourcesDeleteCassandraKeyspaceOperation : Azure.Operation<Azure.Response>
     {
-        internal CassandraResourcesDeleteCassandraKeyspaceOperation() { }
+        protected CassandraResourcesDeleteCassandraKeyspaceOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class CassandraResourcesDeleteCassandraTableOperation : Azure.Operation<Azure.Response>
     {
-        internal CassandraResourcesDeleteCassandraTableOperation() { }
+        protected CassandraResourcesDeleteCassandraTableOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class CassandraResourcesMigrateCassandraKeyspaceToAutoscaleOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal CassandraResourcesMigrateCassandraKeyspaceToAutoscaleOperation() { }
+        protected CassandraResourcesMigrateCassandraKeyspaceToAutoscaleOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class CassandraResourcesMigrateCassandraKeyspaceToManualThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal CassandraResourcesMigrateCassandraKeyspaceToManualThroughputOperation() { }
+        protected CassandraResourcesMigrateCassandraKeyspaceToManualThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class CassandraResourcesMigrateCassandraTableToAutoscaleOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal CassandraResourcesMigrateCassandraTableToAutoscaleOperation() { }
+        protected CassandraResourcesMigrateCassandraTableToAutoscaleOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class CassandraResourcesMigrateCassandraTableToManualThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal CassandraResourcesMigrateCassandraTableToManualThroughputOperation() { }
+        protected CassandraResourcesMigrateCassandraTableToManualThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class CassandraResourcesUpdateCassandraKeyspaceThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal CassandraResourcesUpdateCassandraKeyspaceThroughputOperation() { }
+        protected CassandraResourcesUpdateCassandraKeyspaceThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class CassandraResourcesUpdateCassandraTableThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal CassandraResourcesUpdateCassandraTableThroughputOperation() { }
+        protected CassandraResourcesUpdateCassandraTableThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class DatabaseAccountsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.DatabaseAccountGetResults>
     {
-        internal DatabaseAccountsCreateOrUpdateOperation() { }
+        protected DatabaseAccountsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class DatabaseAccountsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal DatabaseAccountsDeleteOperation() { }
+        protected DatabaseAccountsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class DatabaseAccountsFailoverPriorityChangeOperation : Azure.Operation<Azure.Response>
     {
-        internal DatabaseAccountsFailoverPriorityChangeOperation() { }
+        protected DatabaseAccountsFailoverPriorityChangeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class DatabaseAccountsOfflineRegionOperation : Azure.Operation<Azure.Response>
     {
-        internal DatabaseAccountsOfflineRegionOperation() { }
+        protected DatabaseAccountsOfflineRegionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class DatabaseAccountsOnlineRegionOperation : Azure.Operation<Azure.Response>
     {
-        internal DatabaseAccountsOnlineRegionOperation() { }
+        protected DatabaseAccountsOnlineRegionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class DatabaseAccountsRegenerateKeyOperation : Azure.Operation<Azure.Response>
     {
-        internal DatabaseAccountsRegenerateKeyOperation() { }
+        protected DatabaseAccountsRegenerateKeyOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class DatabaseAccountsUpdateOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.DatabaseAccountGetResults>
     {
-        internal DatabaseAccountsUpdateOperation() { }
+        protected DatabaseAccountsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class GremlinResourcesCreateUpdateGremlinDatabaseOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseGetResults>
     {
-        internal GremlinResourcesCreateUpdateGremlinDatabaseOperation() { }
+        protected GremlinResourcesCreateUpdateGremlinDatabaseOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class GremlinResourcesCreateUpdateGremlinGraphOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.GremlinGraphGetResults>
     {
-        internal GremlinResourcesCreateUpdateGremlinGraphOperation() { }
+        protected GremlinResourcesCreateUpdateGremlinGraphOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class GremlinResourcesDeleteGremlinDatabaseOperation : Azure.Operation<Azure.Response>
     {
-        internal GremlinResourcesDeleteGremlinDatabaseOperation() { }
+        protected GremlinResourcesDeleteGremlinDatabaseOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class GremlinResourcesDeleteGremlinGraphOperation : Azure.Operation<Azure.Response>
     {
-        internal GremlinResourcesDeleteGremlinGraphOperation() { }
+        protected GremlinResourcesDeleteGremlinGraphOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class GremlinResourcesMigrateGremlinDatabaseToAutoscaleOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal GremlinResourcesMigrateGremlinDatabaseToAutoscaleOperation() { }
+        protected GremlinResourcesMigrateGremlinDatabaseToAutoscaleOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class GremlinResourcesMigrateGremlinDatabaseToManualThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal GremlinResourcesMigrateGremlinDatabaseToManualThroughputOperation() { }
+        protected GremlinResourcesMigrateGremlinDatabaseToManualThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class GremlinResourcesMigrateGremlinGraphToAutoscaleOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal GremlinResourcesMigrateGremlinGraphToAutoscaleOperation() { }
+        protected GremlinResourcesMigrateGremlinGraphToAutoscaleOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class GremlinResourcesMigrateGremlinGraphToManualThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal GremlinResourcesMigrateGremlinGraphToManualThroughputOperation() { }
+        protected GremlinResourcesMigrateGremlinGraphToManualThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class GremlinResourcesUpdateGremlinDatabaseThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal GremlinResourcesUpdateGremlinDatabaseThroughputOperation() { }
+        protected GremlinResourcesUpdateGremlinDatabaseThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class GremlinResourcesUpdateGremlinGraphThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal GremlinResourcesUpdateGremlinGraphThroughputOperation() { }
+        protected GremlinResourcesUpdateGremlinGraphThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class MongoDBResourcesCreateUpdateMongoDBCollectionOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionGetResults>
     {
-        internal MongoDBResourcesCreateUpdateMongoDBCollectionOperation() { }
+        protected MongoDBResourcesCreateUpdateMongoDBCollectionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class MongoDBResourcesCreateUpdateMongoDBDatabaseOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseGetResults>
     {
-        internal MongoDBResourcesCreateUpdateMongoDBDatabaseOperation() { }
+        protected MongoDBResourcesCreateUpdateMongoDBDatabaseOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class MongoDBResourcesDeleteMongoDBCollectionOperation : Azure.Operation<Azure.Response>
     {
-        internal MongoDBResourcesDeleteMongoDBCollectionOperation() { }
+        protected MongoDBResourcesDeleteMongoDBCollectionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class MongoDBResourcesDeleteMongoDBDatabaseOperation : Azure.Operation<Azure.Response>
     {
-        internal MongoDBResourcesDeleteMongoDBDatabaseOperation() { }
+        protected MongoDBResourcesDeleteMongoDBDatabaseOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class MongoDBResourcesMigrateMongoDBCollectionToAutoscaleOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal MongoDBResourcesMigrateMongoDBCollectionToAutoscaleOperation() { }
+        protected MongoDBResourcesMigrateMongoDBCollectionToAutoscaleOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class MongoDBResourcesMigrateMongoDBCollectionToManualThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal MongoDBResourcesMigrateMongoDBCollectionToManualThroughputOperation() { }
+        protected MongoDBResourcesMigrateMongoDBCollectionToManualThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class MongoDBResourcesMigrateMongoDBDatabaseToAutoscaleOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal MongoDBResourcesMigrateMongoDBDatabaseToAutoscaleOperation() { }
+        protected MongoDBResourcesMigrateMongoDBDatabaseToAutoscaleOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class MongoDBResourcesMigrateMongoDBDatabaseToManualThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal MongoDBResourcesMigrateMongoDBDatabaseToManualThroughputOperation() { }
+        protected MongoDBResourcesMigrateMongoDBDatabaseToManualThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class MongoDBResourcesUpdateMongoDBCollectionThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal MongoDBResourcesUpdateMongoDBCollectionThroughputOperation() { }
+        protected MongoDBResourcesUpdateMongoDBCollectionThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class MongoDBResourcesUpdateMongoDBDatabaseThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal MongoDBResourcesUpdateMongoDBDatabaseThroughputOperation() { }
+        protected MongoDBResourcesUpdateMongoDBDatabaseThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class NotebookWorkspacesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.NotebookWorkspace>
     {
-        internal NotebookWorkspacesCreateOrUpdateOperation() { }
+        protected NotebookWorkspacesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class NotebookWorkspacesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal NotebookWorkspacesDeleteOperation() { }
+        protected NotebookWorkspacesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class NotebookWorkspacesRegenerateAuthTokenOperation : Azure.Operation<Azure.Response>
     {
-        internal NotebookWorkspacesRegenerateAuthTokenOperation() { }
+        protected NotebookWorkspacesRegenerateAuthTokenOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class NotebookWorkspacesStartOperation : Azure.Operation<Azure.Response>
     {
-        internal NotebookWorkspacesStartOperation() { }
+        protected NotebookWorkspacesStartOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class PrivateEndpointConnectionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.PrivateEndpointConnectionAutoGenerated>
     {
-        internal PrivateEndpointConnectionsCreateOrUpdateOperation() { }
+        protected PrivateEndpointConnectionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class PrivateEndpointConnectionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal PrivateEndpointConnectionsDeleteOperation() { }
+        protected PrivateEndpointConnectionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesCreateUpdateSqlContainerOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.SqlContainerGetResults>
     {
-        internal SqlResourcesCreateUpdateSqlContainerOperation() { }
+        protected SqlResourcesCreateUpdateSqlContainerOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesCreateUpdateSqlDatabaseOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.SqlDatabaseGetResults>
     {
-        internal SqlResourcesCreateUpdateSqlDatabaseOperation() { }
+        protected SqlResourcesCreateUpdateSqlDatabaseOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesCreateUpdateSqlStoredProcedureOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.SqlStoredProcedureGetResults>
     {
-        internal SqlResourcesCreateUpdateSqlStoredProcedureOperation() { }
+        protected SqlResourcesCreateUpdateSqlStoredProcedureOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesCreateUpdateSqlTriggerOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.SqlTriggerGetResults>
     {
-        internal SqlResourcesCreateUpdateSqlTriggerOperation() { }
+        protected SqlResourcesCreateUpdateSqlTriggerOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesCreateUpdateSqlUserDefinedFunctionOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.SqlUserDefinedFunctionGetResults>
     {
-        internal SqlResourcesCreateUpdateSqlUserDefinedFunctionOperation() { }
+        protected SqlResourcesCreateUpdateSqlUserDefinedFunctionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesDeleteSqlContainerOperation : Azure.Operation<Azure.Response>
     {
-        internal SqlResourcesDeleteSqlContainerOperation() { }
+        protected SqlResourcesDeleteSqlContainerOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesDeleteSqlDatabaseOperation : Azure.Operation<Azure.Response>
     {
-        internal SqlResourcesDeleteSqlDatabaseOperation() { }
+        protected SqlResourcesDeleteSqlDatabaseOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesDeleteSqlStoredProcedureOperation : Azure.Operation<Azure.Response>
     {
-        internal SqlResourcesDeleteSqlStoredProcedureOperation() { }
+        protected SqlResourcesDeleteSqlStoredProcedureOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesDeleteSqlTriggerOperation : Azure.Operation<Azure.Response>
     {
-        internal SqlResourcesDeleteSqlTriggerOperation() { }
+        protected SqlResourcesDeleteSqlTriggerOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesDeleteSqlUserDefinedFunctionOperation : Azure.Operation<Azure.Response>
     {
-        internal SqlResourcesDeleteSqlUserDefinedFunctionOperation() { }
+        protected SqlResourcesDeleteSqlUserDefinedFunctionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesMigrateSqlContainerToAutoscaleOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal SqlResourcesMigrateSqlContainerToAutoscaleOperation() { }
+        protected SqlResourcesMigrateSqlContainerToAutoscaleOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesMigrateSqlContainerToManualThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal SqlResourcesMigrateSqlContainerToManualThroughputOperation() { }
+        protected SqlResourcesMigrateSqlContainerToManualThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesMigrateSqlDatabaseToAutoscaleOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal SqlResourcesMigrateSqlDatabaseToAutoscaleOperation() { }
+        protected SqlResourcesMigrateSqlDatabaseToAutoscaleOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesMigrateSqlDatabaseToManualThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal SqlResourcesMigrateSqlDatabaseToManualThroughputOperation() { }
+        protected SqlResourcesMigrateSqlDatabaseToManualThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesUpdateSqlContainerThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal SqlResourcesUpdateSqlContainerThroughputOperation() { }
+        protected SqlResourcesUpdateSqlContainerThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class SqlResourcesUpdateSqlDatabaseThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal SqlResourcesUpdateSqlDatabaseThroughputOperation() { }
+        protected SqlResourcesUpdateSqlDatabaseThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class TableResourcesCreateUpdateTableOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.TableGetResults>
     {
-        internal TableResourcesCreateUpdateTableOperation() { }
+        protected TableResourcesCreateUpdateTableOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class TableResourcesDeleteTableOperation : Azure.Operation<Azure.Response>
     {
-        internal TableResourcesDeleteTableOperation() { }
+        protected TableResourcesDeleteTableOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1154,7 +1154,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class TableResourcesMigrateTableToAutoscaleOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal TableResourcesMigrateTableToAutoscaleOperation() { }
+        protected TableResourcesMigrateTableToAutoscaleOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class TableResourcesMigrateTableToManualThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal TableResourcesMigrateTableToManualThroughputOperation() { }
+        protected TableResourcesMigrateTableToManualThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1200,7 +1200,7 @@ namespace Azure.ResourceManager.CosmosDB
     }
     public partial class TableResourcesUpdateTableThroughputOperation : Azure.Operation<Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsGetResults>
     {
-        internal TableResourcesUpdateTableThroughputOperation() { }
+        protected TableResourcesUpdateTableThroughputOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

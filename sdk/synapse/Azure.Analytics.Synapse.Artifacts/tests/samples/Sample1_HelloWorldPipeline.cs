@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:CreatePipelineClient
-            var client = new PipelineClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+            var client = new PipelineClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreatePipeline
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeletePipeline
             PipelineDeletePipelineOperation deleteOperation = client.StartDeletePipeline(pipelineName);
-            await deleteOperation.WaitForCompletionAsync();
+            await deleteOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

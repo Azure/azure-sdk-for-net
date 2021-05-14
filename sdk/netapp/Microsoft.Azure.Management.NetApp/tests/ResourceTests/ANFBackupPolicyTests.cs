@@ -84,7 +84,9 @@ namespace NetApp.Tests.ResourceTests
                 // clean up
                 netAppMgmtClient.BackupPolicies.Delete(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName1);
                 netAppMgmtClient.BackupPolicies.Delete(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName2);
-                ResourceUtils.DeleteAccount(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1);
+
+                WaitForBackupPolicyDeleted(netAppMgmtClient, resourceGroup: ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1);
+                ResourceUtils.DeleteAccount(netAppMgmtClient, resourceGroup: ResourceUtils.resourceGroup, accountName: ResourceUtils.volumeBackupAccountName1);
             }
         }
 
@@ -256,8 +258,11 @@ namespace NetApp.Tests.ResourceTests
 
                 var resultbackupPolicy = netAppMgmtClient.BackupPolicies.Update(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName1, patchBackupPolicy);
                 Assert.NotNull(resultbackupPolicy);
-                Assert.NotNull(resultbackupPolicy.DailyBackupsToKeep);
 
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
                 var getResultbackupPolicy = netAppMgmtClient.BackupPolicies.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName1);
                 Assert.NotNull(getResultbackupPolicy);                               
                 Assert.NotNull(getResultbackupPolicy.DailyBackupsToKeep);
@@ -288,6 +293,17 @@ namespace NetApp.Tests.ResourceTests
 
             return testBackupPolicy;
         }
+
+        private void WaitForBackupPolicyDeleted(AzureNetAppFilesManagementClient netAppMgmtClient, string resourceGroup = ResourceUtils.resourceGroup, string accountName = ResourceUtils.accountName1)
+        {
+            int count = 0;
+            do
+            {
+                count = netAppMgmtClient.BackupPolicies.List(resourceGroup, accountName).Count();
+                Thread.Sleep(5);
+            } while (count > 0);
+        }
+
 
         private static string GetSessionsDirectoryPath()
         {

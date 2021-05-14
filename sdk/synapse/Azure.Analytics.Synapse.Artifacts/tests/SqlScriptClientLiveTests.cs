@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             public async ValueTask DisposeAsync()
             {
                 SqlScriptDeleteSqlScriptOperation deleteOperation = await _client.StartDeleteSqlScriptAsync (Name);
-                await deleteOperation.WaitForCompletionAsync();
+                await deleteOperation.WaitForCompletionResponseAsync();
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private SqlScriptClient CreateClient()
         {
             return InstrumentClient(new SqlScriptClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
@@ -106,13 +106,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string newScriptName = Recording.GenerateId("SqlScript", 16);
 
             SqlScriptRenameSqlScriptOperation renameOperation = await client.StartRenameSqlScriptAsync (resource.Name, new ArtifactRenameRequest () { NewName = newScriptName } );
-            await renameOperation.WaitForCompletionAsync();
+            await renameOperation.WaitForCompletionResponseAsync();
 
             SqlScriptResource sparkJob = await client.GetSqlScriptAsync (newScriptName);
             Assert.AreEqual (newScriptName, sparkJob.Name);
 
             SqlScriptDeleteSqlScriptOperation deleteOperation = await client.StartDeleteSqlScriptAsync (newScriptName);
-            await deleteOperation.WaitForCompletionAsync();
+            await deleteOperation.WaitForCompletionResponseAsync();
         }
     }
 }

@@ -80,6 +80,10 @@ namespace Azure.Core.Pipeline
             {
                 scope.AddAttribute("serviceRequestId", serviceRequestId);
             }
+			if (message.ResponseClassifier.IsErrorResponse(message))
+            {
+                scope.AddAttribute("otel.status_code", "ERROR");
+            }
         }
 
         private static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)

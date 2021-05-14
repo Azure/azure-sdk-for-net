@@ -52,7 +52,7 @@ namespace Sql.Tests
             // Modify the policy properties, send and receive and see it its still ok
             ManagedServerSecurityAlertPolicy updatedManagedServerPolicy = new ManagedServerSecurityAlertPolicy
             {
-                State = SecurityAlertPolicyState.Enabled,
+                State = SecurityAlertsPolicyState.Enabled,
                 EmailAccountAdmins = true
             };
 
@@ -69,7 +69,7 @@ namespace Sql.Tests
             // Modify the policy properties again, send and receive and see it its still ok
             updatedManagedServerPolicy = new ManagedServerSecurityAlertPolicy
             {
-                State = SecurityAlertPolicyState.Disabled,
+                State = SecurityAlertsPolicyState.Disabled,
                 EmailAccountAdmins = true,
                 EmailAddresses = new List<string>() { "testSecurityAlert@microsoft.com", "testServerPolicy@microsoft.com" },
                 DisabledAlerts = new List<string>() { "Sql_Injection" },
@@ -139,7 +139,7 @@ namespace Sql.Tests
         {
             ManagedServerSecurityAlertPolicy properties = new ManagedServerSecurityAlertPolicy
             {
-                State = SecurityAlertPolicyState.Disabled,
+                State = SecurityAlertsPolicyState.Disabled,
                 EmailAccountAdmins = false,
                 DisabledAlerts = new List<string>() { string.Empty },
                 EmailAddresses = new List<string>() { string.Empty },

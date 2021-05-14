@@ -199,6 +199,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         }
 
         [Test]
+        public async Task BindToIEnumerableBinaryData()
+        {
+            await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("IEnumerableBinaryDataBinding"));
+
+            Assert.AreEqual(6, _numBlobsRead);
+        }
+
+        [Test]
         public async Task BindToIEnumerableStream()
         {
             await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("IEnumerableStreamBinding"));
@@ -248,6 +256,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(1, _numBlobsRead);
         }
 
+        [TestCase("BinaryDataBinding_Block")]
+        [TestCase("BinaryDataBinding_Page")]
+        [TestCase("BinaryDataBinding_Append")]
+        public async Task BindToBinaryData(string functionName)
+        {
+            await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod(functionName));
+
+            Assert.AreEqual(1, _numBlobsRead);
+        }
+
         [TestCase("StreamBindingReadable_Block")]
         [TestCase("StreamBindingReadable_Page")]
         [TestCase("StreamBindingReadable_Append")]
@@ -276,6 +294,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         [TestCase("OutStringBinding_Page")]
         [TestCase("OutStringBinding_Append")]
         public void BindToOutString_Fails(string functionName)
+        {
+            var ex = Assert.ThrowsAsync<FunctionInvocationException>(() =>
+            _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod(functionName)));
+
+            var innerEx = ex.InnerException.InnerException;
+            Assert.AreEqual("Cannot bind to page or append blobs using 'out string', 'TextWriter', or writable 'Stream' parameters.", innerEx.Message);
+        }
+
+        [Test]
+        public async Task BindToOutBinaryData()
+        {
+            var blob = _fixture.BlobContainer.GetBlockBlobClient("overwrite");
+            Assert.AreEqual(TestData, await blob.DownloadTextAsync());
+            await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("OutBinaryDataBinding_Block"));
+            string text = null;
+            using (var reader = new StreamReader(await blob.OpenReadAsync()))
+            {
+                text = reader.ReadToEnd();
+            }
+            Assert.AreEqual("overwritten", text);
+            await blob.UploadTextAsync(TestData);
+        }
+
+        [TestCase("OutBinaryDataBinding_Page")]
+        [TestCase("OutBinaryDataBinding_Append")]
+        public void BindToOutBinaryData_Fails(string functionName)
         {
             var ex = Assert.ThrowsAsync<FunctionInvocationException>(() =>
             _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod(functionName)));
@@ -481,6 +525,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         }
 
         [NoAutomaticTrigger]
+        public static void IEnumerableBinaryDataBinding(
+            [Blob(ContainerName)] IEnumerable<BinaryData> blobs)
+        {
+            foreach (var blob in blobs)
+            {
+                Assert.AreEqual(TestData, blob.ToString());
+            }
+            _numBlobsRead = blobs.Count();
+        }
+
+        [NoAutomaticTrigger]
         public static void IEnumerableStreamBinding(
             [Blob(ContainerName)] IEnumerable<Stream> blobs)
         {
@@ -565,6 +620,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         }
 
         [NoAutomaticTrigger]
+        public static void BinaryDataBinding_Block(
+            [Blob(ContainerName + "/blob1")] BinaryData blob)
+        {
+            Assert.AreEqual(TestData, blob.ToString());
+            _numBlobsRead = 1;
+        }
+
+        [NoAutomaticTrigger]
+        public static void BinaryDataBinding_Page(
+            [Blob(PageBlobContainerName + "/blob1")] BinaryData blob)
+        {
+            var blobAsString = blob.ToString().Trim('\0');
+            Assert.AreEqual(TestData, blobAsString);
+            _numBlobsRead = 1;
+        }
+
+        [NoAutomaticTrigger]
+        public static void BinaryDataBinding_Append(
+            [Blob(AppendBlobContainerName + "/blob1")] BinaryData blob)
+        {
+            Assert.AreEqual(TestData, blob.ToString());
+            _numBlobsRead = 1;
+        }
+
+        [NoAutomaticTrigger]
         public static void OutStringBinding_Block(
             [Blob(ContainerName + "/overwrite")] out string blob)
         {
@@ -585,6 +665,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         {
             // this will fail before getting this far
             blob = TestData;
+        }
+
+        [NoAutomaticTrigger]
+        public static void OutBinaryDataBinding_Block(
+            [Blob(ContainerName + "/overwrite")] out BinaryData blob)
+        {
+            blob = BinaryData.FromString("overwritten");
+        }
+
+        [NoAutomaticTrigger]
+        public static void OutBinaryDataBinding_Page(
+            [Blob(PageBlobContainerName + "/blob1")] out BinaryData blob)
+        {
+            // this wil fail before getting this far
+            blob = BinaryData.FromString(TestData);
+        }
+
+        [NoAutomaticTrigger]
+        public static void OutBinaryDataBinding_Append(
+            [Blob(AppendBlobContainerName + "/blob1")] out BinaryData blob)
+        {
+            // this will fail before getting this far
+            blob = BinaryData.FromString(TestData);
         }
 
         [NoAutomaticTrigger]

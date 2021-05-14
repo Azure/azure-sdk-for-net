@@ -9,6 +9,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
@@ -394,9 +395,40 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var credential = new EventHubsSharedAccessKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+                var credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
 
                 await using (var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
+                {
+                    using EventDataBatch batch = await producer.CreateBatchAsync();
+
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("This is a message")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("This is another message")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("So many messages")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Event more messages")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Will it ever stop?")));
+
+                    Assert.That(batch.Count, Is.EqualTo(5), "The batch should contain all 5 events.");
+                    Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendAnEventBatchUsingTheSasCredential()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var options = new EventHubProducerClientOptions();
+                var resource = EventHubConnection.BuildConnectionSignatureAuthorizationResource(options.ConnectionOptions.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
+                var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+                var credential = new AzureSasCredential(signature.Value);
+
+                await using (var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential, options))
                 {
                     using EventDataBatch batch = await producer.CreateBatchAsync();
 
@@ -589,6 +621,30 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
 
                     await producer.CloseAsync();
+                    Assert.That(async () => await producer.SendAsync(events), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCannotSendWhenSharedConnectionIsClosed()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var connection = new EventHubConnection(connectionString))
+                await using (var producer = new EventHubProducerClient(connection))
+                {
+                    EventData[] events = new[] { new EventData(Encoding.UTF8.GetBytes("Dummy event")) };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+
+                    await connection.CloseAsync();
                     Assert.That(async () => await producer.SendAsync(events), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                 }
             }

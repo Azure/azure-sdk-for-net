@@ -9,8 +9,12 @@
     <PackageTags>azure;management;compute</PackageTags>
   </PropertyGroup>
 
-    <PropertyGroup>
+  <PropertyGroup>
     <!-- TODO: Temp workaround. Should be fixed prior to release  -->
     <NoWarn>$(NoWarn);AZC0001;AZC0008</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+  </ItemGroup>
 </Project>

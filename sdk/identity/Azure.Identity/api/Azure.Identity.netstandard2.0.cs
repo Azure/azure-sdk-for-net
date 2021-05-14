@@ -47,6 +47,17 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
+    {
+        public AzurePowerShellCredential() { }
+        public AzurePowerShellCredential(Azure.Identity.AzurePowerShellCredentialOptions options) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AzurePowerShellCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public AzurePowerShellCredentialOptions() { }
+    }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
         public ChainedTokenCredential(params Azure.Core.TokenCredential[] sources) { }
@@ -102,6 +113,7 @@ namespace Azure.Identity
     {
         public DefaultAzureCredentialOptions() { }
         public bool ExcludeAzureCliCredential { get { throw null; } set { } }
+        public bool ExcludeAzurePowerShellCredential { get { throw null; } set { } }
         public bool ExcludeEnvironmentCredential { get { throw null; } set { } }
         public bool ExcludeInteractiveBrowserCredential { get { throw null; } set { } }
         public bool ExcludeManagedIdentityCredential { get { throw null; } set { } }

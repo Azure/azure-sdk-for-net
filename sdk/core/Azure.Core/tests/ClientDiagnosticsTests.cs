@@ -187,7 +187,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void NoopsWhenDisabled()
+        public void NoOpsWhenDisabled()
         {
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", false);
             DiagnosticScope scope = clientDiagnostics.CreateScope("");

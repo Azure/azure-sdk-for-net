@@ -31,6 +31,26 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
 
         /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
         /// <param name="client">The <see cref="EventGridPublisherClient"/> instance to extend.</param>
+        /// <param name="cloudEvent"> The event to be published to Event Grid. </param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        public static Response SendCloudEvent(
+            this EventGridPublisherClient client,
+            CloudEvent cloudEvent,
+            CancellationToken cancellationToken = default) =>
+            SendCloudEvents(client, new CloudEvent[] { cloudEvent }, cancellationToken);
+
+        /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
+        /// <param name="client">The <see cref="EventGridPublisherClient"/> instance to extend.</param>
+        /// <param name="cloudEvent"> The event to be published to Event Grid. </param>
+        /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
+        public static async Task<Response> SendCloudEventAsync(
+            this EventGridPublisherClient client,
+            CloudEvent cloudEvent,
+            CancellationToken cancellationToken = default) =>
+            await SendCloudEventsAsync(client, new CloudEvent[] { cloudEvent }, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
+        /// <param name="client">The <see cref="EventGridPublisherClient"/> instance to extend.</param>
         /// <param name="cloudEvents"> The set of events to be published to Event Grid. </param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
         public static Response SendCloudEvents(

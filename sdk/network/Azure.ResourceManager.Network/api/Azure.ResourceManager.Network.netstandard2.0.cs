@@ -2,7 +2,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ApplicationGatewaysBackendHealthOnDemandOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealthOnDemand>
     {
-        internal ApplicationGatewaysBackendHealthOnDemandOperation() { }
+        protected ApplicationGatewaysBackendHealthOnDemandOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ApplicationGatewaysBackendHealthOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendHealth>
     {
-        internal ApplicationGatewaysBackendHealthOperation() { }
+        protected ApplicationGatewaysBackendHealthOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ApplicationGatewaysCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ApplicationGateway>
     {
-        internal ApplicationGatewaysCreateOrUpdateOperation() { }
+        protected ApplicationGatewaysCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ApplicationGatewaysDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ApplicationGatewaysDeleteOperation() { }
+        protected ApplicationGatewaysDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ApplicationGatewaysStartOperation : Azure.Operation<Azure.Response>
     {
-        internal ApplicationGatewaysStartOperation() { }
+        protected ApplicationGatewaysStartOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ApplicationGatewaysStopOperation : Azure.Operation<Azure.Response>
     {
-        internal ApplicationGatewaysStopOperation() { }
+        protected ApplicationGatewaysStopOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ApplicationSecurityGroupsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ApplicationSecurityGroup>
     {
-        internal ApplicationSecurityGroupsCreateOrUpdateOperation() { }
+        protected ApplicationSecurityGroupsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ApplicationSecurityGroupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ApplicationSecurityGroupsDeleteOperation() { }
+        protected ApplicationSecurityGroupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class AzureFirewallsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.AzureFirewall>
     {
-        internal AzureFirewallsCreateOrUpdateOperation() { }
+        protected AzureFirewallsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class AzureFirewallsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal AzureFirewallsDeleteOperation() { }
+        protected AzureFirewallsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class AzureFirewallsUpdateTagsOperation : Azure.Operation<Azure.ResourceManager.Network.Models.AzureFirewall>
     {
-        internal AzureFirewallsUpdateTagsOperation() { }
+        protected AzureFirewallsUpdateTagsOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class BastionHostsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.BastionHost>
     {
-        internal BastionHostsCreateOrUpdateOperation() { }
+        protected BastionHostsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class BastionHostsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal BastionHostsDeleteOperation() { }
+        protected BastionHostsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ConnectionMonitorsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ConnectionMonitorResult>
     {
-        internal ConnectionMonitorsCreateOrUpdateOperation() { }
+        protected ConnectionMonitorsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ConnectionMonitorsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ConnectionMonitorsDeleteOperation() { }
+        protected ConnectionMonitorsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ConnectionMonitorsQueryOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ConnectionMonitorQueryResult>
     {
-        internal ConnectionMonitorsQueryOperation() { }
+        protected ConnectionMonitorsQueryOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ConnectionMonitorsStartOperation : Azure.Operation<Azure.Response>
     {
-        internal ConnectionMonitorsStartOperation() { }
+        protected ConnectionMonitorsStartOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ConnectionMonitorsStopOperation : Azure.Operation<Azure.Response>
     {
-        internal ConnectionMonitorsStopOperation() { }
+        protected ConnectionMonitorsStopOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class DdosCustomPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.DdosCustomPolicy>
     {
-        internal DdosCustomPoliciesCreateOrUpdateOperation() { }
+        protected DdosCustomPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class DdosCustomPoliciesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal DdosCustomPoliciesDeleteOperation() { }
+        protected DdosCustomPoliciesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class DdosProtectionPlansCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.DdosProtectionPlan>
     {
-        internal DdosProtectionPlansCreateOrUpdateOperation() { }
+        protected DdosProtectionPlansCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class DdosProtectionPlansDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal DdosProtectionPlansDeleteOperation() { }
+        protected DdosProtectionPlansDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitAuthorization>
     {
-        internal ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation() { }
+        protected ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitAuthorizationsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ExpressRouteCircuitAuthorizationsDeleteOperation() { }
+        protected ExpressRouteCircuitAuthorizationsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitConnectionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitConnection>
     {
-        internal ExpressRouteCircuitConnectionsCreateOrUpdateOperation() { }
+        protected ExpressRouteCircuitConnectionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitConnectionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ExpressRouteCircuitConnectionsDeleteOperation() { }
+        protected ExpressRouteCircuitConnectionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitPeeringsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeering>
     {
-        internal ExpressRouteCircuitPeeringsCreateOrUpdateOperation() { }
+        protected ExpressRouteCircuitPeeringsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitPeeringsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ExpressRouteCircuitPeeringsDeleteOperation() { }
+        protected ExpressRouteCircuitPeeringsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCircuit>
     {
-        internal ExpressRouteCircuitsCreateOrUpdateOperation() { }
+        protected ExpressRouteCircuitsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ExpressRouteCircuitsDeleteOperation() { }
+        protected ExpressRouteCircuitsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitsListArpTableOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitsArpTableListResult>
     {
-        internal ExpressRouteCircuitsListArpTableOperation() { }
+        protected ExpressRouteCircuitsListArpTableOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitsListRoutesTableOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitsRoutesTableListResult>
     {
-        internal ExpressRouteCircuitsListRoutesTableOperation() { }
+        protected ExpressRouteCircuitsListRoutesTableOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCircuitsListRoutesTableSummaryOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitsRoutesTableSummaryListResult>
     {
-        internal ExpressRouteCircuitsListRoutesTableSummaryOperation() { }
+        protected ExpressRouteCircuitsListRoutesTableSummaryOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteConnectionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteConnection>
     {
-        internal ExpressRouteConnectionsCreateOrUpdateOperation() { }
+        protected ExpressRouteConnectionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteConnectionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ExpressRouteConnectionsDeleteOperation() { }
+        protected ExpressRouteConnectionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCrossConnectionPeeringsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCrossConnectionPeering>
     {
-        internal ExpressRouteCrossConnectionPeeringsCreateOrUpdateOperation() { }
+        protected ExpressRouteCrossConnectionPeeringsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCrossConnectionPeeringsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ExpressRouteCrossConnectionPeeringsDeleteOperation() { }
+        protected ExpressRouteCrossConnectionPeeringsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCrossConnectionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCrossConnection>
     {
-        internal ExpressRouteCrossConnectionsCreateOrUpdateOperation() { }
+        protected ExpressRouteCrossConnectionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCrossConnectionsListArpTableOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitsArpTableListResult>
     {
-        internal ExpressRouteCrossConnectionsListArpTableOperation() { }
+        protected ExpressRouteCrossConnectionsListArpTableOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCrossConnectionsListRoutesTableOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCircuitsRoutesTableListResult>
     {
-        internal ExpressRouteCrossConnectionsListRoutesTableOperation() { }
+        protected ExpressRouteCrossConnectionsListRoutesTableOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteCrossConnectionsListRoutesTableSummaryOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteCrossConnectionsRoutesTableSummaryListResult>
     {
-        internal ExpressRouteCrossConnectionsListRoutesTableSummaryOperation() { }
+        protected ExpressRouteCrossConnectionsListRoutesTableSummaryOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteGatewaysCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRouteGateway>
     {
-        internal ExpressRouteGatewaysCreateOrUpdateOperation() { }
+        protected ExpressRouteGatewaysCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteGatewaysDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ExpressRouteGatewaysDeleteOperation() { }
+        protected ExpressRouteGatewaysDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRoutePortsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ExpressRoutePort>
     {
-        internal ExpressRoutePortsCreateOrUpdateOperation() { }
+        protected ExpressRoutePortsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRoutePortsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ExpressRoutePortsDeleteOperation() { }
+        protected ExpressRoutePortsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class FirewallPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.FirewallPolicy>
     {
-        internal FirewallPoliciesCreateOrUpdateOperation() { }
+        protected FirewallPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class FirewallPoliciesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal FirewallPoliciesDeleteOperation() { }
+        protected FirewallPoliciesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class FirewallPolicyRuleGroupsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.FirewallPolicyRuleGroup>
     {
-        internal FirewallPolicyRuleGroupsCreateOrUpdateOperation() { }
+        protected FirewallPolicyRuleGroupsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -984,7 +984,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class FirewallPolicyRuleGroupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal FirewallPolicyRuleGroupsDeleteOperation() { }
+        protected FirewallPolicyRuleGroupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class FlowLogsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.FlowLog>
     {
-        internal FlowLogsCreateOrUpdateOperation() { }
+        protected FlowLogsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1022,7 +1022,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class FlowLogsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal FlowLogsDeleteOperation() { }
+        protected FlowLogsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class HubRouteTablesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.HubRouteTable>
     {
-        internal HubRouteTablesCreateOrUpdateOperation() { }
+        protected HubRouteTablesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class HubRouteTablesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal HubRouteTablesDeleteOperation() { }
+        protected HubRouteTablesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class InboundNatRulesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.InboundNatRule>
     {
-        internal InboundNatRulesCreateOrUpdateOperation() { }
+        protected InboundNatRulesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class InboundNatRulesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal InboundNatRulesDeleteOperation() { }
+        protected InboundNatRulesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class IpAllocationsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.IpAllocation>
     {
-        internal IpAllocationsCreateOrUpdateOperation() { }
+        protected IpAllocationsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class IpAllocationsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal IpAllocationsDeleteOperation() { }
+        protected IpAllocationsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class IpGroupsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.IpGroup>
     {
-        internal IpGroupsCreateOrUpdateOperation() { }
+        protected IpGroupsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class IpGroupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal IpGroupsDeleteOperation() { }
+        protected IpGroupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class LoadBalancerBackendAddressPoolsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.BackendAddressPool>
     {
-        internal LoadBalancerBackendAddressPoolsCreateOrUpdateOperation() { }
+        protected LoadBalancerBackendAddressPoolsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class LoadBalancerBackendAddressPoolsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal LoadBalancerBackendAddressPoolsDeleteOperation() { }
+        protected LoadBalancerBackendAddressPoolsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1291,7 +1291,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class LoadBalancersCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.LoadBalancer>
     {
-        internal LoadBalancersCreateOrUpdateOperation() { }
+        protected LoadBalancersCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1304,7 +1304,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class LoadBalancersDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal LoadBalancersDeleteOperation() { }
+        protected LoadBalancersDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1333,7 +1333,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class LocalNetworkGatewaysCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.LocalNetworkGateway>
     {
-        internal LocalNetworkGatewaysCreateOrUpdateOperation() { }
+        protected LocalNetworkGatewaysCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class LocalNetworkGatewaysDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal LocalNetworkGatewaysDeleteOperation() { }
+        protected LocalNetworkGatewaysDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NatGatewaysCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.NatGateway>
     {
-        internal NatGatewaysCreateOrUpdateOperation() { }
+        protected NatGatewaysCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1386,7 +1386,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NatGatewaysDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal NatGatewaysDeleteOperation() { }
+        protected NatGatewaysDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkInterfacesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.NetworkInterface>
     {
-        internal NetworkInterfacesCreateOrUpdateOperation() { }
+        protected NetworkInterfacesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1442,7 +1442,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkInterfacesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal NetworkInterfacesDeleteOperation() { }
+        protected NetworkInterfacesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1455,7 +1455,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkInterfacesGetEffectiveRouteTableOperation : Azure.Operation<Azure.ResourceManager.Network.Models.EffectiveRouteListResult>
     {
-        internal NetworkInterfacesGetEffectiveRouteTableOperation() { }
+        protected NetworkInterfacesGetEffectiveRouteTableOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1468,7 +1468,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation : Azure.Operation<Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroupListResult>
     {
-        internal NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation() { }
+        protected NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1511,7 +1511,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkInterfaceTapConfigurationsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.NetworkInterfaceTapConfiguration>
     {
-        internal NetworkInterfaceTapConfigurationsCreateOrUpdateOperation() { }
+        protected NetworkInterfaceTapConfigurationsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1524,7 +1524,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkInterfaceTapConfigurationsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal NetworkInterfaceTapConfigurationsDeleteOperation() { }
+        protected NetworkInterfaceTapConfigurationsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1654,7 +1654,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkManagementDeleteBastionShareableLinkOperation : Azure.Operation<Azure.Response>
     {
-        internal NetworkManagementDeleteBastionShareableLinkOperation() { }
+        protected NetworkManagementDeleteBastionShareableLinkOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1667,7 +1667,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnProfileResponse>
     {
-        internal NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation() { }
+        protected NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1680,7 +1680,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkManagementGetActiveSessionsOperation : Azure.Operation<Azure.AsyncPageable<Azure.ResourceManager.Network.Models.BastionActiveSession>>
     {
-        internal NetworkManagementGetActiveSessionsOperation() { }
+        protected NetworkManagementGetActiveSessionsOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1713,7 +1713,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkManagementPutBastionShareableLinkOperation : Azure.Operation<Azure.AsyncPageable<Azure.ResourceManager.Network.Models.BastionShareableLink>>
     {
-        internal NetworkManagementPutBastionShareableLinkOperation() { }
+        protected NetworkManagementPutBastionShareableLinkOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkProfilesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal NetworkProfilesDeleteOperation() { }
+        protected NetworkProfilesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1755,7 +1755,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkSecurityGroupsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.NetworkSecurityGroup>
     {
-        internal NetworkSecurityGroupsCreateOrUpdateOperation() { }
+        protected NetworkSecurityGroupsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1768,7 +1768,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkSecurityGroupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal NetworkSecurityGroupsDeleteOperation() { }
+        protected NetworkSecurityGroupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1797,7 +1797,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkVirtualAppliancesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.NetworkVirtualAppliance>
     {
-        internal NetworkVirtualAppliancesCreateOrUpdateOperation() { }
+        protected NetworkVirtualAppliancesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1810,7 +1810,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkVirtualAppliancesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal NetworkVirtualAppliancesDeleteOperation() { }
+        protected NetworkVirtualAppliancesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1839,7 +1839,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersCheckConnectivityOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ConnectivityInformation>
     {
-        internal NetworkWatchersCheckConnectivityOperation() { }
+        protected NetworkWatchersCheckConnectivityOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1852,7 +1852,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal NetworkWatchersDeleteOperation() { }
+        protected NetworkWatchersDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1865,7 +1865,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersGetAzureReachabilityReportOperation : Azure.Operation<Azure.ResourceManager.Network.Models.AzureReachabilityReport>
     {
-        internal NetworkWatchersGetAzureReachabilityReportOperation() { }
+        protected NetworkWatchersGetAzureReachabilityReportOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1878,7 +1878,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersGetFlowLogStatusOperation : Azure.Operation<Azure.ResourceManager.Network.Models.FlowLogInformation>
     {
-        internal NetworkWatchersGetFlowLogStatusOperation() { }
+        protected NetworkWatchersGetFlowLogStatusOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1891,7 +1891,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersGetNetworkConfigurationDiagnosticOperation : Azure.Operation<Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticResponse>
     {
-        internal NetworkWatchersGetNetworkConfigurationDiagnosticOperation() { }
+        protected NetworkWatchersGetNetworkConfigurationDiagnosticOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1904,7 +1904,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersGetNextHopOperation : Azure.Operation<Azure.ResourceManager.Network.Models.NextHopResult>
     {
-        internal NetworkWatchersGetNextHopOperation() { }
+        protected NetworkWatchersGetNextHopOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1917,7 +1917,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersGetTroubleshootingOperation : Azure.Operation<Azure.ResourceManager.Network.Models.TroubleshootingResult>
     {
-        internal NetworkWatchersGetTroubleshootingOperation() { }
+        protected NetworkWatchersGetTroubleshootingOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersGetTroubleshootingResultOperation : Azure.Operation<Azure.ResourceManager.Network.Models.TroubleshootingResult>
     {
-        internal NetworkWatchersGetTroubleshootingResultOperation() { }
+        protected NetworkWatchersGetTroubleshootingResultOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1943,7 +1943,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersGetVMSecurityRulesOperation : Azure.Operation<Azure.ResourceManager.Network.Models.SecurityGroupViewResult>
     {
-        internal NetworkWatchersGetVMSecurityRulesOperation() { }
+        protected NetworkWatchersGetVMSecurityRulesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1956,7 +1956,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersListAvailableProvidersOperation : Azure.Operation<Azure.ResourceManager.Network.Models.AvailableProvidersList>
     {
-        internal NetworkWatchersListAvailableProvidersOperation() { }
+        protected NetworkWatchersListAvailableProvidersOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2009,7 +2009,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersSetFlowLogConfigurationOperation : Azure.Operation<Azure.ResourceManager.Network.Models.FlowLogInformation>
     {
-        internal NetworkWatchersSetFlowLogConfigurationOperation() { }
+        protected NetworkWatchersSetFlowLogConfigurationOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2022,7 +2022,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class NetworkWatchersVerifyIPFlowOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VerificationIPFlowResult>
     {
-        internal NetworkWatchersVerifyIPFlowOperation() { }
+        protected NetworkWatchersVerifyIPFlowOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2041,7 +2041,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class P2SVpnGatewaysCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.P2SVpnGateway>
     {
-        internal P2SVpnGatewaysCreateOrUpdateOperation() { }
+        protected P2SVpnGatewaysCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2054,7 +2054,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class P2SVpnGatewaysDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal P2SVpnGatewaysDeleteOperation() { }
+        protected P2SVpnGatewaysDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2067,7 +2067,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class P2SVpnGatewaysDisconnectP2SVpnConnectionsOperation : Azure.Operation<Azure.Response>
     {
-        internal P2SVpnGatewaysDisconnectP2SVpnConnectionsOperation() { }
+        protected P2SVpnGatewaysDisconnectP2SVpnConnectionsOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2080,7 +2080,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class P2SVpnGatewaysGenerateVpnProfileOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnProfileResponse>
     {
-        internal P2SVpnGatewaysGenerateVpnProfileOperation() { }
+        protected P2SVpnGatewaysGenerateVpnProfileOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2093,7 +2093,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation : Azure.Operation<Azure.ResourceManager.Network.Models.P2SVpnConnectionHealth>
     {
-        internal P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation() { }
+        protected P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2106,7 +2106,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class P2SVpnGatewaysGetP2SVpnConnectionHealthOperation : Azure.Operation<Azure.ResourceManager.Network.Models.P2SVpnGateway>
     {
-        internal P2SVpnGatewaysGetP2SVpnConnectionHealthOperation() { }
+        protected P2SVpnGatewaysGetP2SVpnConnectionHealthOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2143,7 +2143,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PacketCapturesCreateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.PacketCaptureResult>
     {
-        internal PacketCapturesCreateOperation() { }
+        protected PacketCapturesCreateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2156,7 +2156,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PacketCapturesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal PacketCapturesDeleteOperation() { }
+        protected PacketCapturesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2169,7 +2169,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PacketCapturesGetStatusOperation : Azure.Operation<Azure.ResourceManager.Network.Models.PacketCaptureQueryStatusResult>
     {
-        internal PacketCapturesGetStatusOperation() { }
+        protected PacketCapturesGetStatusOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2198,7 +2198,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PacketCapturesStopOperation : Azure.Operation<Azure.Response>
     {
-        internal PacketCapturesStopOperation() { }
+        protected PacketCapturesStopOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2219,7 +2219,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PrivateDnsZoneGroupsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.PrivateDnsZoneGroup>
     {
-        internal PrivateDnsZoneGroupsCreateOrUpdateOperation() { }
+        protected PrivateDnsZoneGroupsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2232,7 +2232,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PrivateDnsZoneGroupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal PrivateDnsZoneGroupsDeleteOperation() { }
+        protected PrivateDnsZoneGroupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2257,7 +2257,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PrivateEndpointsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.PrivateEndpoint>
     {
-        internal PrivateEndpointsCreateOrUpdateOperation() { }
+        protected PrivateEndpointsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2270,7 +2270,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PrivateEndpointsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal PrivateEndpointsDeleteOperation() { }
+        protected PrivateEndpointsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2297,7 +2297,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation : Azure.Operation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>
     {
-        internal PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation() { }
+        protected PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2310,7 +2310,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation : Azure.Operation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>
     {
-        internal PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation() { }
+        protected PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2323,7 +2323,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PrivateLinkServicesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.PrivateLinkService>
     {
-        internal PrivateLinkServicesCreateOrUpdateOperation() { }
+        protected PrivateLinkServicesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2336,7 +2336,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PrivateLinkServicesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal PrivateLinkServicesDeleteOperation() { }
+        protected PrivateLinkServicesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2349,7 +2349,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PrivateLinkServicesDeletePrivateEndpointConnectionOperation : Azure.Operation<Azure.Response>
     {
-        internal PrivateLinkServicesDeletePrivateEndpointConnectionOperation() { }
+        protected PrivateLinkServicesDeletePrivateEndpointConnectionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2392,7 +2392,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PublicIPAddressesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.PublicIPAddress>
     {
-        internal PublicIPAddressesCreateOrUpdateOperation() { }
+        protected PublicIPAddressesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2405,7 +2405,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PublicIPAddressesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal PublicIPAddressesDeleteOperation() { }
+        protected PublicIPAddressesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2440,7 +2440,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PublicIPPrefixesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.PublicIPPrefix>
     {
-        internal PublicIPPrefixesCreateOrUpdateOperation() { }
+        protected PublicIPPrefixesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2453,7 +2453,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class PublicIPPrefixesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal PublicIPPrefixesDeleteOperation() { }
+        protected PublicIPPrefixesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2488,7 +2488,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class RouteFilterRulesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.RouteFilterRule>
     {
-        internal RouteFilterRulesCreateOrUpdateOperation() { }
+        protected RouteFilterRulesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2501,7 +2501,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class RouteFilterRulesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal RouteFilterRulesDeleteOperation() { }
+        protected RouteFilterRulesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2526,7 +2526,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class RouteFiltersCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.RouteFilter>
     {
-        internal RouteFiltersCreateOrUpdateOperation() { }
+        protected RouteFiltersCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2539,7 +2539,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class RouteFiltersDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal RouteFiltersDeleteOperation() { }
+        protected RouteFiltersDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2568,7 +2568,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class RoutesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.Route>
     {
-        internal RoutesCreateOrUpdateOperation() { }
+        protected RoutesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2581,7 +2581,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class RoutesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal RoutesDeleteOperation() { }
+        protected RoutesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2606,7 +2606,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class RouteTablesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.RouteTable>
     {
-        internal RouteTablesCreateOrUpdateOperation() { }
+        protected RouteTablesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2619,7 +2619,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class RouteTablesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal RouteTablesDeleteOperation() { }
+        protected RouteTablesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2648,7 +2648,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class SecurityPartnerProvidersCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.SecurityPartnerProvider>
     {
-        internal SecurityPartnerProvidersCreateOrUpdateOperation() { }
+        protected SecurityPartnerProvidersCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2661,7 +2661,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class SecurityPartnerProvidersDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal SecurityPartnerProvidersDeleteOperation() { }
+        protected SecurityPartnerProvidersDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2690,7 +2690,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class SecurityRulesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.SecurityRule>
     {
-        internal SecurityRulesCreateOrUpdateOperation() { }
+        protected SecurityRulesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2703,7 +2703,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class SecurityRulesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal SecurityRulesDeleteOperation() { }
+        protected SecurityRulesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2734,7 +2734,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ServiceEndpointPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ServiceEndpointPolicy>
     {
-        internal ServiceEndpointPoliciesCreateOrUpdateOperation() { }
+        protected ServiceEndpointPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2747,7 +2747,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ServiceEndpointPoliciesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ServiceEndpointPoliciesDeleteOperation() { }
+        protected ServiceEndpointPoliciesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2776,7 +2776,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ServiceEndpointPolicyDefinition>
     {
-        internal ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation() { }
+        protected ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2789,7 +2789,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ServiceEndpointPolicyDefinitionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ServiceEndpointPolicyDefinitionsDeleteOperation() { }
+        protected ServiceEndpointPolicyDefinitionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2820,7 +2820,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class SubnetsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.Subnet>
     {
-        internal SubnetsCreateOrUpdateOperation() { }
+        protected SubnetsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2833,7 +2833,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class SubnetsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal SubnetsDeleteOperation() { }
+        protected SubnetsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2862,7 +2862,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class SubnetsPrepareNetworkPoliciesOperation : Azure.Operation<Azure.Response>
     {
-        internal SubnetsPrepareNetworkPoliciesOperation() { }
+        protected SubnetsPrepareNetworkPoliciesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2875,7 +2875,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class SubnetsUnprepareNetworkPoliciesOperation : Azure.Operation<Azure.Response>
     {
-        internal SubnetsUnprepareNetworkPoliciesOperation() { }
+        protected SubnetsUnprepareNetworkPoliciesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2894,7 +2894,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualHubRouteTableV2SCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualHubRouteTableV2>
     {
-        internal VirtualHubRouteTableV2SCreateOrUpdateOperation() { }
+        protected VirtualHubRouteTableV2SCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2907,7 +2907,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualHubRouteTableV2SDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualHubRouteTableV2SDeleteOperation() { }
+        protected VirtualHubRouteTableV2SDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2932,7 +2932,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualHubsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualHub>
     {
-        internal VirtualHubsCreateOrUpdateOperation() { }
+        protected VirtualHubsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2945,7 +2945,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualHubsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualHubsDeleteOperation() { }
+        protected VirtualHubsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2974,7 +2974,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewayConnectionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnection>
     {
-        internal VirtualNetworkGatewayConnectionsCreateOrUpdateOperation() { }
+        protected VirtualNetworkGatewayConnectionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2987,7 +2987,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewayConnectionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualNetworkGatewayConnectionsDeleteOperation() { }
+        protected VirtualNetworkGatewayConnectionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3024,7 +3024,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewayConnectionsResetSharedKeyOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ConnectionResetSharedKey>
     {
-        internal VirtualNetworkGatewayConnectionsResetSharedKeyOperation() { }
+        protected VirtualNetworkGatewayConnectionsResetSharedKeyOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3037,7 +3037,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewayConnectionsSetSharedKeyOperation : Azure.Operation<Azure.ResourceManager.Network.Models.ConnectionSharedKey>
     {
-        internal VirtualNetworkGatewayConnectionsSetSharedKeyOperation() { }
+        protected VirtualNetworkGatewayConnectionsSetSharedKeyOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3050,7 +3050,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewayConnectionsStartPacketCaptureOperation : Azure.Operation<string>
     {
-        internal VirtualNetworkGatewayConnectionsStartPacketCaptureOperation() { }
+        protected VirtualNetworkGatewayConnectionsStartPacketCaptureOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3063,7 +3063,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewayConnectionsStopPacketCaptureOperation : Azure.Operation<string>
     {
-        internal VirtualNetworkGatewayConnectionsStopPacketCaptureOperation() { }
+        protected VirtualNetworkGatewayConnectionsStopPacketCaptureOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3076,7 +3076,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewayConnectionsUpdateTagsOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnection>
     {
-        internal VirtualNetworkGatewayConnectionsUpdateTagsOperation() { }
+        protected VirtualNetworkGatewayConnectionsUpdateTagsOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3089,7 +3089,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualNetworkGateway>
     {
-        internal VirtualNetworkGatewaysCreateOrUpdateOperation() { }
+        protected VirtualNetworkGatewaysCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3102,7 +3102,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualNetworkGatewaysDeleteOperation() { }
+        protected VirtualNetworkGatewaysDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3115,7 +3115,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVpnConnectionsOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVpnConnectionsOperation() { }
+        protected VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVpnConnectionsOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3128,7 +3128,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysGeneratevpnclientpackageOperation : Azure.Operation<string>
     {
-        internal VirtualNetworkGatewaysGeneratevpnclientpackageOperation() { }
+        protected VirtualNetworkGatewaysGeneratevpnclientpackageOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3141,7 +3141,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysGenerateVpnProfileOperation : Azure.Operation<string>
     {
-        internal VirtualNetworkGatewaysGenerateVpnProfileOperation() { }
+        protected VirtualNetworkGatewaysGenerateVpnProfileOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3154,7 +3154,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysGetAdvertisedRoutesOperation : Azure.Operation<Azure.ResourceManager.Network.Models.GatewayRouteListResult>
     {
-        internal VirtualNetworkGatewaysGetAdvertisedRoutesOperation() { }
+        protected VirtualNetworkGatewaysGetAdvertisedRoutesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3167,7 +3167,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysGetBgpPeerStatusOperation : Azure.Operation<Azure.ResourceManager.Network.Models.BgpPeerStatusListResult>
     {
-        internal VirtualNetworkGatewaysGetBgpPeerStatusOperation() { }
+        protected VirtualNetworkGatewaysGetBgpPeerStatusOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3180,7 +3180,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysGetLearnedRoutesOperation : Azure.Operation<Azure.ResourceManager.Network.Models.GatewayRouteListResult>
     {
-        internal VirtualNetworkGatewaysGetLearnedRoutesOperation() { }
+        protected VirtualNetworkGatewaysGetLearnedRoutesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3193,7 +3193,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnClientConnectionHealthDetailListResult>
     {
-        internal VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation() { }
+        protected VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3206,7 +3206,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnClientIPsecParameters>
     {
-        internal VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation() { }
+        protected VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3219,7 +3219,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation : Azure.Operation<string>
     {
-        internal VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation() { }
+        protected VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3280,7 +3280,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysResetOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualNetworkGateway>
     {
-        internal VirtualNetworkGatewaysResetOperation() { }
+        protected VirtualNetworkGatewaysResetOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3293,7 +3293,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysResetVpnClientSharedKeyOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualNetworkGatewaysResetVpnClientSharedKeyOperation() { }
+        protected VirtualNetworkGatewaysResetVpnClientSharedKeyOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3306,7 +3306,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysSetVpnclientIpsecParametersOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnClientIPsecParameters>
     {
-        internal VirtualNetworkGatewaysSetVpnclientIpsecParametersOperation() { }
+        protected VirtualNetworkGatewaysSetVpnclientIpsecParametersOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3319,7 +3319,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysStartPacketCaptureOperation : Azure.Operation<string>
     {
-        internal VirtualNetworkGatewaysStartPacketCaptureOperation() { }
+        protected VirtualNetworkGatewaysStartPacketCaptureOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3332,7 +3332,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysStopPacketCaptureOperation : Azure.Operation<string>
     {
-        internal VirtualNetworkGatewaysStopPacketCaptureOperation() { }
+        protected VirtualNetworkGatewaysStopPacketCaptureOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3345,7 +3345,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkGatewaysUpdateTagsOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualNetworkGateway>
     {
-        internal VirtualNetworkGatewaysUpdateTagsOperation() { }
+        protected VirtualNetworkGatewaysUpdateTagsOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3358,7 +3358,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkPeeringsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualNetworkPeering>
     {
-        internal VirtualNetworkPeeringsCreateOrUpdateOperation() { }
+        protected VirtualNetworkPeeringsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3371,7 +3371,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkPeeringsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualNetworkPeeringsDeleteOperation() { }
+        protected VirtualNetworkPeeringsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3396,7 +3396,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworksCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualNetwork>
     {
-        internal VirtualNetworksCreateOrUpdateOperation() { }
+        protected VirtualNetworksCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3409,7 +3409,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworksDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualNetworksDeleteOperation() { }
+        protected VirtualNetworksDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3442,7 +3442,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkTapsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualNetworkTap>
     {
-        internal VirtualNetworkTapsCreateOrUpdateOperation() { }
+        protected VirtualNetworkTapsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3455,7 +3455,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualNetworkTapsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualNetworkTapsDeleteOperation() { }
+        protected VirtualNetworkTapsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3484,7 +3484,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualRouterPeeringsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualRouterPeering>
     {
-        internal VirtualRouterPeeringsCreateOrUpdateOperation() { }
+        protected VirtualRouterPeeringsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3497,7 +3497,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualRouterPeeringsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualRouterPeeringsDeleteOperation() { }
+        protected VirtualRouterPeeringsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3522,7 +3522,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualRoutersCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualRouter>
     {
-        internal VirtualRoutersCreateOrUpdateOperation() { }
+        protected VirtualRoutersCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3535,7 +3535,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualRoutersDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualRoutersDeleteOperation() { }
+        protected VirtualRoutersDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3562,7 +3562,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualWansCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VirtualWAN>
     {
-        internal VirtualWansCreateOrUpdateOperation() { }
+        protected VirtualWansCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3575,7 +3575,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VirtualWansDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualWansDeleteOperation() { }
+        protected VirtualWansDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3604,7 +3604,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnConnectionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnConnection>
     {
-        internal VpnConnectionsCreateOrUpdateOperation() { }
+        protected VpnConnectionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3617,7 +3617,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnConnectionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VpnConnectionsDeleteOperation() { }
+        protected VpnConnectionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3642,7 +3642,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnGatewaysCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnGateway>
     {
-        internal VpnGatewaysCreateOrUpdateOperation() { }
+        protected VpnGatewaysCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3655,7 +3655,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnGatewaysDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VpnGatewaysDeleteOperation() { }
+        protected VpnGatewaysDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3686,7 +3686,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnGatewaysResetOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnGateway>
     {
-        internal VpnGatewaysResetOperation() { }
+        protected VpnGatewaysResetOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3705,7 +3705,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnServerConfigurationsAssociatedWithVirtualWanListOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnServerConfigurationsResponse>
     {
-        internal VpnServerConfigurationsAssociatedWithVirtualWanListOperation() { }
+        protected VpnServerConfigurationsAssociatedWithVirtualWanListOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3724,7 +3724,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnServerConfigurationsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnServerConfiguration>
     {
-        internal VpnServerConfigurationsCreateOrUpdateOperation() { }
+        protected VpnServerConfigurationsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3737,7 +3737,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnServerConfigurationsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VpnServerConfigurationsDeleteOperation() { }
+        protected VpnServerConfigurationsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3780,7 +3780,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnSitesConfigurationDownloadOperation : Azure.Operation<Azure.Response>
     {
-        internal VpnSitesConfigurationDownloadOperation() { }
+        protected VpnSitesConfigurationDownloadOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3799,7 +3799,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnSitesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Network.Models.VpnSite>
     {
-        internal VpnSitesCreateOrUpdateOperation() { }
+        protected VpnSitesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3812,7 +3812,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class VpnSitesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VpnSitesDeleteOperation() { }
+        protected VpnSitesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -3841,7 +3841,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class WebApplicationFirewallPoliciesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal WebApplicationFirewallPoliciesDeleteOperation() { }
+        protected WebApplicationFirewallPoliciesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

@@ -10,6 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Feedback indicating that this is an interval of seasonality.
     /// </summary>
     [CodeGenModel("PeriodFeedback")]
+    [CodeGenSuppress(nameof(MetricPeriodFeedback), typeof(string), typeof(FeedbackDimensionFilter))]
     public partial class MetricPeriodFeedback : MetricFeedback
     {
         /// <summary> Initializes a new <see cref="MetricPeriodFeedback"/> instance. </summary>

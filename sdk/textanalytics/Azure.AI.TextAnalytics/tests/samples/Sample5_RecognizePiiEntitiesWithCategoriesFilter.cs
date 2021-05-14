@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Samples
             try
             {
                 // For sample purposes we want the service to only return SSN.
-                RecognizePiiEntitiesOptions options = new () { CategoriesFilter = { PiiEntityCategory.PhoneNumber } };
+                RecognizePiiEntitiesOptions options = new() { CategoriesFilter = { PiiEntityCategory.PhoneNumber } };
                 Response<PiiEntityCollection> response = client.RecognizePiiEntities(document, options: options);
                 PiiEntityCollection entities = response.Value;
 

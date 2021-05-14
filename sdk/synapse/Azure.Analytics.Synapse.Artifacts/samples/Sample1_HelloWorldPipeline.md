@@ -14,7 +14,7 @@ string pipelineName = "Test-Pipeline";
 ```
 
 ```C# Snippet:CreatePipelineClient
-var client = new PipelineClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+var client = new PipelineClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
 
 ## Create a pipeline
@@ -65,5 +65,5 @@ To delete a pipeline no longer needed call `StartDeletePipeline`, passing in the
 
 ```C# Snippet:DeletePipeline
 PipelineDeletePipelineOperation deleteOperation = client.StartDeletePipeline(pipelineName);
-await deleteOperation.WaitForCompletionAsync();
+await deleteOperation.WaitForCompletionResponseAsync();
 ```

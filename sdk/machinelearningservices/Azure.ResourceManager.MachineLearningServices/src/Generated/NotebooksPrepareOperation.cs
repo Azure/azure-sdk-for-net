@@ -19,6 +19,12 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class NotebooksPrepareOperation : Operation<NotebookResourceInfo>, IOperationSource<NotebookResourceInfo>
     {
         private readonly ArmOperationHelpers<NotebookResourceInfo> _operation;
+
+        /// <summary> Initializes a new instance of NotebooksPrepareOperation for mocking. </summary>
+        protected NotebooksPrepareOperation()
+        {
+        }
+
         internal NotebooksPrepareOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<NotebookResourceInfo>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebooksPrepareOperation");

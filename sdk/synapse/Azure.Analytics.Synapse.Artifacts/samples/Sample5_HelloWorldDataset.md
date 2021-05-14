@@ -8,7 +8,7 @@ string dataSetName = "Test-Dataset";
 ```
 
 ```C# Snippet:CreateDatasetClient
-DatasetClient client = new DatasetClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+DatasetClient client = new DatasetClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
 
 ```C# Snippet:CreateDataset
@@ -31,5 +31,5 @@ foreach (DatasetResource dataset in datasets)
 
 ```C# Snippet:DeleteDataset
 DatasetDeleteDatasetOperation deleteDatasetOperation = client.StartDeleteDataset(dataSetName);
-await deleteDatasetOperation.WaitForCompletionAsync();
+await deleteDatasetOperation.WaitForCompletionResponseAsync();
 ```

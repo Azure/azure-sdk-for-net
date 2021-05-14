@@ -32,17 +32,17 @@ Phone numbers can be acquired through purchasing a reservation.
 
 ```C# Snippet:StartPurchaseSearchAsync
 var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Value.SearchId);
-await purchaseOperation.WaitForCompletionAsync();
+await purchaseOperation.WaitForCompletionResponseAsync();
 ```
 
-## Listing acquired phone numbers
+## Listing purchased phone numbers
 
 You can list all phone numbers that have been acquired for your resource.
 
-```C# Snippet:ListAcquiredPhoneNumbersAsync
-var acquiredPhoneNumbers = client.GetPhoneNumbersAsync();
+```C# Snippet:GetPurchasedPhoneNumbersAsync
+var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
 
-await foreach (var phoneNumber in acquiredPhoneNumbers)
+await foreach (var phoneNumber in purchasedPhoneNumbers)
 {
     Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, monthly cost: {phoneNumber.Cost}");
 }
@@ -53,7 +53,7 @@ await foreach (var phoneNumber in acquiredPhoneNumbers)
 Phone number's capabilities can be updated by started by `StartUpdateCapabilities` function.
 
 ```C# Snippet:UpdateCapabilitiesNumbersAsync
-var updateCapabilitiesOperation = client.StartUpdateCapabilities(acquiredPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
+var updateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(purchasedPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
 
 await updateCapabilitiesOperation.WaitForCompletionAsync();
 ```
@@ -63,7 +63,7 @@ await updateCapabilitiesOperation.WaitForCompletionAsync();
 If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbersAsync
-var acquiredPhoneNumber = "<acquired_phone_number>";
-var releaseOperation = client.StartReleasePhoneNumber(acquiredPhoneNumber);
-await releaseOperation.WaitForCompletionAsync();
+var purchasedPhoneNumber = "<purchased_phone_number>";
+var releaseOperation = await client.StartReleasePhoneNumberAsync(purchasedPhoneNumber);
+await releaseOperation.WaitForCompletionResponseAsync();
 ```

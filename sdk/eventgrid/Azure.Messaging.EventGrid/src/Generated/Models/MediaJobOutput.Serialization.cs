@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(MediaJobOutputConverter))]
     public partial class MediaJobOutput
     {
         internal static MediaJobOutput DeserializeMediaJobOutput(JsonElement element)
@@ -24,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     case "#Microsoft.Media.JobOutputAsset": return MediaJobOutputAsset.DeserializeMediaJobOutputAsset(element);
                 }
             }
-            Optional<string> odataType = default;
+            string odataType = default;
             Optional<MediaJobError> error = default;
             Optional<string> label = default;
             long progress = default;
@@ -62,20 +59,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobOutput(odataType.Value, error.Value, label.Value, progress, state);
-        }
-
-        internal partial class MediaJobOutputConverter : JsonConverter<MediaJobOutput>
-        {
-            public override void Write(Utf8JsonWriter writer, MediaJobOutput model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override MediaJobOutput Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeMediaJobOutput(document.RootElement);
-            }
+            return new MediaJobOutput(odataType, error.Value, label.Value, progress, state);
         }
     }
 }

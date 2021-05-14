@@ -29,5 +29,5 @@ extends:
     ServiceDirectory: deviceupdate
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Iot.DeviceUpdate
-      safeName: AzureIotDeviceUpdate
+    - name: Azure.IoT.DeviceUpdate
+      safeName: AzureIoTDeviceUpdate

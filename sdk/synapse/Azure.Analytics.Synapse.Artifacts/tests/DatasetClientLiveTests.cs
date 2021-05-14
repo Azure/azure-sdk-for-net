@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private DatasetClient CreateClient()
         {
             return InstrumentClient(new DatasetClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await createOperation.WaitForCompletionAsync();
 
             DatasetDeleteDatasetOperation deleteOperation = await client.StartDeleteDatasetAsync(datasetName);
-            Response response = await deleteOperation.WaitForCompletionAsync();
+            Response response = await deleteOperation.WaitForCompletionResponseAsync();
             Assert.AreEqual(200, response.Status);
         }
     }

@@ -8,12 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "Date": "Tue, 02 Mar 2021 23:44:45 GMT",
-        "traceparent": "00-34e276e7929bda4b813fed49d7b4fb98-ce7f6e19f61c9940-00",
-        "User-Agent": [
-          "azsdk-net-Communication.Sms/1.0.0-alpha.20210302.1",
-          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
-        ],
+        "Date": "Mon, 26 Apr 2021 16:58:14 GMT",
+        "traceparent": "00-6c4e249a8883d749a2d437d57828a8b1-0d222d8f848a974e-00",
+        "User-Agent": "azsdk-net-Communication.Sms/1.1.0-alpha.20210426.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "29955a9cfed96eb9debd52c0effcf838",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -29,22 +26,22 @@
         ],
         "message": "Hi"
       },
-      "StatusCode": 404,
+      "StatusCode": 401,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Length": "0",
-        "Date": "Tue, 02 Mar 2021 23:44:44 GMT",
-        "MS-CV": "47gMnraixU\u002BV4Hb4D9SUxA.0",
+        "Date": "Mon, 26 Apr 2021 16:58:13 GMT",
+        "MS-CV": "QXYzWaUeJ0m083rd1JW0iw.0",
         "Request-Context": "appId=",
-        "X-Azure-Ref": "07c0\u002BYAAAAABRGTcBIT3sRain8HMKFZryRVdSMzBFREdFMDUwOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "192ms"
+        "X-Azure-Ref": "0JfGGYAAAAADa/6n8fhI4TaMPPJDsV//oWVZSMzBFREdFMDQxNAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "267ms"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "AZURE_PHONE_NUMBER": "\u002B18005555555",
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "AZURE_PHONE_NUMBER": "\u002B14255550123",
     "RandomSeed": "257421069"
   }
 }

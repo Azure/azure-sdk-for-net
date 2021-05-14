@@ -52,17 +52,50 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="accountKey">The account key of the Azure CosmosDB
         /// account. Type: SecureString or
         /// AzureKeyVaultSecretReference.</param>
+        /// <param name="servicePrincipalId">The client ID of the application
+        /// in Azure Active Directory used for Server-To-Server authentication.
+        /// Type: string (or Expression with resultType string).</param>
+        /// <param name="servicePrincipalCredentialType">The service principal
+        /// credential type to use in Server-To-Server authentication.
+        /// 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for
+        /// certificate. Type: string (or Expression with resultType string).
+        /// Possible values include: 'ServicePrincipalKey',
+        /// 'ServicePrincipalCert'</param>
+        /// <param name="servicePrincipalCredential">The credential of the
+        /// service principal object in Azure Active Directory. If
+        /// servicePrincipalCredentialType is 'ServicePrincipalKey',
+        /// servicePrincipalCredential can be SecureString or
+        /// AzureKeyVaultSecretReference. If servicePrincipalCredentialType is
+        /// 'ServicePrincipalCert', servicePrincipalCredential can only be
+        /// AzureKeyVaultSecretReference.</param>
+        /// <param name="tenant">The name or ID of the tenant to which the
+        /// service principal belongs. Type: string (or Expression with
+        /// resultType string).</param>
+        /// <param name="azureCloudType">Indicates the azure cloud type of the
+        /// service principle auth. Allowed values are AzurePublic, AzureChina,
+        /// AzureUsGovernment, AzureGermany. Default value is the data factory
+        /// regions’ cloud type. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="connectionMode">The connection mode used to access
+        /// CosmosDB account. Type: string (or Expression with resultType
+        /// string). Possible values include: 'Gateway', 'Direct'</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public CosmosDbLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object accountEndpoint = default(object), object database = default(object), SecretBase accountKey = default(SecretBase), object encryptedCredential = default(object))
+        public CosmosDbLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object accountEndpoint = default(object), object database = default(object), SecretBase accountKey = default(SecretBase), object servicePrincipalId = default(object), string servicePrincipalCredentialType = default(string), SecretBase servicePrincipalCredential = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), string connectionMode = default(string), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
             AccountEndpoint = accountEndpoint;
             Database = database;
             AccountKey = accountKey;
+            ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalCredentialType = servicePrincipalCredentialType;
+            ServicePrincipalCredential = servicePrincipalCredential;
+            Tenant = tenant;
+            AzureCloudType = azureCloudType;
+            ConnectionMode = connectionMode;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -99,6 +132,62 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.accountKey")]
         public SecretBase AccountKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client ID of the application in Azure Active
+        /// Directory used for Server-To-Server authentication. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.servicePrincipalId")]
+        public object ServicePrincipalId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the service principal credential type to use in
+        /// Server-To-Server authentication. 'ServicePrincipalKey' for
+        /// key/secret, 'ServicePrincipalCert' for certificate. Type: string
+        /// (or Expression with resultType string). Possible values include:
+        /// 'ServicePrincipalKey', 'ServicePrincipalCert'
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.servicePrincipalCredentialType")]
+        public string ServicePrincipalCredentialType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the credential of the service principal object in
+        /// Azure Active Directory. If servicePrincipalCredentialType is
+        /// 'ServicePrincipalKey', servicePrincipalCredential can be
+        /// SecureString or AzureKeyVaultSecretReference. If
+        /// servicePrincipalCredentialType is 'ServicePrincipalCert',
+        /// servicePrincipalCredential can only be
+        /// AzureKeyVaultSecretReference.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.servicePrincipalCredential")]
+        public SecretBase ServicePrincipalCredential { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name or ID of the tenant to which the service
+        /// principal belongs. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.tenant")]
+        public object Tenant { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the azure cloud type of the service
+        /// principle auth. Allowed values are AzurePublic, AzureChina,
+        /// AzureUsGovernment, AzureGermany. Default value is the data factory
+        /// regions’ cloud type. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.azureCloudType")]
+        public object AzureCloudType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the connection mode used to access CosmosDB account.
+        /// Type: string (or Expression with resultType string). Possible
+        /// values include: 'Gateway', 'Direct'
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.connectionMode")]
+        public string ConnectionMode { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.

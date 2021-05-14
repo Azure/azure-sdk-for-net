@@ -46,5 +46,12 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="StringIndexType.Utf16CodeUnit"/>.
         /// </summary>
         public StringIndexType StringIndexType { get; set; } = StringIndexType.Utf16CodeUnit;
+
+        /// <summary>
+        /// The default value of this property is 'false', except for methods like 'StartAnalyzeHealthcareEntities' and 'RecognizePiiEntities'.
+        /// This means, Text Analytics service logs your input text for 48 hours, solely to allow for troubleshooting issues.
+        /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
+        /// </summary>
+        public bool? DisableServiceLogs { get; set; }
     }
 }

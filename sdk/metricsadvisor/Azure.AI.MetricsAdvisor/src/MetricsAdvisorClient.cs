@@ -116,8 +116,8 @@ namespace Azure.AI.MetricsAdvisor
             {
                 DimensionValueFilter = options?.DimensionValueToFilter
             };
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
@@ -126,7 +126,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<MetricDimensionList> response = await _serviceRestClient.GetMetricDimensionAsync(metricGuid, queryOptions, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<MetricDimensionList> response = await _serviceRestClient.GetMetricDimensionAsync(metricGuid, queryOptions, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -176,8 +176,8 @@ namespace Azure.AI.MetricsAdvisor
             {
                 DimensionValueFilter = options?.DimensionValueToFilter
             };
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             Page<string> FirstPageFunc(int? pageSizeHint)
             {
@@ -186,7 +186,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<MetricDimensionList> response = _serviceRestClient.GetMetricDimension(metricGuid, queryOptions, skip, top, cancellationToken);
+                    Response<MetricDimensionList> response = _serviceRestClient.GetMetricDimension(metricGuid, queryOptions, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -233,8 +233,8 @@ namespace Azure.AI.MetricsAdvisor
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             MetricSeriesQueryOptions queryOptions = new MetricSeriesQueryOptions(ClientCommon.NormalizeDateTimeOffset(options.ActiveSince));
 
-            int? skip = options.SkipCount;
-            int? top = options.TopCount;
+            int? skip = options.Skip;
+            int? maxPageSize = options.MaxPageSize;
 
             // Deep copy filter contents from options to queryOptions.
 
@@ -250,7 +250,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<MetricSeriesList> response = await _serviceRestClient.GetMetricSeriesAsync(metricGuid, queryOptions, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<MetricSeriesList> response = await _serviceRestClient.GetMetricSeriesAsync(metricGuid, queryOptions, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -297,8 +297,8 @@ namespace Azure.AI.MetricsAdvisor
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             MetricSeriesQueryOptions queryOptions = new MetricSeriesQueryOptions(ClientCommon.NormalizeDateTimeOffset(options.ActiveSince));
 
-            int? skip = options.SkipCount;
-            int? top = options.TopCount;
+            int? skip = options.Skip;
+            int? maxPageSize = options.MaxPageSize;
 
             // Deep copy filter contents from options to queryOptions.
 
@@ -314,7 +314,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<MetricSeriesList> response = _serviceRestClient.GetMetricSeries(metricGuid, queryOptions, skip, top, cancellationToken);
+                    Response<MetricSeriesList> response = _serviceRestClient.GetMetricSeries(metricGuid, queryOptions, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -436,8 +436,8 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
-            int? skip = options.SkipCount;
-            int? top = options.TopCount;
+            int? skip = options.Skip;
+            int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<EnrichmentStatus>> FirstPageFunc(int? pageSizeHint)
             {
@@ -446,7 +446,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<EnrichmentStatusList> response = await _serviceRestClient.GetEnrichmentStatusByMetricAsync(metricGuid, queryOptions, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<EnrichmentStatusList> response = await _serviceRestClient.GetEnrichmentStatusByMetricAsync(metricGuid, queryOptions, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -490,8 +490,8 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
-            int? skip = options.SkipCount;
-            int? top = options.TopCount;
+            int? skip = options.Skip;
+            int? maxPageSize = options.MaxPageSize;
 
             Page<EnrichmentStatus> FirstPageFunc(int? pageSizeHint)
             {
@@ -500,7 +500,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<EnrichmentStatusList> response = _serviceRestClient.GetEnrichmentStatusByMetric(metricGuid, queryOptions, skip, top, cancellationToken);
+                    Response<EnrichmentStatusList> response = _serviceRestClient.GetEnrichmentStatusByMetric(metricGuid, queryOptions, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -559,8 +559,8 @@ namespace Azure.AI.MetricsAdvisor
                 StartTime = options?.StartTime,
                 TimeMode = options?.TimeMode
             };
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<MetricFeedback>> FirstPageFunc(int? pageSizeHint)
             {
@@ -569,7 +569,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<MetricFeedbackList> response = await _serviceRestClient.ListMetricFeedbacksAsync(queryOptions, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<MetricFeedbackList> response = await _serviceRestClient.ListMetricFeedbacksAsync(queryOptions, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -624,8 +624,8 @@ namespace Azure.AI.MetricsAdvisor
                 StartTime = options?.StartTime,
                 TimeMode = options?.TimeMode
             };
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             Page<MetricFeedback> FirstPageFunc(int? pageSizeHint)
             {
@@ -634,7 +634,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<MetricFeedbackList> response = _serviceRestClient.ListMetricFeedbacks(queryOptions, skip, top, cancellationToken);
+                    Response<MetricFeedbackList> response = _serviceRestClient.ListMetricFeedbacks(queryOptions, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -823,8 +823,8 @@ namespace Azure.AI.MetricsAdvisor
             {
                 Filter = options.Filter?.GetDetectionAnomalyFilterCondition()
             };
-            int? skip = options.SkipCount;
-            int? top = options.TopCount;
+            int? skip = options.Skip;
+            int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<DataPointAnomaly>> FirstPageFunc(int? pageSizeHint)
             {
@@ -833,7 +833,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AnomalyResultList> response = await _serviceRestClient.GetAnomaliesByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, queryOptions, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<AnomalyResultList> response = await _serviceRestClient.GetAnomaliesByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, queryOptions, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -850,7 +850,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AnomalyResultList> response = await _serviceRestClient.GetAnomaliesByAnomalyDetectionConfigurationNextPageAsync(nextLink, detectionConfigurationGuid, queryOptions, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<AnomalyResultList> response = await _serviceRestClient.GetAnomaliesByAnomalyDetectionConfigurationNextPageAsync(nextLink, detectionConfigurationGuid, queryOptions, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -882,8 +882,8 @@ namespace Azure.AI.MetricsAdvisor
             {
                 Filter = options.Filter?.GetDetectionAnomalyFilterCondition()
             };
-            int? skip = options.SkipCount;
-            int? top = options.TopCount;
+            int? skip = options.Skip;
+            int? maxPageSize = options.MaxPageSize;
 
             Page<DataPointAnomaly> FirstPageFunc(int? pageSizeHint)
             {
@@ -892,7 +892,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AnomalyResultList> response = _serviceRestClient.GetAnomaliesByAnomalyDetectionConfiguration(detectionConfigurationGuid, queryOptions, skip, top, cancellationToken);
+                    Response<AnomalyResultList> response = _serviceRestClient.GetAnomaliesByAnomalyDetectionConfiguration(detectionConfigurationGuid, queryOptions, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -909,7 +909,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AnomalyResultList> response = _serviceRestClient.GetAnomaliesByAnomalyDetectionConfigurationNextPage(nextLink, detectionConfigurationGuid, queryOptions, skip, top, cancellationToken);
+                    Response<AnomalyResultList> response = _serviceRestClient.GetAnomaliesByAnomalyDetectionConfigurationNextPage(nextLink, detectionConfigurationGuid, queryOptions, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -941,8 +941,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 Filter = options.GetDetectionIncidentFilterCondition()
             };
-            int? skip = options.SkipCount; // Unused?
-            int? top = options.TopCount;
+            int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<AnomalyIncident>> FirstPageFunc(int? pageSizeHint)
             {
@@ -951,7 +950,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<IncidentResultList> response = await _serviceRestClient.GetIncidentsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, queryOptions, top, cancellationToken).ConfigureAwait(false);
+                    Response<IncidentResultList> response = await _serviceRestClient.GetIncidentsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, queryOptions, maxPageSize, cancellationToken).ConfigureAwait(false);
                     PopulateDetectionConfigurationIds(response.Value.Value, detectionConfigurationId);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -969,7 +968,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<IncidentResultList> response = await _serviceRestClient.GetIncidentsByAnomalyDetectionConfigurationNextPageAsync(nextLink, detectionConfigurationGuid, queryOptions, top, cancellationToken).ConfigureAwait(false);
+                    Response<IncidentResultList> response = await _serviceRestClient.GetIncidentsByAnomalyDetectionConfigurationNextPageAsync(nextLink, detectionConfigurationGuid, queryOptions, maxPageSize, cancellationToken).ConfigureAwait(false);
                     PopulateDetectionConfigurationIds(response.Value.Value, detectionConfigurationId);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1002,8 +1001,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 Filter = options.GetDetectionIncidentFilterCondition()
             };
-            int? skip = options.SkipCount; // Unused?
-            int? top = options.TopCount;
+            int? maxPageSize = options.MaxPageSize;
 
             Page<AnomalyIncident> FirstPageFunc(int? pageSizeHint)
             {
@@ -1012,7 +1010,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<IncidentResultList> response = _serviceRestClient.GetIncidentsByAnomalyDetectionConfiguration(detectionConfigurationGuid, queryOptions, top, cancellationToken);
+                    Response<IncidentResultList> response = _serviceRestClient.GetIncidentsByAnomalyDetectionConfiguration(detectionConfigurationGuid, queryOptions, maxPageSize, cancellationToken);
                     PopulateDetectionConfigurationIds(response.Value.Value, detectionConfigurationId);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1030,7 +1028,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<IncidentResultList> response = _serviceRestClient.GetIncidentsByAnomalyDetectionConfigurationNextPage(nextLink, detectionConfigurationGuid, queryOptions, top, cancellationToken);
+                    Response<IncidentResultList> response = _serviceRestClient.GetIncidentsByAnomalyDetectionConfigurationNextPage(nextLink, detectionConfigurationGuid, queryOptions, maxPageSize, cancellationToken);
                     PopulateDetectionConfigurationIds(response.Value.Value, detectionConfigurationId);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1206,8 +1204,8 @@ namespace Azure.AI.MetricsAdvisor
             {
                 DimensionFilter = options.DimensionToFilter?.Clone()
             };
-            int? skip = options.SkipCount;
-            int? top = options.TopCount;
+            int? skip = options.Skip;
+            int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1216,7 +1214,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AnomalyDimensionList> response = await _serviceRestClient.GetDimensionOfAnomaliesByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, queryOptions, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<AnomalyDimensionList> response = await _serviceRestClient.GetDimensionOfAnomaliesByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, queryOptions, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1268,8 +1266,8 @@ namespace Azure.AI.MetricsAdvisor
             {
                 DimensionFilter = options.DimensionToFilter?.Clone()
             };
-            int? skip = options.SkipCount;
-            int? top = options.TopCount;
+            int? skip = options.Skip;
+            int? maxPageSize = options.MaxPageSize;
 
             Page<string> FirstPageFunc(int? pageSizeHint)
             {
@@ -1278,7 +1276,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AnomalyDimensionList> response = _serviceRestClient.GetDimensionOfAnomaliesByAnomalyDetectionConfiguration(detectionConfigurationGuid, queryOptions, skip, top, cancellationToken);
+                    Response<AnomalyDimensionList> response = _serviceRestClient.GetDimensionOfAnomaliesByAnomalyDetectionConfiguration(detectionConfigurationGuid, queryOptions, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1416,8 +1414,8 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             AlertingResultQuery queryOptions = new AlertingResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), options.TimeMode);
-            int? skip = options.SkipCount;
-            int? top = options.TopCount;
+            int? skip = options.Skip;
+            int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<AnomalyAlert>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1426,7 +1424,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AlertResultList> response = await _serviceRestClient.GetAlertsByAnomalyAlertingConfigurationAsync(alertConfigurationGuid, queryOptions, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<AlertResultList> response = await _serviceRestClient.GetAlertsByAnomalyAlertingConfigurationAsync(alertConfigurationGuid, queryOptions, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1472,8 +1470,8 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             AlertingResultQuery queryOptions = new AlertingResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), options.TimeMode);
-            int? skip = options.SkipCount;
-            int? top = options.TopCount;
+            int? skip = options.Skip;
+            int? maxPageSize = options.MaxPageSize;
 
             Page<AnomalyAlert> FirstPageFunc(int? pageSizeHint)
             {
@@ -1482,7 +1480,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AlertResultList> response = _serviceRestClient.GetAlertsByAnomalyAlertingConfiguration(alertConfigurationGuid, queryOptions, skip, top, cancellationToken);
+                    Response<AlertResultList> response = _serviceRestClient.GetAlertsByAnomalyAlertingConfiguration(alertConfigurationGuid, queryOptions, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1529,8 +1527,8 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<DataPointAnomaly>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1539,7 +1537,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AnomalyResultList> response = await _serviceRestClient.GetAnomaliesFromAlertByAnomalyAlertingConfigurationAsync(alertConfigurationGuid, alertId, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<AnomalyResultList> response = await _serviceRestClient.GetAnomaliesFromAlertByAnomalyAlertingConfigurationAsync(alertConfigurationGuid, alertId, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1556,7 +1554,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AnomalyResultList> response = await _serviceRestClient.GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageAsync(nextLink, alertConfigurationGuid, alertId, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<AnomalyResultList> response = await _serviceRestClient.GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageAsync(nextLink, alertConfigurationGuid, alertId, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1586,8 +1584,8 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             Page<DataPointAnomaly> FirstPageFunc(int? pageSizeHint)
             {
@@ -1596,7 +1594,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AnomalyResultList> response = _serviceRestClient.GetAnomaliesFromAlertByAnomalyAlertingConfiguration(alertConfigurationGuid, alertId, skip, top, cancellationToken);
+                    Response<AnomalyResultList> response = _serviceRestClient.GetAnomaliesFromAlertByAnomalyAlertingConfiguration(alertConfigurationGuid, alertId, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1613,7 +1611,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<AnomalyResultList> response = _serviceRestClient.GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPage(nextLink, alertConfigurationGuid, alertId, skip, top, cancellationToken);
+                    Response<AnomalyResultList> response = _serviceRestClient.GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPage(nextLink, alertConfigurationGuid, alertId, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1643,8 +1641,8 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<AnomalyIncident>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1653,7 +1651,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<IncidentResultList> response = await _serviceRestClient.GetIncidentsFromAlertByAnomalyAlertingConfigurationAsync(alertConfigurationGuid, alertId, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<IncidentResultList> response = await _serviceRestClient.GetIncidentsFromAlertByAnomalyAlertingConfigurationAsync(alertConfigurationGuid, alertId, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1670,7 +1668,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<IncidentResultList> response = await _serviceRestClient.GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageAsync(nextLink, alertConfigurationGuid, alertId, skip, top, cancellationToken).ConfigureAwait(false);
+                    Response<IncidentResultList> response = await _serviceRestClient.GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageAsync(nextLink, alertConfigurationGuid, alertId, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1700,8 +1698,8 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
-            int? skip = options?.SkipCount;
-            int? top = options?.TopCount;
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             Page<AnomalyIncident> FirstPageFunc(int? pageSizeHint)
             {
@@ -1710,7 +1708,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<IncidentResultList> response = _serviceRestClient.GetIncidentsFromAlertByAnomalyAlertingConfiguration(alertConfigurationGuid, alertId, skip, top, cancellationToken);
+                    Response<IncidentResultList> response = _serviceRestClient.GetIncidentsFromAlertByAnomalyAlertingConfiguration(alertConfigurationGuid, alertId, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1727,7 +1725,7 @@ namespace Azure.AI.MetricsAdvisor
 
                 try
                 {
-                    Response<IncidentResultList> response = _serviceRestClient.GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPage(nextLink, alertConfigurationGuid, alertId, skip, top, cancellationToken);
+                    Response<IncidentResultList> response = _serviceRestClient.GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPage(nextLink, alertConfigurationGuid, alertId, skip, maxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

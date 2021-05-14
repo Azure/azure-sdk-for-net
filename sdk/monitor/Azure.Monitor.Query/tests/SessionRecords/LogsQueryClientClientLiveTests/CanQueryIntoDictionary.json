@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/bb1b4371-062d-414d-bef3-b0d124ff721c/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "traceparent": "00-c5656762c78efc4d842e4c17d89d298c-f935700052a5de48-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "b0ad0544223e642737428909269feb69",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "TableA1_116_CL |project-rename Name = StringColumn_s, Age = IntColumn_d |project Name, Age |order by Name asc",
+        "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "79",
+        "Connection": "keep-alive",
+        "Content-Length": "143",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 04 May 2021 18:37:07 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6c84644dc4-fn7sf",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "Age",
+                "type": "real"
+              }
+            ],
+            "rows": [
+              [
+                "a",
+                1
+              ],
+              [
+                "b",
+                3
+              ],
+              [
+                "c",
+                1
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-05-04T11:37:07.3648895-07:00",
+    "RandomSeed": "472670342",
+    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+  }
+}

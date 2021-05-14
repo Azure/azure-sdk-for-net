@@ -12,10 +12,12 @@
     <PackageTags>IoT;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure Digital Twins service</Description>
     <Version>1.3.0-beta.1</Version>
-    <ApiCompatVersion>1.2.1</ApiCompatVersion>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.2.2</ApiCompatVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -53,5 +55,4 @@
     </Compile>
   </ItemGroup>
 
-  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />
 </Project>

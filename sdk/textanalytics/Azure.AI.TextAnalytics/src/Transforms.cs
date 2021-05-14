@@ -329,7 +329,9 @@ namespace Azure.AI.TextAnalytics
                 {
                     Domain = option.DomainFilter.HasValue ? option.DomainFilter.Value.GetString() : (PiiTaskParametersDomain?)null,
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
-                    StringIndexType = option.StringIndexType
+                    StringIndexType = option.StringIndexType,
+                    LoggingOptOut = option.DisableServiceLogs
+                    // Categories are not enabled because of https://github.com/Azure/azure-sdk-for-net/issues/19237
                 }
             };
         }
@@ -341,7 +343,8 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new EntityLinkingTaskParameters()
                 {
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
-                    StringIndexType = option.StringIndexType
+                    StringIndexType = option.StringIndexType,
+                    LoggingOptOut = option.DisableServiceLogs
                 }
             };
         }
@@ -353,7 +356,8 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new EntitiesTaskParameters()
                 {
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
-                    StringIndexType = option.StringIndexType
+                    StringIndexType = option.StringIndexType,
+                    LoggingOptOut = option.DisableServiceLogs
                 }
             };
         }
@@ -365,6 +369,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new KeyPhrasesTaskParameters()
                 {
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
+                    LoggingOptOut = option.DisableServiceLogs
                 }
             };
         }
@@ -420,39 +425,6 @@ namespace Azure.AI.TextAnalytics
         internal static AnalyzeBatchActionsResult ConvertToAnalyzeOperationResult(AnalyzeJobState jobState, IDictionary<string, int> map)
         {
             return new AnalyzeBatchActionsResult(jobState, map);
-        }
-
-        internal static IReadOnlyList<KeyPhraseExtractionTasksItem> ConvertToKeyPhraseExtractionTasks(IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IDictionary<string, int> idToIndexMap)
-        {
-            var collection = new List<KeyPhraseExtractionTasksItem>();
-            foreach (KeyPhraseExtractionTasksItem task in keyPhraseExtractionTasks)
-            {
-                collection.Add(new KeyPhraseExtractionTasksItem(task, idToIndexMap));
-            }
-
-            return collection;
-        }
-
-        internal static IReadOnlyList<EntityRecognitionPiiTasksItem> ConvertToEntityRecognitionPiiTasks(IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IDictionary<string, int> idToIndexMap)
-        {
-            var collection = new List<EntityRecognitionPiiTasksItem>();
-            foreach (EntityRecognitionPiiTasksItem task in entityRecognitionPiiTasks)
-            {
-                collection.Add(new EntityRecognitionPiiTasksItem(task, idToIndexMap));
-            }
-
-            return collection;
-        }
-
-        internal static IReadOnlyList<EntityRecognitionTasksItem> ConvertToEntityRecognitionTasks(IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IDictionary<string, int> idToIndexMap)
-        {
-            var collection = new List<EntityRecognitionTasksItem>();
-            foreach (EntityRecognitionTasksItem task in entityRecognitionTasks)
-            {
-                collection.Add(new EntityRecognitionTasksItem(task, idToIndexMap));
-            }
-
-            return collection;
         }
 
         private static string[] parseActionErrorTarget(string targetReference)
@@ -535,7 +507,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 else
                 {
-                    collection.Add(new RecognizeLinkedEntitiesActionResult(ConvertToRecognizeLinkedEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, null));
+                    collection.Add(new RecognizeLinkedEntitiesActionResult(ConvertToRecognizeLinkedEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, null));
                 }
                 index++;
             }
@@ -557,7 +529,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 else
                 {
-                    collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, null));
+                    collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, null));
                 }
                 index++;
             }
@@ -579,7 +551,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 else
                 {
-                    collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, taskError));
+                    collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, taskError));
                 }
                 index++;
             }
@@ -603,7 +575,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 else
                 {
-                    collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, taskError));
+                    collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, taskError));
                 }
                 index++;
             }

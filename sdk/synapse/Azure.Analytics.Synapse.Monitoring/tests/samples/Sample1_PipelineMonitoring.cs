@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Samples
         {
             #region Snippet:CreateMonitoringClient
             string endpoint = TestEnvironment.EndpointUrl;
-            MonitoringClient client = new MonitoringClient(endpoint, new DefaultAzureCredential());
+            MonitoringClient client = new MonitoringClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:GetSparkJobList

@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,6 +24,8 @@ namespace Azure.Core
     /// A mutable representation of a JSON value.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
+    [JsonConverter(typeof(JsonConverter))]
     public class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
         private readonly JsonValueKind _kind;
@@ -481,7 +484,7 @@ namespace Azure.Core
         /// <summary>
         /// Inserts a new value at the end of an array.
         /// </summary>
-        /// <param name="serializable">The value to insert intot he array.</param>
+        /// <param name="serializable">The value to insert into the array.</param>
         /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
@@ -496,7 +499,7 @@ namespace Azure.Core
         /// <summary>
         /// Inserts a new value at the end of an array.
         /// </summary>
-        /// <param name="serializable">The value to insert intot he array.</param>
+        /// <param name="serializable">The value to insert into the array.</param>
         /// <param name="options">Options to control the conversion behavior.</param>
         /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
         /// <remarks>
@@ -512,7 +515,7 @@ namespace Azure.Core
         /// <summary>
         /// Inserts a new value at the end of an array.
         /// </summary>
-        /// <param name="serializable">The value to insert intot he array.</param>
+        /// <param name="serializable">The value to insert into the array.</param>
         /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Array"/> this method throws <see cref="InvalidOperationException"/>.
@@ -527,7 +530,7 @@ namespace Azure.Core
         /// <summary>
         /// Inserts a new value at the end of an array.
         /// </summary>
-        /// <param name="serializable">The value to insert intot he array.</param>
+        /// <param name="serializable">The value to insert into the array.</param>
         /// <param name="options">Options to control the conversion behavior.</param>
         /// <returns>A <see cref="JsonData"/> of the serialized object.</returns>
         /// <remarks>
@@ -586,7 +589,7 @@ namespace Azure.Core
         /// Gets or sets a value for a given property in an object.
         /// </summary>
         /// <param name="propertyName">The name of the property in the object to get or set.</param>
-        /// <returns>The value for the given proeprty name.</returns>
+        /// <returns>The value for the given property name.</returns>
         /// <remarks>
         /// If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.
         /// </remarks>
@@ -857,7 +860,7 @@ namespace Azure.Core
         /// <summary>
         /// Returns the number of elements in this array.
         /// </summary>
-        /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Array"/> this methods thows <see cref="InvalidOperationException"/>.</remarks>
+        /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Array"/> this methods throws <see cref="InvalidOperationException"/>.</remarks>
         public int Length
         {
             get => EnsureArray().Count;
@@ -866,7 +869,7 @@ namespace Azure.Core
         /// <summary>
         /// Returns the names of all the properties of this object.
         /// </summary>
-        /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Object"/> this methods thows <see cref="InvalidOperationException"/>.</remarks>
+        /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Object"/> this methods throws <see cref="InvalidOperationException"/>.</remarks>
         public IEnumerable<string> Properties
         {
             get => EnsureObject().Keys;
@@ -875,7 +878,7 @@ namespace Azure.Core
         /// <summary>
         /// Returns all the elements in this array.
         /// </summary>
-        /// <remarks>If<see cref="Kind"/> is not<see cref="JsonValueKind.Array"/> this methods thows <see cref = "InvalidOperationException" />.</remarks>
+        /// <remarks>If<see cref="Kind"/> is not<see cref="JsonValueKind.Array"/> this methods throws <see cref = "InvalidOperationException" />.</remarks>
         public IEnumerable<JsonData> Items
         {
             get => EnsureArray();
@@ -1140,10 +1143,7 @@ namespace Azure.Core
             return EnsureObject();
         }
 
-        private string DebuggerDisplay
-        {
-            get => $"{{Kind: {_kind}, JSON: {ToJsonString()}}}";
-        }
+        private string DebuggerDisplay => ToJsonString();
 
         private struct Number
         {
@@ -1246,6 +1246,79 @@ namespace Azure.Core
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
                 DynamicMetaObject setProperty = new DynamicMetaObject(setPropertyCall, restrictions);
                 return setProperty;
+            }
+        }
+
+        internal class JsonDataDebuggerProxy
+        {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private readonly JsonData _jsonData;
+
+            public JsonDataDebuggerProxy(JsonData jsonData)
+            {
+                _jsonData = jsonData;
+            }
+
+            [DebuggerDisplay("{Value.DebuggerDisplay,nq}", Name = "{Name,nq}")]
+            internal class PropertyMember
+            {
+                [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+                public string? Name { get; set; }
+                [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+                public JsonData? Value { get; set; }
+            }
+
+            [DebuggerDisplay("{Value,nq}")]
+            internal class SingleMember
+            {
+                public object? Value { get; set; }
+            }
+
+            [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+            public object Members {
+                get
+                {
+                    if (_jsonData.Kind != JsonValueKind.Array &&
+                        _jsonData.Kind != JsonValueKind.Object)
+                        return new SingleMember() { Value = _jsonData.ToJsonString() };
+
+                    return BuildMembers().ToArray();
+                }}
+
+            private IEnumerable<object> BuildMembers()
+            {
+                if (_jsonData.Kind == JsonValueKind.Object)
+                {
+                    foreach (var property in _jsonData.Properties)
+                    {
+                        yield return new PropertyMember() {Name = property, Value = _jsonData.Get(property)};
+                    }
+                }
+                else if (_jsonData.Kind == JsonValueKind.Array)
+                {
+                    foreach (var property in _jsonData.Items)
+                    {
+                        yield return  property;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The default serialization behavior for <see cref="JsonData"/> is not the behavior we want, we want to use
+        /// the underlying JSON value that <see cref="JsonData"/> wraps, instead of using the default behavior for
+        /// POCOs.
+        /// </summary>
+        private class JsonConverter : JsonConverter<JsonData>
+        {
+            public override JsonData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                return new JsonData(JsonDocument.ParseValue(ref reader));
+            }
+
+            public override void Write(Utf8JsonWriter writer, JsonData value, JsonSerializerOptions options)
+            {
+                value.WriteTo(writer);
             }
         }
     }
