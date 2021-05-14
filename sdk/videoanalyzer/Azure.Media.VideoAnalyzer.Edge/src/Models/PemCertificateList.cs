@@ -10,7 +10,7 @@ using System.Text;
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
-    /// Initializes a new instance of the PemCertificates class.
+    /// Initializes a new instance of the PemCertificateList class.
     /// </summary>
     public partial class PemCertificateList
     {

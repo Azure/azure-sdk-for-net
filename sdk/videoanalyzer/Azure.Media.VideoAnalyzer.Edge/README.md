@@ -17,9 +17,9 @@ This is a models-only SDK. All client operations are done using the [Microsoft A
 
 The client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
 
-```C# Snippet:Azure_VideoAnalyzer_Samples_ConnectionString
-var connectionString = "connectionString";
-this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+```C# Snippet:Azure_VideoAnalyzerSamples_ConnectionString
+String connectionString = "HostName=lvasamplehubnpctns45jvoji.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=dburWgVNqX+/xuOpSfXMKQdkr4nypY7HbwmwduL3mbs=";
+ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
 ```
 
 ### Install the package
@@ -27,7 +27,7 @@ this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString)
 Install the Video Analyzer client library for .NET with NuGet:
 
 ```bash
-dotnet add package Azure.Media.VideoAnalyzer.Edge --version 1.0.0-beta.1
+dotnet add package Azure.Media.VideoAnalyzer.Edge --prerelease
 ```
 
 Install the Azure IoT Hub SDk for .NET with NuGet:
@@ -55,9 +55,9 @@ A _pipeline topology_ is a blueprint or template for instantiating live pipeline
 
 ### CloudToDeviceMethod
 
-The `CloudToDeviceMethod` is part of the [azure-iot-hub SDk][iot-hub-sdk]. This method allows you to communicate one way notifications to a device in your IoT hub. In our case, we want to communicate various methods such as `PipelineTopologySetRequest` and `PipelineTopologyGetRequest`. To use `CloudToDeviceMethod` you need to pass in one parameter: `methodName` and then set the JSON payload of that method.
+The `CloudToDeviceMethod` is part of the [azure-iot-hub SDk][iot-hub-sdk]. This method allows you to communicate one way notifications to a device in your IoT hub. In our case, we want to communicate various methods such as `PipelineTopologySetRequest` and `PipelineTopologyGetRequest`. To use `CloudToDeviceMethod` you need to pass in one parameter: `MethodName` and then set the JSON payload of that method.
 
-The parameter `methodName` is the name of the request you are sending. Make sure to use each method's predefined `methodName` property. For example, `PipelineTopologySetRequest.methodName`.
+The parameter `MethodName` is the name of the request you are sending. Make sure to use each method's predefined `MethodName` property. For example, `PipelineTopologySetRequest.MethodName`.
 
 To set the Json payload of the cloud method, use the pipeline request method's `GetPayloadAsJson()` function. For example, `directCloudMethod.SetPayloadJson(PipelineTopologySetRequest.GetPayloadAsJson())`
 
@@ -88,12 +88,12 @@ To create a pipeline topology you need to define parameters, sources, and sinks.
 pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUserName", ParameterType.String)
 {
     Description = "rtsp source user name.",
-    Default = "dummyUserName"
+    Default = "exampleUserName"
 });
 pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspPassword", ParameterType.SecretString)
 {
     Description = "rtsp source password.",
-    Default = "dummyPassword"
+    Default = "examplePassword"
 });
 pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUrl", ParameterType.String)
 {
@@ -167,14 +167,14 @@ var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
 directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
 
-var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+var setPipelineTopResponse = await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, directMethod);
 ```
 
 To try different pipeline topologies with the SDK, please see the official [Samples][samples].
 
 ## Troubleshooting
 
-- When sending a method request using the IoT Hub's `CloudToDeviceMethod` remember to not type in the method request name directly. Instead use `[MethodRequestName.methodName]`
+- When sending a method request using the IoT Hub's `CloudToDeviceMethod` remember to not type in the method request name directly. Instead use `MethodRequestName.MethodName`
 - Make sure to serialize the entire method request before passing it to `CloudToDeviceMethod`
 
 ## Next steps
@@ -214,7 +214,7 @@ additional questions or comments.
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 
-[package]: TODO://link-to-published-package
+[package]: TODO://link-to-published-package <!-- https://msazure.visualstudio.com/One/_workitems/edit/9946084 WorkItem to track all all TODO links-->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mediaservices
 [samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
 
