@@ -13,15 +13,13 @@ namespace Azure.Storage.Shared
     /// <summary>
     ///
     /// </summary>
-    public class StorageBearerTokenChallengeAuthorizationPolicy : BearerTokenAuthenticationPolicy
+    public class StorageBearerTokenChallengeAuthorizationPolicy : BearerTokenAuthenticationPolicy, IBearerTokenChallengeOptions
     {
-        /// <summary>
-        /// Disables tenant discovery through challenge responses.
-        /// </summary>
-        public bool DisableTenantDiscovery { get; set; }
-
         private readonly string[] _scopes;
         private volatile string tenantId;
+
+        /// <inheritdoc />
+        public bool DisableTenantDiscovery { get; set; }
 
         /// <summary>
         ///

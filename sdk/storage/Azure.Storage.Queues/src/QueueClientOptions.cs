@@ -13,7 +13,7 @@ namespace Azure.Storage.Queues
     /// Provides the client configuration options for connecting to Azure Queue
     /// Storage
     /// </summary>
-    public class QueueClientOptions : ClientOptions
+    public class QueueClientOptions : ClientOptions, IBearerTokenChallengeOptions
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -123,9 +123,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.None;
 
-        /// <summary>
-        /// Disables tenant discovery for the storage service.
-        /// </summary>
+        /// <inheritdoc />
         public bool DisableTenantDiscovery { get; set; }
 
         /// <summary>

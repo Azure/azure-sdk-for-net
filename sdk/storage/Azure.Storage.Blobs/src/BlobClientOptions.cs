@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs
     /// Provides the client configuration options for connecting to Azure Blob
     /// Storage.
     /// </summary>
-    public class BlobClientOptions : ClientOptions
+    public class BlobClientOptions : ClientOptions, IBearerTokenChallengeOptions
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -86,11 +86,6 @@ namespace Azure.Storage.Blobs
         /// Gets the <see cref="EncryptionScope"/> to be used when making requests.
         /// </summary>
         public string EncryptionScope { get; set; }
-
-        /// <summary>
-        /// Disables discovery of the tenant Id related to the storage service.
-        /// </summary>
-        public bool DisableTenantDiscovery { get; set; }
 
         /// <summary>
         /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
@@ -267,5 +262,8 @@ namespace Azure.Storage.Blobs
         {
             return this.Build(credentials, GeoRedundantSecondaryUri);
         }
+
+        /// <inheritdoc />
+        public bool DisableTenantDiscovery { get; set; }
     }
 }
