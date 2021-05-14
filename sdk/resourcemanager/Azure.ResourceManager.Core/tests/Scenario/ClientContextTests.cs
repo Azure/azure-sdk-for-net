@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Core.Tests
             
             Console.WriteLine("-----Client 1-----");
             _ = await client1.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            Assert.AreEqual(1, dummyPolicy1.numMsgGot);
+            Assert.AreEqual(2, dummyPolicy1.numMsgGot);
 
             options1.AddPolicy(dummyPolicy2, HttpPipelinePosition.PerCall);
 
             _ = await client1.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("test2Rg-"));
             
-            Assert.AreEqual(2, dummyPolicy1.numMsgGot);
+            Assert.AreEqual(3, dummyPolicy1.numMsgGot);
             Assert.AreEqual(0, dummyPolicy2.numMsgGot);
         }
 
