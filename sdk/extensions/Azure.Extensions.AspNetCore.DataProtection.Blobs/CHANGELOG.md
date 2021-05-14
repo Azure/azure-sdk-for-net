@@ -4,13 +4,12 @@
 
 ### Changes
 
+- Dependency versions updated.
+
 #### Key Bug Fixes
 
 - Fixed a bug where referencing an existing empty blob resulted in a failure.
 
-## 1.0.0-preview.1 (2020)
-
-- Initial preview of the Azure.AspNetCore.DataProtection.Blobs library
 ## 1.2.0 (2020-12-16)
 
 ### Changes
@@ -37,3 +36,6 @@
 
 - Package renamed to Azure.Extensions.AspNetCore.DataProtection.Blobs
 
+## 1.0.0-preview.1 (2020-03-02)
+
+- Initial preview of the Azure.AspNetCore.DataProtection.Blobs library
