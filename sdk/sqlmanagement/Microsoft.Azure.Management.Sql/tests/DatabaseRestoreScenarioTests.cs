@@ -106,6 +106,9 @@ namespace Sql.Tests
                 var droppedDatabase = droppedDatabases.Single();
                 Assert.StartsWith(db1.Name, droppedDatabase.Name);
 
+                // Check that backup storage redundancy property is set
+                Assert.NotNull(droppedDatabase.BackupStorageRedundancy);
+
                 // Restore the deleted database using restorable dropped database id
                 //   In new DB API (Version 2017), if use restorable dropped database id, need to specify the RestorableDroppedDatabaseId,
                 //       which include the source database id and deletion time
@@ -150,6 +153,10 @@ namespace Sql.Tests
                 Location = server.Location,
             });
             Assert.NotNull(db);
+
+            Thread.Sleep(1000);
+
+            db = sqlClient.Databases.Get(resourceGroup.Name, server.Name, dbName);
 
             // If earliest restore time is in the future, we need to wait until then.
             // Add some padding in case of clock skew between Azure and this machine.
