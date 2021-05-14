@@ -20,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tagCount"> Number of the tags. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="writeableProperties"/> is null. </exception>
-        internal RepositoryProperties(string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, ContentProperties writeableProperties)
+        internal RepositoryProperties(string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, RepositoryWriteableProperties writeableProperties)
         {
             if (name == null)
             {
@@ -50,6 +50,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Number of the tags. </summary>
         public int TagCount { get; }
         /// <summary> Writeable properties of the resource. </summary>
-        public ContentProperties WriteableProperties { get; }
+        public RepositoryWriteableProperties WriteableProperties { get; }
     }
 }
