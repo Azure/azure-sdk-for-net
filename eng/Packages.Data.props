@@ -12,7 +12,7 @@
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
 		<PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
-    <PackageReference Update="Azure.Core" Version="1.5.0" />
+    <PackageReference Update="Azure.Core" Version="1.14.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.5" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.1" />
@@ -88,7 +88,7 @@
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.8.5" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
-    <PackageReference Update="System.Buffers" Version="4.5.0" />
+    <PackageReference Update="System.Buffers" Version="4.5.1" />
     <PackageReference Update="System.Collections.Concurrent" Version="4.3.0" />
     <PackageReference Update="System.Collections" Version="4.3.0" />
     <PackageReference Update="System.ComponentModel.Annotations" Version="4.7.0" />
@@ -126,7 +126,7 @@
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
 
     <!-- BCL packages -->
-    <PackageReference Update="System.Memory" Version="4.5.3" />
+    <PackageReference Update="System.Memory" Version="4.5.4" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
     <PackageReference Update="System.Threading.Channels" Version="4.6.0" />
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
