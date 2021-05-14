@@ -131,11 +131,6 @@ namespace Azure.Core
             }
             private set
             {
-                if (value is null)
-                {
-                    throw new ArgumentNullException(nameof(Value));
-                }
-
                 _value = value;
                 HasValue = true;
             }
@@ -410,8 +405,18 @@ namespace Azure.Core
         /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
         /// <param name="value">The final result of the long-running operation.</param>
         /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>
-        public static OperationState<T> Success(Response rawResponse, T value) =>
-            new OperationState<T>(rawResponse, true, true, value, default);
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> or <paramref name="value"/> is <c>null</c>.</exception>
+        public static OperationState<T> Success(Response rawResponse, T value)
+        {
+            Argument.AssertNotNull(rawResponse, nameof(rawResponse));
+
+            if (value is null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            return new OperationState<T>(rawResponse, true, true, value, default);
+        }
 
         /// <summary>
         /// Instantiates an <see cref="OperationState{T}"/> indicating the operation has completed with failures.
@@ -423,15 +428,23 @@ namespace Azure.Core
         /// <paramref name="rawResponse"/> parameter.
         /// </param>
         /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>
-        public static OperationState<T> Failure(Response rawResponse, RequestFailedException operationFailedException = null) =>
-            new OperationState<T>(rawResponse, true, false, default, operationFailedException);
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
+        public static OperationState<T> Failure(Response rawResponse, RequestFailedException operationFailedException = null)
+        {
+            Argument.AssertNotNull(rawResponse, nameof(rawResponse));
+            return new OperationState<T>(rawResponse, true, false, default, operationFailedException);
+        }
 
         /// <summary>
         /// Instantiates an <see cref="OperationState{T}"/> indicating the operation has not completed yet.
         /// </summary>
         /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
         /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>
-        public static OperationState<T> Pending(Response rawResponse) =>
-            new OperationState<T>(rawResponse, false, default, default, default);
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
+        public static OperationState<T> Pending(Response rawResponse)
+        {
+            Argument.AssertNotNull(rawResponse, nameof(rawResponse));
+            return new OperationState<T>(rawResponse, false, default, default, default);
+        }
     }
 }

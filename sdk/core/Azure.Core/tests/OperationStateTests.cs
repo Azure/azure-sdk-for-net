@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -28,6 +24,14 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void SuccessThrowsIfRawResponseIsNull() =>
+            Assert.Throws<ArgumentNullException>(() => OperationState<int>.Success(null, 10));
+
+        [Test]
+        public void SuccessThrowsIfValueIsNull() =>
+            Assert.Throws<ArgumentNullException>(() => OperationState<string>.Success(new MockResponse(200), null));
+
+        [Test]
         public void FailureProperties()
         {
             RequestFailedException expectedException = new RequestFailedException("");
@@ -42,6 +46,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void FailureThrowsIfRawResponseIsNull() =>
+            Assert.Throws<ArgumentNullException>(() => OperationState<int>.Failure(null, new RequestFailedException("")));
+
+        [Test]
         public void PendingProperties()
         {
             MockResponse mockResponse = new MockResponse(200);
@@ -53,5 +61,9 @@ namespace Azure.Core.Tests
             Assert.AreEqual(default(int), state.Value);
             Assert.IsNull(state.OperationFailedException);
         }
+
+        [Test]
+        public void PendingThrowsIfRawResponseIsNull() =>
+            Assert.Throws<ArgumentNullException>(() => OperationState<int>.Pending(null));
     }
 }
