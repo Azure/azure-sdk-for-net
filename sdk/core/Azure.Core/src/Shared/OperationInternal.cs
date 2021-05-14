@@ -22,9 +22,9 @@ namespace Azure.Core
     ///   <item><see cref="HasValue"/></item>
     ///   <item><see cref="HasCompleted"/></item>
     ///   <item><see cref="Value"/></item>
-    ///   <item><see cref="RawResponse"/>, used for <see cref="Operation{T}.GetRawResponse"/></item>
+    ///   <item><see cref="RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></item>
     ///   <item><see cref="UpdateStatus"/></item>
-    ///   <item><see cref="UpdateStatusAsync"/></item>
+    ///   <item><see cref="UpdateStatusAsync(CancellationToken)"/></item>
     ///   <item><see cref="WaitForCompletionAsync(CancellationToken)"/></item>
     ///   <item><see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/></item>
     /// </list>
@@ -194,10 +194,10 @@ namespace Azure.Core
             UpdateStatusAsync(async: false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Periodically calls <see cref="UpdateStatusAsync"/> until the long-running operation completes. The interval between calls is
-        /// defined by the property <see cref="DefaultPollingInterval"/>, but it can change based on information returned from the server.
-        /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll for status
-        /// change until the specified time has passed. In this case, the maximum value between the <see cref="DefaultPollingInterval"/>
+        /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
+        /// between calls is defined by the property <see cref="DefaultPollingInterval"/>, but it can change based on information returned
+        /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
+        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="DefaultPollingInterval"/>
         /// property and the retry-after header is choosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
@@ -214,10 +214,10 @@ namespace Azure.Core
             await WaitForCompletionAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Periodically calls <see cref="UpdateStatusAsync"/> until the long-running operation completes. The interval between calls is
-        /// defined by the parameter <paramref name="pollingInterval"/>, but it can change based on information returned from the server.
-        /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll for status
-        /// change until the specified time has passed. In this case, the maximum value between the <paramref name="pollingInterval"/>
+        /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
+        /// between calls is defined by the parameter <paramref name="pollingInterval"/>, but it can change based on information returned
+        /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
+        /// for status change until the specified time has passed. In this case, the maximum value between the <paramref name="pollingInterval"/>
         /// parameter and the retry-after header is choosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
         /// and "x-ms-retry-after-ms".
         /// <example>Usage example:
