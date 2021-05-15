@@ -41,7 +41,7 @@ Install the Azure IoT Hub SDk for .NET with NuGet:
 
     | SDK  | Video Analyzer Edge Module  |
     |---|---|
-    | 1.0.0-beta.2  | 2.0  |
+    | 1.0.0-beta.2  | 1.0  |
 
 ### Creating a pipeline topology and making requests
 
