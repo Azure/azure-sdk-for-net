@@ -38,8 +38,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="operatingSystem"> Operating system. </param>
         /// <param name="manifestReferences"> List of manifests referenced by this manifest list.  List will be empty if this manifest is not a manifest list. </param>
         /// <param name="tags"> List of tags. </param>
-        /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestReference> manifestReferences, IReadOnlyList<string> tags, ManifestWriteableProperties writeableProperties)
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        /// <param name="quarantineState"> Quarantine state. </param>
+        /// <param name="quarantineDetails"> Quarantine details. </param>
+        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestReference> manifestReferences, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, string quarantineState, string quarantineDetails)
         {
             Digest = digest;
             Size = size;
@@ -49,7 +54,12 @@ namespace Azure.Containers.ContainerRegistry
             OperatingSystem = operatingSystem;
             ManifestReferences = manifestReferences;
             Tags = tags;
-            WriteableProperties = writeableProperties;
+            CanDelete = canDelete;
+            CanWrite = canWrite;
+            CanList = canList;
+            CanRead = canRead;
+            QuarantineState = quarantineState;
+            QuarantineDetails = quarantineDetails;
         }
 
         /// <summary> Manifest. </summary>
@@ -68,7 +78,17 @@ namespace Azure.Containers.ContainerRegistry
         public IReadOnlyList<ArtifactManifestReference> ManifestReferences { get; }
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
-        /// <summary> Writeable properties of the resource. </summary>
-        public ManifestWriteableProperties WriteableProperties { get; }
+        /// <summary> Delete enabled. </summary>
+        public bool? CanDelete { get; }
+        /// <summary> Write enabled. </summary>
+        public bool? CanWrite { get; }
+        /// <summary> List enabled. </summary>
+        public bool? CanList { get; }
+        /// <summary> Read enabled. </summary>
+        public bool? CanRead { get; }
+        /// <summary> Quarantine state. </summary>
+        public string QuarantineState { get; }
+        /// <summary> Quarantine details. </summary>
+        public string QuarantineDetails { get; }
     }
 }

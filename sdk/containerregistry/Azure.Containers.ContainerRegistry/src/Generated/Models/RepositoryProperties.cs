@@ -18,17 +18,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="lastUpdatedOn"> Image last update time. </param>
         /// <param name="manifestCount"> Number of the manifests. </param>
         /// <param name="tagCount"> Number of the tags. </param>
-        /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="writeableProperties"/> is null. </exception>
-        internal RepositoryProperties(string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, RepositoryWriteableProperties writeableProperties)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        internal RepositoryProperties(string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
-            }
-            if (writeableProperties == null)
-            {
-                throw new ArgumentNullException(nameof(writeableProperties));
             }
 
             Name = name;
@@ -36,7 +31,31 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
             ManifestCount = manifestCount;
             TagCount = tagCount;
-            WriteableProperties = writeableProperties;
+        }
+
+        /// <summary> Initializes a new instance of RepositoryProperties. </summary>
+        /// <param name="name"> Image name. </param>
+        /// <param name="createdOn"> Image created time. </param>
+        /// <param name="lastUpdatedOn"> Image last update time. </param>
+        /// <param name="manifestCount"> Number of the manifests. </param>
+        /// <param name="tagCount"> Number of the tags. </param>
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        /// <param name="teleportEnabled"> Enables Teleport functionality on new images in the repository improving Container startup performance. </param>
+        internal RepositoryProperties(string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, bool? teleportEnabled)
+        {
+            Name = name;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            ManifestCount = manifestCount;
+            TagCount = tagCount;
+            CanDelete = canDelete;
+            CanWrite = canWrite;
+            CanList = canList;
+            CanRead = canRead;
+            TeleportEnabled = teleportEnabled;
         }
 
         /// <summary> Image name. </summary>
@@ -49,7 +68,15 @@ namespace Azure.Containers.ContainerRegistry
         public int ManifestCount { get; }
         /// <summary> Number of the tags. </summary>
         public int TagCount { get; }
-        /// <summary> Writeable properties of the resource. </summary>
-        public RepositoryWriteableProperties WriteableProperties { get; }
+        /// <summary> Delete enabled. </summary>
+        public bool? CanDelete { get; }
+        /// <summary> Write enabled. </summary>
+        public bool? CanWrite { get; }
+        /// <summary> List enabled. </summary>
+        public bool? CanList { get; }
+        /// <summary> Read enabled. </summary>
+        public bool? CanRead { get; }
+        /// <summary> Enables Teleport functionality on new images in the repository improving Container startup performance. </summary>
+        public bool? TeleportEnabled { get; }
     }
 }

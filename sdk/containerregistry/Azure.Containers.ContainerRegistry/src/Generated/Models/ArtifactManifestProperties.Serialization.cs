@@ -25,7 +25,12 @@ namespace Azure.Containers.ContainerRegistry
             Optional<ArtifactOperatingSystem?> os = default;
             Optional<IReadOnlyList<ArtifactManifestReference>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
-            Optional<ManifestWriteableProperties> changeableAttributes = default;
+            Optional<bool> deleteEnabled = default;
+            Optional<bool> writeEnabled = default;
+            Optional<bool> listEnabled = default;
+            Optional<bool> readEnabled = default;
+            Optional<string> quarantineState = default;
+            Optional<string> quarantineDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageName"))
@@ -134,14 +139,66 @@ namespace Azure.Containers.ContainerRegistry
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            changeableAttributes = ManifestWriteableProperties.DeserializeManifestWriteableProperties(property0.Value);
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("deleteEnabled"))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    deleteEnabled = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("writeEnabled"))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    writeEnabled = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("listEnabled"))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    listEnabled = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("readEnabled"))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    readEnabled = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("quarantineState"))
+                                {
+                                    quarantineState = property1.Value.GetString();
+                                    continue;
+                                }
+                                if (property1.NameEquals("quarantineDetails"))
+                                {
+                                    quarantineDetails = property1.Value.GetString();
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ArtifactManifestProperties(imageName.Value, digest, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
+            return new ArtifactManifestProperties(imageName.Value, digest, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
         }
     }
 }

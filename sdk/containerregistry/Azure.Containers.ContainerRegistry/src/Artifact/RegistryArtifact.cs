@@ -354,7 +354,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<ArtifactTagProperties>> SetTagPropertiesAsync(string tag, TagWriteableProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArtifactTagProperties>> SetTagPropertiesAsync(string tag, ArtifactTagProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));
             Argument.AssertNotNull(value, nameof(value));
@@ -363,13 +363,24 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.UpdateTagAttributesAsync(_repositoryName, tag, value, cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdateTagAttributesAsync(_repositoryName, tag, GetTagWriteableProperties(value), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static TagWriteableProperties GetTagWriteableProperties(ArtifactTagProperties value)
+        {
+            return new TagWriteableProperties()
+            {
+                CanDelete = value.CanDelete,
+                CanList = value.CanList,
+                CanRead = value.CanRead,
+                CanWrite = value.CanWrite
+            };
         }
 
         /// <summary> Update tag attributes. </summary>
@@ -380,7 +391,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<ArtifactTagProperties> SetTagProperties(string tag, TagWriteableProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<ArtifactTagProperties> SetTagProperties(string tag, ArtifactTagProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));
             Argument.AssertNotNull(value, nameof(value));
@@ -389,7 +400,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.UpdateTagAttributes(_repositoryName, tag, value, cancellationToken);
+                return _restClient.UpdateTagAttributes(_repositoryName, tag, GetTagWriteableProperties(value), cancellationToken);
             }
             catch (Exception e)
             {

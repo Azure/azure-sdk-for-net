@@ -20,7 +20,10 @@ namespace Azure.Containers.ContainerRegistry
             string digest = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
-            TagWriteableProperties changeableAttributes = default;
+            Optional<bool> deleteEnabled = default;
+            Optional<bool> writeEnabled = default;
+            Optional<bool> listEnabled = default;
+            Optional<bool> readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageName"))
@@ -59,14 +62,61 @@ namespace Azure.Containers.ContainerRegistry
                         }
                         if (property0.NameEquals("changeableAttributes"))
                         {
-                            changeableAttributes = TagWriteableProperties.DeserializeTagWriteableProperties(property0.Value);
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("deleteEnabled"))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    deleteEnabled = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("writeEnabled"))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    writeEnabled = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("listEnabled"))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    listEnabled = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("readEnabled"))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        property1.ThrowNonNullablePropertyIsNull();
+                                        continue;
+                                    }
+                                    readEnabled = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ArtifactTagProperties(imageName, name, digest, createdTime, lastUpdateTime, changeableAttributes);
+            return new ArtifactTagProperties(imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }
