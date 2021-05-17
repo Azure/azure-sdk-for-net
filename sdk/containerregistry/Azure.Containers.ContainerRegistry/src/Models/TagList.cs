@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
                 List<ArtifactTagProperties> tags = new List<ArtifactTagProperties>(this.TagAttributeBases.Count);
                 foreach (var tag in this.TagAttributeBases)
                 {
-                    tags.Add(FromTagAttributesBase(this.Registry, this.Repository, tag));
+                    tags.Add(FromTagAttributesBase(this.RegistryLoginServer, this.Repository, tag));
                 }
                 return tags.AsReadOnly();
             }

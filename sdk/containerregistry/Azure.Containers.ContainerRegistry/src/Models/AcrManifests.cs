@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
                 List<ArtifactManifestProperties> artifacts = new List<ArtifactManifestProperties>(this.Manifests.Count);
                 foreach (var artifact in this.Manifests)
                 {
-                    artifacts.Add(FromManifestAttributesBase(this.RegistryName, this.Repository, artifact));
+                    artifacts.Add(FromManifestAttributesBase(this.RegistryLoginServer, this.Repository, artifact));
                 }
                 return artifacts.AsReadOnly();
             }
