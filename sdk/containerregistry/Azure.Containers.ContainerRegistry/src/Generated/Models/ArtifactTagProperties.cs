@@ -13,14 +13,19 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ArtifactTagProperties
     {
         /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <param name="registryName"> Registry name. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="repositoryName"/>, <paramref name="name"/>, or <paramref name="digest"/> is null. </exception>
-        internal ArtifactTagProperties(string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
+        /// <exception cref="ArgumentNullException"> <paramref name="registryName"/>, <paramref name="repositoryName"/>, <paramref name="name"/>, or <paramref name="digest"/> is null. </exception>
+        internal ArtifactTagProperties(string registryName, string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
             if (repositoryName == null)
             {
                 throw new ArgumentNullException(nameof(repositoryName));
@@ -34,6 +39,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
+            RegistryName = registryName;
             RepositoryName = repositoryName;
             Name = name;
             Digest = digest;
@@ -42,6 +48,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <param name="registryName"> Registry name. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
@@ -51,8 +58,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        internal ArtifactTagProperties(string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        internal ArtifactTagProperties(string registryName, string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
         {
+            RegistryName = registryName;
             RepositoryName = repositoryName;
             Name = name;
             Digest = digest;
@@ -64,6 +72,8 @@ namespace Azure.Containers.ContainerRegistry
             CanRead = canRead;
         }
 
+        /// <summary> Registry name. </summary>
+        public string RegistryName { get; }
         /// <summary> Image name. </summary>
         public string RepositoryName { get; }
         /// <summary> Tag name. </summary>

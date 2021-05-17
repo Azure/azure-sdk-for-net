@@ -34,6 +34,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of ArtifactManifestProperties. </summary>
+        /// <param name="registryName"> Registry name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="digest"> Manifest. </param>
         /// <param name="size"> Image size. </param>
@@ -49,8 +50,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canRead"> Read enabled. </param>
         /// <param name="quarantineState"> Quarantine state. </param>
         /// <param name="quarantineDetails"> Quarantine details. </param>
-        internal ArtifactManifestProperties(string repositoryName, string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestReference> manifestReferences, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, string quarantineState, string quarantineDetails)
+        internal ArtifactManifestProperties(string registryName, string repositoryName, string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestReference> manifestReferences, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, string quarantineState, string quarantineDetails)
         {
+            RegistryName = registryName;
             RepositoryName = repositoryName;
             Digest = digest;
             Size = size;
@@ -68,6 +70,8 @@ namespace Azure.Containers.ContainerRegistry
             QuarantineDetails = quarantineDetails;
         }
 
+        /// <summary> Registry name. </summary>
+        public string RegistryName { get; }
         /// <summary> Repository name. </summary>
         public string RepositoryName { get; }
         /// <summary> Manifest. </summary>

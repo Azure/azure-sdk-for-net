@@ -17,15 +17,16 @@ namespace Azure.Containers.ContainerRegistry
                 List<ArtifactTagProperties> tags = new List<ArtifactTagProperties>(this.TagAttributeBases.Count);
                 foreach (var tag in this.TagAttributeBases)
                 {
-                    tags.Add(FromTagAttributesBase(this.Repository, tag));
+                    tags.Add(FromTagAttributesBase(this.Registry, this.Repository, tag));
                 }
                 return tags.AsReadOnly();
             }
         }
 
-        internal static ArtifactTagProperties FromTagAttributesBase(string repository, TagAttributesBase attributesBase)
+        internal static ArtifactTagProperties FromTagAttributesBase(string registry, string repository, TagAttributesBase attributesBase)
         {
             return new ArtifactTagProperties(
+                registry,
                 repository,
                 attributesBase.Name,
                 attributesBase.Digest,

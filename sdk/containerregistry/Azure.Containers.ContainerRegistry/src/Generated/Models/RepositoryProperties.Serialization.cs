@@ -15,6 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static RepositoryProperties DeserializeRepositoryProperties(JsonElement element)
         {
+            string registry = default;
             string imageName = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
@@ -27,6 +28,11 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> teleportEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("registry"))
+                {
+                    registry = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("imageName"))
                 {
                     imageName = property.Value.GetString();
@@ -115,7 +121,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new RepositoryProperties(imageName, createdTime, lastUpdateTime, manifestCount, tagCount, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), Optional.ToNullable(teleportEnabled));
+            return new RepositoryProperties(registry, imageName, createdTime, lastUpdateTime, manifestCount, tagCount, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), Optional.ToNullable(teleportEnabled));
         }
     }
 }

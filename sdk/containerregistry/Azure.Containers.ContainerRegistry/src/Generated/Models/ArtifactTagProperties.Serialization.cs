@@ -15,6 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ArtifactTagProperties DeserializeArtifactTagProperties(JsonElement element)
         {
+            string registry = default;
             string imageName = default;
             string name = default;
             string digest = default;
@@ -26,6 +27,11 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("registry"))
+                {
+                    registry = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("imageName"))
                 {
                     imageName = property.Value.GetString();
@@ -116,7 +122,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactTagProperties(imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ArtifactTagProperties(registry, imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }

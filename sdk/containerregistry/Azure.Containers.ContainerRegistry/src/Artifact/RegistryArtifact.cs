@@ -128,7 +128,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<ArtifactManifestProperties>> SetManifestPropertiesAsync(ManifestWriteableProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArtifactManifestProperties>> SetManifestPropertiesAsync(ArtifactManifestProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -137,7 +137,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
-                return await _restClient.UpdateManifestPropertiesAsync(_repositoryName, digest, value, cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdateManifestPropertiesAsync(_repositoryName, digest, GetManifestWriteableProperties(value), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<ArtifactManifestProperties> SetManifestProperties(ManifestWriteableProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<ArtifactManifestProperties> SetManifestProperties(ArtifactManifestProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -160,13 +160,26 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = GetDigest(cancellationToken);
-                return _restClient.UpdateManifestProperties(_repositoryName, digest, value, cancellationToken);
+                return _restClient.UpdateManifestProperties(_repositoryName, digest, GetManifestWriteableProperties(value), cancellationToken);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static ManifestWriteableProperties GetManifestWriteableProperties(ArtifactManifestProperties value)
+        {
+            return new ManifestWriteableProperties()
+            {
+                CanDelete = value.CanDelete,
+                CanList = value.CanList,
+                CanRead = value.CanRead,
+                CanWrite = value.CanWrite,
+                QuarantineDetails = value.QuarantineDetails,
+                QuarantineState = value.QuarantineState
+            };
         }
 
         /// <summary> Delete registry artifact. </summary>

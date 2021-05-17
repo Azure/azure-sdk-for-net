@@ -16,6 +16,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ArtifactManifestProperties DeserializeArtifactManifestProperties(JsonElement element)
         {
+            Optional<string> registry = default;
             Optional<string> imageName = default;
             string digest = default;
             Optional<long> imageSize = default;
@@ -33,6 +34,11 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> quarantineDetails = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("registry"))
+                {
+                    registry = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("imageName"))
                 {
                     imageName = property.Value.GetString();
@@ -188,7 +194,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactManifestProperties(imageName.Value, digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
+            return new ArtifactManifestProperties(registry.Value, imageName.Value, digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
         }
     }
 }

@@ -17,15 +17,16 @@ namespace Azure.Containers.ContainerRegistry
                 List<ArtifactManifestProperties> artifacts = new List<ArtifactManifestProperties>(this.Manifests.Count);
                 foreach (var artifact in this.Manifests)
                 {
-                    artifacts.Add(FromManifestAttributesBase(this.Repository, artifact));
+                    artifacts.Add(FromManifestAttributesBase(this.RegistryName, this.Repository, artifact));
                 }
                 return artifacts.AsReadOnly();
             }
         }
 
-        internal static ArtifactManifestProperties FromManifestAttributesBase(string repository, ManifestAttributesBase attributesBase)
+        internal static ArtifactManifestProperties FromManifestAttributesBase(string registry, string repository, ManifestAttributesBase attributesBase)
         {
             return new ArtifactManifestProperties(
+                registry,
                 repository,
                 attributesBase.Digest,
                 attributesBase.Size,
@@ -35,7 +36,8 @@ namespace Azure.Containers.ContainerRegistry
                 attributesBase.OperatingSystem,
                 attributesBase.ManifestReferences,
                 attributesBase.Tags,
-                attributesBase.CanDelete, attributesBase.CanWrite, attributesBase.CanList, attributesBase.CanRead, attributesBase.QuarantineState, attributesBase.QuarantineDetails);
+                attributesBase.CanDelete, attributesBase.CanWrite, attributesBase.CanList, attributesBase.CanRead,
+                attributesBase.QuarantineState, attributesBase.QuarantineDetails);
         }
     }
 }
