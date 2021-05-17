@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Represents an Azure geography region where supported resource providers live.
     /// </summary>
-    public class LocationData : IEquatable<LocationData>, IComparable<LocationData>
+    public sealed partial class LocationData : IEquatable<LocationData>, IComparable<LocationData>
     {
         #region Public Cloud Locations
 
@@ -266,10 +266,6 @@ namespace Azure.ResourceManager.Core
         private const string RegexDash = @"-";
         private const string RegexWhitespace = @" ";
 
-        private LocationData()
-        {
-        }
-
         private LocationData(string location)
         {
             switch (DetectNameType(location))
@@ -305,19 +301,24 @@ namespace Azure.ResourceManager.Core
         public static ref readonly LocationData Default => ref WestUS;
 
         /// <summary>
-        /// Gets a location name consisting of only lowercase characters without white spaces or any separation character between words, e.g. "westus".
-        /// </summary>
-        public string Name { get; private set; }
-
-        /// <summary>
         /// Gets a location canonical name consisting of only lowercase chararters with a '-' between words, e.g. "west-us".
         /// </summary>
         public string CanonicalName { get; private set; }
 
-        /// <summary>
-        /// Gets a location display name consisting of titlecase words or alphanumeric characters separated by whitespaces, e.g. "West US"
-        /// </summary>
-        public string DisplayName { get; private set; }
+        /// <summary> Initializes a new instance of Location. </summary>
+        /// <param name="name"> The location name. </param>
+        /// <param name="displayName"> The display name of the location. </param>
+        /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
+        /// <param name="canonicalName"> The canonical name of the location . </param>
+        /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
+        internal LocationData(string name, string displayName, string regionalDisplayName, string canonicalName, LocationMetadata metadata)
+        {
+            Name = name;
+            DisplayName = displayName;
+            RegionalDisplayName = regionalDisplayName;
+            CanonicalName = canonicalName;
+            Metadata = metadata;
+        }
 
         /// <summary>
         /// Creates a new location implicitly from a string.
@@ -371,7 +372,8 @@ namespace Azure.ResourceManager.Core
         /// <returns> Display name. </returns>
         public override string ToString()
         {
-            return DisplayName;
+            //return DisplayName;
+            return Name; //TODO: change to return Name
         }
 
         /// <summary>

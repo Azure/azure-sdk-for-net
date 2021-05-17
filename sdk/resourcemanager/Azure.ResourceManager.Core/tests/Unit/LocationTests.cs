@@ -221,6 +221,5 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsNotNull(LocationData.Default);
             LocationData location = LocationData.Default;
             Assert.IsTrue(location.Equals(LocationData.Default));
-        }
-    }
+        }    }
 }
