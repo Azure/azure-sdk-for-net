@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var endTime = DateTimeOffset.UtcNow;
             var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyTime)
             {
-                TopCount = 5
+                MaxPageSize = 5
             };
 
             int alertCount = 0;

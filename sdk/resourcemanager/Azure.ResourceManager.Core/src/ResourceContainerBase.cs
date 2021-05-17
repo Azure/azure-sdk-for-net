@@ -174,6 +174,8 @@ namespace Azure.ResourceManager.Core
         /// <returns> Whether or not the resource existed. </returns>
         public virtual bool DoesExist(string resourceName, CancellationToken cancellationToken = default)
         {
+            using var scope = Diagnostics.CreateScope("ResourceContainerBase`3.DoesExist");
+            scope.Start();
             return TryGet(resourceName, cancellationToken) != null;
         }
 
@@ -186,6 +188,8 @@ namespace Azure.ResourceManager.Core
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<bool> DoesExistAsync(string resourceName, CancellationToken cancellationToken = default)
         {
+            using var scope = Diagnostics.CreateScope("ResourceContainerBase`3.DoesExist");
+            scope.Start();
             return await TryGetAsync(resourceName, cancellationToken).ConfigureAwait(false) != null;
         }
 

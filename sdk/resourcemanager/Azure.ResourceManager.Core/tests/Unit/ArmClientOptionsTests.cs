@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsFalse(ReferenceEquals(options1.Diagnostics, options2.Diagnostics));
             Assert.IsFalse(ReferenceEquals(options1.Retry, options2.Retry));
             Assert.IsFalse(ReferenceEquals(options1.ApiVersions, options2.ApiVersions));
-            Assert.IsFalse(ReferenceEquals(options1.PerCallPolicies, options2.PerCallPolicies));
-            Assert.IsFalse(ReferenceEquals(options1.PerRetryPolicies, options2.PerRetryPolicies));
         }
 
         [TestCase]
@@ -77,10 +75,6 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestClientOptionsParamCheck()
         {
             Assert.Throws<ArgumentNullException>(() => { new ArmClientOptions(null); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmClientOptions(null, null); });
-
-            var options = new ArmClientOptions();
-            Assert.Throws<ArgumentNullException>(() => { options.AddPolicy(null, HttpPipelinePosition.PerCall); });
         }
 
         [TestCase]

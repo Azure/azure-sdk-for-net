@@ -33,20 +33,20 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name"> The role assignment name. </param>
         /// <param name="type"> The role assignment type. </param>
         /// <param name="properties"> Role assignment properties. </param>
-        public static KeyVaultRoleAssignment RoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentPropertiesWithScope properties) =>
+        public static KeyVaultRoleAssignment RoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentProperties properties) =>
             new KeyVaultRoleAssignment(id, name, type, properties);
 
         /// <summary>
         /// Initializes a new instance of a FullRestoreOperation for mocking purposes.
         /// </summary>
-        /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="RestoreOperation.GetRawResponse" />.</param>
+        /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="KeyVaultRestoreOperation.GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="id"> Identifier for the restore operation.</param>
         /// <param name="startTime"> The start time of the restore operation.</param>
         /// <param name="endTime"> The end time of the restore operation.</param>
         /// <param name="errorMessage">The error message generated from the operation, if any.</param>
-        public static RestoreOperation RestoreOperation(Response response, KeyVaultBackupClient client, string id, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string errorMessage = null) =>
-            new RestoreOperation(new RestoreDetailsInternal(
+        public static KeyVaultRestoreOperation RestoreOperation(Response response, KeyVaultBackupClient client, string id, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string errorMessage = null) =>
+            new KeyVaultRestoreOperation(new RestoreDetailsInternal(
                 null,
                 null,
                 errorMessage == null ? null : new KeyVaultServiceError(string.Empty, errorMessage, null),
@@ -57,15 +57,15 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of a FullBackupOperation for mocking purposes.
         /// </summary>
-        /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="BackupOperation.GetRawResponse" />.</param>
+        /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="KeyVaultBackupOperation.GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="id"> Identifier for the restore operation.</param>
         /// <param name="blobContainerUri">The Blob Container Uri containing the backup.</param>
         /// <param name="startTime"> The start time of the restore operation.</param>
         /// <param name="endTime"> The end time of the restore operation.</param>
         /// <param name="errorMessage">The error message generated from the operation, if any.</param>
-        public static BackupOperation BackupOperation(Response response, KeyVaultBackupClient client, string id, Uri blobContainerUri, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string errorMessage = null) =>
-            new BackupOperation(new FullBackupDetailsInternal(
+        public static KeyVaultBackupOperation BackupOperation(Response response, KeyVaultBackupClient client, string id, Uri blobContainerUri, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string errorMessage = null) =>
+            new KeyVaultBackupOperation(new FullBackupDetailsInternal(
                 null,
                 null,
                 errorMessage == null ? null : new KeyVaultServiceError(string.Empty, errorMessage, null),
@@ -81,8 +81,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="startTime">The start time of the backup operation.</param>
         /// <param name="endTime">The end time of the backup operation.</param>
         /// <returns>A new <see cref="BackupResult"/> instance.</returns>
-        public static BackupResult BackupResult(Uri folderUri, DateTimeOffset startTime, DateTimeOffset endTime) =>
-            new BackupResult(folderUri, startTime, endTime);
+        public static KeyVaultBackupResult BackupResult(Uri folderUri, DateTimeOffset startTime, DateTimeOffset endTime) =>
+            new KeyVaultBackupResult(folderUri, startTime, endTime);
 
         /// <summary>
         /// Initializes a new instance of a <see cref="RestoreResult"/> for mocking purposes.
@@ -90,8 +90,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="startTime">The start time of the restore operation.</param>
         /// <param name="endTime">The end time of the restore operation.</param>
         /// <returns>A new <see cref="BackupResult"/> instance.</returns>
-        public static RestoreResult RestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
-            new RestoreResult(startTime, endTime);
+        public static KeyVaultRestoreResult RestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
+            new KeyVaultRestoreResult(startTime, endTime);
 
         /// <summary>
         /// Initializes a new instance of a <see cref="SelectiveKeyRestoreResult"/> for mocking purposes.
@@ -99,7 +99,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="startTime">The start time of the restore operation.</param>
         /// <param name="endTime">The end time of the restore operation.</param>
         /// <returns>A new <see cref="BackupResult"/> instance.</returns>
-        public static RestoreResult SelectiveKeyRestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
-            new RestoreResult(startTime, endTime);
+        public static KeyVaultRestoreResult SelectiveKeyRestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
+            new KeyVaultRestoreResult(startTime, endTime);
     }
 }

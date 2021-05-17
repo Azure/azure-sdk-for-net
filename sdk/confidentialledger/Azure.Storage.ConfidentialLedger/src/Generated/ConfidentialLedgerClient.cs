@@ -6,13 +6,10 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-#pragma warning disable AZC0007
 
 namespace Azure.Storage.ConfidentialLedger
 {
@@ -24,6 +21,7 @@ namespace Azure.Storage.ConfidentialLedger
         private readonly string[] AuthorizationScopes = { "https://confidential-ledger.azure.com/.default" };
         private Uri ledgerUri;
         private readonly string apiVersion;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient for mocking. </summary>
         protected ConfidentialLedgerClient()
@@ -46,29 +44,94 @@ namespace Azure.Storage.ConfidentialLedger
             }
 
             options ??= new ConfidentialLedgerClientOptions();
-            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
+            _clientDiagnostics = new ClientDiagnostics(options);
+            var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
             this.ledgerUri = ledgerUri;
             apiVersion = options.Version;
         }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetConstitutionAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetConstitutionAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetConstitutionRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetConstitutionRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetConstitution(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetConstitution(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetConstitutionRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetConstitutionRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetConstitution"/> and <see cref="GetConstitutionAsync"/> operations. </summary>
-        private Request CreateGetConstitutionRequest()
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetConstitutionRequest(RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -79,27 +142,90 @@ namespace Azure.Storage.ConfidentialLedger
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetConsortiumMembersAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetConsortiumMembersAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetConsortiumMembersRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetConsortiumMembersRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetConsortiumMembers(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetConsortiumMembers(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetConsortiumMembersRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetConsortiumMembersRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConsortiumMembers");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetConsortiumMembers"/> and <see cref="GetConsortiumMembersAsync"/> operations. </summary>
-        private Request CreateGetConsortiumMembersRequest()
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetConsortiumMembersRequest(RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -110,27 +236,90 @@ namespace Azure.Storage.ConfidentialLedger
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEnclaveQuotesAsync(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetEnclaveQuotesAsync(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetEnclaveQuotesRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetEnclaveQuotesRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEnclaveQuotes(CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetEnclaveQuotes(RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetEnclaveQuotesRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetEnclaveQuotesRequest(requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetEnclaveQuotes"/> and <see cref="GetEnclaveQuotesAsync"/> operations. </summary>
-        private Request CreateGetEnclaveQuotesRequest()
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetEnclaveQuotesRequest(RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -141,36 +330,99 @@ namespace Azure.Storage.ConfidentialLedger
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> A sub-ledger id may optionally be specified. Only entries in the specified (or default) sub-ledger will be returned. </summary>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntries");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> A sub-ledger id may optionally be specified. Only entries in the specified (or default) sub-ledger will be returned. </summary>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntries");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetLedgerEntries"/> and <see cref="GetLedgerEntriesAsync"/> operations. </summary>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
-        private Request CreateGetLedgerEntriesRequest(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetLedgerEntriesRequest(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -193,7 +445,7 @@ namespace Azure.Storage.ConfidentialLedger
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
@@ -228,11 +480,42 @@ namespace Azure.Storage.ConfidentialLedger
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostLedgerEntryAsync(RequestContent requestBody, string subLedgerId = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> PostLedgerEntryAsync(RequestContent requestBody, string subLedgerId = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreatePostLedgerEntryRequest(requestBody, subLedgerId);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreatePostLedgerEntryRequest(requestBody, subLedgerId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
@@ -267,17 +550,49 @@ namespace Azure.Storage.ConfidentialLedger
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostLedgerEntry(RequestContent requestBody, string subLedgerId = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response PostLedgerEntry(RequestContent requestBody, string subLedgerId = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreatePostLedgerEntryRequest(requestBody, subLedgerId);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreatePostLedgerEntryRequest(requestBody, subLedgerId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="PostLedgerEntry"/> and <see cref="PostLedgerEntryAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        private Request CreatePostLedgerEntryRequest(RequestContent requestBody, string subLedgerId = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreatePostLedgerEntryRequest(RequestContent requestBody, string subLedgerId = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -294,33 +609,96 @@ namespace Azure.Storage.ConfidentialLedger
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetLedgerEntryRequest(transactionId, subLedgerId);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetLedgerEntry(string transactionId, string subLedgerId = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetLedgerEntry(string transactionId, string subLedgerId = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetLedgerEntryRequest(transactionId, subLedgerId);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLedgerEntryRequest(transactionId, subLedgerId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetLedgerEntry"/> and <see cref="GetLedgerEntryAsync"/> operations. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        private Request CreateGetLedgerEntryRequest(string transactionId, string subLedgerId = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetLedgerEntryRequest(string transactionId, string subLedgerId = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -336,30 +714,93 @@ namespace Azure.Storage.ConfidentialLedger
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetReceiptAsync(string transactionId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetReceiptRequest(transactionId);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetReceiptRequest(transactionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetReceipt(string transactionId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetReceipt(string transactionId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetReceiptRequest(transactionId);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetReceiptRequest(transactionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetReceipt"/> and <see cref="GetReceiptAsync"/> operations. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        private Request CreateGetReceiptRequest(string transactionId)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetReceiptRequest(string transactionId, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -372,30 +813,93 @@ namespace Azure.Storage.ConfidentialLedger
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Gets the status of an entry identified by a transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetTransactionStatusRequest(transactionId);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetTransactionStatusRequest(transactionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets the status of an entry identified by a transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetTransactionStatus(string transactionId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetTransactionStatus(string transactionId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetTransactionStatusRequest(transactionId);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetTransactionStatusRequest(transactionId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetTransactionStatus"/> and <see cref="GetTransactionStatusAsync"/> operations. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
-        private Request CreateGetTransactionStatusRequest(string transactionId)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetTransactionStatusRequest(string transactionId, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -408,30 +912,93 @@ namespace Azure.Storage.ConfidentialLedger
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetCurrentLedgerEntryAsync(string subLedgerId = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetCurrentLedgerEntryAsync(string subLedgerId = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetCurrentLedgerEntryRequest(subLedgerId);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetCurrentLedgerEntry(string subLedgerId = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetCurrentLedgerEntry(string subLedgerId = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetCurrentLedgerEntryRequest(subLedgerId);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetCurrentLedgerEntryRequest(subLedgerId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetCurrentLedgerEntry"/> and <see cref="GetCurrentLedgerEntryAsync"/> operations. </summary>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
-        private Request CreateGetCurrentLedgerEntryRequest(string subLedgerId = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetCurrentLedgerEntryRequest(string subLedgerId = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -446,30 +1013,93 @@ namespace Azure.Storage.ConfidentialLedger
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Deletes a user from the Confidential Ledger. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteUserAsync(string userId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteUserAsync(string userId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteUserRequest(userId);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteUserRequest(userId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a user from the Confidential Ledger. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteUser(string userId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteUser(string userId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteUserRequest(userId);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteUserRequest(userId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="DeleteUser"/> and <see cref="DeleteUserAsync"/> operations. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        private Request CreateDeleteUserRequest(string userId)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteUserRequest(string userId, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -481,30 +1111,93 @@ namespace Azure.Storage.ConfidentialLedger
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Gets a user. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetUserAsync(string userId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetUserAsync(string userId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetUserRequest(userId);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetUserRequest(userId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets a user. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetUser(string userId, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetUser(string userId, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetUserRequest(userId);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetUserRequest(userId, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetUser"/> and <see cref="GetUserAsync"/> operations. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        private Request CreateGetUserRequest(string userId)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetUserRequest(string userId, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -516,7 +1209,7 @@ namespace Azure.Storage.ConfidentialLedger
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> A JSON merge patch is applied for existing users. </summary>
@@ -545,11 +1238,42 @@ namespace Azure.Storage.ConfidentialLedger
         /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateOrUpdateUserRequest(userId, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateUserRequest(userId, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> A JSON merge patch is applied for existing users. </summary>
@@ -578,17 +1302,49 @@ namespace Azure.Storage.ConfidentialLedger
         /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateOrUpdateUser(string userId, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateUser(string userId, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateOrUpdateUserRequest(userId, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateUserRequest(userId, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CreateOrUpdateUser"/> and <see cref="CreateOrUpdateUserAsync"/> operations. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateOrUpdateUserRequest(string userId, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateUserRequest(string userId, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -602,7 +1358,7 @@ namespace Azure.Storage.ConfidentialLedger
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
     }
 }

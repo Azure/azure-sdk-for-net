@@ -22,9 +22,9 @@ namespace Azure.Containers.ContainerRegistry
             Optional<DateTimeOffset> lastUpdateTime = default;
             Optional<ArtifactArchitecture?> architecture = default;
             Optional<ArtifactOperatingSystem?> os = default;
-            Optional<IReadOnlyList<ManifestAttributesManifestReferences>> references = default;
+            Optional<IReadOnlyList<ArtifactManifestReference>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
-            Optional<ContentProperties> changeableAttributes = default;
+            Optional<ManifestWriteableProperties> changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"))
@@ -89,10 +89,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManifestAttributesManifestReferences> array = new List<ManifestAttributesManifestReferences>();
+                    List<ArtifactManifestReference> array = new List<ArtifactManifestReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManifestAttributesManifestReferences.DeserializeManifestAttributesManifestReferences(item));
+                        array.Add(ArtifactManifestReference.DeserializeArtifactManifestReference(item));
                     }
                     references = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    changeableAttributes = ContentProperties.DeserializeContentProperties(property.Value);
+                    changeableAttributes = ManifestWriteableProperties.DeserializeManifestWriteableProperties(property.Value);
                     continue;
                 }
             }

@@ -148,10 +148,10 @@ namespace Azure.Monitor.Query.Tests
         public async Task CanQueryBatch()
         {
             var client = CreateClient();
-            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
             string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
-            Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
+            Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult(id1);
             var result2 = response.Value.GetResult(id2);
@@ -182,15 +182,16 @@ namespace Azure.Monitor.Query.Tests
 
             LogsQueryResultRow row = results.Value.PrimaryTable.Rows[0];
 
-            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.GetDateTimeOffset("DateTime"));
-            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.GetDateTimeOffset(0));
-            Assert.AreEqual("2015-12-31T23:59:59.9Z", row.GetObject("DateTime"));
+            var expectedDate = DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00");
+            Assert.AreEqual(expectedDate, row.GetDateTimeOffset("DateTime"));
+            Assert.AreEqual(expectedDate, row.GetDateTimeOffset(0));
+            Assert.AreEqual(expectedDate, row.GetObject("DateTime"));
             Assert.AreEqual(false, row.GetBoolean("Bool"));
             Assert.AreEqual(false, row.GetBoolean(1));
             Assert.AreEqual(false, row.GetObject("Bool"));
             Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetGuid("Guid"));
             Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetGuid(2));
-            Assert.AreEqual("74be27de-1e4e-49d9-b579-fe0b331d3642", row.GetObject("Guid"));
+            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetObject("Guid"));
             Assert.AreEqual(12345, row.GetInt32("Int"));
             Assert.AreEqual(12345, row.GetInt32(3));
             Assert.AreEqual(12345, row.GetObject("Int"));
@@ -205,10 +206,10 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("string value", row.GetObject("String"));
             Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetTimeSpan("Timespan"));
             Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetTimeSpan(7));
-            Assert.AreEqual("00:00:10", row.GetObject("Timespan"));
+            Assert.AreEqual(TimeSpan.FromSeconds(10),  row.GetObject("Timespan"));
             Assert.AreEqual(0.10101m, row.GetDecimal("Decimal"));
             Assert.AreEqual(0.10101m, row.GetDecimal(8));
-            Assert.AreEqual("0.10101", row.GetObject("Decimal"));
+            Assert.AreEqual(0.10101m, row.GetObject("Decimal"));
             Assert.True(row.IsNull("NullBool"));
             Assert.True(row.IsNull(9));
             Assert.IsNull(row.GetObject("NullBool"));
@@ -380,10 +381,10 @@ namespace Azure.Monitor.Query.Tests
             timespan = timespan.Add(TimeSpan.FromDays(1));
 
             var client = CreateClient();
-            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", _logsTestData.DataTimeRange);
             string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", timespan);
-            Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
+            Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult<DateTimeOffset>(id1);
             var result2 = response.Value.GetResult<DateTimeOffset>(id2);
@@ -410,9 +411,9 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            LogsBatchQuery batch = new LogsBatchQuery();
             var queryId = batch.AddQuery(TestEnvironment.WorkspaceId, "this won't work", _logsTestData.DataTimeRange);
-            var batchResult = await batch.SubmitAsync();
+            var batchResult = await client.QueryBatchAsync(batch);
 
             var exception = Assert.Throws<RequestFailedException>(() => batchResult.Value.GetResult(queryId));
 
@@ -425,9 +426,9 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            LogsBatchQuery batch = new LogsBatchQuery();
             batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange);
-            var batchResult = await batch.SubmitAsync();
+            var batchResult = await client.QueryBatchAsync(batch);
 
             var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
 
@@ -464,12 +465,12 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            LogsBatchQuery batch = new LogsBatchQuery();
             var queryId = batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange, options: new LogsQueryOptions()
             {
                 IncludeStatistics = include
             });
-            var batchResult = await batch.SubmitAsync();
+            var batchResult = await client.QueryBatchAsync(batch);
             var result = batchResult.Value.GetResult(queryId);
 
             if (include)

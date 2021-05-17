@@ -56,11 +56,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
 
-            return new MessageProcessor(CreateProcessor(client, entityPath), GetOrAddMessageReceiver(client, entityPath));
+            return new MessageProcessor(CreateProcessor(client, entityPath));
         }
 
         public virtual ServiceBusProcessor CreateProcessor(ServiceBusClient client, string entityPath)
         {
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
+
             // processors cannot be shared across listeners since there is a limit of 1 event handler in the Service Bus SDK.
 
             ServiceBusProcessor processor;
@@ -81,6 +84,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         public virtual ServiceBusSender CreateMessageSender(ServiceBusClient client, string entityPath)
         {
+            Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
 
             return _messageSenderCache.GetOrAdd(entityPath, client.CreateSender(entityPath));
@@ -88,6 +92,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         public virtual ServiceBusReceiver CreateBatchMessageReceiver(ServiceBusClient client, string entityPath)
         {
+            Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
 
             return _messageReceiverCache.GetOrAdd(entityPath, (_) => client.CreateReceiver(
@@ -100,13 +105,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         public virtual SessionMessageProcessor CreateSessionMessageProcessor(ServiceBusClient client, string entityPath)
         {
+            Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
 
-            return new SessionMessageProcessor(client, CreateSessionProcessor(client, entityPath));
+            return new SessionMessageProcessor(CreateSessionProcessor(client, entityPath));
         }
 
         public virtual ServiceBusSessionProcessor CreateSessionProcessor(ServiceBusClient client, string entityPath)
         {
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
+
             ServiceBusSessionProcessor processor;
             if (ServiceBusEntityPathHelper.ParseEntityType(entityPath) == EntityType.Topic)
             {
@@ -121,16 +130,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             }
             processor.ProcessErrorAsync += _options.ExceptionReceivedHandler;
             return processor;
-        }
-
-        private ServiceBusReceiver GetOrAddMessageReceiver(ServiceBusClient client, string entityPath)
-        {
-            return _messageReceiverCache.GetOrAdd(entityPath, (_) => client.CreateReceiver(
-                entityPath,
-                new ServiceBusReceiverOptions
-                {
-                    PrefetchCount = _options.PrefetchCount
-                }));
         }
     }
 }

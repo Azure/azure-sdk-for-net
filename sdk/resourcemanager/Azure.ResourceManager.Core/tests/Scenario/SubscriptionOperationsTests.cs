@@ -124,6 +124,21 @@ namespace Azure.ResourceManager.Core.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task TestListLocations()
+        {
+            var subOps = Client.DefaultSubscription;
+            var locations = await subOps.ListLocationsAsync(subOps.Id.SubscriptionId).ToEnumerableAsync();
+            Assert.IsTrue(locations.Count != 0);
+        }
+
+        [RecordedTest]
+        public async Task TestGetSubscription()
+        {
+            var subscription = await Client.DefaultSubscription.GetAsync();
+            Assert.NotNull(subscription.Value.Data.Id);
+        }
+
         private string GetLongString(int length)
         {
             StringBuilder builder = new StringBuilder();

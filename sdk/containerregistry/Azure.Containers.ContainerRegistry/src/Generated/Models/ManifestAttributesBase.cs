@@ -25,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             Digest = digest;
-            References = new ChangeTrackingList<ManifestAttributesManifestReferences>();
+            ManifestReferences = new ChangeTrackingList<ArtifactManifestReference>();
             Tags = new ChangeTrackingList<string>();
         }
 
@@ -36,10 +36,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="lastUpdatedOn"> Last update time. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
-        /// <param name="references"> List of manifest attributes details. </param>
+        /// <param name="manifestReferences"> List of manifests referenced by this manifest list.  List will be empty if this manifest is not a manifest list. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
+        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestReference> manifestReferences, IReadOnlyList<string> tags, ManifestWriteableProperties writeableProperties)
         {
             Digest = digest;
             Size = size;
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
             Architecture = architecture;
             OperatingSystem = operatingSystem;
-            References = references;
+            ManifestReferences = manifestReferences;
             Tags = tags;
             WriteableProperties = writeableProperties;
         }
@@ -64,11 +64,11 @@ namespace Azure.Containers.ContainerRegistry
         public ArtifactArchitecture? Architecture { get; }
         /// <summary> Operating system. </summary>
         public ArtifactOperatingSystem? OperatingSystem { get; }
-        /// <summary> List of manifest attributes details. </summary>
-        public IReadOnlyList<ManifestAttributesManifestReferences> References { get; }
+        /// <summary> List of manifests referenced by this manifest list.  List will be empty if this manifest is not a manifest list. </summary>
+        public IReadOnlyList<ArtifactManifestReference> ManifestReferences { get; }
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
         /// <summary> Writeable properties of the resource. </summary>
-        public ContentProperties WriteableProperties { get; }
+        public ManifestWriteableProperties WriteableProperties { get; }
     }
 }

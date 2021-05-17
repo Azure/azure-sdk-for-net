@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Network/trafficmanagerProfiles.</param>
+        /// Microsoft.Network/trafficManagerProfiles.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">The Azure Region where the resource
         /// lives</param>
