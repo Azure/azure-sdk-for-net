@@ -8,6 +8,13 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Tag attributes. </summary>
     public partial class ArtifactTagProperties
     {
+        /// <summary>
+        /// Gets and instance of <see cref="ArtifactTagProperties"/>.
+        /// </summary>
+        public ArtifactTagProperties()
+        {
+        }
+
         /// <summary> Delete enabled. </summary>
         public bool? CanDelete { get; set; }
         /// <summary> Write enabled. </summary>

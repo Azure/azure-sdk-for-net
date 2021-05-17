@@ -8,6 +8,13 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Repository attributes. </summary>
     public partial class RepositoryProperties
     {
+        /// <summary>
+        /// Gets an instance of <see cref="RepositoryProperties"/>.
+        /// </summary>
+        public RepositoryProperties()
+        {
+        }
+
         /// <summary> Delete enabled. </summary>
         public bool? CanDelete { get; set; }
         /// <summary> Write enabled. </summary>

@@ -10,6 +10,13 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Manifest attributes details. </summary>
     public partial class ArtifactManifestProperties
     {
+        /// <summary>
+        /// Gets an instance of <see cref="ArtifactManifestProperties"/>.
+        /// </summary>
+        public ArtifactManifestProperties()
+        {
+        }
+
         /// <summary> Delete enabled. </summary>
         public bool? CanDelete { get; set; }
         /// <summary> Write enabled. </summary>
