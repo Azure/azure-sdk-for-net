@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class KeyPhraseExtractionTasksItemProperties
+    internal partial class Components15Gvwi3SchemasTasksstatePropertiesTasksPropertiesEntityrecognitiontasksItemsAllof1
     {
-        internal static KeyPhraseExtractionTasksItemProperties DeserializeKeyPhraseExtractionTasksItemProperties(JsonElement element)
+        internal static Components15Gvwi3SchemasTasksstatePropertiesTasksPropertiesEntityrecognitiontasksItemsAllof1 DeserializeComponents15Gvwi3SchemasTasksstatePropertiesTasksPropertiesEntityrecognitiontasksItemsAllof1(JsonElement element)
         {
-            Optional<KeyPhraseResult> results = default;
+            Optional<EntitiesResult> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
@@ -24,11 +24,11 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    results = KeyPhraseResult.DeserializeKeyPhraseResult(property.Value);
+                    results = EntitiesResult.DeserializeEntitiesResult(property.Value);
                     continue;
                 }
             }
-            return new KeyPhraseExtractionTasksItemProperties(results.Value);
+            return new Components15Gvwi3SchemasTasksstatePropertiesTasksPropertiesEntityrecognitiontasksItemsAllof1(results.Value);
         }
     }
 }

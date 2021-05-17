@@ -11,21 +11,21 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksSentimentAnalysisTasksItem. </summary>
-    internal partial class TasksStateTasksSentimentAnalysisTasksItem : TaskState
+    internal partial class SentimentAnalysisTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksSentimentAnalysisTasksItem. </summary>
+        /// <summary> Initializes a new instance of SentimentAnalysisTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        internal TasksStateTasksSentimentAnalysisTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
+        internal SentimentAnalysisTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksSentimentAnalysisTasksItem. </summary>
+        /// <summary> Initializes a new instance of SentimentAnalysisTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
-        internal TasksStateTasksSentimentAnalysisTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, SentimentResponse results) : base(lastUpdateDateTime, name, status)
+        internal SentimentAnalysisTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, SentimentResponse results) : base(lastUpdateDateTime, name, status)
         {
             Results = results;
         }

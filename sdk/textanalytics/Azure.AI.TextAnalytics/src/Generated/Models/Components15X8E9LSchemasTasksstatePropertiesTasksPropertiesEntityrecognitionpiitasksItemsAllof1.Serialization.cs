@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class EntityRecognitionPiiTasksItemProperties
+    internal partial class Components15X8E9LSchemasTasksstatePropertiesTasksPropertiesEntityrecognitionpiitasksItemsAllof1
     {
-        internal static EntityRecognitionPiiTasksItemProperties DeserializeEntityRecognitionPiiTasksItemProperties(JsonElement element)
+        internal static Components15X8E9LSchemasTasksstatePropertiesTasksPropertiesEntityrecognitionpiitasksItemsAllof1 DeserializeComponents15X8E9LSchemasTasksstatePropertiesTasksPropertiesEntityrecognitionpiitasksItemsAllof1(JsonElement element)
         {
             Optional<PiiEntitiesResult> results = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntityRecognitionPiiTasksItemProperties(results.Value);
+            return new Components15X8E9LSchemasTasksstatePropertiesTasksPropertiesEntityrecognitionpiitasksItemsAllof1(results.Value);
         }
     }
 }
