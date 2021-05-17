@@ -328,7 +328,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new PiiTaskParameters()
                 {
                     Domain = option.DomainFilter.HasValue ? option.DomainFilter.Value.GetString() : (PiiTaskParametersDomain?)null,
-                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
+                    ModelVersion = option.ModelVersion,
                     StringIndexType = option.StringIndexType,
                     LoggingOptOut = option.DisableServiceLogs
                     // Categories are not enabled because of https://github.com/Azure/azure-sdk-for-net/issues/19237
@@ -342,7 +342,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new EntityLinkingTaskParameters()
                 {
-                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
+                    ModelVersion = option.ModelVersion,
                     StringIndexType = option.StringIndexType,
                     LoggingOptOut = option.DisableServiceLogs
                 }
@@ -355,7 +355,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new EntitiesTaskParameters()
                 {
-                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
+                    ModelVersion = option.ModelVersion,
                     StringIndexType = option.StringIndexType,
                     LoggingOptOut = option.DisableServiceLogs
                 }
@@ -368,7 +368,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new KeyPhrasesTaskParameters()
                 {
-                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
+                    ModelVersion = option.ModelVersion,
                     LoggingOptOut = option.DisableServiceLogs
                 }
             };
