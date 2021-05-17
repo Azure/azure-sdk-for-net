@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
@@ -39,10 +40,10 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
         /// </summary>
-        /// <param name="subscription"> The subscription operations to copy client options from. </param>
-        /// <param name="id"> The identifier of the subscription. </param>
-        protected SubscriptionOperations(SubscriptionOperations subscription, SubscriptionResourceIdentifier id)
-            : base(subscription, id)
+        /// <param name="operations"> The resource operations to copy the options from. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal SubscriptionOperations(OperationsBase operations, TenantResourceIdentifier id)
+            : base(operations, id)
         {
         }
 
@@ -73,11 +74,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private SubscriptionsOperations SubscriptionsClient => new ResourcesManagementClient(
-            BaseUri,
-            Guid.NewGuid().ToString(),
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
+        private SubscriptionsRestOperations RestClient => new SubscriptionsRestOperations(Diagnostics, Pipeline, BaseUri);
 
         /// <summary>
         /// Gets the resource group container under this subscription.
@@ -100,22 +97,93 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override Response<Subscription> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
-                SubscriptionsClient.Get(Id.Name, cancellationToken),
-                Converter());
+            using var scope = Diagnostics.CreateScope("SubscriptionOperations.Get");
+            scope.Start();
+            try
+            {
+                var response = RestClient.Get(Id.Name, cancellationToken);
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
         public override async Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
-                await SubscriptionsClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
-                Converter());
+            using var scope = Diagnostics.CreateScope("SubscriptionOperations.Get");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        private Func<ResourceManager.Resources.Models.Subscription, Subscription> Converter()
+        /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public virtual AsyncPageable<LocationData> ListLocationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            return s => new Subscription(this, new SubscriptionData(s));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            async Task<Page<LocationData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListLocations");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListLocationsAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public virtual Pageable<LocationData> ListLocations(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            Page<LocationData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListLocations");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListLocations(subscriptionId, cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
