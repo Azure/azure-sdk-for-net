@@ -68,15 +68,5 @@ namespace Azure.Containers.ContainerRegistry
         public int ManifestCount { get; }
         /// <summary> Number of the tags. </summary>
         public int TagCount { get; }
-        /// <summary> Delete enabled. </summary>
-        public bool? CanDelete { get; }
-        /// <summary> Write enabled. </summary>
-        public bool? CanWrite { get; }
-        /// <summary> List enabled. </summary>
-        public bool? CanList { get; }
-        /// <summary> Read enabled. </summary>
-        public bool? CanRead { get; }
-        /// <summary> Enables Teleport functionality on new images in the repository improving Container startup performance. </summary>
-        public bool? TeleportEnabled { get; }
     }
 }

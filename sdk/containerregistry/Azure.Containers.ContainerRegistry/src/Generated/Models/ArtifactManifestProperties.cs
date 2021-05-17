@@ -82,17 +82,5 @@ namespace Azure.Containers.ContainerRegistry
         public IReadOnlyList<ArtifactManifestReference> ManifestReferences { get; }
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
-        /// <summary> Delete enabled. </summary>
-        public bool? CanDelete { get; }
-        /// <summary> Write enabled. </summary>
-        public bool? CanWrite { get; }
-        /// <summary> List enabled. </summary>
-        public bool? CanList { get; }
-        /// <summary> Read enabled. </summary>
-        public bool? CanRead { get; }
-        /// <summary> Quarantine state. </summary>
-        public string QuarantineState { get; }
-        /// <summary> Quarantine details. </summary>
-        public string QuarantineDetails { get; }
     }
 }

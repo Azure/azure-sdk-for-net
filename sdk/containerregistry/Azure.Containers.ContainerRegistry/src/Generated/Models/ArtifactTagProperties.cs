@@ -74,13 +74,5 @@ namespace Azure.Containers.ContainerRegistry
         public DateTimeOffset CreatedOn { get; }
         /// <summary> Tag last update time. </summary>
         public DateTimeOffset LastUpdatedOn { get; }
-        /// <summary> Delete enabled. </summary>
-        public bool? CanDelete { get; }
-        /// <summary> Write enabled. </summary>
-        public bool? CanWrite { get; }
-        /// <summary> List enabled. </summary>
-        public bool? CanList { get; }
-        /// <summary> Read enabled. </summary>
-        public bool? CanRead { get; }
     }
 }
