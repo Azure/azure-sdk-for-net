@@ -2,8 +2,8 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 ### Added
-- Support for metadata in message. 
-- New overloads for sendmessage and updatemessage operations with options : SendChatMessageOptions and UpdateChatMessageOptions 
+- Added support for metadata in messages.
+- Added new overloads for sendmessage and updatemessage operations with options : SendChatMessageOptions and UpdateChatMessageOptions. 
 
 
 ## 1.0.1 (2021-05-11)
