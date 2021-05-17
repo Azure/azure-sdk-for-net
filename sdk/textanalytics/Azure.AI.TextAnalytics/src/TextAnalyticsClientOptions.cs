@@ -20,7 +20,6 @@ namespace Azure.AI.TextAnalytics
         private const string AzurePublicCloud = "https://login.microsoftonline.com/";
         private const string AzureChina = "https://login.microsoftonline.cn/";
         private const string AzureGovernment = "https://login.microsoftonline.us/";
-
         /// <summary>
         /// The versions of the Text Analytics service supported by this client library.
         /// </summary>
