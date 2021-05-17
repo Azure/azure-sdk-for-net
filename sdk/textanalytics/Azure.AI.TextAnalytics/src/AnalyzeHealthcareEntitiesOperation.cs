@@ -334,7 +334,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(RemoveExtraInformationFromNextLink(nextLink)).ConfigureAwait(false);
+                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(nextLink).ConfigureAwait(false);
 
                     AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -363,7 +363,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(RemoveExtraInformationFromNextLink(nextLink));
+                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(nextLink);
 
                     AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -384,8 +384,5 @@ namespace Azure.AI.TextAnalytics
             if (!HasValue)
                 throw _requestFailedException;
         }
-
-        // Service bug https://github.com/Azure/azure-sdk-for-net/issues/20991
-        private static string RemoveExtraInformationFromNextLink(string nextlink) => nextlink.Split('/').Last();
     }
 }

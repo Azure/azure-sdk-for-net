@@ -8,8 +8,8 @@
         "Content-Length": "316",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c2ac4de25a99094aae579f5f756d0cc4-f11478700f5ce442-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-5264fc0b9a8f8840b2e8fe732bd6b1b5-18f8a17622fe6c40-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210514.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "31f09c56057d756e3c532a93aa2edb35",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,14 +29,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5808c98b-73a9-4448-bec8-e1684f8c434a",
+        "apim-request-id": "99224061-39ed-41ec-99a8-f835c390214a",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Tue, 11 May 2021 16:09:03 GMT",
+        "Date": "Fri, 14 May 2021 17:21:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "36"
+        "x-envoy-upstream-service-time": "37"
       },
       "ResponseBody": {
         "statistics": {
@@ -47,13 +47,20 @@
         },
         "documents": [
           {
-            "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
+            "redactedText": "A ********* with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
             "id": "1",
             "statistics": {
               "charactersCount": 123,
               "transactionsCount": 1
             },
             "entities": [
+              {
+                "text": "developer",
+                "category": "PersonType",
+                "offset": 2,
+                "length": 9,
+                "confidenceScore": 0.97
+              },
               {
                 "text": "859-98-0987",
                 "category": "USSocialSecurityNumber",
