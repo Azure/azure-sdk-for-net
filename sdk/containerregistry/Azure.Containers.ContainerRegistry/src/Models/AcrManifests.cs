@@ -35,7 +35,7 @@ namespace Azure.Containers.ContainerRegistry
                 attributesBase.OperatingSystem,
                 attributesBase.ManifestReferences,
                 attributesBase.Tags,
-                attributesBase.WriteableProperties);
+                attributesBase.CanDelete, attributesBase.CanWrite, attributesBase.CanList, attributesBase.CanRead, attributesBase.QuarantineState, attributesBase.QuarantineDetails);
         }
     }
 }

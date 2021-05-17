@@ -31,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry
                 attributesBase.Digest,
                 attributesBase.CreatedOn,
                 attributesBase.LastUpdatedOn,
-                attributesBase.WriteableProperties);
+                attributesBase.CanDelete, attributesBase.CanWrite, attributesBase.CanList, attributesBase.CanRead);
         }
     }
 }
