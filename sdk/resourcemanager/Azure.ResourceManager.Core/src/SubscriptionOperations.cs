@@ -40,16 +40,6 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
         /// </summary>
-        /// <param name="subscription"> The subscription operations to copy client options from. </param>
-        /// <param name="id"> The identifier of the subscription. </param>
-        protected SubscriptionOperations(SubscriptionOperations subscription, SubscriptionResourceIdentifier id)
-            : base(subscription, id)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
-        /// </summary>
         /// <param name="operations"> The resource operations to copy the options from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SubscriptionOperations(OperationsBase operations, TenantResourceIdentifier id)
@@ -84,7 +74,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private SubscriptionsRestOperations SubscriptionsRestOperations => new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline, BaseUri);
+        private SubscriptionsRestOperations RestClient => new SubscriptionsRestOperations(Diagnostics, Pipeline, BaseUri);
 
         /// <summary>
         /// Gets the resource group container under this subscription.
@@ -111,9 +101,8 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                return new PhArmResponse<Subscription, SubscriptionData>(
-                SubscriptionsRestOperations.Get(Id.Name, cancellationToken),
-                Converter());
+                var response = RestClient.Get(Id.Name, cancellationToken);
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,9 +118,8 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                return new PhArmResponse<Subscription, SubscriptionData>(
-                await SubscriptionsRestOperations.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
-                Converter());
+                var response = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +145,7 @@ namespace Azure.ResourceManager.Core
                 scope.Start();
                 try
                 {
-                    var response = await SubscriptionsRestOperations.ListLocationsAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListLocationsAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -186,7 +174,7 @@ namespace Azure.ResourceManager.Core
                 scope.Start();
                 try
                 {
-                    var response = SubscriptionsRestOperations.ListLocations(subscriptionId, cancellationToken);
+                    var response = RestClient.ListLocations(subscriptionId, cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -196,11 +184,6 @@ namespace Azure.ResourceManager.Core
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        private Func<SubscriptionData, Subscription> Converter()
-        {
-            return s => new Subscription(this, s);
         }
 
         /// <summary>
