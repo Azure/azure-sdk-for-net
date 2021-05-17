@@ -20,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
             string digest = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
-            ContentProperties changeableAttributes = default;
+            TagWriteableProperties changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageName"))
@@ -59,7 +59,7 @@ namespace Azure.Containers.ContainerRegistry
                         }
                         if (property0.NameEquals("changeableAttributes"))
                         {
-                            changeableAttributes = ContentProperties.DeserializeContentProperties(property0.Value);
+                            changeableAttributes = TagWriteableProperties.DeserializeTagWriteableProperties(property0.Value);
                             continue;
                         }
                     }

@@ -36,7 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 writer.WritePropertyName("projectedProperties");
                 writer.WriteStartArray();
-                foreach (EventProperty item in ProjectedProperties)
+                foreach (TimeSeriesInsightsEventProperty item in ProjectedProperties)
                 {
                     writer.WriteObjectValue(item);
                 }

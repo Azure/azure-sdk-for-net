@@ -19,8 +19,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
     /// </summary>
     ///
     /// <remarks>
-    ///   When defining Start/Stop tasks, it is highly recommended that the
-    ///   the StopEvent.Id must be exactly StartEvent.Id + 1.
+    ///   When defining Start/Complete tasks, it is highly recommended that the
+    ///   the CompleteEvent.Id must be exactly StartEvent.Id + 1.
     /// </remarks>
     [EventSource(Name = EventSourceName)]
     internal class ServiceBusEventSource : EventSource
@@ -191,6 +191,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int RequestAuthorizationExceptionEvent = 107;
 
         internal const int ProcessorClientClosedExceptionEvent = 108;
+        internal const int ProcessorAcceptSessionTimeoutEvent = 109;
+        internal const int ProcessorStoppingReceiveCanceledEvent = 110;
+        internal const int ProcessorStoppingAcceptSessionCanceledEvent = 111;
 
         #endregion
         // add new event numbers here incrementing from previous
@@ -842,6 +845,36 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ProcessorClientClosedExceptionEvent, identifier);
+            }
+        }
+
+        [Event(ProcessorStoppingReceiveCanceledEvent, Level = EventLevel.Verbose, Message = "A receive operation was cancelled while stopping the processor. (Identifier '{0}'). Error Message: '{1}'")]
+        public void ProcessorStoppingReceiveCanceled(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorStoppingReceiveCanceledEvent, identifier, exception);
+            }
+        }
+
+        [Event(ProcessorStoppingAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation was cancelled while stopping the processor. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        public void ProcessorStoppingAcceptSessionCanceled(string fullyQualifiedNamespace, string entityPath, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorStoppingAcceptSessionCanceledEvent, fullyQualifiedNamespace, entityPath, exception);
+            }
+        }
+
+        [Event(ProcessorAcceptSessionTimeoutEvent, Level = EventLevel.Verbose, Message = "The processor accept session call timed out. It will be tried again. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        public virtual void ProcessorAcceptSessionTimeout(
+            string fullyQualifiedNamespace,
+            string entityPath,
+            string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorAcceptSessionTimeoutEvent, fullyQualifiedNamespace, entityPath, exception);
             }
         }
 

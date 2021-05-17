@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30, SearchClientOptions.ServiceVersion.V2020_06_30_Preview)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -40,7 +41,7 @@ namespace Azure.Search.Documents.Tests
         {
             // Make sure we're not repeating Header/Query names already defined
             // in the base ClientOptions
-            SearchClientOptions options = new SearchClientOptions();
+            SearchClientOptions options = new SearchClientOptions(ServiceVersion);
             Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedHeaderNames));
             Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedQueryParameters));
 
@@ -66,7 +67,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this, populate: true);
 
-            SearchIndexerClient serviceClient = resources.GetIndexerClient();
+            SearchIndexerClient serviceClient = resources.GetIndexerClient(new SearchClientOptions(ServiceVersion));
 
             // Create the Azure Blob data source and indexer.
             SearchIndexerDataSourceConnection dataSource = new SearchIndexerDataSourceConnection(
@@ -381,9 +382,19 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this);
 
-            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions());
+            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions(ServiceVersion));
             string skillsetName = Recording.Random.GetName();
 
+            SearchIndexerSkillset skillset = CreateSkillsetModel(skillsetName, resources);
+
+            // Create the skillset.
+            SearchIndexerSkillset createdSkillset = await client.CreateSkillsetAsync(skillset);
+
+            await TestSkillsetAsync(client, skillset, createdSkillset, skillsetName);
+        }
+
+        private SearchIndexerSkillset CreateSkillsetModel(string skillsetName, SearchResources resources)
+        {
             // Skills based on https://github.com/Azure-Samples/azure-search-sample-data/blob/master/hotelreviews/HotelReviews_skillset.json.
             SearchIndexerSkill skill1 = new SplitSkill(
                 new[]
@@ -502,10 +513,8 @@ namespace Azure.Search.Documents.Tests
                 SourceContext = null,
             };
 
-            SearchIndexerKnowledgeStoreProjection projection1 = new();
-            projection1.Tables.Add(table1);
-            projection1.Tables.Add(table2);
-            projection1.Tables.Add(table3);
+            SearchIndexerKnowledgeStoreProjection projection1 = new()
+            { Tables = { table1, table2, table3 } };
 
             SearchIndexerKnowledgeStoreTableProjectionSelector table4 = new("hotelReviewsInlineDocument")
             {
@@ -538,10 +547,8 @@ namespace Azure.Search.Documents.Tests
             };
             table6.Inputs.Add(new("Keyphrases") { Source = "/document/reviews_text/pages/*/Keyphrases/*", SourceContext = null });
 
-            SearchIndexerKnowledgeStoreProjection projection2 = new();
-            projection2.Tables.Add(table4);
-            projection2.Tables.Add(table5);
-            projection2.Tables.Add(table6);
+            SearchIndexerKnowledgeStoreProjection projection2 = new()
+            { Tables = { table4, table5, table6 } };
 
             List<SearchIndexerKnowledgeStoreProjection> projections = new() { projection1, projection2 };
 
@@ -551,9 +558,11 @@ namespace Azure.Search.Documents.Tests
                 KnowledgeStore = new SearchIndexerKnowledgeStore(resources.StorageAccountConnectionString, projections),
             };
 
-            // Create the skillset.
-            SearchIndexerSkillset createdSkillset = await client.CreateSkillsetAsync(skillset);
+            return skillset;
+        }
 
+        private async Task TestSkillsetAsync(SearchIndexerClient client, SearchIndexerSkillset skillset, SearchIndexerSkillset createdSkillset, string skillsetName)
+        {
             try
             {
                 Assert.That(createdSkillset, Is.EqualTo(skillset).Using(SearchIndexerSkillsetComparer.Shared));
@@ -620,13 +629,13 @@ namespace Azure.Search.Documents.Tests
 
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
-            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions());
+            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions(ServiceVersion));
             string skillsetName = Recording.Random.GetName();
 
             // Enumerate all skills and create them with consistently fake input to test for nullability during deserialization.
             SearchIndexerSkill CreateSkill(Type t, string[] inputNames, string[] outputNames)
             {
-                var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" } ).ToList();
+                var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
                 var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
 
                 return t switch

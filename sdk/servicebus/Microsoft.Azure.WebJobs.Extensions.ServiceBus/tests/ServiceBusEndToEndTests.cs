@@ -357,14 +357,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-1", _resultMessage1);
             Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-2", _resultMessage2);
 
-            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
-                // Filter out Azure SDK and custom processor logs for easier validation. Intentionally do the error check after as the
-                // Service Bus SDK currently logs errors when stopping the processor.
-                .GetAllLogMessages().Where(m =>
-                    !m.Category.StartsWith("Azure.") &&
-                    m.Category != CustomMessagingProvider.CustomMessagingCategory);
-
+            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
             Assert.False(logMessages.Any(p => p.Level == LogLevel.Error));
+
+            // Filter out Azure SDK and custom processor logs for easier validation.
+            logMessages = logMessages.Where(
+                m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture) &&
+                     m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
             string[] consoleOutputLines = logMessages
                 .Where(p => p.FormattedMessage != null)
@@ -807,15 +806,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // TODO decide whether it makes sense to still default error handler when there is a custom provider
                 // currently user needs to set it.
                 processor.ProcessErrorAsync += args => Task.CompletedTask;
-                return new CustomMessageProcessor(processor, receiver, _logger);
+                return new CustomMessageProcessor(processor, _logger);
             }
 
             private class CustomMessageProcessor : MessageProcessor
             {
                 private readonly ILogger _logger;
 
-                public CustomMessageProcessor(ServiceBusProcessor processor, ServiceBusReceiver receiver, ILogger logger)
-                    : base(processor, receiver)
+                public CustomMessageProcessor(ServiceBusProcessor processor, ILogger logger)
+                    : base(processor)
                 {
                     _logger = logger;
                 }

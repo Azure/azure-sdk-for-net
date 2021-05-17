@@ -23,6 +23,7 @@ namespace Azure.Core.GeoJson
         private const string TypeProperty = "type";
         private const string GeometriesProperty = "geometries";
         private const string CoordinatesProperty = "coordinates";
+        // cspell:ignore bbox
         private const string BBoxProperty = "bbox";
 
         /// <inheritdoc />

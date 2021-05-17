@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
 
-        private readonly Uri _registryUri;
+        private readonly Uri _registryEndpoint;
         private readonly string _repositoryName;
         private readonly string _tagOrDigest;
         private readonly string _fullyQualifiedName;
@@ -25,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Gets the Registry Uri.
         /// </summary>
-        public virtual Uri RegistryUri => _registryUri;
+        public virtual Uri RegistryEndpoint => _registryEndpoint;
 
         /// <summary>
         /// Gets the name of the repository for this artifact.
@@ -44,12 +44,12 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        internal RegistryArtifact(Uri registryUri, string repositoryName, string tagOrDigest, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
+        internal RegistryArtifact(Uri registryEndpoint, string repositoryName, string tagOrDigest, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
         {
             _repositoryName = repositoryName;
             _tagOrDigest = tagOrDigest;
-            _registryUri = registryUri;
-            _fullyQualifiedName = $"{registryUri.Host}/{repositoryName}{(IsDigest(tagOrDigest) ? '@' : ':')}{tagOrDigest}";
+            _registryEndpoint = registryEndpoint;
+            _fullyQualifiedName = $"{registryEndpoint.Host}/{repositoryName}{(IsDigest(tagOrDigest) ? '@' : ':')}{tagOrDigest}";
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
@@ -128,7 +128,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<ArtifactManifestProperties>> SetManifestPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArtifactManifestProperties>> SetManifestPropertiesAsync(ManifestWriteableProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -151,7 +151,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<ArtifactManifestProperties> SetManifestProperties(ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<ArtifactManifestProperties> SetManifestProperties(ManifestWriteableProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -354,7 +354,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<ArtifactTagProperties>> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArtifactTagProperties>> SetTagPropertiesAsync(string tag, TagWriteableProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));
             Argument.AssertNotNull(value, nameof(value));
@@ -380,7 +380,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<ArtifactTagProperties> SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<ArtifactTagProperties> SetTagProperties(string tag, TagWriteableProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));
             Argument.AssertNotNull(value, nameof(value));
