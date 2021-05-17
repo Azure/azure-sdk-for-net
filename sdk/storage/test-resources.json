@@ -419,7 +419,7 @@
               }
             ],
             "output": {
-              "type": "string"
+              "type": "string",
               "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('accountName'), ';AccountKey=', parameters('accountKey'), ';BlobEndpoint=', parameters('blobEndpoint'), ';QueueEndpoint=', parameters('queueEndpoint'), ';FileEndpoint=', parameters('fileEndpoint'), ';TableEndpoint=', parameters('tableEndpoint'))]"
             }
           }
