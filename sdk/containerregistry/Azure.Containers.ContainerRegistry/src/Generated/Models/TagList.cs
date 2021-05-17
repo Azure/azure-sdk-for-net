@@ -15,15 +15,15 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class TagList
     {
         /// <summary> Initializes a new instance of TagList. </summary>
-        /// <param name="registry"> Registry name. </param>
+        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tagAttributeBases"> List of tag attribute details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="registry"/>, <paramref name="repository"/>, or <paramref name="tagAttributeBases"/> is null. </exception>
-        internal TagList(string registry, string repository, IEnumerable<TagAttributesBase> tagAttributeBases)
+        /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/>, <paramref name="repository"/>, or <paramref name="tagAttributeBases"/> is null. </exception>
+        internal TagList(string registryLoginServer, string repository, IEnumerable<TagAttributesBase> tagAttributeBases)
         {
-            if (registry == null)
+            if (registryLoginServer == null)
             {
-                throw new ArgumentNullException(nameof(registry));
+                throw new ArgumentNullException(nameof(registryLoginServer));
             }
             if (repository == null)
             {
@@ -34,26 +34,26 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(tagAttributeBases));
             }
 
-            Registry = registry;
+            RegistryLoginServer = registryLoginServer;
             Repository = repository;
             TagAttributeBases = tagAttributeBases.ToList();
         }
 
         /// <summary> Initializes a new instance of TagList. </summary>
-        /// <param name="registry"> Registry name. </param>
+        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tagAttributeBases"> List of tag attribute details. </param>
         /// <param name="link"> . </param>
-        internal TagList(string registry, string repository, IReadOnlyList<TagAttributesBase> tagAttributeBases, string link)
+        internal TagList(string registryLoginServer, string repository, IReadOnlyList<TagAttributesBase> tagAttributeBases, string link)
         {
-            Registry = registry;
+            RegistryLoginServer = registryLoginServer;
             Repository = repository;
             TagAttributeBases = tagAttributeBases;
             Link = link;
         }
 
-        /// <summary> Registry name. </summary>
-        public string Registry { get; }
+        /// <summary> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </summary>
+        public string RegistryLoginServer { get; }
         /// <summary> Image name. </summary>
         public string Repository { get; }
         /// <summary> List of tag attribute details. </summary>

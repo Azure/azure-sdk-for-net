@@ -13,25 +13,25 @@ namespace Azure.Containers.ContainerRegistry
     public partial class RepositoryProperties
     {
         /// <summary> Initializes a new instance of RepositoryProperties. </summary>
-        /// <param name="registryName"> Registry name. </param>
+        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
         /// <param name="lastUpdatedOn"> Image last update time. </param>
         /// <param name="manifestCount"> Number of the manifests. </param>
         /// <param name="tagCount"> Number of the tags. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="name"/> is null. </exception>
-        internal RepositoryProperties(string registryName, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount)
+        /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/> or <paramref name="name"/> is null. </exception>
+        internal RepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount)
         {
-            if (registryName == null)
+            if (registryLoginServer == null)
             {
-                throw new ArgumentNullException(nameof(registryName));
+                throw new ArgumentNullException(nameof(registryLoginServer));
             }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            RegistryName = registryName;
+            RegistryLoginServer = registryLoginServer;
             Name = name;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
@@ -40,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of RepositoryProperties. </summary>
-        /// <param name="registryName"> Registry name. </param>
+        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
         /// <param name="lastUpdatedOn"> Image last update time. </param>
@@ -51,9 +51,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
         /// <param name="teleportEnabled"> Enables Teleport functionality on new images in the repository improving Container startup performance. </param>
-        internal RepositoryProperties(string registryName, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, bool? teleportEnabled)
+        internal RepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, bool? teleportEnabled)
         {
-            RegistryName = registryName;
+            RegistryLoginServer = registryLoginServer;
             Name = name;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
@@ -66,8 +66,8 @@ namespace Azure.Containers.ContainerRegistry
             TeleportEnabled = teleportEnabled;
         }
 
-        /// <summary> Registry name. </summary>
-        public string RegistryName { get; }
+        /// <summary> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </summary>
+        public string RegistryLoginServer { get; }
         /// <summary> Image name. </summary>
         public string Name { get; }
         /// <summary> Image created time. </summary>
