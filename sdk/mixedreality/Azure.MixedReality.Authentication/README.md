@@ -4,7 +4,7 @@ Mixed Reality services, like Azure Spatial Anchors, Azure Remote Rendering, and 
 token service (STS) for authentication. This package supports exchanging Mixed Reality account credentials for an access
 token from the STS that can be used to access Mixed Reality services.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mixedreality/Azure.MixedReality.Authentication) | NuGet
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mixedreality/Azure.MixedReality.Authentication/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.MixedReality.Authentication)
 
 ![Mixed Reality service authentication diagram](https://docs.microsoft.com/azure/spatial-anchors/concepts/media/spatial-anchors-authentication-overview.png)
 
