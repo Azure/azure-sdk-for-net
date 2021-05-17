@@ -15,7 +15,7 @@ namespace Monitor.Tests.Scenarios
     public class DataCollectionRulesTests : TestBase
     {
         private const string ResourceGroupName = "netSdkTestRecord";
-        private const string vmResourceUri = "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourcegroups/netSdkTestRecord/providers/Microsoft.Compute/virtualMachines/vm-dcrTestPpe";
+        private const string vmResourceUri = "/subscriptions/b97224f3-b199-49b1-84c7-25b09e8fbf84/resourcegroups/netSdkTestRecord/providers/Microsoft.Compute/virtualMachines/vm-dcrTestRecordSession";
 
         private RecordedDelegatingHandler handler;
 
@@ -34,7 +34,7 @@ namespace Monitor.Tests.Scenarios
             {
                 var dcrName = "dcrSdkCreateTest";
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
-                
+
                 var dcr = CreateDcr(insightsClient, dcrName);
                 Assert.NotNull(dcr);
 
@@ -67,7 +67,6 @@ namespace Monitor.Tests.Scenarios
             }
         }
 
-
         [Fact]
         [Trait("Category", "Scenario")]
         public void ListDcrBySubscriptionTest()
@@ -83,7 +82,7 @@ namespace Monitor.Tests.Scenarios
                 Assert.NotNull(dcrList);
                 Assert.True(dcrList.Count >= 3, "List must be greather than 3 items");
 
-                foreach (var dcrName in dcrNames) 
+                foreach (var dcrName in dcrNames)
                 {
                     Assert.Equal(1, dcrList.Count(x => x.Name == dcrName));
                 }
@@ -100,11 +99,12 @@ namespace Monitor.Tests.Scenarios
             {
                 var dcrName = "dcrSdkUpdateTest";
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
-                
+
                 var dcr = CreateDcr(insightsClient, dcrName);
                 Assert.NotNull(dcr);
 
-                dcr = insightsClient.DataCollectionRules.Update(ResourceGroupName, dcrName, new ResourceForUpdate { 
+                dcr = insightsClient.DataCollectionRules.Update(ResourceGroupName, dcrName, new ResourceForUpdate
+                {
                     Tags = new Dictionary<string, string>
                     {
                         { "TagUpdated", "ValueUpdate" }
@@ -134,11 +134,12 @@ namespace Monitor.Tests.Scenarios
                 var dcrName = "dcraSdkCreateTest";
                 var dcraName = "dcraSdkCreateTestAssoc";
                 MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
-                
+
                 var dcr = CreateDcr(insightsClient, dcrName);
                 Assert.NotNull(dcr);
 
-                var dcra = insightsClient.DataCollectionRuleAssociations.Create(vmResourceUri, dcraName, new DataCollectionRuleAssociationProxyOnlyResource {
+                var dcra = insightsClient.DataCollectionRuleAssociations.Create(vmResourceUri, dcraName, new DataCollectionRuleAssociationProxyOnlyResource
+                {
                     DataCollectionRuleId = dcr.Id,
                     Description = "Assoc with virtual machine"
                 });
@@ -159,6 +160,105 @@ namespace Monitor.Tests.Scenarios
         }
         #endregion
 
+        #region DCRE
+        [Fact]
+        [Trait("Category", "Scenario")]
+        public void CreateDceTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var dceName = "createTestDce";
+                MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
+
+                var dce = CreateDce(insightsClient, dceName);
+                Assert.NotNull(dce);
+
+                var dceFromGet = insightsClient.DataCollectionEndpoints.Get(ResourceGroupName, dceName);
+                insightsClient.DataCollectionEndpoints.Delete(ResourceGroupName, dceName);
+
+                AreEqual(dce, dceFromGet);
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Scenario")]
+        public void DeleteDceTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var dceName = "deleteTestDce";
+                MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
+                var dceDelete = CreateDce(insightsClient, dceName); ;
+
+                Assert.NotNull(dceDelete);
+
+                var dceList = insightsClient.DataCollectionEndpoints.ListByResourceGroup(ResourceGroupName).ToList();
+                Assert.Equal(1, dceList.Count(x => x.Name == dceName));
+
+                insightsClient.DataCollectionEndpoints.Delete(ResourceGroupName, dceName);
+
+                dceList = insightsClient.DataCollectionEndpoints.ListByResourceGroup(ResourceGroupName).ToList();
+                Assert.Equal(0, dceList.Count(x => x.Name == dceName));
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Scenario")]
+        public void ListDceBySubscriptionTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string[] dceNames = { "dceListOneTest", "dceListTwoTest", "dceListThreeTest", "dceListFourTest" }; ;
+                MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
+                foreach (var dceName in dceNames) _ = CreateDce(insightsClient, dceName);
+
+                var dceList = insightsClient.DataCollectionEndpoints.ListBySubscription().ToList();
+
+                Assert.NotNull(dceList);
+                Assert.True(dceList.Count >= 3, "List must be greather than 3 items");
+
+                foreach (var dceName in dceNames)
+                {
+                    Assert.Equal(1, dceList.Count(x => x.Name == dceName));
+                }
+
+                foreach (var dceName in dceNames) insightsClient.DataCollectionEndpoints.Delete(ResourceGroupName, dceName);
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Scenario")]
+        public void UpdateDceTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var dceName = "dceSdkUpdateTest";
+                MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
+
+                var dce = CreateDce(insightsClient, dceName);
+                Assert.NotNull(dce);
+
+                dce = insightsClient.DataCollectionEndpoints.Update(ResourceGroupName, dceName, new ResourceForUpdate
+                {
+                    Tags = new Dictionary<string, string>
+                    {
+                        { "TagUpdated", "ValueUpdate" }
+                    }
+                });
+                Assert.NotNull(dce);
+
+                var dcrList = insightsClient.DataCollectionEndpoints.ListByResourceGroup(ResourceGroupName).ToList();
+                dce = dcrList.FirstOrDefault(x => x.Name == dceName);
+                Assert.NotNull(dce);
+                Assert.True(dce.Tags.Count == 1);
+                Assert.Equal("TagUpdated", dce.Tags.Keys.First());
+                Assert.Equal("ValueUpdate", dce.Tags["TagUpdated"]);
+
+                insightsClient.DataCollectionEndpoints.Delete(ResourceGroupName, dceName);
+            }
+        }
+        #endregion
+
         #region Helpers
         private DataCollectionRuleResource CreateDcr(MonitorManagementClient insightsClient, string dcrName)
         {
@@ -167,7 +267,7 @@ namespace Monitor.Tests.Scenarios
                     dataCollectionRuleName: dcrName,
                     new DataCollectionRuleResource
                     {
-                        Location = "East US",
+                        Location = "eastus2euap",
                         Tags = new Dictionary<string, string>
                         {
                             { "tagOne", "valueOne" },
@@ -205,6 +305,23 @@ namespace Monitor.Tests.Scenarios
                         }
                     }
                 );
+        }
+
+        private DataCollectionEndpointResource CreateDce(MonitorManagementClient insightsClient, string dceName)
+        {
+            return insightsClient.DataCollectionEndpoints.Create(
+                resourceGroupName: ResourceGroupName,
+                dataCollectionEndpointName: dceName,
+                body: new DataCollectionEndpointResource
+                {
+                    Location = "eastus2euap",
+                    Tags = new Dictionary<string, string>
+                        {
+                            { "tagOne", "valueOne" },
+                            { "tagTwo", "valueTwo" }
+                        },
+                    NetworkAcls = new DataCollectionEndpointNetworkAcls { PublicNetworkAccess = "Enabled" }
+                });
         }
         #endregion
 
@@ -358,7 +475,7 @@ namespace Monitor.Tests.Scenarios
         }
         #endregion
 
-        #region DCRA AreEqual Helpers}
+        #region DCRA AreEqual Helpers
         private static void AreEqual(DataCollectionRuleAssociationProxyOnlyResource exp, DataCollectionRuleAssociationProxyOnlyResource act)
         {
             if (exp != null)
@@ -370,6 +487,29 @@ namespace Monitor.Tests.Scenarios
                 Assert.Equal(exp.Name, act.Name);
                 Assert.Equal(exp.ProvisioningState, act.ProvisioningState);
                 Assert.Equal(exp.Type, act.Type);
+            }
+        }
+        #endregion
+
+        #region DCE AreEqual Helpers
+        private static void AreEqual(DataCollectionEndpointResource exp, DataCollectionEndpointResource act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.Id, act.Id);
+                Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.Description, act.Description);
+                Assert.Equal(exp.Etag, act.Etag);
+                Assert.Equal(exp.Location, act.Location);
+                Assert.Equal(exp.ProvisioningState, act.ProvisioningState);
+                Assert.Equal(exp.Type, act.Type);
+                Assert.Equal(exp.Kind, act.Kind);
+                Assert.Equal(exp.ImmutableId, act.ImmutableId);
+                Utilities.AreEqual(exp.Tags, act.Tags);
+
+                Assert.Equal(exp?.ConfigurationAccess?.Endpoint, act?.ConfigurationAccess?.Endpoint);
+                Assert.Equal(exp?.LogsIngestion?.Endpoint, act?.LogsIngestion?.Endpoint);
+                Assert.Equal(exp?.NetworkAcls?.PublicNetworkAccess, act?.NetworkAcls?.PublicNetworkAccess);
             }
         }
         #endregion

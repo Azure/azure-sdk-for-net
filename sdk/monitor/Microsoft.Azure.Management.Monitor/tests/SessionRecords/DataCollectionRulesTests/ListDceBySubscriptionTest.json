@@ -1,0 +1,587 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListOneTest?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvbkVuZHBvaW50cy9kY2VMaXN0T25lVGVzdD9hcGktdmVyc2lvbj0yMDIxLTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"networkAcls\": {\r\n      \"publicNetworkAccess\": \"Enabled\"\r\n    }\r\n  },\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"tagOne\": \"valueOne\",\r\n    \"tagTwo\": \"valueTwo\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "199"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "59"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2021-04-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "851c2299-a441-47ea-91c5-d87cb185224d"
+        ],
+        "x-ms-correlation-request-id": [
+          "851c2299-a441-47ea-91c5-d87cb185224d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210517T224839Z:851c2299-a441-47ea-91c5-d87cb185224d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 17 May 2021 22:48:39 GMT"
+        ],
+        "Content-Length": [
+          "997"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"immutableId\": \"dce-1f9751c51e9342d197562a52ef0bf802\",\r\n    \"configurationAccess\": {\r\n      \"endpoint\": \"https://dcelistonetest-mg6w.eastus2euap-1.handler.control.monitor.azure.com\"\r\n    },\r\n    \"logsIngestion\": {\r\n      \"endpoint\": \"https://dcelistonetest-mg6w.eastus2euap-1.ingest.monitor.azure.com\"\r\n    },\r\n    \"networkAcls\": {\r\n      \"publicNetworkAccess\": \"Enabled\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"tagOne\": \"valueOne\",\r\n    \"tagTwo\": \"valueTwo\"\r\n  },\r\n  \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListOneTest\",\r\n  \"name\": \"dceListOneTest\",\r\n  \"type\": \"Microsoft.Insights/dataCollectionEndpoints\",\r\n  \"etag\": \"\\\"00001bf5-0000-3400-0000-60a2f2c60000\\\"\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-05-17T22:48:36.7427015Z\",\r\n    \"lastModifiedBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-05-17T22:48:36.7427015Z\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListTwoTest?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvbkVuZHBvaW50cy9kY2VMaXN0VHdvVGVzdD9hcGktdmVyc2lvbj0yMDIxLTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"networkAcls\": {\r\n      \"publicNetworkAccess\": \"Enabled\"\r\n    }\r\n  },\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"tagOne\": \"valueOne\",\r\n    \"tagTwo\": \"valueTwo\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "199"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "58"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2021-04-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "fdb2a76d-1e5a-40cd-bc0d-fc91e8bd4297"
+        ],
+        "x-ms-correlation-request-id": [
+          "fdb2a76d-1e5a-40cd-bc0d-fc91e8bd4297"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210517T224852Z:fdb2a76d-1e5a-40cd-bc0d-fc91e8bd4297"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 17 May 2021 22:48:52 GMT"
+        ],
+        "Content-Length": [
+          "997"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"immutableId\": \"dce-1ca8fd5e9aaa4fb6b70334f515f784de\",\r\n    \"configurationAccess\": {\r\n      \"endpoint\": \"https://dcelisttwotest-p18p.eastus2euap-1.handler.control.monitor.azure.com\"\r\n    },\r\n    \"logsIngestion\": {\r\n      \"endpoint\": \"https://dcelisttwotest-p18p.eastus2euap-1.ingest.monitor.azure.com\"\r\n    },\r\n    \"networkAcls\": {\r\n      \"publicNetworkAccess\": \"Enabled\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"tagOne\": \"valueOne\",\r\n    \"tagTwo\": \"valueTwo\"\r\n  },\r\n  \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListTwoTest\",\r\n  \"name\": \"dceListTwoTest\",\r\n  \"type\": \"Microsoft.Insights/dataCollectionEndpoints\",\r\n  \"etag\": \"\\\"000020f5-0000-3400-0000-60a2f2d30000\\\"\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-05-17T22:48:40.5926708Z\",\r\n    \"lastModifiedBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-05-17T22:48:40.5926708Z\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListThreeTest?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvbkVuZHBvaW50cy9kY2VMaXN0VGhyZWVUZXN0P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"networkAcls\": {\r\n      \"publicNetworkAccess\": \"Enabled\"\r\n    }\r\n  },\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"tagOne\": \"valueOne\",\r\n    \"tagTwo\": \"valueTwo\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "199"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "57"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2021-04-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "9c2c782a-059a-46d4-93bc-76325d5c4c13"
+        ],
+        "x-ms-correlation-request-id": [
+          "9c2c782a-059a-46d4-93bc-76325d5c4c13"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210517T224855Z:9c2c782a-059a-46d4-93bc-76325d5c4c13"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 17 May 2021 22:48:54 GMT"
+        ],
+        "Content-Length": [
+          "1005"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"immutableId\": \"dce-919650a76497427faf209b5bb24d03f5\",\r\n    \"configurationAccess\": {\r\n      \"endpoint\": \"https://dcelistthreetest-074i.eastus2euap-1.handler.control.monitor.azure.com\"\r\n    },\r\n    \"logsIngestion\": {\r\n      \"endpoint\": \"https://dcelistthreetest-074i.eastus2euap-1.ingest.monitor.azure.com\"\r\n    },\r\n    \"networkAcls\": {\r\n      \"publicNetworkAccess\": \"Enabled\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"tagOne\": \"valueOne\",\r\n    \"tagTwo\": \"valueTwo\"\r\n  },\r\n  \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListThreeTest\",\r\n  \"name\": \"dceListThreeTest\",\r\n  \"type\": \"Microsoft.Insights/dataCollectionEndpoints\",\r\n  \"etag\": \"\\\"000025f5-0000-3400-0000-60a2f2d60000\\\"\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-05-17T22:48:53.3937288Z\",\r\n    \"lastModifiedBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-05-17T22:48:53.3937288Z\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListFourTest?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvbkVuZHBvaW50cy9kY2VMaXN0Rm91clRlc3Q/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"networkAcls\": {\r\n      \"publicNetworkAccess\": \"Enabled\"\r\n    }\r\n  },\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"tagOne\": \"valueOne\",\r\n    \"tagTwo\": \"valueTwo\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "199"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "56"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2021-04-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "e0c31433-ff4e-485a-a781-644b4c2a4125"
+        ],
+        "x-ms-correlation-request-id": [
+          "e0c31433-ff4e-485a-a781-644b4c2a4125"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210517T224857Z:e0c31433-ff4e-485a-a781-644b4c2a4125"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 17 May 2021 22:48:57 GMT"
+        ],
+        "Content-Length": [
+          "1001"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"immutableId\": \"dce-dd28a1b96d9049c8bb345b51ac8bb86f\",\r\n    \"configurationAccess\": {\r\n      \"endpoint\": \"https://dcelistfourtest-p884.eastus2euap-1.handler.control.monitor.azure.com\"\r\n    },\r\n    \"logsIngestion\": {\r\n      \"endpoint\": \"https://dcelistfourtest-p884.eastus2euap-1.ingest.monitor.azure.com\"\r\n    },\r\n    \"networkAcls\": {\r\n      \"publicNetworkAccess\": \"Enabled\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"tagOne\": \"valueOne\",\r\n    \"tagTwo\": \"valueTwo\"\r\n  },\r\n  \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListFourTest\",\r\n  \"name\": \"dceListFourTest\",\r\n  \"type\": \"Microsoft.Insights/dataCollectionEndpoints\",\r\n  \"etag\": \"\\\"00002af5-0000-3400-0000-60a2f2d80000\\\"\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-05-17T22:48:55.9387116Z\",\r\n    \"lastModifiedBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-05-17T22:48:55.9387116Z\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/providers/Microsoft.Insights/dataCollectionEndpoints?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuSW5zaWdodHMvZGF0YUNvbGxlY3Rpb25FbmRwb2ludHM/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fd3079ed-236c-4070-a4bc-e6fad54ea359"
+        ],
+        "x-ms-correlation-request-id": [
+          "fd3079ed-236c-4070-a4bc-e6fad54ea359"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210517T224857Z:fd3079ed-236c-4070-a4bc-e6fad54ea359"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 17 May 2021 22:48:57 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "4955"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"immutableId\": \"dce-7d6fdba0c52d42829764ae5040c54b75\",\r\n        \"configurationAccess\": {\r\n          \"endpoint\": \"https://firsttestdce-d0ki.eastus2euap-1.handler.control.monitor.azure.com\"\r\n        },\r\n        \"logsIngestion\": {\r\n          \"endpoint\": \"https://firsttestdce-d0ki.eastus2euap-1.ingest.monitor.azure.com\"\r\n        },\r\n        \"networkAcls\": {\r\n          \"publicNetworkAccess\": \"Enabled\"\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"location\": \"eastus2euap\",\r\n      \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/FirstTestDCE\",\r\n      \"name\": \"FirstTestDCE\",\r\n      \"type\": \"Microsoft.Insights/dataCollectionEndpoints\",\r\n      \"etag\": \"\\\"0000c9c3-0000-3400-0000-609ecf1a0000\\\"\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-05-14T19:23:19.594434Z\",\r\n        \"lastModifiedBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-05-14T19:27:21.9119246Z\"\r\n      }\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"immutableId\": \"dce-1f9751c51e9342d197562a52ef0bf802\",\r\n        \"configurationAccess\": {\r\n          \"endpoint\": \"https://dcelistonetest-mg6w.eastus2euap-1.handler.control.monitor.azure.com\"\r\n        },\r\n        \"logsIngestion\": {\r\n          \"endpoint\": \"https://dcelistonetest-mg6w.eastus2euap-1.ingest.monitor.azure.com\"\r\n        },\r\n        \"networkAcls\": {\r\n          \"publicNetworkAccess\": \"Enabled\"\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"location\": \"eastus2euap\",\r\n      \"tags\": {\r\n        \"tagOne\": \"valueOne\",\r\n        \"tagTwo\": \"valueTwo\"\r\n      },\r\n      \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListOneTest\",\r\n      \"name\": \"dceListOneTest\",\r\n      \"type\": \"Microsoft.Insights/dataCollectionEndpoints\",\r\n      \"etag\": \"\\\"00001bf5-0000-3400-0000-60a2f2c60000\\\"\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-05-17T22:48:36.7427015Z\",\r\n        \"lastModifiedBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-05-17T22:48:36.7427015Z\"\r\n      }\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"immutableId\": \"dce-1ca8fd5e9aaa4fb6b70334f515f784de\",\r\n        \"configurationAccess\": {\r\n          \"endpoint\": \"https://dcelisttwotest-p18p.eastus2euap-1.handler.control.monitor.azure.com\"\r\n        },\r\n        \"logsIngestion\": {\r\n          \"endpoint\": \"https://dcelisttwotest-p18p.eastus2euap-1.ingest.monitor.azure.com\"\r\n        },\r\n        \"networkAcls\": {\r\n          \"publicNetworkAccess\": \"Enabled\"\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"location\": \"eastus2euap\",\r\n      \"tags\": {\r\n        \"tagOne\": \"valueOne\",\r\n        \"tagTwo\": \"valueTwo\"\r\n      },\r\n      \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListTwoTest\",\r\n      \"name\": \"dceListTwoTest\",\r\n      \"type\": \"Microsoft.Insights/dataCollectionEndpoints\",\r\n      \"etag\": \"\\\"000020f5-0000-3400-0000-60a2f2d30000\\\"\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-05-17T22:48:40.5926708Z\",\r\n        \"lastModifiedBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-05-17T22:48:40.5926708Z\"\r\n      }\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"immutableId\": \"dce-919650a76497427faf209b5bb24d03f5\",\r\n        \"configurationAccess\": {\r\n          \"endpoint\": \"https://dcelistthreetest-074i.eastus2euap-1.handler.control.monitor.azure.com\"\r\n        },\r\n        \"logsIngestion\": {\r\n          \"endpoint\": \"https://dcelistthreetest-074i.eastus2euap-1.ingest.monitor.azure.com\"\r\n        },\r\n        \"networkAcls\": {\r\n          \"publicNetworkAccess\": \"Enabled\"\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"location\": \"eastus2euap\",\r\n      \"tags\": {\r\n        \"tagOne\": \"valueOne\",\r\n        \"tagTwo\": \"valueTwo\"\r\n      },\r\n      \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListThreeTest\",\r\n      \"name\": \"dceListThreeTest\",\r\n      \"type\": \"Microsoft.Insights/dataCollectionEndpoints\",\r\n      \"etag\": \"\\\"000025f5-0000-3400-0000-60a2f2d60000\\\"\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-05-17T22:48:53.3937288Z\",\r\n        \"lastModifiedBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-05-17T22:48:53.3937288Z\"\r\n      }\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"immutableId\": \"dce-dd28a1b96d9049c8bb345b51ac8bb86f\",\r\n        \"configurationAccess\": {\r\n          \"endpoint\": \"https://dcelistfourtest-p884.eastus2euap-1.handler.control.monitor.azure.com\"\r\n        },\r\n        \"logsIngestion\": {\r\n          \"endpoint\": \"https://dcelistfourtest-p884.eastus2euap-1.ingest.monitor.azure.com\"\r\n        },\r\n        \"networkAcls\": {\r\n          \"publicNetworkAccess\": \"Enabled\"\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"location\": \"eastus2euap\",\r\n      \"tags\": {\r\n        \"tagOne\": \"valueOne\",\r\n        \"tagTwo\": \"valueTwo\"\r\n      },\r\n      \"id\": \"/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListFourTest\",\r\n      \"name\": \"dceListFourTest\",\r\n      \"type\": \"Microsoft.Insights/dataCollectionEndpoints\",\r\n      \"etag\": \"\\\"00002af5-0000-3400-0000-60a2f2d80000\\\"\",\r\n      \"systemData\": {\r\n        \"createdBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n        \"createdByType\": \"Application\",\r\n        \"createdAt\": \"2021-05-17T22:48:55.9387116Z\",\r\n        \"lastModifiedBy\": \"aaf73922-b087-4684-a5e2-b0177c1e0bff\",\r\n        \"lastModifiedByType\": \"Application\",\r\n        \"lastModifiedAt\": \"2021-05-17T22:48:55.9387116Z\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListOneTest?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvbkVuZHBvaW50cy9kY2VMaXN0T25lVGVzdD9hcGktdmVyc2lvbj0yMDIxLTA0LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2021-04-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "9afe5589-5118-46dc-ade6-24a85d900f40"
+        ],
+        "x-ms-correlation-request-id": [
+          "9afe5589-5118-46dc-ade6-24a85d900f40"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210517T224900Z:9afe5589-5118-46dc-ade6-24a85d900f40"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 17 May 2021 22:49:00 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListTwoTest?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvbkVuZHBvaW50cy9kY2VMaXN0VHdvVGVzdD9hcGktdmVyc2lvbj0yMDIxLTA0LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2021-04-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "eb4057df-dcd3-43c4-9381-8f5790599b86"
+        ],
+        "x-ms-correlation-request-id": [
+          "eb4057df-dcd3-43c4-9381-8f5790599b86"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210517T224903Z:eb4057df-dcd3-43c4-9381-8f5790599b86"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 17 May 2021 22:49:02 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListThreeTest?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvbkVuZHBvaW50cy9kY2VMaXN0VGhyZWVUZXN0P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2021-04-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "75555226-bc21-4f6c-80fb-ed7131da46cd"
+        ],
+        "x-ms-correlation-request-id": [
+          "75555226-bc21-4f6c-80fb-ed7131da46cd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210517T224905Z:75555226-bc21-4f6c-80fb-ed7131da46cd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 17 May 2021 22:49:05 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/63ca8f08-4d36-47a1-9467-03282553ad6b/resourceGroups/netSdkTestRecord/providers/Microsoft.Insights/dataCollectionEndpoints/dceListFourTest?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjNjYThmMDgtNGQzNi00N2ExLTk0NjctMDMyODI1NTNhZDZiL3Jlc291cmNlR3JvdXBzL25ldFNka1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5JbnNpZ2h0cy9kYXRhQ29sbGVjdGlvbkVuZHBvaW50cy9kY2VMaXN0Rm91clRlc3Q/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.25.2.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:2bbfbac8-e1b0-44af-b9c6-3a40669d37e3"
+        ],
+        "api-supported-versions": [
+          "2021-04-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "f11d867c-eb35-4257-beb5-b6052e60c77e"
+        ],
+        "x-ms-correlation-request-id": [
+          "f11d867c-eb35-4257-beb5-b6052e60c77e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210517T224908Z:f11d867c-eb35-4257-beb5-b6052e60c77e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 17 May 2021 22:49:08 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "63ca8f08-4d36-47a1-9467-03282553ad6b"
+  }
+}
