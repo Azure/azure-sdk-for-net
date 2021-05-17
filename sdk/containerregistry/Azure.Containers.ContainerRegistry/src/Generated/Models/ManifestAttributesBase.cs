@@ -16,8 +16,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
         /// <param name="digest"> Manifest. </param>
+        /// <param name="createdOn"> Created time. </param>
+        /// <param name="lastUpdatedOn"> Last update time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
-        internal ManifestAttributesBase(string digest)
+        internal ManifestAttributesBase(string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
             if (digest == null)
             {
@@ -25,6 +27,8 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             Digest = digest;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             ManifestReferences = new ChangeTrackingList<ArtifactManifestReference>();
             Tags = new ChangeTrackingList<string>();
         }
@@ -44,7 +48,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canRead"> Read enabled. </param>
         /// <param name="quarantineState"> Quarantine state. </param>
         /// <param name="quarantineDetails"> Quarantine details. </param>
-        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestReference> manifestReferences, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, string quarantineState, string quarantineDetails)
+        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestReference> manifestReferences, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, string quarantineState, string quarantineDetails)
         {
             Digest = digest;
             Size = size;
@@ -67,9 +71,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Image size. </summary>
         public long? Size { get; }
         /// <summary> Created time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset CreatedOn { get; }
         /// <summary> Last update time. </summary>
-        public DateTimeOffset? LastUpdatedOn { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
         /// <summary> CPU architecture. </summary>
         public ArtifactArchitecture? Architecture { get; }
         /// <summary> Operating system. </summary>

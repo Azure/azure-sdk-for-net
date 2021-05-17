@@ -18,8 +18,8 @@ namespace Azure.Containers.ContainerRegistry
         {
             string digest = default;
             Optional<long> imageSize = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
+            DateTimeOffset createdTime = default;
+            DateTimeOffset lastUpdateTime = default;
             Optional<ArtifactArchitecture?> architecture = default;
             Optional<ArtifactOperatingSystem?> os = default;
             Optional<IReadOnlyList<ArtifactManifestReference>> references = default;
@@ -49,21 +49,11 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastUpdateTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -180,7 +170,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
+            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), quarantineState.Value, quarantineDetails.Value);
         }
     }
 }
