@@ -7,15 +7,15 @@
       "RequestBody": "{\r\n  \"location\": \"WestUS2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4d9d6eed-5cf4-40fd-9e97-1bd2edd59f3f"
+          "9f10becf-0de7-4be3-9684-4a0506f3af84"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ],
         "Content-Type": [
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "5da7e083-8df9-40ec-b302-9b7ae6476d88"
+          "c80cd805-cc67-484c-b9e1-9c90ea285f38"
         ],
         "x-ms-correlation-request-id": [
-          "5da7e083-8df9-40ec-b302-9b7ae6476d88"
+          "c80cd805-cc67-484c-b9e1-9c90ea285f38"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T185947Z:5da7e083-8df9-40ec-b302-9b7ae6476d88"
+          "WESTUS2:20210514T191242Z:c80cd805-cc67-484c-b9e1-9c90ea285f38"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 18:59:46 GMT"
+          "Fri, 14 May 2021 19:12:41 GMT"
         ],
         "Content-Length": [
           "198"
@@ -67,22 +67,22 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/checkNameAvailability?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAyMC0wMy0wMQ==",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/checkNameAvailability?api-version=2021-03-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAyMS0wMy0zMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"DotNetCertificateHub\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0b5f44a1-0239-464e-9a9b-6c9120c995b3"
+          "115cf6f1-a310-4402-a1e2-2433042fd681"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -105,13 +105,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "bf82cff7-8bfb-4203-a63e-598662b2ffbf"
+          "135f1612-219f-4565-a87b-be407f420bf4"
         ],
         "x-ms-correlation-request-id": [
-          "bf82cff7-8bfb-4203-a63e-598662b2ffbf"
+          "135f1612-219f-4565-a87b-be407f420bf4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T185947Z:bf82cff7-8bfb-4203-a63e-598662b2ffbf"
+          "WESTUS2:20210514T191243Z:135f1612-219f-4565-a87b-be407f420bf4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -120,7 +120,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 18:59:47 GMT"
+          "Fri, 14 May 2021 19:12:43 GMT"
         ],
         "Content-Length": [
           "56"
@@ -136,22 +136,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWI/YXBpLXZlcnNpb249MjAyMC0wMy0wMQ==",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub?api-version=2021-03-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWI/YXBpLXZlcnNpb249MjAyMS0wMy0zMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"WestUS2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2323723a-602d-41ae-9f2d-69b4c8860e58"
+          "849a7e9c-7040-4e87-bd26-a20b8e704e6d"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -168,7 +168,7 @@
           "no-cache"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZTc0MDc2NGUtNDBhZS00Y2EzLWIyZWYtM2NkNDI3NDE3MjM3?api-version=2020-03-01&operationSource=os_ih&asyncinfo"
+          "https://management.azure.com/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZDNkODJhMjMtYzgyMy00YTI0LTlmNGUtYWJhNmFiZTVmNDVh?api-version=2021-03-31&operationSource=os_ih&asyncinfo"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -177,13 +177,13 @@
           "4999"
         ],
         "x-ms-request-id": [
-          "a992d0fa-7272-4a17-81a2-ef7837e495b3"
+          "4cb7af18-872c-4bd5-872a-bb5d39a17c45"
         ],
         "x-ms-correlation-request-id": [
-          "a992d0fa-7272-4a17-81a2-ef7837e495b3"
+          "4cb7af18-872c-4bd5-872a-bb5d39a17c45"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T185951Z:a992d0fa-7272-4a17-81a2-ef7837e495b3"
+          "WESTUS2:20210514T191247Z:4cb7af18-872c-4bd5-872a-bb5d39a17c45"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -192,7 +192,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 18:59:51 GMT"
+          "Fri, 14 May 2021 19:12:46 GMT"
         ],
         "Content-Length": [
           "679"
@@ -208,16 +208,16 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZTc0MDc2NGUtNDBhZS00Y2EzLWIyZWYtM2NkNDI3NDE3MjM3?api-version=2020-03-01&operationSource=os_ih&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmWlRjME1EYzJOR1V0TkRCaFpTMDBZMkV6TFdJeVpXWXRNMk5rTkRJM05ERTNNak0zP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEmb3BlcmF0aW9uU291cmNlPW9zX2loJmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZDNkODJhMjMtYzgyMy00YTI0LTlmNGUtYWJhNmFiZTVmNDVh?api-version=2021-03-31&operationSource=os_ih&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmWkROa09ESmhNak10WXpneU15MDBZVEkwTFRsbU5HVXRZV0poTm1GaVpUVm1ORFZoP2FwaS12ZXJzaW9uPTIwMjEtMDMtMzEmb3BlcmF0aW9uU291cmNlPW9zX2loJmFzeW5jaW5mbw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -234,13 +234,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "66fe345e-ae16-41e7-ac0a-46a5dfde6301"
+          "bcf16774-882a-41c5-b9c0-ba7fefd1783c"
         ],
         "x-ms-correlation-request-id": [
-          "66fe345e-ae16-41e7-ac0a-46a5dfde6301"
+          "bcf16774-882a-41c5-b9c0-ba7fefd1783c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190021Z:66fe345e-ae16-41e7-ac0a-46a5dfde6301"
+          "WESTUS2:20210514T191317Z:bcf16774-882a-41c5-b9c0-ba7fefd1783c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -249,7 +249,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 19:00:21 GMT"
+          "Fri, 14 May 2021 19:13:17 GMT"
         ],
         "Content-Length": [
           "20"
@@ -265,16 +265,16 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZTc0MDc2NGUtNDBhZS00Y2EzLWIyZWYtM2NkNDI3NDE3MjM3?api-version=2020-03-01&operationSource=os_ih&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmWlRjME1EYzJOR1V0TkRCaFpTMDBZMkV6TFdJeVpXWXRNMk5rTkRJM05ERTNNak0zP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEmb3BlcmF0aW9uU291cmNlPW9zX2loJmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZDNkODJhMjMtYzgyMy00YTI0LTlmNGUtYWJhNmFiZTVmNDVh?api-version=2021-03-31&operationSource=os_ih&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmWkROa09ESmhNak10WXpneU15MDBZVEkwTFRsbU5HVXRZV0poTm1GaVpUVm1ORFZoP2FwaS12ZXJzaW9uPTIwMjEtMDMtMzEmb3BlcmF0aW9uU291cmNlPW9zX2loJmFzeW5jaW5mbw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -291,13 +291,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "4072fbee-ce23-482b-aebe-e616c39bfbdf"
+          "be5ea02d-ef38-4762-8ddb-3bc1ec38fe37"
         ],
         "x-ms-correlation-request-id": [
-          "4072fbee-ce23-482b-aebe-e616c39bfbdf"
+          "be5ea02d-ef38-4762-8ddb-3bc1ec38fe37"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190052Z:4072fbee-ce23-482b-aebe-e616c39bfbdf"
+          "WESTUS2:20210514T191347Z:be5ea02d-ef38-4762-8ddb-3bc1ec38fe37"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -306,7 +306,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 19:00:51 GMT"
+          "Fri, 14 May 2021 19:13:47 GMT"
         ],
         "Content-Length": [
           "20"
@@ -322,16 +322,16 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZTc0MDc2NGUtNDBhZS00Y2EzLWIyZWYtM2NkNDI3NDE3MjM3?api-version=2020-03-01&operationSource=os_ih&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmWlRjME1EYzJOR1V0TkRCaFpTMDBZMkV6TFdJeVpXWXRNMk5rTkRJM05ERTNNak0zP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEmb3BlcmF0aW9uU291cmNlPW9zX2loJmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZDNkODJhMjMtYzgyMy00YTI0LTlmNGUtYWJhNmFiZTVmNDVh?api-version=2021-03-31&operationSource=os_ih&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmWkROa09ESmhNak10WXpneU15MDBZVEkwTFRsbU5HVXRZV0poTm1GaVpUVm1ORFZoP2FwaS12ZXJzaW9uPTIwMjEtMDMtMzEmb3BlcmF0aW9uU291cmNlPW9zX2loJmFzeW5jaW5mbw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -348,13 +348,13 @@
           "11997"
         ],
         "x-ms-request-id": [
-          "1d7ddbcb-9232-4296-8ae1-bde66b51a6d7"
+          "2aac5d75-38a1-42c8-92c6-9500a7426616"
         ],
         "x-ms-correlation-request-id": [
-          "1d7ddbcb-9232-4296-8ae1-bde66b51a6d7"
+          "2aac5d75-38a1-42c8-92c6-9500a7426616"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190122Z:1d7ddbcb-9232-4296-8ae1-bde66b51a6d7"
+          "WESTUS2:20210514T191418Z:2aac5d75-38a1-42c8-92c6-9500a7426616"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -363,7 +363,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 19:01:21 GMT"
+          "Fri, 14 May 2021 19:14:17 GMT"
         ],
         "Content-Length": [
           "20"
@@ -379,16 +379,16 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZTc0MDc2NGUtNDBhZS00Y2EzLWIyZWYtM2NkNDI3NDE3MjM3?api-version=2020-03-01&operationSource=os_ih&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmWlRjME1EYzJOR1V0TkRCaFpTMDBZMkV6TFdJeVpXWXRNMk5rTkRJM05ERTNNak0zP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEmb3BlcmF0aW9uU291cmNlPW9zX2loJmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZDNkODJhMjMtYzgyMy00YTI0LTlmNGUtYWJhNmFiZTVmNDVh?api-version=2021-03-31&operationSource=os_ih&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmWkROa09ESmhNak10WXpneU15MDBZVEkwTFRsbU5HVXRZV0poTm1GaVpUVm1ORFZoP2FwaS12ZXJzaW9uPTIwMjEtMDMtMzEmb3BlcmF0aW9uU291cmNlPW9zX2loJmFzeW5jaW5mbw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -405,13 +405,13 @@
           "11996"
         ],
         "x-ms-request-id": [
-          "0110c165-a51d-44e4-8a13-8e7e8a9f14bf"
+          "0aa2a0a9-386f-4046-9f3b-f8e21173b7f7"
         ],
         "x-ms-correlation-request-id": [
-          "0110c165-a51d-44e4-8a13-8e7e8a9f14bf"
+          "0aa2a0a9-386f-4046-9f3b-f8e21173b7f7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190152Z:0110c165-a51d-44e4-8a13-8e7e8a9f14bf"
+          "WESTUS2:20210514T191448Z:0aa2a0a9-386f-4046-9f3b-f8e21173b7f7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -420,10 +420,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 19:01:52 GMT"
+          "Fri, 14 May 2021 19:14:47 GMT"
         ],
         "Content-Length": [
-          "20"
+          "22"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -432,20 +432,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/providers/Microsoft.Devices/operationResults/b3NfaWhfZTc0MDc2NGUtNDBhZS00Y2EzLWIyZWYtM2NkNDI3NDE3MjM3?api-version=2020-03-01&operationSource=os_ih&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmWlRjME1EYzJOR1V0TkRCaFpTMDBZMkV6TFdJeVpXWXRNMk5rTkRJM05ERTNNak0zP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDEmb3BlcmF0aW9uU291cmNlPW9zX2loJmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub?api-version=2021-03-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWI/YXBpLXZlcnNpb249MjAyMS0wMy0zMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -462,13 +462,13 @@
           "11995"
         ],
         "x-ms-request-id": [
-          "090392ea-ed49-47e9-b9ed-c176c8c15690"
+          "34d2917f-fa5e-494c-891e-928a7a480c87"
         ],
         "x-ms-correlation-request-id": [
-          "090392ea-ed49-47e9-b9ed-c176c8c15690"
+          "34d2917f-fa5e-494c-891e-928a7a480c87"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190222Z:090392ea-ed49-47e9-b9ed-c176c8c15690"
+          "WESTUS2:20210514T191448Z:34d2917f-fa5e-494c-891e-928a7a480c87"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -477,10 +477,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 19:02:22 GMT"
+          "Fri, 14 May 2021 19:14:48 GMT"
         ],
         "Content-Length": [
-          "22"
+          "1590"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -489,89 +489,32 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub\",\r\n  \"name\": \"DotNetCertificateHub\",\r\n  \"type\": \"Microsoft.Devices/IotHubs\",\r\n  \"location\": \"WestUS2\",\r\n  \"tags\": {},\r\n  \"subscriptionid\": \"9dbb02fa-c9d2-4593-967e-ffc99c566c5c\",\r\n  \"resourcegroup\": \"DotNetCertificateHubRG\",\r\n  \"etag\": \"AAAADEo70uM=\",\r\n  \"properties\": {\r\n    \"locations\": [\r\n      {\r\n        \"location\": \"West US 2\",\r\n        \"role\": \"primary\"\r\n      },\r\n      {\r\n        \"location\": \"West Central US\",\r\n        \"role\": \"secondary\"\r\n      }\r\n    ],\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"ipFilterRules\": [],\r\n    \"hostName\": \"DotNetCertificateHub.azure-devices.net\",\r\n    \"eventHubEndpoints\": {\r\n      \"events\": {\r\n        \"retentionTimeInDays\": 1,\r\n        \"partitionCount\": 4,\r\n        \"partitionIds\": [\r\n          \"0\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ],\r\n        \"path\": \"dotnetcertificatehub\",\r\n        \"endpoint\": \"sb://iothub-ns-dotnetcert-10944369-58cab905a1.servicebus.windows.net/\"\r\n      }\r\n    },\r\n    \"routing\": {\r\n      \"endpoints\": {\r\n        \"serviceBusQueues\": [],\r\n        \"serviceBusTopics\": [],\r\n        \"eventHubs\": [],\r\n        \"storageContainers\": []\r\n      },\r\n      \"routes\": [],\r\n      \"fallbackRoute\": {\r\n        \"name\": \"$fallback\",\r\n        \"source\": \"DeviceMessages\",\r\n        \"condition\": \"true\",\r\n        \"endpointNames\": [\r\n          \"events\"\r\n        ],\r\n        \"isEnabled\": true\r\n      }\r\n    },\r\n    \"storageEndpoints\": {\r\n      \"$default\": {\r\n        \"sasTtlAsIso8601\": \"PT1H\",\r\n        \"connectionString\": \"\",\r\n        \"containerName\": \"\"\r\n      }\r\n    },\r\n    \"messagingEndpoints\": {\r\n      \"fileNotifications\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"enableFileUploadNotifications\": false,\r\n    \"cloudToDevice\": {\r\n      \"maxDeliveryCount\": 10,\r\n      \"defaultTtlAsIso8601\": \"PT1H\",\r\n      \"feedback\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"features\": \"None\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"None\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWI/YXBpLXZlcnNpb249MjAyMC0wMy0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29719.03",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
-        ],
-        "x-ms-request-id": [
-          "25c6ded7-d722-43dc-b762-c89317931681"
-        ],
-        "x-ms-correlation-request-id": [
-          "25c6ded7-d722-43dc-b762-c89317931681"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190223Z:25c6ded7-d722-43dc-b762-c89317931681"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Fri, 19 Feb 2021 19:02:22 GMT"
-        ],
-        "Content-Length": [
-          "1589"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub\",\r\n  \"name\": \"DotNetCertificateHub\",\r\n  \"type\": \"Microsoft.Devices/IotHubs\",\r\n  \"location\": \"WestUS2\",\r\n  \"tags\": {},\r\n  \"subscriptionid\": \"9dbb02fa-c9d2-4593-967e-ffc99c566c5c\",\r\n  \"resourcegroup\": \"DotNetCertificateHubRG\",\r\n  \"etag\": \"AAAACmuwJEM=\",\r\n  \"properties\": {\r\n    \"locations\": [\r\n      {\r\n        \"location\": \"West US 2\",\r\n        \"role\": \"primary\"\r\n      },\r\n      {\r\n        \"location\": \"West Central US\",\r\n        \"role\": \"secondary\"\r\n      }\r\n    ],\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"ipFilterRules\": [],\r\n    \"hostName\": \"DotNetCertificateHub.azure-devices.net\",\r\n    \"eventHubEndpoints\": {\r\n      \"events\": {\r\n        \"retentionTimeInDays\": 1,\r\n        \"partitionCount\": 4,\r\n        \"partitionIds\": [\r\n          \"0\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ],\r\n        \"path\": \"dotnetcertificatehub\",\r\n        \"endpoint\": \"sb://iothub-ns-dotnetcert-8263241-79921f2440.servicebus.windows.net/\"\r\n      }\r\n    },\r\n    \"routing\": {\r\n      \"endpoints\": {\r\n        \"serviceBusQueues\": [],\r\n        \"serviceBusTopics\": [],\r\n        \"eventHubs\": [],\r\n        \"storageContainers\": []\r\n      },\r\n      \"routes\": [],\r\n      \"fallbackRoute\": {\r\n        \"name\": \"$fallback\",\r\n        \"source\": \"DeviceMessages\",\r\n        \"condition\": \"true\",\r\n        \"endpointNames\": [\r\n          \"events\"\r\n        ],\r\n        \"isEnabled\": true\r\n      }\r\n    },\r\n    \"storageEndpoints\": {\r\n      \"$default\": {\r\n        \"sasTtlAsIso8601\": \"PT1H\",\r\n        \"connectionString\": \"\",\r\n        \"containerName\": \"\"\r\n      }\r\n    },\r\n    \"messagingEndpoints\": {\r\n      \"fileNotifications\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"enableFileUploadNotifications\": false,\r\n    \"cloudToDevice\": {\r\n      \"maxDeliveryCount\": 10,\r\n      \"defaultTtlAsIso8601\": \"PT1H\",\r\n      \"feedback\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"features\": \"None\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"None\"\r\n  }\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzL0RvdE5ldENlcnRpZmljYXRlSHViQ2VydGlmaWNhdGU/YXBpLXZlcnNpb249MjAyMC0wMy0wMQ==",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate?api-version=2021-03-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzL0RvdE5ldENlcnRpZmljYXRlSHViQ2VydGlmaWNhdGU/YXBpLXZlcnNpb249MjAyMS0wMy0zMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"certificate\": \"MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRowGAYDVQQDDBFBenVyZSBJb1QgUm9vdCBDQTAeFw0xNzExMDMyMDUyNDZaFw0xNzEyMDMyMTAyNDdaMBwxGjAYBgNVBAMMEUF6dXJlIElvVCBSb290IENBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+CgpnW3K+KRNIi/U6Zqe/Al9m8PExHX2KgakmGTfE04nNBwnSoygWb0ekqpT+Lm+OP56LMMe9ynVNryDEr9OSKOBhjCBgzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB8GA1UdEQQYMBaCFENOPUF6dXJlIElvVCBSb290IENBMBIGA1UdEwEB/wQIMAYBAf8CAQwwHQYDVR0OBBYEFDjiklfHQzw1G0A33BcmRQTjAivTMAoGCCqGSM49BAMCA0kAMEYCIQCtjJ4bAvoYuDhwr92Kk+OkvpPF+qBFiRfrA/EC4YGtzQIhAO79WPtbUnBQ5fsQnW2aUAT4yJGWL+7l4/qfmqblb96n\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"certificate\": \"MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRowGAYDVQQDDBFBenVyZSBJb1QgUm9vdCBDQTAeFw0xNzExMDMyMDUyNDZaFw0xNzEyMDMyMTAyNDdaMBwxGjAYBgNVBAMMEUF6dXJlIElvVCBSb290IENBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+CgpnW3K+KRNIi/U6Zqe/Al9m8PExHX2KgakmGTfE04nNBwnSoygWb0ekqpT+Lm+OP56LMMe9ynVNryDEr9OSKOBhjCBgzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB8GA1UdEQQYMBaCFENOPUF6dXJlIElvVCBSb290IENBMBIGA1UdEwEB/wQIMAYBAf8CAQwwHQYDVR0OBBYEFDjiklfHQzw1G0A33BcmRQTjAivTMAoGCCqGSM49BAMCA0kAMEYCIQCtjJ4bAvoYuDhwr92Kk+OkvpPF+qBFiRfrA/EC4YGtzQIhAO79WPtbUnBQ5fsQnW2aUAT4yJGWL+7l4/qfmqblb96n\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "43248b9a-fbb2-4f94-9365-eda9f19cc214"
+          "b70e6d63-f586-47cf-9be0-afc3f4aa47e8"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "625"
+          "651"
         ]
       },
       "ResponseHeaders": {
@@ -588,13 +531,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "2de03cb2-c556-4781-9376-efee05098419"
+          "986ec14b-de14-4bc0-bcb9-0f624fa0e314"
         ],
         "x-ms-correlation-request-id": [
-          "2de03cb2-c556-4781-9376-efee05098419"
+          "986ec14b-de14-4bc0-bcb9-0f624fa0e314"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190224Z:2de03cb2-c556-4781-9376-efee05098419"
+          "WESTUS2:20210514T191449Z:986ec14b-de14-4bc0-bcb9-0f624fa0e314"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -603,10 +546,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 19:02:23 GMT"
+          "Fri, 14 May 2021 19:14:48 GMT"
         ],
         "Content-Length": [
-          "575"
+          "1173"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -615,26 +558,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"subject\": \"Azure IoT Root CA\",\r\n    \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n    \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n    \"isVerified\": false,\r\n    \"created\": \"Fri, 19 Feb 2021 19:02:23 GMT\",\r\n    \"updated\": \"Fri, 19 Feb 2021 19:02:23 GMT\",\r\n    \"certificate\": null\r\n  },\r\n  \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate\",\r\n  \"name\": \"DotNetCertificateHubCertificate\",\r\n  \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n  \"etag\": \"AAAACmuxV6w=\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"subject\": \"Azure IoT Root CA\",\r\n    \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n    \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n    \"isVerified\": false,\r\n    \"created\": \"Fri, 14 May 2021 19:14:49 GMT\",\r\n    \"updated\": \"Fri, 14 May 2021 19:14:49 GMT\",\r\n    \"certificate\": \"MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRowGAYDVQQDDBFBenVyZSBJb1QgUm9vdCBDQTAeFw0xNzExMDMyMDUyNDZaFw0xNzEyMDMyMTAyNDdaMBwxGjAYBgNVBAMMEUF6dXJlIElvVCBSb290IENBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+CgpnW3K+KRNIi/U6Zqe/Al9m8PExHX2KgakmGTfE04nNBwnSoygWb0ekqpT+Lm+OP56LMMe9ynVNryDEr9OSKOBhjCBgzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB8GA1UdEQQYMBaCFENOPUF6dXJlIElvVCBSb290IENBMBIGA1UdEwEB/wQIMAYBAf8CAQwwHQYDVR0OBBYEFDjiklfHQzw1G0A33BcmRQTjAivTMAoGCCqGSM49BAMCA0kAMEYCIQCtjJ4bAvoYuDhwr92Kk+OkvpPF+qBFiRfrA/EC4YGtzQIhAO79WPtbUnBQ5fsQnW2aUAT4yJGWL+7l4/qfmqblb96n\"\r\n  },\r\n  \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate\",\r\n  \"name\": \"DotNetCertificateHubCertificate\",\r\n  \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n  \"etag\": \"AAAADEo71Js=\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDE=",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates?api-version=2021-03-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzP2FwaS12ZXJzaW9uPTIwMjEtMDMtMzE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "521347d1-7cc1-42f8-be40-76b02f7ade86"
+          "e35876c2-0b78-49f1-ad42-ebc699db9d26"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -648,16 +591,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11993"
+          "11994"
         ],
         "x-ms-request-id": [
-          "956a5aeb-583f-479b-a8b9-9ca54a70978d"
+          "18a2f5e6-d01e-4d19-9a90-792bbd45e77a"
         ],
         "x-ms-correlation-request-id": [
-          "956a5aeb-583f-479b-a8b9-9ca54a70978d"
+          "18a2f5e6-d01e-4d19-9a90-792bbd45e77a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190224Z:956a5aeb-583f-479b-a8b9-9ca54a70978d"
+          "WESTUS2:20210514T191449Z:18a2f5e6-d01e-4d19-9a90-792bbd45e77a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -666,10 +609,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 19:02:23 GMT"
+          "Fri, 14 May 2021 19:14:49 GMT"
         ],
         "Content-Length": [
-          "587"
+          "1185"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -678,89 +621,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"subject\": \"Azure IoT Root CA\",\r\n        \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n        \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n        \"isVerified\": false,\r\n        \"created\": \"Fri, 19 Feb 2021 19:02:23 GMT\",\r\n        \"updated\": \"Fri, 19 Feb 2021 19:02:23 GMT\",\r\n        \"certificate\": null\r\n      },\r\n      \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate\",\r\n      \"name\": \"DotNetCertificateHubCertificate\",\r\n      \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n      \"etag\": \"AAAACmuxV6w=\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"subject\": \"Azure IoT Root CA\",\r\n        \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n        \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n        \"isVerified\": false,\r\n        \"created\": \"Fri, 14 May 2021 19:14:49 GMT\",\r\n        \"updated\": \"Fri, 14 May 2021 19:14:49 GMT\",\r\n        \"certificate\": \"MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRowGAYDVQQDDBFBenVyZSBJb1QgUm9vdCBDQTAeFw0xNzExMDMyMDUyNDZaFw0xNzEyMDMyMTAyNDdaMBwxGjAYBgNVBAMMEUF6dXJlIElvVCBSb290IENBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+CgpnW3K+KRNIi/U6Zqe/Al9m8PExHX2KgakmGTfE04nNBwnSoygWb0ekqpT+Lm+OP56LMMe9ynVNryDEr9OSKOBhjCBgzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB8GA1UdEQQYMBaCFENOPUF6dXJlIElvVCBSb290IENBMBIGA1UdEwEB/wQIMAYBAf8CAQwwHQYDVR0OBBYEFDjiklfHQzw1G0A33BcmRQTjAivTMAoGCCqGSM49BAMCA0kAMEYCIQCtjJ4bAvoYuDhwr92Kk+OkvpPF+qBFiRfrA/EC4YGtzQIhAO79WPtbUnBQ5fsQnW2aUAT4yJGWL+7l4/qfmqblb96n\"\r\n      },\r\n      \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate\",\r\n      \"name\": \"DotNetCertificateHubCertificate\",\r\n      \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n      \"etag\": \"AAAADEo71Js=\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDE=",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates?api-version=2021-03-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzP2FwaS12ZXJzaW9uPTIwMjEtMDMtMzE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c57bd21b-0160-43b8-8e0c-d44907d9b4fb"
+          "be770c99-5fb0-4cf1-b2d4-ec37e50f2d70"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
-        ],
-        "x-ms-request-id": [
-          "fd60e8d8-f3dc-4ec0-8d8b-a5a320840dbb"
-        ],
-        "x-ms-correlation-request-id": [
-          "fd60e8d8-f3dc-4ec0-8d8b-a5a320840dbb"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190225Z:fd60e8d8-f3dc-4ec0-8d8b-a5a320840dbb"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Fri, 19 Feb 2021 19:02:25 GMT"
-        ],
-        "Content-Length": [
-          "12"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzL0RvdE5ldENlcnRpZmljYXRlSHViQ2VydGlmaWNhdGU/YXBpLXZlcnNpb249MjAyMC0wMy0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "ff314164-72ef-4182-beba-7f75c248593f"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29719.03",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -777,13 +657,13 @@
           "11992"
         ],
         "x-ms-request-id": [
-          "77e7604c-40cd-4ad3-acea-bc93d1e05a9a"
+          "11ea1022-df75-4431-8869-21c770df82f2"
         ],
         "x-ms-correlation-request-id": [
-          "77e7604c-40cd-4ad3-acea-bc93d1e05a9a"
+          "11ea1022-df75-4431-8869-21c770df82f2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190224Z:77e7604c-40cd-4ad3-acea-bc93d1e05a9a"
+          "WESTUS2:20210514T191451Z:11ea1022-df75-4431-8869-21c770df82f2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -792,10 +672,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 19:02:24 GMT"
+          "Fri, 14 May 2021 19:14:50 GMT"
         ],
         "Content-Length": [
-          "575"
+          "12"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -804,29 +684,92 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"subject\": \"Azure IoT Root CA\",\r\n    \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n    \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n    \"isVerified\": false,\r\n    \"created\": \"Fri, 19 Feb 2021 19:02:23 GMT\",\r\n    \"updated\": \"Fri, 19 Feb 2021 19:02:23 GMT\",\r\n    \"certificate\": null\r\n  },\r\n  \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate\",\r\n  \"name\": \"DotNetCertificateHubCertificate\",\r\n  \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n  \"etag\": \"AAAACmuxV6w=\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate/generateVerificationCode?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzL0RvdE5ldENlcnRpZmljYXRlSHViQ2VydGlmaWNhdGUvZ2VuZXJhdGVWZXJpZmljYXRpb25Db2RlP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDE=",
-      "RequestMethod": "POST",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate?api-version=2021-03-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzL0RvdE5ldENlcnRpZmljYXRlSHViQ2VydGlmaWNhdGU/YXBpLXZlcnNpb249MjAyMS0wMy0zMQ==",
+      "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "77ff1d70-aea8-4b59-95c5-19c44b02cf64"
-        ],
-        "If-Match": [
-          "AAAACmuxV6w="
+          "f7476e22-9b88-4c0c-96b2-994693ed26ef"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-request-id": [
+          "db106d31-4aed-41a9-a8df-124101ed4144"
+        ],
+        "x-ms-correlation-request-id": [
+          "db106d31-4aed-41a9-a8df-124101ed4144"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210514T191450Z:db106d31-4aed-41a9-a8df-124101ed4144"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Fri, 14 May 2021 19:14:49 GMT"
+        ],
+        "Content-Length": [
+          "1173"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"subject\": \"Azure IoT Root CA\",\r\n    \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n    \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n    \"isVerified\": false,\r\n    \"created\": \"Fri, 14 May 2021 19:14:49 GMT\",\r\n    \"updated\": \"Fri, 14 May 2021 19:14:49 GMT\",\r\n    \"certificate\": \"MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRowGAYDVQQDDBFBenVyZSBJb1QgUm9vdCBDQTAeFw0xNzExMDMyMDUyNDZaFw0xNzEyMDMyMTAyNDdaMBwxGjAYBgNVBAMMEUF6dXJlIElvVCBSb290IENBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+CgpnW3K+KRNIi/U6Zqe/Al9m8PExHX2KgakmGTfE04nNBwnSoygWb0ekqpT+Lm+OP56LMMe9ynVNryDEr9OSKOBhjCBgzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB8GA1UdEQQYMBaCFENOPUF6dXJlIElvVCBSb290IENBMBIGA1UdEwEB/wQIMAYBAf8CAQwwHQYDVR0OBBYEFDjiklfHQzw1G0A33BcmRQTjAivTMAoGCCqGSM49BAMCA0kAMEYCIQCtjJ4bAvoYuDhwr92Kk+OkvpPF+qBFiRfrA/EC4YGtzQIhAO79WPtbUnBQ5fsQnW2aUAT4yJGWL+7l4/qfmqblb96n\"\r\n  },\r\n  \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate\",\r\n  \"name\": \"DotNetCertificateHubCertificate\",\r\n  \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n  \"etag\": \"AAAADEo71Js=\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate/generateVerificationCode?api-version=2021-03-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzL0RvdE5ldENlcnRpZmljYXRlSHViQ2VydGlmaWNhdGUvZ2VuZXJhdGVWZXJpZmljYXRpb25Db2RlP2FwaS12ZXJzaW9uPTIwMjEtMDMtMzE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7c116154-d462-4045-abfe-4c98205435e6"
+        ],
+        "If-Match": [
+          "AAAADEo71Js="
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -843,13 +786,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "8806cc49-5ff6-4f73-b5b3-690467c8aa5f"
+          "a58e7af0-83b7-4100-a0e7-cb7bf20e6422"
         ],
         "x-ms-correlation-request-id": [
-          "8806cc49-5ff6-4f73-b5b3-690467c8aa5f"
+          "a58e7af0-83b7-4100-a0e7-cb7bf20e6422"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190225Z:8806cc49-5ff6-4f73-b5b3-690467c8aa5f"
+          "WESTUS2:20210514T191450Z:a58e7af0-83b7-4100-a0e7-cb7bf20e6422"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -858,7 +801,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 19:02:24 GMT"
+          "Fri, 14 May 2021 19:14:49 GMT"
         ],
         "Content-Length": [
           "1243"
@@ -870,29 +813,29 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"verificationCode\": \"628D2CEA6DDB41F1D627CECE2A85D18CE5E76F9D6B9E0DB7\",\r\n    \"subject\": \"Azure IoT Root CA\",\r\n    \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n    \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n    \"isVerified\": false,\r\n    \"created\": \"Fri, 19 Feb 2021 19:02:23 GMT\",\r\n    \"updated\": \"Fri, 19 Feb 2021 19:02:24 GMT\",\r\n    \"certificate\": \"MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRowGAYDVQQDDBFBenVyZSBJb1QgUm9vdCBDQTAeFw0xNzExMDMyMDUyNDZaFw0xNzEyMDMyMTAyNDdaMBwxGjAYBgNVBAMMEUF6dXJlIElvVCBSb290IENBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+CgpnW3K+KRNIi/U6Zqe/Al9m8PExHX2KgakmGTfE04nNBwnSoygWb0ekqpT+Lm+OP56LMMe9ynVNryDEr9OSKOBhjCBgzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB8GA1UdEQQYMBaCFENOPUF6dXJlIElvVCBSb290IENBMBIGA1UdEwEB/wQIMAYBAf8CAQwwHQYDVR0OBBYEFDjiklfHQzw1G0A33BcmRQTjAivTMAoGCCqGSM49BAMCA0kAMEYCIQCtjJ4bAvoYuDhwr92Kk+OkvpPF+qBFiRfrA/EC4YGtzQIhAO79WPtbUnBQ5fsQnW2aUAT4yJGWL+7l4/qfmqblb96n\"\r\n  },\r\n  \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate\",\r\n  \"name\": \"DotNetCertificateHubCertificate\",\r\n  \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n  \"etag\": \"AAAACmuxV7M=\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"verificationCode\": \"3989FE54BCC56799DCC6E2AA5F79984DC5AE73D73E56893A\",\r\n    \"subject\": \"Azure IoT Root CA\",\r\n    \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n    \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n    \"isVerified\": false,\r\n    \"created\": \"Fri, 14 May 2021 19:14:49 GMT\",\r\n    \"updated\": \"Fri, 14 May 2021 19:14:50 GMT\",\r\n    \"certificate\": \"MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRowGAYDVQQDDBFBenVyZSBJb1QgUm9vdCBDQTAeFw0xNzExMDMyMDUyNDZaFw0xNzEyMDMyMTAyNDdaMBwxGjAYBgNVBAMMEUF6dXJlIElvVCBSb290IENBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+CgpnW3K+KRNIi/U6Zqe/Al9m8PExHX2KgakmGTfE04nNBwnSoygWb0ekqpT+Lm+OP56LMMe9ynVNryDEr9OSKOBhjCBgzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB8GA1UdEQQYMBaCFENOPUF6dXJlIElvVCBSb290IENBMBIGA1UdEwEB/wQIMAYBAf8CAQwwHQYDVR0OBBYEFDjiklfHQzw1G0A33BcmRQTjAivTMAoGCCqGSM49BAMCA0kAMEYCIQCtjJ4bAvoYuDhwr92Kk+OkvpPF+qBFiRfrA/EC4YGtzQIhAO79WPtbUnBQ5fsQnW2aUAT4yJGWL+7l4/qfmqblb96n\"\r\n  },\r\n  \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate\",\r\n  \"name\": \"DotNetCertificateHubCertificate\",\r\n  \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n  \"etag\": \"AAAADEo71KQ=\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzL0RvdE5ldENlcnRpZmljYXRlSHViQ2VydGlmaWNhdGU/YXBpLXZlcnNpb249MjAyMC0wMy0wMQ==",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/DotNetCertificateHubRG/providers/Microsoft.Devices/IotHubs/DotNetCertificateHub/certificates/DotNetCertificateHubCertificate?api-version=2021-03-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL0RvdE5ldENlcnRpZmljYXRlSHViUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvRG90TmV0Q2VydGlmaWNhdGVIdWIvY2VydGlmaWNhdGVzL0RvdE5ldENlcnRpZmljYXRlSHViQ2VydGlmaWNhdGU/YXBpLXZlcnNpb249MjAyMS0wMy0zMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ec34f714-3f1d-4bd1-9a7c-35ccbf2ddb10"
+          "b13eb926-67e1-4225-ac00-330455d3db79"
         ],
         "If-Match": [
-          "AAAACmuxV7M="
+          "AAAADEo71KQ="
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29719.03",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -909,13 +852,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "76320be4-1c43-4aa5-a052-51a30baa9477"
+          "aea0a32d-85c5-4099-ab34-83ec3ddfc945"
         ],
         "x-ms-correlation-request-id": [
-          "76320be4-1c43-4aa5-a052-51a30baa9477"
+          "aea0a32d-85c5-4099-ab34-83ec3ddfc945"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210219T190225Z:76320be4-1c43-4aa5-a052-51a30baa9477"
+          "WESTUS2:20210514T191451Z:aea0a32d-85c5-4099-ab34-83ec3ddfc945"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -924,7 +867,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 19 Feb 2021 19:02:25 GMT"
+          "Fri, 14 May 2021 19:14:50 GMT"
         ],
         "Expires": [
           "-1"

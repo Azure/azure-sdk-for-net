@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public const string ServiceMode = "ServiceMode";
         public const string EnableConnectivityLogs = "EnableConnectivityLogs";
         public const string EnableMessagingLogs = "EnableMessagingLogs";
+        public const string EnableLiveTrace = "EnableLiveTrace";
     }
 }

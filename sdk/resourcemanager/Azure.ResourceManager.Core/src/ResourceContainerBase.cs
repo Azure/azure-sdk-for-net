@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,12 +14,12 @@ namespace Azure.ResourceManager.Core
     /// <typeparam name="TIdentifier"> The type of the resource identifier. </typeparam>
     /// <typeparam name="TOperations"> The type of the class containing operations for the underlying resource. </typeparam>
     /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
-    public abstract class ResourceContainerBase<TIdentifier, TOperations, TResource> : ContainerBase<TIdentifier, TOperations>
-        where TIdentifier : TenantResourceIdentifier
+    public abstract class ResourceContainerBase<TIdentifier, TOperations, TResource> : ContainerBase<TIdentifier>
+        where TIdentifier : ResourceIdentifier
         where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
         where TResource : class
     {
-        private static readonly object _parentLock = new object();
+        private readonly object _parentLock = new object();
         private object _parentResource;
 
         /// <summary>
@@ -105,5 +106,102 @@ namespace Azure.ResourceManager.Core
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> resourceName cannot be null or a whitespace. </exception>
         public abstract Task<Response<TOperations>> GetAsync(string resourceName, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Returns the resource from Azure if it exists.
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource you want to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual TOperations TryGet(string resourceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceContainerBase`3.TryGet");
+            scope.Start();
+
+            var op = GetOperation(resourceName);
+
+            try
+            {
+                return op.Get(cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the resource from Azure if it exists.
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource you want to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual async Task<TOperations> TryGetAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceContainerBase`3.TryGet");
+            scope.Start();
+
+            var op = GetOperation(resourceName);
+
+            try
+            {
+                return (await op.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether or not the azure resource exists in this container
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource you want to check. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual bool DoesExist(string resourceName, CancellationToken cancellationToken = default)
+        {
+            return TryGet(resourceName, cancellationToken) != null;
+        }
+
+        /// <summary>
+        /// Determines whether or not the azure resource exists in this container
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource you want to check. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual async Task<bool> DoesExistAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await TryGetAsync(resourceName, cancellationToken).ConfigureAwait(false) != null;
+        }
+
+        /// <summary>
+        /// Get an instance of the operations this container holds.
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource to scope the operations to. </param>
+        /// <returns> An instance of <see cref="ResourceContainerBase{TIdentifier, TOperations, TResource}"/>. </returns>
+        protected virtual ResourceOperationsBase<TIdentifier, TOperations> GetOperation(string resourceName)
+        {
+            return Activator.CreateInstance(
+                typeof(TOperations).BaseType,
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
+                null,
+                new object[] { Parent, resourceName },
+                CultureInfo.InvariantCulture) as ResourceOperationsBase<TIdentifier, TOperations>;
+        }
     }
 }

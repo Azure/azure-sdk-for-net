@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tags"> The tags for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
         [SerializationConstructor]
-        protected TrackedResource(TIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags)
+        protected internal TrackedResource(TIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags)
             : base(id, name, type)
         {
             Tags = tags ?? new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);

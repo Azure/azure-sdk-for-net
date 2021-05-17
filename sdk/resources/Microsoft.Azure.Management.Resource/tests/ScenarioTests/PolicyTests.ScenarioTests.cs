@@ -135,7 +135,7 @@ namespace Policy.Tests
                 Assert.Null(getResult.Parameters);
 
                 // Delete definition and validate
-                this.DeleteDefinitionAndValidate(client, policyName);                               
+                this.DeleteDefinitionAndValidate(client, policyName);
             }
         }
 
@@ -356,7 +356,7 @@ namespace Policy.Tests
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var resourceGroupClient = context.GetServiceClient<ResourceManagementClient>();
- 
+
                 // make a test resource group
                 var resourceGroupName = TestUtilities.GenerateName();
                 var resourceGroup = resourceGroupClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup("westus2"));
@@ -1287,7 +1287,7 @@ namespace Policy.Tests
             {
                 Assert.Equal("Custom", result.PolicyType);
             }
-            
+
             Assert.NotNull(result.PolicyRule);
             Assert.NotEmpty(result.PolicyRule.ToString());
             Assert.NotNull(result.Type);
