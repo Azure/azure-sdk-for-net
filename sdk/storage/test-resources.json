@@ -375,16 +375,80 @@
         "namespace": "url",
         "members": {
           "serviceEndpointSuffix":{
-             "parameters": [
-               {
-                 "name": "endpoint",
-                 "type": "string"
-               }
-             ],
-             "output": {
-               "type": "string",
-               "value": "[substring(parameters('endpoint'), add(indexOf(parameters('endpoint'), '.'),1), sub(length(parameters('endpoint')), add(indexOf(parameters('endpoint'), '.'),2)))]"
-             }
+            "parameters": [
+              {
+                "name": "endpoint",
+                "type": "string"
+              }
+            ],
+            "output": {
+              "type": "string",
+              "value": "[substring(parameters('endpoint'), add(indexOf(parameters('endpoint'), '.'),1), sub(length(parameters('endpoint')), add(indexOf(parameters('endpoint'), '.'),2)))]"
+            }
+          },
+          "blobServiceEndpoint":{
+            "parameters": [
+              {
+                "name": "accountName",
+                "type": "string"
+              },
+              {
+                "name": "mgmtApiVersion",
+                "type": "string"
+              }
+            ],
+            "output": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('accountName')), parameters('mgmtApiVersion')).primaryEndpoints.blob]"
+            }
+          },
+          "fileServiceEndpoint":{
+            "parameters": [
+              {
+                "name": "accountName",
+                "type": "string"
+              },
+              {
+                "name": "mgmtApiVersion",
+                "type": "string"
+              }
+            ],
+            "output": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('accountName')), parameters('mgmtApiVersion')).primaryEndpoints.file]"
+            }
+          },
+          "queueServiceEndpoint":{
+            "parameters": [
+              {
+                "name": "accountName",
+                "type": "string"
+              },
+              {
+                "name": "mgmtApiVersion",
+                "type": "string"
+              }
+            ],
+            "output": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('accountName')), parameters('mgmtApiVersion')).primaryEndpoints.file]"
+            }
+          },
+          "tableServiceEndpoint":{
+            "parameters": [
+              {
+                "name": "accountName",
+                "type": "string"
+              },
+              {
+                "name": "mgmtApiVersion",
+                "type": "string"
+              }
+            ],
+            "output": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('accountName')), parameters('mgmtApiVersion')).primaryEndpoints.file]"
+            }
           }
         }
       }
@@ -400,19 +464,19 @@
     },
     "PRIMARY_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX": {
         "type": "string",
-        "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob)]"
+        "value": "[url.serviceEndpointSuffix(url.blobServiceEndpoint(variables('primaryAccountName'),variables('mgmtApiVersion')))]"
     },
     "PRIMARY_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX": {
         "type": "string",
-        "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.file)]"
+        "value": "[url.serviceEndpointSuffix(url.fileServiceEndpoint(variables('primaryAccountName'),variables('mgmtApiVersion')))]"
     },
     "PRIMARY_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX": {
         "type": "string",
-        "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.queue)]"
+        "value": "[url.serviceEndpointSuffix(url.queueServiceEndpoint(variables('primaryAccountName'),variables('mgmtApiVersion')))]"
     },
     "PRIMARY_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX": {
         "type": "string",
-        "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.table)]"
+        "value": "[url.serviceEndpointSuffix(url.tableServiceEndpoint(variables('primaryAccountName'),variables('mgmtApiVersion')))]"
     },
     "SECONDARY_STORAGE_ACCOUNT_NAME": {
       "type": "string",
