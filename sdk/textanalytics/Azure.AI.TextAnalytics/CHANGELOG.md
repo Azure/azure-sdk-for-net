@@ -1,5 +1,8 @@
 # Release History
 
+## 5.1.0-beta.8 (Unreleased)
+
+
 ## 5.1.0-beta.7 (2021-05-18)
 ### New features
 - Added property `DisableServiceLogs` to `TextAnalyticsRequestOptions`.
