@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Manifest attributes details. </summary>
+    /// <summary> Properties of an artifact's manifest. </summary>
     public partial class ArtifactManifestProperties
     {
         /// <summary>
