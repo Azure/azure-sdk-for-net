@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, actions);
+            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchDocuments, actions);
 
             TimeSpan pollingInterval = new TimeSpan(1000);
 
@@ -79,7 +79,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             }
 
-            foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
+            foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
                 IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
                 IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;

@@ -15,14 +15,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public void AnalyzeOperationBatchConvenience()
+        public void AnalyzeOperationConvenience()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:AnalyzeOperationBatchConvenience
+            #region Snippet:AnalyzeOperationConvenience
             string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
                                 worth the hike! Yesterday was foggy though, so we missed the spectacular views.
                                 We tried again today and it was amazing. Everyone in my family liked the trail although
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, actions);
+            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchDocuments, actions);
 
             TimeSpan pollingInterval = new TimeSpan(1000);
 
@@ -72,7 +72,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             }
 
-            foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
+            foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
                 IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
                 IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;

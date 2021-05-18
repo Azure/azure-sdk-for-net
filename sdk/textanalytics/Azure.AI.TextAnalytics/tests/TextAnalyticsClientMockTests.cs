@@ -687,7 +687,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { options },
             };
 
-            await client.StartAnalyzeBatchActionsAsync(documents, batchActions);
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
 
             var content = mockTransport.Requests.Single().Content;
             using var stream = new MemoryStream();
@@ -725,7 +725,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { options },
             };
 
-            await client.StartAnalyzeBatchActionsAsync(documents, batchActions);
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
 
             var content = mockTransport.Requests.Single().Content;
             using var stream = new MemoryStream();
@@ -763,7 +763,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { options },
             };
 
-            await client.StartAnalyzeBatchActionsAsync(documents, batchActions);
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
 
             var content = mockTransport.Requests.Single().Content;
             using var stream = new MemoryStream();
@@ -801,7 +801,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { options },
             };
 
-            await client.StartAnalyzeBatchActionsAsync(documents, batchActions);
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
 
             var content = mockTransport.Requests.Single().Content;
             using var stream = new MemoryStream();
