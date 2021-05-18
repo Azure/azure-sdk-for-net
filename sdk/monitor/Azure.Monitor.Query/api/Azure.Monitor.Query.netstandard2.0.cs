@@ -17,6 +17,7 @@ namespace Azure.Monitor.Query
         public static bool operator ==(Azure.Monitor.Query.DateTimeRange left, Azure.Monitor.Query.DateTimeRange right) { throw null; }
         public static implicit operator Azure.Monitor.Query.DateTimeRange (System.TimeSpan timeSpan) { throw null; }
         public static bool operator !=(Azure.Monitor.Query.DateTimeRange left, Azure.Monitor.Query.DateTimeRange right) { throw null; }
+        public static Azure.Monitor.Query.DateTimeRange Parse(string value) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class LogsBatchQuery
@@ -193,23 +194,36 @@ namespace Azure.Monitor.Query.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.Metric> Metrics { get { throw null; } }
         public string Namespace { get { throw null; } }
         public string Resourceregion { get { throw null; } }
-        public string Timespan { get { throw null; } }
+        public Azure.Monitor.Query.DateTimeRange TimeSpan { get { throw null; } }
     }
-    public enum MetricUnit
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MetricUnit : System.IEquatable<Azure.Monitor.Query.Models.MetricUnit>
     {
-        Count = 0,
-        Bytes = 1,
-        Seconds = 2,
-        CountPerSecond = 3,
-        BytesPerSecond = 4,
-        Percent = 5,
-        MilliSeconds = 6,
-        ByteSeconds = 7,
-        Unspecified = 8,
-        Cores = 9,
-        MilliCores = 10,
-        NanoCores = 11,
-        BitsPerSecond = 12,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MetricUnit(string value) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricUnit BitsPerSecond { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit Bytes { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit ByteSeconds { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit BytesPerSecond { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit Cores { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit Count { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit CountPerSecond { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit MilliCores { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit MilliSeconds { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit NanoCores { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit Percent { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit Seconds { get { throw null; } }
+        public static Azure.Monitor.Query.Models.MetricUnit Unspecified { get { throw null; } }
+        public bool Equals(Azure.Monitor.Query.Models.MetricUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.Models.MetricUnit left, Azure.Monitor.Query.Models.MetricUnit right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.Models.MetricUnit (string value) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.Models.MetricUnit left, Azure.Monitor.Query.Models.MetricUnit right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MetricValue
     {
