@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class ErrorResponseV2
+    internal partial class TranslationErrorResponse
     {
-        internal static ErrorResponseV2 DeserializeErrorResponseV2(JsonElement element)
+        internal static TranslationErrorResponse DeserializeTranslationErrorResponse(JsonElement element)
         {
             Optional<DocumentTranslationError> error = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +29,7 @@ namespace Azure.AI.Translation.Document.Models
                     continue;
                 }
             }
-            return new ErrorResponseV2(error.Value);
+            return new TranslationErrorResponse(error.Value);
         }
     }
 }

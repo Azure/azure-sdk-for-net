@@ -9,7 +9,7 @@ namespace Azure.AI.Translation.Document
     /// <summary>
     /// Status information about a particular document within a translation operation.
     /// </summary>
-    [CodeGenModel("DocumentStatusDetail")]
+    [CodeGenModel("DocumentStatus")]
     public partial class DocumentStatusResult
     {
         /// <summary>

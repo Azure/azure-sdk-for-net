@@ -16,16 +16,16 @@ namespace Azure.AI.Translation.Document.Models
     /// 
     /// a controller.
     /// </summary>
-    internal partial class ErrorResponseV2
+    internal partial class TranslationErrorResponse
     {
-        /// <summary> Initializes a new instance of ErrorResponseV2. </summary>
-        internal ErrorResponseV2()
+        /// <summary> Initializes a new instance of TranslationErrorResponse. </summary>
+        internal TranslationErrorResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorResponseV2. </summary>
+        /// <summary> Initializes a new instance of TranslationErrorResponse. </summary>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
-        internal ErrorResponseV2(DocumentTranslationError error)
+        internal TranslationErrorResponse(DocumentTranslationError error)
         {
             Error = error;
         }

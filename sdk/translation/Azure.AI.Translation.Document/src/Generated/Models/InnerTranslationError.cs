@@ -14,13 +14,13 @@ namespace Azure.AI.Translation.Document.Models
     /// 
     /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
     /// </summary>
-    internal partial class InnerErrorV2
+    internal partial class InnerTranslationError
     {
-        /// <summary> Initializes a new instance of InnerErrorV2. </summary>
+        /// <summary> Initializes a new instance of InnerTranslationError. </summary>
         /// <param name="code"> Gets code error string. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal InnerErrorV2(string code, string message)
+        internal InnerTranslationError(string code, string message)
         {
             if (code == null)
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.Translation.Document.Models
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of InnerErrorV2. </summary>
+        /// <summary> Initializes a new instance of InnerTranslationError. </summary>
         /// <param name="code"> Gets code error string. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <param name="target">
@@ -48,7 +48,7 @@ namespace Azure.AI.Translation.Document.Models
         /// 
         /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
         /// </param>
-        internal InnerErrorV2(string code, string message, string target, InnerErrorV2 innerError)
+        internal InnerTranslationError(string code, string message, string target, InnerTranslationError innerError)
         {
             Code = code;
             Message = message;
@@ -71,6 +71,6 @@ namespace Azure.AI.Translation.Document.Models
         /// 
         /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
         /// </summary>
-        public InnerErrorV2 InnerError { get; }
+        public InnerTranslationError InnerError { get; }
     }
 }

@@ -12,20 +12,20 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class DocumentStatusResponse
+    internal partial class TranslationsStatus
     {
-        internal static DocumentStatusResponse DeserializeDocumentStatusResponse(JsonElement element)
+        internal static TranslationsStatus DeserializeTranslationsStatus(JsonElement element)
         {
-            IReadOnlyList<DocumentStatusResult> value = default;
+            IReadOnlyList<TranslationStatusResult> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DocumentStatusResult> array = new List<DocumentStatusResult>();
+                    List<TranslationStatusResult> array = new List<TranslationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentStatusResult.DeserializeDocumentStatusResult(item));
+                        array.Add(TranslationStatusResult.DeserializeTranslationStatusResult(item));
                     }
                     value = array;
                     continue;
@@ -36,7 +36,7 @@ namespace Azure.AI.Translation.Document.Models
                     continue;
                 }
             }
-            return new DocumentStatusResponse(value, nextLink.Value);
+            return new TranslationsStatus(value, nextLink.Value);
         }
     }
 }

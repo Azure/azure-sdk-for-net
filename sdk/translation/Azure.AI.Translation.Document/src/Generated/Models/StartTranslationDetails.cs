@@ -12,13 +12,13 @@ using Azure.AI.Translation.Document;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    /// <summary> Job submission batch request. </summary>
-    internal partial class BatchSubmissionRequest
+    /// <summary> Translation job submission batch request. </summary>
+    internal partial class StartTranslationDetails
     {
-        /// <summary> Initializes a new instance of BatchSubmissionRequest. </summary>
+        /// <summary> Initializes a new instance of StartTranslationDetails. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public BatchSubmissionRequest(IEnumerable<DocumentTranslationInput> inputs)
+        public StartTranslationDetails(IEnumerable<DocumentTranslationInput> inputs)
         {
             if (inputs == null)
             {

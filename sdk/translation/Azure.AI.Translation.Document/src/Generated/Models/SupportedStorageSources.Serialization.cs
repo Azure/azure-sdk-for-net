@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class StorageSourceListResult
+    internal partial class SupportedStorageSources
     {
-        internal static StorageSourceListResult DeserializeStorageSourceListResult(JsonElement element)
+        internal static SupportedStorageSources DeserializeSupportedStorageSources(JsonElement element)
         {
             IReadOnlyList<StorageSource> value = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +29,7 @@ namespace Azure.AI.Translation.Document.Models
                     continue;
                 }
             }
-            return new StorageSourceListResult(value);
+            return new SupportedStorageSources(value);
         }
     }
 }
