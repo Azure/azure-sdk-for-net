@@ -122,7 +122,7 @@ Pageable<ArtifactTagProperties> tags = image.GetTags();
 Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
 foreach (ArtifactTagProperties tag in tags)
 {
-    Console.WriteLine($"    {image.RegistryUri.Host}/{image.RepositoryName}:{tag}");
+    Console.WriteLine($"    {image.RegistryEndpoint.Host}/{image.RepositoryName}:{tag}");
 }
 ```
 
@@ -137,7 +137,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new Defau
 RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
 // Set permissions on the v1 image's "latest" tag
-image.SetTagProperties("latest", new TagWriteableProperties()
+image.SetTagProperties("latest", new ArtifactTagProperties()
 {
     CanWrite = false,
     CanDelete = false
@@ -221,7 +221,7 @@ AsyncPageable<ArtifactTagProperties> tags = image.GetTagsAsync();
 Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
 await foreach (ArtifactTagProperties tag in tags)
 {
-    Console.WriteLine($"    {image.RegistryUri.Host}/{image.RepositoryName}:{tag}");
+    Console.WriteLine($"    {image.RegistryEndpoint.Host}/{image.RepositoryName}:{tag}");
 }
 ```
 
@@ -236,7 +236,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new Defau
 RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
 // Set permissions on the image's "latest" tag
-await image.SetTagPropertiesAsync("latest", new TagWriteableProperties()
+await image.SetTagPropertiesAsync("latest", new ArtifactTagProperties()
 {
     CanWrite = false,
     CanDelete = false
