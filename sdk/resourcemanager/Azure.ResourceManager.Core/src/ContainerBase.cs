@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ContainerBase"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
+        internal ContainerBase(ClientContext clientContext)
+            : base(clientContext, ResourceIdentifier.RootResourceIdentifier)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerBase"/> class.
+        /// </summary>
+        /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
