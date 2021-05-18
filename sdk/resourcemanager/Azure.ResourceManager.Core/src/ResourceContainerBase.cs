@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Core
     /// <typeparam name="TIdentifier"> The type of the resource identifier. </typeparam>
     /// <typeparam name="TOperations"> The type of the class containing operations for the underlying resource. </typeparam>
     /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
-    public abstract class ResourceContainerBase<TIdentifier, TOperations, TResource> : ContainerBase<TIdentifier>
+    public abstract class ResourceContainerBase<TIdentifier, TOperations, TResource> : ContainerBase
         where TIdentifier : ResourceIdentifier
         where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
         where TResource : class
