@@ -1265,6 +1265,27 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
             {
+                QuotaInGB = 5
+            };
+
+            // Act
+            await share.SetPropertiesAsync(options);
+
+            // Assert
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+            Assert.AreEqual(5, response.Value.QuotaInGB);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetPropertiesAsync_AccessTier()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
+            {
                 QuotaInGB = 5,
                 AccessTier = ShareAccessTier.Hot
             };
@@ -1314,12 +1335,12 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             var shareName = GetNewShareName();
             ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClientOptions clientOptions = new ShareClientOptions(ShareClientOptions.ServiceVersion.V2020_02_10);
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
 
             ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
             {
-                QuotaInGB = 5,
-                AccessTier = ShareAccessTier.Hot
+                QuotaInGB = 5
             };
 
             // Act

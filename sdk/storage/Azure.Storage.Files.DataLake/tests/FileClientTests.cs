@@ -459,7 +459,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFile.ExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.AreEqual(
+                    _serviceVersion >= DataLakeClientOptions.ServiceVersion.V2019_12_12 ?
+                        "NoAuthenticationInformation" :
+                        "AuthenticationFailed",
+                    e.ErrorCode));
         }
 
         [RecordedTest]
@@ -1704,7 +1708,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task AppendDataAsync_EmptyStream()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-
             // Arrange
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
             await file.CreateAsync();
@@ -1718,9 +1721,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     {
                         Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
                         Assert.IsTrue(e.Message.Contains("The value for one of the HTTP headers is not in the correct format."));
-                        Assert.AreEqual("Content-Length", e.Data["HeaderName"]);
-                        Assert.AreEqual("0", e.Data["HeaderValue"]);
-                    });
+                        if (_serviceVersion > DataLakeClientOptions.ServiceVersion.V2019_02_02)
+                        {
+                            Assert.AreEqual("Content-Length", e.Data["HeaderName"]);
+                            Assert.AreEqual("0", e.Data["HeaderValue"]);
+                        }
+                    }
+                );
             }
         }
 
