@@ -73,16 +73,16 @@ We guarantee that all client instance methods are thread-safe and independent of
 ### Sync examples
 
 - [List repositories](#list-repositories)
-- [Delete images](#delete-images)
-- [Set artifact properties](#set-artifact-properties)
 - [List tags with anonymous access](#list-tags-with-anonymous-access)
+- [Set artifact properties](#set-artifact-properties)
+- [Delete images](#delete-images)
 
 ### Async examples
 
 - [List repositories asynchronously](#list-repositories-asynchronously)
-- [Delete images asynchronously](#delete-images)
-- [Set artifact properties asynchronously](#set-artifact-properties)
 - [List tags with anonymous access asynchronously](#list-tags-with-anonymous-access)
+- [Set artifact properties asynchronously](#set-artifact-properties)
+- [Delete images asynchronously](#delete-images)
 
 ### List repositories
 
@@ -101,6 +101,47 @@ foreach (string repository in repositories)
 {
     Console.WriteLine(repository);
 }
+```
+
+### List tags with anonymous access
+
+```C# Snippet:ContainerRegistry_Tests_Samples_ListTagsAnonymous
+// Get the service endpoint from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+// Create a new ContainerRegistryClient for anonymous access
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
+
+// Obtain a RegistryArtifact object to get access to image operations
+RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
+
+// List the set of tags on the hello_world image tagged as "latest"
+Pageable<ArtifactTagProperties> tags = image.GetTags();
+
+// Iterate through the image's tags, listing the tagged alias for the image
+Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
+foreach (ArtifactTagProperties tag in tags)
+{
+    Console.WriteLine($"    {image.RegistryUri.Host}/{image.RepositoryName}:{tag}");
+}
+```
+
+### Set artifact properties
+
+```C# Snippet:ContainerRegistry_Tests_Samples_SetArtifactProperties
+// Get the service endpoint from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+// Create a new ContainerRegistryClient and RegistryArtifact to access image operations
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
+
+// Set permissions on the v1 image's "latest" tag
+image.SetTagProperties("latest", new TagWriteableProperties()
+{
+    CanWrite = false,
+    CanDelete = false
+});
 ```
 
 ### Delete images
@@ -142,47 +183,6 @@ foreach (string repositoryName in repositoryNames)
 }
 ```
 
-### Set artifact properties
-
-```C# Snippet:ContainerRegistry_Tests_Samples_SetArtifactProperties
-// Get the service endpoint from the environment
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
-
-// Create a new ContainerRegistryClient and RegistryArtifact to access image operations
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
-RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
-
-// Set permissions on the v1 image's "latest" tag
-image.SetTagProperties("latest", new TagWriteableProperties()
-{
-    CanWrite = false,
-    CanDelete = false
-});
-```
-
-### List tags with anonymous access
-
-```C# Snippet:ContainerRegistry_Tests_Samples_ListTagsAnonymous
-// Get the service endpoint from the environment
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
-
-// Create a new ContainerRegistryClient for anonymous access
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
-
-// Obtain a RegistryArtifact object to get access to image operations
-RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
-
-// List the set of tags on the hello_world image tagged as "latest"
-Pageable<ArtifactTagProperties> tags = image.GetTags();
-
-// Iterate through the image's tags, listing the tagged alias for the image
-Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
-foreach (ArtifactTagProperties tag in tags)
-{
-    Console.WriteLine($"    {image.RegistryUri.Host}/{image.RepositoryName}:{tag}");
-}
-```
-
 ### List repositories asynchronously
 
 The asynchronous APIs are identical to their synchronous counterparts, but methods end with the standard .NET "Async" suffix and return a Task.
@@ -200,6 +200,47 @@ await foreach (string repository in repositories)
 {
     Console.WriteLine(repository);
 }
+```
+
+### List tags with anonymous access asynchronously
+
+```C# Snippet:ContainerRegistry_Tests_Samples_ListTagsAnonymousAsync
+// Get the service endpoint from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+// Create a new ContainerRegistryClient for anonymous access
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
+
+// Obtain a RegistryArtifact object to get access to image operations
+RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
+
+// List the set of tags on the hello_world image tagged as "latest"
+AsyncPageable<ArtifactTagProperties> tags = image.GetTagsAsync();
+
+// Iterate through the image's tags, listing the tagged alias for the image
+Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
+await foreach (ArtifactTagProperties tag in tags)
+{
+    Console.WriteLine($"    {image.RegistryUri.Host}/{image.RepositoryName}:{tag}");
+}
+```
+
+### Set artifact properties asynchronously
+
+```C# Snippet:ContainerRegistry_Tests_Samples_SetArtifactPropertiesAsync
+// Get the service endpoint from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+// Create a new ContainerRegistryClient and RegistryArtifact to access image operations
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
+
+// Set permissions on the image's "latest" tag
+await image.SetTagPropertiesAsync("latest", new TagWriteableProperties()
+{
+    CanWrite = false,
+    CanDelete = false
+});
 ```
 
 ### Delete images asynchronously
@@ -238,47 +279,6 @@ await foreach (string repositoryName in repositoryNames)
             await repository.GetArtifact(imageManifest.Digest).DeleteAsync();
         }
     }
-}
-```
-
-### Set artifact properties asynchronously
-
-```C# Snippet:ContainerRegistry_Tests_Samples_SetArtifactPropertiesAsync
-// Get the service endpoint from the environment
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
-
-// Create a new ContainerRegistryClient and RegistryArtifact to access image operations
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
-RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
-
-// Set permissions on the image's "latest" tag
-await image.SetTagPropertiesAsync("latest", new TagWriteableProperties()
-{
-    CanWrite = false,
-    CanDelete = false
-});
-```
-
-### List tags with anonymous access asynchronously
-
-```C# Snippet:ContainerRegistry_Tests_Samples_ListTagsAnonymousAsync
-// Get the service endpoint from the environment
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
-
-// Create a new ContainerRegistryClient for anonymous access
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
-
-// Obtain a RegistryArtifact object to get access to image operations
-RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
-
-// List the set of tags on the hello_world image tagged as "latest"
-AsyncPageable<ArtifactTagProperties> tags = image.GetTagsAsync();
-
-// Iterate through the image's tags, listing the tagged alias for the image
-Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
-await foreach (ArtifactTagProperties tag in tags)
-{
-    Console.WriteLine($"    {image.RegistryUri.Host}/{image.RepositoryName}:{tag}");
 }
 ```
 
