@@ -43,12 +43,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gallery resource. This property is updatable.</param>
         /// <param name="provisioningState">The current state of the
         /// gallery.</param>
-        public GalleryUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), GalleryIdentifier identifier = default(GalleryIdentifier), string provisioningState = default(string))
+        public GalleryUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), GalleryIdentifier identifier = default(GalleryIdentifier), string provisioningState = default(string), SharingProfile sharingProfile = default(SharingProfile))
             : base(id, name, type, tags)
         {
             Description = description;
             Identifier = identifier;
             ProvisioningState = provisioningState;
+            SharingProfile = sharingProfile;
             CustomInit();
         }
 
@@ -79,6 +80,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sharingProfile")]
+        public SharingProfile SharingProfile { get; set; }
 
     }
 }

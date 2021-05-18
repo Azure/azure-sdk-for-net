@@ -33,12 +33,12 @@ namespace ComputerVisionSDK.Tests
             return null;
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void ReadTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "BatchReadFileTest");
+                HttpMockServer.Initialize(this.GetType(), "ReadTest");
 
                 string imageUrl = GetTestImageUrl("signage.jpg");
 
@@ -74,12 +74,12 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void ReadFileInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "BatchReadFileInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "ReadFileInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("whiteboard.jpg"), FileMode.Open))
@@ -113,12 +113,12 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
-        public void BatchReadPdfFileInStreamTest()
+        [Fact]
+        public void ReadPdfFileInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "BatchReadPdfFileInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "ReadPdfFileInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("menu.pdf"), FileMode.Open))

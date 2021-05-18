@@ -11,9 +11,7 @@ using System.Reflection;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -35,9 +33,7 @@ namespace Azure.Search.Documents.Indexes
                     [typeof(bool)] = SearchFieldDataType.Boolean,
                     [typeof(DateTime)] = SearchFieldDataType.DateTimeOffset,
                     [typeof(DateTimeOffset)] = SearchFieldDataType.DateTimeOffset,
-#if EXPERIMENTAL_SPATIAL
                     [typeof(GeoPoint)] = SearchFieldDataType.GeographyPoint,
-#endif
                 });
 
         private static readonly ISet<Type> s_unsupportedTypes =
@@ -229,7 +225,7 @@ namespace Azure.Search.Documents.Indexes
             return info.Properties
                 .Select(prop => (prop.Name, BuildField(prop)))
                 .Where(pair => pair.Item2 != null)
-                .ToDictionary(pair => pair.Item1, pair => pair.Item2);
+                .ToDictionary(pair => pair.Name, pair => pair.Item2);
         }
 
         private static IDataTypeInfo GetDataTypeInfo(Type propertyType, IMemberNameConverter nameProvider)

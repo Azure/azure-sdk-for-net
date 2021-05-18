@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Job Output Progress Event Data. </summary>
+    /// <summary> Job Output Progress Event Data. Schema of the Data property of an EventGridEvent for a Microsoft.Media.JobOutputProgress event. </summary>
     public partial class MediaJobOutputProgressEventData
     {
         /// <summary> Initializes a new instance of MediaJobOutputProgressEventData. </summary>

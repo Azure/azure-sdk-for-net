@@ -9,24 +9,13 @@
       Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.
       Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Compute" (https://www.nuget.org/packages/Azure.ResourceManager.Compute/). Please see the package changelog for more information.
     </Description>
-    <Version>44.0.0.0</Version>
+    <Version>46.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release are
-        1. Implementation of EnableCrossZoneUpgrade and PrioritizeUnhealthyInstances to VMSS RollingUpgradePolicy.
-        2. Added Extended Location property to VM, VMSS, and Image resources.
-        3. Added Edge Zone property to Image discovery APIs. 
-        4. Added customer assigned PlatformFAultDOmain on VM creation when it references a VMSS object.
-        5. Added new DetachOption property for data disks. 
-        6. Updated VirtualMachineSizeTypes description to provide more details on locating available VM sizes.
-        7. Added Force Deletion optional parameter for VMSS Deletion operations. 
-        8. Added UEFISettings and SecurityType properties for Trusted VMs.
-        9. Updates to the Install Patches API.
-        10. Updates to the PatchStatus in VMInstanceView, and Windows and Linux patch settings. 
-        11. Added the OrchestrationMode property to VMSS resources. 
-        Note: The Cloud Service API is not part of this release, please look at the 43.0.0.0-preview.1 release. 
+        1. This is a release of the Azure Compute SDK with Gallery SDK. It contains blob as source gallery change, shared gallery change, and gallery image features.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class SnapshotsUpdateOperation : Operation<Snapshot>, IOperationSource<Snapshot>
     {
         private readonly ArmOperationHelpers<Snapshot> _operation;
+
+        /// <summary> Initializes a new instance of SnapshotsUpdateOperation for mocking. </summary>
+        protected SnapshotsUpdateOperation()
+        {
+        }
+
         internal SnapshotsUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Snapshot>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SnapshotsUpdateOperation");

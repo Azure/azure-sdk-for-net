@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,16 +17,22 @@ namespace SnippetGenerator
         [Option(ShortName = "b")]
         public string BasePath { get; set; }
 
-        public void OnExecuteAsync()
+        public async Task OnExecuteAsync()
         {
             var baseDirectory = new DirectoryInfo(BasePath).Name;
             if (baseDirectory.Equals("sdk"))
             {
-                Parallel.ForEach(Directory.GetDirectories(BasePath), sdkDir => new DirectoryProcessor(sdkDir).Process());
+                var tasks = new List<Task>();
+                foreach (var sdkDir in Directory.GetDirectories(BasePath))
+                {
+                    tasks.Add(new DirectoryProcessor(sdkDir).ProcessAsync());
+                }
+
+                await Task.WhenAll(tasks);
             }
             else
             {
-                new DirectoryProcessor(BasePath).Process();
+                await new DirectoryProcessor(BasePath).ProcessAsync();
             }
         }
 

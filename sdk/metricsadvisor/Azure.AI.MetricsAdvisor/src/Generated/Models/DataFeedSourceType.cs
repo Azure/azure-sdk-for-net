@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> data source type. </summary>
+    /// <summary> Type of data source credential. </summary>
     public readonly partial struct DataFeedSourceType : IEquatable<DataFeedSourceType>
     {
         private readonly string _value;
@@ -27,6 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string AzureCosmosDbValue = "AzureCosmosDB";
         private const string AzureDataExplorerValue = "AzureDataExplorer";
         private const string AzureDataLakeStorageGen2Value = "AzureDataLakeStorageGen2";
+        private const string AzureEventHubsValue = "AzureEventHubs";
         private const string AzureTableValue = "AzureTable";
         private const string ElasticsearchValue = "Elasticsearch";
         private const string HttpRequestValue = "HttpRequest";
@@ -35,6 +36,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string MySqlValue = "MySql";
         private const string PostgreSqlValue = "PostgreSql";
         private const string SqlServerValue = "SqlServer";
+        /// <summary> AzureEventHubs. </summary>
+        public static DataFeedSourceType AzureEventHubs { get; } = new DataFeedSourceType(AzureEventHubsValue);
         /// <summary> Determines if two <see cref="DataFeedSourceType"/> values are the same. </summary>
         public static bool operator ==(DataFeedSourceType left, DataFeedSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedSourceType"/> values are not the same. </summary>

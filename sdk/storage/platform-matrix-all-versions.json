@@ -1,0 +1,27 @@
+{
+  "matrix": {
+    "Agent": {
+      "ubuntu-18.04": {
+          "OSVmImage": "MMSUbuntu18.04",
+          "Pool": "azsdk-pool-mms-ubuntu-1804-storage"
+      },
+      "windows-2019": {
+          "OSVmImage": "MMS2019",
+          "Pool": "azsdk-pool-mms-win-2019-storage"
+      }
+    },
+    "TestTargetFramework": [
+        "netcoreapp2.1",
+        "net5.0"
+    ],
+    "AZURE_LIVE_TEST_SERVICE_VERSIONS": [
+        "V2019_02_02",
+        "V2019_07_07",
+        "V2019_12_12",
+        "V2020_02_10",
+        "V2020_04_08",
+        "V2020_06_12",
+        "V2020_08_04"
+    ]
+  }
+}

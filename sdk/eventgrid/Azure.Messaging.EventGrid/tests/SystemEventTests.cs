@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class SystemEventTests
     {
-        private static readonly HashSet<string> s_casingExclusions = new ()
+        private static readonly HashSet<string> s_casingExclusions = new()
         {
             "SignalRServiceClientConnectionConnectedEventData",
             "SignalRServiceClientConnectionDisconnectedEventData",

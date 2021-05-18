@@ -40,6 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> . </param>
+        /// <param name="connectionProperties"> Properties used to connect to Concur. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="clientId"> Application client_id supplied by Concur App Management. </param>
         /// <param name="username"> The user name that you use to access Concur Service. </param>
         /// <param name="password"> The password corresponding to the user name that you provided in the username field. </param>
@@ -47,8 +48,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal ConcurLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clientId, object username, SecretBase password, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal ConcurLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionProperties, object clientId, object username, SecretBase password, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
+            ConnectionProperties = connectionProperties;
             ClientId = clientId;
             Username = username;
             Password = password;
@@ -59,6 +61,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Concur";
         }
 
+        /// <summary> Properties used to connect to Concur. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        public object ConnectionProperties { get; set; }
         /// <summary> Application client_id supplied by Concur App Management. </summary>
         public object ClientId { get; set; }
         /// <summary> The user name that you use to access Concur Service. </summary>

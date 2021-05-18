@@ -1,7 +1,15 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
+
+## 1.1.0-beta.3 (2021-05-11)
+
+### Changes
+
+#### New Features
+
+- The `AddClient` method that allows registering any Azure SDK client with a custom factory function.
 
 ## 1.1.0-beta.2 (2021-02-09)
 

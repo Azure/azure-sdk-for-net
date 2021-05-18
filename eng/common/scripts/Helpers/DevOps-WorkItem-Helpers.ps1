@@ -142,6 +142,8 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
   $fields += "PackageBetaVersions"
   $fields += "PackageGAVersion"
   $fields += "PackagePatchVersions"
+  $fields += "Generated"
+  $fields += "RoadmapState"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Package'"
@@ -163,13 +165,17 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
 
   $workItems = Invoke-AzBoardsCmd "query" $parameters $outputCommand
 
+  if ($workItems -and $workItems.Count -eq 1000) {
+    Write-Warning "Retrieved the max of 1000 items so item list might not be complete."
+  }
+
   foreach ($wi in $workItems)
   {
     $localKey = BuildHashKeyNoNull $wi.fields["Custom.Language"] $wi.fields["Custom.Package"] $wi.fields["Custom.PackageVersionMajorMinor"]
     if (!$localKey) {
       $packageWorkItemWithoutKeyFields[$wi.id] = $wi
       Write-Host "Skipping package [$($wi.id)]$($wi.fields['System.Title']) which is missing required fields language, package, or version."
-      continue 
+      continue
     }
     if ($packageWorkItems.ContainsKey($localKey) -and $packageWorkItems[$localKey].id -ne $wi.id) {
       Write-Warning "Already found package [$($packageWorkItems[$localKey].id)] with key [$localKey], using that one instead of [$($wi.id)]."
@@ -177,7 +183,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
     else {
       Write-Verbose "Caching package [$($wi.id)] for [$localKey]"
       $packageWorkItems[$localKey] = $wi
-    } 
+    }
   }
 
   if ($key -and $packageWorkItems.ContainsKey($key)) {
@@ -216,7 +222,7 @@ function UpdateWorkItemParent($childWorkItem, $parentWorkItem, $outputCommand = 
 
 function CreateWorkItemParent($id, $parentId, $oldParentId, $outputCommand = $true)
 {
-  # Have to remove old parent first if you want to add a new parent. 
+  # Have to remove old parent first if you want to add a new parent.
   if ($oldParentId)
   {
      $parameters = $ReleaseDevOpsCommonParameters
@@ -287,17 +293,18 @@ function UpdateWorkItem($id, $fields, $title, $state, $assignedTo, $outputComman
 
 function UpdatePackageWorkItemReleaseState($id, $state, $releaseType, $outputCommand = $true)
 {
-  $fields = "`"Custom.ReleaseType=${releaseType}`"" 
+  $fields = "`"Custom.ReleaseType=${releaseType}`""
   return UpdateWorkItem -id $id -state $state -fields $fields -outputCommand $outputCommand
 }
 
-function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $outputCommand = $false)
+function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPrompt = $false, $outputCommand = $false)
 {
   $workItem = FindPackageWorkItem -lang $lang -packageName $pkg.Package -version $verMajorMinor -includeClosed $true -outputCommand $outputCommand
 
   if (!$workItem) {
     $latestVersionItem = FindLatestPackageWorkItem -lang $lang -packageName $pkg.Package -outputCommand $outputCommand
     $assignedTo = "me"
+    $extraFields = @()
     if ($latestVersionItem) {
       Write-Verbose "Copying data from latest matching [$($latestVersionItem.id)] with version $($latestVersionItem.fields["Custom.PackageVersionMajorMinor"])"
       if ($latestVersionItem.fields["System.AssignedTo"]) {
@@ -308,14 +315,33 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $outputCo
       if (!$pkg.RepoPath -and $pkg.RepoPath -ne "NA" -and $pkg.fields["Custom.PackageRepoPath"]) {
         $pkg.RepoPath = $pkg.fields["Custom.PackageRepoPath"]
       }
+
+      $extraFields += "`"Generated=" + $latestVersionItem.fields["Custom.Generated"] + "`""
+      $extraFields += "`"RoadmapState=" +  $latestVersionItem.fields["Custom.RoadmapState"] + "`""
     }
-    $workItem = CreateOrUpdatePackageWorkItem $lang $pkg $verMajorMinor -existingItem $null -assignedTo $assignedTo -outputCommand $outputCommand
+
+    if ($allowPrompt) {
+      if (!$pkg.DisplayName) {
+        Write-Host "We need a package display name to be used in various places and it should be consistent across languages for similar packages."
+        while (($readInput = Read-Host -Prompt "Input the display name") -eq "") { }
+        $packageInfo.DisplayName = $readInput
+      }
+
+      if (!$pkg.ServiceName) {
+        Write-Host "We need a package service name to be used in various places and it should be consistent across languages for similar packages."
+        while (($readInput = Read-Host -Prompt "Input the service name") -eq "") { }
+        $packageInfo.ServiceName = $readInput
+      }
+    }
+
+
+    $workItem = CreateOrUpdatePackageWorkItem $lang $pkg $verMajorMinor -existingItem $null -assignedTo $assignedTo -extraFields $extraFields -outputCommand $outputCommand
   }
 
   return $workItem
 }
 
-function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingItem, $assignedTo = $null, $outputCommand = $true)
+function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingItem, $assignedTo = $null, $extraFields = $null, $outputCommand = $true)
 {
   if (!$lang -or !$pkg -or !$verMajorMinor) {
     Write-Host "Cannot create or update because one of lang, pkg or verMajorMinor aren't set. [$lang|$($pkg.Package)|$verMajorMinor]"
@@ -338,6 +364,10 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   $fields += "`"PackageVersionMajorMinor=${verMajorMinor}`""
   $fields += "`"ServiceName=${serviceName}`""
   $fields += "`"PackageRepoPath=${pkgRepoPath}`""
+
+  if ($extraFields) {
+    $fields += $extraFields
+  }
 
   if ($existingItem)
   {
@@ -399,10 +429,10 @@ function FindOrCreatePackageGroupParent($serviceName, $packageDisplayName, $outp
   $localKey = BuildHashKey $serviceName $packageDisplayName
   Write-Host "[$($workItem.id)]$localKey - Created Parent"
   $parentWorkItems[$localKey] = $workItem
-  return $workItem 
+  return $workItem
 }
 
-function FindOrCreateServiceParent($serviceName, $outputCommand = $true) 
+function FindOrCreateServiceParent($serviceName, $outputCommand = $true)
 {
   $serviceParent = FindParentWorkItem $serviceName -outputCommand $outputCommand
   if ($serviceParent) {
@@ -733,7 +763,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     {
       $versionSet[$version] = $plannedVersionSet[$version]
     }
-    else 
+    else
     {
       # Looks like we shipped this version so remove it from the planned set
       $plannedVersionSet.Remove($version)
@@ -778,7 +808,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
 
   # If no version files to update do nothing
   if ($fieldUpdates.Count -eq 0) {
-    return
+    return $pkgWorkItem
   }
 
   $versionsForDebug = ($versionList | Foreach-Object { $_.Version }) -join ","
@@ -798,7 +828,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     $encodedToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes([string]::Format("{0}:{1}", "", $devops_pat)))
     $headers = @{ Authorization = "Basic $encodedToken" }
   }
-  else 
+  else
   {
     # Get a temp access token from the logged in az cli user for azure devops resource
     $jwt_accessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
@@ -806,5 +836,6 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
   }
   $response = Invoke-RestMethod -Method PATCH `
     -Uri "https://dev.azure.com/azure-sdk/_apis/wit/workitems/${id}?api-version=6.0" `
-    -Headers $headers -Body $body -ContentType "application/json-patch+json"
+    -Headers $headers -Body $body -ContentType "application/json-patch+json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
+  return $response
 }

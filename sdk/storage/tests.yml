@@ -1,14 +1,26 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: storage
     BuildInParallel: true
     TimeoutInMinutes: 180
     Location: canadacentral
     Clouds: Preview
+    # Storage service enables in-preview features only in Preview subscription
+    SupportedClouds: Preview
+    MatrixReplace:
+      # Use dedicated storage pool in canadacentral with higher memory capacity
+      - Pool=(.*)-general/$1-storage
+    ${{ if contains(variables['Build.DefinitionName'], 'tests-weekly') }}:
+      MatrixConfigs:
+        - Name: Storage_all_versions
+          Path: sdk/storage/platform-matrix-all-versions.json
+          Selection: sparse
+          GenerateVMJobs: true
+    ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
+      EnvVars:
+        AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
-    EnvVars:
-      AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true

@@ -47,6 +47,13 @@
     <PackageProjectUrl>http://go.microsoft.com/fwlink/?LinkId=235168</PackageProjectUrl>
     -->
   </PropertyGroup>
+  <PropertyGroup Condition="'$(HasReleaseVersion)' != 'true'">
+    <!-- Verify that latest service version is used only when we ship release. -->
+    <NoWarn>
+      $(NoWarn);
+      AZC0010;
+    </NoWarn>
+  </PropertyGroup>
 
 
   <!-- DEBUG specific settings -->

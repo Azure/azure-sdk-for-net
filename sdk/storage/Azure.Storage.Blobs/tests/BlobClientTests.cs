@@ -124,7 +124,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [Ignore("#10044: Re-enable failing Storage tests")]
         public void Ctor_CPK_EncryptionScope()
         {
             // Arrange
@@ -172,6 +171,25 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new BlobClient(blobUri, new AzureSasCredential(sas)),
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
+        public void Ctor_With_Sas_Does_Not_Reorder_Services()
+        {
+            // Arrange
+            var uri = new Uri("http://127.0.0.1/accountName/foo/bar?sv=2015-04-05&ss=bqtf&srt=sco&st=2021-03-29T02%3A25%3A53Z&se=2021-06-09T02%3A40%3A53Z&sp=crwdlaup&sig=XXXXX");
+            var transport = new MockTransport(r => new MockResponse(404));
+            var clientOptions = new BlobClientOptions()
+            {
+                Transport = transport
+            };
+
+            // Act
+            var client = new BlobClient(uri, clientOptions);
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetPropertiesAsync());
+
+            // Act
+            StringAssert.Contains("ss=bqtf", transport.SingleRequest.Uri.ToString());
         }
 
         #region Upload

@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         /// <param name="path">The path of the property.</param>
         /// <param name="propertyChangeType">The type of property change.
-        /// Possible values include: 'Create', 'Delete', 'Modify',
-        /// 'Array'</param>
+        /// Possible values include: 'Create', 'Delete', 'Modify', 'Array',
+        /// 'NoEffect'</param>
         /// <param name="before">The value of the property before the
         /// deployment is executed.</param>
         /// <param name="after">The value of the property after the deployment
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 
         /// <summary>
         /// Gets or sets the type of property change. Possible values include:
-        /// 'Create', 'Delete', 'Modify', 'Array'
+        /// 'Create', 'Delete', 'Modify', 'Array', 'NoEffect'
         /// </summary>
         [JsonProperty(PropertyName = "propertyChangeType")]
         public PropertyChangeType PropertyChangeType { get; set; }

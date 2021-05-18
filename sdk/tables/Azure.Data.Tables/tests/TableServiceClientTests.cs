@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Data.Tables;
 using Azure.Data.Tables.Sas;
 using NUnit.Framework;
 
-namespace Azure.Tables.Tests
+namespace Azure.Data.Tables.Tests
 {
     public class TableServiceClientTests : ClientTestBase
     {

@@ -46,6 +46,14 @@
             "type": "string",
             "defaultValue": "selectionmark"
         },
+        "labelTablesVariableRowsDataContainer": {
+            "type": "string",
+            "defaultValue": "labeled-tables-variable-rows"
+        },
+        "labelTablesFixedRowsDataContainer": {
+            "type": "string",
+            "defaultValue": "labeled-tables-fixed-rows"
+        },
         "trainingDataResourceId": {
             "type": "string",
             "defaultValue": "[resourceId('TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
@@ -72,6 +80,24 @@
             "type": "object",
             "defaultValue": {
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('selectionMarkTrainingDataContainer'))]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        },
+        "labelTablesVariableRowsSasProperties": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('labelTablesVariableRowsDataContainer'))]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        },
+        "labelTablesFixedRowsSasProperties": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('labelTablesFixedRowsDataContainer'))]",
                 "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
                 "signedPermission": "rl",
                 "signedResource": "c"
@@ -127,6 +153,14 @@
         "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL": {
             "type": "string",
             "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('selectionMarkTrainingDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('selectionMarkTrainingDataSasProperties')).serviceSasToken)]"
+        },
+        "FORM_RECOGNIZER_TABLE_VARIABLE_ROWS_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('labelTablesVariableRowsDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('labelTablesVariableRowsSasProperties')).serviceSasToken)]"
+        },
+        "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('labelTablesFixedRowsDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('labelTablesFixedRowsSasProperties')).serviceSasToken)]"
         },
         "FORM_RECOGNIZER_TARGET_RESOURCE_REGION": {
             "type": "string",

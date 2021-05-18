@@ -299,7 +299,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             Assert.That(options, Is.Not.Null);
         }
 
-#if NETCOREAPP3_1 || NET5
+#if NETCOREAPP3_1 || NET5 || SNIPPET
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>

@@ -19,6 +19,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewaysStopPacketCaptureOperation : Operation<string>, IOperationSource<string>
     {
         private readonly ArmOperationHelpers<string> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkGatewaysStopPacketCaptureOperation for mocking. </summary>
+        protected VirtualNetworkGatewaysStopPacketCaptureOperation()
+        {
+        }
+
         internal VirtualNetworkGatewaysStopPacketCaptureOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<string>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysStopPacketCaptureOperation");
