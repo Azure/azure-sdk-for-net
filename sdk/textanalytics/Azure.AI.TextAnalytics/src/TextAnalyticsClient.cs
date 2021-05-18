@@ -2757,7 +2757,8 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
+        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition,
+        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2781,7 +2782,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActions enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
+        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition,
+        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2805,7 +2807,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActions enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
+        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition,
+        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2828,7 +2831,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
+        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition,
+        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2871,6 +2875,10 @@ namespace Azure.AI.TextAnalytics
             if (actions.RecognizeLinkedEntitiesOptions != null)
             {
                 tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
+            }
+            if (actions.AnalyzeSentimentOptions != null)
+            {
+                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentOptionsToTasks(actions.AnalyzeSentimentOptions);
             }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks) { DisplayName = actions.DisplayName };
@@ -2915,6 +2923,10 @@ namespace Azure.AI.TextAnalytics
             if (actions.RecognizeLinkedEntitiesOptions != null)
             {
                 tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
+            }
+            if (actions.AnalyzeSentimentOptions != null)
+            {
+                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentOptionsToTasks(actions.AnalyzeSentimentOptions);
             }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks) { DisplayName = actions.DisplayName };

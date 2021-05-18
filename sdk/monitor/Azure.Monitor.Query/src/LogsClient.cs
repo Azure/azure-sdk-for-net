@@ -25,17 +25,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Initializes a new instance of <see cref="LogsClient"/>.
         /// </summary>
+        /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        public LogsClient(TokenCredential credential) : this(credential, null)
+        public LogsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="LogsClient"/>.
         /// </summary>
+        /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="LogsClientOptions"/> instance to use as client configuration.</param>
-        public LogsClient(TokenCredential credential, LogsClientOptions options)
+        public LogsClient(Uri endpoint, TokenCredential credential, LogsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -43,7 +45,7 @@ namespace Azure.Monitor.Query
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://api.loganalytics.io//.default"));
-            _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline);
+            _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
             _rowBinder = new RowBinder();
         }
 

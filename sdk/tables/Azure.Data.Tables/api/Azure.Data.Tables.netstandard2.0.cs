@@ -5,7 +5,7 @@ namespace Azure.Data.Tables
         Azure.ETag ETag { get; set; }
         string PartitionKey { get; set; }
         string RowKey { get; set; }
-        System.DateTimeOffset? Timestamp { get; }
+        System.DateTimeOffset? Timestamp { get; set; }
     }
     public partial class TableClient
     {

@@ -27,6 +27,8 @@ namespace Azure.AI.MetricsAdvisor
             }
 
             Version = version;
+
+            AddLoggedHeadersAndQueryParameters();
         }
 
         /// <summary>
@@ -46,5 +48,19 @@ namespace Azure.AI.MetricsAdvisor
         /// The service version.
         /// </summary>
         public ServiceVersion Version { get; }
+
+        /// <summary>
+        /// Add headers and query parameters that are considered safe for logging or including in
+        /// error messages by default.
+        /// </summary>
+        private void AddLoggedHeadersAndQueryParameters()
+        {
+            Diagnostics.LoggedHeaderNames.Add("apim-request-id");
+            Diagnostics.LoggedHeaderNames.Add("Location");
+            Diagnostics.LoggedHeaderNames.Add("Strict-Transport-Security");
+            Diagnostics.LoggedHeaderNames.Add("X-Content-Type-Options");
+            Diagnostics.LoggedHeaderNames.Add("x-envoy-upstream-service-time");
+            Diagnostics.LoggedHeaderNames.Add("X-Request-ID");
+        }
     }
 }
