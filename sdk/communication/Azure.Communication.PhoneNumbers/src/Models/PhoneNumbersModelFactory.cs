@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary>
     /// Model factory that enables mocking for the Azure.Communication.PhoneNumbers library.
@@ -31,12 +32,16 @@ namespace Azure.Communication.PhoneNumbers.Models
         public static PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency)
             => new PhoneNumberCost(amount, currencyCode, billingFrequency);
 
-        /// <summary> Initializes a new instance of <see cref="ReleasePhoneNumberResult"/>. </summary>
-        public static ReleasePhoneNumberResult ReleasePhoneNumberResult()
-            => new ReleasePhoneNumberResult();
-
-        /// <summary> Initializes a new instance of <see cref="PurchasePhoneNumbersResult"/>. </summary>
-        public static PurchasePhoneNumbersResult PurchasePhoneNumbersResult()
-            => new PurchasePhoneNumbersResult();
+        /// <summary> Initializes a new instance of PhoneNumberSearchResult. </summary>
+        /// <param name="searchId"> The search id. </param>
+        /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
+        /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. geographic, or tollFree. </param>
+        /// <param name="assignmentType"> Phone number&apos;s assignment type. </param>
+        /// <param name="capabilities"> Capabilities of a phone number. </param>
+        /// <param name="cost"> The incurred cost for a single phone number. </param>
+        /// <param name="searchExpiresOn"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="phoneNumbers"/>, <paramref name="capabilities"/>, or <paramref name="cost"/> is null. </exception>
+        public static PhoneNumberSearchResult PhoneNumberSearchResult(string searchId, IEnumerable<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn)
+            => new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresOn);
     }
 }

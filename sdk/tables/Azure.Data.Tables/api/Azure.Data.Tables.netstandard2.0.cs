@@ -11,24 +11,27 @@ namespace Azure.Data.Tables
     {
         protected TableClient() { }
         public TableClient(string connectionString, string tableName) { }
-        public TableClient(string connectionString, string tableName, Azure.Data.Tables.TableClientOptions options = null) { }
-        public TableClient(System.Uri endpoint, string tableName, Azure.AzureSasCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(string connectionString, string tableName, Azure.Data.Tables.TablesClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Data.Tables.TablesClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, Azure.Data.Tables.TablesClientOptions options = null) { }
         public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential) { }
-        public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TablesClientOptions options = null) { }
+        public virtual string AccountName { get { throw null; } }
+        public virtual string Name { get { throw null; } }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddEntityAsync<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response AddEntity<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> Create(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableItem>> CreateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> CreateIfNotExists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableItem>> CreateIfNotExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static string CreateQueryFilter(System.FormattableString filter) { throw null; }
         public static string CreateQueryFilter<T>(System.Linq.Expressions.Expression<System.Func<T, bool>> filter) { throw null; }
-        public virtual Azure.Data.Tables.TableTransactionalBatch CreateTransactionalBatch(string partitionKey) { throw null; }
         public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteEntity(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteEntityAsync(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.SignedIdentifier>> GetAccessPolicy(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.SignedIdentifier>>> GetAccessPolicyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.TableSignedIdentifier>> GetAccessPolicies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.TableSignedIdentifier>>> GetAccessPoliciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response<T> GetEntity<T>(string partitionKey, string rowKey, System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Data.Tables.Sas.TableSasBuilder GetSasBuilder(Azure.Data.Tables.Sas.TableSasPermissions permissions, System.DateTimeOffset expiresOn) { throw null; }
@@ -37,20 +40,14 @@ namespace Azure.Data.Tables
         public virtual Azure.AsyncPageable<T> QueryAsync<T>(string filter = null, int? maxPerPage = default(int?), System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Pageable<T> Query<T>(System.Linq.Expressions.Expression<System.Func<T, bool>> filter, int? maxPerPage = default(int?), System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Pageable<T> Query<T>(string filter = null, int? maxPerPage = default(int?), System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
-        public virtual Azure.Response SetAccessPolicy(System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.SignedIdentifier> tableAcl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.SignedIdentifier> tableAcl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetAccessPolicy(System.Collections.Generic.IEnumerable<Azure.Data.Tables.TableSignedIdentifier> tableAcl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(System.Collections.Generic.IEnumerable<Azure.Data.Tables.TableSignedIdentifier> tableAcl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Response>> SubmitTransaction(System.Collections.Generic.IEnumerable<Azure.Data.Tables.TableTransactionAction> transactionActions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Response>>> SubmitTransactionAsync(System.Collections.Generic.IEnumerable<Azure.Data.Tables.TableTransactionAction> transactionActions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateEntityAsync<T>(T entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response UpdateEntity<T>(T entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpsertEntityAsync<T>(T entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response UpsertEntity<T>(T entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
-    }
-    public partial class TableClientOptions : Azure.Core.ClientOptions
-    {
-        public TableClientOptions(Azure.Data.Tables.TableClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TableClientOptions.ServiceVersion.V2019_02_02) { }
-        public enum ServiceVersion
-        {
-            V2019_02_02 = 1,
-        }
     }
     public sealed partial class TableEntity : Azure.Data.Tables.ITableEntity, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
@@ -70,11 +67,11 @@ namespace Azure.Data.Tables
         public void Clear() { }
         public bool ContainsKey(string key) { throw null; }
         public byte[] GetBinary(string key) { throw null; }
+        public System.BinaryData GetBinaryData(string key) { throw null; }
         public bool? GetBoolean(string key) { throw null; }
         public System.DateTime? GetDateTime(string key) { throw null; }
         public System.DateTimeOffset? GetDateTimeOffset(string key) { throw null; }
         public double? GetDouble(string key) { throw null; }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
         public System.Guid? GetGuid(string key) { throw null; }
         public int? GetInt32(string key) { throw null; }
         public long? GetInt64(string key) { throw null; }
@@ -84,18 +81,36 @@ namespace Azure.Data.Tables
         bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Contains(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
         void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.CopyTo(System.Collections.Generic.KeyValuePair<string, object>[] array, int arrayIndex) { }
         bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Remove(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
+        System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
+    }
+    public partial class TableRetentionPolicy
+    {
+        public TableRetentionPolicy(bool enabled) { }
+        public int? Days { get { throw null; } set { } }
+        public bool Enabled { get { throw null; } set { } }
+    }
+    public partial class TablesClientOptions : Azure.Core.ClientOptions
+    {
+        public TablesClientOptions(Azure.Data.Tables.TablesClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TablesClientOptions.ServiceVersion.V2019_02_02) { }
+        public enum ServiceVersion
+        {
+            V2019_02_02 = 1,
+        }
     }
     public partial class TableServiceClient
     {
         protected TableServiceClient() { }
         public TableServiceClient(string connectionString) { }
-        public TableServiceClient(string connectionString, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableServiceClient(string connectionString, Azure.Data.Tables.TablesClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint, Azure.AzureSasCredential credential) { }
-        public TableServiceClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableServiceClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Data.Tables.TablesClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential) { }
-        public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TablesClientOptions options) { }
+        public virtual string AccountName { get { throw null; } }
+        public static string CreateQueryFilter(System.FormattableString filter) { throw null; }
+        public static string CreateQueryFilter(System.Linq.Expressions.Expression<System.Func<Azure.Data.Tables.Models.TableItem, bool>> filter) { throw null; }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> CreateTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableItem>> CreateTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> CreateTableIfNotExists(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -109,8 +124,12 @@ namespace Azure.Data.Tables
         public virtual Azure.Response<Azure.Data.Tables.Models.TableServiceStatistics> GetStatistics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableServiceStatistics>> GetStatisticsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Data.Tables.TableClient GetTableClient(string tableName) { throw null; }
-        public virtual Azure.Pageable<Azure.Data.Tables.Models.TableItem> GetTables(string filter = null, int? maxPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Data.Tables.Models.TableItem> GetTablesAsync(string filter = null, int? maxPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.Tables.Models.TableItem> Query(System.FormattableString filter, int? maxPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.Tables.Models.TableItem> Query(System.Linq.Expressions.Expression<System.Func<Azure.Data.Tables.Models.TableItem, bool>> filter, int? maxPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.Tables.Models.TableItem> Query(string filter = null, int? maxPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.Tables.Models.TableItem> QueryAsync(System.FormattableString filter, int? maxPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.Tables.Models.TableItem> QueryAsync(System.Linq.Expressions.Expression<System.Func<Azure.Data.Tables.Models.TableItem, bool>> filter, int? maxPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.Tables.Models.TableItem> QueryAsync(string filter = null, int? maxPerPage = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetProperties(Azure.Data.Tables.Models.TableServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(Azure.Data.Tables.Models.TableServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -120,21 +139,34 @@ namespace Azure.Data.Tables
         public string AccountName { get { throw null; } }
         public void SetAccountKey(string accountKey) { }
     }
-    public static partial class TablesModelFactory
+    public partial class TableSignedIdentifier
     {
-        public static Azure.Data.Tables.Models.TableItem TableItem(string tableName, string odataType, string odataId, string odataEditLink) { throw null; }
+        public TableSignedIdentifier(string id, Azure.Data.Tables.Models.TableAccessPolicy accessPolicy) { }
+        public Azure.Data.Tables.Models.TableAccessPolicy AccessPolicy { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
     }
-    public partial class TableTransactionalBatch
+    public partial class TableTransactionAction
     {
-        protected TableTransactionalBatch() { }
-        public virtual void AddEntities<T>(System.Collections.Generic.IEnumerable<T> entities) where T : class, Azure.Data.Tables.ITableEntity, new() { }
-        public virtual void AddEntity<T>(T entity) where T : class, Azure.Data.Tables.ITableEntity, new() { }
-        public virtual void DeleteEntity(string rowKey, Azure.ETag ifMatch = default(Azure.ETag)) { }
-        public virtual Azure.Response<Azure.Data.Tables.Models.TableBatchResponse> SubmitBatch(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableBatchResponse>> SubmitBatchAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual bool TryGetFailedEntityFromException(Azure.RequestFailedException exception, out Azure.Data.Tables.ITableEntity failedEntity) { throw null; }
-        public virtual void UpdateEntity<T>(T entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) where T : class, Azure.Data.Tables.ITableEntity, new() { }
-        public virtual void UpsertEntity<T>(T entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) where T : class, Azure.Data.Tables.ITableEntity, new() { }
+        public TableTransactionAction(Azure.Data.Tables.TableTransactionActionType actionType, Azure.Data.Tables.ITableEntity entity) { }
+        public TableTransactionAction(Azure.Data.Tables.TableTransactionActionType actionType, Azure.Data.Tables.ITableEntity entity, Azure.ETag etag = default(Azure.ETag)) { }
+        public Azure.Data.Tables.TableTransactionActionType ActionType { get { throw null; } }
+        public Azure.Data.Tables.ITableEntity Entity { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+    }
+    public enum TableTransactionActionType
+    {
+        Add = 0,
+        UpdateMerge = 1,
+        UpdateReplace = 2,
+        Delete = 3,
+        UpsertMerge = 4,
+        UpsertReplace = 5,
+    }
+    public partial class TableTransactionFailedException : Azure.RequestFailedException
+    {
+        public TableTransactionFailedException(Azure.RequestFailedException requestFailedException) : base (default(string)) { }
+        protected TableTransactionFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
+        public int? FailedTransactionActionIndex { get { throw null; } }
     }
     public enum TableUpdateMode
     {
@@ -144,39 +176,21 @@ namespace Azure.Data.Tables
 }
 namespace Azure.Data.Tables.Models
 {
-    public partial class RetentionPolicy
-    {
-        public RetentionPolicy(bool enabled) { }
-        public int? Days { get { throw null; } set { } }
-        public bool Enabled { get { throw null; } set { } }
-    }
-    public partial class SignedIdentifier
-    {
-        public SignedIdentifier(string id, Azure.Data.Tables.Models.TableAccessPolicy accessPolicy) { }
-        public Azure.Data.Tables.Models.TableAccessPolicy AccessPolicy { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-    }
     public partial class TableAccessPolicy
     {
-        public TableAccessPolicy(System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, string permission) { }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public TableAccessPolicy(System.DateTimeOffset? startsOn, System.DateTimeOffset? expiresOn, string permission) { }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public string Permission { get { throw null; } set { } }
-        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
     }
     public partial class TableAnalyticsLoggingSettings
     {
-        public TableAnalyticsLoggingSettings(string version, bool delete, bool read, bool write, Azure.Data.Tables.Models.RetentionPolicy retentionPolicy) { }
+        public TableAnalyticsLoggingSettings(string version, bool delete, bool read, bool write, Azure.Data.Tables.TableRetentionPolicy retentionPolicy) { }
         public bool Delete { get { throw null; } set { } }
         public bool Read { get { throw null; } set { } }
-        public Azure.Data.Tables.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
+        public Azure.Data.Tables.TableRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         public bool Write { get { throw null; } set { } }
-    }
-    public partial class TableBatchResponse
-    {
-        internal TableBatchResponse() { }
-        public int ResponseCount { get { throw null; } }
-        public Azure.Response GetResponseForEntity(string rowKey) { throw null; }
     }
     public partial class TableCorsRule
     {
@@ -186,6 +200,70 @@ namespace Azure.Data.Tables.Models
         public string AllowedOrigins { get { throw null; } set { } }
         public string ExposedHeaders { get { throw null; } set { } }
         public int MaxAgeInSeconds { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TableErrorCode : System.IEquatable<Azure.Data.Tables.Models.TableErrorCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TableErrorCode(string value) { throw null; }
+        public static Azure.Data.Tables.Models.TableErrorCode AccountIOPSLimitExceeded { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode AtomFormatNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode AuthorizationPermissionMismatch { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode AuthorizationResourceTypeMismatch { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode CannotCreateTableWithIOPSGreaterThanMaxAllowedPerTable { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode CommandsInBatchActOnDifferentPartitions { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode ContentLengthExceeded { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode DuplicateKeyPropertySpecified { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode DuplicatePropertiesSpecified { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode EntityAlreadyExists { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode EntityNotFound { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode EntityTooLarge { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode Forbidden { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode InvalidDuplicateRow { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode InvalidInput { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode InvalidValueType { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode JsonFormatNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode JsonVerboseFormatNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode KeyValueTooLarge { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode MediaTypeNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode MethodNotAllowed { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode NotImplemented { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode OperationTimedOut { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode OperatorInvalid { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode OutOfRangeInput { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeyEqualityComparisonExpected { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeyNotSpecified { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeyPropertyCannotBeUpdated { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeySpecifiedMoreThanOnce { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PerTableIOPSDecrementLimitReached { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PerTableIOPSIncrementLimitReached { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PrimaryKeyPropertyIsInvalidType { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertiesNeedValue { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertyNameInvalid { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertyNameTooLong { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertyValueTooLarge { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode ResourceNotFound { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode SettingIOPSForATableInProvisioningNotAllowed { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableAlreadyExists { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableBeingDeleted { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableHasNoProperties { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableHasNoSuchProperty { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableNotFound { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TooManyProperties { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode UpdateConditionNotSatisfied { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode XMethodIncorrectCount { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode XMethodIncorrectValue { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode XMethodNotUsingPost { get { throw null; } }
+        public bool Equals(Azure.Data.Tables.Models.TableErrorCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.Tables.Models.TableErrorCode left, Azure.Data.Tables.Models.TableErrorCode right) { throw null; }
+        public static implicit operator Azure.Data.Tables.Models.TableErrorCode (string value) { throw null; }
+        public static bool operator !=(Azure.Data.Tables.Models.TableErrorCode left, Azure.Data.Tables.Models.TableErrorCode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TableGeoReplicationInfo
     {
@@ -214,15 +292,15 @@ namespace Azure.Data.Tables.Models
     }
     public partial class TableItem
     {
-        internal TableItem() { }
-        public string TableName { get { throw null; } }
+        public TableItem(string name) { }
+        public string Name { get { throw null; } }
     }
     public partial class TableMetrics
     {
         public TableMetrics(bool enabled) { }
         public bool Enabled { get { throw null; } set { } }
         public bool? IncludeApis { get { throw null; } set { } }
-        public Azure.Data.Tables.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
+        public Azure.Data.Tables.TableRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
     public partial class TableServiceProperties
@@ -237,6 +315,12 @@ namespace Azure.Data.Tables.Models
     {
         internal TableServiceStatistics() { }
         public Azure.Data.Tables.Models.TableGeoReplicationInfo GeoReplication { get { throw null; } }
+    }
+    public partial class TableTransactionResult
+    {
+        internal TableTransactionResult() { }
+        public int ResponseCount { get { throw null; } }
+        public Azure.Response GetResponseForEntity(string rowKey) { throw null; }
     }
 }
 namespace Azure.Data.Tables.Sas
@@ -380,5 +464,14 @@ namespace Azure.Data.Tables.Sas
         public string Tablename { get { throw null; } set { } }
         public override string ToString() { throw null; }
         public System.Uri ToUri() { throw null; }
+    }
+}
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class TableClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.Tables.TableServiceClient, Azure.Data.Tables.TablesClientOptions> AddTableServiceClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.Tables.TableServiceClient, Azure.Data.Tables.TablesClientOptions> AddTableServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Data.Tables.TableSharedKeyCredential sharedKeyCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.Tables.TableServiceClient, Azure.Data.Tables.TablesClientOptions> AddTableServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

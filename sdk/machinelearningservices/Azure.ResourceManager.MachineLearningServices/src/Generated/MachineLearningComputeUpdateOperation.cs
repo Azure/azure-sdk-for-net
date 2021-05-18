@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class MachineLearningComputeUpdateOperation : Operation<ComputeResource>, IOperationSource<ComputeResource>
     {
         private readonly ArmOperationHelpers<ComputeResource> _operation;
+
+        /// <summary> Initializes a new instance of MachineLearningComputeUpdateOperation for mocking. </summary>
+        protected MachineLearningComputeUpdateOperation()
+        {
+        }
+
         internal MachineLearningComputeUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ComputeResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "MachineLearningComputeUpdateOperation");

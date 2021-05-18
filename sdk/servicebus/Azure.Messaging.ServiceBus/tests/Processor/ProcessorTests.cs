@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Messaging.ServiceBus.Authorization;
+using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
@@ -18,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotAddNullHandler()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusPlugin[] { },
@@ -32,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void MustSetMessageHandler()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusPlugin[] { },
@@ -45,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void MustSetErrorHandler()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusPlugin[] { },
@@ -60,7 +63,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotAddTwoHandlersToTheSameEvent()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusPlugin[] { },
@@ -77,7 +80,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotRemoveHandlerThatHasNotBeenAdded()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusPlugin[] { },
@@ -101,7 +104,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CanRemoveHandlerThatHasBeenAdded()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusPlugin[] { },
@@ -136,7 +139,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 PrefetchCount = 5,
                 ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
-                MaxReceiveWaitTime = TimeSpan.FromSeconds(10)
+                MaxReceiveWaitTime = TimeSpan.FromSeconds(10),
+                SubQueue = SubQueue.DeadLetter
             };
             var processor = client.CreateProcessor("queueName", options);
             Assert.AreEqual(options.AutoCompleteMessages, processor.AutoCompleteMessages);
@@ -146,6 +150,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
             Assert.AreEqual(options.MaxReceiveWaitTime, processor.MaxReceiveWaitTime);
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
+            Assert.AreEqual(EntityNameFormatter.FormatDeadLetterPath("queueName"), processor.EntityPath);
             Assert.IsFalse(processor.IsClosed);
             Assert.IsFalse(processor.IsProcessing);
         }
@@ -287,7 +292,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public async Task CanDisposeStartedProcessorMultipleTimes()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusPlugin[] { },
@@ -304,7 +309,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public async Task CanDisposeClosedProcessor()
         {
             var processor = new ServiceBusProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 false,
                 new ServiceBusPlugin[] { },
@@ -316,6 +321,144 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await processor.CloseAsync();
 
             await processor.DisposeAsync();
+        }
+
+        [Test]
+        public async Task CanRaiseEventsOnMockProcessor()
+        {
+            var mockProcessor = new MockProcessor();
+            bool processMessageCalled = false;
+            bool processErrorCalled = false;
+
+            var processArgs = new ProcessMessageEventArgs(
+                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1"),
+                new Mock<ServiceBusReceiver>().Object,
+                CancellationToken.None);
+
+            var errorArgs = new ProcessErrorEventArgs(
+                new ServiceBusException("error", ServiceBusFailureReason.MessageSizeExceeded),
+                ServiceBusErrorSource.Abandon,
+                "namespace",
+                "entityPath",
+                CancellationToken.None);
+
+            mockProcessor.ProcessMessageAsync += args =>
+            {
+                processMessageCalled = true;
+                Assert.AreEqual("1", args.Message.MessageId);
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.ProcessErrorAsync += args =>
+            {
+                processErrorCalled = true;
+                Assert.AreEqual(
+                    ServiceBusFailureReason.MessageSizeExceeded,
+                    ((ServiceBusException)args.Exception).Reason);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
+                Assert.AreEqual(ServiceBusErrorSource.Abandon, args.ErrorSource);
+                return Task.CompletedTask;
+            };
+
+            await mockProcessor.OnProcessMessageAsync(processArgs);
+            await mockProcessor.OnProcessErrorAsync(errorArgs);
+
+            Assert.IsTrue(processMessageCalled);
+            Assert.IsTrue(processErrorCalled);
+        }
+
+        [Test]
+        public async Task CannotStartProcessorWhenProcessorIsDisposed()
+        {
+            var mockConnection = GetMockedReceiverConnection();
+
+            var processor = new ServiceBusProcessor(
+                mockConnection,
+                "entityPath",
+                false,
+                new ServiceBusPlugin[] { },
+                new ServiceBusProcessorOptions());
+
+            processor.ProcessMessageAsync += _ => Task.CompletedTask;
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+
+            await processor.DisposeAsync();
+
+            Assert.That(async () => await processor.StartProcessingAsync(),
+                Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusProcessor)));
+        }
+
+        [Test]
+        public async Task CannotStartProcessorWhenConnectionIsClosed()
+        {
+            var connectionClosed = false;
+            var mockTransportClient = new Mock<TransportClient>();
+            var mockConnection = new Mock<ServiceBusConnection>("not.real.com", Mock.Of<TokenCredential>(), new ServiceBusClientOptions())
+            {
+                CallBase = true
+            };
+
+            mockTransportClient
+                .SetupGet(client => client.IsClosed)
+                .Returns(() => connectionClosed);
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportClient(
+                    It.IsAny<ServiceBusTokenCredential>(),
+                    It.IsAny<ServiceBusClientOptions>()))
+                .Returns(mockTransportClient.Object);
+
+            var processor = new ServiceBusProcessor(
+                mockConnection.Object,
+                "entityPath",
+                false,
+                new ServiceBusPlugin[] { },
+                new ServiceBusProcessorOptions());
+
+            processor.ProcessMessageAsync += _ => Task.CompletedTask;
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+
+            connectionClosed = true;
+
+            Assert.That(async () => await processor.StartProcessingAsync(),
+                Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+
+            await processor.DisposeAsync();
+        }
+
+        [Test]
+        public async Task CloseRespectsCancellationToken()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};
+            mockProcessor.Setup(
+                p => p.IsProcessing).Returns(true);
+            var cts = new CancellationTokenSource();
+
+            // mutate the cancellation token to distinguish it from CancellationToken.None
+            cts.CancelAfter(100);
+
+            await mockProcessor.Object.CloseAsync(cts.Token);
+            mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
+        }
+    }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    internal class MockProcessor : ServiceBusProcessor
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        public MockProcessor() : base()
+        {
+        }
+
+        protected internal override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
+        {
+            await base.OnProcessMessageAsync(args);
+        }
+
+        protected internal override async Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+        {
+            await base.OnProcessErrorAsync(args);
         }
     }
 }

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewayConnectionsSetSharedKeyOperation : Operation<ConnectionSharedKey>, IOperationSource<ConnectionSharedKey>
     {
         private readonly ArmOperationHelpers<ConnectionSharedKey> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionsSetSharedKeyOperation for mocking. </summary>
+        protected VirtualNetworkGatewayConnectionsSetSharedKeyOperation()
+        {
+        }
+
         internal VirtualNetworkGatewayConnectionsSetSharedKeyOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ConnectionSharedKey>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkGatewayConnectionsSetSharedKeyOperation");

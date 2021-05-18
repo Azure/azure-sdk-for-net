@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
@@ -56,6 +57,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='azureRegion'>
         /// Azure region to hit Api
         /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -77,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AADPropertiesResource>> GetWithHttpMessagesAsync(string azureRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AADPropertiesResource>> GetWithHttpMessagesAsync(string azureRegion, ODataQuery<BMSAADPropertiesQueryObject> odataQuery = default(ODataQuery<BMSAADPropertiesQueryObject>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (azureRegion == null)
             {
@@ -95,6 +99,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("azureRegion", azureRegion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -106,6 +111,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             _url = _url.Replace("{azureRegion}", System.Uri.EscapeDataString(azureRegion));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter))
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));

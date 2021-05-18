@@ -10,11 +10,12 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// A server DNS alias acquisition request.
+    /// A server dns alias acquisition request.
     /// </summary>
     public partial class ServerDnsAliasAcquisition
     {
@@ -31,7 +32,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         /// <param name="oldServerDnsAliasId">The id of the server alias that
         /// will be acquired to point to this server instead.</param>
-        public ServerDnsAliasAcquisition(string oldServerDnsAliasId = default(string))
+        public ServerDnsAliasAcquisition(string oldServerDnsAliasId)
         {
             OldServerDnsAliasId = oldServerDnsAliasId;
             CustomInit();
@@ -49,5 +50,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         [JsonProperty(PropertyName = "oldServerDnsAliasId")]
         public string OldServerDnsAliasId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (OldServerDnsAliasId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "OldServerDnsAliasId");
+            }
+        }
     }
 }

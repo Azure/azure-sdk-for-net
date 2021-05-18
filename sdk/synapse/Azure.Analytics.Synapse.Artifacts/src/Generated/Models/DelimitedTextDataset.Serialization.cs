@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DelimitedTextDatasetConverter))]
     public partial class DelimitedTextDataset : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -91,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CompressionLevel))
             {
                 writer.WritePropertyName("compressionLevel");
-                writer.WriteStringValue(CompressionLevel.Value.ToString());
+                writer.WriteObjectValue(CompressionLevel);
             }
             if (Optional.IsDefined(QuoteChar))
             {
@@ -136,8 +139,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> columnDelimiter = default;
             Optional<object> rowDelimiter = default;
             Optional<object> encodingName = default;
-            Optional<DelimitedTextCompressionCodec> compressionCodec = default;
-            Optional<DatasetCompressionLevel> compressionLevel = default;
+            Optional<CompressionCodec> compressionCodec = default;
+            Optional<object> compressionLevel = default;
             Optional<object> quoteChar = default;
             Optional<object> escapeChar = default;
             Optional<object> firstRowAsHeader = default;
@@ -277,7 +280,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            compressionCodec = new DelimitedTextCompressionCodec(property0.Value.GetString());
+                            compressionCodec = new CompressionCodec(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("compressionLevel"))
@@ -287,7 +290,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            compressionLevel = new DatasetCompressionLevel(property0.Value.GetString());
+                            compressionLevel = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("quoteChar"))
@@ -336,7 +339,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, Optional.ToNullable(compressionCodec), Optional.ToNullable(compressionLevel), quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
+            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, Optional.ToNullable(compressionCodec), compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
+        }
+
+        internal partial class DelimitedTextDatasetConverter : JsonConverter<DelimitedTextDataset>
+        {
+            public override void Write(Utf8JsonWriter writer, DelimitedTextDataset model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DelimitedTextDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDelimitedTextDataset(document.RootElement);
+            }
         }
     }
 }

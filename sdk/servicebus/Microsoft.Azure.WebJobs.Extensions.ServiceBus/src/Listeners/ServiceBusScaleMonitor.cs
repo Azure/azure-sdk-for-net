@@ -3,15 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
@@ -22,7 +21,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly string _functionId;
         private readonly EntityType _entityType;
         private readonly string _entityPath;
-        private readonly string _connectionString;
         private readonly ScaleMonitorDescriptor _scaleMonitorDescriptor;
         private readonly bool _isListeningOnDeadLetterQueue;
         private readonly Lazy<ServiceBusReceiver> _receiver;
@@ -31,16 +29,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private DateTime _nextWarningTime;
 
-        public ServiceBusScaleMonitor(string functionId, EntityType entityType, string entityPath, string connectionString, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory)
+        public ServiceBusScaleMonitor(string functionId, EntityType entityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
         {
             _functionId = functionId;
             _entityType = entityType;
             _entityPath = entityPath;
-            _connectionString = connectionString;
             _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(CultureInfo.InvariantCulture));
             _isListeningOnDeadLetterQueue = entityPath.EndsWith(DeadLetterQueuePath, StringComparison.OrdinalIgnoreCase);
             _receiver = receiver;
-            _administrationClient = new Lazy<ServiceBusAdministrationClient>(() => new ServiceBusAdministrationClient(_connectionString));
+            _administrationClient = new Lazy<ServiceBusAdministrationClient>(() => clientFactory.CreateAdministrationClient(connection));
             _logger = loggerFactory.CreateLogger<ServiceBusScaleMonitor>();
             _nextWarningTime = DateTime.UtcNow;
         }

@@ -165,7 +165,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -214,7 +214,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewFileName();
             DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
@@ -244,7 +244,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_Builder()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewFileName();
             DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
@@ -282,7 +282,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_BuilderWrongFileSystemName()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("http://127.0.0.1/");
             UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
             string path = GetNewFileName();
@@ -317,7 +317,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_BuilderWrongPath()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("http://127.0.0.1/");
             UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
             string fileSystemName = GetNewFileSystemName();
@@ -351,7 +351,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_BuilderIsDirectoryError()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("http://127.0.0.1/");
             UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
             string fileSystemName = GetNewFileSystemName();

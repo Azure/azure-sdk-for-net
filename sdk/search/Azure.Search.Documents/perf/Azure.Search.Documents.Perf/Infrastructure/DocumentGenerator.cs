@@ -10,7 +10,7 @@ namespace Azure.Search.Documents.Perf.Infrastructure
     {
         public static List<Hotel> GenerateHotels(int count, DocumentSize documentSize)
         {
-            List<Hotel> hotels = new (count);
+            List<Hotel> hotels = new(count);
 
             for (int i = 0; i < count; i++)
             {
@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Perf.Infrastructure
 
         private static Hotel CreateHotel(int id, DocumentSize documentSize)
         {
-            Hotel hotel = new ()
+            Hotel hotel = new()
             {
                 HotelId = id.ToString()
             };

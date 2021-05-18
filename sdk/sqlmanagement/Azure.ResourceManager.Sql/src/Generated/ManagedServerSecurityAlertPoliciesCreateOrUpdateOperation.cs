@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedServerSecurityAlertPoliciesCreateOrUpdateOperation : Operation<ManagedServerSecurityAlertPolicy>, IOperationSource<ManagedServerSecurityAlertPolicy>
     {
         private readonly ArmOperationHelpers<ManagedServerSecurityAlertPolicy> _operation;
+
+        /// <summary> Initializes a new instance of ManagedServerSecurityAlertPoliciesCreateOrUpdateOperation for mocking. </summary>
+        protected ManagedServerSecurityAlertPoliciesCreateOrUpdateOperation()
+        {
+        }
+
         internal ManagedServerSecurityAlertPoliciesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ManagedServerSecurityAlertPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedServerSecurityAlertPoliciesCreateOrUpdateOperation");

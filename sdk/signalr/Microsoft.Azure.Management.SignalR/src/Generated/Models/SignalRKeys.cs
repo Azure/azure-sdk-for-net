@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// A class represents the access keys of SignalR service.
+    /// A class represents the access keys of the resource.
     /// </summary>
     public partial class SignalRKeys
     {
@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         /// <param name="primaryKey">The primary access key.</param>
         /// <param name="secondaryKey">The secondary access key.</param>
-        /// <param name="primaryConnectionString">SignalR connection string
-        /// constructed via the primaryKey</param>
-        /// <param name="secondaryConnectionString">SignalR connection string
+        /// <param name="primaryConnectionString">Connection string constructed
+        /// via the primaryKey</param>
+        /// <param name="secondaryConnectionString">Connection string
         /// constructed via the secondaryKey</param>
         public SignalRKeys(string primaryKey = default(string), string secondaryKey = default(string), string primaryConnectionString = default(string), string secondaryConnectionString = default(string))
         {
@@ -62,15 +62,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string SecondaryKey { get; set; }
 
         /// <summary>
-        /// Gets or sets signalR connection string constructed via the
-        /// primaryKey
+        /// Gets or sets connection string constructed via the primaryKey
         /// </summary>
         [JsonProperty(PropertyName = "primaryConnectionString")]
         public string PrimaryConnectionString { get; set; }
 
         /// <summary>
-        /// Gets or sets signalR connection string constructed via the
-        /// secondaryKey
+        /// Gets or sets connection string constructed via the secondaryKey
         /// </summary>
         [JsonProperty(PropertyName = "secondaryConnectionString")]
         public string SecondaryConnectionString { get; set; }

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewaysGetBgpPeerStatusOperation : Operation<BgpPeerStatusListResult>, IOperationSource<BgpPeerStatusListResult>
     {
         private readonly ArmOperationHelpers<BgpPeerStatusListResult> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetBgpPeerStatusOperation for mocking. </summary>
+        protected VirtualNetworkGatewaysGetBgpPeerStatusOperation()
+        {
+        }
+
         internal VirtualNetworkGatewaysGetBgpPeerStatusOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<BgpPeerStatusListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetBgpPeerStatusOperation");

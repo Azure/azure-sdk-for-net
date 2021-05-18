@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class AzureFirewallsCreateOrUpdateOperation : Operation<AzureFirewall>, IOperationSource<AzureFirewall>
     {
         private readonly ArmOperationHelpers<AzureFirewall> _operation;
+
+        /// <summary> Initializes a new instance of AzureFirewallsCreateOrUpdateOperation for mocking. </summary>
+        protected AzureFirewallsCreateOrUpdateOperation()
+        {
+        }
+
         internal AzureFirewallsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<AzureFirewall>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AzureFirewallsCreateOrUpdateOperation");

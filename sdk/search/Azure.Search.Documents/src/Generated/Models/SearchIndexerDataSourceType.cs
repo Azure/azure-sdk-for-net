@@ -27,17 +27,20 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string AzureBlobValue = "azureblob";
         private const string AzureTableValue = "azuretable";
         private const string MySqlValue = "mysql";
+        private const string AdlsGen2Value = "adlsgen2";
 
         /// <summary> Indicates an Azure SQL datasource. </summary>
         public static SearchIndexerDataSourceType AzureSql { get; } = new SearchIndexerDataSourceType(AzureSqlValue);
         /// <summary> Indicates a CosmosDB datasource. </summary>
         public static SearchIndexerDataSourceType CosmosDb { get; } = new SearchIndexerDataSourceType(CosmosDbValue);
-        /// <summary> Indicates a Azure Blob datasource. </summary>
+        /// <summary> Indicates an Azure Blob datasource. </summary>
         public static SearchIndexerDataSourceType AzureBlob { get; } = new SearchIndexerDataSourceType(AzureBlobValue);
-        /// <summary> Indicates a Azure Table datasource. </summary>
+        /// <summary> Indicates an Azure Table datasource. </summary>
         public static SearchIndexerDataSourceType AzureTable { get; } = new SearchIndexerDataSourceType(AzureTableValue);
         /// <summary> Indicates a MySql datasource. </summary>
         public static SearchIndexerDataSourceType MySql { get; } = new SearchIndexerDataSourceType(MySqlValue);
+        /// <summary> Indicates an ADLS Gen2 datasource. </summary>
+        public static SearchIndexerDataSourceType AdlsGen2 { get; } = new SearchIndexerDataSourceType(AdlsGen2Value);
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are the same. </summary>
         public static bool operator ==(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are not the same. </summary>

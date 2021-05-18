@@ -211,7 +211,7 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -370,7 +370,7 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -529,6 +529,52 @@ namespace Azure.Storage.Blobs.Specialized
                 blobUriBuilder.ToUri(),
                 ClientConfiguration,
                 ClientSideEncryption);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="BlobBaseClient"/>.
+        /// </remarks>
+        public virtual BlobBaseClient WithCustomerProvidedKey(CustomerProvidedKey? customerProvidedKey) => WithCustomerProvidedKeyCore(customerProvidedKey);
+
+        private protected virtual BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey? customerProvidedKey)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new BlobBaseClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration,
+                clientSideEncryption: ClientSideEncryption?.Clone());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="encryptionScope"/>.
+        ///
+        /// </summary>
+        /// <param name="encryptionScope">The encryption scope.</param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the encryption scope in the returned <see cref="BlobBaseClient"/>.
+        /// </remarks>
+        public virtual BlobBaseClient WithEncryptionScope(string encryptionScope) => WithEncryptionScopeCore(encryptionScope);
+
+        private protected virtual BlobBaseClient WithEncryptionScopeCore(string encryptionScope)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.EncryptionScope = encryptionScope;
+            return new BlobBaseClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration,
+                clientSideEncryption: ClientSideEncryption?.Clone());
         }
 
         /// <summary>
@@ -3403,6 +3449,11 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     return Response.FromValue(false, default);
                 }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobUsesCustomerSpecifiedEncryption)
+                {
+                    return Response.FromValue(true, default);
+                }
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
@@ -4850,7 +4901,20 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
-            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (builder == null)
+            {
+                throw Errors.ArgumentNull(nameof(builder));
+            }
+
+            // Deep copy of builder so we don't modify the user's original BlobSasBuilder.
+            builder = BlobSasBuilder.DeepCopy(builder);
+
+            // Assign builder's ContainerName, BlobName, Snapshot, and BlobVersionId, if they are null.
+            builder.BlobContainerName ??= BlobContainerName;
+            builder.BlobName ??= Name;
+            builder.Snapshot ??= _snapshot;
+            builder.BlobVersionId ??= _blobVersionId;
+
             if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(
@@ -4879,7 +4943,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };
             return sasUri.ToUri();
         }

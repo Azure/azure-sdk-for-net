@@ -18,6 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         public string ModelVersion { get; set; }
+        public bool? LoggingOptOut { get; set; }
         public StringIndexType? StringIndexType { get; set; }
     }
 }

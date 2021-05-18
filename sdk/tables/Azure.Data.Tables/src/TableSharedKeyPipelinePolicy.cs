@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using Azure.Core;
@@ -30,6 +27,9 @@ namespace Azure.Data.Tables
                 return ComputeSasSignature(credential, message);
             }
         }
+
+        private const string compQueryParam = "comp=";
+
         /// <summary>
         /// Shared key credentials used to sign requests
         /// </summary>
@@ -72,7 +72,7 @@ namespace Azure.Data.Tables
             return stringToSign;
         }
 
-        private string BuildCanonicalizedResource(Uri resource)
+        internal string BuildCanonicalizedResource(Uri resource)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authentication-for-the-azure-storage-services
             StringBuilder cr = new StringBuilder("/").Append(_credentials.AccountName);
@@ -89,50 +89,44 @@ namespace Azure.Data.Tables
                 cr.Append('/');
             }
 
-            System.Collections.Generic.IDictionary<string, string> parameters = GetQueryParameters(resource); // Returns URL decoded values
-            if (parameters.Count > 0)
+            // If the request URI addresses a component of the resource, append the appropriate query string.
+            // The query string should include the question mark and the comp parameter (for example, ?comp=metadata).
+            // No other parameters should be included on the query string.
+            // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key#shared-key-lite-and-table-service-format-for-2009-09-19-and-later
+            if (TryGetCompQueryParameterValue(resource, out string compValue))
             {
-                foreach (var name in parameters.Keys.OrderBy(key => key, StringComparer.Ordinal))
-                {
-                    // If the request URI addresses a component of the resource, append the appropriate query string.
-                    // The query string should include the question mark and the comp parameter (for example, ?comp=metadata).
-                    // No other parameters should be included on the query string.
-                    // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key#shared-key-lite-and-table-service-format-for-2009-09-19-and-later
-                    if (name == "comp")
-                    {
-#pragma warning disable CA1308 // Normalize strings to uppercase
-                        cr.Append('?').Append(name.ToLowerInvariant()).Append('=').Append(parameters[name]);
-#pragma warning restore CA1308 // Normalize strings to uppercase
-                    }
-                }
+                cr.Append("?comp=").Append(compValue);
             }
+
             return cr.ToString();
         }
-        public static IDictionary<string, string> GetQueryParameters(Uri uri)
+
+        public static bool TryGetCompQueryParameterValue(Uri uri, out string value)
         {
-            var parameters = new Dictionary<string, string>();
-            var query = uri.Query ?? "";
-            if (!string.IsNullOrEmpty(query))
+            value = null;
+
+            if (uri.Query == null || uri.Query.Length <= 0)
             {
-                if (query.StartsWith("?", true, CultureInfo.InvariantCulture))
-                {
-                    query = query.Substring(1);
-                }
-                foreach (var param in query.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    var parts = param.Split(new[] { '=' }, 2);
-                    var name = WebUtility.UrlDecode(parts[0]);
-                    if (parts.Length == 1)
-                    {
-                        parameters.Add(name, default);
-                    }
-                    else
-                    {
-                        parameters.Add(name, WebUtility.UrlDecode(parts[1]));
-                    }
-                }
+                return false;
             }
-            return parameters;
+            var query = uri.Query.AsSpan();
+            int iComp = query.IndexOf(compQueryParam.AsSpan(), StringComparison.OrdinalIgnoreCase);
+            if (iComp < 0)
+            {
+                return false;
+            }
+
+            query = query.Slice(iComp + compQueryParam.Length);
+
+            int iEndOfValue = query.IndexOf('&');
+
+            value = iEndOfValue switch
+            {
+                -1 => query.Slice(0).ToString(),
+                _ => query.Slice(0, iEndOfValue).ToString()
+            };
+
+            return true;
         }
     }
 }

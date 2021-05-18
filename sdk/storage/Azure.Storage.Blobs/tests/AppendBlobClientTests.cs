@@ -102,7 +102,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [Ignore("#10044: Re-enable failing Storage tests")]
         public void Ctor_CPK_EncryptionScope()
         {
             // Arrange
@@ -1834,6 +1833,39 @@ namespace Azure.Storage.Blobs.Test
                         await openWriteStream.FlushAsync();
                     });
             }
+        }
+
+        [RecordedTest]
+        public async Task WithCustomerProvidedKey()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            AppendBlobClient cpkBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()).WithCustomerProvidedKey(customerProvidedKey));
+            await cpkBlob.CreateAsync();
+            AppendBlobClient noCpkBlob = InstrumentClient(cpkBlob.WithCustomerProvidedKey(null));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                noCpkBlob.GetPropertiesAsync(),
+                e => Assert.AreEqual(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task WithEncryptionScope()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string encryptionScope = TestConfigDefault.EncryptionScope;
+            AppendBlobClient encryptionScopeBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()).WithEncryptionScope(encryptionScope));
+            await encryptionScopeBlob.CreateAsync();
+            AppendBlobClient noEncryptionScopeBlob = InstrumentClient(encryptionScopeBlob.WithEncryptionScope(null));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                noEncryptionScopeBlob.SetMetadataAsync(BuildMetadata()),
+                e => Assert.AreEqual(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]

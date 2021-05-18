@@ -49,7 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="referenceObjects"> Reference objects. </param>
         /// <param name="extendedProperties"> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </param>
         /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
-        internal CustomActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object command, LinkedServiceReference resourceLinkedService, object folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, object> extendedProperties, object retentionTimeInDays) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
+        internal CustomActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object command, LinkedServiceReference resourceLinkedService, object folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, object> extendedProperties, object retentionTimeInDays, object autoUserSpecification) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Command = command;
             ResourceLinkedService = resourceLinkedService;
@@ -57,6 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ReferenceObjects = referenceObjects;
             ExtendedProperties = extendedProperties;
             RetentionTimeInDays = retentionTimeInDays;
+            AutoUserSpecification = autoUserSpecification;
             Type = type ?? "Custom";
         }
 
@@ -72,5 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IDictionary<string, object> ExtendedProperties { get; }
         /// <summary> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </summary>
         public object RetentionTimeInDays { get; set; }
+        /// <summary> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </summary>
+        public object AutoUserSpecification { get; set; }
     }
 }

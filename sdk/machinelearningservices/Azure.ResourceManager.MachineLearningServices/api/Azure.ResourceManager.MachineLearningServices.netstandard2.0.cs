@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     }
     public partial class MachineLearningComputeCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.Models.ComputeResource>
     {
-        internal MachineLearningComputeCreateOrUpdateOperation() { }
+        protected MachineLearningComputeCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     }
     public partial class MachineLearningComputeDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal MachineLearningComputeDeleteOperation() { }
+        protected MachineLearningComputeDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     }
     public partial class MachineLearningComputeUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.Models.ComputeResource>
     {
-        internal MachineLearningComputeUpdateOperation() { }
+        protected MachineLearningComputeUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     }
     public partial class MachineLearningServiceCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.Models.ServiceResource>
     {
-        internal MachineLearningServiceCreateOrUpdateOperation() { }
+        protected MachineLearningServiceCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     }
     public partial class NotebooksPrepareOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.Models.NotebookResourceInfo>
     {
-        internal NotebooksPrepareOperation() { }
+        protected NotebooksPrepareOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     }
     public partial class WorkspacesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.Models.Workspace>
     {
-        internal WorkspacesCreateOrUpdateOperation() { }
+        protected WorkspacesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     }
     public partial class WorkspacesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal WorkspacesDeleteOperation() { }
+        protected WorkspacesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

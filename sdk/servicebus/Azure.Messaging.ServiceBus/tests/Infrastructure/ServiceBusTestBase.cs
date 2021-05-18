@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Moq;
 using NUnit.Framework;
@@ -59,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             return msg;
         }
 
-        protected byte[] GetRandomBuffer(long size)
+        public static byte[] GetRandomBuffer(long size)
         {
             var chars =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
@@ -79,22 +81,18 @@ namespace Azure.Messaging.ServiceBus.Tests
             return text;
         }
 
-        internal ServiceBusConnection GetMockedConnection()
+        internal ServiceBusConnection GetMockedReceiverConnection()
         {
             var mockTransportReceiver = new Mock<TransportReceiver>();
             mockTransportReceiver
-                .Setup(receiver => receiver.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Returns(async (int maximumMessageCount, TimeSpan? maxWaitTime, CancellationToken cancellationToken) =>
+                .Setup(receiver => receiver.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .Returns(async (int maximumMessageCount, TimeSpan? maxWaitTime, bool isProcessor, CancellationToken cancellationToken) =>
                 {
                     await Task.Delay(Timeout.Infinite, cancellationToken);
                     throw new NotImplementedException();
                 });
 
-            var mockConnection = new Mock<ServiceBusConnection>();
-
-            mockConnection
-                .Setup(connection => connection.RetryOptions)
-                .Returns(new ServiceBusRetryOptions());
+            var mockConnection = CreateMockConnection();
 
             mockConnection
                 .Setup(connection => connection.CreateTransportReceiver(
@@ -104,9 +102,27 @@ namespace Azure.Messaging.ServiceBus.Tests
                     It.IsAny<uint>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
-                    It.IsAny<bool>()))
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);
             return mockConnection.Object;
+        }
+
+        internal static Mock<ServiceBusConnection> CreateMockConnection()
+        {
+            var mockConnection = new Mock<ServiceBusConnection>("not.real.com", Mock.Of<TokenCredential>(), new ServiceBusClientOptions())
+            {
+                CallBase = true
+            };
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportClient(
+                    It.IsAny<ServiceBusTokenCredential>(),
+                    It.IsAny<ServiceBusClientOptions>()))
+                .Returns(Mock.Of<TransportClient>());
+
+            return mockConnection;
         }
     }
 }

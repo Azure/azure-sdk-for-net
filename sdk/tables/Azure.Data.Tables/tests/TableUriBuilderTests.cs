@@ -6,7 +6,7 @@ using System.Net;
 using Azure.Data.Tables.Sas;
 using NUnit.Framework;
 
-namespace Azure.Data.Tables.Test
+namespace Azure.Data.Tables.Tests
 {
     public class TableUriBuilderTests
     {

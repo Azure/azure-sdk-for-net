@@ -105,6 +105,35 @@ Configuration file used in the sample above:
 }
 ```
 
+### Registering a custom client factory
+
+If you want to take control over how the client instance is created or need to use other dependencies during the client construction use the `AddClient<TClient, TOptions>` method.
+
+Here's and example of how to use `IOptions<T>` instance to construct the client:
+
+```C# Snippet:UsingOptionsForClientConstruction
+public class MyApplicationOptions
+{
+    public Uri KeyVaultEndpoint { get; set; }
+}
+
+public void ConfigureServices(IServiceCollection services)
+{
+    // Configure a custom options instance
+    services.Configure<MyApplicationOptions>(options => options.KeyVaultEndpoint = new Uri("http://localhost/"));
+
+    services.AddAzureClients(builder =>
+    {
+        // Register a client using MyApplicationOptions to get constructor parameters
+        builder.AddClient<SecretClient, SecretClientOptions>((provider, credential, options) =>
+        {
+            var appOptions = provider.GetService<IOptions<MyApplicationOptions>>();
+            return new SecretClient(appOptions.Value.KeyVaultEndpoint, credential, options);
+        });
+    });
+}
+```
+
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 

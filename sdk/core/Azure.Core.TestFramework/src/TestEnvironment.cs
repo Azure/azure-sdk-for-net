@@ -7,11 +7,11 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using System.ComponentModel;
 using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
 {
@@ -23,6 +23,8 @@ namespace Azure.Core.TestFramework
     {
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
+
+        private static readonly Dictionary<Type, Task> s_environmentStateCache = new Dictionary<Type, Task>();
 
         private readonly string _prefix;
 
@@ -131,7 +133,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         ///   The URL of the Azure Authority host to be used for authentication. Recorded.
         /// </summary>
-        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST");
+        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST") ?? AzureAuthorityHosts.AzurePublicCloud.ToString();
 
         /// <summary>
         ///   The suffix for Azure Storage accounts for the active cloud environment, such as "core.windows.net".  Recorded.
@@ -147,11 +149,6 @@ namespace Azure.Core.TestFramework
         ///   The client secret of the Azure Active Directory service principal to use during Live tests. Not recorded.
         /// </summary>
         public string ClientSecret => GetVariable("CLIENT_SECRET");
-
-        /// <summary>
-        /// Determins if the current environment is Azure DevOps.
-        /// </summary>
-        public static bool IsRunningInCI => Environment.GetEnvironmentVariable("TF_BUILD") != null;
 
         public TokenCredential Credential
         {
@@ -177,6 +174,59 @@ namespace Azure.Core.TestFramework
 
                 return _credential;
             }
+        }
+
+        /// <summary>
+        /// Returns whether environment is ready to use. Should be overridden to provide service specific sampling scenario.
+        /// The test framework will wait until this returns true before starting tests.
+        /// Use this place to hook up logic that polls if eventual consistency has happened.
+        ///
+        /// Return true if environment is ready to use.
+        /// Return false if environment is not ready to use and framework should wait.
+        /// Throw if you want to fail the run fast.
+        /// </summary>
+        /// <returns>Whether environment is ready to use.</returns>
+        protected virtual ValueTask<bool> IsEnvironmentReadyAsync()
+        {
+            return new ValueTask<bool>(true);
+        }
+
+        /// <summary>
+        /// Waits until environment becomes ready to use. See <see cref="IsEnvironmentReadyAsync"/> to define sampling scenario.
+        /// </summary>
+        /// <returns>A task.</returns>
+        public async ValueTask WaitForEnvironmentAsync()
+        {
+            if (GlobalIsRunningInCI && Mode == RecordedTestMode.Live)
+            {
+                Task task;
+                lock (s_environmentStateCache)
+                {
+                    if (!s_environmentStateCache.TryGetValue(GetType(), out task))
+                    {
+                        task = WaitForEnvironmentInternalAsync();
+                        s_environmentStateCache[GetType()] = task;
+                    }
+                }
+                await task;
+            }
+        }
+
+        private async Task WaitForEnvironmentInternalAsync()
+        {
+            int numberOfTries = 60;
+            TimeSpan delay = TimeSpan.FromSeconds(10);
+            for (int i = 0; i < numberOfTries; i++)
+            {
+                var isReady = await IsEnvironmentReadyAsync();
+                if (isReady)
+                {
+                    return;
+                }
+                await Task.Delay(delay);
+            }
+
+            throw new InvalidOperationException("The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
         }
 
         /// <summary>
@@ -321,6 +371,74 @@ namespace Azure.Core.TestFramework
                 throw new InvalidOperationException($"Unable to determine the test directory for {assembly}");
             }
             return testProject;
+        }
+
+        /// <summary>
+        /// Determines if the current environment is Azure DevOps.
+        /// </summary>
+        public static bool GlobalIsRunningInCI => Environment.GetEnvironmentVariable("TF_BUILD") != null;
+
+        /// <summary>
+        /// Determines if the current global test mode.
+        /// </summary>
+        internal static RecordedTestMode GlobalTestMode
+        {
+            get
+            {
+                string modeString = TestContext.Parameters["TestMode"] ?? Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+
+                RecordedTestMode mode = RecordedTestMode.Playback;
+                if (!string.IsNullOrEmpty(modeString))
+                {
+                    mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
+                }
+
+                return mode;
+            }
+        }
+
+        /// <summary>
+        /// Determines if tests that use <see cref="ClientTestFixtureAttribute"/> should only test the latest version.
+        /// </summary>
+        internal static bool GlobalTestOnlyLatestVersion
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["OnlyLiveTestLatestServiceVersion"] ?? Environment.GetEnvironmentVariable("AZURE_ONLY_TEST_LATEST_SERVICE_VERSION");
+
+                bool.TryParse(switchString, out bool onlyTestLatestServiceVersion);
+
+                return onlyTestLatestServiceVersion;
+            }
+        }
+
+        /// <summary>
+        /// Determines service versions that would be tested in tests that use <see cref="ClientTestFixtureAttribute"/>.
+        /// NOTE: this variable only narrows the set of versions defined in the attribute
+        /// </summary>
+        internal static string[] GlobalTestServiceVersions
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["LiveTestServiceVersions"] ?? Environment.GetEnvironmentVariable("AZURE_LIVE_TEST_SERVICE_VERSIONS") ?? string.Empty;
+
+                return switchString.Split(new char[] {',', ';'}, StringSplitOptions.RemoveEmptyEntries);
+            }
+        }
+
+        /// <summary>
+        /// Determines if tests that use <see cref="RecordedTestAttribute"/> should try to re-record on failure.
+        /// </summary>
+        internal static bool GlobalDisableAutoRecording
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["DisableAutoRecording"] ?? Environment.GetEnvironmentVariable("AZURE_DISABLE_AUTO_RECORDING");
+
+                bool.TryParse(switchString, out bool disableAutoRecording);
+
+                return disableAutoRecording || GlobalIsRunningInCI;
+            }
         }
     }
 }

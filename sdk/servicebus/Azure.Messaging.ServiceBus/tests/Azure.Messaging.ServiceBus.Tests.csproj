@@ -9,12 +9,8 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <!--TODO - remove once new version of Core containing BD extensions is released-->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
-
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
