@@ -114,7 +114,7 @@
             "type": "string"
         },
         "LOGS_ENDPOINT": {
-            "value": "https://api.loganalytics.io/v1",
+            "value": "https://api.loganalytics.io",
             "type": "string"
         }
     }
