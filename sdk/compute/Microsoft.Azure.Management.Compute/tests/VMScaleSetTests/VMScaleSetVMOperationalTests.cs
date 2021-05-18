@@ -209,15 +209,16 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetVMOperations_Put()
         {
+            
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
                 bool passed = false;
+                InitializeCommon(context);
 
                 try
                 {
                     Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus2");
-                    InitializeCommon(context);
                     instanceId = "0";
 
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
