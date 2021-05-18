@@ -19,6 +19,9 @@ namespace Azure.ResourceManager.Core
         /// <summary> Metadata of the location, such as lat/long, paired region, and others. </summary>
         public LocationMetadata Metadata { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LocationData"/> class.
+        /// </summary>
         private LocationData()
         {
         }
