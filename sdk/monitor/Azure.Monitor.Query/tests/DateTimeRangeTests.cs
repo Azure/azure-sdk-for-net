@@ -48,5 +48,15 @@ namespace Azure.Monitor.Query.Tests
         {
             Assert.AreEqual(range, DateTimeRange.Parse(range).ToString());
         }
+
+        [TestCase("A")]
+        [TestCase("A/A")]
+        [TestCase("PT23M/PT23M/2021-05-04T03:02:01.0000000Z")]
+        [TestCase("1000000-05-04T03:02:01.0000000Z/PT23M")]
+        public void ParseThrowsFormatExceptionForInvalidInput(string range)
+        {
+            var ex = Assert.Throws<FormatException>(() => DateTimeRange.Parse(range));
+            StringAssert.StartsWith("Unable to parse the DateTimeRange value.", ex.Message);
+        }
     }
 }

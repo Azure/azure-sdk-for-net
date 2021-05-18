@@ -156,18 +156,30 @@ namespace Azure.Monitor.Query
         /// <exception cref="FormatException"><paramref name="value" /> is not in correct format to represent a <see langword="DateTimeRange" /> value.</exception>
         public static DateTimeRange Parse(string value)
         {
-            FormatException CreateFormatException() => new("Unable to parse the DateTimeRange value. " +
+            FormatException CreateFormatException(Exception inner = null) => new("Unable to parse the DateTimeRange value. " +
                                                                    "Expected one of the following formats:" +
                                                                    " Duration," +
                                                                    " Duration/EndTime," +
                                                                    " StartTime/Duration," +
-                                                                   " StartTime/EndTime");
+                                                                   " StartTime/EndTime", inner);
+
+            TimeSpan ParseTimeSpan(string s)
+            {
+                try
+                {
+                    return XmlConvert.ToTimeSpan(s);
+                }
+                catch (FormatException e)
+                {
+                    throw CreateFormatException(e);
+                }
+            }
 
             var parts = value.Split(new[] { '/' }, StringSplitOptions.None);
             switch (parts.Length)
             {
                 case 1:
-                    return XmlConvert.ToTimeSpan(parts[0]);
+                    return ParseTimeSpan(parts[0]);
                 case 2:
                     var firstIsDateTime = DateTimeOffset.TryParse(parts[0], out var dateTimeFirst);
                     var secondIsDateTime = DateTimeOffset.TryParse(parts[1], out var dateTimeSecond);
@@ -175,8 +187,8 @@ namespace Azure.Monitor.Query
                     return (firstIsDateTime, secondIsDateTime) switch
                     {
                         (true, true) => new DateTimeRange(dateTimeFirst, dateTimeSecond),
-                        (true, false) => new DateTimeRange(dateTimeFirst, XmlConvert.ToTimeSpan(parts[1])),
-                        (false, true) => new DateTimeRange(XmlConvert.ToTimeSpan(parts[0]), dateTimeSecond),
+                        (true, false) => new DateTimeRange(dateTimeFirst, ParseTimeSpan(parts[1])),
+                        (false, true) => new DateTimeRange(ParseTimeSpan(parts[0]), dateTimeSecond),
                         _ => throw CreateFormatException()
                     };
                 default:
