@@ -43,7 +43,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllHierarchies">
         /// // Get all Time Series hierarchies in the environment
-        /// AsyncPageable&lt;TimeSeriesHierarchy&gt; getAllHierarchies = client.Hierarchies.GetAsync();
+        /// AsyncPageable&lt;TimeSeriesHierarchy&gt; getAllHierarchies = hierarchiesClient.GetAsync();
         /// await foreach (TimeSeriesHierarchy hierarchy in getAllHierarchies)
         /// {
         ///     Console.WriteLine($&quot;Retrieved Time Series Insights hierarchy with Id: &apos;{hierarchy.Id}&apos; and Name: &apos;{hierarchy.Name}&apos;.&quot;);
@@ -291,8 +291,7 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     &quot;sampleHierarchyId&quot;
         /// };
         ///
-        /// Response&lt;TimeSeriesHierarchyOperationResult[]&gt; getHierarchiesByIdsResult = await client
-        ///             .Hierarchies
+        /// Response&lt;TimeSeriesHierarchyOperationResult[]&gt; getHierarchiesByIdsResult = await hierarchiesClient
         ///             .GetByIdAsync(tsiHierarchyIds);
         ///
         /// // The response of calling the API contains a list of hieararchy or error objects corresponding by position to the input parameter array in the request.
@@ -415,6 +414,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateHierarchies">
+        /// TimeSeriesInsightsHierarchies hierarchiesClient = client.GetHierarchiesClient();
+        ///
         /// var hierarchySource = new TimeSeriesHierarchySource();
         /// hierarchySource.InstanceFieldNames.Add(&quot;hierarchyLevel1&quot;);
         ///
@@ -429,8 +430,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// };
         ///
         /// // Create Time Series hierarchies
-        /// Response&lt;TimeSeriesHierarchyOperationResult[]&gt; createHierarchiesResult = await client
-        ///     .Hierarchies
+        /// Response&lt;TimeSeriesHierarchyOperationResult[]&gt; createHierarchiesResult = await hierarchiesClient
         ///     .CreateOrReplaceAsync(timeSeriesHierarchies);
         ///
         /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
@@ -658,8 +658,7 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     &quot;sampleHiearchyId&quot;
         /// };
         ///
-        /// Response&lt;TimeSeriesOperationError[]&gt; deleteHierarchiesResponse = await client
-        ///         .Hierarchies
+        /// Response&lt;TimeSeriesOperationError[]&gt; deleteHierarchiesResponse = await hierarchiesClient
         ///         .DeleteByIdAsync(tsiHierarchyIdsToDelete);
         ///
         /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter

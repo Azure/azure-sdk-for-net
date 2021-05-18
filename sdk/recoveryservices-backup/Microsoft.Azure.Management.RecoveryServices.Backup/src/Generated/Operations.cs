@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </return>
         public async Task<AzureOperationResponse<IPage<ClientDiscoveryValueForSingleApi>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2016-08-10";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

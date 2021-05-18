@@ -86,6 +86,8 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ContainerRegistryClient
     {
         protected ContainerRegistryClient() { }
+        public ContainerRegistryClient(System.Uri registryUri) { }
+        public ContainerRegistryClient(System.Uri registryUri, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
         public ContainerRegistryClient(System.Uri registryUri, Azure.Core.TokenCredential credential) { }
         public ContainerRegistryClient(System.Uri registryUri, Azure.Core.TokenCredential credential, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
         public virtual string LoginServer { get { throw null; } }

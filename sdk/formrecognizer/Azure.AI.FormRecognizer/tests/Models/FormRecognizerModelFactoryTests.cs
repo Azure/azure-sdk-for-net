@@ -182,8 +182,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryRegion());
         }
 
         [Test]
@@ -204,8 +203,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryRegion());
         }
 
         [Test]
@@ -226,8 +224,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryRegion());
         }
 
         [Test]
@@ -248,8 +245,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryRegion());
         }
 
         [Test]
@@ -270,8 +266,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryRegion());
         }
 
         [Test]
@@ -292,8 +287,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryRegion());
         }
 
         [Test]
@@ -317,8 +311,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryRegion());
         }
 
         [Test]
@@ -342,8 +335,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryRegion());
         }
 
         [Test]
@@ -363,39 +355,17 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryRegion());
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithCountryCodeValueType()
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithCountryRegionValueType()
         {
             var value = "BRA";
-            var fieldValue = FormRecognizerModelFactory.FieldValueWithCountryCodeValueType(value);
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithCountryRegionValueType(value);
 
-            Assert.AreEqual(FieldValueType.Country, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsCountryCode());
-
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
-        }
-
-        [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithGenderValueType()
-        {
-            var value = FieldValueGender.F;
-            var fieldValue = FormRecognizerModelFactory.FieldValueWithGenderValueType(value);
-
-            Assert.AreEqual(FieldValueType.Gender, fieldValue.ValueType);
-            Assert.AreEqual(value, fieldValue.AsGender());
+            Assert.AreEqual(FieldValueType.CountryRegion, fieldValue.ValueType);
+            Assert.AreEqual(value, fieldValue.AsCountryRegion());
 
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
@@ -406,7 +376,6 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
         }
 
         [Test]

@@ -17,6 +17,7 @@ namespace Azure.Core.TestFramework
     {
         private const string RandomSeedVariableKey = "RandomSeed";
         private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        // cspell: disable-next-line
         private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
@@ -314,7 +315,7 @@ namespace Azure.Core.TestFramework
 
         public DisableRecordingScope DisableRecording()
         {
-            return new DisableRecordingScope(this, EntryRecordModel.DontRecord);
+            return new DisableRecordingScope(this, EntryRecordModel.DoNotRecord);
         }
 
         public DisableRecordingScope DisableRequestBodyRecording()
