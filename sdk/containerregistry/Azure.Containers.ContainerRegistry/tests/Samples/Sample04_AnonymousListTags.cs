@@ -35,7 +35,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
             foreach (ArtifactTagProperties tag in tags)
             {
-                Console.WriteLine($"    {image.RegistryUri.Host}/{image.RepositoryName}:{tag}");
+                Console.WriteLine($"    {image.RegistryEndpoint.Host}/{image.RepositoryName}:{tag}");
             }
             #endregion
         }
@@ -63,7 +63,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
             await foreach (ArtifactTagProperties tag in tags)
             {
-                Console.WriteLine($"    {image.RegistryUri.Host}/{image.RepositoryName}:{tag}");
+                Console.WriteLine($"    {image.RegistryEndpoint.Host}/{image.RepositoryName}:{tag}");
             }
             #endregion
         }

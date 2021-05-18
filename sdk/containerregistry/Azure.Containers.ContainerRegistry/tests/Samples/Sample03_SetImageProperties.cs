@@ -31,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
             // Set permissions on the v1 image's "latest" tag
-            image.SetTagProperties("latest", new ContentProperties()
+            image.SetTagProperties("latest", new ArtifactTagProperties()
             {
                 CanWrite = false,
                 CanDelete = false
@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #endregion
 
             // Reset registry state
-            image.SetTagProperties("latest", new ContentProperties()
+            image.SetTagProperties("latest", new ArtifactTagProperties()
             {
                 CanRead = true,
                 CanList = true,
@@ -66,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
             // Set permissions on the image's "latest" tag
-            await image.SetTagPropertiesAsync("latest", new ContentProperties()
+            await image.SetTagPropertiesAsync("latest", new ArtifactTagProperties()
             {
                 CanWrite = false,
                 CanDelete = false
@@ -74,7 +74,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #endregion
 
             // Reset registry state
-            await image.SetTagPropertiesAsync("latest", new ContentProperties()
+            await image.SetTagPropertiesAsync("latest", new ArtifactTagProperties()
             {
                 CanRead = true,
                 CanList = true,
