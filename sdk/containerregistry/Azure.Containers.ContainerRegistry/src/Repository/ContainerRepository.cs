@@ -36,7 +36,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        internal ContainerRepository(Uri registryEndpoint, string name,  ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
+        internal ContainerRepository(Uri registryEndpoint, string name, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
         {
             _name = name;
             _registryEndpoint = registryEndpoint;
@@ -136,7 +136,8 @@ namespace Azure.Containers.ContainerRegistry
                 CanDelete = value.CanDelete,
                 CanList = value.CanList,
                 CanRead = value.CanRead,
-                CanWrite = value.CanWrite
+                CanWrite = value.CanWrite,
+                TeleportEnabled = value.TeleportEnabled
             };
         }
 
