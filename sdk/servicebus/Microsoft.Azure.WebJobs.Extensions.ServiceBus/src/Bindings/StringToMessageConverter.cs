@@ -6,7 +6,7 @@ using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
-    internal class StringToBrokeredMessageConverter : IConverter<string, ServiceBusMessage>
+    internal class StringToMessageConverter : IConverter<string, ServiceBusMessage>
     {
         public ServiceBusMessage Convert(string input)
         {
