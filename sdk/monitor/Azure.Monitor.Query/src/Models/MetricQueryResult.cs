@@ -21,5 +21,9 @@ namespace Azure.Monitor.Query.Models
         /// This may be adjusted in the future and returned back from what was originally requested.
         /// </summary>
         public DateTimeRange TimeSpan => DateTimeRange.Parse(_timespan);
+
+        /// <summary> The region of the resource been queried for metrics. </summary>
+        [CodeGenMember("Resourceregion")]
+        public string ResourceRegion { get; }
     }
 }

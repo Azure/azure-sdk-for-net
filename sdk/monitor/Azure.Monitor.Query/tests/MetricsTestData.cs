@@ -94,7 +94,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeries = metrics.Value.Metrics[0].Timeseries.FirstOrDefault();
+            var timeSeries = metrics.Value.Metrics[0].TimeSeries.FirstOrDefault();
             if (timeSeries == null)
             {
                 return false;
