@@ -33,7 +33,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Initializes a new instance of <see cref="CallClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallClient(string connectionString, CallClientOptions? options = default)
+        public CallClient(string connectionString, CallClientOptions options = default)
             : this(
                   ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
                   options ?? new CallClientOptions())
@@ -43,7 +43,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallClient(Uri endpoint, AzureKeyCredential keyCredential, CallClientOptions? options = default)
+        public CallClient(Uri endpoint, AzureKeyCredential keyCredential, CallClientOptions options = default)
             : this(
                 AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 AssertNotNull(keyCredential, nameof(keyCredential)),
@@ -54,7 +54,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="tokenCredential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallClient(Uri endpoint, TokenCredential tokenCredential, CallClientOptions? options = default)
+        public CallClient(Uri endpoint, TokenCredential tokenCredential, CallClientOptions options = default)
             : this(
                   AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                   AssertNotNull(tokenCredential, nameof(tokenCredential)),
@@ -426,7 +426,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="callLegId"/> or <paramref name="participants"/> is null. </exception>
-        public virtual async Task<Response> InviteParticipantsAsync(string callLegId, IEnumerable<CommunicationIdentifier> participants, string operationContext, string? alternateCallerId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> InviteParticipantsAsync(string callLegId, IEnumerable<CommunicationIdentifier> participants, string operationContext, string alternateCallerId = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(InviteParticipants)}");
             scope.Start();
@@ -463,7 +463,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="callLegId"/> or <paramref name="participants"/> is null. </exception>
-        public virtual Response InviteParticipants(string callLegId, IEnumerable<CommunicationIdentifier> participants, string operationContext, string? alternateCallerId = null, CancellationToken cancellationToken = default)
+        public virtual Response InviteParticipants(string callLegId, IEnumerable<CommunicationIdentifier> participants, string operationContext, string alternateCallerId = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(InviteParticipants)}");
             scope.Start();

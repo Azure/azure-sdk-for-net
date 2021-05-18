@@ -11,11 +11,6 @@ namespace Azure.Communication.Calling.Server.Tests
     /// </summary>
     public class ServerCallingTestEnvironment : CommunicationTestEnvironment
     {
-        // please find the allowed package value in tests.yml
-        private const string ServerCallingTestPackagesEnabled = "servercalling";
-
-        public override string ExpectedTestPackagesEnabled { get { return ServerCallingTestPackagesEnabled; } }
-
         public string ToPhoneNumber => GetRecordedVariable(AzurePhoneNumber);
 
         public string FromPhoneNumber => GetRecordedVariable(AzurePhoneNumber);

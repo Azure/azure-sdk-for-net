@@ -11,10 +11,10 @@ namespace Azure.Communication.Calling.Server
     public class CreateCallOptions
     {
         /// <summary> The alternate caller id of the source. </summary>
-        public PhoneNumberIdentifier? AlternateCallerId { get; set; }
+        public PhoneNumberIdentifier AlternateCallerId { get; set; }
 
         /// <summary> The subject. </summary>
-        public string? Subject { get; set; }
+        public string Subject { get; set; }
 
         /// <summary> The callback URI. </summary>
         public Uri CallbackUri { get; }

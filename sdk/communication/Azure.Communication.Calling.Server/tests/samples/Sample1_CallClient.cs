@@ -34,9 +34,9 @@ namespace Azure.Communication.Calling.Server.Tests.samples
             Console.WriteLine("Performing CreateCall operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCallAsync
             CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
-                //@@ source: "<source-identifier>", // Your Azure Communication Resource Guid Id used to make a Call
-                //@@ targets: "<targets-phone-number>", // E.164 formatted recipient phone number
-                //@@ callOptions: "<callOptions-object>", // The request payload for creating a call.
+                //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
+                //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
+                //@@ callOptions: <callOptions-object>, // The request payload for creating a call.
                 /*@@*/ source: source,
                 /*@@*/ targets: targets,
                 /*@@*/ callOptions: createCallOption);
@@ -60,9 +60,9 @@ namespace Azure.Communication.Calling.Server.Tests.samples
             Console.WriteLine("Performing CreateCall operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCall
             CreateCallResponse createCallResponse = callClient.CreateCall(
-                //@@ source: "<source-identifier>", // Your Azure Communication Resource Guid Id used to make a Call
-                //@@ targets: "<targets-phone-number>", // E.164 formatted recipient phone number
-                //@@ callOptions: "<callOptions-object>", // The request payload for creating a call.
+                //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
+                //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
+                //@@ callOptions: <callOptions-object>, // The request payload for creating a call.
                 /*@@*/ source: source,
                 /*@@*/ targets: targets,
                 /*@@*/ callOptions: createCallOption);
