@@ -13,5 +13,65 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyResult. </summary>
     public partial class DataPointAnomaly
     {
+
+        /// <summary> Initializes a new instance of DataPointAnomaly. </summary>
+        /// <param name="dataFeedId">
+        /// data feed unique id
+        /// 
+        /// 
+        /// 
+        /// only return for alerting anomaly result.
+        /// </param>
+        /// <param name="metricId">
+        /// metric unique id
+        /// 
+        /// 
+        /// 
+        /// only return for alerting anomaly result.
+        /// </param>
+        /// <param name="anomalyDetectionConfigurationId">
+        /// anomaly detection configuration unique id
+        /// 
+        /// 
+        /// 
+        /// only return for alerting anomaly result.
+        /// </param>
+        /// <param name="timestamp"> anomaly time. </param>
+        /// <param name="createdTime">
+        /// created time
+        /// 
+        /// 
+        /// 
+        /// only return for alerting result.
+        /// </param>
+        /// <param name="modifiedTime">
+        /// modified time
+        /// 
+        /// 
+        /// 
+        /// only return for alerting result.
+        /// </param>
+        /// <param name="dimension"> dimension specified for series. </param>
+        /// <param name="property"> . </param>
+        internal DataPointAnomaly(Guid? dataFeedId, string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
+        {
+            DataFeedId = dataFeedId;
+            MetricId = metricId;
+            AnomalyDetectionConfigurationId = anomalyDetectionConfigurationId;
+            Timestamp = timestamp;
+            CreatedTime = createdTime;
+            ModifiedTime = modifiedTime;
+            Dimension = dimension;
+            Property = property;
+        }
+
+        /// <summary>
+        /// data feed unique id
+        /// 
+        /// 
+        /// 
+        /// only return for alerting anomaly result.
+        /// </summary>
+        public Guid? DataFeedId { get; }
     }
 }

@@ -10,17 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The HttpRequestDataFeed. </summary>
-    internal partial class HttpRequestDataFeed : DataFeedDetail
+    /// <summary> The AzureLogAnalyticsDataFeed. </summary>
+    internal partial class AzureLogAnalyticsDataFeed : DataFeedDetail
     {
-        /// <summary> Initializes a new instance of HttpRequestDataFeed. </summary>
+        /// <summary> Initializes a new instance of AzureLogAnalyticsDataFeed. </summary>
         /// <param name="dataFeedName"> data feed name. </param>
         /// <param name="granularityName"> granularity of the time series. </param>
         /// <param name="metrics"> measure list. </param>
         /// <param name="dataStartFrom"> ingestion start time. </param>
         /// <param name="dataSourceParameter"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/>, <paramref name="metrics"/>, or <paramref name="dataSourceParameter"/> is null. </exception>
-        public HttpRequestDataFeed(string dataFeedName, DataFeedGranularityType granularityName, IEnumerable<DataFeedMetric> metrics, DateTimeOffset dataStartFrom, HttpRequestParameter dataSourceParameter) : base(dataFeedName, granularityName, metrics, dataStartFrom)
+        public AzureLogAnalyticsDataFeed(string dataFeedName, DataFeedGranularityType granularityName, IEnumerable<DataFeedMetric> metrics, DateTimeOffset dataStartFrom, AzureLogAnalyticsParameter dataSourceParameter) : base(dataFeedName, granularityName, metrics, dataStartFrom)
         {
             if (dataFeedName == null)
             {
@@ -36,10 +36,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
 
             DataSourceParameter = dataSourceParameter;
-            DataSourceType = DataFeedSourceType.HttpRequest;
+            DataSourceType = DataFeedSourceType.AzureLogAnalytics;
         }
 
-        /// <summary> Initializes a new instance of HttpRequestDataFeed. </summary>
+        /// <summary> Initializes a new instance of AzureLogAnalyticsDataFeed. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>
         /// <param name="dataFeedName"> data feed name. </param>
@@ -71,12 +71,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="authenticationType"> authentication type for corresponding data source. </param>
         /// <param name="credentialId"> The credential entity id. </param>
         /// <param name="dataSourceParameter"> . </param>
-        internal HttpRequestDataFeed(DataFeedSourceType dataSourceType, string dataFeedId, string dataFeedName, string dataFeedDescription, DataFeedGranularityType granularityName, int? granularityAmount, IList<DataFeedMetric> metrics, IList<DataFeedDimension> dimension, string timestampColumn, DateTimeOffset dataStartFrom, long? startOffsetInSeconds, int? maxConcurrency, long? minRetryIntervalInSeconds, long? stopRetryAfterInSeconds, DataFeedRollupType? needRollup, DataFeedAutoRollupMethod? rollUpMethod, IList<string> rollUpColumns, string allUpIdentification, DataFeedMissingDataPointFillType? fillMissingPointType, double? fillMissingPointValue, DataFeedAccessMode? viewMode, IList<string> admins, IList<string> viewers, bool? isAdmin, string creator, DataFeedStatus? status, DateTimeOffset? createdTime, string actionLinkTemplate, AuthenticationTypeEnum? authenticationType, string credentialId, HttpRequestParameter dataSourceParameter) : base(dataSourceType, dataFeedId, dataFeedName, dataFeedDescription, granularityName, granularityAmount, metrics, dimension, timestampColumn, dataStartFrom, startOffsetInSeconds, maxConcurrency, minRetryIntervalInSeconds, stopRetryAfterInSeconds, needRollup, rollUpMethod, rollUpColumns, allUpIdentification, fillMissingPointType, fillMissingPointValue, viewMode, admins, viewers, isAdmin, creator, status, createdTime, actionLinkTemplate, authenticationType, credentialId)
+        internal AzureLogAnalyticsDataFeed(DataFeedSourceType dataSourceType, string dataFeedId, string dataFeedName, string dataFeedDescription, DataFeedGranularityType granularityName, int? granularityAmount, IList<DataFeedMetric> metrics, IList<DataFeedDimension> dimension, string timestampColumn, DateTimeOffset dataStartFrom, long? startOffsetInSeconds, int? maxConcurrency, long? minRetryIntervalInSeconds, long? stopRetryAfterInSeconds, DataFeedRollupType? needRollup, DataFeedAutoRollupMethod? rollUpMethod, IList<string> rollUpColumns, string allUpIdentification, DataFeedMissingDataPointFillType? fillMissingPointType, double? fillMissingPointValue, DataFeedAccessMode? viewMode, IList<string> admins, IList<string> viewers, bool? isAdmin, string creator, DataFeedStatus? status, DateTimeOffset? createdTime, string actionLinkTemplate, AuthenticationTypeEnum? authenticationType, string credentialId, AzureLogAnalyticsParameter dataSourceParameter) : base(dataSourceType, dataFeedId, dataFeedName, dataFeedDescription, granularityName, granularityAmount, metrics, dimension, timestampColumn, dataStartFrom, startOffsetInSeconds, maxConcurrency, minRetryIntervalInSeconds, stopRetryAfterInSeconds, needRollup, rollUpMethod, rollUpColumns, allUpIdentification, fillMissingPointType, fillMissingPointValue, viewMode, admins, viewers, isAdmin, creator, status, createdTime, actionLinkTemplate, authenticationType, credentialId)
         {
             DataSourceParameter = dataSourceParameter;
             DataSourceType = dataSourceType;
         }
 
-        public HttpRequestParameter DataSourceParameter { get; set; }
+        public AzureLogAnalyticsParameter DataSourceParameter { get; set; }
     }
 }
