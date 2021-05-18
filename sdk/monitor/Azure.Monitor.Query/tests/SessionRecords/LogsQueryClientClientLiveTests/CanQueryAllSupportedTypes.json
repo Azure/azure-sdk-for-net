@@ -103,7 +103,7 @@
   ],
   "Variables": {
     "DateTimeOffsetNow": "2021-05-13T14:57:45.5219898-07:00",
-    "LOGS_ENDPOINT": "https://api.loganalytics.io/v1",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io",
     "RandomSeed": "1735501629",
     "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
   }
