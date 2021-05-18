@@ -15,7 +15,7 @@ This is a models-only SDK. All client operations are done using the [Microsoft A
 
 ### Authenticate the client
 
-The client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
+The client is coming from Azure IoT SDK. You will need to obtain an IoT device connection string in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
 
 ```C# Snippet:Azure_VideoAnalyzerSamples_ConnectionString
 String connectionString = "connectionString";
@@ -36,7 +36,7 @@ Install the Azure IoT Hub SDk for .NET with NuGet:
 
 ### Prerequisites
 
-- You need an active [Azure subscription][azure_sub] and an [IoT device connection string][iot_device_connection_string] to use this package.
+- You need an active [Azure subscription][azure_sub] and an IoT device connection string to use this package.
 - You will need to use the version of the SDK that corresponds to the version of the Video Analyzer Edge module you are using.
 
     | SDK  | Video Analyzer Edge Module  |
@@ -216,13 +216,12 @@ additional questions or comments.
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mediaservices
 [samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
 
-[doc_direct_methods]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/direct-methods
-[doc_pipelines]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline
-[doc_product]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/overview
+[doc_direct_methods]:https://go.microsoft.com/fwlink/?linkid=2162396
+[doc_pipelines]: https://go.microsoft.com/fwlink/?linkid=2162396
+[doc_product]: https://go.microsoft.com/fwlink/?linkid=2162396
 
 [iot-device-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices.Client/
 [iot-hub-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices/
-[iot_device_connection_string]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/get-started-detect-motion-emit-events#obtain-your-iot-hub-connection-string
 
 [github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues
 
