@@ -8,7 +8,7 @@ steps:
   - task: UseDotNet@2
     displayName: 'Use .NET Core SDK'
     inputs:
-      useGlobalJson: true
+      version: 5.0.x
       performMultiLevelLookup: true
       includePreviewVersions: true
   - task: UseDotNet@2
