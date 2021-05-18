@@ -63,7 +63,6 @@ We guarantee that all client instance methods are thread-safe and independent of
 You can query logs using the `LogsClient.QueryAsync`. The result would be returned as a table with a collection of rows:
 
 ```C# Snippet:QueryLogsAsTable
-LogsClient client = new LogsClient(new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
@@ -88,7 +87,7 @@ public class MyLogEntryModel
 ```
 
 ```C# Snippet:QueryLogsAsModels
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
@@ -107,7 +106,7 @@ foreach (var logEntryModel in response.Value)
 If your query return a single column (or a single value) of a primitive type you can use `LogsClient.QueryAsync<T>` overload to deserialize it:
 
 ```C# Snippet:QueryLogsAsPrimitive
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
@@ -126,7 +125,7 @@ foreach (var resourceGroup in response.Value)
 You can execute multiple queries in on request using the `LogsClient.CreateBatchQuery`:
 
 ```C# Snippet:BatchQuery
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
@@ -152,7 +151,7 @@ foreach (var logEntryModel in topEntries)
 You can also dynamically inspect the list of columns. The following example prints the result of the query as a table:
 
 ```C# Snippet:QueryLogsPrintTable
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
@@ -182,7 +181,7 @@ foreach (var row in table.Rows)
 Some queries take longer to execute than the default service timeout allows. You can use the `LogsQueryOptions` parameter to specify the service timeout.
 
 ```C# Snippet:QueryLogsPrintTable
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
@@ -217,7 +216,7 @@ For example, if you submit an invalid query a `400` error is returned, indicatin
 
 ```C# Snippet:BadRequest
 string workspaceId = "<workspace_id>";
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 try
 {
     await client.QueryAsync(workspaceId, "My Not So Valid Query", TimeSpan.FromDays(1));

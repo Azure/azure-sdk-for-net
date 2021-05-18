@@ -15,14 +15,13 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
 
-        private readonly Uri _registryUri;
+        private readonly Uri _registryEndpoint;
         private readonly string _name;
-        private readonly string _fullyQualifiedName;
 
         /// <summary>
         /// Gets the Registry Uri.
         /// </summary>
-        public virtual Uri RegistryUri => _registryUri;
+        public virtual Uri RegistryEndpoint => _registryEndpoint;
 
         /// <summary>
         /// Gets the name of the repository.
@@ -30,17 +29,11 @@ namespace Azure.Containers.ContainerRegistry
         public virtual string Name => _name;
 
         /// <summary>
-        /// Gets the fully qualified name of this repository.
         /// </summary>
-        public virtual string FullyQualifiedName => _fullyQualifiedName;
-
-        /// <summary>
-        /// </summary>
-        internal ContainerRepository(Uri registryUri, string name,  ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
+        internal ContainerRepository(Uri registryEndpoint, string name, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
         {
             _name = name;
-            _registryUri = registryUri;
-            _fullyQualifiedName = $"{registryUri.Host}/{name}";
+            _registryEndpoint = registryEndpoint;
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
@@ -63,7 +56,7 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNullOrEmpty(tagOrDigest, nameof(tagOrDigest));
 
             return new RegistryArtifact(
-                _registryUri,
+                _registryEndpoint,
                 _name,
                 tagOrDigest,
                 _clientDiagnostics,
@@ -112,7 +105,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<RepositoryProperties>> SetPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RepositoryProperties>> SetPropertiesAsync(RepositoryProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -120,7 +113,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.SetPropertiesAsync(Name, value, cancellationToken).ConfigureAwait(false);
+                return await _restClient.SetPropertiesAsync(Name, GetRepositoryWriteableProperties(value), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -129,12 +122,24 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        private static RepositoryWriteableProperties GetRepositoryWriteableProperties(RepositoryProperties value)
+        {
+            return new RepositoryWriteableProperties()
+            {
+                CanDelete = value.CanDelete,
+                CanList = value.CanList,
+                CanRead = value.CanRead,
+                CanWrite = value.CanWrite,
+                TeleportEnabled = value.TeleportEnabled
+            };
+        }
+
         /// <summary>Update the repository properties.</summary>
         /// <param name="value"> Repository properties to set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<RepositoryProperties> SetProperties(ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<RepositoryProperties> SetProperties(RepositoryProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -142,7 +147,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.SetProperties(Name, value, cancellationToken);
+                return _restClient.SetProperties(Name, GetRepositoryWriteableProperties(value), cancellationToken);
             }
             catch (Exception e)
             {

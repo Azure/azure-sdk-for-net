@@ -1,8 +1,9 @@
 # Release History
 
-## 3.1.0-beta.5 (Unreleased)
+## 3.1.0 (Unreleased)
 
 ### New Features
+- This General Availability (GA) release marks the stability of the changes introduced in package versions `3.1.0-beta.1` through `3.1.0-beta.4`.
 - Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
 - Added support for service version `2.0`. This can be specified in the `FormRecognizerClientOptions` object under the `ServiceVersion` enum.
 By default the SDK targets latest supported service version.

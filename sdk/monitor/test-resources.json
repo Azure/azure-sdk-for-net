@@ -112,6 +112,10 @@
         "METRICS_RESOURCE_NAMESPACE": {
             "value": "Microsoft.OperationalInsights/workspaces",
             "type": "string"
+        },
+        "LOGS_ENDPOINT": {
+            "value": "https://api.loganalytics.io/v1",
+            "type": "string"
         }
     }
 }

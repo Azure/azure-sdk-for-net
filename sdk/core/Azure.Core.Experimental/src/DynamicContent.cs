@@ -26,7 +26,7 @@ namespace Azure.Core
 
         // TODO(matell): When this moves to Azure.Core, this static method should be exposed from the abstract RequestContent class.
         /// <summary>
-        /// Creates a RequestConent for a given JSON object.
+        /// Creates a RequestContent for a given JSON object.
         /// </summary>
         /// <param name="body">The JSON object the request content represents</param>
         /// <returns>A RequestContent which is the UTF-8 encoding of the underlying DynamicJson</returns>

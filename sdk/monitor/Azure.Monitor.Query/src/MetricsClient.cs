@@ -24,17 +24,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Initializes a new instance of <see cref="MetricsClient"/>.
         /// </summary>
+        /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        public MetricsClient(TokenCredential credential) : this(credential, null)
+        public MetricsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="MetricsClient"/>.
         /// </summary>
+        /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="MetricsClientOptions"/> instance to as client configuration.</param>
-        public MetricsClient(TokenCredential credential, MetricsClientOptions options)
+        public MetricsClient(Uri endpoint, TokenCredential credential, MetricsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -43,9 +45,9 @@ namespace Azure.Monitor.Query
             _clientDiagnostics = new ClientDiagnostics(options);
 
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com//.default"));
-            _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline);
-            _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline);
-            _namespacesRestClient = new MetricNamespacesRestClient(_clientDiagnostics, pipeline);
+            _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline, endpoint);
+            _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline, endpoint);
+            _namespacesRestClient = new MetricNamespacesRestClient(_clientDiagnostics, pipeline, endpoint);
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="MetricQueryResult"/> instance containing the query results.</returns>
-        public virtual Response<MetricQueryResult> Query(string resource, IEnumerable<string> metrics, MetricQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricQueryResult> Query(string resource, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
             scope.Start();
@@ -97,7 +99,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="MetricQueryResult"/> instance with query results.</returns>
-        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resource, IEnumerable<string> metrics, MetricQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resource, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
             scope.Start();
@@ -220,7 +222,7 @@ namespace Azure.Monitor.Query
             }
         }
 
-        private static string GetAggregation(MetricQueryOptions options)
+        private static string GetAggregation(MetricsQueryOptions options)
         {
             if (options?.Aggregations == null ||
                 options.Aggregations.Count == 0)

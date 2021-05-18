@@ -43,15 +43,19 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="databaseName">The name of the database.</param>
         /// <param name="maxSizeBytes">The max size of the database expressed
         /// in bytes.</param>
-        /// <param name="elasticPoolId">The resource name of the elastic pool
-        /// containing this database.</param>
+        /// <param name="elasticPoolId">DEPRECATED: The resource name of the
+        /// elastic pool containing this database. This property is deprecated
+        /// and the value will always be null.</param>
         /// <param name="creationDate">The creation date of the database
         /// (ISO8601 format).</param>
         /// <param name="deletionDate">The deletion date of the database
         /// (ISO8601 format).</param>
         /// <param name="earliestRestoreDate">The earliest restore date of the
         /// database (ISO8601 format).</param>
-        public RestorableDroppedDatabase(string id = default(string), string name = default(string), string type = default(string), Sku sku = default(Sku), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string databaseName = default(string), long? maxSizeBytes = default(long?), string elasticPoolId = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? deletionDate = default(System.DateTime?), System.DateTime? earliestRestoreDate = default(System.DateTime?))
+        /// <param name="backupStorageRedundancy">The storage account type used
+        /// to store backups for this database. Possible values include: 'Geo',
+        /// 'Local', 'Zone'</param>
+        public RestorableDroppedDatabase(string id = default(string), string name = default(string), string type = default(string), Sku sku = default(Sku), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string databaseName = default(string), long? maxSizeBytes = default(long?), string elasticPoolId = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? deletionDate = default(System.DateTime?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string backupStorageRedundancy = default(string))
             : base(id, name, type)
         {
             Sku = sku;
@@ -63,6 +67,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             CreationDate = creationDate;
             DeletionDate = deletionDate;
             EarliestRestoreDate = earliestRestoreDate;
+            BackupStorageRedundancy = backupStorageRedundancy;
             CustomInit();
         }
 
@@ -102,8 +107,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         public long? MaxSizeBytes { get; private set; }
 
         /// <summary>
-        /// Gets the resource name of the elastic pool containing this
-        /// database.
+        /// Gets DEPRECATED: The resource name of the elastic pool containing
+        /// this database. This property is deprecated and the value will
+        /// always be null.
         /// </summary>
         [JsonProperty(PropertyName = "properties.elasticPoolId")]
         public string ElasticPoolId { get; private set; }
@@ -125,6 +131,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.earliestRestoreDate")]
         public System.DateTime? EarliestRestoreDate { get; private set; }
+
+        /// <summary>
+        /// Gets the storage account type used to store backups for this
+        /// database. Possible values include: 'Geo', 'Local', 'Zone'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.backupStorageRedundancy")]
+        public string BackupStorageRedundancy { get; private set; }
 
         /// <summary>
         /// Validate the object.

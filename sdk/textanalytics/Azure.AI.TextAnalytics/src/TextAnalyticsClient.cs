@@ -350,7 +350,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -376,7 +376,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -818,7 +818,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
@@ -845,7 +845,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.StringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
@@ -909,7 +909,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
@@ -976,7 +976,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
@@ -1144,7 +1144,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
@@ -1173,7 +1173,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
@@ -1289,7 +1289,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.IncludeOpinionMining,
                     options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
@@ -1350,7 +1350,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.IncludeOpinionMining,
                     options.StringIndexType,
                     cancellationToken);
@@ -1627,7 +1627,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.IncludeOpinionMining,
                     options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
@@ -1655,7 +1655,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.IncludeOpinionMining,
                     options.StringIndexType,
                     cancellationToken);
@@ -2079,7 +2079,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -2105,7 +2105,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -2523,7 +2523,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
@@ -2549,7 +2549,7 @@ namespace Azure.AI.TextAnalytics
                 Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.StringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
@@ -2709,7 +2709,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.StringIndexType,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken);
                 string location = response.Headers.OperationLocation;
 
@@ -2737,7 +2737,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.StringIndexType,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
@@ -2757,7 +2757,8 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
+        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2771,17 +2772,18 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return await StartAnalyzeBatchActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
+            return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActions enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
+        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2795,17 +2797,18 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual AnalyzeBatchActionsOperation StartAnalyzeBatchActions(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return StartAnalyzeBatchActions(documentInputs, actions, options, cancellationToken);
+            return StartAnalyzeActions(documentInputs, actions, options, cancellationToken);
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActions enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
+        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2818,17 +2821,18 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual AnalyzeBatchActionsOperation StartAnalyzeBatchActions(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            return StartAnalyzeBatchActions(documentInputs, actions, options, cancellationToken);
+            return StartAnalyzeActions(documentInputs, actions, options, cancellationToken);
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition, PII entity recognition, linked entity recognition and key phrases extraction.
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
+        /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
@@ -2841,20 +2845,20 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            return await StartAnalyzeBatchActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
+            return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
-        private AnalyzeBatchActionsOperation StartAnalyzeBatchActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             JobManifestTasks tasks = new JobManifestTasks();
 
-            options ??= new AnalyzeBatchActionsOptions();
+            options ??= new AnalyzeActionsOptions();
 
             if (actions.RecognizePiiEntitiesOptions != null)
             {
@@ -2872,10 +2876,14 @@ namespace Azure.AI.TextAnalytics
             {
                 tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
             }
+            if (actions.AnalyzeSentimentOptions != null)
+            {
+                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentOptionsToTasks(actions.AnalyzeSentimentOptions);
+            }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks) { DisplayName = actions.DisplayName };
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeBatchActions)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
             scope.Start();
 
             try
@@ -2885,7 +2893,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeBatchActionsOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                return new AnalyzeActionsOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2894,11 +2902,11 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private async Task<AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             JobManifestTasks tasks = new JobManifestTasks();
 
-            options ??= new AnalyzeBatchActionsOptions();
+            options ??= new AnalyzeActionsOptions();
 
             if (actions.RecognizePiiEntitiesOptions != null)
             {
@@ -2916,10 +2924,14 @@ namespace Azure.AI.TextAnalytics
             {
                 tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
             }
+            if (actions.AnalyzeSentimentOptions != null)
+            {
+                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentOptionsToTasks(actions.AnalyzeSentimentOptions);
+            }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks) { DisplayName = actions.DisplayName };
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeBatchActions)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
             scope.Start();
 
             try
@@ -2929,7 +2941,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeBatchActionsOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                return new AnalyzeActionsOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {

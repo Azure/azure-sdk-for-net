@@ -1,5 +1,8 @@
 # Release History
 
+## 7.2.0-beta.4 (Unreleased)
+
+
 ## 7.2.0-beta.3 (2021-05-12)
 
 ### Added
@@ -7,6 +10,13 @@
 * Added Verbose event source events for the following scenarios that previously had Error events which resulted in unnecessary noise in application logs: 
   * Accepting a session times out because there are no sessions available.
   * TaskCanceledException occurs while stopping the processor.
+
+## 7.1.2 (2021-04-09)
+
+### Key Bug Fixes
+- Updated dependency on Microsoft.Azure.Amqp to benefit from a performance enhancement involving message settlement.
+- Updated dependency on System.Text.Encodings.Web
+
 
 ## 7.2.0-beta.2 (2021-04-07)
 
@@ -27,6 +37,11 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Multiple enhancements were made to the transport paths for publishing and reading events to reduce memory allocations and increase performance. (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
 - Fixed an issue where constructing a new `CreateRuleOption` from a `RuleProperties` would fail if the `CorrelationId` was null. (A community contribution, courtesy of _[mikaelkolkinn](https://github.com/mikaelkolkinn))_
 
+## 7.1.1 (2021-03-10)
+
+### Key Bug Fixes
+- Fixed issue where batch size calculation was not taking diagnostic tracing information into account.
+
 ## 7.2.0-beta.1 (2021-03-08)
 ### Added
 - Added `EnableCrossEntityTransactions` property to `ServiceBusClientOptions` to support transactions spanning multiple entities.
@@ -36,18 +51,6 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Fixed issue where batch size calculation was not taking diagnostic tracing information into account.
 - Retry on authorization failures to reduce likelihood of transient failures bubbling up to user application.
 - Reduce maximum refresh interval to prevent Timer exceptions involving long-lived SAS tokens.
-
-## 7.1.2 (2021-04-09)
-
-### Key Bug Fixes
-- Updated dependency on Microsoft.Azure.Amqp to benefit from a performance enhancement involving message settlement.
-- Updated dependency on System.Text.Encodings.Web
-
-
-## 7.1.1 (2021-03-10)
-
-### Key Bug Fixes
-- Fixed issue where batch size calculation was not taking diagnostic tracing information into account.
 
 ## 7.1.0 (2021-02-09)
 

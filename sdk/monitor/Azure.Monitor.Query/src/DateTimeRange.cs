@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.Monitor.Query
@@ -90,7 +91,7 @@ namespace Azure.Monitor.Query
         {
             var startTime = StartTime != null ? TypeFormatters.ToString(StartTime.Value, "o") : null;
             var endTime = EndTime != null ? TypeFormatters.ToString(EndTime.Value, "o") : null;
-            var duration = TypeFormatters.ToString(Duration, "P");
+            var duration = XmlConvert.ToString(Duration);
 
             switch (startTime, endTime, duration)
             {
@@ -145,6 +146,54 @@ namespace Azure.Monitor.Query
         public override int GetHashCode()
         {
             return HashCodeBuilder.Combine(StartTime, EndTime, Duration);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="string"/> value to it's <see cref="DateTimeRange"/> representation.
+        /// </summary>
+        /// <param name="value">The string to convert.</param>
+        /// <returns>A <see langword="DateTimeRange" /> equivalent of the string.</returns>
+        /// <exception cref="FormatException"><paramref name="value" /> is not in correct format to represent a <see langword="DateTimeRange" /> value.</exception>
+        public static DateTimeRange Parse(string value)
+        {
+            FormatException CreateFormatException(Exception inner = null) => new("Unable to parse the DateTimeRange value. " +
+                                                                   "Expected one of the following formats:" +
+                                                                   " Duration," +
+                                                                   " Duration/EndTime," +
+                                                                   " StartTime/Duration," +
+                                                                   " StartTime/EndTime", inner);
+
+            TimeSpan ParseTimeSpan(string s)
+            {
+                try
+                {
+                    return XmlConvert.ToTimeSpan(s);
+                }
+                catch (FormatException e)
+                {
+                    throw CreateFormatException(e);
+                }
+            }
+
+            var parts = value.Split(new[] { '/' }, StringSplitOptions.None);
+            switch (parts.Length)
+            {
+                case 1:
+                    return ParseTimeSpan(parts[0]);
+                case 2:
+                    var firstIsDateTime = DateTimeOffset.TryParse(parts[0], out var dateTimeFirst);
+                    var secondIsDateTime = DateTimeOffset.TryParse(parts[1], out var dateTimeSecond);
+
+                    return (firstIsDateTime, secondIsDateTime) switch
+                    {
+                        (true, true) => new DateTimeRange(dateTimeFirst, dateTimeSecond),
+                        (true, false) => new DateTimeRange(dateTimeFirst, ParseTimeSpan(parts[1])),
+                        (false, true) => new DateTimeRange(ParseTimeSpan(parts[0]), dateTimeSecond),
+                        _ => throw CreateFormatException()
+                    };
+                default:
+                    throw CreateFormatException();
+            }
         }
     }
 }

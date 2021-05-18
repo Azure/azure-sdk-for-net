@@ -21,6 +21,7 @@ namespace Azure.Monitor.Query.Tests
         private MetricsClient CreateClient()
         {
             return InstrumentClient(new MetricsClient(
+                TestEnvironment.MetricsEndpoint,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MetricsClientOptions())
             ));
@@ -52,7 +53,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions()
+                new MetricsQueryOptions()
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, duration)
@@ -62,6 +63,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual(duration.Minutes, timeSeriesData.Count);
             // Average is queried by default
             Assert.True(timeSeriesData.All(d=> d.Average != null));
+            Assert.AreEqual(new DateTimeRange(_testData.StartTime, _testData.StartTime + duration), results.Value.TimeSpan);
         }
 
         [RecordedTest]
@@ -72,7 +74,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)),
@@ -105,7 +107,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
@@ -125,7 +127,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.Duration)
@@ -145,7 +147,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.Duration, _testData.EndTime)
@@ -165,7 +167,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace
                 });
@@ -182,7 +184,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
@@ -203,7 +205,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[] {_testData.MetricName},
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
@@ -226,7 +228,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[] {_testData.MetricName},
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
