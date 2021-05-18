@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V3_1_Preview_4;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V3_1_Preview_5;
         private const string AzurePublicCloud = "https://login.microsoftonline.com/";
         private const string AzureChina = "https://login.microsoftonline.cn/";
         private const string AzureGovernment = "https://login.microsoftonline.us/";
@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics
             /// <summary>
             /// Version 3.1-preview.4
             /// </summary>
-            V3_1_Preview_4 = 2,
+            V3_1_Preview_5 = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -82,7 +82,7 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
-        internal static string getDefaultCognitiveScope(string authorityHost)
+        internal static string GetDefaultCognitiveScope(string authorityHost)
         {
             switch (authorityHost)
             {
