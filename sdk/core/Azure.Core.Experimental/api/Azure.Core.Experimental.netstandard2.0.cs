@@ -1,5 +1,41 @@
+namespace Azure
+{
+    public partial class RequestOptions
+    {
+        public RequestOptions() { }
+        public RequestOptions(Azure.ResponseStatusOption statusOption) { }
+        public RequestOptions(System.Action<Azure.Core.HttpMessage> perCall) { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public Azure.Core.Pipeline.HttpPipelinePolicy? PerCallPolicy { get { throw null; } set { } }
+        public Azure.ResponseStatusOption StatusOption { get { throw null; } set { } }
+        public static implicit operator Azure.RequestOptions (Azure.ResponseStatusOption option) { throw null; }
+    }
+    public enum ResponseStatusOption
+    {
+        Default = 0,
+        NoThrow = 1,
+    }
+}
 namespace Azure.Core
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContentType : System.IEquatable<Azure.Core.ContentType>, System.IEquatable<string>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContentType(string contentType) { throw null; }
+        public static Azure.Core.ContentType ApplicationJson { get { throw null; } }
+        public static Azure.Core.ContentType ApplicationOctetStream { get { throw null; } }
+        public static Azure.Core.ContentType TextPlain { get { throw null; } }
+        public bool Equals(Azure.Core.ContentType other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public bool Equals(string other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
+        public static implicit operator Azure.Core.ContentType (string contentType) { throw null; }
+        public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Diagnostics.DebuggerDisplayAttribute("Content: {_body}")]
     public partial class DynamicContent : Azure.Core.RequestContent
     {

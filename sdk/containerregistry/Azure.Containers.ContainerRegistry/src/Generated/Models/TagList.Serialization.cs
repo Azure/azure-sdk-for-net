@@ -15,16 +15,11 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static TagList DeserializeTagList(JsonElement element)
         {
-            Optional<string> registry = default;
-            Optional<string> imageName = default;
-            Optional<IReadOnlyList<TagAttributesBase>> tags = default;
+            string imageName = default;
+            IReadOnlyList<TagAttributesBase> tags = default;
+            Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registry"))
-                {
-                    registry = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("imageName"))
                 {
                     imageName = property.Value.GetString();
@@ -32,11 +27,6 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<TagAttributesBase> array = new List<TagAttributesBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -45,8 +35,13 @@ namespace Azure.Containers.ContainerRegistry
                     tags = array;
                     continue;
                 }
+                if (property.NameEquals("link"))
+                {
+                    link = property.Value.GetString();
+                    continue;
+                }
             }
-            return new TagList(registry.Value, imageName.Value, Optional.ToList(tags));
+            return new TagList(imageName, tags, link.Value);
         }
     }
 }

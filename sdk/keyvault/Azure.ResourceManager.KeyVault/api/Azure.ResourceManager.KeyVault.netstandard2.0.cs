@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault
     }
     public partial class PrivateEndpointConnectionsDeleteOperation : Azure.Operation<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection>
     {
-        internal PrivateEndpointConnectionsDeleteOperation() { }
+        protected PrivateEndpointConnectionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault
     }
     public partial class VaultsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.KeyVault.Models.Vault>
     {
-        internal VaultsCreateOrUpdateOperation() { }
+        protected VaultsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
     }
     public partial class VaultsPurgeDeletedOperation : Azure.Operation<Azure.Response>
     {
-        internal VaultsPurgeDeletedOperation() { }
+        protected VaultsPurgeDeletedOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

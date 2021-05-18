@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(AzureDataLakeStoreWriteSettingsConverter))]
     public partial class AzureDataLakeStoreWriteSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ExpiryDateTime))
+            {
+                writer.WritePropertyName("expiryDateTime");
+                writer.WriteObjectValue(ExpiryDateTime);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
@@ -38,6 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureDataLakeStoreWriteSettings DeserializeAzureDataLakeStoreWriteSettings(JsonElement element)
         {
+            Optional<object> expiryDateTime = default;
             string type = default;
             Optional<object> maxConcurrentConnections = default;
             Optional<object> copyBehavior = default;
@@ -45,6 +54,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("expiryDateTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expiryDateTime = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
@@ -73,7 +92,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataLakeStoreWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties);
+            return new AzureDataLakeStoreWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties, expiryDateTime.Value);
+        }
+
+        internal partial class AzureDataLakeStoreWriteSettingsConverter : JsonConverter<AzureDataLakeStoreWriteSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, AzureDataLakeStoreWriteSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AzureDataLakeStoreWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAzureDataLakeStoreWriteSettings(document.RootElement);
+            }
         }
     }
 }

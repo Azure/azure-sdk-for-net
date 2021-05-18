@@ -21,5 +21,7 @@ namespace Azure.Storage.Files.DataLake
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </summary>
         public string Continuation => _response.Headers.TryGetValue("x-ms-continuation", out string value) ? value : null;
+        /// <summary> Returned only for hierarchical namespace space enabled accounts when soft delete is enabled. A unique identifier for the entity that can be used to restore it. See the Undelete REST API for more information. </summary>
+        public string DeletionId => _response.Headers.TryGetValue("x-ms-deletion-id", out string value) ? value : null;
     }
 }

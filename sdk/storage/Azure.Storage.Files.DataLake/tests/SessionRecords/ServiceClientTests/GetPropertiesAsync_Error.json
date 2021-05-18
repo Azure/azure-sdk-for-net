@@ -1,0 +1,38 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://seannsecanary2.blob.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "traceparent": "00-1ae0d289d9d83a48b966f4c7cfd973f8-ef789c8dbdb0d443-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210323.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "b63055a8-875d-8358-0b3f-bee99a2d6a1f",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-08-04"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "279",
+        "Content-Type": "application/xml",
+        "Date": "Tue, 23 Mar 2021 16:47:04 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "x-ms-error-code": "AccountRequiresHttps",
+        "x-ms-request-id": "3235cfce-b01e-00aa-0304-20d637000000"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAccountRequiresHttps\u003C/Code\u003E\u003CMessage\u003EThe account being accessed does not support http.\n",
+        "RequestId:3235cfce-b01e-00aa-0304-20d637000000\n",
+        "Time:2021-03-23T16:47:05.5588146Z\u003C/Message\u003E\u003CAccountName\u003Eseannsecanary2\u003C/AccountName\u003E\u003C/Error\u003E"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1274092183",
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannsecanary2\nU2FuaXRpemVk\nhttp://seannsecanary2.blob.core.windows.net\nhttp://seannsecanary2.file.core.windows.net\nhttp://seannsecanary2.queue.core.windows.net\nhttp://seannsecanary2.table.core.windows.net\n\n\n\n\nhttp://seannsecanary2-secondary.blob.core.windows.net\nhttp://seannsecanary2-secondary.file.core.windows.net\nhttp://seannsecanary2-secondary.queue.core.windows.net\nhttp://seannsecanary2-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://seannsecanary2.blob.core.windows.net/;QueueEndpoint=http://seannsecanary2.queue.core.windows.net/;FileEndpoint=http://seannsecanary2.file.core.windows.net/;BlobSecondaryEndpoint=http://seannsecanary2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seannsecanary2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seannsecanary2-secondary.file.core.windows.net/;AccountName=seannsecanary2;AccountKey=Sanitized\n"
+  }
+}

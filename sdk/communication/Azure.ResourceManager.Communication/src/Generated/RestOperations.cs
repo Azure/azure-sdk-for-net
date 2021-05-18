@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public RestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-08-20-preview")
+        public RestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-08-20")
         {
             endpoint ??= new Uri("https://management.azure.com");
             if (apiVersion == null)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> Lists all of the available REST API operations of the Microsoft.Communication provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<OperationList>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<OperationListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        OperationList value = default;
+                        OperationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationList.DeserializeOperationList(document.RootElement);
+                        value = OperationListResult.DeserializeOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> Lists all of the available REST API operations of the Microsoft.Communication provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<OperationList> List(CancellationToken cancellationToken = default)
+        public Response<OperationListResult> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        OperationList value = default;
+                        OperationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationList.DeserializeOperationList(document.RootElement);
+                        value = OperationListResult.DeserializeOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<OperationList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        OperationList value = default;
+                        OperationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationList.DeserializeOperationList(document.RootElement);
+                        value = OperationListResult.DeserializeOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<OperationList> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<OperationListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Communication
             {
                 case 200:
                     {
-                        OperationList value = default;
+                        OperationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationList.DeserializeOperationList(document.RootElement);
+                        value = OperationListResult.DeserializeOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

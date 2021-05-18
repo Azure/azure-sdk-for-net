@@ -8,6 +8,7 @@ parameters:
   RepoId: $(Build.Repository.Name)
 
 steps:
+- template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 - pwsh: |
     Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://aka.ms/downloadazcopy-v10-windows" -OutFile "azcopy.zip" | Wait-Process;
     Expand-Archive -Path "azcopy.zip" -DestinationPath "$(Build.BinariesDirectory)/azcopy/"
@@ -23,7 +24,7 @@ steps:
       -SASKey "${{ parameters.BlobSASKey }}"
       -BlobName "${{ parameters.BlobName }}"
       -PublicArtifactLocation "${{ parameters.ArtifactLocation }}"
-      -RepoReplaceRegex "(https://github.com/${{ parameters.RepoId }}/(?:blob|tree)/)master"
+      -RepoReplaceRegex "(https://github.com/${{ parameters.RepoId }}/(?:blob|tree)/)$(DefaultBranch)"
     pwsh: true
     workingDirectory: $(Pipeline.Workspace)
   displayName: Copy Docs to Blob

@@ -14,3 +14,5 @@ steps:
       filePath: ${{ parameters.ScriptDirectory }}/Verify-AgentOS.ps1
       arguments: >
         -AgentImage "${{ parameters.AgentImage }}"
+
+  - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml

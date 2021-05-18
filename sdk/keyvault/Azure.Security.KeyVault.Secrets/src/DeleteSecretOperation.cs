@@ -34,6 +34,9 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeleteSecretOperation" /> for mocking. </summary>
+        protected DeleteSecretOperation() {}
+
         /// <inheritdoc/>
         public override string Id => _value.Id.ToString();
 

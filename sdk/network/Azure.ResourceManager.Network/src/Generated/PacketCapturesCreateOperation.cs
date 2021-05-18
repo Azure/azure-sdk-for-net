@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class PacketCapturesCreateOperation : Operation<PacketCaptureResult>, IOperationSource<PacketCaptureResult>
     {
         private readonly ArmOperationHelpers<PacketCaptureResult> _operation;
+
+        /// <summary> Initializes a new instance of PacketCapturesCreateOperation for mocking. </summary>
+        protected PacketCapturesCreateOperation()
+        {
+        }
+
         internal PacketCapturesCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<PacketCaptureResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PacketCapturesCreateOperation");

@@ -1,0 +1,41 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://identity.accledger.azure.com/ledgerIdentity/lyshi-sdk-ledger-2?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Request-Id": "|37bcf84e-4a0c08e4fa041169.",
+        "User-Agent": [
+          "azsdk-net-Storage.ConfidentialLedger/1.0.1-alpha.20210505.1",
+          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "a625e5e0d5f5c3c15a5ede3d146b490c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 05 May 2021 20:57:35 GMT",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "a625e5e0d5f5c3c15a5ede3d146b490c",
+        "x-ms-correlation-request-id": "fd4203d8-1b50-4747-bb85-c763190d6ec5",
+        "x-ms-image-digest": "sha256:11ed1da225547a3b77101645cee8a1071520b55acfe3194319a88a45103666e3",
+        "x-ms-image-tag": "latest-20210504174045259-f27d27c4",
+        "x-ms-machineName": "identityservice-5ccb4b98b4-7d8xz"
+      },
+      "ResponseBody": {
+        "ledgerTlsCertificate": "-----BEGIN CERTIFICATE-----\nMIIBtzCCAT2gAwIBAgIQe4JhG6hKLvCdroePZH\u002BcKDAKBggqhkjOPQQDAzAWMRQw\nEgYDVQQDDAtDQ0YgTmV0d29yazAeFw0yMTAzMTEwMDAwMDBaFw0yMzA2MTEyMzU5\nNTlaMBYxFDASBgNVBAMMC0NDRiBOZXR3b3JrMHYwEAYHKoZIzj0CAQYFK4EEACID\nYgAEkjvmjNJBSTJss9v0FYVxlDuCpf\u002BFyeFNoq5ocrcoADjUJg6SS/VIhLoMNRW9\ngN2g5O8djtZPQcknTZz3ZDhsP6pnuNA01mEqGuI9ncXzJhP0V1hNrLF\u002B0zjKEg1j\ntY5Ro1AwTjAMBgNVHRMEBTADAQH/MB0GA1UdDgQWBBSG8Ck1xlfAVKktN7FCodq9\n\u002BsMaRDAfBgNVHSMEGDAWgBSG8Ck1xlfAVKktN7FCodq9\u002BsMaRDAKBggqhkjOPQQD\nAwNoADBlAjEAgBx1Vz5qzW71O6Yv3I0069Ev6xzEIRMOuPyijBjo2ZKsT752cCVf\nST1N7LpldE7jAjAygUUodS7GYHgoL40fUEChKLZuI/v\u002B3iLOxj/NtVRiW\u002BQ5XYw0\n4f0/7slp9c9JZmo=\n-----END CERTIFICATE-----\n\u0000",
+        "ledgerId": "lyshi-sdk-ledger-2"
+      }
+    }
+  ],
+  "Variables": {
+    "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.accledger.azure.com",
+    "CONFIDENTIALLEDGER_URL": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com",
+    "RandomSeed": "348864651"
+  }
+}

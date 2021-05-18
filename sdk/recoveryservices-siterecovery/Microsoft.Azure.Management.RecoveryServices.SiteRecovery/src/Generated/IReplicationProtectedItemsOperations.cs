@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse> PurgeWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates protection.
+        /// Updates the replication protected item settings.
         /// </summary>
         /// <remarks>
         /// The operation to update the recovery settings of an ASR replication
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// The protection container name.
         /// </param>
         /// <param name='replicatedProtectedItemName'>
-        /// The replicated protected item's name.
+        /// The replicated protected item name.
         /// </param>
         /// <param name='applyRecoveryPointInput'>
         /// The ApplyRecoveryPointInput.
@@ -255,7 +255,38 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> ApplyRecoveryPointWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ApplyRecoveryPointInput applyRecoveryPointInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute commit failover
+        /// Execute cancel failover.
+        /// </summary>
+        /// <remarks>
+        /// Operation to cancel the failover of the replication protected item.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// Unique fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Protection container name.
+        /// </param>
+        /// <param name='replicatedProtectedItemName'>
+        /// Replication protected item name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ReplicationProtectedItem>> FailoverCancelWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Execute commit failover.
         /// </summary>
         /// <remarks>
         /// Operation to commit the failover of the replication protected item.
@@ -286,7 +317,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> FailoverCommitWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute planned failover
+        /// Execute planned failover.
         /// </summary>
         /// <remarks>
         /// Operation to initiate a planned failover of the replication
@@ -302,7 +333,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Replication protected item name.
         /// </param>
         /// <param name='failoverInput'>
-        /// Disable protection input.
+        /// Planned failover input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -419,7 +450,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> RepairReplicationWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute Reverse Replication\Reprotect
+        /// Execute Reverse Replication\Reprotect.
         /// </summary>
         /// <remarks>
         /// Operation to reprotect or reverse replicate a failed over
@@ -434,8 +465,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='replicatedProtectedItemName'>
         /// Replication protected item name.
         /// </param>
-        /// <param name='rrInput'>
-        /// Disable protection input.
+        /// <param name='reprotectInput'>
+        /// Reverse replication input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -452,7 +483,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> ReprotectWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput rrInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ReplicationProtectedItem>> ReprotectWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput reprotectInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Resolve health errors.
         /// </summary>
@@ -489,7 +520,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> ResolveHealthErrorsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ResolveHealthInput resolveHealthInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute test failover
+        /// Execute test failover.
         /// </summary>
         /// <remarks>
         /// Operation to perform a test failover of the replication protected
@@ -504,7 +535,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='replicatedProtectedItemName'>
         /// Replication protected item name.
         /// </param>
-        /// <param name='failoverInput'>
+        /// <param name='testfailoverInput'>
         /// Test failover input.
         /// </param>
         /// <param name='customHeaders'>
@@ -522,7 +553,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> TestFailoverWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput failoverInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ReplicationProtectedItem>> TestFailoverWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput testfailoverInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Execute test failover cleanup.
         /// </summary>
@@ -559,7 +590,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> TestFailoverCleanupWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverCleanupInput cleanupInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute unplanned failover
+        /// Execute unplanned failover.
         /// </summary>
         /// <remarks>
         /// Operation to initiate a failover of the replication protected item.
@@ -574,7 +605,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Replication protected item name.
         /// </param>
         /// <param name='failoverInput'>
-        /// Disable protection input.
+        /// Failover input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -639,7 +670,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </param>
         /// <param name='skipToken'>
         /// The pagination token. Possible values: "FabricId" or
-        /// "FabricId_CloudId" or null
+        /// "FabricId_CloudId" or null.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -724,7 +755,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse> BeginPurgeWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates protection.
+        /// Updates the replication protected item settings.
         /// </summary>
         /// <remarks>
         /// The operation to update the recovery settings of an ASR replication
@@ -806,7 +837,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// The protection container name.
         /// </param>
         /// <param name='replicatedProtectedItemName'>
-        /// The replicated protected item's name.
+        /// The replicated protected item name.
         /// </param>
         /// <param name='applyRecoveryPointInput'>
         /// The ApplyRecoveryPointInput.
@@ -828,7 +859,38 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> BeginApplyRecoveryPointWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ApplyRecoveryPointInput applyRecoveryPointInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute commit failover
+        /// Execute cancel failover.
+        /// </summary>
+        /// <remarks>
+        /// Operation to cancel the failover of the replication protected item.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// Unique fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Protection container name.
+        /// </param>
+        /// <param name='replicatedProtectedItemName'>
+        /// Replication protected item name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ReplicationProtectedItem>> BeginFailoverCancelWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Execute commit failover.
         /// </summary>
         /// <remarks>
         /// Operation to commit the failover of the replication protected item.
@@ -859,7 +921,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> BeginFailoverCommitWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute planned failover
+        /// Execute planned failover.
         /// </summary>
         /// <remarks>
         /// Operation to initiate a planned failover of the replication
@@ -875,7 +937,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Replication protected item name.
         /// </param>
         /// <param name='failoverInput'>
-        /// Disable protection input.
+        /// Planned failover input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -992,7 +1054,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> BeginRepairReplicationWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute Reverse Replication\Reprotect
+        /// Execute Reverse Replication\Reprotect.
         /// </summary>
         /// <remarks>
         /// Operation to reprotect or reverse replicate a failed over
@@ -1007,8 +1069,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='replicatedProtectedItemName'>
         /// Replication protected item name.
         /// </param>
-        /// <param name='rrInput'>
-        /// Disable protection input.
+        /// <param name='reprotectInput'>
+        /// Reverse replication input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1025,7 +1087,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> BeginReprotectWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput rrInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ReplicationProtectedItem>> BeginReprotectWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput reprotectInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Resolve health errors.
         /// </summary>
@@ -1062,7 +1124,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> BeginResolveHealthErrorsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ResolveHealthInput resolveHealthInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute test failover
+        /// Execute test failover.
         /// </summary>
         /// <remarks>
         /// Operation to perform a test failover of the replication protected
@@ -1077,7 +1139,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='replicatedProtectedItemName'>
         /// Replication protected item name.
         /// </param>
-        /// <param name='failoverInput'>
+        /// <param name='testfailoverInput'>
         /// Test failover input.
         /// </param>
         /// <param name='customHeaders'>
@@ -1095,7 +1157,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> BeginTestFailoverWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput failoverInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ReplicationProtectedItem>> BeginTestFailoverWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput testfailoverInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Execute test failover cleanup.
         /// </summary>
@@ -1132,7 +1194,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> BeginTestFailoverCleanupWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverCleanupInput cleanupInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute unplanned failover
+        /// Execute unplanned failover.
         /// </summary>
         /// <remarks>
         /// Operation to initiate a failover of the replication protected item.
@@ -1147,7 +1209,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Replication protected item name.
         /// </param>
         /// <param name='failoverInput'>
-        /// Disable protection input.
+        /// Failover input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

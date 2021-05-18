@@ -28,6 +28,16 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("crossMetricsOperator");
                 writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(SplitAlertByDimensions))
+            {
+                writer.WritePropertyName("splitAlertByDimensions");
+                writer.WriteStartArray();
+                foreach (var item in SplitAlertByDimensions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("hookIds");
             writer.WriteStartArray();
             foreach (var item in IdsOfHooksToAlert)
@@ -51,6 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string name = default;
             Optional<string> description = default;
             Optional<MetricAnomalyAlertConfigurationsOperator> crossMetricsOperator = default;
+            Optional<IList<string>> splitAlertByDimensions = default;
             IList<string> hookIds = default;
             IList<MetricAnomalyAlertConfiguration> metricAlertingConfigurations = default;
             foreach (var property in element.EnumerateObject())
@@ -80,6 +91,21 @@ namespace Azure.AI.MetricsAdvisor.Models
                     crossMetricsOperator = new MetricAnomalyAlertConfigurationsOperator(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("splitAlertByDimensions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    splitAlertByDimensions = array;
+                    continue;
+                }
                 if (property.NameEquals("hookIds"))
                 {
                     List<string> array = new List<string>();
@@ -101,7 +127,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, Optional.ToNullable(crossMetricsOperator), hookIds, metricAlertingConfigurations);
+            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, Optional.ToNullable(crossMetricsOperator), Optional.ToList(splitAlertByDimensions), hookIds, metricAlertingConfigurations);
         }
     }
 }

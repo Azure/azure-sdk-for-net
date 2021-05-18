@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,12 +15,11 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static TagAttributesBase DeserializeTagAttributesBase(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> digest = default;
-            Optional<string> createdTime = default;
-            Optional<string> lastUpdateTime = default;
-            Optional<bool> signed = default;
-            Optional<ContentProperties> changeableAttributes = default;
+            string name = default;
+            string digest = default;
+            DateTimeOffset createdTime = default;
+            DateTimeOffset lastUpdateTime = default;
+            TagWriteableProperties changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -34,36 +34,21 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    createdTime = property.Value.GetString();
+                    createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastUpdateTime"))
                 {
-                    lastUpdateTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("signed"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    signed = property.Value.GetBoolean();
+                    lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("changeableAttributes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    changeableAttributes = ContentProperties.DeserializeContentProperties(property.Value);
+                    changeableAttributes = TagWriteableProperties.DeserializeTagWriteableProperties(property.Value);
                     continue;
                 }
             }
-            return new TagAttributesBase(name.Value, digest.Value, createdTime.Value, lastUpdateTime.Value, Optional.ToNullable(signed), changeableAttributes.Value);
+            return new TagAttributesBase(name, digest, createdTime, lastUpdateTime, changeableAttributes);
         }
     }
 }

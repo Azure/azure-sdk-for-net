@@ -365,7 +365,7 @@ namespace Azure.Storage.Queues.Test
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -400,7 +400,7 @@ namespace Azure.Storage.Queues.Test
         public void CanGenerateSas_GetQueueClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -456,15 +456,16 @@ namespace Azure.Storage.Queues.Test
         public void GenerateAccountSas_RequiredParameters()
         {
             // Arrange
-            var constants = new TestConstants(this);
-            var queueEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
-            var queueSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (queueEndpoint, queueSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
+            TestConstants constants = TestConstants.Create(this);
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.queue.core.windows.net");
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(connectionString, GetOptions()));
+            QueueServiceClient serviceClient = InstrumentClient(
+                new QueueServiceClient(
+                    serviceUri,
+                    constants.Sas.SharedKeyCredential,
+                    GetOptions()));
 
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(
@@ -474,32 +475,30 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, AccountSasServices.Queues, resourceTypes);
-            UriBuilder expectedUri = new UriBuilder(queueEndpoint)
+            UriBuilder expectedUri = new UriBuilder(serviceUri)
             {
                 Query = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString()
             };
-            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+            Assert.AreEqual(expectedUri.Uri, sasUri);
         }
 
         [RecordedTest]
         public void GenerateAccountSas_Builder()
         {
-            var constants = new TestConstants(this);
-            var queueEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
-            var queueSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (queueEndpoint, queueSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
+            TestConstants constants = TestConstants.Create(this);
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.queue.core.windows.net");
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             AccountSasServices services = AccountSasServices.Queues;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(connectionString, GetOptions()));
+            QueueServiceClient serviceClient = InstrumentClient(
+                new QueueServiceClient(
+                    serviceUri,
+                    constants.Sas.SharedKeyCredential,
+                    GetOptions()));
 
-            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
-            {
-                StartsOn = startsOn
-            };
+            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
+
             // Add more properties on the builder
             sasBuilder.SetPermissions(permissions);
 
@@ -507,46 +506,33 @@ namespace Azure.Storage.Queues.Test
             Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
 
             // Assert
-            AccountSasBuilder sasBuilder2 = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
-            {
-                StartsOn = startsOn
-            };
-            UriBuilder expectedUri = new UriBuilder(queueEndpoint);
+            AccountSasBuilder sasBuilder2 = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
+            UriBuilder expectedUri = new UriBuilder(serviceUri);
             expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
-            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+            Assert.AreEqual(expectedUri.Uri, sasUri);
         }
 
         [RecordedTest]
         public void GenerateAccountSas_WrongService_Service()
         {
-            var constants = new TestConstants(this);
-            var queueEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
-            var queueSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (queueEndpoint, queueSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
+            TestConstants constants = TestConstants.Create(this);
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.queue.core.windows.net");
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasServices services = AccountSasServices.Blobs; // Wrong Service
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            QueueServiceClient serviceClient = InstrumentClient(new QueueServiceClient(connectionString, GetOptions()));
+            QueueServiceClient serviceClient = InstrumentClient(
+                new QueueServiceClient(
+                    serviceUri,
+                    constants.Sas.SharedKeyCredential,
+                    GetOptions()));
 
-            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
-            {
-                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None),
-                StartsOn = Recording.UtcNow.AddHours(-1)
-            };
+            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
 
             // Act
-            try
-            {
-                Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
-
-                Assert.Fail("BlobContainerClient.GenerateSasUri should have failed with an ArgumentException.");
-            }
-            catch (InvalidOperationException)
-            {
-                // the correct exception came back
-            }
+            TestHelper.AssertExpectedException(
+                () => serviceClient.GenerateAccountSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. builder.Services does specify Queues. builder.Services must either specify Queues or specify all Services are accessible in the value."));
         }
         #endregion
 

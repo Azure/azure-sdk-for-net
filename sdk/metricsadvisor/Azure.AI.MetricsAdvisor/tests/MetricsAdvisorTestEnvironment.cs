@@ -28,5 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public string AlertId => Environment.GetEnvironmentVariable("METRICSADVISOR_ALERT_ID");
         public string IncidentId => Environment.GetEnvironmentVariable("METRICSADVISOR_INCIDENT_ID");
         public string FeedbackId => Environment.GetEnvironmentVariable("METRICSADVISOR_FEEDBACK_ID");
+
+        protected string GetUniqueName() => $"net-sample-{Guid.NewGuid().ToString("N")}";
     }
 }
