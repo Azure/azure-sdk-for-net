@@ -60,19 +60,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Queries metrics for a resource.
         /// </summary>
-        /// <param name="resource">The resource name.
+        /// <param name="resourceId">The resource name.
         /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
         /// <param name="metrics">The list of metrics to query.</param>
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="MetricQueryResult"/> instance containing the query results.</returns>
-        public virtual Response<MetricQueryResult> Query(string resource, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricQueryResult> Query(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return _metricsRestClient.List(resource,
+                return _metricsRestClient.List(resourceId,
                     timespan: options?.TimeSpan?.ToString(),
                     interval: options?.Interval,
                     filter: options?.Filter,
@@ -93,19 +93,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Queries metrics for a resource.
         /// </summary>
-        /// <param name="resource">The resource name.
+        /// <param name="resourceId">The resource name.
         /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
         /// <param name="metrics">The list of metrics to query.</param>
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="MetricQueryResult"/> instance with query results.</returns>
-        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resource, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return await _metricsRestClient.ListAsync(resource,
+                return await _metricsRestClient.ListAsync(resourceId,
                     timespan: options?.TimeSpan?.ToString(),
                     interval: options?.Interval,
                     filter: options?.Filter,
@@ -126,19 +126,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets metric definitions for a particular resource and metric namespace.
         /// </summary>
-        /// <param name="resource">The resource name.
+        /// <param name="resourceId">The resource name.
         /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
         /// <param name="metricsNamespace">The metric namespace.
         /// For example: <c>Microsoft.OperationalInsights/workspaces</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A list of metric definitions.</returns>
-        public virtual Response<IReadOnlyList<MetricDefinition>> GetMetrics(string resource, string metricsNamespace, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<MetricDefinition>> GetMetrics(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetrics)}");
             scope.Start();
             try
             {
-                var response = _metricDefinitionsClient.List(resource, metricsNamespace, cancellationToken);
+                var response = _metricDefinitionsClient.List(resourceId, metricsNamespace, cancellationToken);
 
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
@@ -152,19 +152,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets metric definitions for a particular resource and metric namespace.
         /// </summary>
-        /// <param name="resource">The resource name.
+        /// <param name="resourceId">The resource name.
         /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
         /// <param name="metricsNamespace">The metric namespace.
         /// For example: <c>Microsoft.OperationalInsights/workspaces</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A list of metric definitions.</returns>
-        public virtual async Task<Response<IReadOnlyList<MetricDefinition>>> GetMetricsAsync(string resource, string metricsNamespace, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<MetricDefinition>>> GetMetricsAsync(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetrics)}");
             scope.Start();
             try
             {
-                var response = await _metricDefinitionsClient.ListAsync(resource, metricsNamespace, cancellationToken).ConfigureAwait(false);
+                var response = await _metricDefinitionsClient.ListAsync(resourceId, metricsNamespace, cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
@@ -178,17 +178,17 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets metric namespaces for a particular resource.
         /// </summary>
-        /// <param name="resource">The resource name.
+        /// <param name="resourceId">The resource name.
         /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A list of metric namespaces.</returns>
-        public virtual Response<IReadOnlyList<MetricNamespace>> GetMetricNamespaces(string resource, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<MetricNamespace>> GetMetricNamespaces(string resourceId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetricNamespaces)}");
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.List(resource, cancellationToken: cancellationToken);
+                var response = _namespacesRestClient.List(resourceId, cancellationToken: cancellationToken);
 
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
@@ -202,16 +202,16 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets metric namespaces for a particular resource.
         /// </summary>
-        /// <param name="resource">The resource name.</param>
+        /// <param name="resourceId">The resource name.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A list of metric namespaces.</returns>
-        public virtual async Task<Response<IReadOnlyList<MetricNamespace>>> GetMetricNamespacesAsync(string resource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<MetricNamespace>>> GetMetricNamespacesAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetricNamespaces)}");
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.ListAsync(resource, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _namespacesRestClient.ListAsync(resourceId, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
