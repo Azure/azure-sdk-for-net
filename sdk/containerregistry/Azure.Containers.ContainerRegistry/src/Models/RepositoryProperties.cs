@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Repository attributes. </summary>
+    /// <summary> Repository properties. </summary>
     public partial class RepositoryProperties
     {
         /// <summary>
