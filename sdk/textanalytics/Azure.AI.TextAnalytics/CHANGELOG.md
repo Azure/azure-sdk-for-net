@@ -1,6 +1,6 @@
 # Release History
 
-## 5.1.0-beta.7 (Unreleased)
+## 5.1.0-beta.7 (2021-05-18)
 ### New features
 - Added property `DisableServiceLogs` to `TextAnalyticsRequestOptions`.
 - Added support for Sentiment Analysis as an action type for `StartAnalyzeBatchActions`.
