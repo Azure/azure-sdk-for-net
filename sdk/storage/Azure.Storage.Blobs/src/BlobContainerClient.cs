@@ -200,10 +200,6 @@ namespace Azure.Storage.Blobs
                 encryptionScope: options.EncryptionScope);
 
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
-            if (_authenticationPolicy is StorageBearerTokenChallengeAuthorizationPolicy policy)
-            {
-                policy.DisableTenantDiscovery = options.DisableTenantDiscovery;
-            }
             _containerRestClient = BuildContainerRestClient(_uri);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
@@ -313,7 +309,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobContainerUri, credential.AsPolicy(), options)
+            : this(blobContainerUri, credential.AsPolicy(options), options)
         {
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
         }

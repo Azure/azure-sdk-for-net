@@ -19,17 +19,19 @@ namespace Azure.Storage.Shared
         private volatile string tenantId;
 
         /// <inheritdoc />
-        public bool DisableTenantDiscovery { get; set; }
+        public bool DisableTenantDiscovery { get; }
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="credential"></param>
         /// <param name="scope"></param>
-        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, string scope) : base(credential, scope)
+        /// <param name="disableTenantDiscovery"> </param>
+        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, string scope, bool disableTenantDiscovery) : base(credential, scope)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             _scopes = new[] { scope };
+            DisableTenantDiscovery = disableTenantDiscovery;
         }
 
         /// <summary>
@@ -37,10 +39,12 @@ namespace Azure.Storage.Shared
         /// </summary>
         /// <param name="credential"></param>
         /// <param name="scopes"></param>
-        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, IEnumerable<string> scopes) : base(credential, scopes)
+        /// <param name="disableTenantDiscovery"> </param>
+        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, IEnumerable<string> scopes, bool disableTenantDiscovery) : base(credential, scopes)
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
             _scopes = scopes.ToArray();
+            DisableTenantDiscovery = disableTenantDiscovery;
         }
 
         /// <inheritdoc />

@@ -318,7 +318,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(), options, null)
+            : this(blobUri, credential.AsPolicy(options), options, null)
         {
             _blobRestClient = BuildBlobRestClient(blobUri);
             Errors.VerifyHttpsTokenAuth(blobUri);
@@ -365,10 +365,6 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
                 }
-            }
-            if (authentication is StorageBearerTokenChallengeAuthorizationPolicy policy)
-            {
-                policy.DisableTenantDiscovery = options.DisableTenantDiscovery;
             }
 
             _clientConfiguration = new BlobClientConfiguration(

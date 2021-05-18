@@ -304,7 +304,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options, null)
+            : this(queueUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(queueUri);
         }
@@ -339,10 +339,6 @@ namespace Azure.Storage.Queues
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
-            if (authentication is StorageBearerTokenChallengeAuthorizationPolicy policy)
-            {
-                policy.DisableTenantDiscovery = options.DisableTenantDiscovery;
-            }
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,

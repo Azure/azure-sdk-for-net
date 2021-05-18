@@ -399,7 +399,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential)
-            : this(pathUri, credential.AsPolicy(), null, null)
+            : this(pathUri, credential.AsPolicy(new DataLakeClientOptions()), null, null)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }
@@ -422,7 +422,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(pathUri, credential.AsPolicy(), options, null)
+            : this(pathUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }
@@ -471,10 +471,6 @@ namespace Azure.Storage.Files.DataLake
             _uri = pathUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
-            if (authentication is StorageBearerTokenChallengeAuthorizationPolicy policy)
-            {
-                policy.DisableTenantDiscovery = options.DisableTenantDiscovery;
-            }
 
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
