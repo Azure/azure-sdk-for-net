@@ -236,7 +236,7 @@ Response<MetricQueryResult> results = await metricsClient.QueryAsync(
 foreach (var metric in results.Value.Metrics)
 {
     Console.WriteLine(metric.Name);
-    foreach (var element in metric.Timeseries)
+    foreach (var element in metric.TimeSeries)
     {
         Console.WriteLine("Dimensions: " + string.Join(",", element.Metadata));
 
