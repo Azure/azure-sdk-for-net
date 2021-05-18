@@ -54,7 +54,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             {
                 MessageSender = messageSender,
                 ServiceBusEntityType = _attribute.ServiceBusEntityType,
-                JsonSerializerSettings = _messagingProvider.Options.JsonSerializerSettings
             };
 
             return await BindAsync(entity, context.ValueContext).ConfigureAwait(false);

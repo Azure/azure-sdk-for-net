@@ -15,8 +15,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
         public ServiceBusEntityType ServiceBusEntityType { get; set; } = ServiceBusEntityType.Queue;
 
-        internal JsonSerializerSettings JsonSerializerSettings { get; set; }
-
         public Task SendAndCreateEntityIfNotExistsAsync(ServiceBusMessage message, Guid functionInstanceId, CancellationToken cancellationToken)
         {
             return MessageSender.SendAndCreateEntityIfNotExists(message, functionInstanceId, cancellationToken);

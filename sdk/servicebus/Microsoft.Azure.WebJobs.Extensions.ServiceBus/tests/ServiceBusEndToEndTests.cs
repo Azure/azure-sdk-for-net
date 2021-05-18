@@ -231,6 +231,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_OutputPoco()
+        {
+            var (jobHost, _) = BuildHost<ServiceBusOutputPocoTest>();
+            using (jobHost)
+            {
+                await jobHost.CallAsync(nameof(ServiceBusOutputPocoTest.OutputPoco));
+                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await jobHost.StopAsync();
+            }
+        }
+
+        [Test]
         public async Task TestBatch_DataContractPoco()
         {
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>(true);
@@ -611,6 +624,23 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBus(TopicNameKey)] out string output)
             {
                 output = input;
+            }
+        }
+
+        public class ServiceBusOutputPocoTest
+        {
+            public static void OutputPoco(
+                [ServiceBus(FirstQueueNameKey)] out TestPoco output)
+            {
+                output = new TestPoco() {Value = "value", Name = "name"};
+            }
+
+            public static void TriggerPoco(
+                [ServiceBusTrigger(FirstQueueNameKey)] TestPoco received)
+            {
+                Assert.AreEqual("value", received.Value);
+                Assert.AreEqual("name", received.Name);
+                _eventWait.Set();
             }
         }
 

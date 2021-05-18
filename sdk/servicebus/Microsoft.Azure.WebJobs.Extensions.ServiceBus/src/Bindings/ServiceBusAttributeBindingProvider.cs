@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
                 new MessageArgumentBindingProvider(),
                 new StringArgumentBindingProvider(),
                 new ByteArrayArgumentBindingProvider(),
-                new UserTypeArgumentBindingProvider(),
+                new UserTypeArgumentBindingProvider(jsonSettings),
                 new SyncCollectorArgumentBindingProvider(jsonSettings),
                 new AsyncCollectorArgumentBindingProvider(jsonSettings));
         }
