@@ -24,17 +24,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Initializes a new instance of <see cref="MetricsClient"/>.
         /// </summary>
+        /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        public MetricsClient(TokenCredential credential) : this(credential, null)
+        public MetricsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="MetricsClient"/>.
         /// </summary>
+        /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="MetricsClientOptions"/> instance to as client configuration.</param>
-        public MetricsClient(TokenCredential credential, MetricsClientOptions options)
+        public MetricsClient(Uri endpoint, TokenCredential credential, MetricsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -43,9 +45,9 @@ namespace Azure.Monitor.Query
             _clientDiagnostics = new ClientDiagnostics(options);
 
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com//.default"));
-            _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline);
-            _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline);
-            _namespacesRestClient = new MetricNamespacesRestClient(_clientDiagnostics, pipeline);
+            _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline, endpoint);
+            _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline, endpoint);
+            _namespacesRestClient = new MetricNamespacesRestClient(_clientDiagnostics, pipeline, endpoint);
         }
 
         /// <summary>
