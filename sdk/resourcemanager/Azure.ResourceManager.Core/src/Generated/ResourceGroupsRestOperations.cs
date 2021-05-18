@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Core
             _pipeline = pipeline;
         }
 
-        internal Azure.Core.HttpMessage CreateCheckExistenceRequest(string resourceGroupName)
+        internal HttpMessage CreateCheckExistenceRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, ResourceGroupData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, ResourceGroupData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Azure.Core.HttpMessage CreateDeleteRequest(string resourceGroupName)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetRequest(string resourceGroupName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string resourceGroupName, ResourceGroupPatchable parameters)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, ResourceGroupPatchable parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Azure.Core.HttpMessage CreateExportTemplateRequest(string resourceGroupName, ExportTemplateRequest parameters)
+        internal HttpMessage CreateExportTemplateRequest(string resourceGroupName, ExportTemplateRequest parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListRequest(string filter, int? top)
+        internal HttpMessage CreateListRequest(string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListNextPageRequest(string nextLink, string filter, int? top)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
