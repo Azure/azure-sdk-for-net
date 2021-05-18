@@ -19,8 +19,9 @@ namespace Microsoft.Azure.Management.Monitor
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Insights", "DataCollectionRules", "2019-11-01-preview"),
-                new Tuple<string, string, string>("Insights", "DataCollectionRuleAssociations", "2019-11-01-preview"),
+                new Tuple<string, string, string>("Insights", "DataCollectionRules", "2021-04-01"),
+                new Tuple<string, string, string>("Insights", "DataCollectionRuleAssociations", "2021-04-01"),
+                new Tuple<string, string, string>("Insights", "DataCollectionEndpoints", "2021-04-01"),
                 new Tuple<string, string, string>("Insights", "MetricAlerts", "2018-03-01"),
                 new Tuple<string, string, string>("Insights", "MetricAlertsStatus", "2018-03-01"),
                 new Tuple<string, string, string>("Insights", "PrivateEndpointConnections", "2019-10-17-preview"),
