@@ -64,7 +64,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="MetricQueryResult"/> instance containing the query results.</returns>
-        public virtual Response<MetricQueryResult> Query(string resource, IEnumerable<string> metrics, MetricQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricQueryResult> Query(string resource, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="MetricQueryResult"/> instance with query results.</returns>
-        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resource, IEnumerable<string> metrics, MetricQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resource, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
             scope.Start();
@@ -220,7 +220,7 @@ namespace Azure.Monitor.Query
             }
         }
 
-        private static string GetAggregation(MetricQueryOptions options)
+        private static string GetAggregation(MetricsQueryOptions options)
         {
             if (options?.Aggregations == null ||
                 options.Aggregations.Count == 0)

@@ -52,7 +52,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions()
+                new MetricsQueryOptions()
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, duration)
@@ -73,7 +73,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)),
@@ -106,7 +106,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
@@ -126,7 +126,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.Duration)
@@ -146,7 +146,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.Duration, _testData.EndTime)
@@ -166,7 +166,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace
                 });
@@ -183,7 +183,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
@@ -204,7 +204,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[] {_testData.MetricName},
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
@@ -227,7 +227,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[] {_testData.MetricName},
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),

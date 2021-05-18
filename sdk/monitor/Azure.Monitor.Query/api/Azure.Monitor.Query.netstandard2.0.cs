@@ -51,17 +51,6 @@ namespace Azure.Monitor.Query
         public bool IncludeStatistics { get { throw null; } set { } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
     }
-    public partial class MetricQueryOptions
-    {
-        public MetricQueryOptions() { }
-        public System.Collections.Generic.IList<Azure.Monitor.Query.Models.MetricAggregationType> Aggregations { get { throw null; } }
-        public string Filter { get { throw null; } set { } }
-        public System.TimeSpan? Interval { get { throw null; } set { } }
-        public string MetricNamespace { get { throw null; } set { } }
-        public string OrderBy { get { throw null; } set { } }
-        public Azure.Monitor.Query.DateTimeRange? TimeSpan { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
     public partial class MetricsClient
     {
         protected MetricsClient() { }
@@ -71,8 +60,8 @@ namespace Azure.Monitor.Query
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricNamespace>>> GetMetricNamespacesAsync(string resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricDefinition>> GetMetrics(string resource, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricDefinition>>> GetMetricsAsync(string resource, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Monitor.Query.Models.MetricQueryResult> Query(string resource, System.Collections.Generic.IEnumerable<string> metrics, Azure.Monitor.Query.MetricQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricQueryResult>> QueryAsync(string resource, System.Collections.Generic.IEnumerable<string> metrics, Azure.Monitor.Query.MetricQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Monitor.Query.Models.MetricQueryResult> Query(string resource, System.Collections.Generic.IEnumerable<string> metrics, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricQueryResult>> QueryAsync(string resource, System.Collections.Generic.IEnumerable<string> metrics, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MetricsClientOptions : Azure.Core.ClientOptions
     {
@@ -81,6 +70,17 @@ namespace Azure.Monitor.Query
         {
             V2018_01_01 = 0,
         }
+    }
+    public partial class MetricsQueryOptions
+    {
+        public MetricsQueryOptions() { }
+        public System.Collections.Generic.IList<Azure.Monitor.Query.Models.MetricAggregationType> Aggregations { get { throw null; } }
+        public string Filter { get { throw null; } set { } }
+        public System.TimeSpan? Interval { get { throw null; } set { } }
+        public string MetricNamespace { get { throw null; } set { } }
+        public string OrderBy { get { throw null; } set { } }
+        public Azure.Monitor.Query.DateTimeRange? TimeSpan { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
     }
 }
 namespace Azure.Monitor.Query.Models
