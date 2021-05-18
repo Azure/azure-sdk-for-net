@@ -1335,7 +1335,6 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             var shareName = GetNewShareName();
             ShareServiceClient service = GetServiceClient_SharedKey();
-            ShareClientOptions clientOptions = new ShareClientOptions(ShareClientOptions.ServiceVersion.V2020_02_10);
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
 
             ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
