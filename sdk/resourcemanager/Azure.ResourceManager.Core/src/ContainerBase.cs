@@ -6,29 +6,27 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Base class representing collection of resources.
     /// </summary>
-    /// <typeparam name="TIdentifier"> The type of the resource identifier. </typeparam>
-    public abstract class ContainerBase<TIdentifier> : OperationsBase
-        where TIdentifier : ResourceIdentifier
+    public abstract class ContainerBase : OperationsBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContainerBase{TIdentifier}"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ContainerBase"/> class for mocking.
         /// </summary>
         protected ContainerBase()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContainerBase{TIdentifier}"/> class.
+        /// Initializes a new instance of the <see cref="ContainerBase"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ContainerBase(ClientContext clientContext, TIdentifier id)
+        internal ContainerBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContainerBase{TOperations}"/> class.
+        /// Initializes a new instance of the <see cref="ContainerBase"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected ContainerBase(ResourceOperationsBase parent)
