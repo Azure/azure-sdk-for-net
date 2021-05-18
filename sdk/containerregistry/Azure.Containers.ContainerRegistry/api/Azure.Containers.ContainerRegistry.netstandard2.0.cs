@@ -126,7 +126,6 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ContainerRepository
     {
         protected ContainerRepository() { }
-        public virtual string FullyQualifiedName { get { throw null; } }
         public virtual string Name { get { throw null; } }
         public virtual System.Uri RegistryEndpoint { get { throw null; } }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.DeleteRepositoryResult> Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
