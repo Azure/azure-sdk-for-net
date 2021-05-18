@@ -39,5 +39,14 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual("2021-01-02T03:04:05.0000000Z/2021-05-04T03:02:01.0000000Z", new DateTimeRange(startTime, endTime).ToString());
         }
+
+        [TestCase("PT23M")]
+        [TestCase("PT23M/2021-05-04T03:02:01.0000000Z")]
+        [TestCase("2021-05-04T03:02:01.0000000Z/PT23M")]
+        [TestCase("2021-01-02T03:04:05.0000000Z/2021-05-04T03:02:01.0000000Z")]
+        public void CanRoundtrip(string range)
+        {
+            Assert.AreEqual(range, DateTimeRange.Parse(range).ToString());
+        }
     }
 }
