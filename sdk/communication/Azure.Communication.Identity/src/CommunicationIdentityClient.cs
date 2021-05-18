@@ -281,6 +281,45 @@ namespace Azure.Communication.Identity
             }
         }
 
+        /// <summary>Exchange an AAD access token of a Teams user for a new ACS access token.</summary>
+        /// <param name="token">Azure Active Directory access token to acquire a new ACS access token.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <exception cref="RequestFailedException">The server returned an error.</exception>
+        public virtual Response<AccessToken> ExchangeAccessToken(string token, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(ExchangeAccessToken)}");
+            scope.Start();
+            try
+            {
+                Response<CommunicationIdentityAccessToken> response = RestClient.ExchangeTeamsUserAccessToken(token, cancellationToken);
+                return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Asynchronously exchange an AAD access token of a Teams user for a new ACS access token.</summary>
+        /// <param name="token">Azure Active Directory access token to acquire a new ACS access token.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual async Task<Response<AccessToken>> ExchangeAccessTokenAsync(String token, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(ExchangeAccessToken)}");
+            scope.Start();
+            try
+            {
+                Response<CommunicationIdentityAccessToken> response = await RestClient.ExchangeTeamsUserAccessTokenAsync(token, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         private static T AssertNotNull<T>(T argument, string argumentName)
             where T : class
         {
