@@ -64,7 +64,7 @@ namespace Azure.Monitor.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = property.Value.GetString().ToMetricUnit();
+                    unit = new MetricUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryAggregationType"))
