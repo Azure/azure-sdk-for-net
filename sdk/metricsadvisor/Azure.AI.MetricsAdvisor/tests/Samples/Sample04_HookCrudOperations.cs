@@ -122,7 +122,6 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20677")]
         public async Task GetHooksAsync()
         {
             string endpoint = MetricsAdvisorUri;

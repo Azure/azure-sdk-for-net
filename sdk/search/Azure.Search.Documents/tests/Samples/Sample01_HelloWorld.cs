@@ -184,7 +184,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 #if !SNIPPET
-                indexClient = resources.GetIndexClient(new SearchClientOptions());
+                indexClient = resources.GetIndexClient(new SearchClientOptions(ServiceVersion));
 #endif
 
                 // Create a synonym map from a file containing country names and abbreviations

@@ -713,8 +713,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureDataLakeStorageGen2 { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureEventHubs { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureTable { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType Elasticsearch { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType HttpRequest { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType InfluxDb { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType MongoDb { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType MySql { get { throw null; } }
@@ -794,14 +792,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.DimensionKey left, Azure.AI.MetricsAdvisor.Models.DimensionKey right) { throw null; }
         public void RemoveDimensionColumn(string dimensionColumnName) { }
     }
-    public partial class ElasticsearchDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
-    {
-        public ElasticsearchDataFeedSource(string host, string port, string authorizationHeader, string query) { }
-        public string AuthorizationHeader { get { throw null; } }
-        public string Host { get { throw null; } }
-        public string Port { get { throw null; } }
-        public string Query { get { throw null; } }
-    }
     public partial class EmailNotificationHook : Azure.AI.MetricsAdvisor.Models.NotificationHook
     {
         public EmailNotificationHook() { }
@@ -846,14 +836,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public double? LowerBound { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.SuppressCondition SuppressCondition { get { throw null; } }
         public double? UpperBound { get { throw null; } set { } }
-    }
-    public partial class HttpRequestDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
-    {
-        public HttpRequestDataFeedSource(System.Uri url, string httpHeader, string httpMethod, string payload) { }
-        public string HttpHeader { get { throw null; } }
-        public string HttpMethod { get { throw null; } }
-        public string Payload { get { throw null; } }
-        public System.Uri Url { get { throw null; } }
     }
     public partial class IncidentRootCause
     {

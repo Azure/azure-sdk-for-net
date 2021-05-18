@@ -40,11 +40,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repository = client.GetRepository(_repositoryName);
 
             RepositoryProperties repositoryProperties = await repository.GetPropertiesAsync();
-            ContentProperties originalContentProperties = repositoryProperties.WriteableProperties;
+            RepositoryProperties originalProperties = repositoryProperties;
 
             // Act
             RepositoryProperties properties = await repository.SetPropertiesAsync(
-                new ContentProperties()
+                new RepositoryProperties()
                 {
                     CanList = false,
                     CanRead = false,
@@ -53,20 +53,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
 
             // Assert
-            Assert.IsFalse(properties.WriteableProperties.CanList);
-            Assert.IsFalse(properties.WriteableProperties.CanRead);
-            Assert.IsFalse(properties.WriteableProperties.CanWrite);
-            Assert.IsFalse(properties.WriteableProperties.CanDelete);
+            Assert.IsFalse(properties.CanList);
+            Assert.IsFalse(properties.CanRead);
+            Assert.IsFalse(properties.CanWrite);
+            Assert.IsFalse(properties.CanDelete);
 
             RepositoryProperties updatedProperties = await repository.GetPropertiesAsync();
 
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanList);
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanRead);
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanWrite);
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanDelete);
+            Assert.IsFalse(updatedProperties.CanList);
+            Assert.IsFalse(updatedProperties.CanRead);
+            Assert.IsFalse(updatedProperties.CanWrite);
+            Assert.IsFalse(updatedProperties.CanDelete);
 
             // Cleanup
-            await repository.SetPropertiesAsync(originalContentProperties);
+            await repository.SetPropertiesAsync(originalProperties);
         }
 
         [RecordedTest, NonParallelizable]
@@ -79,7 +79,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
             Assert.ThrowsAsync<RequestFailedException>(() =>
                 repository.SetPropertiesAsync(
-                    new ContentProperties()
+                    new RepositoryProperties()
                     {
                         CanList = false,
                         CanRead = false,
@@ -266,7 +266,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 await foreach (ArtifactManifestProperties manifest in manifests)
                 {
                     // Make sure we're looking at a manifest list, which has the tag
-                    if (manifest.References != null && manifest.References.Count > 0)
+                    if (manifest.ManifestReferences != null && manifest.ManifestReferences.Count > 0)
                     {
                         digest = manifest.Digest;
                         Assert.That(manifest.RepositoryName.Contains(repositoryName));

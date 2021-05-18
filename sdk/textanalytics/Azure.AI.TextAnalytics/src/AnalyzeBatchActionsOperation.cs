@@ -266,7 +266,7 @@ namespace Azure.AI.TextAnalytics
                     {
                         // we need to first assign a value and then mark the operation as completed to avoid race conditions
                         var nextLink = update.Value.NextLink;
-                        var value = Transforms.ConvertToAnalyzeOperationResult(update.Value, _idToIndexMap);
+                        var value = Transforms.ConvertToAnalyzeBatchActionsResult(update.Value, _idToIndexMap);
                         _firstPage = Page.FromValues(new List<AnalyzeBatchActionsResult>() { value }, nextLink, _response);
                         _hasCompleted = true;
                     }
@@ -296,9 +296,9 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(RemoveExtraInformationFromNextLink(nextLink)).ConfigureAwait(false);
+                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(nextLink).ConfigureAwait(false);
 
-                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
+                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeBatchActionsResult(jobState.Value, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception)
@@ -325,9 +325,9 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(RemoveExtraInformationFromNextLink(nextLink));
+                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(nextLink);
 
-                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
+                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeBatchActionsResult(jobState.Value, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception)
@@ -344,8 +344,5 @@ namespace Azure.AI.TextAnalytics
             if (!HasCompleted)
                 throw new InvalidOperationException("The operation has not completed yet.");
         }
-
-        // Service bug https://github.com/Azure/azure-sdk-for-net/issues/20991
-        private static string RemoveExtraInformationFromNextLink(string nextlink) => nextlink.Split('/').Last();
     }
 }
