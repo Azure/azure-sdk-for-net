@@ -16,9 +16,14 @@ namespace Azure.Monitor.Query.Tests
         [Test]
         public async Task QueryLogsAsTable()
         {
+#if SNIPPET
+            LogsClient client = new LogsClient(new Uri("<endpoint>"), new DefaultAzureCredential());
+#else
+            LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
+#endif
+
             #region Snippet:QueryLogsAsTable
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
             /*@@*/string workspaceId = TestEnvironment.WorkspaceId;
             //@@string workspaceId = "<workspace_id>";
             Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
@@ -38,7 +43,7 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:QueryLogsPrintTable
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
+            LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 #if SNIPPET
             string workspaceId = "<workspace_id>";
 #else
@@ -74,7 +79,7 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:QueryLogsAsPrimitive
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
+            LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 #if SNIPPET
             string workspaceId = "<workspace_id>";
 #else
@@ -99,7 +104,7 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:QueryLogsAsModels
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
+            LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 #if SNIPPET
             string workspaceId = "<workspace_id>";
 #else
@@ -124,7 +129,7 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:BatchQuery
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
+            LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 #if SNIPPET
             string workspaceId = "<workspace_id>";
 #else
@@ -133,11 +138,11 @@ namespace Azure.Monitor.Query.Tests
 
             // Query TOP 10 resource groups by event count
             // And total event count
-            LogsBatchQuery batch = client.CreateBatchQuery();
+            LogsBatchQuery batch = new LogsBatchQuery();
             string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count", TimeSpan.FromDays(1));
             string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count", TimeSpan.FromDays(1));
 
-            Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
+            Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
 
             var count = response.Value.GetResult<int>(countQueryId).Single();
             var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);
@@ -156,7 +161,7 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:QueryLogsWithTimeout
 
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
+            LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 #if SNIPPET
             string workspaceId = "<workspace_id>";
 #else
@@ -189,7 +194,7 @@ namespace Azure.Monitor.Query.Tests
 #else
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
-            LogsClient client = new LogsClient(new DefaultAzureCredential());
+            LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
             try
             {
                 await client.QueryAsync(workspaceId, "My Not So Valid Query", TimeSpan.FromDays(1));

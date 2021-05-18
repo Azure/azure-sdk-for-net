@@ -69,6 +69,36 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
 
         /// <summary>
+        /// Gets the IProtectionIntentOperations.
+        /// </summary>
+        IProtectionIntentOperations ProtectionIntent { get; }
+
+        /// <summary>
+        /// Gets the IBackupStatusOperations.
+        /// </summary>
+        IBackupStatusOperations BackupStatus { get; }
+
+        /// <summary>
+        /// Gets the IFeatureSupportOperations.
+        /// </summary>
+        IFeatureSupportOperations FeatureSupport { get; }
+
+        /// <summary>
+        /// Gets the IBackupProtectionIntentOperations.
+        /// </summary>
+        IBackupProtectionIntentOperations BackupProtectionIntent { get; }
+
+        /// <summary>
+        /// Gets the IBackupUsageSummariesOperations.
+        /// </summary>
+        IBackupUsageSummariesOperations BackupUsageSummaries { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IBackupResourceVaultConfigsOperations.
         /// </summary>
         IBackupResourceVaultConfigsOperations BackupResourceVaultConfigs { get; }
@@ -292,36 +322,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IBackupProtectedItemsCrrOperations.
         /// </summary>
         IBackupProtectedItemsCrrOperations BackupProtectedItemsCrr { get; }
-
-        /// <summary>
-        /// Gets the IProtectionIntentOperations.
-        /// </summary>
-        IProtectionIntentOperations ProtectionIntent { get; }
-
-        /// <summary>
-        /// Gets the IBackupStatusOperations.
-        /// </summary>
-        IBackupStatusOperations BackupStatus { get; }
-
-        /// <summary>
-        /// Gets the IFeatureSupportOperations.
-        /// </summary>
-        IFeatureSupportOperations FeatureSupport { get; }
-
-        /// <summary>
-        /// Gets the IBackupProtectionIntentOperations.
-        /// </summary>
-        IBackupProtectionIntentOperations BackupProtectionIntent { get; }
-
-        /// <summary>
-        /// Gets the IBackupUsageSummariesOperations.
-        /// </summary>
-        IBackupUsageSummariesOperations BackupUsageSummaries { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
 
         /// <summary>
         /// Fetches operation status for data move operation on vault

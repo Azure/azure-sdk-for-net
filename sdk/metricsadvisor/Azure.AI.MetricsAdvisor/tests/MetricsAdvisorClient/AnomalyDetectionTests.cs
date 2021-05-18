@@ -140,7 +140,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // TODO: create AnomalyIncident using model factory instead. We're currently using an internal constructor.
             var seriesIdentity = new SeriesIdentity(new Dictionary<string, string>());
-            var incidentProperty = new IncidentProperty(default, default);
+            var incidentProperty = new IncidentProperty(default, default, default);
             var incident = new AnomalyIncident(default, FakeGuid, "incidentId", default, default, seriesIdentity, incidentProperty);
 
             using var cancellationSource = new CancellationTokenSource();

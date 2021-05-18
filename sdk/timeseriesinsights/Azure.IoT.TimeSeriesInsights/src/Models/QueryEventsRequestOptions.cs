@@ -14,20 +14,20 @@ namespace Azure.IoT.TimeSeriesInsights
         /// An array of properties to be returned in the response. These properties must appear
         /// in the events; otherwise, they are not returned.
         /// </summary>
-        public List<EventProperty> ProjectedProperties { get; }
+        public IList<TimeSeriesInsightsEventProperty> ProjectedProperties { get; }
 
         /// <summary>
         /// The maximum number of property values in the whole response set, not the maximum number of property values per page.
         /// Defaults to 10,000 when not set. Maximum value of take can be 250,000.
         /// </summary>
-        public int? MaximumNumberOfEvents { get; set; }
+        public int? MaxNumberOfEvents { get; set; }
 
         /// <summary>
         /// Creates a new instance of QueryEventsRequestOptions.
         /// </summary>
         public QueryEventsRequestOptions()
         {
-            ProjectedProperties = new List<EventProperty>();
+            ProjectedProperties = new List<TimeSeriesInsightsEventProperty>();
         }
     }
 }

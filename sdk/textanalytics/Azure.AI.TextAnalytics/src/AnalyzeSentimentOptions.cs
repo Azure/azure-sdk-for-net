@@ -30,6 +30,6 @@ namespace Azure.AI.TextAnalytics
         /// will contain the result of this analysis.
         /// <para>Only available for service version v3.1-preview and up.</para>
         /// </summary>
-        public bool IncludeOpinionMining { get; set; }
+        public bool? IncludeOpinionMining { get; set; }
     }
 }

@@ -531,6 +531,7 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 _responseMessage?.Dispose();
+                DisposeContentStreamIfNotBuffered();
             }
 
             public override string ToString() => _responseMessage.ToString();
