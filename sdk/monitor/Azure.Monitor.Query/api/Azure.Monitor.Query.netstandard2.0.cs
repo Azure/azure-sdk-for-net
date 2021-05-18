@@ -36,12 +36,12 @@ namespace Azure.Monitor.Query
         protected MetricsClient() { }
         public MetricsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public MetricsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.MetricsClientOptions options) { }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricNamespace>> GetMetricNamespaces(string resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricNamespace>>> GetMetricNamespacesAsync(string resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricDefinition>> GetMetrics(string resource, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricDefinition>>> GetMetricsAsync(string resource, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Monitor.Query.Models.MetricQueryResult> Query(string resource, System.Collections.Generic.IEnumerable<string> metrics, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricQueryResult>> QueryAsync(string resource, System.Collections.Generic.IEnumerable<string> metrics, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricNamespace>> GetMetricNamespaces(string resourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricNamespace>>> GetMetricNamespacesAsync(string resourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricDefinition>> GetMetrics(string resourceId, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricDefinition>>> GetMetricsAsync(string resourceId, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Monitor.Query.Models.MetricQueryResult> Query(string resourceId, System.Collections.Generic.IEnumerable<string> metrics, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricQueryResult>> QueryAsync(string resourceId, System.Collections.Generic.IEnumerable<string> metrics, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MetricsClientOptions : Azure.Core.ClientOptions
     {
@@ -75,7 +75,7 @@ namespace Azure.Monitor.Query.Models
     {
         internal LogsQueryResult() { }
         public Azure.Monitor.Query.Models.LogsQueryResultTable PrimaryTable { get { throw null; } }
-        public System.Text.Json.JsonElement Statistics { get { throw null; } }
+        public System.BinaryData Statistics { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultTable> Tables { get { throw null; } }
     }
     public partial class LogsQueryResultColumn
@@ -125,7 +125,7 @@ namespace Azure.Monitor.Query.Models
         internal Metric() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.TimeSeriesElement> Timeseries { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.TimeSeriesElement> TimeSeries { get { throw null; } }
         public string Type { get { throw null; } }
         public Azure.Monitor.Query.Models.MetricUnit Unit { get { throw null; } }
     }
@@ -173,7 +173,7 @@ namespace Azure.Monitor.Query.Models
         public System.TimeSpan? Interval { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.Metric> Metrics { get { throw null; } }
         public string Namespace { get { throw null; } }
-        public string Resourceregion { get { throw null; } }
+        public string ResourceRegion { get { throw null; } }
         public Azure.Core.DateTimeRange TimeSpan { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
