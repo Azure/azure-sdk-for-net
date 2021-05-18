@@ -248,8 +248,6 @@ foreach (var metric in results.Value.Metrics)
 }
 ```
 
-
-
 ## Troubleshooting
 
 ### General
