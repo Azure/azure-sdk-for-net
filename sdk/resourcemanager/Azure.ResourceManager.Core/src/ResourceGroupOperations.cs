@@ -176,10 +176,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(Id.Name, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var response = Operations.Get(Id.Name, cancellationToken);
+                return Response.FromValue(new ResourceGroup(this, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,12 +194,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
-                g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var response = await Operations.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(this, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,10 +225,8 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var response = Operations.Update(Id.Name, patch, cancellationToken);
+                return Response.FromValue(new ResourceGroup(this, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,11 +256,8 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var response = await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(this, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -430,10 +419,8 @@ namespace Azure.ResourceManager.Core
                 var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var response = Operations.Update(Id.Name, patch, cancellationToken);
+                return Response.FromValue(new ResourceGroup(this, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -461,12 +448,8 @@ namespace Azure.ResourceManager.Core
                 ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                    g =>
-                    {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
-                    });
+                var response = await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(this, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -565,10 +548,8 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var response = Operations.Update(Id.Name, patch, cancellationToken);
+                return Response.FromValue(new ResourceGroup(this, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -597,12 +578,8 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                    g =>
-                    {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
-                    });
+                var response = await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(this, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {

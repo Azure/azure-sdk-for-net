@@ -91,9 +91,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var response = Operations.CreateOrUpdate(name, resourceDetails, cancellationToken);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    response,
-                    g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+                return Response.FromValue(new ResourceGroup(Parent, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,9 +122,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var response = await Operations.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    response,
-                    g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+                return Response.FromValue(new ResourceGroup(Parent, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,10 +258,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(resourceGroupName, cancellationToken), g =>
-                {
-                    return new ResourceGroup(Parent, new ResourceGroupData(g));
-                });
+                var response = Operations.Get(resourceGroupName, cancellationToken);
+                return Response.FromValue(new ResourceGroup(Parent, new ResourceGroupData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -283,12 +277,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var result = await Operations.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                result,
-                g =>
-                {
-                    return new ResourceGroup(Parent, new ResourceGroupData(g));
-                });
+                return Response.FromValue(new ResourceGroup(Parent, new ResourceGroupData(result.Value)), result.GetRawResponse());
             }
             catch (Exception e)
             {
