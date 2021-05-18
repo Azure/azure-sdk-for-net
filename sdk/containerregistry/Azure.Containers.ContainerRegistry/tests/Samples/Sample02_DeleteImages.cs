@@ -86,7 +86,8 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                     await repository.GetArtifact(imageManifest.Digest).DeleteAsync();
                 }
             }
+
+            #endregion
         }
-        #endregion
     }
 }

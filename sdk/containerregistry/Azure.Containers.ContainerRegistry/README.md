@@ -240,33 +240,32 @@ await image.SetTagPropertiesAsync("latest", new ArtifactTagProperties()
 ### Delete images asynchronously
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
-    // Get the service endpoint from the environment
-    Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+// Get the service endpoint from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
-    // Create a new ContainerRegistryClient
-    ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+// Create a new ContainerRegistryClient
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
-    // Iterate through repositories
-    AsyncPageable<string> repositoryNames = client.GetRepositoryNamesAsync();
-    await foreach (string repositoryName in repositoryNames)
+// Iterate through repositories
+AsyncPageable<string> repositoryNames = client.GetRepositoryNamesAsync();
+await foreach (string repositoryName in repositoryNames)
+{
+    ContainerRepository repository = client.GetRepository(repositoryName);
+
+    // Obtain the images ordered from newest to oldest
+    AsyncPageable<ArtifactManifestProperties> imageManifests =
+        repository.GetManifestsAsync(orderBy: ManifestOrderBy.LastUpdatedOnDescending);
+
+    // Delete images older than the first three.
+    await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
     {
-        ContainerRepository repository = client.GetRepository(repositoryName);
-
-        // Obtain the images ordered from newest to oldest
-        AsyncPageable<ArtifactManifestProperties> imageManifests =
-            repository.GetManifestsAsync(orderBy: ManifestOrderBy.LastUpdatedOnDescending);
-
-        // Delete images older than the first three.
-        await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
+        Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
+        Console.WriteLine($"   This image has the following tags: ");
+        foreach (var tagName in imageManifest.Tags)
         {
-            Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
-            Console.WriteLine($"   This image has the following tags: ");
-            foreach (var tagName in imageManifest.Tags)
-            {
-                Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
-            }
-            await repository.GetArtifact(imageManifest.Digest).DeleteAsync();
+            Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
         }
+        await repository.GetArtifact(imageManifest.Digest).DeleteAsync();
     }
 }
 ```
