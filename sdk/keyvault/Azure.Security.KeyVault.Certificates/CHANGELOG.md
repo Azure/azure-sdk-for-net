@@ -1,7 +1,19 @@
 # Release History
 
-## 4.2.0-beta.6 (Unreleased)
+## 4.2.0-beta.7 (Unreleased)
 
+
+## 4.2.0-beta.6 (2021-05-11)
+
+### Changed
+
+- Updated dependency versions
+
+## 4.1.1 (2021-05-04)
+
+### Changed
+
+- Updated dependency versions
 
 ## 4.2.0-beta.5 (2021-03-09)
 

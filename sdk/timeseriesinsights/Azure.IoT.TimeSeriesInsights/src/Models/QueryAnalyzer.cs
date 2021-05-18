@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// The query analyzer allows a user to query for pages of data.
+    /// QueryAnalyzer allows a user to query for pages of data.
     /// </summary>
     public class QueryAnalyzer
     {

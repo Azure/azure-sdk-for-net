@@ -131,11 +131,11 @@ string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
 // And total event count
-LogsBatchQuery batch = client.CreateBatchQuery();
+LogsBatchQuery batch = new LogsBatchQuery();
 string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count", TimeSpan.FromDays(1));
 string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count", TimeSpan.FromDays(1));
 
-Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
+Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
 
 var count = response.Value.GetResult<int>(countQueryId).Single();
 var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);

@@ -647,7 +647,7 @@ namespace Azure.AI.TextAnalytics
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public StringIndexType(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.StringIndexType TextElementsV8 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.StringIndexType TextElementV8 { get { throw null; } }
         public static Azure.AI.TextAnalytics.StringIndexType UnicodeCodePoint { get { throw null; } }
         public static Azure.AI.TextAnalytics.StringIndexType Utf16CodeUnit { get { throw null; } }
         public bool Equals(Azure.AI.TextAnalytics.StringIndexType other) { throw null; }
@@ -795,13 +795,13 @@ namespace Azure.AI.TextAnalytics
     }
     public partial class TextAnalyticsClientOptions : Azure.Core.ClientOptions
     {
-        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_4) { }
+        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5) { }
         public string DefaultCountryHint { get { throw null; } set { } }
         public string DefaultLanguage { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V3_0 = 1,
-            V3_1_Preview_4 = 2,
+            V3_1_Preview_5 = 2,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -925,6 +925,7 @@ namespace Azure.AI.TextAnalytics
     public partial class TextAnalyticsRequestOptions
     {
         public TextAnalyticsRequestOptions() { }
+        public bool? DisableServiceLogs { get { throw null; } set { } }
         public bool IncludeStatistics { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.StringIndexType StringIndexType { get { throw null; } set { } }

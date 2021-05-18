@@ -52,7 +52,10 @@ directive:
           path.includes("HierarchiesRequestBatchGetDelete") ||
           path.includes("ModelSettingsResponse") ||
           path.includes("TypesBatchRequest") ||
-          path.includes("TypesRequestBatchGetOrDelete"))
+          path.includes("TypesRequestBatchGetOrDelete") ||
+          path.includes("DateTimeRange") ||
+          path.includes("PagedResponse") ||
+          path.includes("QueryResultPage"))
       {
         $[path]["x-accessibility"] = "internal"
       }

@@ -3,6 +3,22 @@
 ## 5.5.0-beta.1 (Unreleased)
 
 
+## 5.4.1 (2021-05-11)
+
+### Changes
+
+#### New Features
+
+- The processor will now perform validation of core configuration and permissions at startup, in order to attempt to detect unrecoverable problems more deterministically.  Validation is non-blocking and will not delay claiming of partitions.  One important note is that validation should be considered point-in-time and best effort; it is not meant to replace monitoring of error handler activity.
+
+- Partition initialization has been moved to a background operation.  This will allow partitions to be more efficiently managed and speed up ownership claims, especially when using the `LoadBalancingStrategy.Greedy` configuration or when the processor is recovering from some error conditions.
+
+#### Key Bug Fixes
+
+- Dependencies have been updated to resolve security warnings for CVE-2021-26701. _(The Event Hubs client library does not make use of the vulnerable components, directly or indirectly)_
+
+- The processor will no longer inappropriately determine that it should attempt to steal partitions from itself or when the load is balanced but there is an uneven ownership distribution.  Previously, stealing was attempted but no candidates were found, leading to log spam but no interruption in processing.
+
 ## 5.4.0 (2021-04-05)
 
 ### Acknowledgments

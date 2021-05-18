@@ -1,6 +1,13 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
+
+
+## 1.1.0 (2021-05-14)
+
+### Changes
+
+- Dependency versions updated.
 
 ### Added
 
@@ -25,6 +32,6 @@ An overload of `AddAzureKeyVault` that takes an `AzureKeyVaultConfigurationOptio
 
 - Package renamed to Azure.Extensions.AspNetCore.Configuration.Secrets
 
-## 1.0.0-preview.1 (2020)
+## 1.0.0-preview.1 (2020-03-02)
 
 - Initial preview of the Azure.Extensions.Configuration.Secrets library

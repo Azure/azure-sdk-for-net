@@ -27,14 +27,17 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
+            TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+            TimeSeriesInsightsInstances instancesClient = client.GetInstancesClient();
+
             int numOfIdProperties = 3;
             int numOfInstancesToSetup = 2;
             var timeSeriesInstances = new List<TimeSeriesInstance>();
-            string defaultTypeId = await getDefaultTypeIdAsync(client).ConfigureAwait(false);
+            string defaultTypeId = await getDefaultTypeIdAsync(modelSettingsClient).ConfigureAwait(false);
 
             for (int i = 0; i < numOfInstancesToSetup; i++)
             {
-                TimeSeriesId id = await GetUniqueTimeSeriesInstanceIdAsync(client, numOfIdProperties)
+                TimeSeriesId id = await GetUniqueTimeSeriesInstanceIdAsync(instancesClient, numOfIdProperties)
                     .ConfigureAwait(false);
 
                 var instance = new TimeSeriesInstance(id, defaultTypeId)
@@ -52,8 +55,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
                 {
                     // Create TSI instances
-                    Response<TimeSeriesOperationError[]> createInstancesResult = await client
-                        .Instances
+                    Response<TimeSeriesOperationError[]> createInstancesResult = await instancesClient
                         .CreateOrReplaceAsync(timeSeriesInstances)
                         .ConfigureAwait(false);
 
@@ -61,8 +63,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     createInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
 
                     // Get the created instances by Ids
-                    Response<InstancesOperationResult[]> getInstancesByIdsResult = await client
-                        .Instances
+                    Response<InstancesOperationResult[]> getInstancesByIdsResult = await instancesClient
                         .GetAsync(timeSeriesInstancesIds)
                         .ConfigureAwait(false);
 
@@ -77,27 +78,19 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         instanceResult.Instance.InstanceFields.Count.Should().Be(0);
                     }
 
-                    return null;
-                }, MaxNumberOfRetries, s_retryDelay);
+                    // Update the instances by adding descriptions to them
+                    timeSeriesInstances.ForEach((timeSeriesInstance) =>
+                        timeSeriesInstance.Description = "Description");
 
-                // Update the instances by adding descriptions to them
-                timeSeriesInstances.ForEach((timeSeriesInstance) =>
-                    timeSeriesInstance.Description = "Description");
+                    Response<InstancesOperationResult[]> replaceInstancesResult = await instancesClient
+                        .ReplaceAsync(timeSeriesInstances)
+                        .ConfigureAwait(false);
 
-                Response<InstancesOperationResult[]> replaceInstancesResult = await client
-                    .Instances
-                    .ReplaceAsync(timeSeriesInstances)
-                    .ConfigureAwait(false);
+                    replaceInstancesResult.Value.Length.Should().Be(timeSeriesInstances.Count);
+                    replaceInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
 
-                replaceInstancesResult.Value.Length.Should().Be(timeSeriesInstances.Count);
-                replaceInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
-
-                // This retry logic was added as the TSI instance are not immediately available after creation
-                await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
-                {
                     // Get instances by name
-                    Response<InstancesOperationResult[]> getInstancesByNameResult = await client
-                        .Instances
+                    Response<InstancesOperationResult[]> getInstancesByNameResult = await instancesClient
                         .GetAsync(timeSeriesInstances.Select((instance) => instance.Name))
                         .ConfigureAwait(false);
 
@@ -112,27 +105,25 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         instanceResult.Instance.InstanceFields.Count.Should().Be(0);
                     }
 
+                    // Get all Time Series instances in the environment
+                    AsyncPageable<TimeSeriesInstance> getAllInstancesResponse = instancesClient.GetAsync();
+
+                    int numOfInstances = 0;
+                    await foreach (TimeSeriesInstance tsiInstance in getAllInstancesResponse)
+                    {
+                        numOfInstances++;
+                        tsiInstance.Should().NotBeNull();
+                    }
+                    numOfInstances.Should().BeGreaterOrEqualTo(numOfInstancesToSetup);
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);
-
-                // Get all Time Series instances in the environment
-                AsyncPageable<TimeSeriesInstance> getAllInstancesResponse = client.Instances.GetAsync();
-
-                int numOfInstances = 0;
-                await foreach (TimeSeriesInstance tsiInstance in getAllInstancesResponse)
-                {
-                    numOfInstances++;
-                    tsiInstance.Should().NotBeNull();
-                }
-                numOfInstances.Should().BeGreaterOrEqualTo(numOfInstancesToSetup);
             }
             finally
             {
                 // clean up
                 try
                 {
-                    Response<TimeSeriesOperationError[]> deleteInstancesResponse = await client
-                        .Instances
+                    Response<TimeSeriesOperationError[]> deleteInstancesResponse = await instancesClient
                         .DeleteAsync(timeSeriesInstancesIds)
                         .ConfigureAwait(false);
 

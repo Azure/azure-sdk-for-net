@@ -5,12 +5,11 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Core;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Proto.Compute
 {
@@ -44,14 +43,14 @@ namespace Proto.Compute
 
         // Note: Singleton may have different operations such as GET/PUT/PATCH/POST or a combination of these
         // Individual methods will be generated as they are declared
-        public ArmResponse<RollingUpgrade> Get(CancellationToken cancellationToken = default)
+        public Response<RollingUpgrade> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<RollingUpgrade, Azure.ResourceManager.Compute.Models.RollingUpgradeStatusInfo>(
                 Operations.GetLatest(ParentId.ResourceGroupName, ParentId.Name, cancellationToken),
                 v => new RollingUpgrade(Parent, new RollingUpgradeStatusInfo(v)));
         }
 
-        public async Task<ArmResponse<RollingUpgrade>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<RollingUpgrade>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<RollingUpgrade, Azure.ResourceManager.Compute.Models.RollingUpgradeStatusInfo>(
                 await Operations.GetLatestAsync(ParentId.ResourceGroupName, ParentId.Name, cancellationToken),
@@ -60,18 +59,18 @@ namespace Proto.Compute
 
         // Note: Singleton may have different operations such as GET/PUT/PATCH/POST or a combination of these
         // Individual methods will be generated as they are declared
-        public ArmResponse Cancel(CancellationToken cancellationToken = default)
+        public Response Cancel(CancellationToken cancellationToken = default)
         {
-            return ArmResponse.FromResponse(Operations
+            return Operations
                 .StartCancel(ParentId.ResourceGroupName, ParentId.Name, cancellationToken)
-                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<ArmResponse> CancelAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
-            return ArmResponse.FromResponse((await Operations
+            return (await Operations
                 .StartCancel(ParentId.ResourceGroupName, ParentId.Name, cancellationToken)
-                .WaitForCompletionAsync(cancellationToken)));
+                .WaitForCompletionAsync(cancellationToken));
         }
     }
 }

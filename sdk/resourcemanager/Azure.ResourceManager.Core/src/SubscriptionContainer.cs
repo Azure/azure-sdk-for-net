@@ -2,16 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
     /// A class representing collection of Subscription and their operations
     /// </summary>
-    public class SubscriptionContainer : ContainerBase<SubscriptionResourceIdentifier, Subscription>
+    public class SubscriptionContainer : ResourceContainerBase<SubscriptionResourceIdentifier, Subscription, SubscriptionData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class for mocking.
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.Core
         internal SubscriptionContainer(ClientContext clientContext)
             : base(clientContext, null)
         {
+            RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline);
         }
 
         /// <summary>
@@ -37,11 +39,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the operations that can be performed on the container.
         /// </summary>
-        private SubscriptionsOperations Operations => new ResourcesManagementClient(
-            BaseUri,
-            Guid.NewGuid().ToString(),
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
+        private SubscriptionsRestOperations RestClient;
 
         /// <summary>
         /// Lists all subscriptions in the current container.
@@ -52,20 +50,37 @@ namespace Azure.ResourceManager.Core
         [ForwardsClientCalls]
         public virtual Pageable<Subscription> List(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
-            scope.Start();
-
-            try
+            Page<Subscription> FirstPageFunc(int? pageSizeHint)
             {
-                return new PhWrappingPageable<ResourceManager.Resources.Models.Subscription, Subscription>(
-                Operations.List(cancellationToken),
-                Converter());
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.List(cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<Subscription> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListNextPage(nextLink, cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -77,20 +92,37 @@ namespace Azure.ResourceManager.Core
         [ForwardsClientCalls]
         public virtual AsyncPageable<Subscription> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
-            scope.Start();
-
-            try
+            async Task<Page<Subscription>> FirstPageFunc(int? pageSizeHint)
             {
-                return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.Subscription, Subscription>(
-                Operations.ListAsync(cancellationToken),
-                Converter());
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<Subscription>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -101,6 +133,22 @@ namespace Azure.ResourceManager.Core
         {
             if (!(identifier is null))
                 throw new ArgumentException("Invalid parent for subscription container", nameof(identifier));
+        }
+
+        /// <inheritdoc />
+        public override Response<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
+        {
+            return new SubscriptionOperations(
+                    new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
+                    subscriptionGuid).Get(cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public override Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        {
+            return new SubscriptionOperations(
+                new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
+                subscriptionGuid).GetAsync(cancellationToken);
         }
 
         /// <summary>
@@ -114,9 +162,9 @@ namespace Azure.ResourceManager.Core
         }
 
         //TODO: can make static?
-        private Func<ResourceManager.Resources.Models.Subscription, Subscription> Converter()
+        private Func<SubscriptionData, Subscription> Converter()
         {
-            return s => new Subscription(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), s.SubscriptionId), new SubscriptionData(s));
+            return s => new Subscription(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), s.Id), s);
         }
     }
 }

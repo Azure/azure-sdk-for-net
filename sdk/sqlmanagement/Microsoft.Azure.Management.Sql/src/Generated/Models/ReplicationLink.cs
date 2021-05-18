@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a database replication link.
+    /// A replication link.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ReplicationLink : ProxyResource
@@ -35,45 +35,34 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="location">Location of the server that contains this
-        /// firewall rule.</param>
-        /// <param name="isTerminationAllowed">Legacy value indicating whether
-        /// termination is allowed.  Currently always returns true.</param>
-        /// <param name="replicationMode">Replication mode of this replication
+        /// <param name="partnerServer">Resource partner server.</param>
+        /// <param name="partnerDatabase">Resource partner database.</param>
+        /// <param name="partnerLocation">Resource partner location.</param>
+        /// <param name="role">Local replication role.</param>
+        /// <param name="partnerRole">Partner replication role.</param>
+        /// <param name="replicationMode">Replication mode.</param>
+        /// <param name="startTime">Time at which the link was created.</param>
+        /// <param name="percentComplete">Seeding completion percentage for the
         /// link.</param>
-        /// <param name="partnerServer">The name of the server hosting the
-        /// partner database.</param>
-        /// <param name="partnerDatabase">The name of the partner
-        /// database.</param>
-        /// <param name="partnerLocation">The Azure Region of the partner
-        /// database.</param>
-        /// <param name="role">The role of the database in the replication
-        /// link. Possible values include: 'Primary', 'Secondary',
-        /// 'NonReadableSecondary', 'Source', 'Copy'</param>
-        /// <param name="partnerRole">The role of the partner database in the
-        /// replication link. Possible values include: 'Primary', 'Secondary',
-        /// 'NonReadableSecondary', 'Source', 'Copy'</param>
-        /// <param name="startTime">The start time for the replication
-        /// link.</param>
-        /// <param name="percentComplete">The percentage of seeding complete
-        /// for the replication link.</param>
-        /// <param name="replicationState">The replication state for the
-        /// replication link. Possible values include: 'PENDING', 'SEEDING',
-        /// 'CATCH_UP', 'SUSPENDED'</param>
-        public ReplicationLink(string id = default(string), string name = default(string), string type = default(string), string location = default(string), bool? isTerminationAllowed = default(bool?), string replicationMode = default(string), string partnerServer = default(string), string partnerDatabase = default(string), string partnerLocation = default(string), ReplicationRole? role = default(ReplicationRole?), ReplicationRole? partnerRole = default(ReplicationRole?), System.DateTime? startTime = default(System.DateTime?), int? percentComplete = default(int?), string replicationState = default(string))
+        /// <param name="replicationState">Replication state (PENDING, SEEDING,
+        /// CATCHUP, SUSPENDED).</param>
+        /// <param name="isTerminationAllowed">Whether the user is currently
+        /// allowed to terminate the link.</param>
+        /// <param name="linkType">Link type (GEO, NAMED).</param>
+        public ReplicationLink(string id = default(string), string name = default(string), string type = default(string), string partnerServer = default(string), string partnerDatabase = default(string), string partnerLocation = default(string), string role = default(string), string partnerRole = default(string), string replicationMode = default(string), System.DateTime? startTime = default(System.DateTime?), int? percentComplete = default(int?), string replicationState = default(string), bool? isTerminationAllowed = default(bool?), string linkType = default(string))
             : base(id, name, type)
         {
-            Location = location;
-            IsTerminationAllowed = isTerminationAllowed;
-            ReplicationMode = replicationMode;
             PartnerServer = partnerServer;
             PartnerDatabase = partnerDatabase;
             PartnerLocation = partnerLocation;
             Role = role;
             PartnerRole = partnerRole;
+            ReplicationMode = replicationMode;
             StartTime = startTime;
             PercentComplete = percentComplete;
             ReplicationState = replicationState;
+            IsTerminationAllowed = isTerminationAllowed;
+            LinkType = linkType;
             CustomInit();
         }
 
@@ -83,76 +72,70 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets location of the server that contains this firewall rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; private set; }
-
-        /// <summary>
-        /// Gets legacy value indicating whether termination is allowed.
-        /// Currently always returns true.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isTerminationAllowed")]
-        public bool? IsTerminationAllowed { get; private set; }
-
-        /// <summary>
-        /// Gets replication mode of this replication link.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.replicationMode")]
-        public string ReplicationMode { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the server hosting the partner database.
+        /// Gets resource partner server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerServer")]
         public string PartnerServer { get; private set; }
 
         /// <summary>
-        /// Gets the name of the partner database.
+        /// Gets resource partner database.
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerDatabase")]
         public string PartnerDatabase { get; private set; }
 
         /// <summary>
-        /// Gets the Azure Region of the partner database.
+        /// Gets resource partner location.
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerLocation")]
         public string PartnerLocation { get; private set; }
 
         /// <summary>
-        /// Gets the role of the database in the replication link. Possible
-        /// values include: 'Primary', 'Secondary', 'NonReadableSecondary',
-        /// 'Source', 'Copy'
+        /// Gets local replication role.
         /// </summary>
         [JsonProperty(PropertyName = "properties.role")]
-        public ReplicationRole? Role { get; private set; }
+        public string Role { get; private set; }
 
         /// <summary>
-        /// Gets the role of the partner database in the replication link.
-        /// Possible values include: 'Primary', 'Secondary',
-        /// 'NonReadableSecondary', 'Source', 'Copy'
+        /// Gets partner replication role.
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerRole")]
-        public ReplicationRole? PartnerRole { get; private set; }
+        public string PartnerRole { get; private set; }
 
         /// <summary>
-        /// Gets the start time for the replication link.
+        /// Gets replication mode.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replicationMode")]
+        public string ReplicationMode { get; private set; }
+
+        /// <summary>
+        /// Gets time at which the link was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startTime")]
         public System.DateTime? StartTime { get; private set; }
 
         /// <summary>
-        /// Gets the percentage of seeding complete for the replication link.
+        /// Gets seeding completion percentage for the link.
         /// </summary>
         [JsonProperty(PropertyName = "properties.percentComplete")]
         public int? PercentComplete { get; private set; }
 
         /// <summary>
-        /// Gets the replication state for the replication link. Possible
-        /// values include: 'PENDING', 'SEEDING', 'CATCH_UP', 'SUSPENDED'
+        /// Gets replication state (PENDING, SEEDING, CATCHUP, SUSPENDED).
         /// </summary>
         [JsonProperty(PropertyName = "properties.replicationState")]
         public string ReplicationState { get; private set; }
+
+        /// <summary>
+        /// Gets whether the user is currently allowed to terminate the link.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isTerminationAllowed")]
+        public bool? IsTerminationAllowed { get; private set; }
+
+        /// <summary>
+        /// Gets link type (GEO, NAMED).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.linkType")]
+        public string LinkType { get; private set; }
 
     }
 }

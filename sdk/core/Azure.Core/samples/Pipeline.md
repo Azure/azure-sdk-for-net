@@ -20,7 +20,7 @@ options.AddPolicy(new StopwatchPolicy(), HttpPipelinePosition.PerRetry);
 
 ## Implementing a policy
 
-To implement a policy create a class deriving from `HttpPipelinePolicy` and overide `ProcessAsync` and `Process` methods. Request can be acessed via `message.Request`. Response is accessible via `message.Response` but only after `ProcessNextAsync`/`ProcessNext` was called.
+To implement a policy create a class deriving from `HttpPipelinePolicy` and overide `ProcessAsync` and `Process` methods. Request can be accessed via `message.Request`. Response is accessible via `message.Response` but only after `ProcessNextAsync`/`ProcessNext` was called.
 
 ```C# Snippet:StopwatchPolicy
 public class StopwatchPolicy : HttpPipelinePolicy
@@ -51,9 +51,9 @@ public class StopwatchPolicy : HttpPipelinePolicy
 }
 ```
 
-## Implementing a syncronous policy
+## Implementing a synchronous policy
 
-If your policy doesn't do any asyncronous operations you can derive from `HttpPipelineSynchronousPolicy` and override `OnSendingRequest` or `OnResponseReceived` method.
+If your policy doesn't do any asynchronous operations you can derive from `HttpPipelineSynchronousPolicy` and override `OnSendingRequest` or `OnResponseReceived` method.
 
 ```C# Snippet:SyncPolicy
 public class CustomRequestPolicy : HttpPipelineSynchronousPolicy

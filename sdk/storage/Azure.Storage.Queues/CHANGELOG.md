@@ -1,6 +1,9 @@
 # Release History
 
-## 12.7.0-beta.4 (Unreleased)
+## 12.7.0-beta.5 (Unreleased)
+
+
+## 12.7.0-beta.4 (2021-05-12)
 - Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a QueueSasBuilder parameter.
 - Deprecated property QueueSasBuilder.Version, so when generating SAS will always use the latest Storage Service SAS version.
 

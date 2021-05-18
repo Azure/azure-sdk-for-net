@@ -16,17 +16,17 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of EventSchema. </summary>
         internal EventSchema()
         {
-            Properties = new ChangeTrackingList<EventProperty>();
+            Properties = new ChangeTrackingList<TimeSeriesInsightsEventProperty>();
         }
 
         /// <summary> Initializes a new instance of EventSchema. </summary>
         /// <param name="properties"> A set of property definitions. When environment has no data, the returned array is empty. </param>
-        internal EventSchema(IReadOnlyList<EventProperty> properties)
+        internal EventSchema(IReadOnlyList<TimeSeriesInsightsEventProperty> properties)
         {
             Properties = properties;
         }
 
         /// <summary> A set of property definitions. When environment has no data, the returned array is empty. </summary>
-        public IReadOnlyList<EventProperty> Properties { get; }
+        public IReadOnlyList<TimeSeriesInsightsEventProperty> Properties { get; }
     }
 }

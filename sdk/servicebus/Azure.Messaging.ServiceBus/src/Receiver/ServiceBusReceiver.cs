@@ -123,9 +123,9 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="plugins">The plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
         /// <param name="sessionId">An optional session Id to scope the receiver to. If not specified,
-        /// the next available session returned from the service will be used.</param>
+        ///     the next available session returned from the service will be used.</param>
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">The cancellation token to use when opening the receiver link.</param>
-        ///
         internal ServiceBusReceiver(
             ServiceBusConnection connection,
             string entityPath,
@@ -133,6 +133,7 @@ namespace Azure.Messaging.ServiceBus
             IList<ServiceBusPlugin> plugins,
             ServiceBusReceiverOptions options,
             string sessionId = default,
+            bool isProcessor = default,
             CancellationToken cancellationToken = default)
         {
             Type type = GetType();
@@ -166,6 +167,7 @@ namespace Azure.Messaging.ServiceBus
                     identifier: Identifier,
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver,
+                    isProcessor: isProcessor,
                     cancellationToken: cancellationToken);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;
@@ -194,8 +196,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
-        public virtual async Task CloseAsync(
-            CancellationToken cancellationToken = default)
+        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             IsClosed = true;
             Type clientType = GetType();
@@ -203,7 +204,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.ClientCloseStart(clientType, Identifier);
             try
             {
-                await InnerReceiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                await InnerReceiver.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -228,9 +229,16 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
-           int maxMessages,
-           TimeSpan? maxWaitTime = default,
-           CancellationToken cancellationToken = default)
+            int maxMessages,
+            TimeSpan? maxWaitTime = default,
+            CancellationToken cancellationToken = default) =>
+            await ReceiveMessagesAsync(maxMessages, maxWaitTime, false, cancellationToken).ConfigureAwait(false);
+
+        internal async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
+            int maxMessages,
+            TimeSpan? maxWaitTime,
+            bool isProcessor,
+            CancellationToken cancellationToken)
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
@@ -261,8 +269,16 @@ namespace Azure.Messaging.ServiceBus
                 messages = await InnerReceiver.ReceiveMessagesAsync(
                     maxMessages,
                     maxWaitTime,
+                    isProcessor,
                     cancellationToken).ConfigureAwait(false);
                 await ApplyPlugins(messages).ConfigureAwait(false);
+            }
+            catch (TaskCanceledException ex)
+                when (isProcessor)
+            {
+                Logger.ProcessorStoppingReceiveCanceled(Identifier, ex.ToString());
+                scope.Failed(ex);
+                throw;
             }
             catch (Exception exception)
             {
@@ -457,12 +473,11 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
-        ///
+        /// <param name="isProcessor"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        internal async Task OpenLinkAsync(CancellationToken cancellationToken) =>
-            await InnerReceiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
+        internal async Task OpenLinkAsync(bool isProcessor, CancellationToken cancellationToken) =>
+            await InnerReceiver.OpenLinkAsync(isProcessor, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
@@ -1104,9 +1119,13 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync() =>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
+            Justification = "This signature must match the IAsyncDisposable interface.")]
+        public virtual async ValueTask DisposeAsync()
+        {
             await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
