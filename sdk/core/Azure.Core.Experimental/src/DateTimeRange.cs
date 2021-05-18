@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Xml;
 using Azure.Core;
 
-namespace Azure.Monitor.Query
+namespace Azure.Core
 {
     /// <summary>
     /// Represents a span of time over which the query would be executed.
@@ -15,7 +16,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Represents the maximum <see cref="DateTimeRange"/>.
         /// </summary>
-        public static DateTimeRange MaxValue => new DateTimeRange(TimeSpan.MaxValue);
+        public static DateTimeRange All => new DateTimeRange(TimeSpan.MaxValue);
 
         /// <summary>
         /// Gets the duration of the range.
@@ -25,12 +26,12 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets the start time of the range.
         /// </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? Start { get; }
 
         /// <summary>
         /// Gets the end time of the range.
         /// </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? End { get; }
 
         /// <summary>
         /// Initializes an instance of <see cref="DateTimeRange"/> using a duration value.
@@ -40,44 +41,44 @@ namespace Azure.Monitor.Query
         public DateTimeRange(TimeSpan duration)
         {
             Duration = duration;
-            StartTime = null;
-            EndTime = null;
+            Start = null;
+            End = null;
         }
 
         /// <summary>
         /// Initializes an instance of <see cref="DateTimeRange"/> using a start time and a duration value.
         /// </summary>
-        /// <param name="startTime">The start of the range.</param>
+        /// <param name="start">The start of the range.</param>
         /// <param name="duration">The duration of the range.</param>
-        public DateTimeRange(DateTimeOffset startTime, TimeSpan duration)
+        public DateTimeRange(DateTimeOffset start, TimeSpan duration)
         {
             Duration = duration;
-            StartTime = startTime;
-            EndTime = null;
+            Start = start;
+            End = null;
         }
 
         /// <summary>
         /// Initializes an instance of <see cref="DateTimeRange"/> using a duration and an end time.
         /// </summary>
         /// <param name="duration">The duration of the range.</param>
-        /// <param name="endTime">The end of the range.</param>
-        public DateTimeRange(TimeSpan duration, DateTimeOffset endTime)
+        /// <param name="end">The end of the range.</param>
+        public DateTimeRange(TimeSpan duration, DateTimeOffset end)
         {
             Duration = duration;
-            StartTime = null;
-            EndTime = endTime;
+            Start = null;
+            End = end;
         }
 
         /// <summary>
         /// Initializes an instance of <see cref="DateTimeRange"/> using a start time and an end time.
         /// </summary>
-        /// <param name="startTime">The start of the range.</param>
-        /// <param name="endTime">The end of the range.</param>
-        public DateTimeRange(DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <param name="start">The start of the range.</param>
+        /// <param name="end">The end of the range.</param>
+        public DateTimeRange(DateTimeOffset start, DateTimeOffset end)
         {
-            Duration = endTime - startTime;
-            StartTime = startTime;
-            EndTime = endTime;
+            Duration = end - start;
+            Start = start;
+            End = end;
         }
 
         /// <summary>
@@ -89,8 +90,21 @@ namespace Azure.Monitor.Query
         /// <inheritdoc />
         public override string ToString()
         {
-            var startTime = StartTime != null ? TypeFormatters.ToString(StartTime.Value, "o") : null;
-            var endTime = EndTime != null ? TypeFormatters.ToString(EndTime.Value, "o") : null;
+            string ToString(DateTimeOffset value)
+            {
+                if (value.Offset == TimeSpan.Zero)
+                {
+                    // Some Azure service required 0-offset dates to be formatted without the
+                    // -00:00 part
+                    const string roundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+                    return value.ToString(roundtripZFormat, CultureInfo.InvariantCulture);
+                }
+
+                return value.ToString("O", CultureInfo.InvariantCulture);
+            }
+
+            var startTime = Start != null ? ToString(Start.Value) : null;
+            var endTime = End != null ? ToString(End.Value) : null;
             var duration = XmlConvert.ToString(Duration);
 
             switch (startTime, endTime, duration)
@@ -110,8 +124,8 @@ namespace Azure.Monitor.Query
         public bool Equals(DateTimeRange other)
         {
             return Duration.Equals(other.Duration) &&
-                   Nullable.Equals(StartTime, other.StartTime) &&
-                   Nullable.Equals(EndTime, other.EndTime);
+                   Nullable.Equals(Start, other.Start) &&
+                   Nullable.Equals(End, other.End);
         }
 
         /// <inheritdoc />
@@ -145,7 +159,7 @@ namespace Azure.Monitor.Query
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return HashCodeBuilder.Combine(StartTime, EndTime, Duration);
+            return HashCodeBuilder.Combine(Start, End, Duration);
         }
 
         /// <summary>
@@ -156,12 +170,15 @@ namespace Azure.Monitor.Query
         /// <exception cref="FormatException"><paramref name="value" /> is not in correct format to represent a <see langword="DateTimeRange" /> value.</exception>
         public static DateTimeRange Parse(string value)
         {
-            FormatException CreateFormatException(Exception inner = null) => new("Unable to parse the DateTimeRange value. " +
-                                                                   "Expected one of the following formats:" +
-                                                                   " Duration," +
-                                                                   " Duration/EndTime," +
-                                                                   " StartTime/Duration," +
-                                                                   " StartTime/EndTime", inner);
+            Argument.AssertNotNullOrWhiteSpace(value, nameof(value));
+
+            FormatException CreateFormatException(Exception? inner = null) =>
+                new("Unable to parse the DateTimeRange value. " +
+                      "Expected one of the following formats:" +
+                      " Duration," +
+                      " Duration/EndTime," +
+                      " StartTime/Duration," +
+                      " StartTime/EndTime", inner);
 
             TimeSpan ParseTimeSpan(string s)
             {

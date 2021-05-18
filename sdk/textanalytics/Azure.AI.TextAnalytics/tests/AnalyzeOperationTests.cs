@@ -42,12 +42,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
 
             await operation.WaitForCompletionAsync();
 
             //Take the first page
-            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesActionsResults;
 
@@ -65,12 +65,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchConvenienceDocuments, batchActions, "en");
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions, "en");
 
             await operation.WaitForCompletionAsync();
 
             //Take the first page
-            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = resultCollection.RecognizeEntitiesActionsResults;
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesActionsResults;
@@ -124,12 +124,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithLanguageTest"
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
 
             await operation.WaitForCompletionAsync();
 
             //Take the first page
-            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesActionsResults;
 
@@ -181,7 +181,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithMultipleTasks"
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
 
             Assert.AreEqual(0, operation.ActionsFailed);
             Assert.AreEqual(0, operation.ActionsSucceeded);
@@ -199,7 +199,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
 
             //Take the first page
-            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = resultCollection.RecognizeEntitiesActionsResults;
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesActionsResults;
@@ -304,7 +304,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithPagination",
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
 
             Assert.IsFalse(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -319,7 +319,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // try async
             //There most be 2 pages as service limit is 20 documents per page
-            List<AnalyzeBatchActionsResult> asyncPages = operation.Value.ToEnumerableAsync().Result;
+            List<AnalyzeActionsResult> asyncPages = operation.Value.ToEnumerableAsync().Result;
             Assert.AreEqual(2, asyncPages.Count);
 
             // First page should have 20 results
@@ -330,7 +330,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // try sync
             //There most be 2 pages as service limit is 20 documents per page
-            List<AnalyzeBatchActionsResult> pages = operation.GetValues().AsEnumerable().ToList();
+            List<AnalyzeActionsResult> pages = operation.GetValues().AsEnumerable().ToList();
             Assert.AreEqual(2, pages.Count);
 
             // First page should have 20 results
@@ -341,7 +341,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public void AnalyzeOperationBatchWithErrorTest()
+        public void AnalyzeOperationWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -363,12 +363,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationBatchWithErrorTest",
             };
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeBatchActionsAsync(documents, batchActions));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, ex.ErrorCode);
         }
 
         [RecordedTest]
-        public async Task AnalyzeOperationBatchWithErrorsInDocumentTest()
+        public async Task AnalyzeOperationWithErrorsInDocumentTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -385,11 +385,11 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions, "en");
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
             await operation.WaitForCompletionAsync();
 
             //Take the first page
-            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             //Key phrases
             List<ExtractKeyPhrasesActionResult> keyPhrasesActions = resultCollection.ExtractKeyPhrasesActionsResults.ToList();
@@ -404,7 +404,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20984")]
-        public async Task AnalyzeOperationBatchWithPHIDomain()
+        public async Task AnalyzeOperationWithPHIDomain()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -419,12 +419,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithPHIDomain",
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions, "en");
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
 
             await operation.WaitForCompletionAsync();
 
             //Take the first page
-            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesActionsResults;
 
@@ -440,7 +440,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeOperationBatchWithStatisticsTest()
+        public async Task AnalyzeOperationWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -466,17 +466,17 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationTest",
             };
 
-            AnalyzeBatchActionsOptions options = new AnalyzeBatchActionsOptions()
+            AnalyzeActionsOptions options = new AnalyzeActionsOptions()
             {
                 IncludeStatistics = true
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions, options);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions, options);
 
             await operation.WaitForCompletionAsync();
 
             //Take the first page
-            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             ExtractKeyPhrasesResultCollection result = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
 
@@ -507,12 +507,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 AnalyzeSentimentOptions = new List<AnalyzeSentimentOptions>() { new AnalyzeSentimentOptions() { DisableServiceLogs = true } },
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchConvenienceDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);
 
             await operation.WaitForCompletionAsync();
 
             //Take the first page
-            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesActionsResults;
             IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = resultCollection.RecognizeEntitiesActionsResults;
@@ -552,12 +552,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithOpinionMining",
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
 
             await operation.WaitForCompletionAsync();
 
             //Take the first page
-            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentActionsResults;
 

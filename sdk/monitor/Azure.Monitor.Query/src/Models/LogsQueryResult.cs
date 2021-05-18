@@ -23,7 +23,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Returns the query statistics if the <see cref="LogsQueryOptions.IncludeStatistics"/> is set to <c>true</c>.
         /// </summary>
-        public BinaryData Statistics => new BinaryData(_statistics.ToString());
+        public BinaryData Statistics => _statistics.ValueKind == JsonValueKind.Undefined ? null : new BinaryData(_statistics.ToString());
 
         internal ErrorDetails Error { get; }
     }

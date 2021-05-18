@@ -8,12 +8,11 @@ namespace Azure.AI.TextAnalytics
     /// is run and what information is returned from it by the service.
     /// <para>For example whether to include statistics.</para>
     /// </summary>
-    public class AnalyzeBatchActionsOptions
+    public class AnalyzeActionsOptions
     {
         /// <summary>
         /// Gets or sets a value that, if set to true, indicates that the service
-        /// should return document and document batch statistics with the results
-        /// of the operation.
+        /// should return statistics with the results of the operation.
         /// </summary>
         public bool IncludeStatistics { get; set; }
     }

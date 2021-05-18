@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Azure.AI.TextAnalytics.Models;
 
@@ -468,7 +467,7 @@ namespace Azure.AI.TextAnalytics
             return taskNameIdPair;
         }
 
-        internal static AnalyzeBatchActionsResult ConvertToAnalyzeBatchActionsResult(AnalyzeJobState jobState, IDictionary<string, int> map)
+        internal static AnalyzeActionsResult ConvertToAnalyzeActionsResult(AnalyzeJobState jobState, IDictionary<string, int> map)
         {
             IDictionary<int, TextAnalyticsErrorInternal> keyPhraseErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> entitiesRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
@@ -511,7 +510,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            return new AnalyzeBatchActionsResult(
+            return new AnalyzeActionsResult(
                 ConvertToExtractKeyPhrasesActionResults(jobState, map, keyPhraseErrors),
                 ConvertToRecognizeEntitiesActionsResults(jobState, map, entitiesRecognitionErrors),
                 ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors),

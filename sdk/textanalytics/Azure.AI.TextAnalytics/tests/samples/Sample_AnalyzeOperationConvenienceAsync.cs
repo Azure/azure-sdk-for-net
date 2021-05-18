@@ -16,14 +16,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task AnalyzeOperationBatchConvenienceAsync()
+        public async Task AnalyzeOperationConvenienceAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:AnalyzeOperationBatchConvenienceAsync
+            #region Snippet:AnalyzeOperationConvenienceAsync
             string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
                                 worth the hike! Yesterday was foggy though, so we missed the spectacular views.
                                 We tried again today and it was amazing. Everyone in my family liked the trail although
@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, actions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
 
             await operation.WaitForCompletionAsync();
 
@@ -64,7 +64,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
             Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
 
-            await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
+            await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
                 IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
                 IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;

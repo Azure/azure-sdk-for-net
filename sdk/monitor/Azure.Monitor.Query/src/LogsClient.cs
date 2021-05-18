@@ -188,7 +188,7 @@ namespace Azure.Monitor.Query
         internal static QueryBody CreateQueryBody(string query, DateTimeRange timeRange, LogsQueryOptions options, out string prefer)
         {
             var queryBody = new QueryBody(query);
-            if (timeRange != DateTimeRange.MaxValue)
+            if (timeRange != DateTimeRange.All)
             {
                 queryBody.Timespan = timeRange.ToString();
             }

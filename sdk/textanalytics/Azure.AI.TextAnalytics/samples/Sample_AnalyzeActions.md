@@ -15,9 +15,9 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 ## Running multiple actions in multiple documents
 
-To run multiple actions in multiple documents, call `StartAnalyzeBatchActionsAsync` on the documents.  The result is a Long Running operation of type `AnalyzeBatchActionsOperation` which polls for the results from the API.
+To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` on the documents.  The result is a Long Running operation of type `AnalyzeActionsOperation` which polls for the results from the API.
 
-```C# Snippet:AnalyzeOperationBatchConvenienceAsync
+```C# Snippet:AnalyzeOperationConvenienceAsync
     string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
                         worth the hike! Yesterday was foggy though, so we missed the spectacular views.
                         We tried again today and it was amazing. Everyone in my family liked the trail although
@@ -43,7 +43,7 @@ To run multiple actions in multiple documents, call `StartAnalyzeBatchActionsAsy
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, actions);
+    AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
 
     await operation.WaitForCompletionAsync();
 
@@ -58,7 +58,7 @@ To run multiple actions in multiple documents, call `StartAnalyzeBatchActionsAsy
     Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
     Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
 
-    await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
+    await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     {
         IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
         IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;
@@ -178,10 +178,10 @@ To run multiple actions in multiple documents, call `StartAnalyzeBatchActionsAsy
 
 To see the full example source files, see:
 
-* [Synchronously StartAnalyzeBatchActions ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperation.cs)
-* [Asynchronously StartAnalyzeBatchActions ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationAsync.cs)
-* [Synchronously StartAnalyzeBatchActions Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationBatchConvenience.cs)
-* [Asynchronously StartAnalyzeBatchActions Convenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationBatchConvenienceAsync.cs)
+* [Synchronously StartAnalyzeActions ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperation.cs)
+* [Asynchronously StartAnalyzeActions ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationAsync.cs)
+* [Synchronously StartAnalyzeActions Convenience ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationConvenience.cs)
+* [Asynchronously StartAnalyzeActions Convenience](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationConvenienceAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

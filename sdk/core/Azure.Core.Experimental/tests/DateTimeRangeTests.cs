@@ -4,7 +4,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Azure.Monitor.Query.Tests
+namespace Azure.Core.Tests
 {
     public class DateTimeRangeTests
     {

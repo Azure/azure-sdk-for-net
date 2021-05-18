@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, actions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
 
             await operation.WaitForCompletionAsync();
 
@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
             Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
 
-            await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
+            await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
                 IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = documentsInPage.ExtractKeyPhrasesActionsResults;
                 IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = documentsInPage.RecognizeEntitiesActionsResults;

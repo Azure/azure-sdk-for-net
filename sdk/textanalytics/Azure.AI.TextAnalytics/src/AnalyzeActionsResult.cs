@@ -6,11 +6,11 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The results of an analyze batch actions operation.
+    /// The results of executing multiple actions in a set of documents.
     /// </summary>
-    public class AnalyzeBatchActionsResult
+    public class AnalyzeActionsResult
     {
-        internal AnalyzeBatchActionsResult(
+        internal AnalyzeActionsResult(
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
             IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
