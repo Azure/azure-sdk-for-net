@@ -17,7 +17,6 @@ namespace Azure.Containers.ContainerRegistry
 
         private readonly Uri _registryEndpoint;
         private readonly string _name;
-        private readonly string _fullyQualifiedName;
 
         /// <summary>
         /// Gets the Registry Uri.
@@ -30,17 +29,11 @@ namespace Azure.Containers.ContainerRegistry
         public virtual string Name => _name;
 
         /// <summary>
-        /// Gets the fully qualified name of this repository.
-        /// </summary>
-        public virtual string FullyQualifiedName => _fullyQualifiedName;
-
-        /// <summary>
         /// </summary>
         internal ContainerRepository(Uri registryEndpoint, string name, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
         {
             _name = name;
             _registryEndpoint = registryEndpoint;
-            _fullyQualifiedName = $"{registryEndpoint.Host}/{name}";
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
