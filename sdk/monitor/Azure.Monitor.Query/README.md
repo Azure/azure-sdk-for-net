@@ -219,7 +219,7 @@ foreach (var row in table.Rows)
 
 ### Querying metrics
 
-You can query metrics using the `MetricsClient.QueryAsync`.
+You can query metrics using the `MetricsClient.QueryAsync`. For every requested metric a set of aggregated values would be returned inside the `TimeSeries` collection.
 
 ```C# Snippet:QueryMetrics
 Uri endpoint = new Uri("https://management.azure.com");
