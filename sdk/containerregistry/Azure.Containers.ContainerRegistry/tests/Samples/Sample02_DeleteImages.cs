@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 using Azure.Core.TestFramework;
 using Azure.Containers.ContainerRegistry;
 using Azure.Identity;
@@ -35,22 +36,16 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 Pageable<ArtifactManifestProperties> imageManifests =
                     repository.GetManifests(orderBy: ManifestOrderBy.LastUpdatedOnDescending);
 
-                int imageCount = 0;
-                int imagesToKeep = 3;
-
                 // Delete images older than the first three.
-                foreach (ArtifactManifestProperties imageManifest in imageManifests)
+                foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
                 {
-                    if (imageCount++ >= imagesToKeep)
+                    Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
+                    Console.WriteLine($"   This image has the following tags: ");
+                    foreach (var tagName in imageManifest.Tags)
                     {
-                        Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
-                        Console.WriteLine($"   This image has the following tags: ");
-                        foreach (var tagName in imageManifest.Tags)
-                        {
-                            Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
-                        }
-                        repository.GetArtifact(imageManifest.Digest).Delete();
+                        Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
                     }
+                    repository.GetArtifact(imageManifest.Digest).Delete();
                 }
             }
             #endregion
@@ -79,25 +74,19 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 AsyncPageable<ArtifactManifestProperties> imageManifests =
                     repository.GetManifestsAsync(orderBy: ManifestOrderBy.LastUpdatedOnDescending);
 
-                int imageCount = 0;
-                int imagesToKeep = 3;
-
                 // Delete images older than the first three.
-                await foreach (ArtifactManifestProperties imageManifest in imageManifests)
+                await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
                 {
-                    if (imageCount++ >= imagesToKeep)
+                    Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
+                    Console.WriteLine($"   This image has the following tags: ");
+                    foreach (var tagName in imageManifest.Tags)
                     {
-                        Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
-                        Console.WriteLine($"   This image has the following tags: ");
-                        foreach (var tagName in imageManifest.Tags)
-                        {
-                            Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
-                        }
-                        await repository.GetArtifact(imageManifest.Digest).DeleteAsync();
+                        Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
                     }
+                    await repository.GetArtifact(imageManifest.Digest).DeleteAsync();
                 }
             }
-            #endregion
         }
+        #endregion
     }
 }

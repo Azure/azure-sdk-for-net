@@ -163,22 +163,16 @@ foreach (string repositoryName in repositoryNames)
     Pageable<ArtifactManifestProperties> imageManifests =
         repository.GetManifests(orderBy: ManifestOrderBy.LastUpdatedOnDescending);
 
-    int imageCount = 0;
-    int imagesToKeep = 3;
-
     // Delete images older than the first three.
-    foreach (ArtifactManifestProperties imageManifest in imageManifests)
+    foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
     {
-        if (imageCount++ >= imagesToKeep)
+        Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
+        Console.WriteLine($"   This image has the following tags: ");
+        foreach (var tagName in imageManifest.Tags)
         {
-            Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
-            Console.WriteLine($"   This image has the following tags: ");
-            foreach (var tagName in imageManifest.Tags)
-            {
-                Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
-            }
-            repository.GetArtifact(imageManifest.Digest).Delete();
+            Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
         }
+        repository.GetArtifact(imageManifest.Digest).Delete();
     }
 }
 ```
@@ -246,29 +240,24 @@ await image.SetTagPropertiesAsync("latest", new ArtifactTagProperties()
 ### Delete images asynchronously
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
-// Get the service endpoint from the environment
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+    // Get the service endpoint from the environment
+    Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
-// Create a new ContainerRegistryClient
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+    // Create a new ContainerRegistryClient
+    ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
-// Iterate through repositories
-AsyncPageable<string> repositoryNames = client.GetRepositoryNamesAsync();
-await foreach (string repositoryName in repositoryNames)
-{
-    ContainerRepository repository = client.GetRepository(repositoryName);
-
-    // Obtain the images ordered from newest to oldest
-    AsyncPageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifestsAsync(orderBy: ManifestOrderBy.LastUpdatedOnDescending);
-
-    int imageCount = 0;
-    int imagesToKeep = 3;
-
-    // Delete images older than the first three.
-    await foreach (ArtifactManifestProperties imageManifest in imageManifests)
+    // Iterate through repositories
+    AsyncPageable<string> repositoryNames = client.GetRepositoryNamesAsync();
+    await foreach (string repositoryName in repositoryNames)
     {
-        if (imageCount++ >= imagesToKeep)
+        ContainerRepository repository = client.GetRepository(repositoryName);
+
+        // Obtain the images ordered from newest to oldest
+        AsyncPageable<ArtifactManifestProperties> imageManifests =
+            repository.GetManifestsAsync(orderBy: ManifestOrderBy.LastUpdatedOnDescending);
+
+        // Delete images older than the first three.
+        await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
         {
             Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
             Console.WriteLine($"   This image has the following tags: ");
