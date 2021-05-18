@@ -14,10 +14,10 @@ namespace Azure.AI.FormRecognizer
 
         public const string OperationLocationHeader = "Operation-Location";
 
-        public static string DefaultCognitiveScope = getDefaultCognitiveScope(Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST"));
+        public static string DefaultCognitiveScope = GetDefaultCognitiveScope(Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST"));
 
         public const float DefaultConfidenceValue = 1.0f;
-        internal static string getDefaultCognitiveScope(string authorityHost)
+        internal static string GetDefaultCognitiveScope(string authorityHost)
         {
             switch (authorityHost)
             {
