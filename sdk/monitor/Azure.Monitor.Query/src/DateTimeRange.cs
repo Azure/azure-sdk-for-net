@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.Monitor.Query
@@ -145,6 +146,27 @@ namespace Azure.Monitor.Query
         public override int GetHashCode()
         {
             return HashCodeBuilder.Combine(StartTime, EndTime, Duration);
+        }
+
+        public static DateTimeRange Parse(string value)
+        {
+            var parts = value.Split(new [] { '/' }, StringSplitOptions.None);
+            if (parts.Length > 2)
+            {
+                throw new FormatException();
+            }
+
+            var firstIsDateTime = DateTimeOffset.TryParse(parts[0], out var dateTimeFirst);
+            var secondIsDateTime = DateTimeOffset.TryParse(parts[0], out var dateTimeFirst);
+
+            return parts.Length switch
+            {
+                1 => XmlConvert.ToTimeSpan(parts[0]),
+                2 when
+                    &&
+                    DateTimeOffset.TryParse(parts[0], out var dateTimeSecond) &&
+                    => new DateTimeRange(dateTimeFirst, dateTimeSecond);
+            }
         }
     }
 }
