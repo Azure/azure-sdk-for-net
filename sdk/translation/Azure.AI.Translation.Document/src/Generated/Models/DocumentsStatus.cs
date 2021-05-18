@@ -12,13 +12,13 @@ using Azure.AI.Translation.Document;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    /// <summary> Document Status Response. </summary>
-    internal partial class BatchStatusResponse
+    /// <summary> Documents Status Response. </summary>
+    internal partial class DocumentsStatus
     {
-        /// <summary> Initializes a new instance of BatchStatusResponse. </summary>
-        /// <param name="value"> The summary status of individual operation. </param>
+        /// <summary> Initializes a new instance of DocumentsStatus. </summary>
+        /// <param name="value"> The detail status of individual documents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal BatchStatusResponse(IEnumerable<TranslationStatusResult> value)
+        internal DocumentsStatus(IEnumerable<DocumentStatusResult> value)
         {
             if (value == null)
             {
@@ -28,17 +28,17 @@ namespace Azure.AI.Translation.Document.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of BatchStatusResponse. </summary>
-        /// <param name="value"> The summary status of individual operation. </param>
+        /// <summary> Initializes a new instance of DocumentsStatus. </summary>
+        /// <param name="value"> The detail status of individual documents. </param>
         /// <param name="nextLink"> Url for the next page.  Null if no more pages available. </param>
-        internal BatchStatusResponse(IReadOnlyList<TranslationStatusResult> value, string nextLink)
+        internal DocumentsStatus(IReadOnlyList<DocumentStatusResult> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The summary status of individual operation. </summary>
-        public IReadOnlyList<TranslationStatusResult> Value { get; }
+        /// <summary> The detail status of individual documents. </summary>
+        public IReadOnlyList<DocumentStatusResult> Value { get; }
         /// <summary> Url for the next page.  Null if no more pages available. </summary>
         public string NextLink { get; }
     }

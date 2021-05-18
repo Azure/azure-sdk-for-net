@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class BatchSubmissionRequest : IUtf8JsonSerializable
+    internal partial class StartTranslationDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

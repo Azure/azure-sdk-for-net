@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    internal partial class DocumentTranslationSubmitBatchRequestHeaders
+    internal partial class DocumentTranslationStartTranslationHeaders
     {
         private readonly Response _response;
-        public DocumentTranslationSubmitBatchRequestHeaders(Response response)
+        public DocumentTranslationStartTranslationHeaders(Response response)
         {
             _response = response;
         }

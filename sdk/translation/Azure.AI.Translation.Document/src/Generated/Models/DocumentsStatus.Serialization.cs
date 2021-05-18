@@ -12,20 +12,20 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class BatchStatusResponse
+    internal partial class DocumentsStatus
     {
-        internal static BatchStatusResponse DeserializeBatchStatusResponse(JsonElement element)
+        internal static DocumentsStatus DeserializeDocumentsStatus(JsonElement element)
         {
-            IReadOnlyList<TranslationStatusResult> value = default;
+            IReadOnlyList<DocumentStatusResult> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<TranslationStatusResult> array = new List<TranslationStatusResult>();
+                    List<DocumentStatusResult> array = new List<DocumentStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TranslationStatusResult.DeserializeTranslationStatusResult(item));
+                        array.Add(DocumentStatusResult.DeserializeDocumentStatusResult(item));
                     }
                     value = array;
                     continue;
@@ -36,7 +36,7 @@ namespace Azure.AI.Translation.Document.Models
                     continue;
                 }
             }
-            return new BatchStatusResponse(value, nextLink.Value);
+            return new DocumentsStatus(value, nextLink.Value);
         }
     }
 }

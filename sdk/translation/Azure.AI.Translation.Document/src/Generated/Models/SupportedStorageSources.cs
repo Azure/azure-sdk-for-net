@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Base type for List return in our api. </summary>
-    internal partial class StorageSourceListResult
+    internal partial class SupportedStorageSources
     {
-        /// <summary> Initializes a new instance of StorageSourceListResult. </summary>
+        /// <summary> Initializes a new instance of SupportedStorageSources. </summary>
         /// <param name="value"> list of objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StorageSourceListResult(IEnumerable<StorageSource> value)
+        internal SupportedStorageSources(IEnumerable<StorageSource> value)
         {
             if (value == null)
             {
@@ -27,9 +27,9 @@ namespace Azure.AI.Translation.Document.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of StorageSourceListResult. </summary>
+        /// <summary> Initializes a new instance of SupportedStorageSources. </summary>
         /// <param name="value"> list of objects. </param>
-        internal StorageSourceListResult(IReadOnlyList<StorageSource> value)
+        internal SupportedStorageSources(IReadOnlyList<StorageSource> value)
         {
             Value = value;
         }

@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class FileFormatListResult
+    internal partial class SupportedFileFormats
     {
-        internal static FileFormatListResult DeserializeFileFormatListResult(JsonElement element)
+        internal static SupportedFileFormats DeserializeSupportedFileFormats(JsonElement element)
         {
             IReadOnlyList<FileFormat> value = default;
             foreach (var property in element.EnumerateObject())
@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Document.Models
                     continue;
                 }
             }
-            return new FileFormatListResult(value);
+            return new SupportedFileFormats(value);
         }
     }
 }

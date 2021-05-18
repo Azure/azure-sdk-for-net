@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    internal partial class DocumentTranslationGetOperationDocumentsStatusHeaders
+    internal partial class DocumentTranslationGetSupportedDocumentFormatsHeaders
     {
         private readonly Response _response;
-        public DocumentTranslationGetOperationDocumentsStatusHeaders(Response response)
+        public DocumentTranslationGetSupportedDocumentFormatsHeaders(Response response)
         {
             _response = response;
         }

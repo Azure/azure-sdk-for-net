@@ -13,12 +13,12 @@ using Azure.AI.Translation.Document;
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Base type for List return in our api. </summary>
-    internal partial class FileFormatListResult
+    internal partial class SupportedFileFormats
     {
-        /// <summary> Initializes a new instance of FileFormatListResult. </summary>
+        /// <summary> Initializes a new instance of SupportedFileFormats. </summary>
         /// <param name="value"> list of objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FileFormatListResult(IEnumerable<FileFormat> value)
+        internal SupportedFileFormats(IEnumerable<FileFormat> value)
         {
             if (value == null)
             {
@@ -28,9 +28,9 @@ namespace Azure.AI.Translation.Document.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of FileFormatListResult. </summary>
+        /// <summary> Initializes a new instance of SupportedFileFormats. </summary>
         /// <param name="value"> list of objects. </param>
-        internal FileFormatListResult(IReadOnlyList<FileFormat> value)
+        internal SupportedFileFormats(IReadOnlyList<FileFormat> value)
         {
             Value = value;
         }
