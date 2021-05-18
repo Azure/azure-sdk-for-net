@@ -119,13 +119,13 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("featured={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(featured, Client.SerializationSettings).Trim('"'))));
             }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", filter));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (_queryParameters.Count > 0)
             {
@@ -673,13 +673,13 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("expiredOnly={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expiredOnly, Client.SerializationSettings).Trim('"'))));
             }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", filter));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (_queryParameters.Count > 0)
             {
@@ -902,13 +902,13 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("featured={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(featured, Client.SerializationSettings).Trim('"'))));
             }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", filter));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1976,13 +1976,13 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("expiredOnly={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expiredOnly, Client.SerializationSettings).Trim('"'))));
             }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", filter));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2205,13 +2205,13 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("featured={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(featured, Client.SerializationSettings).Trim('"'))));
             }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", filter));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (_queryParameters.Count > 0)
             {
