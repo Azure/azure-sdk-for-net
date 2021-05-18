@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry
         public bool? CanList { get; set; }
         /// <summary> Read enabled. </summary>
         public bool? CanRead { get; set; }
-        /// <summary> Enables Teleport functionality on new images in the repository improving Container startup performance. </summary>
+        /// <summary> Gets or sets whether Teleport functionality is enabled on new images in the repository. Setting this to true can improve Container startup performance. </summary>
         public bool? TeleportEnabled { get; set; }
     }
 }
