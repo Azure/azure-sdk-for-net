@@ -7,7 +7,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/53af7fc754f605aabc80a33cceb53b6b0c5da71b/specification/cognitiveservices/data-plane/MetricsAdvisor/preview/v1.0/MetricsAdvisor.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/e24cf486381bbff6a1e06f161dcef327dcaacb94/specification/cognitiveservices/data-plane/MetricsAdvisor/preview/v1.0/MetricsAdvisor.json
 ```
 
 ### Make generated models internal by default
