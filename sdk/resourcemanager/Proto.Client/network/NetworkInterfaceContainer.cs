@@ -50,10 +50,8 @@ namespace Proto.Network
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public Response<NetworkInterface> CreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
+            var response = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new NetworkInterface(Parent, new NetworkInterfaceData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -67,10 +65,8 @@ namespace Proto.Network
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public async Task<Response<NetworkInterface>> CreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
+            var response = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult().WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new NetworkInterface(Parent, new NetworkInterfaceData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -235,17 +231,15 @@ namespace Proto.Network
         /// <inheritdoc />
         public override Response<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                Operations.Get(Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken),
-                g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
+            var response = Operations.Get(Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken);
+            return Response.FromValue(new NetworkInterface(Parent, new NetworkInterfaceData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public override async Task<Response<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                await Operations.GetAsync(Id.ResourceGroupName, networkInterfaceName, null, cancellationToken),
-                    g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new NetworkInterface(Parent, new NetworkInterfaceData(response.Value)), response.GetRawResponse());
         }
     }
 }

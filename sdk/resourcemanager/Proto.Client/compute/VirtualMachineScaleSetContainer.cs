@@ -50,10 +50,8 @@ namespace Proto.Compute
         /// <returns> A response with the <see cref="Response{VirtualMachineScaleSet}"/> operation for this resource. </returns>
         public Response<VirtualMachineScaleSet> CreateOrUpdate(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
+            var response = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).WaitForCompletionAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -65,24 +63,22 @@ namespace Proto.Compute
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{VirtualMachineScaleSet}"/> operation for this resource. </returns>
         public async Task<Response<VirtualMachineScaleSet>> CreateOrUpdateAsync(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
-                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
+            var response = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult().WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc />
         public override Response<VirtualMachineScaleSet> Get(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(Operations.Get(Id.ResourceGroupName, virtualMachineScaleSetName, cancellationToken),
-                v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
+            var response = Operations.Get(Id.ResourceGroupName, virtualMachineScaleSetName, cancellationToken);
+            return Response.FromValue(new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public override async Task<Response<VirtualMachineScaleSet>> GetAsync(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(await Operations.GetAsync(Id.ResourceGroupName, virtualMachineScaleSetName, cancellationToken),
-                v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, virtualMachineScaleSetName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
