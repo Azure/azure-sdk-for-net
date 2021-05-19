@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Tests.Config
                 new KeyValuePair<string, string>("ConnectionStrings:" + Constants.DefaultConnectionStringName, defaultConnectionString),
                 new KeyValuePair<string, string>(Constants.DefaultConnectionSettingStringName, defaultConnectionSettingString));
 
-            var mockProvider = new Mock<MessagingProvider>();
+            var mockProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
             mockProvider.Setup(
                 p => p.CreateClient(expectedValue, It.IsAny<ServiceBusClientOptions>()))
                 .Returns(Mock.Of<ServiceBusClient>());
