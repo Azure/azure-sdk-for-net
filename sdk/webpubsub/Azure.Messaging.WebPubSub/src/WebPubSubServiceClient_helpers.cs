@@ -37,9 +37,10 @@ namespace Azure.Messaging.WebPubSub
             }
             if (roles != default && roles.Length > 0)
             {
-                var jsonArray = BinaryData.FromObjectAsJson(roles).ToString();
-                var role = new Claim("role", jsonArray);
-                claims.Add(role);
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim("role", role));
+                }
             }
 
             string endpoint = _endpoint.AbsoluteUri;
