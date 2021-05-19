@@ -86,10 +86,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var response = RestClient.CreateOrUpdate(name, resourceDetails, cancellationToken);
-                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
-                    response,
-                    g => new ResourceGroup(Parent, g));
+                var operation = StartCreateOrUpdate(name, resourceDetails, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -119,10 +117,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var response = await RestClient.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
-                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
-                    response,
-                    g => new ResourceGroup(Parent, g));
+                var operation = await StartCreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -143,7 +139,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public Operation<ResourceGroup> StartCreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
+        public ResourceGroupCreateOrUpdateOperation StartCreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
@@ -155,9 +151,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmOperation<ResourceGroup, ResourceGroupData>(
-                RestClient.CreateOrUpdate(name, resourceDetails, cancellationToken),
-                g => new ResourceGroup(Parent, g));
+                var originalResponse = RestClient.CreateOrUpdate(name, resourceDetails, cancellationToken);
+                return new ResourceGroupCreateOrUpdateOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateRequest(name, resourceDetails).Request, originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,7 +173,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public virtual async Task<Operation<ResourceGroup>> StartCreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
@@ -190,9 +185,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmOperation<ResourceGroup, ResourceGroupData>(
-                await RestClient.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false),
-                g => new ResourceGroup(Parent, g));
+                var originalResponse = await RestClient.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
+                return new ResourceGroupCreateOrUpdateOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateRequest(name, resourceDetails).Request, originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -291,10 +285,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceGroupData>(RestClient.Get(resourceGroupName, cancellationToken), g =>
-                {
-                    return new ResourceGroup(Parent, g);
-                });
+                var result = RestClient.Get(resourceGroupName, cancellationToken);
+                return Response.FromValue(new ResourceGroup(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -312,12 +304,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var result = await RestClient.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
-                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
-                result,
-                g =>
-                {
-                    return new ResourceGroup(Parent, g);
-                });
+                return Response.FromValue(new ResourceGroup(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)
             {

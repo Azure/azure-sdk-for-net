@@ -9,25 +9,26 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
-    /// <summary> Updates resource group tag. </summary>
-    public class ResourceGroupUpdateTagOperation : Operation<ResourceGroup>, IOperationSource<ResourceGroup>
+    /// <summary> Create or update a resource group. </summary>
+    public class ResourceGroupCreateOrUpdateOperation : Operation<ResourceGroup>, IOperationSource<ResourceGroup>
     {
         private readonly OperationOrResponseInternals<ResourceGroup> _operation;
-        private readonly ResourceOperationsBase _parentOperation;
+        private readonly OperationsBase _parentOperation;
 
-        /// <summary> Initializes a new instance of ResourceGroupUpdateTagOperation for mocking. </summary>
-        protected ResourceGroupUpdateTagOperation()
+        /// <summary> Initializes a new instance of ResourcesCreateOrUpdateByIdOperation for mocking. </summary>
+        protected ResourceGroupCreateOrUpdateOperation()
         {
         }
 
-        internal ResourceGroupUpdateTagOperation(ResourceOperationsBase parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourceGroupCreateOrUpdateOperation(OperationsBase parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<ResourceGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupUpdateTagOperation");
+            _operation = new OperationOrResponseInternals<ResourceGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupCreateOrUpdateOperation");
             _parentOperation = parentOperation;
         }
         /// <inheritdoc />
@@ -60,13 +61,13 @@ namespace Azure.ResourceManager.Core
         ResourceGroup IOperationSource<ResourceGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new ResourceGroup(_parentOperation, ResourceGroupData.DeserializeResourceGroup(document.RootElement));
+            return new ResourceGroup((ResourceOperationsBase)_parentOperation, ResourceGroupData.DeserializeResourceGroup(document.RootElement));
         }
 
         async ValueTask<ResourceGroup> IOperationSource<ResourceGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ResourceGroup(_parentOperation, ResourceGroupData.DeserializeResourceGroup(document.RootElement));
+            return new ResourceGroup((ResourceOperationsBase)_parentOperation, ResourceGroupData.DeserializeResourceGroup(document.RootElement));
         }
     }
 }

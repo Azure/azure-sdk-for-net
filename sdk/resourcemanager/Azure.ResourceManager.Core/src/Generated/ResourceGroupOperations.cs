@@ -87,7 +87,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return RestClient.Delete(Id.Name, cancellationToken);
+                var operation = StartDelete(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -108,7 +109,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -223,8 +225,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var result = RestClient.Get(Id.Name, cancellationToken);
-                return Response.FromValue(new ResourceGroup(this, result), result.GetRawResponse());
+                var originalResponse = RestClient.Get(Id.Name, cancellationToken);
+                return Response.FromValue(new ResourceGroup(this, originalResponse), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,8 +243,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var result = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(this, result), result.GetRawResponse());
+                var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(this, originalResponse), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,8 +262,8 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                var result = RestClient.Update(Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new ResourceGroup(this, result), result.GetRawResponse());
+                var originalResponse = RestClient.Update(Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new ResourceGroup(this, originalResponse), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -279,8 +281,8 @@ namespace Azure.ResourceManager.Core
             scope.Start();
             try
             {
-                var result = await RestClient.UpdateAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(this, result), result.GetRawResponse());
+                var originalResponse = await RestClient.UpdateAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(this, originalResponse), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -306,12 +308,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource(cancellationToken);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags[key] = value;
-                var result = RestClient.Update(Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ResourceGroup(this, result), result.GetRawResponse());
+                var operation = StartAddTag(key, value, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -337,12 +335,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags[key] = value;
-                var result = await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(this, result), result.GetRawResponse());
+                var operation = await StartAddTagAsync(key, value, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -495,13 +489,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource(cancellationToken);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(tags);
-                return new PhArmResponse<ResourceGroup, ResourceGroupData>(RestClient.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, g);
-                });
+                var operation = StartSetTags(tags, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -526,15 +515,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(tags);
-                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
-                    await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                    g =>
-                    {
-                        return new ResourceGroup(this, g);
-                    });
+                var operation = await StartSetTagsAsync(tags, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -623,14 +605,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource(cancellationToken);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags.Remove(key);
-                return new PhArmResponse<ResourceGroup, ResourceGroupData>(RestClient.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, g);
-                });
+                var operation = StartRemoveTag(key, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -655,16 +631,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags.Remove(key);
-                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
-                    await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                    g =>
-                    {
-                        return new ResourceGroup(this, g);
-                    });
+                var operation = await StartRemoveTagAsync(key, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
