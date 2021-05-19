@@ -6,17 +6,21 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
 
 ## Table of contents
 
--   [Migration benefits](#migration-benefits)
--   [General changes](#general-changes)
-    -   [Package and namespaces](#package-and-namespaces)
-    -   [Client hierarchy](#client-hierarchy)
-    -   [Client constructors](#client-constructors)
-    -   [Sending messages](#sending-messages)
-    -   [Receiving messages](#receiving-messages)
-    -   [Working with sessions](#working-with-sessions)
-    -   [Cross-entity transactions](#cross-entity-transactions)
--   [Known gaps](#known-gaps-from-previous-library)
--   [Additional samples](#additional-samples)
+- [Guide for migrating to Azure.Messaging.ServiceBus from Microsoft.Azure.ServiceBus](#guide-for-migrating-to-azuremessagingservicebus-from-microsoftazureservicebus)
+  - [Table of contents](#table-of-contents)
+  - [Migration benefits](#migration-benefits)
+  - [General changes](#general-changes)
+    - [Package and namespaces](#package-and-namespaces)
+    - [Client hierarchy](#client-hierarchy)
+    - [Client constructors](#client-constructors)
+    - [Creating sender and receiver](#creating-sender-and-receiver)
+    - [Sending messages](#sending-messages)
+    - [Receiving messages](#receiving-messages)
+    - [Working with sessions](#working-with-sessions)
+  - [Migration samples](#migration-samples)
+    - [Sending and receiving a message](#sending-and-receiving-a-message)
+    - [Sending and receiving a batch of messages](#sending-and-receiving-a-batch-of-messages)
+  - [Additional samples](#additional-samples)
 
 ## Migration benefits
 
@@ -59,6 +63,7 @@ In the interest of simplifying the API surface we've made a single top level cli
 #### Approachability
 
 By having a single entry point, the `ServiceBusClient` helps with the discoverability of the API as you can explore all available features through methods from a single client, as opposed to searching through documentation or exploring namespace for the types that you can instantiate. Whether sending or receiving, using sessions or not, you will start your applications by constructing the same client.
+| `new ManagementClient(...)` | `new ServiceBusAdministrationClient(...)` | [Create subscription with connection string](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample08_Administration.cs)
 
 #### Consistency
 
