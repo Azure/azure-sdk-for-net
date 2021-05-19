@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
 {
@@ -34,18 +34,14 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
 
-        private ResourceGroupsOperations Operations 
+        private ResourceGroupsRestOperations RestClient
         {
             get
             {
                 string subscriptionId;
                 if (Id is null || !Id.TryGetSubscriptionId(out subscriptionId))
                     subscriptionId = Guid.NewGuid().ToString();
-                return new ResourcesManagementClient(
-                BaseUri,
-                subscriptionId,
-                Credential,
-                ClientOptions.Convert<ResourcesManagementClientOptions>()).ResourceGroups;
+                return new ResourceGroupsRestOperations(Diagnostics, Pipeline, subscriptionId, BaseUri);
             }
         }
 
@@ -62,11 +58,11 @@ namespace Azure.ResourceManager.Core
             if (location is null)
                 throw new ArgumentNullException(nameof(location));
 
-            var model = new ResourceManager.Resources.Models.ResourceGroup(location);
+            var model = new ResourceGroupData(location);
             if (!(tags is null))
                 model.Tags.ReplaceWith(tags);
             model.ManagedBy = managedBy;
-            return new ResourceGroupBuilder(this, new ResourceGroupData(model));
+            return new ResourceGroupBuilder(this, model);
         }
 
         /// <summary>
@@ -90,10 +86,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var response = Operations.CreateOrUpdate(name, resourceDetails, cancellationToken);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    response,
-                    g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+                var operation = StartCreateOrUpdate(name, resourceDetails, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -123,10 +117,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var response = await Operations.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    response,
-                    g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+                var operation = await StartCreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -147,7 +139,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public Operation<ResourceGroup> StartCreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
+        public ResourceGroupCreateOrUpdateOperation StartCreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
@@ -159,9 +151,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    Operations.CreateOrUpdate(name, resourceDetails, cancellationToken),
-                    g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+                var originalResponse = RestClient.CreateOrUpdate(name, resourceDetails, cancellationToken);
+                return new ResourceGroupCreateOrUpdateOperation(Parent, originalResponse);
             }
             catch (Exception e)
             {
@@ -182,7 +173,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public virtual async Task<Operation<ResourceGroup>> StartCreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
@@ -194,9 +185,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false),
-                g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+                var originalResponse = await RestClient.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
+                return new ResourceGroupCreateOrUpdateOperation(Parent, originalResponse);
             }
             catch (Exception e)
             {
@@ -213,21 +203,37 @@ namespace Azure.ResourceManager.Core
         [ForwardsClientCalls]
         public virtual Pageable<ResourceGroup> List(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
-            scope.Start();
-
-            try
+            Page<ResourceGroup> FirstPageFunc(int? pageSizeHint)
             {
-                var results = Operations.List(null, null, cancellationToken);
-                return new PhWrappingPageable<ResourceManager.Resources.Models.ResourceGroup, ResourceGroup>(
-                results,
-                s => new ResourceGroup(Parent, new ResourceGroupData(s)));
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.List(null, null, cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<ResourceGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListNextPage(nextLink, null, null, cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -238,20 +244,37 @@ namespace Azure.ResourceManager.Core
         [ForwardsClientCalls]
         public virtual AsyncPageable<ResourceGroup> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
-            scope.Start();
-
-            try
+            async Task<Page<ResourceGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.ResourceGroup, ResourceGroup>(
-                Operations.ListAsync(null, null, cancellationToken),
-                s => new ResourceGroup(Parent, new ResourceGroupData(s)));
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListAsync(null, null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<ResourceGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListNextPageAsync(nextLink, null, null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <inheritdoc />
@@ -262,10 +285,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(resourceGroupName, cancellationToken), g =>
-                {
-                    return new ResourceGroup(Parent, new ResourceGroupData(g));
-                });
+                var result = RestClient.Get(resourceGroupName, cancellationToken);
+                return Response.FromValue(new ResourceGroup(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -282,13 +303,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var result = await Operations.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                result,
-                g =>
-                {
-                    return new ResourceGroup(Parent, new ResourceGroupData(g));
-                });
+                var result = await RestClient.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
