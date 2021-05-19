@@ -1,9 +1,12 @@
 # Release History
 
-## 12.8.3 (2020-04-27)
+## 12.8.3 (2021-04-27)
 - Fixed bug where Stream returned by BlockBlobClient.OpenWrite could corrupt blocks if flushed between writes.
 
-## 12.8.2 (2020-04-27)
+## 12.8.2 (2021-04-27)
+- This release contains bug fixes to improve quality.
+
+## 12.9.0-beta.3 (2021-04-09)
 - This release contains bug fixes to improve quality.
 
 ## 12.8.1 (2021-03-29)
