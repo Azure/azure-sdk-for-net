@@ -48,12 +48,6 @@ namespace Azure.Search.Documents.Models
         public double? RerankerScore { get; internal set; }
 
         /// <summary>
-        /// Captions are the most representative passages from the document relatively to the search query.
-        /// <para>They are often used as document summary. <see cref="Captions"/> are only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
-        /// </summary>
-        public IList<CaptionResult> Captions { get; internal set; }
-
-        /// <summary>
         /// The document found by the search query.
         /// </summary>
         public T Document { get; internal set; }
@@ -114,16 +108,6 @@ namespace Azure.Search.Documents.Models
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
                     result.RerankerScore = prop.Value.GetDouble();
-                }
-                else if (prop.NameEquals(Constants.SearchCaptionsKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    result.Captions = new List<CaptionResult>();
-
-                    foreach (JsonElement captionValue in prop.Value.EnumerateArray())
-                    {
-                        result.Captions.Add(CaptionResult.DeserializeCaptionResult(captionValue));
-                    }
                 }
             }
 
