@@ -128,10 +128,6 @@ namespace Azure.Search.Documents
         public bool? IncludeTotalCount { get { throw null; } set { } }
         public double? MinimumCoverage { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
-        public Azure.Search.Documents.Models.QueryAnswer? QueryAnswer { get { throw null; } set { } }
-        public int? QueryAnswerCount { get { throw null; } set { } }
-        public Azure.Search.Documents.Models.QueryLanguage? QueryLanguage { get { throw null; } set { } }
-        public Azure.Search.Documents.Models.QuerySpeller? QuerySpeller { get { throw null; } set { } }
         public Azure.Search.Documents.Models.SearchQueryType? QueryType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ScoringParameters { get { throw null; } }
         public string ScoringProfile { get { throw null; } set { } }
@@ -540,12 +536,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public static implicit operator Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage left, Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class CustomNormalizer : Azure.Search.Documents.Indexes.Models.LexicalNormalizer
-    {
-        public CustomNormalizer(string name) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.CharFilterName> CharFilters { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.TokenFilterName> TokenFilters { get { throw null; } }
     }
     public partial class DataChangeDetectionPolicy
     {
@@ -1136,32 +1126,6 @@ namespace Azure.Search.Documents.Indexes.Models
             public const string ZhHantMicrosoft = "zh-Hant.microsoft";
         }
     }
-    public partial class LexicalNormalizer
-    {
-        public LexicalNormalizer(string name) { }
-        public string Name { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LexicalNormalizerName : System.IEquatable<Azure.Search.Documents.Indexes.Models.LexicalNormalizerName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LexicalNormalizerName(string value) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.LexicalNormalizerName AsciiFolding { get { throw null; } }
-        public static Azure.Search.Documents.Indexes.Models.LexicalNormalizerName Elision { get { throw null; } }
-        public static Azure.Search.Documents.Indexes.Models.LexicalNormalizerName Lowercase { get { throw null; } }
-        public static Azure.Search.Documents.Indexes.Models.LexicalNormalizerName Standard { get { throw null; } }
-        public static Azure.Search.Documents.Indexes.Models.LexicalNormalizerName Uppercase { get { throw null; } }
-        public bool Equals(Azure.Search.Documents.Indexes.Models.LexicalNormalizerName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Search.Documents.Indexes.Models.LexicalNormalizerName left, Azure.Search.Documents.Indexes.Models.LexicalNormalizerName right) { throw null; }
-        public static implicit operator Azure.Search.Documents.Indexes.Models.LexicalNormalizerName (string value) { throw null; }
-        public static bool operator !=(Azure.Search.Documents.Indexes.Models.LexicalNormalizerName left, Azure.Search.Documents.Indexes.Models.LexicalNormalizerName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class LexicalTokenizer
     {
         internal LexicalTokenizer() { }
@@ -1547,7 +1511,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? IsSearchable { get { throw null; } set { } }
         public bool? IsSortable { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public Azure.Search.Documents.Indexes.Models.LexicalNormalizerName? Normalizer { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzerName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SynonymMapNames { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchFieldDataType Type { get { throw null; } }
@@ -1598,7 +1561,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchField> Fields { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.LexicalNormalizer> Normalizers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.ScoringProfile> ScoringProfiles { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SimilarityAlgorithm Similarity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchSuggester> Suggesters { get { throw null; } }
@@ -2321,22 +2283,6 @@ namespace Azure.Search.Documents.Indexes.Models
 }
 namespace Azure.Search.Documents.Models
 {
-    public partial class AnswerResult : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
-    {
-        internal AnswerResult() { }
-        public string Highlights { get { throw null; } }
-        public object this[string key] { get { throw null; } }
-        public string Key { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
-        public double? Score { get { throw null; } }
-        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
-        public string Text { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
-        public bool ContainsKey(string key) { throw null; }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string key, out object value) { throw null; }
-    }
     public partial class AutocompleteItem
     {
         internal AutocompleteItem() { }
@@ -2354,20 +2300,6 @@ namespace Azure.Search.Documents.Models
         internal AutocompleteResults() { }
         public double? Coverage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.AutocompleteItem> Results { get { throw null; } }
-    }
-    public partial class CaptionResult : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
-    {
-        internal CaptionResult() { }
-        public string Highlights { get { throw null; } }
-        public object this[string key] { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
-        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
-        public string Text { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
-        public bool ContainsKey(string key) { throw null; }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string key, out object value) { throw null; }
     }
     public partial class FacetResult : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
     {
@@ -2457,60 +2389,6 @@ namespace Azure.Search.Documents.Models
         public string Key { get { throw null; } }
         public int Status { get { throw null; } }
         public bool Succeeded { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct QueryAnswer : System.IEquatable<Azure.Search.Documents.Models.QueryAnswer>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public QueryAnswer(string value) { throw null; }
-        public static Azure.Search.Documents.Models.QueryAnswer Extractive { get { throw null; } }
-        public static Azure.Search.Documents.Models.QueryAnswer None { get { throw null; } }
-        public bool Equals(Azure.Search.Documents.Models.QueryAnswer other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Search.Documents.Models.QueryAnswer left, Azure.Search.Documents.Models.QueryAnswer right) { throw null; }
-        public static implicit operator Azure.Search.Documents.Models.QueryAnswer (string value) { throw null; }
-        public static bool operator !=(Azure.Search.Documents.Models.QueryAnswer left, Azure.Search.Documents.Models.QueryAnswer right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct QueryLanguage : System.IEquatable<Azure.Search.Documents.Models.QueryLanguage>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public QueryLanguage(string value) { throw null; }
-        public static Azure.Search.Documents.Models.QueryLanguage EnUs { get { throw null; } }
-        public static Azure.Search.Documents.Models.QueryLanguage None { get { throw null; } }
-        public bool Equals(Azure.Search.Documents.Models.QueryLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Search.Documents.Models.QueryLanguage left, Azure.Search.Documents.Models.QueryLanguage right) { throw null; }
-        public static implicit operator Azure.Search.Documents.Models.QueryLanguage (string value) { throw null; }
-        public static bool operator !=(Azure.Search.Documents.Models.QueryLanguage left, Azure.Search.Documents.Models.QueryLanguage right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct QuerySpeller : System.IEquatable<Azure.Search.Documents.Models.QuerySpeller>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public QuerySpeller(string value) { throw null; }
-        public static Azure.Search.Documents.Models.QuerySpeller Lexicon { get { throw null; } }
-        public static Azure.Search.Documents.Models.QuerySpeller None { get { throw null; } }
-        public bool Equals(Azure.Search.Documents.Models.QuerySpeller other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Search.Documents.Models.QuerySpeller left, Azure.Search.Documents.Models.QuerySpeller right) { throw null; }
-        public static implicit operator Azure.Search.Documents.Models.QuerySpeller (string value) { throw null; }
-        public static bool operator !=(Azure.Search.Documents.Models.QuerySpeller left, Azure.Search.Documents.Models.QuerySpeller right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class RangeFacetResult<T> where T : struct
     {
@@ -2622,7 +2500,6 @@ namespace Azure.Search.Documents.Models
     public partial class SearchResults<T>
     {
         internal SearchResults() { }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.AnswerResult> Answers { get { throw null; } }
         public double? Coverage { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> Facets { get { throw null; } }
         public long? TotalCount { get { throw null; } }
@@ -2632,7 +2509,6 @@ namespace Azure.Search.Documents.Models
     public partial class SearchResult<T>
     {
         internal SearchResult() { }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.CaptionResult> Captions { get { throw null; } }
         public T Document { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Highlights { get { throw null; } }
         public double? RerankerScore { get { throw null; } }
