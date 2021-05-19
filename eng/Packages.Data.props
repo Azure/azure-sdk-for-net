@@ -85,6 +85,7 @@
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.2" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.2" />
+    <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.2" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.8.0" />
 
     <!-- Other approved packages -->

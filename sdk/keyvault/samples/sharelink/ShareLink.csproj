@@ -6,13 +6,14 @@
     <RootNamespace>Azure.Security.KeyVault.Storage</RootNamespace>
     <NoWarn>
       $(NoWarn);
+      CS1574;
       CS8601;
+      CA1810;
+      CA1835;
+      CA2016;
+      AZC0100;
     </NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(IsClientLibrary)' != 'true'">
-    <!-- Define properties when not generating source -->
-    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Shared\</AzureCoreSharedSources>
+    <IncludeAzureCoreSharedCode>true</IncludeAzureCoreSharedCode>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,15 +25,12 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
- <ItemGroup Condition="'$(IsSample)' == 'true'">
-   <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
- </ItemGroup>
+  <ItemGroup Condition="'$(IsSample)' == 'true'">
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
+  </ItemGroup>
 
- <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\eng\Packages.Data.props" Condition="'$(IsSample)' == 'true'" />
-
- <ItemGroup Condition="'$(IsClientLibrary)' != 'true'">
-    <!-- Define package versions when not generating source (uses central package versions) -->
-    
+  <ItemGroup Condition="'$(IsSample)' != 'true'">
+    <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
     <PackageReference Update="Azure.Core" Version="1.14.0" />
     <PackageReference Update="Azure.Identity" Version="1.4.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.1.1" />
@@ -44,11 +42,6 @@
   <ItemGroup Condition="'$(IsSample)' == 'true'">
     <!-- Link files needed for Key Vault -->
     <Compile Include="..\..\Azure.Security.KeyVault.Shared\src\ChallengeBasedAuthenticationPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsSample)' == 'true'">
-    <!-- Link files needed by the source generator -->
-    <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
   <Target Name="CopySource">
