@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Azure.AI.TextAnalytics.Models;
 
@@ -328,7 +327,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new PiiTaskParameters()
                 {
                     Domain = option.DomainFilter.HasValue ? option.DomainFilter.Value.GetString() : (PiiTaskParametersDomain?)null,
-                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
+                    ModelVersion = option.ModelVersion,
                     StringIndexType = option.StringIndexType,
                     LoggingOptOut = option.DisableServiceLogs
                     // Categories are not enabled because of https://github.com/Azure/azure-sdk-for-net/issues/19237
@@ -342,7 +341,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new EntityLinkingTaskParameters()
                 {
-                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
+                    ModelVersion = option.ModelVersion,
                     StringIndexType = option.StringIndexType,
                     LoggingOptOut = option.DisableServiceLogs
                 }
@@ -355,7 +354,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new EntitiesTaskParameters()
                 {
-                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
+                    ModelVersion = option.ModelVersion,
                     StringIndexType = option.StringIndexType,
                     LoggingOptOut = option.DisableServiceLogs
                 }
@@ -368,7 +367,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new KeyPhrasesTaskParameters()
                 {
-                    ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
+                    ModelVersion = option.ModelVersion,
                     LoggingOptOut = option.DisableServiceLogs
                 }
             };
@@ -468,7 +467,7 @@ namespace Azure.AI.TextAnalytics
             return taskNameIdPair;
         }
 
-        internal static AnalyzeBatchActionsResult ConvertToAnalyzeBatchActionsResult(AnalyzeJobState jobState, IDictionary<string, int> map)
+        internal static AnalyzeActionsResult ConvertToAnalyzeActionsResult(AnalyzeJobState jobState, IDictionary<string, int> map)
         {
             IDictionary<int, TextAnalyticsErrorInternal> keyPhraseErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> entitiesRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
@@ -511,7 +510,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            return new AnalyzeBatchActionsResult(
+            return new AnalyzeActionsResult(
                 ConvertToExtractKeyPhrasesActionResults(jobState, map, keyPhraseErrors),
                 ConvertToRecognizeEntitiesActionsResults(jobState, map, entitiesRecognitionErrors),
                 ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors),

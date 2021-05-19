@@ -1,6 +1,13 @@
 # Release History
 
-## 5.1.0-beta.7 (Unreleased)
+## 5.1.0-beta.8 (Unreleased)
+### Breaking changes
+- Renamed `StartAnalyzeBatchActions` to `StartAnalyzeActions`.
+- Renamed `AnalyzeBatchActionsOperation` to `AnalyzeActionsOperation`.
+- Renamed `AnalyzeBatchActionsResult` to `AnalyzeActionsResult`.
+- Renamed `AnalyzeBatchActionsOptions` to `AnalyzeActionsOptions`.
+
+## 5.1.0-beta.7 (2021-05-18)
 ### New features
 - Added property `DisableServiceLogs` to `TextAnalyticsRequestOptions`.
 - Added support for Sentiment Analysis as an action type for `StartAnalyzeBatchActions`.

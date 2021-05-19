@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
         private IReadOnlyList<MetadataValue> Metadatavalues { get; }
 
         /// <summary>
-        /// The metadata values returned if <see cref="MetricQueryOptions.Filter"/> was specified in the call.
+        /// The metadata values returned if <see cref="MetricsQueryOptions.Filter"/> was specified in the call.
         /// </summary>
         public IReadOnlyDictionary<string, string> Metadata => _metadata ??= Metadatavalues.ToDictionary(m => m.Name.Value, m => m.Value);
     }

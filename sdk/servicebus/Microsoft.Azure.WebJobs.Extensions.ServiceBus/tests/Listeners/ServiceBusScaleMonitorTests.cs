@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             _listener = new ServiceBusListener(
                 _functionId,
-                EntityType.Queue,
+                ServiceBusEntityType.Queue,
                 _entityPath,
                 false,
                 _mockExecutor.Object,
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         {
             return new ServiceBusListener(
                 _functionId,
-                EntityType.Queue,
+                ServiceBusEntityType.Queue,
                 _entityPath,
                 false,
                 _mockExecutor.Object,

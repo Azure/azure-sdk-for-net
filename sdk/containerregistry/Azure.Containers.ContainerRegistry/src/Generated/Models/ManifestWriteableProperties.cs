@@ -8,28 +8,11 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Changeable attributes. </summary>
-    public partial class ManifestWriteableProperties
+    internal partial class ManifestWriteableProperties
     {
         /// <summary> Initializes a new instance of ManifestWriteableProperties. </summary>
         public ManifestWriteableProperties()
         {
-        }
-
-        /// <summary> Initializes a new instance of ManifestWriteableProperties. </summary>
-        /// <param name="canDelete"> Delete enabled. </param>
-        /// <param name="canWrite"> Write enabled. </param>
-        /// <param name="canList"> List enabled. </param>
-        /// <param name="canRead"> Read enabled. </param>
-        /// <param name="quarantineState"> Quarantine state. </param>
-        /// <param name="quarantineDetails"> Quarantine details. </param>
-        internal ManifestWriteableProperties(bool? canDelete, bool? canWrite, bool? canList, bool? canRead, string quarantineState, string quarantineDetails)
-        {
-            CanDelete = canDelete;
-            CanWrite = canWrite;
-            CanList = canList;
-            CanRead = canRead;
-            QuarantineState = quarantineState;
-            QuarantineDetails = quarantineDetails;
         }
 
         /// <summary> Delete enabled. </summary>
