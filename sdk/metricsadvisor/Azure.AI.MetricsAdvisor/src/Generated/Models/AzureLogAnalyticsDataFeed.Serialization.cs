@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class HttpRequestDataFeed : IUtf8JsonSerializable
+    internal partial class AzureLogAnalyticsDataFeed : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -164,9 +164,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static HttpRequestDataFeed DeserializeHttpRequestDataFeed(JsonElement element)
+        internal static AzureLogAnalyticsDataFeed DeserializeAzureLogAnalyticsDataFeed(JsonElement element)
         {
-            HttpRequestParameter dataSourceParameter = default;
+            AzureLogAnalyticsParameter dataSourceParameter = default;
             DataFeedSourceType dataSourceType = default;
             Optional<string> dataFeedId = default;
             string dataFeedName = default;
@@ -201,7 +201,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("dataSourceParameter"))
                 {
-                    dataSourceParameter = HttpRequestParameter.DeserializeHttpRequestParameter(property.Value);
+                    dataSourceParameter = AzureLogAnalyticsParameter.DeserializeAzureLogAnalyticsParameter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceType"))
@@ -470,7 +470,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new HttpRequestDataFeed(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, Optional.ToNullable(authenticationType), credentialId.Value, dataSourceParameter);
+            return new AzureLogAnalyticsDataFeed(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, Optional.ToNullable(authenticationType), credentialId.Value, dataSourceParameter);
         }
     }
 }

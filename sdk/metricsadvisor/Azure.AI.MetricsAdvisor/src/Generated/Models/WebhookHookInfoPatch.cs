@@ -16,6 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             HookType = HookType.Webhook;
         }
 
-        public WebhookHookParameter HookParameter { get; set; }
+        public WebhookHookParameterPatch HookParameter { get; set; }
     }
 }

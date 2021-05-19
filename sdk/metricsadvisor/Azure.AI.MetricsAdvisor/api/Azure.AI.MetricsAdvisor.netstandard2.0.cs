@@ -712,6 +712,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureDataExplorer { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureDataLakeStorageGen2 { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureEventHubs { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureLogAnalytics { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureTable { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType InfluxDb { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType MongoDb { get { throw null; } }

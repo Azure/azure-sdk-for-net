@@ -16,6 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceType.AzureEventHubs;
         }
 
-        public AzureEventHubsParameter DataSourceParameter { get; set; }
+        public AzureEventHubsParameterPatch DataSourceParameter { get; set; }
     }
 }
