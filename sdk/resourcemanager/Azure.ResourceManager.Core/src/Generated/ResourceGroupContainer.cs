@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var originalResponse = RestClient.CreateOrUpdate(name, resourceDetails, cancellationToken);
-                return new ResourceGroupCreateOrUpdateOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateRequest(name, resourceDetails).Request, originalResponse.GetRawResponse());
+                return new ResourceGroupCreateOrUpdateOperation(Parent, originalResponse);
             }
             catch (Exception e)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var originalResponse = await RestClient.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupCreateOrUpdateOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateRequest(name, resourceDetails).Request, originalResponse.GetRawResponse());
+                return new ResourceGroupCreateOrUpdateOperation(Parent, originalResponse);
             }
             catch (Exception e)
             {

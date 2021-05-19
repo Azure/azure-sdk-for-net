@@ -8,23 +8,22 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
     /// <summary> When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations. </summary>
-    public partial class ResourceGroupsDeleteOperation : Operation
+    public partial class ResourceGroupDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
         /// <summary> Initializes a new instance of ResourceGroupsDeleteOperation for mocking. </summary>
-        protected ResourceGroupsDeleteOperation()
+        protected ResourceGroupDeleteOperation()
         {
         }
 
-        internal ResourceGroupsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourceGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupsDeleteOperation");
         }

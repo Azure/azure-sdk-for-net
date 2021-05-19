@@ -6,31 +6,27 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Create or update a resource group. </summary>
-    public class ResourceGroupCreateOrUpdateOperation : Operation<ResourceGroup>, IOperationSource<ResourceGroup>
+    public class ResourceGroupCreateOrUpdateOperation : Operation<ResourceGroup>
     {
         private readonly OperationOrResponseInternals<ResourceGroup> _operation;
-        private readonly OperationsBase _parentOperation;
 
         /// <summary> Initializes a new instance of ResourcesCreateOrUpdateByIdOperation for mocking. </summary>
         protected ResourceGroupCreateOrUpdateOperation()
         {
         }
 
-        internal ResourceGroupCreateOrUpdateOperation(OperationsBase parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourceGroupCreateOrUpdateOperation(ResourceOperationsBase parentOperation, Response<ResourceGroupData> response)
         {
-            _operation = new OperationOrResponseInternals<ResourceGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupCreateOrUpdateOperation");
-            _parentOperation = parentOperation;
+            _operation = new OperationOrResponseInternals<ResourceGroup>(Response.FromValue(new ResourceGroup(parentOperation, response.Value), response.GetRawResponse()));
         }
+
         /// <inheritdoc />
         public override string Id => "";
 
@@ -57,17 +53,5 @@ namespace Azure.ResourceManager.Core
 
         /// <inheritdoc />
         public override ValueTask<Response<ResourceGroup>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
-
-        ResourceGroup IOperationSource<ResourceGroup>.CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return new ResourceGroup((ResourceOperationsBase)_parentOperation, ResourceGroupData.DeserializeResourceGroup(document.RootElement));
-        }
-
-        async ValueTask<ResourceGroup> IOperationSource<ResourceGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new ResourceGroup((ResourceOperationsBase)_parentOperation, ResourceGroupData.DeserializeResourceGroup(document.RootElement));
-        }
     }
 }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -123,11 +122,11 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ResourceGroupsDeleteOperation"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="ResourceGroupDeleteOperation"/> operation for this resource. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual ResourceGroupsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ResourceGroupDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var originalResponse = RestClient.Delete(Id.Name, cancellationToken);
-                return new ResourceGroupsDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
+                return new ResourceGroupDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -148,11 +147,11 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ResourceGroupsDeleteOperation"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ResourceGroupDeleteOperation"/> operation for this resource. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<ResourceGroupsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var originalResponse = await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupsDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
+                return new ResourceGroupDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -355,7 +354,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual ResourceGroupUpdateTagOperation StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual ResourceGroupCreateOrUpdateOperation StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -370,7 +369,7 @@ namespace Azure.ResourceManager.Core
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
                 var originalResponse = RestClient.Update(Id.Name, patch, cancellationToken);
-                return new ResourceGroupUpdateTagOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateRequest(Id.Name, patch).Request, originalResponse.GetRawResponse());
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<ResourceGroupUpdateTagOperation> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupCreateOrUpdateOperation> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -404,7 +403,7 @@ namespace Azure.ResourceManager.Core
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
                 var originalResponse = await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupUpdateTagOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateRequest(Id.Name, patch).Request, originalResponse.GetRawResponse());
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -534,7 +533,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual ResourceGroupUpdateTagOperation StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual ResourceGroupCreateOrUpdateOperation StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
@@ -548,7 +547,7 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
                 var originalResponse = RestClient.Update(Id.Name, patch, cancellationToken);
-                return new ResourceGroupUpdateTagOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateRequest(Id.Name, patch).Request, originalResponse.GetRawResponse());
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -566,7 +565,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<ResourceGroupUpdateTagOperation> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupCreateOrUpdateOperation> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
@@ -580,7 +579,7 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
                 var originalResponse = await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupUpdateTagOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateRequest(Id.Name, patch).Request, originalResponse.GetRawResponse());
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -650,7 +649,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual ResourceGroupUpdateTagOperation StartRemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual ResourceGroupCreateOrUpdateOperation StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -665,7 +664,7 @@ namespace Azure.ResourceManager.Core
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
                 var originalResponse = RestClient.Update(Id.Name, patch, cancellationToken);
-                return new ResourceGroupUpdateTagOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateRequest(Id.Name, patch).Request, originalResponse.GetRawResponse());
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -683,7 +682,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<ResourceGroupUpdateTagOperation> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupCreateOrUpdateOperation> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -698,7 +697,7 @@ namespace Azure.ResourceManager.Core
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
                 var originalResponse = await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupUpdateTagOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateRequest(Id.Name, patch).Request, originalResponse.GetRawResponse());
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
