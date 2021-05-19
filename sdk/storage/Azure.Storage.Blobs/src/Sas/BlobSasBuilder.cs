@@ -356,12 +356,12 @@ namespace Azure.Storage.Sas
                 Version,
                 Resource,
                 Snapshot ?? BlobVersionId,
-                EncryptionScope,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
                 ContentLanguage,
-                ContentType);
+                ContentType,
+                EncryptionScope);
 
             var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
@@ -430,12 +430,12 @@ namespace Azure.Storage.Sas
                 Version,
                 Resource,
                 Snapshot ?? BlobVersionId,
-                EncryptionScope,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
                 ContentLanguage,
-                ContentType);
+                ContentType,
+                EncryptionScope);
 
             var signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
