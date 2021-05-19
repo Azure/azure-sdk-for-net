@@ -369,7 +369,7 @@ namespace Azure.Identity.Tests
             };
             credFactory.OnCreateAzurePowerShellCredential = (c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("PowerShellCredential Unavailable"); };
+                SetupMockForException(c);
             };
             credFactory.OnCreateVisualStudioCredential = (_, c) =>
             {
@@ -477,17 +477,7 @@ namespace Azure.Identity.Tests
             };
             credFactory.OnCreateAzurePowerShellCredential = (c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
-                {
-                    if (exPossition > 6)
-                    {
-                        throw new CredentialUnavailableException("AzurePowerShellCredential Unavailable");
-                    }
-                    else
-                    {
-                        throw new MockClientException("AzurePowerShellCredential unhandled exception");
-                    }
-                };
+                SetupMockForException(c);
             };
 
             credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>

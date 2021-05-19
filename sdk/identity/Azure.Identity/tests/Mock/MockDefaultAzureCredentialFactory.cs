@@ -26,6 +26,8 @@ namespace Azure.Identity.Tests.Mock
         private Mock<VisualStudioCredential> mockVisualStudioCredential = new Mock<VisualStudioCredential>();
         public Action<string, Mock<VisualStudioCodeCredential>> OnCreateVisualStudioCodeCredential { get; set; }
         private Mock<VisualStudioCodeCredential> mockVisualStudioCodeCredential = new Mock<VisualStudioCodeCredential>();
+        public Action<Mock<AzurePowerShellCredential>> OnCreateAzurePowerShellCredential { get; set; }
+        private Mock<AzurePowerShellCredential> mockAzurePowershellCredential = new Mock<AzurePowerShellCredential>();
 
         public override TokenCredential CreateEnvironmentCredential()
         {
@@ -53,11 +55,8 @@ namespace Azure.Identity.Tests.Mock
 
         public override TokenCredential CreateAzurePowerShellCredential()
         {
-            TokenCredential cred = new MockTokenCredential();
-
-            OnCreateAzurePowerShellCredential?.Invoke(cred);
-
-            return cred;
+            OnCreateAzurePowerShellCredential?.Invoke(mockAzurePowershellCredential);
+            return mockAzurePowershellCredential.Object;
         }
 
         public override TokenCredential CreateInteractiveBrowserCredential(string tenantId)
