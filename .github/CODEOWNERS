@@ -614,8 +614,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @zhusijia26
 
 # ServiceLabel: %VideoAnalyzer %Service Attention
+#/<NotInRepo>/            @giakas
+
 # PRLabel: %VideoAnalyzer
-/sdk/videoanalyzer/       @heaths
+/sdk/videoanalyzer/       @giakas @heaths
 
 # ServiceLabel: %Web Apps %Service Attention
 #/<NotInRepo>/            @AzureAppServiceCLI @antcp
