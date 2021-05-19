@@ -1,7 +1,13 @@
 # Release History
 
-## 11.3.0-beta.3 (Unreleased)
+## 11.3.0 (2021-06-08)
 
+### Changed
+- This is a GA release to match the features that are currently available out of preview by the service.
+
+### Breaking Changes
+- Removed [`LexicalNormalizer`](https://docs.microsoft.com/azure/search/search-normalizers#predefined-normalizers) and the `Normalizer` [`SearchField`](https://docs.microsoft.com/dotnet/api/azure.search.documents.indexes.models.searchfield) from index definitions.
+- Removed support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview).
 
 ## 11.3.0-beta.2 (2021-05-11)
 
