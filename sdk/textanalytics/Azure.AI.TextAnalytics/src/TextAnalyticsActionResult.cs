@@ -2,20 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Stores the details for the AnalyzeBatchActionsOperation class.
+    /// Base type for results of Text Analytics Actions executed in a set of documents.
     /// </summary>
-    public class TextAnalyticsActionDetails
+    public class TextAnalyticsActionResult
     {
-        /// <summary>
-        /// Initializes the TextAnalyticsActionDetails class by initializing CompletedOn, Error and HasError properties.
-        /// </summary>
-        internal TextAnalyticsActionDetails (DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+        internal TextAnalyticsActionResult (DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
         {
             CompletedOn = completedOn;
             Error = error != null ? Transforms.ConvertToError(error) : default;
