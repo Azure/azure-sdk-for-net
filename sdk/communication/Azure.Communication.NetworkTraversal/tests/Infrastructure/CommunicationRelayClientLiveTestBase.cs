@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Communication.Identity;
 using Azure.Communication.Pipeline;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using NUnit.Framework;
 
 namespace Azure.Communication.NetworkTraversal.Tests
 {
@@ -13,16 +14,6 @@ namespace Azure.Communication.NetworkTraversal.Tests
     {
         public CommunicationRelayClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new CommunicationRelayClientRecordedTestSanitizer();
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            if (TestEnvironment.ShouldIgnoreTests)
-            {
-                Assert.Ignore("Networking tests are skipped " +
-                    "because networking package is not included in the TEST_PACKAGES_ENABLED variable");
-            }
-        }
 
         /// <summary>
         /// Creates a <see cref="CommunicationRelayClient" /> with the connectionstring via environment
@@ -32,20 +23,20 @@ namespace Azure.Communication.NetworkTraversal.Tests
         protected CommunicationRelayClient CreateClientWithConnectionString()
             => InstrumentClient(
                 new CommunicationRelayClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestDynamicConnectionString,
                     CreateNetworkingClientOptionsWithCorrelationVectorLogs()));
 
         protected CommunicationRelayClient CreateClientWithAzureKeyCredential()
             => InstrumentClient(
                 new CommunicationRelayClient(
-                    TestEnvironment.Endpoint,
-                    new AzureKeyCredential(TestEnvironment.AccessKey),
+                    TestEnvironment.LiveTestDynamicEndpoint,
+                    new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey),
                     CreateNetworkingClientOptionsWithCorrelationVectorLogs()));
 
         protected CommunicationRelayClient CreateClientWithTokenCredential()
             => InstrumentClient(
                 new CommunicationRelayClient(
-                    TestEnvironment.Endpoint,
+                    TestEnvironment.LiveTestDynamicEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     CreateNetworkingClientOptionsWithCorrelationVectorLogs()));
 
@@ -57,7 +48,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestDynamicConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions())));
 
         private CommunicationRelayClientOptions CreateNetworkingClientOptionsWithCorrelationVectorLogs()

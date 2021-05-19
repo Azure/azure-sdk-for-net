@@ -7,8 +7,5 @@ namespace Azure.Communication.NetworkTraversal.Tests
 {
     public class CommunicationRelayClientTestEnvironment : CommunicationTestEnvironment
     {
-        // please find the allowed package value in tests.yml
-        private const string NetworkTraversalPackagesEnabled = "networktraversal";
-        public override string ExpectedTestPackagesEnabled { get { return NetworkTraversalPackagesEnabled; } }
     }
 }

@@ -12,7 +12,6 @@ require:
 payload-flattening-threshold: 3
 ```
 
-
 ### Rename OperationId to for RestClient rename
 
 ```yaml

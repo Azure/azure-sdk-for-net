@@ -32,7 +32,7 @@ var client = new CommunicationRelayClient(connectionString);
 
 Or alternatively using the endpoint and access key acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
 
-```C# Snippet:CreateCommunicationNetworkingFromAccessKey
+```C# Snippet:CreateCommunicationRelayFromAccessKey
 var endpoint = new Uri("https://my-resource.communication.azure.com");
 var accessKey = "<access_key>";
 var client = new CommunicationRelayClient(endpoint, new AzureKeyCredential(accessKey));
@@ -40,7 +40,7 @@ var client = new CommunicationRelayClient(endpoint, new AzureKeyCredential(acces
 
 Clients also have the option to authenticate using a valid Active Directory token.
 
-```C# Snippet:CreateCommunicationNetworkingFromToken
+```C# Snippet:CreateCommunicationRelayFromToken
 var endpoint = new Uri("https://my-resource.communication.azure.com");
 TokenCredential tokenCredential = new DefaultAzureCredential();
 var client = new CommunicationRelayClient(endpoint, tokenCredential);
@@ -68,7 +68,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Generating TURN credentials for a user
 
-```C# Snippet:CreateTURNTokenAsync
+```C# Snippet:GetRelayConfigurationAsync
 Response<CommunicationRelayConfiguration> turnTokenResponse = await client.GetRelayConfigurationAsync(user);
 DateTimeOffset turnTokenExpiresOn = turnTokenResponse.Value.ExpiresOn;
 IReadOnlyList<CommunicationTurnServer> turnServers = turnTokenResponse.Value.TurnServers;
@@ -84,6 +84,14 @@ foreach (CommunicationTurnServer turnServer in turnServers)
 }
 ```
 
+## Troubleshooting
+
+> TODO
+
+## Next steps
+
+> TODO
+
 ## Contributing
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
@@ -94,8 +102,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 
 [azure_sub]: https://azure.microsoft.com/free/
 [azure_portal]: https://portal.azure.com
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.NetworkTraversal/src
-[source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.NetworkTraversal/samples
+<!--[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.NetworkTraversal/src-->
+<!--[source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.NetworkTraversal/samples-->
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
@@ -103,7 +111,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 <!--[package]: https://www.nuget.org/packages/Azure.Communication.NetworkTraversal-->
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
-[user_access_token]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
 [communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_portal]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
