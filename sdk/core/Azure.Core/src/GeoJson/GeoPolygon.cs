@@ -80,7 +80,7 @@ namespace Azure.Core.GeoJson
         public IReadOnlyList<GeoLinearRing> Rings { get; }
 
         /// <summary>
-        /// Returns the outer right of the polygon
+        /// Returns the outer ring of the polygon.
         /// </summary>
         public GeoLinearRing OuterRing => Rings[0];
 

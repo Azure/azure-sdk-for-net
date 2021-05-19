@@ -39,7 +39,7 @@ namespace Azure.Core.GeoJson
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         public GeoLineString(IEnumerable<GeoPosition> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
-            Coordinates = new GeoArray<GeoPosition>(coordinates.ToArray());;
+            Coordinates = new GeoArray<GeoPosition>(coordinates.ToArray());
         }
 
         /// <summary>

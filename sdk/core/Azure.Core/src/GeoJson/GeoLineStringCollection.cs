@@ -33,9 +33,6 @@ namespace Azure.Core.GeoJson
             Lines = lines.ToArray();
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         internal IReadOnlyList<GeoLineString> Lines { get; }
 
         /// <inheritdoc />

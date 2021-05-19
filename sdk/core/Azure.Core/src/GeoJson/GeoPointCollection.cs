@@ -33,9 +33,6 @@ namespace Azure.Core.GeoJson
             Points = points.ToArray();
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         internal IReadOnlyList<GeoPoint> Points { get; }
 
         /// <inheritdoc />
