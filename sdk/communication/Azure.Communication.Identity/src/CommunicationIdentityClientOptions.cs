@@ -25,6 +25,7 @@ namespace Azure.Communication.Identity
         {
             ApiVersion = version switch
             {
+                ServiceVersion.V2021_03_07 => "2021-03-07",
                 ServiceVersion.V2021_03_31_preview1 => "2021-03-31-preview1",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
