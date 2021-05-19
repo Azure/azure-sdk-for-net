@@ -11,7 +11,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary>
     /// QueryAnalyzer allows a user to query for pages of data.
     /// </summary>
-    public class QueryAnalyzer
+    public class TimeSeriesQueryAnalyzer
     {
         private readonly QueryRequest _queryRequest;
         private readonly QueryRestClient _queryClient;
@@ -31,7 +31,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="queryRequest">The query request payload.</param>
         /// <param name="storeType">The store the query should be executed on.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        internal QueryAnalyzer(QueryRestClient queryClient, QueryRequest queryRequest, string storeType, CancellationToken cancellationToken)
+        internal TimeSeriesQueryAnalyzer(QueryRestClient queryClient, QueryRequest queryRequest, string storeType, CancellationToken cancellationToken)
         {
             _queryRequest = queryRequest;
             _storeType = storeType;

@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The type of the property. Currently, only &quot;String&quot; is supported. </summary>
-    public readonly partial struct TimeSeriesIdPropertyTypes : IEquatable<TimeSeriesIdPropertyTypes>
+    public readonly partial struct TimeSeriesIdPropertyType : IEquatable<TimeSeriesIdPropertyType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="TimeSeriesIdPropertyTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="TimeSeriesIdPropertyType"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TimeSeriesIdPropertyTypes(string value)
+        public TimeSeriesIdPropertyType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -25,19 +25,19 @@ namespace Azure.IoT.TimeSeriesInsights
         private const string StringValue = "String";
 
         /// <summary> String. </summary>
-        public static TimeSeriesIdPropertyTypes String { get; } = new TimeSeriesIdPropertyTypes(StringValue);
-        /// <summary> Determines if two <see cref="TimeSeriesIdPropertyTypes"/> values are the same. </summary>
-        public static bool operator ==(TimeSeriesIdPropertyTypes left, TimeSeriesIdPropertyTypes right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="TimeSeriesIdPropertyTypes"/> values are not the same. </summary>
-        public static bool operator !=(TimeSeriesIdPropertyTypes left, TimeSeriesIdPropertyTypes right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TimeSeriesIdPropertyTypes"/>. </summary>
-        public static implicit operator TimeSeriesIdPropertyTypes(string value) => new TimeSeriesIdPropertyTypes(value);
+        public static TimeSeriesIdPropertyType String { get; } = new TimeSeriesIdPropertyType(StringValue);
+        /// <summary> Determines if two <see cref="TimeSeriesIdPropertyType"/> values are the same. </summary>
+        public static bool operator ==(TimeSeriesIdPropertyType left, TimeSeriesIdPropertyType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="TimeSeriesIdPropertyType"/> values are not the same. </summary>
+        public static bool operator !=(TimeSeriesIdPropertyType left, TimeSeriesIdPropertyType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="TimeSeriesIdPropertyType"/>. </summary>
+        public static implicit operator TimeSeriesIdPropertyType(string value) => new TimeSeriesIdPropertyType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TimeSeriesIdPropertyTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is TimeSeriesIdPropertyType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(TimeSeriesIdPropertyTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TimeSeriesIdPropertyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

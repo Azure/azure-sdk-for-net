@@ -22,10 +22,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 throw new ArgumentNullException(nameof(tsx));
             }
 
-            Tsx = tsx;
+            Expression = tsx;
         }
-
-        /// <summary> Time series expression (TSX) written as a single string. Examples: &quot;$event.Status.String=&apos;Good&apos;&quot;, &quot;avg($event.Temperature)&quot;. Refer to the documentation on how to write time series expressions. </summary>
-        public string Tsx { get; set; }
     }
 }
