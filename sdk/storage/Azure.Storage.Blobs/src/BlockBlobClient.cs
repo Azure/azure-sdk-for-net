@@ -1924,7 +1924,199 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region GetBlockList
         /// <summary>
-        /// The <see cref="GetBlockList"/> operation operation retrieves
+        /// The operation operation retrieves
+        /// the list of blocks that have been uploaded as part of a block blob.
+        /// There are two block lists maintained for a blob.  The Committed
+        /// Block list has blocks that have been successfully committed to a
+        /// given blob with <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
+        /// blob using <see cref="StageBlock"/>, but that have not yet
+        /// been committed.  These blocks are stored in Azure in association
+        /// with a blob, but do not yet form part of the blob.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{BlockList}"/> describing requested
+        /// block list.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlockList> GetBlockList() =>
+            GetBlockListInternal(
+                BlockListTypes.All,
+                default,
+                default,
+                false, // async
+                default)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The operation operation retrieves
+        /// the list of blocks that have been uploaded as part of a block blob.
+        /// There are two block lists maintained for a blob.  The Committed
+        /// Block list has blocks that have been successfully committed to a
+        /// given blob with <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
+        /// blob using <see cref="StageBlockAsync"/>, but that have not yet
+        /// been committed.  These blocks are stored in Azure in association
+        /// with a blob, but do not yet form part of the blob.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Response{BlockList}"/> describing requested
+        /// block list.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlockList>> GetBlockListAsync() =>
+            await GetBlockListInternal(
+                BlockListTypes.All,
+                default,
+                default,
+                true, // async
+                default)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The operation operation retrieves
+        /// the list of blocks that have been uploaded as part of a block blob.
+        /// There are two block lists maintained for a blob.  The Committed
+        /// Block list has blocks that have been successfully committed to a
+        /// given blob with <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
+        /// blob using <see cref="StageBlock"/>, but that have not yet
+        /// been committed.  These blocks are stored in Azure in association
+        /// with a blob, but do not yet form part of the blob.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlockList}"/> describing requested
+        /// block list.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlockList> GetBlockList(
+            CancellationToken cancellationToken) =>
+            GetBlockListInternal(
+                BlockListTypes.All,
+                default,
+                default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The operation operation retrieves
+        /// the list of blocks that have been uploaded as part of a block blob.
+        /// There are two block lists maintained for a blob.  The Committed
+        /// Block list has blocks that have been successfully committed to a
+        /// given blob with <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
+        /// blob using <see cref="StageBlockAsync"/>, but that have not yet
+        /// been committed.  These blocks are stored in Azure in association
+        /// with a blob, but do not yet form part of the blob.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlockList}"/> describing requested
+        /// block list.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlockList>> GetBlockListAsync(
+            CancellationToken cancellationToken) =>
+            await GetBlockListInternal(
+                BlockListTypes.All,
+                default,
+                default,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The operation operation retrieves
+        /// the list of blocks that have been uploaded as part of a block blob.
+        /// There are two block lists maintained for a blob.  The Committed
+        /// Block list has blocks that have been successfully committed to a
+        /// given blob with <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
+        /// blob using <see cref="StageBlock"/>, but that have not yet
+        /// been committed.  These blocks are stored in Azure in association
+        /// with a blob, but do not yet form part of the blob.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlockList}"/> describing requested
+        /// block list.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlockList> GetBlockList(
+            GetBlockListOptions options,
+            CancellationToken cancellationToken = default) =>
+            GetBlockListInternal(
+                options.BlockListTypes,
+                options.Snapshot,
+                new BlobRequestConditions() { LeaseId = options.LeaseId, TagConditions = options.TagConditions },
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The operation operation retrieves
+        /// the list of blocks that have been uploaded as part of a block blob.
+        /// There are two block lists maintained for a blob.  The Committed
+        /// Block list has blocks that have been successfully committed to a
+        /// given blob with <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
+        /// blob using <see cref="StageBlockAsync"/>, but that have not yet
+        /// been committed.  These blocks are stored in Azure in association
+        /// with a blob, but do not yet form part of the blob.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlockList}"/> describing requested
+        /// block list.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlockList>> GetBlockListAsync(
+            GetBlockListOptions options,
+            CancellationToken cancellationToken = default) =>
+            await GetBlockListInternal(
+                options.BlockListTypes,
+                options.Snapshot,
+                new BlobRequestConditions() { LeaseId = options.LeaseId, TagConditions = options.TagConditions },
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The operation operation retrieves
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
@@ -1961,6 +2153,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlockList> GetBlockList(
             BlockListTypes blockListTypes = BlockListTypes.All,
             string snapshot = default,
@@ -1975,7 +2168,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetBlockListAsync"/> operation operation retrieves
+        /// The operation operation retrieves
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
@@ -2012,6 +2205,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlockList>> GetBlockListAsync(
             BlockListTypes blockListTypes = BlockListTypes.All,
             string snapshot = default,

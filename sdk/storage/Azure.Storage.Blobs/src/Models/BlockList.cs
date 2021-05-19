@@ -8,8 +8,7 @@ using Azure.Storage.Blobs.Specialized;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// A block blob's <see cref="BlockList"/> returned from
-    /// <see cref="BlockBlobClient.GetBlockListAsync"/>.
+    /// A block blob's <see cref="BlockList"/>.
     /// </summary>
     public partial class BlockList
     {
@@ -29,9 +28,7 @@ namespace Azure.Storage.Blobs.Models
         public ETag ETag { get; internal set; }
 
         /// <summary>
-        /// The media type of the body of the response. For the
-        /// <see cref=" Specialized.BlockBlobClient.GetBlockListAsync"/>
-        /// operation this is 'application/xml'.
+        /// The media type of the body of the response.
         /// </summary>
         public string ContentType { get; internal set; }
 
