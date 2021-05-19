@@ -99,7 +99,7 @@ namespace Azure.IoT.TimeSeriesInsights
     }
     public partial class TimeSeriesExpression
     {
-        public TimeSeriesExpression(string tsx) { }
+        public TimeSeriesExpression(string expression) { }
         public string Expression { get { throw null; } set { } }
     }
     public partial class TimeSeriesHierarchy
@@ -140,6 +140,7 @@ namespace Azure.IoT.TimeSeriesInsights
         internal TimeSeriesIdProperty() { }
         public string Name { get { throw null; } }
         public Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType? PropertyType { get { throw null; } }
+        public Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType? Type { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TimeSeriesIdPropertyType : System.IEquatable<Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType>

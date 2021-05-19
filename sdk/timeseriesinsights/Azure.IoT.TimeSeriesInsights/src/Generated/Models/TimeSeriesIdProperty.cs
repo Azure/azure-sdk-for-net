@@ -17,6 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <summary> The name of the property. </summary>
         public string Name { get; }
-        
+        /// <summary> The type of the property. Currently, only &quot;String&quot; is supported. </summary>
+        public TimeSeriesIdPropertyType? Type { get; }
     }
 }

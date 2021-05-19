@@ -13,16 +13,16 @@ namespace Azure.IoT.TimeSeriesInsights
     public partial class TimeSeriesExpression
     {
         /// <summary> Initializes a new instance of TimeSeriesExpression. </summary>
-        /// <param name="tsx"> Time series expression (TSX) written as a single string. Examples: &quot;$event.Status.String=&apos;Good&apos;&quot;, &quot;avg($event.Temperature)&quot;. Refer to the documentation on how to write time series expressions. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tsx"/> is null. </exception>
-        public TimeSeriesExpression(string tsx)
+        /// <param name="expression"> Time series expression (TSX) written as a single string. Examples: &quot;$event.Status.String=&apos;Good&apos;&quot;, &quot;avg($event.Temperature)&quot;. Refer to the documentation on how to write time series expressions. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
+        public TimeSeriesExpression(string expression)
         {
-            if (tsx == null)
+            if (expression == null)
             {
-                throw new ArgumentNullException(nameof(tsx));
+                throw new ArgumentNullException(nameof(expression));
             }
 
-            Expression = tsx;
+            Expression = expression;
         }
     }
 }
