@@ -6,7 +6,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
     /// a Recognize Entities action in a set of documents.
-    /// For example set model version, disable service logging, and more.
+    /// For example, set model version, disable service logging, and more.
     /// </summary>
     public class RecognizeEntitiesAction : RecognizeEntitiesOptions
     {
@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics
         /// Initializes a new instance of the <see cref="RecognizeEntitiesAction"/>
         /// class which allows callers to specify details about how to execute
         /// a Recognize Entities action in a set of documents.
-        /// For example set model version, disable service logging, and more.
+        /// For example, set model version, disable service logging, and more.
         /// </summary>
         public RecognizeEntitiesAction()
         {

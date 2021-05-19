@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Options that allow callers to specify details about how the operation
-    /// is run. For example execute opinion mining, set model version,
+    /// is run. For example, execute opinion mining, set model version,
     /// whether to include statistics, and more.
     /// </summary>
     public class AnalyzeSentimentOptions : TextAnalyticsRequestOptions
@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeSentimentOptions"/>
         /// class which allows callers to specify details about how the operation
-        /// is run. For example execute opinion mining, set model version,
+        /// is run. For example, execute opinion mining, set model version,
         /// whether to include statistics, and more.
         /// </summary>
         public AnalyzeSentimentOptions()
