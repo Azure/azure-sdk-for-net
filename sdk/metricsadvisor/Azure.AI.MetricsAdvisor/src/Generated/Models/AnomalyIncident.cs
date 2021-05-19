@@ -12,53 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IncidentResult. </summary>
     public partial class AnomalyIncident
     {
-
-        /// <summary> Initializes a new instance of AnomalyIncident. </summary>
-        /// <param name="dataFeedId">
-        /// data feed unique id
-        /// 
-        /// 
-        /// 
-        /// only return for alerting anomaly result.
-        /// </param>
-        /// <param name="metricId">
-        /// metric unique id
-        /// 
-        /// 
-        /// 
-        /// only return for alerting incident result.
-        /// </param>
-        /// <param name="detectionConfigurationId">
-        /// anomaly detection configuration unique id
-        /// 
-        /// 
-        /// 
-        /// only return for alerting incident result.
-        /// </param>
-        /// <param name="id"> incident id. </param>
-        /// <param name="startTime"> incident start time. </param>
-        /// <param name="lastTime"> incident last time. </param>
-        /// <param name="rootNode"> . </param>
-        /// <param name="property"> . </param>
-        internal AnomalyIncident(Guid? dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startTime, DateTimeOffset lastTime, SeriesIdentity rootNode, IncidentProperty property)
-        {
-            DataFeedId = dataFeedId;
-            MetricId = metricId;
-            DetectionConfigurationId = detectionConfigurationId;
-            Id = id;
-            StartTime = startTime;
-            LastTime = lastTime;
-            RootNode = rootNode;
-            Property = property;
-        }
-
-        /// <summary>
-        /// data feed unique id
-        /// 
-        /// 
-        /// 
-        /// only return for alerting anomaly result.
-        /// </summary>
-        public Guid? DataFeedId { get; }
     }
 }

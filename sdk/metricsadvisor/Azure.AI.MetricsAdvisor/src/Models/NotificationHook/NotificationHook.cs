@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             return hook switch
             {
                 EmailNotificationHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, HookParameter = h.HookParameter, Admins = h.Administrators },
-                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, HookParameter = h.HookParameter, Admins = h.Administrators },
+                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, /*HookParameter = h.HookParameter*/ Admins = h.Administrators },
                 _ => throw new InvalidOperationException("Unknown AlertingHook type.")
             };
         }
