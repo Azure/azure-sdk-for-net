@@ -41,6 +41,7 @@ namespace Azure.Core.GeoJson
             return Polygons.GetEnumerator();
         }
 
+        /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

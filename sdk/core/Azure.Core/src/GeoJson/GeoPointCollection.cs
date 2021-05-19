@@ -3,7 +3,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace Azure.Core.GeoJson
@@ -45,6 +44,7 @@ namespace Azure.Core.GeoJson
             return Points.GetEnumerator();
         }
 
+        /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

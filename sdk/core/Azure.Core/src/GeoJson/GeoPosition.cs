@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core.GeoJson
 {
     /// <summary>
-    ///
+    /// Represents a single spatial position with altitude, longitude and optional latitude.
     /// </summary>
     public readonly struct GeoPosition : IEquatable<GeoPosition>
     {
@@ -96,7 +96,7 @@ namespace Azure.Core.GeoJson
         }
 
         /// <summary>
-        ///
+        /// Get the value of coordinate component using it's index.
         /// </summary>
         /// <param name="index"></param>
         public double this[int index]
@@ -116,7 +116,7 @@ namespace Azure.Core.GeoJson
         }
 
         /// <summary>
-        ///
+        /// Returns the count of the coordinate components.
         /// </summary>
         public int Count => Altitude == null ? 2 : 3;
     }

@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Core.GeoJson
 {
+#pragma warning disable AZC0014 // Dont use System.Json apis.
     /// <summary>
     /// Converts a <see cref="GeoObject"/> value from and to JSON in GeoJSON format.
     /// </summary>
@@ -49,7 +50,7 @@ namespace Azure.Core.GeoJson
         {
             JsonElement typeProperty = GetRequiredProperty(element, TypeProperty);
 
-            string type = typeProperty.GetString();
+            string? type = typeProperty.GetString();
 
             GeoBoundingBox? boundingBox = ReadBoundingBox(element);
 
@@ -458,4 +459,5 @@ namespace Azure.Core.GeoJson
             return property;
         }
     }
+#pragma warning restore AZC0014
 }
