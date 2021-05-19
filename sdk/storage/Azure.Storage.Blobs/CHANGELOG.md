@@ -11,6 +11,12 @@
 - Fixed bug where BlobBaseClient.Exists() would not function correctly on blobs encrypted with CPK.
 - Includes all updates and fixes from 12.8.2 and 12.8.3
 
+## 12.8.3 (2021-04-27)
+- Fixed bug where Stream returned by BlockBlobClient.OpenWrite could corrupt blocks if flushed between writes.
+
+## 12.8.2 (2021-04-27)
+- This release contains bug fixes to improve quality.
+
 ## 12.9.0-beta.3 (2021-04-09)
 - This release contains bug fixes to improve quality.
 
@@ -180,9 +186,3 @@ excellent developer experience.  It was created following the Azure SDK Design
 Guidelines for .NET at https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html.
 
 For more information, please visit: https://aka.ms/azure-sdk-preview1-net.
-## 12.8.3 (2020-04-27)
-- Fixed bug where Stream returned by BlockBlobClient.OpenWrite could corrupt blocks if flushed between writes.
-
-## 12.8.2 (2020-04-27)
-- This release contains bug fixes to improve quality.
-
