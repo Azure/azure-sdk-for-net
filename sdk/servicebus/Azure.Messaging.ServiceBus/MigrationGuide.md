@@ -9,17 +9,21 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
 - [Guide for migrating to Azure.Messaging.ServiceBus from Microsoft.Azure.ServiceBus](#guide-for-migrating-to-azuremessagingservicebus-from-microsoftazureservicebus)
   - [Table of contents](#table-of-contents)
   - [Migration benefits](#migration-benefits)
+    - [Cross Service SDK improvements](#cross-service-sdk-improvements)
+    - [New features](#new-features)
   - [General changes](#general-changes)
     - [Package and namespaces](#package-and-namespaces)
     - [Client hierarchy](#client-hierarchy)
+      - [Approachability](#approachability)
+      - [Consistency](#consistency)
+      - [Connection Pooling](#connection-pooling)
     - [Client constructors](#client-constructors)
-    - [Creating sender and receiver](#creating-sender-and-receiver)
+      - [Administration client](#administration-client)
     - [Sending messages](#sending-messages)
     - [Receiving messages](#receiving-messages)
     - [Working with sessions](#working-with-sessions)
-  - [Migration samples](#migration-samples)
-    - [Sending and receiving a message](#sending-and-receiving-a-message)
-    - [Sending and receiving a batch of messages](#sending-and-receiving-a-batch-of-messages)
+    - [Cross-Entity transactions](#cross-entity-transactions)
+  - [Known Gaps from Previous Library](#known-gaps-from-previous-library)
   - [Additional samples](#additional-samples)
 
 ## Migration benefits
@@ -63,7 +67,6 @@ In the interest of simplifying the API surface we've made a single top level cli
 #### Approachability
 
 By having a single entry point, the `ServiceBusClient` helps with the discoverability of the API as you can explore all available features through methods from a single client, as opposed to searching through documentation or exploring namespace for the types that you can instantiate. Whether sending or receiving, using sessions or not, you will start your applications by constructing the same client.
-| `new ManagementClient(...)` | `new ServiceBusAdministrationClient(...)` | [Create subscription with connection string](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample08_Administration.cs)
 
 #### Consistency
 
@@ -93,6 +96,15 @@ Authenticate with connection string:
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
 ServiceBusClient client = new ServiceBusClient(connectionString);
+```
+
+#### Administration client
+
+This replaces the `ManagementClient` from `Microsoft.Azure.ServiceBus`. For example usage please see the sample for [creating a subscription with a connection string](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample08_Administration.cs).
+
+```C# Snippet:ServiceBusAdministrationClient
+string connectionString = "<connection_string>";
+ServiceBusAdministrationClient client = = new ServiceBusAdministrationClient(connectionString);
 ```
 
 ### Sending messages
