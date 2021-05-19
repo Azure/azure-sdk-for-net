@@ -10,8 +10,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {
@@ -20,7 +18,7 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public class ApiVersions
     {
-        private ProvidersOperations ProviderOperations;
+        private ProviderOperations ProviderOperations;
         private ArmClientOptions _clientOptions;
 
         /// <summary>
@@ -38,6 +36,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         internal void SetProviderClient(TokenCredential credential, Uri baseUri, string subscription)
         {
+            //change to new ProviderOperations
             ProviderOperations = new ResourcesManagementClient(
             baseUri,
             subscription,
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.Core
 
         private string LoadApiVersion(ResourceType resourceType, CancellationToken cancellationToken)
         {
-            Response<Provider> results;
+            Response<ProviderData> results;
             try
             {
                 results = ProviderOperations.Get(resourceType.Namespace, null, cancellationToken);
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.Core
 
         private async Task<string> LoadApiVersionAsync(ResourceType resourceType, CancellationToken cancellationToken)
         {
-            Response<Provider> results;
+            Response<ProviderData> results;
             try
             {
                 results = await ProviderOperations.GetAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
