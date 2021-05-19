@@ -12,6 +12,7 @@
   - `RecognizePiiEntitiesOptions` changed to new type `RecognizePiiEntitiesActions`.
   - `RecognizeLinkedEntitiesOptions` changed to new type `RecognizeLinkedEntitiesActions`.
   - `AnalyzeSentimentOptions` changed to new type `AnalyzeSentimentActions`.
+- Renamed type `TextAnalyticsActionDetails` to `TextAnalyticsActionResult`.
 
 ## 5.1.0-beta.7 (2021-05-18)
 ### New features

@@ -83,7 +83,7 @@ namespace Azure.AI.TextAnalytics
     {
         public AnalyzeSentimentAction() { }
     }
-    public partial class AnalyzeSentimentActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionDetails
+    public partial class AnalyzeSentimentActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal AnalyzeSentimentActionResult() { }
         public Azure.AI.TextAnalytics.AnalyzeSentimentResultCollection Result { get { throw null; } }
@@ -226,7 +226,7 @@ namespace Azure.AI.TextAnalytics
     {
         public ExtractKeyPhrasesAction() { }
     }
-    public partial class ExtractKeyPhrasesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionDetails
+    public partial class ExtractKeyPhrasesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal ExtractKeyPhrasesActionResult() { }
         public Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection Result { get { throw null; } }
@@ -570,7 +570,7 @@ namespace Azure.AI.TextAnalytics
     {
         public RecognizeEntitiesAction() { }
     }
-    public partial class RecognizeEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionDetails
+    public partial class RecognizeEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal RecognizeEntitiesActionResult() { }
         public Azure.AI.TextAnalytics.RecognizeEntitiesResultCollection Result { get { throw null; } }
@@ -594,7 +594,7 @@ namespace Azure.AI.TextAnalytics
     {
         public RecognizeLinkedEntitiesAction() { }
     }
-    public partial class RecognizeLinkedEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionDetails
+    public partial class RecognizeLinkedEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal RecognizeLinkedEntitiesActionResult() { }
         public Azure.AI.TextAnalytics.RecognizeLinkedEntitiesResultCollection Result { get { throw null; } }
@@ -618,7 +618,7 @@ namespace Azure.AI.TextAnalytics
     {
         public RecognizePiiEntitiesAction() { }
     }
-    public partial class RecognizePiiEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionDetails
+    public partial class RecognizePiiEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal RecognizePiiEntitiesActionResult() { }
         public Azure.AI.TextAnalytics.RecognizePiiEntitiesResultCollection Result { get { throw null; } }
@@ -697,9 +697,9 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public string Text { get { throw null; } }
     }
-    public partial class TextAnalyticsActionDetails
+    public partial class TextAnalyticsActionResult
     {
-        internal TextAnalyticsActionDetails() { }
+        internal TextAnalyticsActionResult() { }
         public System.DateTimeOffset CompletedOn { get { throw null; } }
         public Azure.AI.TextAnalytics.TextAnalyticsError Error { get { throw null; } }
         public bool HasError { get { throw null; } }
