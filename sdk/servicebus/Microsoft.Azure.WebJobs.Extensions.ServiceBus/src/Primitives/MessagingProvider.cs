@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// </summary>
         /// <param name="client">The client that is being used to communicate with the service.</param>
         /// <param name="entityPath">The path to the Service Bus entity that is being received from.</param>
-        /// <param name="options">The set of options to use for configuring the client. These options are
+        /// <param name="options">The set of options to use for configuring the processor. These options are
         /// computed from the <see cref="ServiceBusOptions"/> passed to the <see cref="MessagingProvider"/>
         /// constructor.</param>
         /// <returns>A message processor that will be used by the extension.</returns>
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// </summary>
         /// <param name="client">The client that is being used to communicate with the service.</param>
         /// <param name="entityPath">The path to the Service Bus entity that is being received from.</param>
-        /// <param name="options">The set of options to use for configuring the client. These options are
+        /// <param name="options">The set of options to use for configuring the processor. These options are
         /// computed from the <see cref="ServiceBusOptions"/> passed to the <see cref="MessagingProvider"/>
         /// constructor.</param>
         /// <remarks>This method is called for functions that bind to a single message.</remarks>
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// </summary>
         /// <param name="client">The client that is being used to communicate with the service.</param>
         /// <param name="entityPath">The path to the Service Bus entity that is being received from.</param>
-        /// <param name="options">The set of options to use for configuring the client. These options are
+        /// <param name="options">The set of options to use for configuring the receiver. These options are
         /// computed from the <see cref="ServiceBusOptions"/> passed to the <see cref="MessagingProvider"/>
         /// constructor.</param>
         /// <remarks>This method is called for functions that bind to multiple messages.</remarks>
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// </summary>
         /// <param name="client">The client that is being used to communicate with the service.</param>
         /// <param name="entityPath">The path to the Service Bus entity that is being received from.</param>
-        /// <param name="options">The set of options to use for configuring the client. These options are
+        /// <param name="options">The set of options to use for configuring the processor. These options are
         /// computed from the <see cref="ServiceBusOptions"/> passed to the <see cref="MessagingProvider"/>
         /// constructor.</param>
         /// <returns>A message processor that will be used by the extension.</returns>
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// </summary>
         /// <param name="client">The client that is being used to communicate with the service.</param>
         /// <param name="entityPath">The path to the Service Bus entity that is being received from.</param>
-        /// <param name="options">The set of options to use for configuring the client. These options are
+        /// <param name="options">The set of options to use for configuring the processor. These options are
         /// computed from the <see cref="ServiceBusOptions"/> passed to the <see cref="MessagingProvider"/>
         /// constructor.</param>
         /// <remarks>This method is called for functions that bind to a single message.</remarks>
