@@ -30,6 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             _operation = new OperationInternals<SparkBatchJob>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SparkJobDefinitionDebugSparkJobDefinitionOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

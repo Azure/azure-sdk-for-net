@@ -19,6 +19,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
         private string classificationRuleName;
         private readonly string apiVersion;
@@ -51,7 +52,8 @@ namespace Azure.Analytics.Purview.Scanning
 
             options ??= new PurviewScanningServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
             this.endpoint = endpoint;
             this.classificationRuleName = classificationRuleName;
