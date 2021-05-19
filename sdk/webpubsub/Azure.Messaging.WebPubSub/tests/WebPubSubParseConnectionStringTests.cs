@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 
 using NUnit.Framework;
@@ -17,7 +14,6 @@ namespace Azure.Messaging.WebPubSub.Tests
     public class WebPubSubParseConnectionStringTests
     {
         private const string FakeAccessKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH";
-        private static readonly TimeSpan FiveMinutesTimeSpan = TimeSpan.FromMinutes(5);
         private static readonly JwtSecurityTokenHandler JwtTokenHandler = new JwtSecurityTokenHandler();
 
         [TestCase("Endpoint=https://host;AccessKey={0};Version=1.0;", "https://host")]
