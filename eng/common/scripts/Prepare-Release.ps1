@@ -182,8 +182,7 @@ if (-not $newVersionParsed.IsPrerelease)
   Check-ApiReviewStatus -PackageName $packageProperties.Name -Language $LanguageDisplayName
 }
 
-exit 0
-##&$EngCommonScriptsDir/Update-DevOps-Release-WorkItem.ps1 `
+&$EngCommonScriptsDir/Update-DevOps-Release-WorkItem.ps1 `
   -language $LanguageDisplayName `
   -packageName $packageProperties.Name `
   -version $newVersion `
