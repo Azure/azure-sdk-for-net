@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class SpatialGeoArrayTest
+    public class GeoArrayTests
     {
         [Test]
         public void PointCoordinatesWork()
