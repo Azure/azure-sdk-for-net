@@ -6,19 +6,21 @@ Familiarity with the v4 client library is assumed. For those new to the Service 
 
 ## Table of contents
 
-- [Migration benefits](#migration-benefits)
-- [General changes](#general-changes)
-  - [Package and namespaces](#package-and-namespaces)
-  - [Client hierarchy](#client-hierarchy)
-  - [Client constructors](#client-constructors)
-  - [Creating sender and receiver](#creating-sender-and-receiver)
-  - [Sending messages](#sending-messages)
-  - [Receiving messages](#receiving-messages)
-  - [Working with sessions](#working-with-sessions)
-- [Migration samples](#migration-samples)
-  - [Sending and receiving a message](#sending-and-receiving-a-message)
-  - [Sending and receiving a batch of messages](#sending-and-receiving-a-batch-of-messages)
-- [Additional samples](#additional-samples)
+- [Guide for migrating to Azure.Messaging.ServiceBus from Microsoft.Azure.ServiceBus](#guide-for-migrating-to-azuremessagingservicebus-from-microsoftazureservicebus)
+  - [Table of contents](#table-of-contents)
+  - [Migration benefits](#migration-benefits)
+  - [General changes](#general-changes)
+    - [Package and namespaces](#package-and-namespaces)
+    - [Client hierarchy](#client-hierarchy)
+    - [Client constructors](#client-constructors)
+    - [Creating sender and receiver](#creating-sender-and-receiver)
+    - [Sending messages](#sending-messages)
+    - [Receiving messages](#receiving-messages)
+    - [Working with sessions](#working-with-sessions)
+  - [Migration samples](#migration-samples)
+    - [Sending and receiving a message](#sending-and-receiving-a-message)
+    - [Sending and receiving a batch of messages](#sending-and-receiving-a-batch-of-messages)
+  - [Additional samples](#additional-samples)
 
 ## Migration benefits
 
@@ -50,6 +52,7 @@ In the interest of simplifying the API surface we've made a single top level cli
 |-------------------------------------------------------|-----------------------------------------------------------------|--------|
 | `new QueueClient()` or `new TopicClient()` or `new SubscriptionClient()` or `new SessionClient()`  | `new ServiceBusClient()`                      | [Authenticate with connection string](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_HelloWorld.cs#L177) |
 | `new QueueClient(..., ITokenProvider)` or `new TopicClient(..., ITokenProvider)` or `new SubscriptionClient(..., ITokenProvider)` or `new SessionClient(..., ITokenProvider)`  | `new ServiceBusClient(..., TokenCredential)` | [Authenticate with client secret credential](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_HelloWorld.cs#L165)
+| `new ManagementClient(...)` | `new ServiceBusAdministrationClient(...)` | [Create subscription with connection string](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample08_Administration.cs)
 
 ### Creating sender and receiver
 
