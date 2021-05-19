@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOperation for mocking. </summary>
+        protected VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOperation()
+        {
+        }
+
         internal VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOperation");
