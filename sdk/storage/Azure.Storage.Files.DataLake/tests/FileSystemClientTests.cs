@@ -628,7 +628,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual(
                     _serviceVersion >= DataLakeClientOptions.ServiceVersion.V2019_12_12 ?
                         "NoAuthenticationInformation" :
-                        "AuthenticationFailed",
+                        "ResourceNotFound",
                     e.ErrorCode));
         }
 
