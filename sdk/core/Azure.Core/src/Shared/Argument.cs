@@ -145,6 +145,24 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Throws if <paramref name="value"/> is not null. To be used for arguments that are not supported by given API.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <exception cref="ArgumentException"><paramref name="value"/> is not null.</exception>
+#if AZURE_NULLABLE
+        public static void AssertUnsupported([AllowNull] object value, string name)
+#else
+        public static void AssertUnsupported(object value, string name)
+#endif
+        {
+            if (value != null)
+            {
+                throw new ArgumentException("The argument is not supported", name);
+            }
+        }
+
+        /// <summary>
         /// Throws if <paramref name="value"/> is the default value for type <typeparamref name="T"/>.
         /// </summary>
         /// <typeparam name="T">The type of structure to validate which implements <see cref="IEquatable{T}"/>.</typeparam>

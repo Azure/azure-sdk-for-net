@@ -1707,6 +1707,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_08_04)]
+        public async Task GetBlockListAsync_UnsupportedHeader()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blob.GetBlockListAsync(conditions: new BlobRequestConditions()
+                {
+                    IfMatch = new ETag("foo")
+                }),
+                e =>
+                {
+                    StringAssert.Contains("The argument is not supported", e.Message);
+                }
+            );
+        }
+
+        [RecordedTest]
         public async Task UploadAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

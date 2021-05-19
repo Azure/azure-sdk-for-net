@@ -2085,6 +2085,14 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(GetBlockList)}");
 
+                if (ClientConfiguration.Version >= BlobClientOptions.ServiceVersion.V2020_08_04)
+                {
+                    Argument.AssertUnsupported(conditions?.IfMatch, nameof(conditions.IfMatch));
+                    Argument.AssertUnsupported(conditions?.IfModifiedSince, nameof(conditions.IfModifiedSince));
+                    Argument.AssertUnsupported(conditions?.IfNoneMatch, nameof(conditions.IfNoneMatch));
+                    Argument.AssertUnsupported(conditions?.IfUnmodifiedSince, nameof(conditions.IfUnmodifiedSince));
+                }
+
                 try
                 {
                     scope.Start();
