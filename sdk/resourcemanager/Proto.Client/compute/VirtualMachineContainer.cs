@@ -48,10 +48,8 @@ namespace Proto.Compute
         /// <returns> A response with the <see cref="Response{VirtualMachine}"/> operation for this resource. </returns>
         public Response<VirtualMachine> CreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                v => new VirtualMachine(Parent, new VirtualMachineData(v)));
+            var response = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new VirtualMachine(Parent, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -64,9 +62,8 @@ namespace Proto.Compute
         public async Task<Response<VirtualMachine>> CreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                v => new VirtualMachine(Parent, new VirtualMachineData(v)));
+            var response = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualMachine(Parent, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -229,15 +226,15 @@ namespace Proto.Compute
         /// <inheritdoc />
         public override Response<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(Operations.Get(Id.ResourceGroupName, virtualMachineName, cancellationToken),
-                v => new VirtualMachine(Parent, new VirtualMachineData(v)));
+            var response = Operations.Get(Id.ResourceGroupName, virtualMachineName, cancellationToken);
+            return Response.FromValue(new VirtualMachine(Parent, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public override async Task<Response<VirtualMachine>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(await Operations.GetAsync(Id.ResourceGroupName, virtualMachineName, cancellationToken),
-                v => new VirtualMachine(Parent, new VirtualMachineData(v)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, virtualMachineName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualMachine(Parent, new VirtualMachineData(response.Value)), response.GetRawResponse());
         }
     }
 }

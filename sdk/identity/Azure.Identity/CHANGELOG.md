@@ -1,6 +1,9 @@
 # Release History
 
-## 1.4.0-beta.6 (2021-05-11)
+## 1.5.0-beta.1 (Unreleased)
+
+
+## 1.4.0 (2021-05-12)
 
 ### New Features
 
@@ -13,6 +16,10 @@ This indicates to AAD that your application is CAE ready and can handle the CAE 
     <RuntimeHostConfigurationOption Include="Azure.Identity.DisableCP1" Value="true" />
 </ItemGroup> 
   ```
+### Fixes and improvements
+
+- The Microsoft Authentication Library (MSAL) dependency versions have been updated to the latest
+    - Microsoft.Identity.Client version 4.30.1, Microsoft.Identity.Client.Extensions.Msal version 2.18.4.
 
 ## 1.4.0-beta.5 (2021-04-06)
 
@@ -28,7 +35,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 ### Fixes and improvements
 
-- When logging is enabled, the log output from MSAL is also logged.
+- When logging is enabled, the log output from Microsoft Authentication Library (MSAL) is also logged.
 - Fixed an issue where an account credential fails to load from the cache when EnableGuestTenantAuthentication is true and the account found in the cache has multiple matching tenantIds ([#18276](https://github.com/Azure/azure-sdk-for-net/issues/18276)).
 - Fixed deadlock issue in `InteractiveBrowserCredential` when running in a UI application ([#18418](https://github.com/Azure/azure-sdk-for-net/issues/18418)).
 

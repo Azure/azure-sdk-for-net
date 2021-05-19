@@ -84,17 +84,15 @@ namespace Proto.Compute
         /// <inheritdoc/>
         public override Response<AvailabilitySet> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                Operations.Get(Id.ResourceGroupName, Id.Name),
-                a => new AvailabilitySet(this, new AvailabilitySetData(a)));
+            var response = Operations.Get(Id.ResourceGroupName, Id.Name);
+            return Response.FromValue(new AvailabilitySet(this, new AvailabilitySetData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public async override Task<Response<AvailabilitySet>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
-                a => new AvailabilitySet(this, new AvailabilitySetData(a)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new AvailabilitySet(this, new AvailabilitySetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -104,9 +102,8 @@ namespace Proto.Compute
         /// <returns> The operation of the updated resource. </returns>
         public Response<AvailabilitySet> Update(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                Operations.Update(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                a => new AvailabilitySet(this, new AvailabilitySetData(a)));
+            var response = Operations.Update(Id.ResourceGroupName, Id.Name, patchable, cancellationToken);
+            return Response.FromValue(new AvailabilitySet(this, new AvailabilitySetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -117,9 +114,8 @@ namespace Proto.Compute
         /// <returns> A <see cref="Task"/> that on completion returns the operation of the updated resource. </returns>
         public async Task<Response<AvailabilitySet>> UpdateAsync(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                await Operations.UpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                a => new AvailabilitySet(this, new AvailabilitySetData(a)));
+            var response = await Operations.UpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new AvailabilitySet(this, new AvailabilitySetData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Azure.Monitor.Query.Models
 {
+    // TODO: This probably be a public extensible enum
     public partial class TimeSeriesElement
     {
         private Dictionary<string,string> _metadata;

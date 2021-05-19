@@ -677,7 +677,7 @@ namespace Azure.Messaging.ServiceBus
                     foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
                         // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
-                        if (!_messageHandlerSemaphore.Wait(0))
+                        if (!_messageHandlerSemaphore.Wait(0, CancellationToken.None))
                         {
                             await _messageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
                         }
@@ -726,7 +726,7 @@ namespace Azure.Messaging.ServiceBus
                     // in that call.  There is little value in surfacing those expected exceptions
                     // to the customer error handler as well; allow StopProcessingAsync to run
                     // in a fire-and-forget manner.
-                    _ = StopProcessingAsync();
+                    _ = StopProcessingAsync(CancellationToken.None);
                 }
             }
             finally
@@ -810,7 +810,10 @@ namespace Azure.Messaging.ServiceBus
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
         ///   This is equivalent to calling <see cref="CloseAsync"/>.
         /// </summary>
-        public async ValueTask DisposeAsync() =>
+        public async ValueTask DisposeAsync()
+        {
             await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
     }
 }

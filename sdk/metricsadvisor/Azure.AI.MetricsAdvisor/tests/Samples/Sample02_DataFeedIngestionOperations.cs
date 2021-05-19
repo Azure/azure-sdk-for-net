@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
             var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
             {
-                TopCount = 5
+                MaxPageSize = 5
             };
 
             Console.WriteLine("Ingestion statuses:");

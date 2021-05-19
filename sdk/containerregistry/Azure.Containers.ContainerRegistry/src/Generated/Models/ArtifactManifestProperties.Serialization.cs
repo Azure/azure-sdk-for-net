@@ -17,15 +17,15 @@ namespace Azure.Containers.ContainerRegistry
         internal static ArtifactManifestProperties DeserializeArtifactManifestProperties(JsonElement element)
         {
             Optional<string> imageName = default;
-            Optional<string> digest = default;
+            string digest = default;
             Optional<long> imageSize = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
             Optional<ArtifactArchitecture?> architecture = default;
             Optional<ArtifactOperatingSystem?> os = default;
-            Optional<IReadOnlyList<ManifestAttributesManifestReferences>> references = default;
+            Optional<IReadOnlyList<ArtifactManifestReference>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
-            Optional<ContentProperties> changeableAttributes = default;
+            Optional<ManifestWriteableProperties> changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageName"))
@@ -104,10 +104,10 @@ namespace Azure.Containers.ContainerRegistry
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ManifestAttributesManifestReferences> array = new List<ManifestAttributesManifestReferences>();
+                            List<ArtifactManifestReference> array = new List<ArtifactManifestReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManifestAttributesManifestReferences.DeserializeManifestAttributesManifestReferences(item));
+                                array.Add(ArtifactManifestReference.DeserializeArtifactManifestReference(item));
                             }
                             references = array;
                             continue;
@@ -134,14 +134,14 @@ namespace Azure.Containers.ContainerRegistry
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            changeableAttributes = ContentProperties.DeserializeContentProperties(property0.Value);
+                            changeableAttributes = ManifestWriteableProperties.DeserializeManifestWriteableProperties(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ArtifactManifestProperties(imageName.Value, digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
+            return new ArtifactManifestProperties(imageName.Value, digest, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
         }
     }
 }

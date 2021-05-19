@@ -4,7 +4,7 @@
 namespace Azure.Core
 {
     /// <summary>
-    /// A concrete ClientOptions for use by client with no additonal options other than the common ones.
+    /// A concrete ClientOptions for use by client with no additional options other than the common ones.
     /// </summary>
 #pragma warning disable AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     public class ProtocolClientOptions : ClientOptions

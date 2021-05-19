@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Threading;
-using Azure.ResourceManager.Resources;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Core
             : base(new ClientContext(subscriptionOperations.ClientOptions, subscriptionOperations.Credential, subscriptionOperations.BaseUri, subscriptionOperations.Pipeline), subscriptionOperations.Id)
         {
             Id = subscriptionOperations.Id;
+            SubscriptionsClient = new SubscriptionOperations(new ClientContext(subscriptionOperations.ClientOptions, subscriptionOperations.Credential, subscriptionOperations.BaseUri, subscriptionOperations.Pipeline), subscriptionOperations.Id);
         }
 
         /// <inheritdoc/>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the subscription client.
         /// </summary>
-        private SubscriptionsOperations SubscriptionsClient => ResourcesClient.Subscriptions;
+        private SubscriptionOperations SubscriptionsClient;
 
         /// <summary>
         /// The resource id
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location data that may take multiple service requests to iterate over. </returns>
         public Pageable<LocationData> List()
         {
-            return new PhWrappingPageable<Azure.ResourceManager.Resources.Models.Location, LocationData>(SubscriptionsClient.ListLocations(Id.SubscriptionId), s => s.DisplayName);
+            return SubscriptionsClient.ListLocations(Id.SubscriptionId);
         }
 
         /// <summary>
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> An async collection of location data that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<LocationData> ListAsync(CancellationToken token = default(CancellationToken))
         {
-            return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.Location, LocationData>(SubscriptionsClient.ListLocationsAsync(Id.SubscriptionId, token), s => s.DisplayName);
+            return SubscriptionsClient.ListLocationsAsync(Id.SubscriptionId, token);
         }
     }
 }
