@@ -13,26 +13,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AzureLogAnalyticsParameter
     {
         /// <summary> Initializes a new instance of AzureLogAnalyticsParameter. </summary>
-        /// <param name="tenantId"> The tenant id of service principal that have access to this Log Analytics. </param>
-        /// <param name="clientId"> The client id of service principal that have access to this Log Analytics. </param>
-        /// <param name="clientSecret"> The client secret of service principal that have access to this Log Analytics. </param>
         /// <param name="workspaceId"> The workspace id of this Log Analytics. </param>
         /// <param name="query"> The KQL (Kusto Query Language) query to fetch data from this Log Analytics. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantId"/>, <paramref name="clientId"/>, <paramref name="clientSecret"/>, <paramref name="workspaceId"/>, or <paramref name="query"/> is null. </exception>
-        public AzureLogAnalyticsParameter(string tenantId, string clientId, string clientSecret, string workspaceId, string query)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="query"/> is null. </exception>
+        public AzureLogAnalyticsParameter(string workspaceId, string query)
         {
-            if (tenantId == null)
-            {
-                throw new ArgumentNullException(nameof(tenantId));
-            }
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (clientSecret == null)
-            {
-                throw new ArgumentNullException(nameof(clientSecret));
-            }
             if (workspaceId == null)
             {
                 throw new ArgumentNullException(nameof(workspaceId));
@@ -42,6 +27,18 @@ namespace Azure.AI.MetricsAdvisor.Models
                 throw new ArgumentNullException(nameof(query));
             }
 
+            WorkspaceId = workspaceId;
+            Query = query;
+        }
+
+        /// <summary> Initializes a new instance of AzureLogAnalyticsParameter. </summary>
+        /// <param name="tenantId"> The tenant id of service principal that have access to this Log Analytics. </param>
+        /// <param name="clientId"> The client id of service principal that have access to this Log Analytics. </param>
+        /// <param name="clientSecret"> The client secret of service principal that have access to this Log Analytics. </param>
+        /// <param name="workspaceId"> The workspace id of this Log Analytics. </param>
+        /// <param name="query"> The KQL (Kusto Query Language) query to fetch data from this Log Analytics. </param>
+        internal AzureLogAnalyticsParameter(string tenantId, string clientId, string clientSecret, string workspaceId, string query)
+        {
             TenantId = tenantId;
             ClientId = clientId;
             ClientSecret = clientSecret;

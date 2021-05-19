@@ -11,11 +11,22 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AzureCosmosDBParameter
     {
         /// <summary> Initializes a new instance of AzureCosmosDBParameter. </summary>
+        /// <param name="sqlQuery"> The statement to query this collection. </param>
+        /// <param name="database"> A database name in this Azure CosmosDB. </param>
+        /// <param name="collectionId"> A collection id in this database. </param>
+        public AzureCosmosDBParameter(string sqlQuery, string database, string collectionId)
+        {
+            SqlQuery = sqlQuery;
+            Database = database;
+            CollectionId = collectionId;
+        }
+
+        /// <summary> Initializes a new instance of AzureCosmosDBParameter. </summary>
         /// <param name="connectionString"> The connection string of this Azure CosmosDB. </param>
         /// <param name="sqlQuery"> The statement to query this collection. </param>
         /// <param name="database"> A database name in this Azure CosmosDB. </param>
         /// <param name="collectionId"> A collection id in this database. </param>
-        public AzureCosmosDBParameter(string connectionString, string sqlQuery, string database, string collectionId)
+        internal AzureCosmosDBParameter(string connectionString, string sqlQuery, string database, string collectionId)
         {
             ConnectionString = connectionString;
             SqlQuery = sqlQuery;

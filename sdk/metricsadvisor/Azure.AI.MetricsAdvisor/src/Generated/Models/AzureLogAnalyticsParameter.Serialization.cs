@@ -15,12 +15,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tenantId");
-            writer.WriteStringValue(TenantId);
-            writer.WritePropertyName("clientId");
-            writer.WriteStringValue(ClientId);
-            writer.WritePropertyName("clientSecret");
-            writer.WriteStringValue(ClientSecret);
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId");
+                writer.WriteStringValue(TenantId);
+            }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId");
+                writer.WriteStringValue(ClientId);
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret");
+                writer.WriteStringValue(ClientSecret);
+            }
             writer.WritePropertyName("workspaceId");
             writer.WriteStringValue(WorkspaceId);
             writer.WritePropertyName("query");
@@ -30,9 +39,9 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureLogAnalyticsParameter DeserializeAzureLogAnalyticsParameter(JsonElement element)
         {
-            string tenantId = default;
-            string clientId = default;
-            string clientSecret = default;
+            Optional<string> tenantId = default;
+            Optional<string> clientId = default;
+            Optional<string> clientSecret = default;
             string workspaceId = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
@@ -63,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureLogAnalyticsParameter(tenantId, clientId, clientSecret, workspaceId, query);
+            return new AzureLogAnalyticsParameter(tenantId.Value, clientId.Value, clientSecret.Value, workspaceId, query);
         }
     }
 }

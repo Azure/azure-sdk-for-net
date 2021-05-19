@@ -2457,7 +2457,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Update hook request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<WebNotificationHook>> UpdateHookAsync(Guid hookId, HookInfoPatch body, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHook>> UpdateHookAsync(Guid hookId, HookInfoPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -2470,9 +2470,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 case 200:
                     {
-                        WebNotificationHook value = default;
+                        NotificationHook value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WebNotificationHook.DeserializeWebNotificationHook(document.RootElement);
+                        value = NotificationHook.DeserializeNotificationHook(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2485,7 +2485,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Update hook request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<WebNotificationHook> UpdateHook(Guid hookId, HookInfoPatch body, CancellationToken cancellationToken = default)
+        public Response<NotificationHook> UpdateHook(Guid hookId, HookInfoPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -2498,9 +2498,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 case 200:
                     {
-                        WebNotificationHook value = default;
+                        NotificationHook value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WebNotificationHook.DeserializeWebNotificationHook(document.RootElement);
+                        value = NotificationHook.DeserializeNotificationHook(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

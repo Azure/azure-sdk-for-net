@@ -11,10 +11,19 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AzureTableParameter
     {
         /// <summary> Initializes a new instance of AzureTableParameter. </summary>
+        /// <param name="table"> A table name in this Azure Table. </param>
+        /// <param name="query"> The statement to query this table. Please find syntax and details from Azure Table documents. </param>
+        public AzureTableParameter(string table, string query)
+        {
+            Table = table;
+            Query = query;
+        }
+
+        /// <summary> Initializes a new instance of AzureTableParameter. </summary>
         /// <param name="connectionString"> The connection string of this Azure Table. </param>
         /// <param name="table"> A table name in this Azure Table. </param>
         /// <param name="query"> The statement to query this table. Please find syntax and details from Azure Table documents. </param>
-        public AzureTableParameter(string connectionString, string table, string query)
+        internal AzureTableParameter(string connectionString, string table, string query)
         {
             ConnectionString = connectionString;
             Table = table;

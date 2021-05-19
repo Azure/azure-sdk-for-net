@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class SQLSourceParameterPatch : IUtf8JsonSerializable
+    internal partial class EmailHookParameterPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionString))
+            if (Optional.IsCollectionDefined(ToList))
             {
-                writer.WritePropertyName("connectionString");
-                writer.WriteStringValue(ConnectionString);
-            }
-            if (Optional.IsDefined(Query))
-            {
-                writer.WritePropertyName("query");
-                writer.WriteStringValue(Query);
+                writer.WritePropertyName("toList");
+                writer.WriteStartArray();
+                foreach (var item in ToList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

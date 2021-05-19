@@ -30,9 +30,9 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> API address, will be called when alert is triggered, only support POST method via SSL. </summary>
         public string Endpoint { get; }
-        /// <summary> The password, if using basic authentication. </summary>
+        /// <summary> (Deprecated) The username, if using basic authentication. </summary>
         public string Username { get; set; }
-        /// <summary> The password, if using basic authentication. </summary>
+        /// <summary> (Deprecated) The password, if using basic authentication. </summary>
         public string Password { get; set; }
         /// <summary> custom headers in api call. </summary>
         public IDictionary<string, string> Headers { get; }

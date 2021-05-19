@@ -13,20 +13,23 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AzureEventHubsParameter
     {
         /// <summary> Initializes a new instance of AzureEventHubsParameter. </summary>
-        /// <param name="connectionString"> The connection string of this Azure Event Hubs. </param>
         /// <param name="consumerGroup"> The consumer group to be used in this data feed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="consumerGroup"/> is null. </exception>
-        public AzureEventHubsParameter(string connectionString, string consumerGroup)
+        /// <exception cref="ArgumentNullException"> <paramref name="consumerGroup"/> is null. </exception>
+        public AzureEventHubsParameter(string consumerGroup)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
             if (consumerGroup == null)
             {
                 throw new ArgumentNullException(nameof(consumerGroup));
             }
 
+            ConsumerGroup = consumerGroup;
+        }
+
+        /// <summary> Initializes a new instance of AzureEventHubsParameter. </summary>
+        /// <param name="connectionString"> The connection string of this Azure Event Hubs. </param>
+        /// <param name="consumerGroup"> The consumer group to be used in this data feed. </param>
+        internal AzureEventHubsParameter(string connectionString, string consumerGroup)
+        {
             ConnectionString = connectionString;
             ConsumerGroup = consumerGroup;
         }
