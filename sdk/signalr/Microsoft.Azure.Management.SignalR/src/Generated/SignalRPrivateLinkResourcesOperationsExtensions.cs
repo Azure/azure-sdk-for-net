@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Management.SignalR
     public static partial class SignalRPrivateLinkResourcesOperationsExtensions
     {
             /// <summary>
-            /// Get the private link resources that need to be created for a resource.
+            /// Get the private link resources that need to be created for a SignalR
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -32,7 +33,7 @@ namespace Microsoft.Azure.Management.SignalR
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='resourceName'>
-            /// The name of the resource.
+            /// The name of the SignalR resource.
             /// </param>
             public static IPage<PrivateLinkResource> List(this ISignalRPrivateLinkResourcesOperations operations, string resourceGroupName, string resourceName)
             {
@@ -40,7 +41,8 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// Get the private link resources that need to be created for a resource.
+            /// Get the private link resources that need to be created for a SignalR
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,7 +52,7 @@ namespace Microsoft.Azure.Management.SignalR
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='resourceName'>
-            /// The name of the resource.
+            /// The name of the SignalR resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -64,7 +66,8 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// Get the private link resources that need to be created for a resource.
+            /// Get the private link resources that need to be created for a SignalR
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -78,7 +81,8 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// Get the private link resources that need to be created for a resource.
+            /// Get the private link resources that need to be created for a SignalR
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

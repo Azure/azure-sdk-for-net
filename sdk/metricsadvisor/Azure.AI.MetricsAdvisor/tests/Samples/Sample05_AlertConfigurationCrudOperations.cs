@@ -23,16 +23,14 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
-            #region Snippet:CreateAlertConfigurationAsync
-#if SNIPPET
-            string hookId = "<hookId>";
-            string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
-            string configurationName = "<configurationName>";
-#else
             string hookId = HookId;
             string anomalyDetectionConfigurationId = DetectionConfigurationId;
-            string configurationName = GetUniqueName();
-#endif
+
+            #region Snippet:CreateAlertConfigurationAsync
+            //@@ string hookId = "<hookId>";
+            //@@ string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
+
+            string configurationName = "Sample anomaly alert configuration";
 
             AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
             {

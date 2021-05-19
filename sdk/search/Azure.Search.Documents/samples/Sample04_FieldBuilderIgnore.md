@@ -68,7 +68,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
 string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Define client options to use camelCase when serializing property names.
-SearchClientOptions options = new SearchClientOptions(ServiceVersion)
+SearchClientOptions options = new SearchClientOptions
 {
     Serializer = new JsonObjectSerializer(
         new JsonSerializerOptions

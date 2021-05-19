@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
+#else
 using Azure.Search.Documents.Models;
 using Microsoft.Spatial;
+#endif
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -158,18 +161,20 @@ namespace Azure.Search.Documents.Tests
         /// <param name="latitude">The latitude.</param>
         /// <param name="longitude">The longitude.</param>
         /// <returns></returns>
-        public static GeoPoint CreateGeoPoint(double longitude, double latitude) =>
+#if EXPERIMENTAL_SPATIAL
+        public static GeoPoint CreatePoint(double longitude, double latitude) =>
             new GeoPoint(new GeoPosition(longitude, latitude));
 
-        public static GeoPoint CreateDynamicGeoPoint(double longitude, double latitude) =>
-            CreateGeoPoint(longitude, latitude);
-
+        public static GeoPoint CreateDynamicPoint(double longitude, double latitude) =>
+            CreatePoint(longitude, latitude);
+#else
         public static GeographyPoint CreatePoint(double longitude, double latitude) =>
             // Note: GeographyPoint takes latitude first, unlike GeoPoint
             GeographyPoint.Create(latitude, longitude);
 
         public static SearchDocument CreateDynamicPoint(double longitude, double latitude) =>
             CreatePoint(longitude, latitude).AsDocument();
+#endif
 
         /// <summary>
         /// Converts the <see cref="GeographyPoint"/> to a <see cref="SearchDocument"/>.

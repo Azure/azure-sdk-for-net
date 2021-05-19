@@ -27,7 +27,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private const string DrainingQueueMessageBody = "queue-message-draining-no-sessions-1";
         private const string DrainingTopicMessageBody = "topic-message-draining-no-sessions-1";
 
+        private static EventWaitHandle _topicSubscriptionCalled1;
+        private static EventWaitHandle _topicSubscriptionCalled2;
         private static EventWaitHandle _eventWait;
+        private static EventWaitHandle _drainValidationPreDelay;
+        private static EventWaitHandle _drainValidationPostDelay;
 
         // These two variables will be checked at the end of the test
         private static string _resultMessage1;
@@ -49,16 +53,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task ServiceBusEndToEndTokenCredential()
-        {
-            var (jobHost, host) = BuildHost<ServiceBusTestJobs>(startHost: false, useTokenCredential: true);
-            using (jobHost)
-            {
-                await ServiceBusEndToEndInternal<ServiceBusTestJobs>(host);
-            }
-        }
-
-        [Test]
         public async Task ServiceBusBinderTest()
         {
             var (jobHost, host) = BuildHost<BinderTestJobs>();
@@ -73,7 +67,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var count = await CleanUpEntity(_firstQueueScope.QueueName);
 
                 Assert.AreEqual(numMessages * 3, count);
-                await jobHost.StopAsync();
             }
         }
 
@@ -123,7 +116,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 IEnumerable<LogMessage> messages = loggerProvider.GetAllLogMessages().Where(m => m.Category == CustomMessagingProvider.CustomMessagingCategory);
                 Assert.AreEqual(4, messages.Count(p => p.FormattedMessage.Contains("Custom processor Begin called!")));
                 Assert.AreEqual(4, messages.Count(p => p.FormattedMessage.Contains("Custom processor End called!")));
-                await jobHost.StopAsync();
             }
         }
 
@@ -142,12 +134,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     connectionString: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespaceConnectionString,
                     queueName: _secondaryNamespaceQueueScope.QueueName);
 
+                _topicSubscriptionCalled1 = new ManualResetEvent(initialState: false);
+                _topicSubscriptionCalled2 = new ManualResetEvent(initialState: false);
+
                 _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
                 _topicSubscriptionCalled2.WaitOne(SBTimeoutMills);
 
                 // ensure all logs have had a chance to flush
                 await Task.Delay(3000);
-                await jobHost.StopAsync();
             }
 
             Assert.AreEqual("Test-topic-1", _resultMessage1);
@@ -191,7 +185,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("PocoValues(foo,bar)", logs);
-                await jobHost.StopAsync();
             }
         }
 
@@ -209,7 +202,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("Input(foobar)", logs);
-                await jobHost.StopAsync();
             }
         }
 
@@ -237,12 +229,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await TestMultipleDrainMode<DrainModeTestJobTopicBatch>(false);
         }
 
-        [Test]
-        public async Task MultipleFunctionsBindingToSameEntity()
-        {
-            await TestMultiple<ServiceBusSingleMessageTestJob_BindMultipleFunctionsToSameEntity>();
-        }
-
         /*
          * Helper functions
          */
@@ -253,6 +239,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             using (jobHost)
             {
+                _drainValidationPreDelay = new ManualResetEvent(initialState: false);
+                _drainValidationPostDelay = new ManualResetEvent(initialState: false);
+
                 if (sendToQueue)
                 {
                     await WriteQueueMessage(DrainingQueueMessageBody);
@@ -271,7 +260,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
-                await jobHost.StopAsync();
             }
         }
 
@@ -290,7 +278,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private async Task TestMultiple<T>(bool isXml = false)
         {
-            var (jobHost, host) = BuildHost<T>();
+            var (jobHost, _) = BuildHost<T>();
             using (jobHost)
             {
                 if (isXml)
@@ -304,9 +292,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}");
                 }
 
+                _topicSubscriptionCalled1 = new ManualResetEvent(initialState: false);
+
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
         }
 
@@ -315,6 +304,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var (jobHost, host) = BuildHost<T>(BuildDrainHost<T>());
             using (jobHost)
             {
+                _drainValidationPreDelay = new ManualResetEvent(initialState: false);
+                _drainValidationPostDelay = new ManualResetEvent(initialState: false);
+
                 if (sendToQueue)
                 {
                     await WriteQueueMessage(DrainingQueueMessageBody);
@@ -333,7 +325,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
-                await jobHost.StopAsync();
             }
         }
 
@@ -342,6 +333,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var jobContainerType = typeof(T);
 
             await WriteQueueMessage("E2E");
+
+            _topicSubscriptionCalled1 = new ManualResetEvent(initialState: false);
+            _topicSubscriptionCalled2 = new ManualResetEvent(initialState: false);
 
             await host.StartAsync();
 
@@ -357,15 +351,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-1", _resultMessage1);
             Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-2", _resultMessage2);
 
-            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
-            Assert.False(logMessages.Any(p => p.Level == LogLevel.Error));
+            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
+                .GetAllLogMessages();
 
-            // Filter out Azure SDK and custom processor logs for easier validation.
-            logMessages = logMessages.Where(
-                m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture) &&
-                     m.Category != CustomMessagingProvider.CustomMessagingCategory);
+            // filter out anything from the custom processor for easier validation.
+            IEnumerable<LogMessage> consoleOutput = logMessages
+                .Where(m => m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
-            string[] consoleOutputLines = logMessages
+            Assert.False(consoleOutput.Where(p => p.Level == LogLevel.Error).Any());
+
+            string[] consoleOutputLines = consoleOutput
                 .Where(p => p.FormattedMessage != null)
                 .SelectMany(p => p.FormattedMessage.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
                 .OrderBy(p => p)
@@ -425,7 +420,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"MaxConcurrentSessions\": 8,",
                 "  \"MaxMessages\": 1000,",
                 "  \"SessionIdleTimeout\": \"\"",
-                "  \"ClientRetryOptions\": {",
+                "  \"RetryOptions\": {",
                 "       \"Mode\": \"Exponential\",",
                 "       \"TryTimeout\": \"00:00:10\",",
                 "       \"Delay\": \"00:00:00.8000000\",",
@@ -582,8 +577,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class ServiceBusMultipleTestJobsBase
         {
-            protected static volatile bool firstReceived = false;
-            protected static volatile bool secondReceived = false;
+            protected static bool firstReceived = false;
+            protected static bool secondReceived = false;
 
             public static void ProcessMessages(string[] messages)
             {
@@ -598,9 +593,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 if (firstReceived && secondReceived)
                 {
-                    // reset for the next test
-                    firstReceived = false;
-                    secondReceived = false;
                     _topicSubscriptionCalled1.Set();
                 }
             }
@@ -748,21 +740,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class ServiceBusSingleMessageTestJob_BindMultipleFunctionsToSameEntity
-        {
-            public static void SBQueueFunction(
-                [ServiceBusTrigger(FirstQueueNameKey)] string message)
-            {
-                ServiceBusMultipleTestJobsBase.ProcessMessages(new string[] { message });
-            }
-
-            public static void SBQueueFunction2(
-                [ServiceBusTrigger(FirstQueueNameKey)] string message)
-            {
-                ServiceBusMultipleTestJobsBase.ProcessMessages(new string[] { message });
-            }
-        }
-
         public class DrainModeHelper
         {
             public static async Task WaitForCancellation(CancellationToken cancellationToken)
@@ -784,16 +761,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             private readonly ILogger _logger;
             private readonly ServiceBusOptions _options;
 
-            public CustomMessagingProvider(
-                IOptions<ServiceBusOptions> serviceBusOptions,
-                ILoggerFactory loggerFactory)
+            public CustomMessagingProvider(IOptions<ServiceBusOptions> serviceBusOptions, ILoggerFactory loggerFactory)
                 : base(serviceBusOptions)
             {
                 _options = serviceBusOptions.Value;
                 _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);
             }
 
-            public override MessageProcessor CreateMessageProcessor(ServiceBusClient client, string entityPath)
+            public override MessageProcessor CreateMessageProcessor(string entityPath, string connectionString)
             {
                 var options = new ServiceBusProcessorOptions()
                 {
@@ -801,8 +776,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin)
                 };
 
+                var client = base.CreateClient(connectionString);
                 var processor = client.CreateProcessor(entityPath, options);
-                var receiver = client.CreateReceiver(entityPath);
                 // TODO decide whether it makes sense to still default error handler when there is a custom provider
                 // currently user needs to set it.
                 processor.ProcessErrorAsync += args => Task.CompletedTask;
@@ -833,12 +808,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
     }
-}
 
 #pragma warning disable SA1402 // File may only contain a single type
-public class TestPoco
+    public class TestPoco
 #pragma warning restore SA1402 // File may only contain a single type
-{
-    public string Name { get; set; }
-    public string Value { get; set; }
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
 }

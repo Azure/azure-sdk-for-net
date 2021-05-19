@@ -21,12 +21,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:FormRecognizerSampleRecognizeBusinessCardsFromUri
-#if SNIPPET
-            Uri businessCardUri = <businessCardUri>;
-#else
             Uri businessCardUri = FormRecognizerTestEnvironment.CreateUri("businessCard.jpg");
-#endif
+
+            #region Snippet:FormRecognizerSampleRecognizeBusinessCardsFromUri
+            //@@ Uri businessCardUri = <businessCardUri>;
 
             RecognizeBusinessCardsOperation operation = await client.StartRecognizeBusinessCardsFromUriAsync(businessCardUri);
             Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();

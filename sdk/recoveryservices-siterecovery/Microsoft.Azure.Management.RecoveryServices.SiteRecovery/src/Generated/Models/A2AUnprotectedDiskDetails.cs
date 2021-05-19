@@ -31,13 +31,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="diskLunId">The source lun Id for the data
         /// disk.</param>
-        /// <param name="diskAutoProtectionStatus">A value indicating whether
-        /// the disk auto protection is enabled. Possible values include:
-        /// 'Disabled', 'Enabled'</param>
-        public A2AUnprotectedDiskDetails(int? diskLunId = default(int?), string diskAutoProtectionStatus = default(string))
+        public A2AUnprotectedDiskDetails(int? diskLunId = default(int?))
         {
             DiskLunId = diskLunId;
-            DiskAutoProtectionStatus = diskAutoProtectionStatus;
             CustomInit();
         }
 
@@ -51,13 +47,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskLunId")]
         public int? DiskLunId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the disk auto protection is
-        /// enabled. Possible values include: 'Disabled', 'Enabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "diskAutoProtectionStatus")]
-        public string DiskAutoProtectionStatus { get; set; }
 
     }
 }

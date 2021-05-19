@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(HdfsLinkedServiceConverter))]
     public partial class HdfsLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -212,19 +209,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HdfsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, authenticationType.Value, encryptedCredential.Value, userName.Value, password.Value);
-        }
-
-        internal partial class HdfsLinkedServiceConverter : JsonConverter<HdfsLinkedService>
-        {
-            public override void Write(Utf8JsonWriter writer, HdfsLinkedService model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override HdfsLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeHdfsLinkedService(document.RootElement);
-            }
         }
     }
 }

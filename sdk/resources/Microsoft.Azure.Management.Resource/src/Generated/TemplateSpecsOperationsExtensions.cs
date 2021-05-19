@@ -125,13 +125,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='templateSpecName'>
             /// Name of the Template Spec.
             /// </param>
-            /// <param name='expand'>
-            /// Allows for expansion of additional Template Spec details in the response.
-            /// Optional. Possible values include: 'versions'
-            /// </param>
-            public static TemplateSpec Get(this ITemplateSpecsOperations operations, string resourceGroupName, string templateSpecName, string expand = default(string))
+            public static TemplateSpec Get(this ITemplateSpecsOperations operations, string resourceGroupName, string templateSpecName)
             {
-                return operations.GetAsync(resourceGroupName, templateSpecName, expand).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, templateSpecName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -146,16 +142,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='templateSpecName'>
             /// Name of the Template Spec.
             /// </param>
-            /// <param name='expand'>
-            /// Allows for expansion of additional Template Spec details in the response.
-            /// Optional. Possible values include: 'versions'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TemplateSpec> GetAsync(this ITemplateSpecsOperations operations, string resourceGroupName, string templateSpecName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TemplateSpec> GetAsync(this ITemplateSpecsOperations operations, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, templateSpecName, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, templateSpecName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -206,13 +198,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='expand'>
-            /// Allows for expansion of additional Template Spec details in the response.
-            /// Optional. Possible values include: 'versions'
-            /// </param>
-            public static IPage<TemplateSpec> ListBySubscription(this ITemplateSpecsOperations operations, string expand = default(string))
+            public static IPage<TemplateSpec> ListBySubscription(this ITemplateSpecsOperations operations)
             {
-                return operations.ListBySubscriptionAsync(expand).GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,16 +209,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='expand'>
-            /// Allows for expansion of additional Template Spec details in the response.
-            /// Optional. Possible values include: 'versions'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TemplateSpec>> ListBySubscriptionAsync(this ITemplateSpecsOperations operations, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TemplateSpec>> ListBySubscriptionAsync(this ITemplateSpecsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -245,13 +229,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='expand'>
-            /// Allows for expansion of additional Template Spec details in the response.
-            /// Optional. Possible values include: 'versions'
-            /// </param>
-            public static IPage<TemplateSpec> ListByResourceGroup(this ITemplateSpecsOperations operations, string resourceGroupName, string expand = default(string))
+            public static IPage<TemplateSpec> ListByResourceGroup(this ITemplateSpecsOperations operations, string resourceGroupName)
             {
-                return operations.ListByResourceGroupAsync(resourceGroupName, expand).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -263,16 +243,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='expand'>
-            /// Allows for expansion of additional Template Spec details in the response.
-            /// Optional. Possible values include: 'versions'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TemplateSpec>> ListByResourceGroupAsync(this ITemplateSpecsOperations operations, string resourceGroupName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TemplateSpec>> ListByResourceGroupAsync(this ITemplateSpecsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

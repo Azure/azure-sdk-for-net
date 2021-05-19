@@ -258,26 +258,16 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
         /// </param>
-        /// <param name='ifMatch'>
-        /// The ETag of the cluster. Omit this value to always overwrite the current
-        /// cluster. Specify the last-seen ETag value to prevent accidentally
-        /// overwriting concurrent changes.
-        /// </param>
-        /// <param name='ifNoneMatch'>
-        /// Set to '*' to allow a new cluster to be created, but to prevent updating an
-        /// existing cluster. Other values will result in a 412 Pre-condition Failed
-        /// response.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Cluster>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, string ifMatch = default(string), string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Cluster> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, ifMatch, ifNoneMatch, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Cluster> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -293,21 +283,16 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The Kusto cluster parameters supplied to the Update operation.
         /// </param>
-        /// <param name='ifMatch'>
-        /// The ETag of the cluster. Omit this value to always overwrite the current
-        /// cluster. Specify the last-seen ETag value to prevent accidentally
-        /// overwriting concurrent changes.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdate parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Cluster> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, ifMatch, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Cluster> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1169,7 +1154,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// Checks that the cluster name is valid and is not already in use.
         /// </summary>
         /// <param name='location'>
-        /// Azure location (region) name.
+        /// Azure location.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the cluster.
@@ -1824,16 +1809,6 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
         /// </param>
-        /// <param name='ifMatch'>
-        /// The ETag of the cluster. Omit this value to always overwrite the current
-        /// cluster. Specify the last-seen ETag value to prevent accidentally
-        /// overwriting concurrent changes.
-        /// </param>
-        /// <param name='ifNoneMatch'>
-        /// Set to '*' to allow a new cluster to be created, but to prevent updating an
-        /// existing cluster. Other values will result in a 412 Pre-condition Failed
-        /// response.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1855,7 +1830,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, string ifMatch = default(string), string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1891,8 +1866,6 @@ namespace Microsoft.Azure.Management.Kusto
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("ifMatch", ifMatch);
-                tracingParameters.Add("ifNoneMatch", ifNoneMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
@@ -1920,22 +1893,6 @@ namespace Microsoft.Azure.Management.Kusto
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (ifMatch != null)
-            {
-                if (_httpRequest.Headers.Contains("If-Match"))
-                {
-                    _httpRequest.Headers.Remove("If-Match");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
-            }
-            if (ifNoneMatch != null)
-            {
-                if (_httpRequest.Headers.Contains("If-None-Match"))
-                {
-                    _httpRequest.Headers.Remove("If-None-Match");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("If-None-Match", ifNoneMatch);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -2084,11 +2041,6 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The Kusto cluster parameters supplied to the Update operation.
         /// </param>
-        /// <param name='ifMatch'>
-        /// The ETag of the cluster. Omit this value to always overwrite the current
-        /// cluster. Specify the last-seen ETag value to prevent accidentally
-        /// overwriting concurrent changes.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2110,7 +2062,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdate parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2142,7 +2094,6 @@ namespace Microsoft.Azure.Management.Kusto
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
@@ -2170,14 +2121,6 @@ namespace Microsoft.Azure.Management.Kusto
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (ifMatch != null)
-            {
-                if (_httpRequest.Headers.Contains("If-Match"))
-                {
-                    _httpRequest.Headers.Remove("If-Match");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
             }
             if (Client.AcceptLanguage != null)
             {

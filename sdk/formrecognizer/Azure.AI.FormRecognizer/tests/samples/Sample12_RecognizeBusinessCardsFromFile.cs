@@ -22,12 +22,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
-#if SNIPPET
-            string businessCardsPath = "<businessCardsPath>";
-#else
             string businessCardsPath = FormRecognizerTestEnvironment.CreatePath("businessCard.jpg");
-#endif
+
+            #region Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
+            //@@ string businessCardsPath = "<businessCardsPath>";
 
             using var stream = new FileStream(businessCardsPath, FileMode.Open);
             var options = new RecognizeBusinessCardsOptions() { Locale = "en-US" };

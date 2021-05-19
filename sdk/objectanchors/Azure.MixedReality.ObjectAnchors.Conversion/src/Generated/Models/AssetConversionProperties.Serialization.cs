@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -44,7 +43,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         {
             Optional<string> clientErrorDetails = default;
             Optional<string> serverErrorDetails = default;
-            Optional<ConversionErrorCode> errorCode = default;
             Optional<Guid> jobId = default;
             Optional<string> outputModelUri = default;
             Optional<AssetConversionStatus> jobStatus = default;
@@ -62,16 +60,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (property.NameEquals("serverErrorDetails"))
                 {
                     serverErrorDetails = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("errorCode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    errorCode = new ConversionErrorCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobId"))
@@ -130,7 +118,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value);
+            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value);
         }
     }
 }

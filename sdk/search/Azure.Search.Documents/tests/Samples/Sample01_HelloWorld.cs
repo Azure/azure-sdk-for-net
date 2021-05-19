@@ -39,9 +39,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create a new SearchIndexClient
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
-#if !SNIPPET
-            indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
-#endif
+            /*@@*/ indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
 
             // Perform an operation
             Response<SearchServiceStatistics> stats = indexClient.GetServiceStatistics();
@@ -67,9 +65,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Create a new SearchIndexClient
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
-#if !SNIPPET
-            indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
-#endif
+            /*@@*/ indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
 
             // Perform an operation
             Response<SearchServiceStatistics> stats = await indexClient.GetServiceStatisticsAsync();
@@ -95,9 +91,7 @@ namespace Azure.Search.Documents.Tests.Samples
             // Create an invalid SearchClient
             string fakeIndexName = "doesnotexist";
             SearchClient searchClient = new SearchClient(endpoint, fakeIndexName, credential);
-#if !SNIPPET
-            searchClient = InstrumentClient(new SearchClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
-#endif
+            /*@@*/ searchClient = InstrumentClient(new SearchClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
             try
             {
                 searchClient.GetDocumentCount();
@@ -125,9 +119,7 @@ namespace Azure.Search.Documents.Tests.Samples
             // Create an invalid SearchClient
             string fakeIndexName = "doesnotexist";
             SearchClient searchClient = new SearchClient(endpoint, fakeIndexName, credential);
-#if !SNIPPET
-            searchClient = InstrumentClient(new SearchClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
-#endif
+            /*@@*/ searchClient = InstrumentClient(new SearchClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
             try
             {
                 await searchClient.GetDocumentCountAsync();
@@ -152,9 +144,7 @@ namespace Azure.Search.Documents.Tests.Samples
             AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
-#if !SNIPPET
-            indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
-#endif
+            /*@@*/ indexClient = InstrumentClient(new SearchIndexClient(endpoint, credential, GetSearchClientOptions()));
 
             // Get and report the Search Service statistics
             Response<SearchServiceStatistics> stats = await indexClient.GetServiceStatisticsAsync();
@@ -183,31 +173,22 @@ namespace Azure.Search.Documents.Tests.Samples
                 AzureKeyCredential credential = new AzureKeyCredential(
                     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
-#if !SNIPPET
-                indexClient = resources.GetIndexClient(new SearchClientOptions(ServiceVersion));
-#endif
+                /*@@*/ indexClient = resources.GetIndexClient();
 
                 // Create a synonym map from a file containing country names and abbreviations
                 // using the Solr format with entry on a new line using \n, for example:
                 // United States of America,US,USA\n
                 string synonymMapName = "countries";
-#if !SNIPPET
-                synonymMapName = Recording.Random.GetName();
-#endif
+                /*@@*/ synonymMapName = Recording.Random.GetName();
                 string synonymMapPath = "countries.txt";
-#if !SNIPPET
-                synonymMapPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Samples", "countries.txt");
-#endif
+                /*@@*/ synonymMapPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Samples", "countries.txt");
 
                 SynonymMap synonyms;
-#if SNIPPET
-                using (StreamReader file = File.OpenText(synonymMapPath))
-                {
-                    synonyms = new SynonymMap(synonymMapName, file);
-                }
-#else
-                synonyms = new SynonymMap(synonymMapName, CountriesSolrSynonymMap);
-#endif
+                //@@using (StreamReader file = File.OpenText(synonymMapPath))
+                //@@{
+                //@@    synonyms = new SynonymMap(synonymMapName, file);
+                //@@}
+                /*@@*/ synonyms = new SynonymMap(synonymMapName, CountriesSolrSynonymMap);
 
                 await indexClient.CreateSynonymMapAsync(synonyms);
                 #endregion Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateSynonymMap
@@ -219,9 +200,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateIndex
                 // Create the index
                 string indexName = "hotels";
-#if !SNIPPET
-                indexName = Recording.Random.GetName();
-#endif
+                /*@@*/ indexName = Recording.Random.GetName();
                 SearchIndex index = new SearchIndex(indexName)
                 {
                     Fields =
@@ -255,14 +234,10 @@ namespace Azure.Search.Documents.Tests.Samples
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateDataSourceConnection
                 // Create a new SearchIndexerClient
                 SearchIndexerClient indexerClient = new SearchIndexerClient(endpoint, credential);
-#if !SNIPPET
-                indexerClient = resources.GetIndexerClient();
-#endif
+                /*@@*/ indexerClient = resources.GetIndexerClient();
 
                 string dataSourceConnectionName = "hotels";
-#if !SNIPPET
-                dataSourceConnectionName = Recording.Random.GetName();
-#endif
+                /*@@*/ dataSourceConnectionName = Recording.Random.GetName();
                 SearchIndexerDataSourceConnection dataSourceConnection = new SearchIndexerDataSourceConnection(
                     dataSourceConnectionName,
                     SearchIndexerDataSourceType.AzureBlob,
@@ -315,18 +290,13 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Create a SearchIndexerSkillset that processes those skills in the order given below.
                 string skillsetName = "translations";
-#if !SNIPPET
-                skillsetName = Recording.Random.GetName();
-#endif
+                /*@@*/ skillsetName = Recording.Random.GetName();
                 SearchIndexerSkillset skillset = new SearchIndexerSkillset(
                     skillsetName,
                     new SearchIndexerSkill[] { translationSkill, conditionalSkill })
                 {
                     CognitiveServicesAccount =  new CognitiveServicesAccountKey(
-                        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
-                    KnowledgeStore = new SearchIndexerKnowledgeStore(
-                        Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
-                        new List<SearchIndexerKnowledgeStoreProjection>()),
+                        Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY"))
                 };
 
                 await indexerClient.CreateSkillsetAsync(skillset);
@@ -338,9 +308,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_CreateIndexer
                 string indexerName = "hotels";
-#if !SNIPPET
-                indexerName = Recording.Random.GetName();
-#endif
+                /*@@*/ indexerName = Recording.Random.GetName();
                 SearchIndexer indexer = new SearchIndexer(
                     indexerName,
                     dataSourceConnectionName,
@@ -384,21 +352,15 @@ namespace Azure.Search.Documents.Tests.Samples
                 #region Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Query
                 // Get a SearchClient from the SearchIndexClient to share its pipeline.
                 SearchClient searchClient = indexClient.GetSearchClient(indexName);
-#if !SNIPPET
-                searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
-#endif
+                /*@@*/ searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
 
                 // Query for hotels with an ocean view.
                 SearchResults<Hotel> results = await searchClient.SearchAsync<Hotel>("ocean view");
-#if !SNIPPET
-                bool found = false;
-#endif
+                /*@@*/ bool found = false;
                 await foreach (SearchResult<Hotel> result in results.GetResultsAsync())
                 {
                     Hotel hotel = result.Document;
-#if !SNIPPET
-                    if (hotel.HotelId == "6") { Assert.IsNotNull(hotel.DescriptionFr); found = true; }
-#endif
+                    /*@@*/ if (hotel.HotelId == "6") { Assert.IsNotNull(hotel.DescriptionFr); found = true; }
 
                     Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");
                     Console.WriteLine($"  Description (English): {hotel.Description}");
@@ -433,9 +395,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
             string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
             SearchClient searchClient = new SearchClient(endpoint, indexName, credential);
-#if !SNIPPET
-            searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
-#endif
+            /*@@*/ searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
 
             // Get and report the number of documents in the index
             Response<long> count = await searchClient.GetDocumentCountAsync();

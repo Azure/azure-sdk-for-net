@@ -6,8 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-03006ea142f68743aecf2a0c33f37faa-b5dbb9a308c3e34e-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "c816e09d1dcd01e80f7392b686213868",
         "x-ms-return-client-request-id": "true"
@@ -15,14 +14,14 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f6de55a2-a95e-4072-8e1a-16b29e522fa6",
-        "Content-Length": "6744",
+        "apim-request-id": "006aeec7-b348-4462-b706-597775670c57",
+        "Content-Length": "5816",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:59:16 GMT",
+        "Date": "Tue, 15 Dec 2020 01:34:33 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "406",
-        "x-request-id": "f6de55a2-a95e-4072-8e1a-16b29e522fa6"
+        "x-envoy-upstream-service-time": "359",
+        "x-request-id": "006aeec7-b348-4462-b706-597775670c57"
       },
       "ResponseBody": {
         "value": [
@@ -39,9 +38,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 3.4,
-              "expectedValueOfRootNode": 1.8564662412054167
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -58,9 +55,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
+              "incidentStatus": "Active"
             }
           },
           {
@@ -77,9 +72,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.4,
-              "expectedValueOfRootNode": 0.23381129349099047
+              "incidentStatus": "Active"
             }
           },
           {
@@ -96,9 +89,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.6,
-              "expectedValueOfRootNode": 0.13304319424495817
+              "incidentStatus": "Active"
             }
           },
           {
@@ -115,9 +106,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
+              "incidentStatus": "Active"
             }
           },
           {
@@ -134,9 +123,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.6,
-              "expectedValueOfRootNode": 0.0
+              "incidentStatus": "Active"
             }
           },
           {
@@ -152,9 +139,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.0,
-              "expectedValueOfRootNode": 5.89638307091832
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -171,9 +156,7 @@
             },
             "property": {
               "maxSeverity": "High",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 79092033.4,
-              "expectedValueOfRootNode": 83904129.166464686
+              "incidentStatus": "Active"
             }
           },
           {
@@ -189,9 +172,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -207,9 +188,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.0,
-              "expectedValueOfRootNode": 0.21970638531468334
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -225,9 +204,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 1.0,
-              "expectedValueOfRootNode": 0.012328166585182702
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -244,9 +221,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
+              "incidentStatus": "Active"
             }
           },
           {
@@ -263,9 +238,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 2.8,
-              "expectedValueOfRootNode": 0.32331066012917681
+              "incidentStatus": "Active"
             }
           },
           {
@@ -281,9 +254,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.0,
-              "expectedValueOfRootNode": 1.7619857385604643
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -300,12 +271,11 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 1.4,
-              "expectedValueOfRootNode": 0.00082077254676293527
+              "incidentStatus": "Active"
             }
           }
-        ]
+        ],
+        "@nextLink": null
       }
     },
     {
@@ -314,8 +284,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-bd28b2a70a8cbe4880ae9d3b27e51108-acffacab0510ce49-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "80a38acd669f32de3263a4ad827ffc5b",
         "x-ms-return-client-request-id": "true"
@@ -323,14 +292,14 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e46df88e-c6de-4c99-b559-a095335577a7",
+        "apim-request-id": "473abdb3-ac40-44fa-b22c-af1b0e82d1a9",
         "Content-Length": "4931",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:59:16 GMT",
+        "Date": "Tue, 15 Dec 2020 01:34:33 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "369",
-        "x-request-id": "e46df88e-c6de-4c99-b559-a095335577a7"
+        "x-envoy-upstream-service-time": "338",
+        "x-request-id": "473abdb3-ac40-44fa-b22c-af1b0e82d1a9"
       },
       "ResponseBody": {
         "value": [

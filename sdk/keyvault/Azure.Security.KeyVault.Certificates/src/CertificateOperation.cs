@@ -13,9 +13,6 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class CertificateOperation : Operation<KeyVaultCertificateWithPolicy>
     {
-        private const string CancelledStatus = "cancelled";
-        private const string CompletedStatus = "completed";
-
         private readonly CertificateClient _client;
 
         private bool _completed;
@@ -47,13 +44,10 @@ namespace Azure.Security.KeyVault.Certificates
             _client = client;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CertificateOperation" /> for mocking. </summary>
-        protected CertificateOperation() {}
-
         /// <summary>
         /// Gets the properties of the pending certificate operation.
         /// </summary>
-        public virtual CertificateOperationProperties Properties { get; private set; }
+        public CertificateOperationProperties Properties { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the operation has reached a terminal state.
@@ -79,7 +73,7 @@ namespace Azure.Security.KeyVault.Certificates
                     throw new InvalidOperationException("The operation was deleted so no value is available.");
                 }
 
-                if (Properties.Status == CancelledStatus)
+                if (Properties.Status == "cancelled")
                 {
                     throw new OperationCanceledException("The operation was canceled so no value is available.");
                 }
@@ -116,8 +110,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The raw response of the poll operation.</returns>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
-            using var _ = new UpdateStatusActivity(this);
-
             if (!_completed)
             {
                 Response<CertificateOperationProperties> pollResponse = _client.GetPendingCertificate(Properties.Name, cancellationToken);
@@ -134,7 +126,7 @@ namespace Azure.Security.KeyVault.Certificates
                 }
             }
 
-            if (Properties.Status == CompletedStatus)
+            if (Properties.Status == "completed")
             {
                 Response<KeyVaultCertificateWithPolicy> getResponse = _client.GetCertificate(Properties.Name, cancellationToken);
 
@@ -144,7 +136,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 _completed = true;
             }
-            else if (Properties.Status == CancelledStatus)
+            else if (Properties.Status == "cancelled")
             {
                 _completed = true;
             }
@@ -166,8 +158,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The raw response of the poll operation.</returns>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var _ = new UpdateStatusActivity(this);
-
             if (!_completed)
             {
                 Response<CertificateOperationProperties> pollResponse = await _client.GetPendingCertificateAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
@@ -184,7 +174,7 @@ namespace Azure.Security.KeyVault.Certificates
                 }
             }
 
-            if (Properties.Status == CompletedStatus)
+            if (Properties.Status == "completed")
             {
                 Response<KeyVaultCertificateWithPolicy> getResponse = await _client.GetCertificateAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
 
@@ -194,7 +184,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 _completed = true;
             }
-            else if (Properties.Status == CancelledStatus)
+            else if (Properties.Status == "cancelled")
             {
                 _completed = true;
             }
@@ -270,25 +260,6 @@ namespace Azure.Security.KeyVault.Certificates
             _response = response.GetRawResponse();
 
             Properties = response;
-        }
-
-        private class UpdateStatusActivity : IDisposable
-        {
-            private readonly CertificateOperation _operation;
-
-            public UpdateStatusActivity(CertificateOperation operation)
-            {
-                _operation = operation;
-
-                EventSource.BeginUpdateStatus(_operation.Properties);
-            }
-
-            public void Dispose()
-            {
-                EventSource.EndUpdateStatus(_operation.Properties);
-            }
-
-            private static CertificatesEventSource EventSource => CertificatesEventSource.Singleton;
         }
     }
 }

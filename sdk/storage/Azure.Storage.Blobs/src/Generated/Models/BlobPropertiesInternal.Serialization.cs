@@ -52,9 +52,6 @@ namespace Azure.Storage.Blobs.Models
             bool? isSealed = default;
             RehydratePriority? rehydratePriority = default;
             DateTimeOffset? lastAccessedOn = default;
-            DateTimeOffset? immutabilityPolicyExpiresOn = default;
-            BlobImmutabilityPolicyMode? immutabilityPolicyMode = default;
-            bool? legalHold = default;
             if (element.Element("Creation-Time") is XElement creationTimeElement)
             {
                 creationTime = creationTimeElement.GetDateTimeOffsetValue("R");
@@ -203,19 +200,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 lastAccessedOn = lastAccessTimeElement.GetDateTimeOffsetValue("R");
             }
-            if (element.Element("ImmutabilityPolicyUntilDate") is XElement immutabilityPolicyUntilDateElement)
-            {
-                immutabilityPolicyExpiresOn = immutabilityPolicyUntilDateElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("ImmutabilityPolicyMode") is XElement immutabilityPolicyModeElement)
-            {
-                immutabilityPolicyMode = immutabilityPolicyModeElement.Value.ToBlobImmutabilityPolicyMode();
-            }
-            if (element.Element("LegalHold") is XElement legalHoldElement)
-            {
-                legalHold = (bool?)legalHoldElement;
-            }
-            return new BlobPropertiesInternal(creationTime, lastModified, etag, contentLength, contentType, contentEncoding, contentLanguage, contentMD5, contentDisposition, cacheControl, blobSequenceNumber, blobType, leaseStatus, leaseState, leaseDuration, copyId, copyStatus, copySource, copyProgress, copyCompletionTime, copyStatusDescription, serverEncrypted, incrementalCopy, destinationSnapshot, deletedTime, remainingRetentionDays, accessTier, accessTierInferred, archiveStatus, customerProvidedKeySha256, encryptionScope, accessTierChangeTime, tagCount, expiresOn, isSealed, rehydratePriority, lastAccessedOn, immutabilityPolicyExpiresOn, immutabilityPolicyMode, legalHold);
+            return new BlobPropertiesInternal(creationTime, lastModified, etag, contentLength, contentType, contentEncoding, contentLanguage, contentMD5, contentDisposition, cacheControl, blobSequenceNumber, blobType, leaseStatus, leaseState, leaseDuration, copyId, copyStatus, copySource, copyProgress, copyCompletionTime, copyStatusDescription, serverEncrypted, incrementalCopy, destinationSnapshot, deletedTime, remainingRetentionDays, accessTier, accessTierInferred, archiveStatus, customerProvidedKeySha256, encryptionScope, accessTierChangeTime, tagCount, expiresOn, isSealed, rehydratePriority, lastAccessedOn);
         }
     }
 }

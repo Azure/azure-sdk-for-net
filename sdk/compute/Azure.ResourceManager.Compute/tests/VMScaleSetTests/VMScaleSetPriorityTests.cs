@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 },
                 createWithManagedDisks: hasManagedDisks,
                 zones: zones);
-            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Response;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
             ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks);
 
             var getInstanceViewResponse = await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName);

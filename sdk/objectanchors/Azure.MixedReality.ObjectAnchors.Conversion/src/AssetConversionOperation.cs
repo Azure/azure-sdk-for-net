@@ -36,9 +36,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             _jobId = jobId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetConversionOperation" /> for mocking. </summary>
-        protected AssetConversionOperation() {}
-
         /// <inheritdoc/>
         public override string Id => _jobId.ToString();
 

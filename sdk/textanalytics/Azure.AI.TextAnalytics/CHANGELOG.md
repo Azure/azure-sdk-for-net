@@ -1,23 +1,7 @@
 # Release History
 
-## 5.1.0-beta.7 (Unreleased)
-### New features
-- Added property `DisableServiceLogs` to `TextAnalyticsRequestOptions`.
-- Added support for Sentiment Analysis as an action type for `StartAnalyzeBatchActions`.
-- Changed type of `IncludeOpinionMining` to `bool?`.
+## 5.1.0-beta.6 (Unreleased)
 
-### Breaking changes
-- The client defaults to the latest supported service version, which currently is `3.1-preview.5`.
-- Renamed type `TextElementsV8` to `TextElementV8` in model `StringIndexType`.
-
-## 5.1.0-beta.6 (2021-04-06)
-### New features
-- Add overloads to `ExtractKeyPhrasesBatch` and `ExtractKeyPhrasesBatchAsync` to on `TextAnalyticsClient` to accept `ExtractKeyPhrasesOptions` and hid the previous methods (non-breaking change).
-- Add overloads to `RecognizeEntitiesBatch` and `RecognizeEntitiesBatchAsync` to on `TextAnalyticsClient` to accept `RecognizeEntitiesOptions` and hid the previous methods (non-breaking change).
-- Add overloads to `RecognizeLinkedEntitiesBatch` and `RecognizeLinkedEntitiesBatch` to on `TextAnalyticsClient` to accept `RecognizeLinkedEntitiesOptions` and hid the previous methods (non-breaking change).
-
-### Breaking changes
-- Renamed `TotalActions` to `ActionsTotal`.
 
 ## 5.1.0-beta.5 (2021-03-09)
 ### New features

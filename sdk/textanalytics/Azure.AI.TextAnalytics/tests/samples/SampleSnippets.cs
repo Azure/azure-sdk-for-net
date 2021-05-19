@@ -17,14 +17,12 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void CreateTextAnalyticsClient()
         {
-            #region Snippet:CreateTextAnalyticsClient
-#if SNIPPET
-            string endpoint = "<endpoint>";
-            string apiKey = "<apiKey>";
-#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-#endif
+
+            #region Snippet:CreateTextAnalyticsClient
+            //@@ string endpoint = "<endpoint>";
+            //@@ string apiKey = "<apiKey>";
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
         }
@@ -32,12 +30,10 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void CreateTextAnalyticsClientTokenCredential()
         {
-            #region Snippet:CreateTextAnalyticsClientTokenCredential
-#if SNIPPET
-            string endpoint = "<endpoint>";
-#else
             string endpoint = TestEnvironment.Endpoint;
-#endif
+
+            #region Snippet:CreateTextAnalyticsClientTokenCredential
+            //@@ string endpoint = "<endpoint>";
             var client = new TextAnalyticsClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }

@@ -186,7 +186,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "{Endpoint}/vision/v3.2";
+            BaseUri = "{Endpoint}/vision/v3.1";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -263,17 +263,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -288,18 +284,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageWithHttpMessagesAsync(string url, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageWithHttpMessagesAsync(string url, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             if (url == null)
             {
@@ -321,7 +310,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 tracingParameters.Add("details", details);
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("descriptionExclude", descriptionExclude);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImage", tracingParameters);
@@ -346,10 +334,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (descriptionExclude != null)
             {
                 _queryParameters.Add(string.Format("descriptionExclude={0}", System.Uri.EscapeDataString(string.Join(",", descriptionExclude))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -405,11 +389,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -490,17 +474,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -515,18 +495,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             if (url == null)
             {
@@ -547,7 +520,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 tracingParameters.Add("maxCandidates", maxCandidates);
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("descriptionExclude", descriptionExclude);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DescribeImage", tracingParameters);
@@ -568,10 +540,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (descriptionExclude != null)
             {
                 _queryParameters.Add(string.Format("descriptionExclude={0}", System.Uri.EscapeDataString(string.Join(",", descriptionExclude))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -627,11 +595,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -694,17 +662,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='url'>
         /// Publicly reachable URL of an image.
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -719,18 +683,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<DetectResult>> DetectObjectsWithHttpMessagesAsync(string url, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<DetectResult>> DetectObjectsWithHttpMessagesAsync(string url, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             if (url == null)
             {
@@ -748,7 +705,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DetectObjects", tracingParameters);
@@ -757,15 +713,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "detect";
             _url = _url.Replace("{Endpoint}", Endpoint);
-            List<string> _queryParameters = new List<string>();
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -816,11 +763,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -886,7 +833,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -965,11 +912,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1046,17 +993,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
         /// 'ja', 'pt', 'zh'
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1071,7 +1014,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainWithHttpMessagesAsync(string model, string url, string language = default(string), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainWithHttpMessagesAsync(string model, string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -1080,13 +1023,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (model == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "model");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             if (url == null)
             {
@@ -1106,7 +1042,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("model", model);
                 tracingParameters.Add("language", language);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImageByDomain", tracingParameters);
@@ -1120,10 +1055,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (language != null)
             {
                 _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1179,11 +1110,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1260,17 +1191,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// 'ja', 'ko', 'nb', 'pl', 'pt', 'ru', 'es', 'sv', 'tr', 'ar', 'ro',
         /// 'sr-Cyrl', 'sr-Latn', 'sk'
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1285,18 +1212,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextWithHttpMessagesAsync(bool detectOrientation, string url, OcrLanguages? language = default(OcrLanguages?), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextWithHttpMessagesAsync(bool detectOrientation, string url, OcrLanguages? language = default(OcrLanguages?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             if (url == null)
             {
@@ -1316,7 +1236,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("detectOrientation", detectOrientation);
                 tracingParameters.Add("language", language);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RecognizePrintedText", tracingParameters);
@@ -1330,10 +1249,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (language != null)
             {
                 _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1389,11 +1304,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1469,17 +1384,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
         /// 'ja', 'pt', 'zh'
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1494,18 +1405,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<TagResult>> TagImageWithHttpMessagesAsync(string url, string language = default(string), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<TagResult>> TagImageWithHttpMessagesAsync(string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             if (url == null)
             {
@@ -1524,7 +1428,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("language", language);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "TagImage", tracingParameters);
@@ -1537,10 +1440,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (language != null)
             {
                 _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1596,11 +1495,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1680,10 +1579,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='smartCropping'>
         /// Boolean flag for enabling smart cropping.
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1705,7 +1600,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Stream>> GenerateThumbnailWithHttpMessagesAsync(int width, int height, string url, bool? smartCropping = false, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Stream>> GenerateThumbnailWithHttpMessagesAsync(int width, int height, string url, bool? smartCropping = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -1727,13 +1622,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "height", 1);
             }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
-            }
             if (url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "url");
@@ -1753,7 +1641,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 tracingParameters.Add("width", width);
                 tracingParameters.Add("height", height);
                 tracingParameters.Add("smartCropping", smartCropping);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GenerateThumbnail", tracingParameters);
@@ -1768,10 +1655,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (smartCropping != null)
             {
                 _queryParameters.Add(string.Format("smartCropping={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(smartCropping, SerializationSettings).Trim('"'))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1876,17 +1759,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='url'>
         /// Publicly reachable URL of an image.
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1901,18 +1780,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestWithHttpMessagesAsync(string url, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestWithHttpMessagesAsync(string url, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             if (url == null)
             {
@@ -1930,7 +1802,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAreaOfInterest", tracingParameters);
@@ -1939,15 +1810,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "areaOfInterest";
             _url = _url.Replace("{Endpoint}", Endpoint);
-            List<string> _queryParameters = new List<string>();
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1998,11 +1860,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -2101,17 +1963,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2126,7 +1984,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageInStreamWithHttpMessagesAsync(Stream image, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageInStreamWithHttpMessagesAsync(Stream image, IList<VisualFeatureTypes?> visualFeatures = default(IList<VisualFeatureTypes?>), IList<Details?> details = default(IList<Details?>), string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -2135,13 +1993,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2155,7 +2006,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("descriptionExclude", descriptionExclude);
                 tracingParameters.Add("image", image);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImageInStream", tracingParameters);
             }
@@ -2179,10 +2029,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (descriptionExclude != null)
             {
                 _queryParameters.Add(string.Format("descriptionExclude={0}", System.Uri.EscapeDataString(string.Join(",", descriptionExclude))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2241,11 +2087,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -2310,17 +2156,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='image'>
         /// An image stream.
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2335,7 +2177,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestInStreamWithHttpMessagesAsync(Stream image, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -2345,13 +2187,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
             }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2360,7 +2195,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("image", image);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAreaOfInterestInStream", tracingParameters);
             }
@@ -2368,15 +2202,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "areaOfInterest";
             _url = _url.Replace("{Endpoint}", Endpoint);
-            List<string> _queryParameters = new List<string>();
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2430,11 +2255,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -2515,17 +2340,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='descriptionExclude'>
         /// Turn off specified domain models when generating the description.
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2540,7 +2361,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, int? maxCandidates = 1, string language = default(string), IList<DescriptionExclude?> descriptionExclude = default(IList<DescriptionExclude?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -2549,13 +2370,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2568,7 +2382,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("descriptionExclude", descriptionExclude);
                 tracingParameters.Add("image", image);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DescribeImageInStream", tracingParameters);
             }
@@ -2588,10 +2401,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (descriptionExclude != null)
             {
                 _queryParameters.Add(string.Format("descriptionExclude={0}", System.Uri.EscapeDataString(string.Join(",", descriptionExclude))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2650,11 +2459,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -2717,17 +2526,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='image'>
         /// An image stream.
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2742,7 +2547,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<DetectResult>> DetectObjectsInStreamWithHttpMessagesAsync(Stream image, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<DetectResult>> DetectObjectsInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -2752,13 +2557,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
             }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2767,7 +2565,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("image", image);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DetectObjectsInStream", tracingParameters);
             }
@@ -2775,15 +2572,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "detect";
             _url = _url.Replace("{Endpoint}", Endpoint);
-            List<string> _queryParameters = new List<string>();
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2837,11 +2625,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -2921,10 +2709,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='smartCropping'>
         /// Boolean flag for enabling smart cropping.
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2946,7 +2730,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Stream>> GenerateThumbnailInStreamWithHttpMessagesAsync(int width, int height, Stream image, bool? smartCropping = false, string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Stream>> GenerateThumbnailInStreamWithHttpMessagesAsync(int width, int height, Stream image, bool? smartCropping = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -2972,13 +2756,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
             }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2990,7 +2767,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 tracingParameters.Add("height", height);
                 tracingParameters.Add("smartCropping", smartCropping);
                 tracingParameters.Add("image", image);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GenerateThumbnailInStream", tracingParameters);
             }
@@ -3004,10 +2780,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (smartCropping != null)
             {
                 _queryParameters.Add(string.Format("smartCropping={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(smartCropping, SerializationSettings).Trim('"'))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3127,17 +2899,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
         /// 'ja', 'pt', 'zh'
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -3152,7 +2920,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainInStreamWithHttpMessagesAsync(string model, Stream image, string language = default(string), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainInStreamWithHttpMessagesAsync(string model, Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -3166,13 +2934,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
             }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3183,7 +2944,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 tracingParameters.Add("model", model);
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("image", image);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImageByDomainInStream", tracingParameters);
             }
@@ -3196,10 +2956,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (language != null)
             {
                 _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3258,11 +3014,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -3339,17 +3095,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// 'ja', 'ko', 'nb', 'pl', 'pt', 'ru', 'es', 'sv', 'tr', 'ar', 'ro',
         /// 'sr-Cyrl', 'sr-Latn', 'sk'
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -3364,7 +3116,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextInStreamWithHttpMessagesAsync(bool detectOrientation, Stream image, OcrLanguages? language = default(OcrLanguages?), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextInStreamWithHttpMessagesAsync(bool detectOrientation, Stream image, OcrLanguages? language = default(OcrLanguages?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -3373,13 +3125,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3391,7 +3136,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 tracingParameters.Add("detectOrientation", detectOrientation);
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("image", image);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RecognizePrintedTextInStream", tracingParameters);
             }
@@ -3404,10 +3148,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (language != null)
             {
                 _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3466,11 +3206,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -3546,17 +3286,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
         /// 'ja', 'pt', 'zh'
         /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the AI model. Accepted values
-        /// are: "latest", "2021-04-01". Defaults to "latest".
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionErrorResponseException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -3571,7 +3307,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<TagResult>> TagImageInStreamWithHttpMessagesAsync(Stream image, string language = default(string), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<TagResult>> TagImageInStreamWithHttpMessagesAsync(Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -3580,13 +3316,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3597,7 +3326,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("image", image);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "TagImageInStream", tracingParameters);
             }
@@ -3609,10 +3337,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (language != null)
             {
                 _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3671,11 +3395,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionErrorResponse>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -3739,27 +3463,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Publicly reachable URL of an image.
         /// </param>
         /// <param name='language'>
-        /// The BCP-47 language code of the text in the document. Read supports auto
+        /// The BCP-47 language code of the text in the document. Currently, only
+        /// English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’),
+        /// Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto
         /// language identification and multi-language documents, so only provide a
-        /// language code if you would like to force the document to be processed in
-        /// that specific language. See https://aka.ms/ocr-languages for list of
-        /// supported languages. Possible values include: 'af', 'ast', 'bi', 'br',
-        /// 'ca', 'ceb', 'ch', 'co', 'crh', 'cs', 'csb', 'da', 'de', 'en', 'es', 'et',
-        /// 'eu', 'fi', 'fil', 'fj', 'fr', 'fur', 'fy', 'ga', 'gd', 'gil', 'gl', 'gv',
-        /// 'hni', 'hsb', 'ht', 'hu', 'ia', 'id', 'it', 'iu', 'ja', 'jv', 'kaa', 'kac',
-        /// 'kea', 'kha', 'kl', 'ko', 'ku', 'kw', 'lb', 'ms', 'mww', 'nap', 'nl', 'no',
-        /// 'oc', 'pl', 'pt', 'quc', 'rm', 'sco', 'sl', 'sq', 'sv', 'sw', 'tet', 'tr',
-        /// 'tt', 'uz', 'vo', 'wae', 'yua', 'za', 'zh-Hans', 'zh-Hant', 'zu'
-        /// </param>
-        /// <param name='pages'>
-        /// Custom page numbers for multi-page documents(PDF/TIFF), input the number of
-        /// the pages you want to get OCR result. For a range of pages, use a hyphen.
-        /// Separate each page or range with a comma.
-        /// </param>
-        /// <param name='modelVersion'>
-        /// Optional parameter to specify the version of the OCR model used for text
-        /// extraction. Accepted values are: "latest", "latest-preview", "2021-04-12".
-        /// Defaults to "latest".
+        /// language code if you would like to force the documented to be processed as
+        /// that specific language. Possible values include: 'en', 'es', 'fr', 'de',
+        /// 'it', 'nl', 'pt'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3767,7 +3477,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionOcrErrorException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -3779,18 +3489,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<ReadHeaders>> ReadWithHttpMessagesAsync(string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<ReadHeaders>> ReadWithHttpMessagesAsync(string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (modelVersion != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
-                }
             }
             if (url == null)
             {
@@ -3809,8 +3512,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("language", language);
-                tracingParameters.Add("pages", pages);
-                tracingParameters.Add("modelVersion", modelVersion);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Read", tracingParameters);
@@ -3823,14 +3524,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (language != null)
             {
                 _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
-            }
-            if (pages != null)
-            {
-                _queryParameters.Add(string.Format("pages={0}", System.Uri.EscapeDataString(string.Join(",", pages))));
-            }
-            if (modelVersion != null)
-            {
-                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3886,11 +3579,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 202)
             {
-                var ex = new ComputerVisionOcrErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionOcrError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionOcrError>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -3951,7 +3644,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionOcrErrorException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -4032,11 +3725,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ComputerVisionOcrErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionOcrError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionOcrError>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -4100,22 +3793,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// An image stream.
         /// </param>
         /// <param name='language'>
-        /// The BCP-47 language code of the text in the document. Read supports auto
+        /// The BCP-47 language code of the text in the document. Currently, only
+        /// English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’),
+        /// Portuguese (‘pt), and Spanish ('es') are supported. Read supports auto
         /// language identification and multi-language documents, so only provide a
-        /// language code if you would like to force the document to be processed in
-        /// that specific language. See https://aka.ms/ocr-languages for list of
-        /// supported languages. Possible values include: 'af', 'ast', 'bi', 'br',
-        /// 'ca', 'ceb', 'ch', 'co', 'crh', 'cs', 'csb', 'da', 'de', 'en', 'es', 'et',
-        /// 'eu', 'fi', 'fil', 'fj', 'fr', 'fur', 'fy', 'ga', 'gd', 'gil', 'gl', 'gv',
-        /// 'hni', 'hsb', 'ht', 'hu', 'ia', 'id', 'it', 'iu', 'ja', 'jv', 'kaa', 'kac',
-        /// 'kea', 'kha', 'kl', 'ko', 'ku', 'kw', 'lb', 'ms', 'mww', 'nap', 'nl', 'no',
-        /// 'oc', 'pl', 'pt', 'quc', 'rm', 'sco', 'sl', 'sq', 'sv', 'sw', 'tet', 'tr',
-        /// 'tt', 'uz', 'vo', 'wae', 'yua', 'za', 'zh-Hans', 'zh-Hant', 'zu'
-        /// </param>
-        /// <param name='pages'>
-        /// Custom page numbers for multi-page documents(PDF/TIFF), input the number of
-        /// the pages you want to get OCR result. For a range of pages, use a hyphen.
-        /// Separate each page or range with a comma.
+        /// language code if you would like to force the documented to be processed as
+        /// that specific language. Possible values include: 'en', 'es', 'fr', 'de',
+        /// 'it', 'nl', 'pt'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4123,7 +3807,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ComputerVisionOcrErrorException">
+        /// <exception cref="ComputerVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -4135,7 +3819,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<ReadInStreamHeaders>> ReadInStreamWithHttpMessagesAsync(Stream image, string language = default(string), IList<string> pages = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<ReadInStreamHeaders>> ReadInStreamWithHttpMessagesAsync(Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -4154,7 +3838,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("image", image);
-                tracingParameters.Add("pages", pages);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ReadInStream", tracingParameters);
             }
@@ -4166,10 +3849,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (language != null)
             {
                 _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
-            }
-            if (pages != null)
-            {
-                _queryParameters.Add(string.Format("pages={0}", System.Uri.EscapeDataString(string.Join(",", pages))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -4228,11 +3907,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             string _responseContent = null;
             if ((int)_statusCode != 202)
             {
-                var ex = new ComputerVisionOcrErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ComputerVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ComputerVisionOcrError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionOcrError>(_responseContent, DeserializationSettings);
+                    ComputerVisionError _errorBody =  SafeJsonConvert.DeserializeObject<ComputerVisionError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;

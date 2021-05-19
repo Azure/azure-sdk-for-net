@@ -4,16 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json.Serialization;
-using Azure.Core;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
     /// <summary>
     /// Attestation policy stored on the MAA Service.
     /// </summary>
-    [JsonConverter(typeof(StoredAttestationPolicyConverter))]
-    [CodeGenModel("StoredAttestationPolicy")]
     public partial class StoredAttestationPolicy
     {
         /// <summary>
@@ -22,7 +18,6 @@ namespace Azure.Security.Attestation
         public StoredAttestationPolicy() : base()
         {
         }
-
         /// <summary>
         /// Gets or sets the attestation policy stored in the MAA.
         /// </summary>

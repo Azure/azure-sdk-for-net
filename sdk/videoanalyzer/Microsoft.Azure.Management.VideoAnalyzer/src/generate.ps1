@@ -1,3 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "videoanalyzer/resource-manager" -AutoRestVersion "v2" -AutoRestCodeGenerationFlags --opt-in-extensible-enums -ConfigFileTag "package-2021-05-01-preview"
-
-#autorest.cmd D:\GitHub\Azure\azure-rest-api-specs\specification\videoanalyzer\resource-manager\readme.md --csharp --version=v2 --opt-in-extensible-enums --reflect-api-versions --csharp-sdks-folder=$PSScriptRoot\..\..\..

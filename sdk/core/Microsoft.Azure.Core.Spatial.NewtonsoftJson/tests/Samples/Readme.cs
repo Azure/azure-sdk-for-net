@@ -60,9 +60,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.Samples
 
             SearchClientOptions clientOptions = new SearchClientOptions
             {
-#if !SNIPPET
-                Transport = new MockTransport(response),
-#endif
+                /*@@*/ Transport = new MockTransport(response),
                 Serializer = new NewtonsoftJsonObjectSerializer(serializerSettings)
             };
 

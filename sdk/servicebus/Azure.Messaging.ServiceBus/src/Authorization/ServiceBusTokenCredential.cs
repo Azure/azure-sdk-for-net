@@ -15,33 +15,47 @@ namespace Azure.Messaging.ServiceBus.Authorization
     ///
     internal class ServiceBusTokenCredential : TokenCredential
     {
-        /// <summary>The <see cref="TokenCredential" /> that forms the basis of this security token.</summary>
-        private readonly TokenCredential _credential;
+        /// <summary>
+        ///   The Service Bus resource to which the token is intended to serve as authorization.
+        /// </summary>
+        ///
+        public string Resource { get; }
 
         /// <summary>
         ///   Indicates whether the credential is based on an Service Bus
-        ///   shared access policy.
+        ///   shared access signature.
         /// </summary>
         ///
         /// <value><c>true</c> if the credential should be considered a SAS credential; otherwise, <c>false</c>.</value>
         ///
-        public bool IsSharedAccessCredential { get; }
+        public bool IsSharedAccessSignatureCredential { get; }
+
+        /// <summary>
+        ///   The <see cref="TokenCredential" /> that forms the basis of this security token.
+        /// </summary>
+        ///
+        private TokenCredential Credential { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusTokenCredential"/> class.
         /// </summary>
         ///
         /// <param name="tokenCredential">The <see cref="TokenCredential" /> on which to base the token.</param>
+        /// <param name="serviceBusResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
         ///
-        public ServiceBusTokenCredential(TokenCredential tokenCredential)
+        public ServiceBusTokenCredential(
+            TokenCredential tokenCredential,
+            string serviceBusResource)
         {
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            Argument.AssertNotNullOrEmpty(serviceBusResource, nameof(serviceBusResource));
 
-            _credential = tokenCredential;
+            Credential = tokenCredential;
+            Resource = serviceBusResource;
 
-            IsSharedAccessCredential =
-                (tokenCredential is SharedAccessCredential)
-                || ((tokenCredential as ServiceBusTokenCredential)?.IsSharedAccessCredential == true);
+            IsSharedAccessSignatureCredential =
+                (tokenCredential is SharedAccessSignatureCredential)
+                || ((tokenCredential as ServiceBusTokenCredential)?.IsSharedAccessSignatureCredential == true);
         }
 
         /// <summary>
@@ -57,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
         public override AccessToken GetToken(
             TokenRequestContext requestContext,
             CancellationToken cancellationToken) =>
-            _credential.GetToken(requestContext, cancellationToken);
+            Credential.GetToken(requestContext, cancellationToken);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
@@ -72,7 +86,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
         public override ValueTask<AccessToken> GetTokenAsync(
             TokenRequestContext requestContext,
             CancellationToken cancellationToken) =>
-            _credential.GetTokenAsync(requestContext, cancellationToken);
+            Credential.GetTokenAsync(requestContext, cancellationToken);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for

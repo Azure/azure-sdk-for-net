@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -31,12 +30,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='azureRegion'>
             /// Azure region to hit Api
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static AADPropertiesResource Get(this IAadPropertiesOperations operations, string azureRegion, ODataQuery<BMSAADPropertiesQueryObject> odataQuery = default(ODataQuery<BMSAADPropertiesQueryObject>))
+            public static AADPropertiesResource Get(this IAadPropertiesOperations operations, string azureRegion)
             {
-                return operations.GetAsync(azureRegion, odataQuery).GetAwaiter().GetResult();
+                return operations.GetAsync(azureRegion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -48,15 +44,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='azureRegion'>
             /// Azure region to hit Api
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AADPropertiesResource> GetAsync(this IAadPropertiesOperations operations, string azureRegion, ODataQuery<BMSAADPropertiesQueryObject> odataQuery = default(ODataQuery<BMSAADPropertiesQueryObject>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AADPropertiesResource> GetAsync(this IAadPropertiesOperations operations, string azureRegion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(azureRegion, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(azureRegion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

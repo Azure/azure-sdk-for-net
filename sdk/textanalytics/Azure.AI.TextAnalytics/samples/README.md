@@ -19,7 +19,6 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Personally Identifiable Information (PII) Recognition
 * Linked Entity Recognition
 * Healthcare Recognition
-* Running multiple actions in one or more documents
 
 ## Common scenarios samples
 - [Detect Language](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md)

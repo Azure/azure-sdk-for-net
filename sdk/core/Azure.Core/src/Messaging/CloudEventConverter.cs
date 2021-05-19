@@ -132,7 +132,6 @@ namespace Azure.Messaging
                 }
                 if (cloudEvent.SpecVersion != "1.0")
                 {
-                    // cspell:word specverion
                     if (cloudEvent.SpecVersion == null)
                     {
                         throw new ArgumentException(

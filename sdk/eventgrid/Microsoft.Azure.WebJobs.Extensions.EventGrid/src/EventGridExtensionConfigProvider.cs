@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Azure;
-using Azure.Messaging;
 using Azure.Messaging.EventGrid;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host.Bindings;
@@ -32,12 +31,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
     {
         private ILogger _logger;
         private readonly ILoggerFactory _loggerFactory;
-        private readonly Func<EventGridAttribute, IAsyncCollector<object>> _converter;
+        private readonly Func<EventGridAttribute, IAsyncCollector<EventGridEvent>> _converter;
         private readonly HttpRequestProcessor _httpRequestProcessor;
 
         // for end to end testing
         internal EventGridExtensionConfigProvider(
-            Func<EventGridAttribute, IAsyncCollector<object>> converter,
+            Func<EventGridAttribute, IAsyncCollector<EventGridEvent>> converter,
             HttpRequestProcessor httpRequestProcessor,
             ILoggerFactory loggerFactory)
         {
@@ -73,13 +72,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             // also take benefit of identity converter
             context
                 .AddBindingRule<EventGridTriggerAttribute>() // following converters are for EventGridTriggerAttribute only
-                .AddConverter<JToken, string>(jtoken => jtoken.ToString(Formatting.Indented))
-                .AddConverter<JToken, string[]>(jarray => jarray.Select(ar => ar.ToString(Formatting.Indented)).ToArray())
-                .AddConverter<JToken, DirectInvokeString>(jtoken => new DirectInvokeString(null))
-                .AddConverter<JToken, EventGridEvent>(jobject => EventGridEvent.Parse(new BinaryData(jobject.ToString()))) // surface the type to function runtime
-                .AddConverter<JToken, EventGridEvent[]>(jobject => EventGridEvent.ParseMany(new BinaryData(jobject.ToString())))
-                .AddConverter<JToken, CloudEvent>(jobject => CloudEvent.Parse(new BinaryData(jobject.ToString())))
-                .AddConverter<JToken, CloudEvent[]>(jobject => CloudEvent.ParseMany(new BinaryData(jobject.ToString())))
+                .AddConverter<JToken, string>((jtoken) => jtoken.ToString(Formatting.Indented))
+                .AddConverter<JToken, string[]>((jarray) => jarray.Select(ar => ar.ToString(Formatting.Indented)).ToArray())
+                .AddConverter<JToken, DirectInvokeString>((jtoken) => new DirectInvokeString(null))
+                .AddConverter<JToken, EventGridEvent>((jobject) => EventGridEvent.Parse(new BinaryData(jobject.ToString()))) // surface the type to function runtime
+                .AddConverter<JToken, EventGridEvent[]>((jobject) => EventGridEvent.ParseMany(new BinaryData(jobject.ToString()))) // surface the type to function runtime
                 .AddOpenConverter<JToken, OpenType.Poco>(typeof(JTokenToPocoConverter<>))
                 .AddOpenConverter<JToken, OpenType.Poco[]>(typeof(JTokenToPocoConverter<>))
                 .BindToTrigger<JToken>(new EventGridTriggerAttributeBindingProvider(this));
@@ -88,30 +85,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             var rule = context
                 .AddBindingRule<EventGridAttribute>()
                 //TODO - add binding for BinaryData?
-                .AddConverter<string, object>(str =>
-                {
-                    // first attempt to parse as EventGridEvent, then fallback to CloudEvent
-                    try
-                    {
-                        return EventGridEvent.Parse(new BinaryData(str));
-                    }
-                    catch (ArgumentException)
-                    {
-                        return CloudEvent.Parse(new BinaryData(str));
-                    }
-                })
-                .AddConverter<JObject, object>(jobject =>
-                {
-                    try
-                    {
-                        return EventGridEvent.Parse(new BinaryData(jobject.ToString()));
-                    }
-                    catch (ArgumentException)
-                    {
-                        return CloudEvent.Parse(new BinaryData(jobject.ToString()));
-                    }
-                });
-
+                .AddConverter<string, EventGridEvent>((str) => EventGridEvent.Parse(new BinaryData(str)))
+                .AddConverter<JObject, EventGridEvent>((jobject) =>  EventGridEvent.Parse(new BinaryData(jobject.ToString())));
             rule.BindToCollector(_converter);
             rule.AddValidator((a, t) =>
             {

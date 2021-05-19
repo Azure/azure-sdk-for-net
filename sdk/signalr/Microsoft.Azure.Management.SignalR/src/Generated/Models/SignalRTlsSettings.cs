@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// TLS settings for the resource
+    /// TLS settings for SignalR
     /// </summary>
     public partial class SignalRTlsSettings
     {

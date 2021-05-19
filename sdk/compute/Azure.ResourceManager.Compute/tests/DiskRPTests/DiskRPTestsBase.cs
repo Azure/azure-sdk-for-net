@@ -517,9 +517,9 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
             // Create the VM, whose OS disk will be used in creating the image
             var returnTwovm = await CreateVM(rgName, asName, storageAccountOutput, imageRef);
-            var createdVM = returnTwovm.Response;
-            inputVM = returnTwovm.Input;
-            string inputVMName = returnTwovm.Name;
+            var createdVM = returnTwovm.Item1;
+            inputVM = returnTwovm.Item2;
+            string inputVMName = returnTwovm.Item3;
             var listResponse = await VirtualMachinesOperations.ListAllAsync().ToEnumerableAsync();
             Assert.True(listResponse.Count() >= 1);
             string[] id = createdVM.Id.Split('/');

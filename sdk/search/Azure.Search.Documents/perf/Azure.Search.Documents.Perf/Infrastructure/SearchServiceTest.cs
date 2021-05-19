@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Search.Documents.Indexes;
@@ -45,13 +46,10 @@ namespace Azure.Search.Documents.Perf.Infrastructure
             SearchClient = _searchIndexClient.GetSearchClient(_indexName);
         }
 
-        /// <summary>
-        /// Executes code that runs exactly once at the beginning of test execution.
-        /// </summary>
-        /// <returns>Task representing the global setup work.</returns>
+        /// <inheritdoc/>
         public override async Task GlobalSetupAsync()
         {
-            SearchIndex index = new(_indexName)
+            SearchIndex index = new (_indexName)
             {
                 Fields = new FieldBuilder().Build(typeof(Hotel)),
                 Suggesters = { new SearchSuggester(SuggesterName, new string[] { nameof(Hotel.Description), nameof(Hotel.HotelName) }) }
@@ -60,10 +58,7 @@ namespace Azure.Search.Documents.Perf.Infrastructure
             await _searchIndexClient.CreateIndexAsync(index);
         }
 
-        /// <summary>
-        /// Executes code that runs exactly once at the end of test execution.
-        /// </summary>
-        /// <returns>Task representing the global cleanup work.</returns>
+        /// <inheritdoc/>
         public override async Task GlobalCleanupAsync()
         {
             await _searchIndexClient.DeleteIndexAsync(_indexName);

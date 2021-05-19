@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             public async ValueTask DisposeAsync()
             {
                 SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await _client.StartDeleteSparkJobDefinitionAsync (Name);
-                await deleteOperation.WaitForCompletionResponseAsync();
+                await deleteOperation.WaitForCompletionAsync();
             }
         }
 
@@ -108,13 +108,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string newSparkJobName = Recording.GenerateId("Pipeline2", 16);
 
             SparkJobDefinitionRenameSparkJobDefinitionOperation renameOperation = await client.StartRenameSparkJobDefinitionAsync (resource.Name, new ArtifactRenameRequest () { NewName = newSparkJobName } );
-            await renameOperation.WaitForCompletionResponseAsync();
+            await renameOperation.WaitForCompletionAsync();
 
             SparkJobDefinitionResource sparkJob = await client.GetSparkJobDefinitionAsync (newSparkJobName);
             Assert.AreEqual (newSparkJobName, sparkJob.Name);
 
             SparkJobDefinitionDeleteSparkJobDefinitionOperation deleteOperation = await client.StartDeleteSparkJobDefinitionAsync (newSparkJobName);
-            await deleteOperation.WaitForCompletionResponseAsync();
+            await deleteOperation.WaitForCompletionAsync();
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18079 - SYNAPSE_API_ISSUE - Parameter name: ClassName")]

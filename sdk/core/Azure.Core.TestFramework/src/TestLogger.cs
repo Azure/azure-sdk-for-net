@@ -48,11 +48,6 @@ namespace Azure.Core.TestFramework
 
             // If there's a request ID, use it after the category
             var message = new StringBuilder();
-            message
-                .Append("[")
-                .Append(DateTime.Now.ToString("HH:mm:ss.FFF"))
-                .Append("] ")
-                .Append(args.EventName).Append(" ");
             if (payload.TryGetValue("requestId", out var requestId))
             {
                 payload.Remove("requestId");

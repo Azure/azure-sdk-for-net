@@ -31,12 +31,8 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// Initializes a new instance of the MonitoringTagRulesProperties
         /// class.
         /// </summary>
-        /// <param name="provisioningState">Possible values include:
-        /// 'Accepted', 'Creating', 'Updating', 'Deleting', 'Succeeded',
-        /// 'Failed', 'Canceled', 'Deleted', 'NotSpecified'</param>
-        public MonitoringTagRulesProperties(string provisioningState = default(string), LogRules logRules = default(LogRules), MetricRules metricRules = default(MetricRules))
+        public MonitoringTagRulesProperties(LogRules logRules = default(LogRules), MetricRules metricRules = default(MetricRules))
         {
-            ProvisioningState = provisioningState;
             LogRules = logRules;
             MetricRules = metricRules;
             CustomInit();
@@ -46,14 +42,6 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets possible values include: 'Accepted', 'Creating',
-        /// 'Updating', 'Deleting', 'Succeeded', 'Failed', 'Canceled',
-        /// 'Deleted', 'NotSpecified'
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// </summary>

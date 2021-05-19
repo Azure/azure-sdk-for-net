@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
+using Azure;
 using Azure.Core;
+using Azure.Security.Attestation.Models;
 
 namespace Azure.Security.Attestation
 {
@@ -13,16 +17,18 @@ namespace Azure.Security.Attestation
     {
         internal string Version { get; }
 
+        internal bool ValidateAttestationTokens { get; }
+
         /// <summary>
-        /// Options used when validating tokens.
+        /// Validation callback which allows customers to provide their own delegate to validate a returned MAA <see cref="AttestationToken"/>.
         /// </summary>
-        public AttestationTokenValidationOptions TokenOptions { get; private set; }
+        public Func<AttestationToken, AttestationSigner, bool> ValidationCallback { get; }
 
         /// <summary>Initializes a new instance of the <see cref="AttestationClientOptions"/>.</summary>
         public AttestationClientOptions(
             ServiceVersion version = ServiceVersion.V2020_10_01,
-            AttestationTokenValidationOptions tokenOptions = default
-            )
+            Func<AttestationToken, AttestationSigner, bool> validationCallback = null,
+            bool validateAttestationTokens = true)
         {
             if (version == default)
             {
@@ -34,10 +40,8 @@ namespace Azure.Security.Attestation
                 ServiceVersion.V2020_10_01 => "2020-10-01",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
-
-            // If the caller specified that they have token validation options, use them, otherwise
-            // use the defaults.
-            TokenOptions = tokenOptions != null ? tokenOptions.Clone() :  new AttestationTokenValidationOptions();
+            ValidationCallback = validationCallback;
+            ValidateAttestationTokens = validateAttestationTokens;
         }
 
         /// <summary>

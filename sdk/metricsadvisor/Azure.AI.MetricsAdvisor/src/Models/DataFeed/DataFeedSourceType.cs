@@ -45,12 +45,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Elasticsearch.
         /// </summary>
-        internal static DataFeedSourceType Elasticsearch { get; } = new DataFeedSourceType(ElasticsearchValue);
+        public static DataFeedSourceType Elasticsearch { get; } = new DataFeedSourceType(ElasticsearchValue);
 
         /// <summary>
         /// HTTP Request.
         /// </summary>
-        internal static DataFeedSourceType HttpRequest { get; } = new DataFeedSourceType(HttpRequestValue);
+        public static DataFeedSourceType HttpRequest { get; } = new DataFeedSourceType(HttpRequestValue);
 
         /// <summary>
         /// InfluxDB.

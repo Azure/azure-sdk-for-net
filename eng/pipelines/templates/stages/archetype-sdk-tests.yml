@@ -34,13 +34,10 @@ parameters:
   default: ''
 - name: SDKType
   type: string
-  default: all
+  default: client
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: Project
-  type: string
-  default: '**'
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -64,7 +61,6 @@ parameters:
     - Name: NET_live_test_base
       Path: eng/pipelines/templates/stages/platform-matrix.json
       Selection: sparse
-      NonSparseParameters: AdditionalTestArguments
       GenerateVMJobs: true
 - name: AdditionalMatrixConfigs
   type: object
@@ -72,12 +68,10 @@ parameters:
 - name: MatrixFilters
   type: object
   default: []
-- name: MatrixReplace
-  type: object
-  default: []
 - name: PlatformPreSteps
   type: object
-  default: []
+  default:
+    - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
 - name: PlatformPostSteps
   type: object
   default:
@@ -110,9 +104,8 @@ stages:
       - stage: ${{ cloud.key }}
         dependsOn: []
         jobs:
-        - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+        - template: /eng/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
           parameters:
-            JobTemplatePath: /eng/pipelines/templates/jobs/live.tests.yml
             AdditionalParameters:
               PreSteps:
                 - ${{ parameters.PlatformPreSteps }}
@@ -127,7 +120,6 @@ stages:
               Location: ${{ parameters.Location }}
               SDKType: ${{ parameters.SDKType }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
-              Project: ${{ parameters.Project }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
             MatrixConfigs:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
@@ -139,12 +131,7 @@ stages:
               - ${{ each cloudFilter in cloud.value.MatrixFilters }}:
                 - ${{ cloudFilter }}
               - ${{ parameters.MatrixFilters }}
-            MatrixReplace:
-              - ${{ each cloudReplace in cloud.value.MatrixReplace }}:
-                - ${{ cloudReplace }}
-              - ${{ parameters.MatrixReplace }}
             CloudConfig:
               SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
-              SubscriptionConfigurations: ${{ cloud.value.SubscriptionConfigurations }}
               Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
               Cloud: ${{ cloud.key }}

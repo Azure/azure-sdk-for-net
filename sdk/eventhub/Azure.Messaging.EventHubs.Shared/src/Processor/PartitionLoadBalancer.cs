@@ -308,7 +308,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>A tuple indicating whether a claim was attempted and any ownership that was claimed.  The claimed ownership will be <c>null</c> if no claim was attempted or if the claim attempt failed.</returns>
         ///
-        private ValueTask<(bool WasClaimAttempted, EventProcessorPartitionOwnership ClaimedPartition)> FindAndClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> completeOwnershipEnumerable,
+        private ValueTask<(bool wasClaimAttempted, EventProcessorPartitionOwnership claimedPartition)> FindAndClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> completeOwnershipEnumerable,
                                                                                                                                   HashSet<string> unclaimedPartitions,
                                                                                                                                   int partitionCount,
                                                                                                                                   CancellationToken cancellationToken)
@@ -320,7 +320,6 @@ namespace Azure.Messaging.EventHubs.Primitives
             // each.  We can guarantee the partition distribution has at least one key, which corresponds to this event processor instance, even
             // if it owns no partitions.
 
-            var unevenPartitionDistribution = (partitionCount % ActiveOwnershipWithDistribution.Keys.Count) > 0;
             var minimumOwnedPartitionsCount = partitionCount / ActiveOwnershipWithDistribution.Keys.Count;
             Logger.MinimumPartitionsPerEventProcessor(minimumOwnedPartitionsCount);
 
@@ -339,10 +338,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             //     but we are making sure there are no better candidates among the other event processors.
 
             if (ownedPartitionsCount < minimumOwnedPartitionsCount
-                || (ownedPartitionsCount == minimumOwnedPartitionsCount
-                    && ActiveOwnershipWithDistribution.Keys.Count > 1
-                    && unevenPartitionDistribution
-                    && !ActiveOwnershipWithDistribution.Values.Any(partitions => partitions.Count < minimumOwnedPartitionsCount)))
+                || (ownedPartitionsCount == minimumOwnedPartitionsCount && !ActiveOwnershipWithDistribution.Values.Any(partitions => partitions.Count < minimumOwnedPartitionsCount)))
             {
                 // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
 
@@ -356,8 +352,10 @@ namespace Azure.Messaging.EventHubs.Primitives
                     return new ValueTask<(bool, EventProcessorPartitionOwnership)>(returnTask);
                 }
 
-                // Only consider stealing partitions if there are no unclaimed partitions left.  At first, only processors that have exceeded the
+                // Only try to steal partitions if there are no unclaimed partitions left.  At first, only processors that have exceeded the
                 // maximum owned partition count should be targeted.
+
+                Logger.ShouldStealPartition(OwnerIdentifier);
 
                 var maximumOwnedPartitionsCount = minimumOwnedPartitionsCount + 1;
                 var partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount = new List<string>();
@@ -389,48 +387,39 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
                 }
 
-                // If this processor has less than the minimum or any other processor has more than the maximum, then we need to steal a partition.
+                // Here's the important part.  If there are no processors that have exceeded the maximum owned partition count allowed, we may
+                // need to steal from the processors that have exactly the maximum amount.  If this instance is below the minimum count, then
+                // we have no choice as we need to enforce balancing.  Otherwise, leave it as it is because the distribution wouldn't change.
 
-                if ((ownedPartitionsCount < minimumOwnedPartitionsCount) || (partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count > 0))
+                if (partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count > 0)
                 {
-                    Logger.ShouldStealPartition(OwnerIdentifier);
+                    // If any stealable partitions were found, randomly pick one of them to claim.
 
-                    // Prefer stealing from a processor that owns more than the maximum number of partitions.
+                    Logger.StealPartition(OwnerIdentifier);
 
-                    if (partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count > 0)
-                    {
-                        // If any partitions that can be stolen were found, randomly pick one of them to claim.
+                    var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count);
 
-                        Logger.StealPartition(OwnerIdentifier);
+                    var returnTask = ClaimOwnershipAsync(
+                        partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount[index],
+                        completeOwnershipEnumerable,
+                        cancellationToken);
 
-                        var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count);
+                    return new ValueTask<(bool, EventProcessorPartitionOwnership)>(returnTask);
+                }
+                else if (ownedPartitionsCount < minimumOwnedPartitionsCount)
+                {
+                    // If any stealable partitions were found, randomly pick one of them to claim.
 
-                        var returnTask = ClaimOwnershipAsync(
-                            partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount[index],
-                            completeOwnershipEnumerable,
-                            cancellationToken);
+                    Logger.StealPartition(OwnerIdentifier);
 
-                        return new ValueTask<(bool, EventProcessorPartitionOwnership)>(returnTask);
-                    }
-                    else if (ownedPartitionsCount < minimumOwnedPartitionsCount)
-                    {
-                        // If there were no processors that have exceeded the maximum owned partition count and we're below the minimum, we
-                        // need to steal from the processors that have exactly the maximum amount to enforce balancing.  If this instance has
-                        // already reached the minimum, there's no benefit to stealing, because the distribution wouldn't change.
+                    var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count);
 
-                        Logger.StealPartition(OwnerIdentifier);
+                    var returnTask = ClaimOwnershipAsync(
+                        partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount[index],
+                        completeOwnershipEnumerable,
+                        cancellationToken);
 
-                        // Randomly pick a processor to steal from.
-
-                        var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count);
-
-                        var returnTask = ClaimOwnershipAsync(
-                            partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount[index],
-                            completeOwnershipEnumerable,
-                            cancellationToken);
-
-                        return new ValueTask<(bool, EventProcessorPartitionOwnership)>(returnTask);
-                    }
+                    return new ValueTask<(bool, EventProcessorPartitionOwnership)>(returnTask);
                 }
             }
 
@@ -515,7 +504,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>A tuple indicating whether a claim was attempted and the claimed ownership. The claimed ownership will be <c>null</c> if the claim attempt failed.</returns>
         ///
-        private async Task<(bool WasClaimAttempted, EventProcessorPartitionOwnership ClaimedPartition)> ClaimOwnershipAsync(string partitionId,
+        private async Task<(bool wasClaimAttempted, EventProcessorPartitionOwnership claimedPartition)> ClaimOwnershipAsync(string partitionId,
                                                                                                                             IEnumerable<EventProcessorPartitionOwnership> completeOwnershipEnumerable,
                                                                                                                             CancellationToken cancellationToken)
         {

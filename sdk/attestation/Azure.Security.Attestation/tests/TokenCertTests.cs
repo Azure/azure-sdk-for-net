@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Security.Attestation.Models;
+using Azure.Identity;
+using Azure.Security.Attestation.Tests.Samples;
 
 namespace Azure.Security.Attestation.Tests
 {

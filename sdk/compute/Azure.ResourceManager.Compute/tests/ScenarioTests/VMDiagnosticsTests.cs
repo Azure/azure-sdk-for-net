@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 {
                     vm.DiagnosticsProfile = GetDiagnosticsProfile(storageAccountForBootDiagnosticsName);
                 });
-            inputVM = returnTwoVm.Input;
-            string inputVMName = returnTwoVm.Name;
+            inputVM = returnTwoVm.Item2;
+            string inputVMName = returnTwoVm.Item3;
             VirtualMachine getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(resourceGroupName, inputVMName);
             ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
             ValidateBootDiagnosticsInstanceView(getVMWithInstanceViewResponse.InstanceView.BootDiagnostics, hasError: false);

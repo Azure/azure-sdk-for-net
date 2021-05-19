@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
     /// <summary> The StoredAttestationPolicy. </summary>
     public partial class StoredAttestationPolicy

@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2020-08-04";
+        public const string DefaultSasVersion = "2020-06-12";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -176,8 +176,6 @@ namespace Azure.Storage
             public const string InternalError = "InternalError";
             public const string OperationTimedOut = "OperationTimedOut";
             public const string ServerBusy = "ServerBusy";
-            public const string ContainerAlreadyExists = "ContainerAlreadyExists";
-            public const string BlobAlreadyExists = "BlobAlreadyExists";
         }
 
         /// <summary>
@@ -341,10 +339,6 @@ namespace Azure.Storage
             public const string IsDirectoryKey = "hdi_isFolder";
 
             public const string FileSystemName = "FileSystem";
-
-            public const string DeletionId = "deletionid";
-
-            public const string DirectoryResourceType = "directory";
         }
 
         /// <summary>
@@ -619,12 +613,6 @@ namespace Azure.Storage
         {
             internal const int NotFound = 404;
             internal const int NotModified = 304;
-        }
-
-        internal static class ServerTimeout
-        {
-            internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
-            internal const string QueryParameterKey = "timeout";
         }
     }
 }

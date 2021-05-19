@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(RerunTumblingWindowTriggerConverter))]
     public partial class RerunTumblingWindowTrigger : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -38,14 +36,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            writer.WritePropertyName("parentTrigger");
-            writer.WriteObjectValue(ParentTrigger);
+            if (Optional.IsDefined(ParentTrigger))
+            {
+                writer.WritePropertyName("parentTrigger");
+                writer.WriteObjectValue(ParentTrigger);
+            }
             writer.WritePropertyName("requestedStartTime");
             writer.WriteStringValue(RequestedStartTime, "O");
             writer.WritePropertyName("requestedEndTime");
             writer.WriteStringValue(RequestedEndTime, "O");
-            writer.WritePropertyName("rerunConcurrency");
-            writer.WriteNumberValue(RerunConcurrency);
+            writer.WritePropertyName("maxConcurrency");
+            writer.WriteNumberValue(MaxConcurrency);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -61,10 +62,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<TriggerRuntimeState> runtimeState = default;
             Optional<IList<object>> annotations = default;
-            object parentTrigger = default;
+            Optional<object> parentTrigger = default;
             DateTimeOffset requestedStartTime = default;
             DateTimeOffset requestedEndTime = default;
-            int rerunConcurrency = default;
+            int maxConcurrency = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -115,6 +116,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("parentTrigger"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             parentTrigger = property0.Value.GetObject();
                             continue;
                         }
@@ -128,9 +134,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             requestedEndTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("rerunConcurrency"))
+                        if (property0.NameEquals("maxConcurrency"))
                         {
-                            rerunConcurrency = property0.Value.GetInt32();
+                            maxConcurrency = property0.Value.GetInt32();
                             continue;
                         }
                     }
@@ -139,20 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RerunTumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, rerunConcurrency);
-        }
-
-        internal partial class RerunTumblingWindowTriggerConverter : JsonConverter<RerunTumblingWindowTrigger>
-        {
-            public override void Write(Utf8JsonWriter writer, RerunTumblingWindowTrigger model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override RerunTumblingWindowTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeRerunTumblingWindowTrigger(document.RootElement);
-            }
+            return new RerunTumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, parentTrigger.Value, requestedStartTime, requestedEndTime, maxConcurrency);
         }
     }
 }

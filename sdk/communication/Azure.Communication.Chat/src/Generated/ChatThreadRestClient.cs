@@ -30,7 +30,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-04-05-preview6")
+        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-01-preview5")
         {
             if (endpoint == null)
             {
@@ -204,7 +204,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateSendChatMessageRequest(string chatThreadId, string content, string senderDisplayName, ChatMessageType? type, IDictionary<string, string> metadata)
+        internal HttpMessage CreateSendChatMessageRequest(string chatThreadId, string content, string senderDisplayName, ChatMessageType? type)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -218,16 +218,11 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            SendChatMessageRequest sendChatMessageRequest = new SendChatMessageRequest(content)
+            var model = new SendChatMessageRequest(content)
             {
                 SenderDisplayName = senderDisplayName,
                 Type = type
             };
-            foreach (var value in metadata)
-            {
-                sendChatMessageRequest.Metadata.Add(value);
-            }
-            var model = sendChatMessageRequest;
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(model);
             request.Content = content0;
@@ -239,10 +234,9 @@ namespace Azure.Communication.Chat
         /// <param name="content"> Chat message content. </param>
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="type"> The chat message type. </param>
-        /// <param name="metadata"> Message metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="content"/> is null. </exception>
-        public async Task<Response<SendChatMessageResultInternal>> SendChatMessageAsync(string chatThreadId, string content, string senderDisplayName = null, ChatMessageType? type = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SendChatMessageResultInternal>> SendChatMessageAsync(string chatThreadId, string content, string senderDisplayName = null, ChatMessageType? type = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -253,7 +247,7 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateSendChatMessageRequest(chatThreadId, content, senderDisplayName, type, metadata);
+            using var message = CreateSendChatMessageRequest(chatThreadId, content, senderDisplayName, type);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -274,10 +268,9 @@ namespace Azure.Communication.Chat
         /// <param name="content"> Chat message content. </param>
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="type"> The chat message type. </param>
-        /// <param name="metadata"> Message metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="content"/> is null. </exception>
-        public Response<SendChatMessageResultInternal> SendChatMessage(string chatThreadId, string content, string senderDisplayName = null, ChatMessageType? type = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public Response<SendChatMessageResultInternal> SendChatMessage(string chatThreadId, string content, string senderDisplayName = null, ChatMessageType? type = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -288,7 +281,7 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateSendChatMessageRequest(chatThreadId, content, senderDisplayName, type, metadata);
+            using var message = CreateSendChatMessageRequest(chatThreadId, content, senderDisplayName, type);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -467,7 +460,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateUpdateChatMessageRequest(string chatThreadId, string chatMessageId, string content, IDictionary<string, string> metadata)
+        internal HttpMessage CreateUpdateChatMessageRequest(string chatThreadId, string chatMessageId, string content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -482,15 +475,10 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            UpdateChatMessageRequest updateChatMessageRequest = new UpdateChatMessageRequest()
+            var model = new UpdateChatMessageRequest()
             {
                 Content = content
             };
-            foreach (var value in metadata)
-            {
-                updateChatMessageRequest.Metadata.Add(value);
-            }
-            var model = updateChatMessageRequest;
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(model);
             request.Content = content0;
@@ -501,10 +489,9 @@ namespace Azure.Communication.Chat
         /// <param name="chatThreadId"> The thread id to which the message was sent. </param>
         /// <param name="chatMessageId"> The message id. </param>
         /// <param name="content"> Chat message content. </param>
-        /// <param name="metadata"> Message metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
-        public async Task<Response> UpdateChatMessageAsync(string chatThreadId, string chatMessageId, string content = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateChatMessageAsync(string chatThreadId, string chatMessageId, string content = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -515,7 +502,7 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(chatMessageId));
             }
 
-            using var message = CreateUpdateChatMessageRequest(chatThreadId, chatMessageId, content, metadata);
+            using var message = CreateUpdateChatMessageRequest(chatThreadId, chatMessageId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -530,10 +517,9 @@ namespace Azure.Communication.Chat
         /// <param name="chatThreadId"> The thread id to which the message was sent. </param>
         /// <param name="chatMessageId"> The message id. </param>
         /// <param name="content"> Chat message content. </param>
-        /// <param name="metadata"> Message metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
-        public Response UpdateChatMessage(string chatThreadId, string chatMessageId, string content = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public Response UpdateChatMessage(string chatThreadId, string chatMessageId, string content = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -544,7 +530,7 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(chatMessageId));
             }
 
-            using var message = CreateUpdateChatMessageRequest(chatThreadId, chatMessageId, content, metadata);
+            using var message = CreateUpdateChatMessageRequest(chatThreadId, chatMessageId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

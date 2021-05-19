@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// Network ACLs for the resource
+    /// Network ACLs for SignalR
     /// </summary>
     public partial class SignalRNetworkACLs
     {

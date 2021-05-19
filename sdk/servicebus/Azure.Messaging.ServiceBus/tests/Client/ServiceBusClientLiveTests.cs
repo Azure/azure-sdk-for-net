@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Core;
 using NUnit.Framework;
@@ -50,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         /// </summary>
         ///
         [Test]
-        public async Task ClientCanConnectUsingSasCredential()
+        public async Task ClientCanConnectUsingSharedKeyCredentialWithSignature()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
             {
@@ -58,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
                 var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
                 var parsed = ServiceBusConnectionStringProperties.Parse(connectionString);
-                var credential = new AzureSasCredential(parsed.SharedAccessSignature);
+                var credential = new ServiceBusSharedAccessKeyCredential(parsed.SharedAccessSignature);
 
                 await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, options))
                 {
@@ -85,13 +84,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         /// </summary>
         ///
         [Test]
-        public async Task ClientCanConnectUsingSharedKeyCredential()
+        public async Task ClientCanConnectUsingSharedKeyCredentialWithSharedKey()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
             {
                 var options = new ServiceBusClientOptions();
                 var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
-                var credential = new AzureNamedKeyCredential(TestEnvironment.SharedAccessKeyName, TestEnvironment.SharedAccessKey);
+                var credential = new ServiceBusSharedAccessKeyCredential(TestEnvironment.SharedAccessKeyName, TestEnvironment.SharedAccessKey);
 
                 await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, options))
                 {
@@ -194,30 +193,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                     await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 client.CreateProcessor(scope.QueueName);
-            }
-        }
-
-        [Test]
-        public async Task AcceptNextSessionRespectsCancellation()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
-            {
-                var client = CreateClient(60);
-                var duration = TimeSpan.FromSeconds(5);
-                using var cancellationTokenSource = new CancellationTokenSource(duration);
-
-                var start = DateTime.UtcNow;
-                Assert.ThrowsAsync<TaskCanceledException>(async () => await client.AcceptNextSessionAsync(scope.QueueName, cancellationToken: cancellationTokenSource.Token));
-                var stop = DateTime.UtcNow;
-
-                Assert.Less(stop - start, duration.Add(duration));
-                var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage("sessionId"));
-
-                start = DateTime.UtcNow;
-                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
-                stop = DateTime.UtcNow;
-                Assert.Less(stop - start, duration.Add(duration));
             }
         }
     }

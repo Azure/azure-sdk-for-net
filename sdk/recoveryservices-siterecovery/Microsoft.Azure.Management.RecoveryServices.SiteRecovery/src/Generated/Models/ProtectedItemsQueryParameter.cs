@@ -39,15 +39,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="multiVmGroupCreateOption">Whether Multi VM group is
         /// auto created or specified by user. Possible values include:
         /// 'AutoCreated', 'UserSpecified'</param>
-        /// <param name="processServerId">The process server Id filter.</param>
-        public ProtectedItemsQueryParameter(string sourceFabricName = default(string), string recoveryPlanName = default(string), string vCenterName = default(string), string instanceType = default(string), string multiVmGroupCreateOption = default(string), string processServerId = default(string))
+        public ProtectedItemsQueryParameter(string sourceFabricName = default(string), string recoveryPlanName = default(string), string vCenterName = default(string), string instanceType = default(string), string multiVmGroupCreateOption = default(string))
         {
             SourceFabricName = sourceFabricName;
             RecoveryPlanName = recoveryPlanName;
             VCenterName = vCenterName;
             InstanceType = instanceType;
             MultiVmGroupCreateOption = multiVmGroupCreateOption;
-            ProcessServerId = processServerId;
             CustomInit();
         }
 
@@ -86,12 +84,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "multiVmGroupCreateOption")]
         public string MultiVmGroupCreateOption { get; set; }
-
-        /// <summary>
-        /// Gets or sets the process server Id filter.
-        /// </summary>
-        [JsonProperty(PropertyName = "processServerId")]
-        public string ProcessServerId { get; set; }
 
     }
 }

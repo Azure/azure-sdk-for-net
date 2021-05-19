@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(AzureSqlDatabaseLinkedServiceConverter))]
     public partial class AzureSqlDatabaseLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -76,11 +73,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("tenant");
                 writer.WriteObjectValue(Tenant);
             }
-            if (Optional.IsDefined(AzureCloudType))
-            {
-                writer.WritePropertyName("azureCloudType");
-                writer.WriteObjectValue(AzureCloudType);
-            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
@@ -107,7 +99,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> servicePrincipalId = default;
             Optional<SecretBase> servicePrincipalKey = default;
             Optional<object> tenant = default;
-            Optional<object> azureCloudType = default;
             Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -217,16 +208,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             tenant = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("azureCloudType"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            azureCloudType = property0.Value.GetObject();
-                            continue;
-                        }
                         if (property0.NameEquals("encryptedCredential"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -243,20 +224,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureSqlDatabaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, password.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, encryptedCredential.Value);
-        }
-
-        internal partial class AzureSqlDatabaseLinkedServiceConverter : JsonConverter<AzureSqlDatabaseLinkedService>
-        {
-            public override void Write(Utf8JsonWriter writer, AzureSqlDatabaseLinkedService model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override AzureSqlDatabaseLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAzureSqlDatabaseLinkedService(document.RootElement);
-            }
+            return new AzureSqlDatabaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, password.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, encryptedCredential.Value);
         }
     }
 }

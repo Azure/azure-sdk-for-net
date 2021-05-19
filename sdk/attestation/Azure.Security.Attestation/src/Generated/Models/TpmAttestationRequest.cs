@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
     /// <summary> Attestation request for Trusted Platform Module (TPM) attestation. </summary>
     public partial class TpmAttestationRequest

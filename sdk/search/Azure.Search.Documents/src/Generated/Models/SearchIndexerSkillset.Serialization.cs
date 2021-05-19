@@ -35,11 +35,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("cognitiveServices");
                 writer.WriteObjectValue(CognitiveServicesAccount);
             }
-            if (Optional.IsDefined(KnowledgeStore))
-            {
-                writer.WritePropertyName("knowledgeStore");
-                writer.WriteObjectValue(KnowledgeStore);
-            }
             if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag");
@@ -66,7 +61,6 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> description = default;
             IList<SearchIndexerSkill> skills = default;
             Optional<CognitiveServicesAccount> cognitiveServices = default;
-            Optional<SearchIndexerKnowledgeStore> knowledgeStore = default;
             Optional<string> odataEtag = default;
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
             foreach (var property in element.EnumerateObject())
@@ -101,16 +95,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     cognitiveServices = CognitiveServicesAccount.DeserializeCognitiveServicesAccount(property.Value);
                     continue;
                 }
-                if (property.NameEquals("knowledgeStore"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    knowledgeStore = SearchIndexerKnowledgeStore.DeserializeSearchIndexerKnowledgeStore(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("@odata.etag"))
                 {
                     odataEtag = property.Value.GetString();
@@ -127,7 +111,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerSkillset(name, description.Value, skills, cognitiveServices.Value, knowledgeStore.Value, odataEtag.Value, encryptionKey.Value);
+            return new SearchIndexerSkillset(name, description.Value, skills, cognitiveServices.Value, odataEtag.Value, encryptionKey.Value);
         }
     }
 }

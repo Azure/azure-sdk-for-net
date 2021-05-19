@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal partial class ClusterListResult
+    public partial class ClusterListResult
     {
         internal static ClusterListResult DeserializeClusterListResult(JsonElement element)
         {

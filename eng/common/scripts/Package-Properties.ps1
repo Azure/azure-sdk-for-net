@@ -39,7 +39,7 @@ class PackageProps
         if (Test-Path (Join-Path $directoryPath "README.md"))
         {
             $this.ReadMePath = Join-Path $directoryPath "README.md"
-        }
+        } 
         else
         {
             $this.ReadMePath = $null
@@ -48,7 +48,7 @@ class PackageProps
         if (Test-Path (Join-Path $directoryPath "CHANGELOG.md"))
         {
             $this.ChangeLogPath = Join-Path $directoryPath "CHANGELOG.md"
-        }
+        } 
         else
         {
             $this.ChangeLogPath = $null
@@ -81,19 +81,17 @@ function Get-PkgProperties
         [string]$ServiceDirectory
     )
 
-    $allPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectory
-    $pkgProps = $allPkgProps.Where({ $_.Name -eq $PackageName -or $_.ArtifactName -eq $PackageName });
+    $AllPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectory
 
-    if ($pkgProps.Count -ge 1)
+    foreach ($pkgProp in $AllPkgProps)
     {
-        if ($pkgProps.Count -gt 1)
+        if(($pkgProp.Name -eq $PackageName) -or ($pkgProp.ArtifactName -eq $PackageName))
         {
-            Write-Host "Found more than one project with the name [$PackageName], choosing the first one under $($pkgProps[0].DirectoryPath)"
+            return $pkgProp
         }
-        return $pkgProps[0]
     }
 
-    LogError "Failed to retrive Properties for [$PackageName]"
+    LogError "Failed to retrive Properties for [ $PackageName ]"
     return $null
 }
 
@@ -116,7 +114,7 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
             {
                 $pkgPropsResult += Get-PkgPropsForEntireService -serviceDirectoryPath $dir.FullName
             }
-        }
+        } 
         else
         {
             $pkgPropsResult = Get-PkgPropsForEntireService -serviceDirectoryPath (Join-Path $RepoRoot "sdk" $ServiceDirectory)
@@ -126,7 +124,7 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
     return $pkgPropsResult
 }
 
-# Given the metadata url under https://github.com/Azure/azure-sdk/tree/master/_data/releases/latest,
+# Given the metadata url under https://github.com/Azure/azure-sdk/tree/master/_data/releases/latest, 
 # the function will return the csv metadata back as part of response.
 function Get-CSVMetadata ([string]$MetadataUri=$MetadataUri)
 {
@@ -137,7 +135,8 @@ function Get-CSVMetadata ([string]$MetadataUri=$MetadataUri)
 function Get-PkgPropsForEntireService ($serviceDirectoryPath)
 {
     $projectProps = @() # Properties from very project inthe service
-    $serviceDirectory = $serviceDirectoryPath -replace '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'
+    $packageProps = @() # Properties for artifacts specified in ci.yml
+    $serviceDirectory = (Split-Path -Path $serviceDirectoryPath -Leaf)
 
     if (!$GetPackageInfoFromRepoFn -or !(Test-Path "Function:$GetPackageInfoFromRepoFn"))
     {
@@ -148,12 +147,49 @@ function Get-PkgPropsForEntireService ($serviceDirectoryPath)
 
     foreach ($directory in (Get-ChildItem $serviceDirectoryPath -Directory))
     {
-        $pkgProps = &$GetPackageInfoFromRepoFn $directory.FullName $serviceDirectory
-        if ($null -ne $pkgProps)
+        $pkgDirectoryPath = Join-Path $serviceDirectoryPath $directory.Name
+        $pkgProps = &$GetPackageInfoFromRepoFn $pkgDirectoryPath $serviceDirectory
+        if ($null -ne  $pkgProps)
         {
             $projectProps += $pkgProps
         }
     }
 
-    return $projectProps
+    $ciYmlFiles = Get-ChildItem $serviceDirectoryPath -filter "ci.yml"
+    foreach($ciYmlFile in $ciYmlFiles)
+    {
+        $activeArtifactList = Get-ArtifactListFromYml -ciYmlPath $ciYmlFile.FullName
+        foreach ($artifact in $activeArtifactList)
+        {
+            $packageProps += $projectProps | Where-Object { $_.ArtifactName -eq $artifact["name"] -and $_.Group -eq $artifact["groupId"] }
+        }
+    }
+
+    return $packageProps
+}
+
+function Get-ArtifactListFromYml ($ciYmlPath)
+{
+    $ProgressPreference = "SilentlyContinue"
+    if ((Get-PSRepository | ?{$_.Name -eq "PSGallery"}).Count -eq 0)
+    {
+        Register-PSRepository -Default -ErrorAction:SilentlyContinue
+    }
+
+    if ((Get-Module -ListAvailable -Name powershell-yaml | ?{$_.Version -eq "0.4.2"}).Count -eq 0)
+    {
+        Install-Module -Name powershell-yaml -RequiredVersion 0.4.2 -Force -Scope CurrentUser
+    }
+
+    $ciYmlContent = Get-Content $ciYmlPath -Raw
+    $ciYmlObj = ConvertFrom-Yaml $ciYmlContent -Ordered
+    if ($ciYmlObj.Contains("stages"))
+    {
+        $artifactsInCI = $ciYmlObj["stages"][0]["parameters"]["Artifacts"]
+    }
+    elseif ($ciYmlObj.Contains("extends")) 
+    {
+        $artifactsInCI = $ciYmlObj["extends"]["parameters"]["Artifacts"]
+    }
+    return $artifactsInCI
 }

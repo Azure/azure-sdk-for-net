@@ -13,32 +13,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for data flow statistics. </summary>
     public partial class DataFlowDebugStatisticsRequest
     {
-        /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>
-        public DataFlowDebugStatisticsRequest()
-        {
-            Columns = new ChangeTrackingList<string>();
-        }
-
-        /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>
-        /// <param name="sessionId"> The ID of data flow debug session. </param>
-        /// <param name="dataFlowName"> The data flow which contains the debug session. </param>
-        /// <param name="streamName"> The output stream name. </param>
-        /// <param name="columns"> List of column names. </param>
-        internal DataFlowDebugStatisticsRequest(string sessionId, string dataFlowName, string streamName, IList<string> columns)
-        {
-            SessionId = sessionId;
-            DataFlowName = dataFlowName;
-            StreamName = streamName;
-            Columns = columns;
-        }
 
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; set; }
+        public string SessionId { get; }
         /// <summary> The data flow which contains the debug session. </summary>
-        public string DataFlowName { get; set; }
+        public string DataFlowName { get; }
         /// <summary> The output stream name. </summary>
-        public string StreamName { get; set; }
+        public string StreamName { get; }
         /// <summary> List of column names. </summary>
-        public IList<string> Columns { get; }
+        public IReadOnlyList<string> Columns { get; }
     }
 }

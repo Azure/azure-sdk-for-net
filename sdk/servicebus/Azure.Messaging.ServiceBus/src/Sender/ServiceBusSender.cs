@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -188,8 +189,6 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
-            _connection.ThrowIfClosed();
-
             IReadOnlyList<ServiceBusMessage> messageList = messages switch
             {
                 IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
@@ -300,8 +299,6 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
-            _connection.ThrowIfClosed();
-
             options = options?.Clone() ?? new CreateMessageBatchOptions();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CreateMessageBatchStart(Identifier);
@@ -337,8 +334,6 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(messageBatch, nameof(messageBatch));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
-            _connection.ThrowIfClosed();
-
             if (messageBatch.Count == 0)
             {
                 return;
@@ -424,7 +419,6 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
-            _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             IReadOnlyList<ServiceBusMessage> messageList = messages switch
@@ -492,9 +486,8 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
-            _connection.ThrowIfClosed();
+            Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             // the sequence numbers MUST be in array form for them to be encoded correctly
@@ -535,7 +528,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
-        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
+        public virtual async Task CloseAsync(
+            CancellationToken cancellationToken = default)
         {
             IsClosed = true;
 
@@ -543,7 +537,7 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                await _innerSender.CloseAsync(cancellationToken).ConfigureAwait(false);
+                await _innerSender.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -556,17 +550,13 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />.
-        ///   This is equivalent to calling <see cref="CloseAsync"/>.
+        ///   This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
-            Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync()
-        {
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
+        public virtual async ValueTask DisposeAsync() =>
             await CloseAsync().ConfigureAwait(false);
-            GC.SuppressFinalize(this);
-        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

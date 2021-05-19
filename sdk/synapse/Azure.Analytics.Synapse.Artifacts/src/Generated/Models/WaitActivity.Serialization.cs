@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(WaitActivityConverter))]
     public partial class WaitActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -51,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("waitTimeInSeconds");
-            writer.WriteObjectValue(WaitTimeInSeconds);
+            writer.WriteNumberValue(WaitTimeInSeconds);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -68,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            object waitTimeInSeconds = default;
+            int waitTimeInSeconds = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("waitTimeInSeconds"))
                         {
-                            waitTimeInSeconds = property0.Value.GetObject();
+                            waitTimeInSeconds = property0.Value.GetInt32();
                             continue;
                         }
                     }
@@ -139,19 +136,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new WaitActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, waitTimeInSeconds);
-        }
-
-        internal partial class WaitActivityConverter : JsonConverter<WaitActivity>
-        {
-            public override void Write(Utf8JsonWriter writer, WaitActivity model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override WaitActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWaitActivity(document.RootElement);
-            }
         }
     }
 }

@@ -35,46 +35,45 @@ A common use case for batch operations is to add many entities to a table in bul
 ```C# Snippet:BatchAdd
 // Create a list of 5 entities with the same partition key.
 string partitionKey = "BatchInsertSample";
-List<TableEntity> entityList = new List<TableEntity>
-{
+List<TableEntity> entityList = new List<TableEntity>{
     new TableEntity(partitionKey, "01")
     {
-        { "Product", "Marker" },
-        { "Price", 5.00 },
-        { "Brand", "Premium" }
+        {"Product", "Marker" },
+        {"Price", 5.00 },
+        {"Brand", "Premium" }
     },
     new TableEntity(partitionKey, "02")
     {
-        { "Product", "Pen" },
-        { "Price", 3.00 },
-        { "Brand", "Premium" }
+        {"Product", "Pen" },
+        {"Price", 3.00 },
+        {"Brand", "Premium" }
     },
     new TableEntity(partitionKey, "03")
     {
-        { "Product", "Paper" },
-        { "Price", 0.10 },
-        { "Brand", "Premium" }
+        {"Product", "Paper" },
+        {"Price", 0.10 },
+        {"Brand", "Premium" }
     },
     new TableEntity(partitionKey, "04")
     {
-        { "Product", "Glue" },
-        { "Price", 1.00 },
-        { "Brand", "Generic" }
+        {"Product", "Glue" },
+        {"Price", 1.00 },
+        {"Brand", "Generic" }
     },
 };
 
 // Create the batch.
-List<TableTransactionAction> addEntitiesBatch = new List<TableTransactionAction>();
+TableTransactionalBatch addEntitiesBatch = client.CreateTransactionalBatch(partitionKey);
 
 // Add the entities to be added to the batch.
-addEntitiesBatch.AddRange(entityList.Select(e => new TableTransactionAction(TableTransactionActionType.Add, e)));
+addEntitiesBatch.AddEntities(entityList);
 
 // Submit the batch.
-Response<IReadOnlyList<Response>> response = await client.SubmitTransactionAsync(addEntitiesBatch).ConfigureAwait(false);
+TableBatchResponse response = await addEntitiesBatch.SubmitBatchAsync().ConfigureAwait(false);
 
-for (int i = 0; i < entityList.Count; i++)
+foreach (TableEntity entity in entityList)
 {
-    Console.WriteLine($"The ETag for the entity with RowKey: '{entityList[i].RowKey}' is {response.Value[i].Headers.ETag}");
+    Console.WriteLine($"The ETag for the entity with RowKey: '{entity.RowKey}' is {response.GetResponseForEntity(entity.RowKey).Headers.ETag}");
 }
 ```
 
@@ -85,31 +84,34 @@ This example assumes we already have added the entities from the previous add en
 
 ```C# Snippet:BatchMixed
 // Create a new batch.
-List<TableTransactionAction> mixedBatch = new List<TableTransactionAction>();
+TableTransactionalBatch mixedBatch = client.CreateTransactionalBatch(partitionKey);
 
 // Add an entity for deletion to the batch.
-mixedBatch.Add(new TableTransactionAction(TableTransactionActionType.Delete, entityList[0]));
+mixedBatch.DeleteEntity(entityList[0].RowKey);
 
 // Remove this entity from our list so that we can track that it will no longer be in the table.
 entityList.RemoveAt(0);
 
 // Change only the price of the entity with a RoyKey equal to "02".
-TableEntity mergeEntity = new TableEntity(partitionKey, "02") { { "Price", 3.50 }, };
+TableEntity mergeEntity = new TableEntity(partitionKey, "02")
+{
+    {"Price", 3.50 },
+};
 
 // Add a merge operation to the batch.
 // We specify an ETag value of ETag.All to indicate that this merge should be unconditional.
-mixedBatch.Add(new TableTransactionAction(TableTransactionActionType.UpdateMerge, mergeEntity, ETag.All));
+mixedBatch.UpdateEntity(mergeEntity, ETag.All, TableUpdateMode.Merge);
 
 // Update a property on an entity.
 TableEntity updateEntity = entityList[2];
 updateEntity["Brand"] = "Generic";
 
-// Add an upsert operation to the batch.
+// Add an update operation to the batch.
 // Using the UpsertEntity method allows us to implicitly ignore the ETag value.
-mixedBatch.Add(new TableTransactionAction(TableTransactionActionType.UpsertReplace, updateEntity));
+mixedBatch.UpsertEntity(updateEntity, TableUpdateMode.Replace);
 
-// Submit the batch.
-await client.SubmitTransactionAsync(mixedBatch).ConfigureAwait(false);
+ // Submit the batch.
+await mixedBatch.SubmitBatchAsync().ConfigureAwait(false);
 ```
 
 ## Deleting entities with a transactional batch
@@ -118,16 +120,16 @@ Let's clean up the rest of the entities remaining in the table with a batch dele
 
 ```C# Snippet:BatchDelete
 // Create a new batch.
-List<TableTransactionAction> deleteEntitiesBatch = new List<TableTransactionAction>();
+TableTransactionalBatch deleteEntitiesBatch = client.CreateTransactionalBatch(partitionKey);
 
 // Add the entities for deletion to the batch.
 foreach (TableEntity entity in entityList)
 {
-    deleteEntitiesBatch.Add(new TableTransactionAction(TableTransactionActionType.Delete, entity));
+    deleteEntitiesBatch.DeleteEntity(entity.RowKey);
 }
 
 // Submit the batch.
-await client.SubmitTransactionAsync(deleteEntitiesBatch).ConfigureAwait(false);
+await deleteEntitiesBatch.SubmitBatchAsync().ConfigureAwait(false);
 ```
 
 ---

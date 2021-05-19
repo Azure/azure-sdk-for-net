@@ -49,14 +49,14 @@ namespace Azure.AI.TextAnalytics.Tests
             "heart failure"
         };
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeHealthcareEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             ValidateOperationProperties(operation);
 
@@ -110,7 +110,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeHealthcareEntitiesTestWithAssertions()
         {
             TextAnalyticsClient client = GetClient();
@@ -129,7 +129,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             ValidateOperationProperties(operation);
 
@@ -174,15 +174,14 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             }
         }
-
-        [RecordedTest]
+        [Test]
         public async Task RecognizeHealthcareEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en");
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             ValidateOperationProperties(operation);
 
@@ -198,7 +197,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeHealthcareEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -211,7 +210,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             ValidateOperationProperties(operation);
 
@@ -228,14 +227,14 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[2].Error.ErrorCode.ToString());
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeHealthcareEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             ValidateOperationProperties(operation);
 
@@ -251,7 +250,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -263,7 +262,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en", options);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             ValidateOperationProperties(operation);
 
@@ -279,14 +278,14 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput, true);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeHealthcareEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             ValidateOperationProperties(operation);
 
@@ -302,7 +301,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeHealthcareEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -314,7 +313,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, options);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             ValidateOperationProperties(operation);
 
@@ -330,7 +329,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(resultCollection, expectedOutput, true);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeHealthcareEntitiesBatchWithCancellation()
         {
             TextAnalyticsClient client = GetClient();
@@ -365,7 +364,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task AnalyzeHealthcareEntitiesPagination()
         {
             TextAnalyticsClient client = GetClient();
@@ -378,7 +377,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.Throws<InvalidOperationException>(() => operation.GetValues());
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);

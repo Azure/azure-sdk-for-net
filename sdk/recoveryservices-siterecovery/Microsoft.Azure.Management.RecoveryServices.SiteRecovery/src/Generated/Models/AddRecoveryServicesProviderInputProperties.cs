@@ -38,19 +38,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// input for DRA authentication.</param>
         /// <param name="resourceAccessIdentityInput">The identity provider
         /// input for resource access.</param>
-        /// <param name="machineId">The Id of the machine where the provider is
-        /// getting added.</param>
-        /// <param name="biosId">The Bios Id of the machine.</param>
-        /// <param name="dataPlaneAuthenticationIdentityInput">The identity
-        /// provider input for data plane authentication.</param>
-        public AddRecoveryServicesProviderInputProperties(string machineName, IdentityProviderInput authenticationIdentityInput, IdentityProviderInput resourceAccessIdentityInput, string machineId = default(string), string biosId = default(string), IdentityProviderInput dataPlaneAuthenticationIdentityInput = default(IdentityProviderInput))
+        public AddRecoveryServicesProviderInputProperties(string machineName, IdentityProviderInput authenticationIdentityInput, IdentityProviderInput resourceAccessIdentityInput)
         {
             MachineName = machineName;
-            MachineId = machineId;
-            BiosId = biosId;
             AuthenticationIdentityInput = authenticationIdentityInput;
             ResourceAccessIdentityInput = resourceAccessIdentityInput;
-            DataPlaneAuthenticationIdentityInput = dataPlaneAuthenticationIdentityInput;
             CustomInit();
         }
 
@@ -67,19 +59,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string MachineName { get; set; }
 
         /// <summary>
-        /// Gets or sets the Id of the machine where the provider is getting
-        /// added.
-        /// </summary>
-        [JsonProperty(PropertyName = "machineId")]
-        public string MachineId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Bios Id of the machine.
-        /// </summary>
-        [JsonProperty(PropertyName = "biosId")]
-        public string BiosId { get; set; }
-
-        /// <summary>
         /// Gets or sets the identity provider input for DRA authentication.
         /// </summary>
         [JsonProperty(PropertyName = "authenticationIdentityInput")]
@@ -90,13 +69,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "resourceAccessIdentityInput")]
         public IdentityProviderInput ResourceAccessIdentityInput { get; set; }
-
-        /// <summary>
-        /// Gets or sets the identity provider input for data plane
-        /// authentication.
-        /// </summary>
-        [JsonProperty(PropertyName = "dataPlaneAuthenticationIdentityInput")]
-        public IdentityProviderInput DataPlaneAuthenticationIdentityInput { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -125,10 +97,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             if (ResourceAccessIdentityInput != null)
             {
                 ResourceAccessIdentityInput.Validate();
-            }
-            if (DataPlaneAuthenticationIdentityInput != null)
-            {
-                DataPlaneAuthenticationIdentityInput.Validate();
             }
         }
     }

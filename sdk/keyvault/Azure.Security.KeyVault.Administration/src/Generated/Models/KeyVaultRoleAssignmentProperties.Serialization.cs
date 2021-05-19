@@ -10,37 +10,16 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    public partial class KeyVaultRoleAssignmentProperties
+    internal partial class KeyVaultRoleAssignmentProperties : IUtf8JsonSerializable
     {
-        internal static KeyVaultRoleAssignmentProperties DeserializeKeyVaultRoleAssignmentProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            Optional<KeyVaultRoleScope> scope = default;
-            Optional<string> roleDefinitionId = default;
-            Optional<string> principalId = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("scope"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    scope = new KeyVaultRoleScope(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("roleDefinitionId"))
-                {
-                    roleDefinitionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("principalId"))
-                {
-                    principalId = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new KeyVaultRoleAssignmentProperties(Optional.ToNullable(scope), roleDefinitionId.Value, principalId.Value);
+            writer.WriteStartObject();
+            writer.WritePropertyName("roleDefinitionId");
+            writer.WriteStringValue(RoleDefinitionId);
+            writer.WritePropertyName("principalId");
+            writer.WriteStringValue(PrincipalId);
+            writer.WriteEndObject();
         }
     }
 }

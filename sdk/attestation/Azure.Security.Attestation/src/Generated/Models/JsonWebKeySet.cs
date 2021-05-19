@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
     /// <summary> The JsonWebKeySet. </summary>
     internal partial class JsonWebKeySet

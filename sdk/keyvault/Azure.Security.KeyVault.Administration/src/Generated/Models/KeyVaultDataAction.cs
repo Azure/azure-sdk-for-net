@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Supported permissions for data actions. </summary>
     public readonly partial struct KeyVaultDataAction : IEquatable<KeyVaultDataAction>

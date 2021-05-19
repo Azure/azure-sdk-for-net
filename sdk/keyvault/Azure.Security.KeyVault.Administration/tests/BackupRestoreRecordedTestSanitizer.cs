@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public BackupRestoreRecordedTestSanitizer()
             : base()
         {
-            AddJsonPathSanitizer("$..token");
+            JsonPathSanitizers.Add("$..token");
         }
 
         private const string RetryAfter = "Retry-After";

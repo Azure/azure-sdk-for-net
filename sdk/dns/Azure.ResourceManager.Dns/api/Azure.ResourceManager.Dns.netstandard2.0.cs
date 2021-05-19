@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dns
     }
     public partial class ZonesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        protected ZonesDeleteOperation() { }
+        internal ZonesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

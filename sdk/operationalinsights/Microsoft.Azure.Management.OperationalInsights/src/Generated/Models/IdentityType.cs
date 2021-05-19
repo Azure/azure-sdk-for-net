@@ -23,8 +23,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     {
         [EnumMember(Value = "SystemAssigned")]
         SystemAssigned,
-        [EnumMember(Value = "UserAssigned")]
-        UserAssigned,
         [EnumMember(Value = "None")]
         None
     }
@@ -41,8 +39,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             {
                 case IdentityType.SystemAssigned:
                     return "SystemAssigned";
-                case IdentityType.UserAssigned:
-                    return "UserAssigned";
                 case IdentityType.None:
                     return "None";
             }
@@ -55,8 +51,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             {
                 case "SystemAssigned":
                     return IdentityType.SystemAssigned;
-                case "UserAssigned":
-                    return IdentityType.UserAssigned;
                 case "None":
                     return IdentityType.None;
             }

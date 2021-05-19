@@ -17,6 +17,7 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             #region Snippet:FormRecognizerSampleTrainModelWithFormsAndLabels
             // For this sample, you can use the training forms found in the `trainingFiles` folder.
@@ -27,11 +28,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // For instructions to create a label file for your training forms, please see:
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 
-#if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
-#else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-#endif
+            //@@ Uri trainingFileUri = <trainingFileUri>;
             string modelName = "My Model with labels";
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 

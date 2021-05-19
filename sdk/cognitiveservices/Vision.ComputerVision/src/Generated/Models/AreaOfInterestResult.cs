@@ -32,12 +32,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="areaOfInterest">A bounding box for an area of interest
         /// inside an image.</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        public AreaOfInterestResult(BoundingRect areaOfInterest = default(BoundingRect), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata), string modelVersion = default(string))
+        public AreaOfInterestResult(BoundingRect areaOfInterest = default(BoundingRect), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
             AreaOfInterest = areaOfInterest;
             RequestId = requestId;
             Metadata = metadata;
-            ModelVersion = modelVersion;
             CustomInit();
         }
 
@@ -62,11 +61,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public ImageMetadata Metadata { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "modelVersion")]
-        public string ModelVersion { get; set; }
 
     }
 }

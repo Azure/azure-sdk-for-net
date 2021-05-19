@@ -11,8 +11,8 @@ namespace Azure.Messaging.ServiceBus.Administration
     /// <remarks>
     /// Filter is an abstract class with the following concrete implementations:
     /// <list type="bullet">
-    /// <item><description><b>SqlRuleFilter</b> that represents a filter using SQL syntax.</description></item>
-    /// <item><description><b>CorrelationRuleFilter</b> that provides an optimization for correlation equality expressions.</description></item>
+    /// <item><b>SqlRuleFilter</b> that represents a filter using SQL syntax. </item>
+    /// <item><b>CorrelationRuleFilter</b> that provides an optimization for correlation equality expressions.</item>
     /// </list>
     /// </remarks>
     /// <seealso cref="SqlRuleFilter"/>

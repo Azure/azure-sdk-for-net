@@ -7,8 +7,6 @@ using Azure.Core.Buffers;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Buffers;
-using Azure.Core.Serialization;
-using System.Text;
 
 namespace Azure.Core
 {
@@ -17,8 +15,6 @@ namespace Azure.Core
     /// </summary>
     public abstract class RequestContent : IDisposable
     {
-        private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
-
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.
         /// </summary>
@@ -55,41 +51,6 @@ namespace Azure.Core
         /// <param name="bytes">The <see cref="ReadOnlySequence{T}"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="ReadOnlySequence{T}"/>.</returns>
         public static RequestContent Create(ReadOnlySequence<byte> bytes) => new ReadOnlySequenceContent(bytes);
-
-        /// <summary>
-        /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>/
-        /// </summary>
-        /// <param name="content">The <see cref="string"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="string"/>.</returns>
-        /// <remarks>The returned content represents the UTF-8 Encoding of the given string.</remarks>
-        public static RequestContent Create(string content) => Create(s_UTF8NoBomEncoding.GetBytes(content));
-
-        /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="content">The <see cref="BinaryData"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static RequestContent Create(BinaryData content) => new MemoryContent(content.ToMemory());
-
-        /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
-        /// </summary>
-        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
-        /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
-        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(object serializable, ObjectSerializer? serializer = null) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
-
-        /// <summary>
-        /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
-        /// </summary>
-        /// <param name="content">The <see cref="string"/> to use.</param>
-        public static implicit operator RequestContent(string content) => Create(content);
-
-        /// <summary>
-        /// Creates a RequestContent that wraps a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="content">The <see cref="BinaryData"/> to use.</param>
-        public static implicit operator RequestContent(BinaryData content) => Create(content);
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.

@@ -22,12 +22,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:FormRecognizerSampleRecognizeReceiptFileStream
-#if SNIPPET
-            string receiptPath = "<receiptPath>";
-#else
             string receiptPath = FormRecognizerTestEnvironment.CreatePath("contoso-receipt.jpg");
-#endif
+
+            #region Snippet:FormRecognizerSampleRecognizeReceiptFileStream
+            //@@ string receiptPath = "<receiptPath>";
 
             using var stream = new FileStream(receiptPath, FileMode.Open);
             var options = new RecognizeReceiptsOptions() { Locale = "en-US" };

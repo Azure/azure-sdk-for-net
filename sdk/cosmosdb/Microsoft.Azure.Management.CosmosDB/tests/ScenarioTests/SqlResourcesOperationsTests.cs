@@ -1,23 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Net;
 using Microsoft.Azure.Management.CosmosDB;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
+    using System;
+    using Microsoft.Rest.Azure;
+
     public class SqlResourcesOperationsTests
     {
         const string location = "EAST US 2";
 
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "cli124";
+        const string databaseAccountName = "db9934";
         const string databaseAccountName2 = "rbac";
 
         const string databaseName = "databaseName";
@@ -67,11 +70,12 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.GlobalDocumentDB,
-                        Locations = new List<Location>()
+                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
                         {
-                            {new Location(locationName: location) }
+                            Locations = new List<Location>()
+                            { new Location(locationName: location) }
                         }
-                };
+                    };
 
                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                     Assert.Equal(databaseAccount.Name, databaseAccountName);

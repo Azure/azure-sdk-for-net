@@ -64,7 +64,6 @@ namespace Azure
         /// <example>
         /// <code snippet="Snippet:AzureNamedKeyCredential_Deconstruct">
         /// var credential = new AzureNamedKeyCredential(&quot;SomeName&quot;, &quot;SomeKey&quot;);
-        ///
         /// (string name, string key) = credential;
         /// </code>
         /// </example>

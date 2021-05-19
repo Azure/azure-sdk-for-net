@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeleteLinkedService
             LinkedServiceDeleteLinkedServiceOperation deleteLinkedServiceOperation = client.StartDeleteLinkedService(serviceName);
-            await deleteLinkedServiceOperation.WaitForCompletionResponseAsync();
+            await deleteLinkedServiceOperation.WaitForCompletionAsync();
             #endregion
         }
     }

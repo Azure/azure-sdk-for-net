@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -91,11 +92,13 @@ namespace Azure.Messaging.ServiceBus.Administration
                connectionStringProperties.SharedAccessKey
             );
 
-            var sharedCredential = new SharedAccessCredential(sharedAccessSignature);
-            var tokenCredential = new ServiceBusTokenCredential(sharedCredential);
+            var sharedCredential = new SharedAccessSignatureCredential(sharedAccessSignature);
+            var tokenCredential = new ServiceBusTokenCredential(
+                sharedCredential,
+                BuildAudienceResource(connectionStringProperties.Endpoint.Host));
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
-            _clientDiagnostics = new ServiceBusClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
 
             _httpRequestAndResponse = new HttpRequestAndResponse(
                 pipeline,
@@ -110,13 +113,11 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="credential">The <see cref="AzureNamedKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="options">A set of options to apply when configuring the connection.</param>
-        public ServiceBusAdministrationClient(
+        /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
+        internal ServiceBusAdministrationClient(
             string fullyQualifiedNamespace,
-            AzureNamedKeyCredential credential,
-            ServiceBusAdministrationClientOptions options = default)
-           : this(fullyQualifiedNamespace, TranslateCredential(fullyQualifiedNamespace, credential), options)
+            ServiceBusSharedAccessKeyCredential credential)
+            : this(fullyQualifiedNamespace, credential, new ServiceBusAdministrationClientOptions())
         {
         }
 
@@ -125,14 +126,31 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="credential">The <see cref="AzureNamedKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
+        /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="options">A set of options to apply when configuring the connection.</param>
-        public ServiceBusAdministrationClient(
+        internal ServiceBusAdministrationClient(
             string fullyQualifiedNamespace,
-            AzureSasCredential credential,
-            ServiceBusAdministrationClientOptions options = default)
-            : this(fullyQualifiedNamespace, TranslateCredential(credential), options)
+            ServiceBusSharedAccessKeyCredential credential,
+            ServiceBusAdministrationClientOptions options)
         {
+            Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new ServiceBusAdministrationClientOptions();
+            _fullyQualifiedNamespace = fullyQualifiedNamespace;
+
+            var audience = BuildAudienceResource(fullyQualifiedNamespace);
+            var tokenCredential = new ServiceBusTokenCredential(credential.AsSharedAccessSignatureCredential(audience), audience);
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
+
+            _httpRequestAndResponse = new HttpRequestAndResponse(
+                pipeline,
+                _clientDiagnostics,
+                tokenCredential,
+                _fullyQualifiedNamespace,
+                options.Version);
         }
 
         /// <summary>
@@ -144,7 +162,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public ServiceBusAdministrationClient(
             string fullyQualifiedNamespace,
             TokenCredential credential)
-            : this(fullyQualifiedNamespace, TranslateCredential(credential), default)
+            : this(fullyQualifiedNamespace, credential, new ServiceBusAdministrationClientOptions())
         {
         }
 
@@ -159,21 +177,6 @@ namespace Azure.Messaging.ServiceBus.Administration
             string fullyQualifiedNamespace,
             TokenCredential credential,
             ServiceBusAdministrationClientOptions options)
-            : this(fullyQualifiedNamespace, TranslateCredential(credential), options)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform administration operations on ServiceBus entities.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="options">A set of options to apply when configuring the connection.</param>
-        private ServiceBusAdministrationClient(
-            string fullyQualifiedNamespace,
-            ServiceBusTokenCredential credential,
-            ServiceBusAdministrationClientOptions options)
         {
             Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -181,20 +184,18 @@ namespace Azure.Messaging.ServiceBus.Administration
             options ??= new ServiceBusAdministrationClientOptions();
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
 
-            BearerTokenAuthenticationPolicy authenticationPolicy = credential.IsSharedAccessCredential
-                ? null
-                : new BearerTokenAuthenticationPolicy(credential, Constants.DefaultScope);
+            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(fullyQualifiedNamespace));
 
+            var authenticationPolicy = new BearerTokenAuthenticationPolicy(credential, Constants.DefaultScope);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(
                 options,
-                authenticationPolicy);
-
+                 authenticationPolicy);
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _httpRequestAndResponse = new HttpRequestAndResponse(
                 pipeline,
                 _clientDiagnostics,
-                credential,
+                tokenCredential,
                 _fullyQualifiedNamespace,
                 options.Version);
         }
@@ -1609,16 +1610,8 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
-        internal static string BuildAudienceResource(string fullyQualifiedNamespace)
+        private static string BuildAudienceResource(string fullyQualifiedNamespace)
         {
-            // If there is no namespace, there is no basis for a URL and the
-            // resource is empty.
-
-            if (string.IsNullOrEmpty(fullyQualifiedNamespace))
-            {
-                return string.Empty;
-            }
-
             var builder = new UriBuilder(fullyQualifiedNamespace)
             {
                 Scheme = Uri.UriSchemeHttps,
@@ -1635,14 +1628,5 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             return builder.Uri.AbsoluteUri.ToLowerInvariant();
         }
-
-        private static ServiceBusTokenCredential TranslateCredential(string fullyQualifiedNamespace, AzureNamedKeyCredential credential) =>
-            new ServiceBusTokenCredential(new SharedAccessCredential(credential, BuildAudienceResource(fullyQualifiedNamespace)));
-
-        private static ServiceBusTokenCredential TranslateCredential(AzureSasCredential credential) =>
-            new ServiceBusTokenCredential(new SharedAccessCredential(credential));
-
-        private static ServiceBusTokenCredential TranslateCredential(TokenCredential credential) =>
-            new ServiceBusTokenCredential(credential);
     }
 }

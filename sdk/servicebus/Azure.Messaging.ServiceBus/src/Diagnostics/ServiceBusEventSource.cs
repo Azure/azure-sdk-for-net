@@ -19,8 +19,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
     /// </summary>
     ///
     /// <remarks>
-    ///   When defining Start/Complete tasks, it is highly recommended that the
-    ///   the CompleteEvent.Id must be exactly StartEvent.Id + 1.
+    ///   When defining Start/Stop tasks, it is highly recommended that the
+    ///   the StopEvent.Id must be exactly StartEvent.Id + 1.
     /// </remarks>
     [EventSource(Name = EventSourceName)]
     internal class ServiceBusEventSource : EventSource
@@ -189,11 +189,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int RequestAuthorizationStartEvent = 105;
         internal const int RequestAuthorizationCompleteEvent = 106;
         internal const int RequestAuthorizationExceptionEvent = 107;
-
-        internal const int ProcessorClientClosedExceptionEvent = 108;
-        internal const int ProcessorAcceptSessionTimeoutEvent = 109;
-        internal const int ProcessorStoppingReceiveCanceledEvent = 110;
-        internal const int ProcessorStoppingAcceptSessionCanceledEvent = 111;
 
         #endregion
         // add new event numbers here incrementing from previous
@@ -418,18 +413,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         #endregion
 
         #region Settlement
-
-        [NonEvent]
-        public virtual void CompleteMessageStart(string identifier, int messageCount, Guid lockToken)
-        {
-            if (IsEnabled())
-            {
-                CompleteMessageStartCore(identifier, messageCount, lockToken.ToString());
-            }
-        }
-
         [Event(CompleteMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: CompleteAsync start. MessageCount = {1}, LockTokens = {2}")]
-        public virtual void CompleteMessageStartCore(string identifier, int messageCount, string lockTokens)
+        public virtual void CompleteMessageStart(string identifier, int messageCount, string lockTokens)
         {
             if (IsEnabled())
             {
@@ -455,17 +440,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [NonEvent]
-        public virtual void DeferMessageStart(string identifier, int messageCount, Guid lockToken)
-        {
-            if (IsEnabled())
-            {
-                DeferMessageStartCore(identifier, messageCount, lockToken.ToString());
-            }
-        }
-
         [Event(DeferMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: DeferAsync start. MessageCount = {1}, LockToken = {2}")]
-        public virtual void DeferMessageStartCore(string identifier, int messageCount, string lockToken)
+        public virtual void DeferMessageStart(string identifier, int messageCount, string lockToken)
         {
             if (IsEnabled())
             {
@@ -488,17 +464,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             WriteEvent(DeferMessageExceptionEvent, identifier, exception);
         }
 
-        [NonEvent]
-        public virtual void AbandonMessageStart(string identifier, int messageCount, Guid lockToken)
-        {
-            if (IsEnabled())
-            {
-                AbandonMessageStartCore(identifier, messageCount, lockToken.ToString());
-            }
-        }
-
         [Event(AbandonMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: AbandonAsync start. MessageCount = {1}, LockToken = {2}")]
-        public virtual void AbandonMessageStartCore(string identifier, int messageCount, string lockToken)
+        public virtual void AbandonMessageStart(string identifier, int messageCount, string lockToken)
         {
             if (IsEnabled())
             {
@@ -524,17 +491,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [NonEvent]
-        public virtual void DeadLetterMessageStart(string identifier, int messageCount, Guid lockToken)
-        {
-            if (IsEnabled())
-            {
-                DeadLetterMessageStartCore(identifier, messageCount, lockToken.ToString());
-            }
-        }
-
         [Event(DeadLetterMessageStartEvent, Level = EventLevel.Informational, Message = "{0}: DeadLetterAsync start. MessageCount = {1}, LockToken = {2}")]
-        public virtual void DeadLetterMessageStartCore(string identifier, int messageCount, string lockToken)
+        public virtual void DeadLetterMessageStart(string identifier, int messageCount, string lockToken)
         {
             if (IsEnabled())
             {
@@ -562,18 +520,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         #endregion
 
         #region Lock renewal
-
-        [NonEvent]
-        public virtual void RenewMessageLockStart(string identifier, int messageCount, Guid lockToken)
-        {
-            if (IsEnabled())
-            {
-                RenewMessageLockStartCore(identifier, messageCount, lockToken.ToString());
-            }
-        }
-
         [Event(RenewMessageLockStartEvent, Level = EventLevel.Informational, Message = "{0}: RenewLockAsync start. MessageCount = {1}, LockToken = {2}")]
-        public virtual void RenewMessageLockStartCore(string identifier, int messageCount, string lockToken)
+        public virtual void RenewMessageLockStart(string identifier, int messageCount, string lockToken)
         {
             if (IsEnabled())
             {
@@ -740,17 +688,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [NonEvent]
-        public virtual void ProcessorRenewMessageLockStart(string identifier, int messageCount, Guid lockToken)
-        {
-            if (IsEnabled())
-            {
-                ProcessorRenewMessageLockStartCore(identifier, messageCount, lockToken.ToString());
-            }
-        }
-
         [Event(ProcessorRenewMessageLockStartEvent, Level = EventLevel.Informational, Message = "{0}: Processor RenewMessageLock start. MessageCount = {1}, LockToken = {2}")]
-        public virtual void ProcessorRenewMessageLockStartCore(string identifier, int messageCount, string lockToken)
+        public virtual void ProcessorRenewMessageLockStart(string identifier, int messageCount, string lockToken)
         {
             if (IsEnabled())
             {
@@ -836,45 +775,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ProcessorMessageHandlerExceptionEvent, identifier, sequenceNumber, exception);
-            }
-        }
-
-        [Event(ProcessorClientClosedExceptionEvent, Level = EventLevel.Error, Message = "{0}: The Service Bus client associated with the processor was closed by the host application.  The processor cannot continue and is shutting down.")]
-        public void ProcessorClientClosedException(string identifier)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(ProcessorClientClosedExceptionEvent, identifier);
-            }
-        }
-
-        [Event(ProcessorStoppingReceiveCanceledEvent, Level = EventLevel.Verbose, Message = "A receive operation was cancelled while stopping the processor. (Identifier '{0}'). Error Message: '{1}'")]
-        public void ProcessorStoppingReceiveCanceled(string identifier, string exception)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(ProcessorStoppingReceiveCanceledEvent, identifier, exception);
-            }
-        }
-
-        [Event(ProcessorStoppingAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation was cancelled while stopping the processor. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
-        public void ProcessorStoppingAcceptSessionCanceled(string fullyQualifiedNamespace, string entityPath, string exception)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(ProcessorStoppingAcceptSessionCanceledEvent, fullyQualifiedNamespace, entityPath, exception);
-            }
-        }
-
-        [Event(ProcessorAcceptSessionTimeoutEvent, Level = EventLevel.Verbose, Message = "The processor accept session call timed out. It will be tried again. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
-        public virtual void ProcessorAcceptSessionTimeout(
-            string fullyQualifiedNamespace,
-            string entityPath,
-            string exception)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(ProcessorAcceptSessionTimeoutEvent, fullyQualifiedNamespace, entityPath, exception);
             }
         }
 

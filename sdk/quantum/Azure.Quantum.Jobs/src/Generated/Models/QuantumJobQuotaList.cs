@@ -11,24 +11,22 @@ using Azure.Core;
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> List of quotas. </summary>
-    internal partial class QuantumJobQuotaList
+    public partial class QuantumJobQuotaList
     {
         /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
         internal QuantumJobQuotaList()
         {
-            Value = new ChangeTrackingList<QuantumJobQuota>();
+            Values = new ChangeTrackingList<QuantumJobQuota>();
         }
 
         /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="values"> . </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal QuantumJobQuotaList(IReadOnlyList<QuantumJobQuota> value, string nextLink)
+        internal QuantumJobQuotaList(IReadOnlyList<QuantumJobQuota> values, string nextLink)
         {
-            Value = value;
+            Values = values;
             NextLink = nextLink;
         }
-
-        public IReadOnlyList<QuantumJobQuota> Value { get; }
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
     }

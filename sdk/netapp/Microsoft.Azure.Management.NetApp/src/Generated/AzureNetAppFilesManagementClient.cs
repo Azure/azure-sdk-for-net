@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.NetApp
     using System.Net.Http;
 
     /// <summary>
-    /// Microsoft NetApp Files Azure Resource Provider specification
+    /// Microsoft NetApp Azure Resource Provider specification
     /// </summary>
     public partial class AzureNetAppFilesManagementClient : ServiceClient<AzureNetAppFilesManagementClient>, IAzureNetAppFilesManagementClient, IAzureClient
     {
@@ -110,11 +110,6 @@ namespace Microsoft.Azure.Management.NetApp
         /// Gets the ISnapshotPoliciesOperations.
         /// </summary>
         public virtual ISnapshotPoliciesOperations SnapshotPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IVolumeBackupStatusOperations.
-        /// </summary>
-        public virtual IVolumeBackupStatusOperations VolumeBackupStatus { get; private set; }
 
         /// <summary>
         /// Gets the IAccountBackupsOperations.
@@ -384,13 +379,12 @@ namespace Microsoft.Azure.Management.NetApp
             Volumes = new VolumesOperations(this);
             Snapshots = new SnapshotsOperations(this);
             SnapshotPolicies = new SnapshotPoliciesOperations(this);
-            VolumeBackupStatus = new VolumeBackupStatusOperations(this);
             AccountBackups = new AccountBackupsOperations(this);
             Backups = new BackupsOperations(this);
             BackupPolicies = new BackupPoliciesOperations(this);
             Vaults = new VaultsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-12-01";
+            ApiVersion = "2020-11-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IRecoveryPointsOperations
     {
         /// <summary>
-        /// Gets the list of recovery points for a replication protected item.
+        /// Get recovery points for a replication protected item.
         /// </summary>
         /// <remarks>
         /// Lists the available recovery points for a replication protected
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// The protection container name.
         /// </param>
         /// <param name='replicatedProtectedItemName'>
-        /// The replication protected item name.
+        /// The replication protected item's name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<IPage<RecoveryPoint>>> ListByReplicationProtectedItemsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a recovery point.
+        /// Get a recovery point.
         /// </summary>
         /// <remarks>
         /// Get the details of specified recovery point.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// The protection container name.
         /// </param>
         /// <param name='replicatedProtectedItemName'>
-        /// The replication protected item name.
+        /// The replication protected item's name.
         /// </param>
         /// <param name='recoveryPointName'>
         /// The recovery point name.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<RecoveryPoint>> GetWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, string recoveryPointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the list of recovery points for a replication protected item.
+        /// Get recovery points for a replication protected item.
         /// </summary>
         /// <remarks>
         /// Lists the available recovery points for a replication protected

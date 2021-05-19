@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6b0333d8919d9f46a85d126e704b7a1c-9fc4c9c4252f4c45-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-2095219417333b43a55174fc24982904-69afacd419575743-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "8fc23c47cb634cd9a8ea1a15d55388b3",
         "x-ms-return-client-request-id": "true"
@@ -15,14 +15,14 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "76ef56af-81b3-48a6-9d7c-fd9f40b68696",
-        "Content-Length": "35798",
+        "apim-request-id": "f91db8a6-ee8b-47e9-96c4-f2f9c254b87e",
+        "Content-Length": "31448",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:58:49 GMT",
+        "Date": "Tue, 19 Jan 2021 17:42:22 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "478",
-        "x-request-id": "76ef56af-81b3-48a6-9d7c-fd9f40b68696"
+        "x-envoy-upstream-service-time": "632",
+        "x-request-id": "f91db8a6-ee8b-47e9-96c4-f2f9c254b87e"
       },
       "ResponseBody": {
         "value": [
@@ -38,9 +38,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 157077.59999999998,
-              "expectedValue": 181218.56936944055
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -55,9 +53,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 163790.59999999998,
-              "expectedValue": 192484.41588363584
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -72,9 +68,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 1.0,
-              "expectedValue": 0.16030692603870361
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -89,9 +83,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 48517.200000000004,
-              "expectedValue": 82380.6273376673
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -106,9 +98,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 384774.8,
-              "expectedValue": 425739.701011788
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -123,9 +113,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 3.4,
-              "expectedValue": 1.8564662412054167
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -140,9 +128,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.2,
-              "expectedValue": 0.0
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -157,9 +143,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 51520.2,
-              "expectedValue": 59465.511859350692
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -174,9 +158,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 90392.0,
-              "expectedValue": 114054.43781517429
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -191,9 +173,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 263007.4,
-              "expectedValue": 299469.32547888882
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -208,9 +188,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 3583808.9999999995,
-              "expectedValue": 4286919.7293367144
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -225,9 +203,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 343973.6,
-              "expectedValue": 377594.368992992
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -242,9 +218,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.0,
-              "expectedValue": 3.5724144512849647
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -259,9 +233,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.4,
-              "expectedValue": 0.23381129349099047
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -276,9 +248,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 7921032.1999999993,
-              "expectedValue": 8322959.9117520843
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -293,9 +263,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 129240.2,
-              "expectedValue": 177259.05288228157
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -310,9 +278,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.6,
-              "expectedValue": 0.13304319424495817
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -327,9 +293,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 3964.0,
-              "expectedValue": 7052.2207915934969
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -344,9 +308,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.2,
-              "expectedValue": 0.0
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -361,9 +323,7 @@
             },
             "property": {
               "anomalySeverity": "High",
-              "anomalyStatus": "Active",
-              "value": 66519260.000000022,
-              "expectedValue": 70651365.375282586
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -378,9 +338,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 573090.6,
-              "expectedValue": 700579.75023709389
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -395,9 +353,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 105163.2,
-              "expectedValue": 137926.87013517786
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -412,9 +368,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.6,
-              "expectedValue": 0.0
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -429,9 +383,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 21153.0,
-              "expectedValue": 23721.703402082909
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -446,9 +398,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 128287.2,
-              "expectedValue": 148298.48106495664
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -463,9 +413,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 3051.8,
-              "expectedValue": 3878.3156446487719
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -480,9 +428,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 513455.6,
-              "expectedValue": 596967.90257180436
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -497,9 +443,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 13668.2,
-              "expectedValue": 15589.618659407335
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -514,9 +458,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 3276301.8000000003,
-              "expectedValue": 3648290.7632062924
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -531,9 +473,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 13951.0,
-              "expectedValue": 17052.084936012034
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -548,9 +488,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 4645918.2,
-              "expectedValue": 4953441.3993763272
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -565,9 +503,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.6,
-              "expectedValue": 0.29684555611205976
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -582,9 +518,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.0,
-              "expectedValue": 5.89638307091832
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -599,9 +533,7 @@
             },
             "property": {
               "anomalySeverity": "High",
-              "anomalyStatus": "Active",
-              "value": 79092033.4,
-              "expectedValue": 83904129.166464686
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -616,9 +548,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 143210.8,
-              "expectedValue": 164852.16590807075
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -633,9 +563,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 1985.6,
-              "expectedValue": 2320.148701215885
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -650,9 +578,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 4226.8,
-              "expectedValue": 5780.4800802272312
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -667,9 +593,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 23648.2,
-              "expectedValue": 30878.275591296202
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -684,9 +608,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.2,
-              "expectedValue": 0.0
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -701,9 +623,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 1220639.8,
-              "expectedValue": 1353817.4313189974
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -718,9 +638,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 22195.4,
-              "expectedValue": 26079.684957036981
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -735,9 +653,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 181043.40000000002,
-              "expectedValue": 195305.11084885083
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -752,9 +668,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 29401.6,
-              "expectedValue": 36480.752283402035
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -769,9 +683,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.2,
-              "expectedValue": 0.0
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -786,9 +698,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 33.4,
-              "expectedValue": 77.265790755136535
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -803,9 +713,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 92548.8,
-              "expectedValue": 110946.63393768857
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -820,9 +728,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 1395682.2,
-              "expectedValue": 1549008.7202043266
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -837,9 +743,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 8564.6,
-              "expectedValue": 9208.6736377689886
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -854,9 +758,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 321202.8,
-              "expectedValue": 386597.96822187968
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -871,9 +773,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 1196469.4000000001,
-              "expectedValue": 1414458.8326065671
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -888,9 +788,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 111116.4,
-              "expectedValue": 128938.696433415
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -905,9 +803,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 136278.6,
-              "expectedValue": 145516.42724883126
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -922,9 +818,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 202219.2,
-              "expectedValue": 239402.56062742215
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -939,9 +833,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 1364655.2000000007,
-              "expectedValue": 1496098.3298686668
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -956,9 +848,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 5464832.3999999994,
-              "expectedValue": 5962432.2200998
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -973,9 +863,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 725175.60000000009,
-              "expectedValue": 882195.56464993954
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -990,9 +878,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 151385.2,
-              "expectedValue": 212998.07999491875
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1007,9 +893,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 1033392.8,
-              "expectedValue": 1211625.401471812
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1024,9 +908,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.0,
-              "expectedValue": 0.21970638531468334
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1041,9 +923,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 248900.4,
-              "expectedValue": 298351.02589707694
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1058,9 +938,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 43094.8,
-              "expectedValue": 75662.4929814965
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1075,9 +953,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 3.0,
-              "expectedValue": 1.4729684801491421
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1092,9 +968,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 1.0,
-              "expectedValue": 0.042535363885149849
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1109,9 +983,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 3080496.6,
-              "expectedValue": 3689096.1750460584
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1126,9 +998,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 15247.8,
-              "expectedValue": 17194.227575452729
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1143,9 +1013,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 1075849.5999999999,
-              "expectedValue": 1238994.8288891343
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1160,9 +1028,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 1.0,
-              "expectedValue": 0.012328166585182702
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1177,9 +1043,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 15463.6,
-              "expectedValue": 18114.404832860055
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1194,9 +1058,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.6,
-              "expectedValue": 0.26713244989257545
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1211,9 +1073,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.2,
-              "expectedValue": 0.0
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1228,9 +1088,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 2.8,
-              "expectedValue": 0.32331066012917681
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1245,9 +1103,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 2819.0,
-              "expectedValue": 3696.5958879526511
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1262,9 +1118,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 5891.0,
-              "expectedValue": 6338.257404824094
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1279,9 +1133,7 @@
             },
             "property": {
               "anomalySeverity": "High",
-              "anomalyStatus": "Active",
-              "value": 32332227.000000004,
-              "expectedValue": 34235014.937926367
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1296,9 +1148,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 234996.2,
-              "expectedValue": 279630.25558062526
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1313,9 +1163,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.0,
-              "expectedValue": 1.7619857385604643
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1330,9 +1178,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 2844091.6,
-              "expectedValue": 3170442.4297326757
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1347,9 +1193,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 123889.8,
-              "expectedValue": 150442.908313583
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1364,9 +1208,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.2,
-              "expectedValue": 4.4979893663574879
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1381,9 +1223,7 @@
             },
             "property": {
               "anomalySeverity": "High",
-              "anomalyStatus": "Active",
-              "value": 26463631.2,
-              "expectedValue": 28204439.128056582
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1398,9 +1238,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 161420.4,
-              "expectedValue": 174051.17889907371
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1415,9 +1253,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 284787.2,
-              "expectedValue": 340843.21337300004
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1432,9 +1268,7 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 1.4,
-              "expectedValue": 0.00082077254676293527
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1449,9 +1283,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 792048.8,
-              "expectedValue": 861444.99715175061
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1466,9 +1298,7 @@
             },
             "property": {
               "anomalySeverity": "Medium",
-              "anomalyStatus": "Active",
-              "value": 867955.8,
-              "expectedValue": 955002.49523577024
+              "anomalyStatus": "Active"
             }
           },
           {
@@ -1483,12 +1313,11 @@
             },
             "property": {
               "anomalySeverity": "Low",
-              "anomalyStatus": "Active",
-              "value": 0.2,
-              "expectedValue": 0.0
+              "anomalyStatus": "Active"
             }
           }
-        ]
+        ],
+        "@nextLink": null
       }
     }
   ],

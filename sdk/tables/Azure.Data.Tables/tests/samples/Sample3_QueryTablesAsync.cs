@@ -29,13 +29,13 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample3QueryTablesAsync
             // Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
-            AsyncPageable<TableItem> queryTableResults = serviceClient.QueryAsync(filter: $"TableName eq '{tableName}'");
+            AsyncPageable<TableItem> queryTableResults = serviceClient.GetTablesAsync(filter: $"TableName eq '{tableName}'");
 
             Console.WriteLine("The following are the names of the tables in the query result:");
             // Iterate the <see cref="Pageable"> in order to access individual queried tables.
             await foreach (TableItem table in queryTableResults)
             {
-                Console.WriteLine(table.Name);
+                Console.WriteLine(table.TableName);
             }
             #endregion
 

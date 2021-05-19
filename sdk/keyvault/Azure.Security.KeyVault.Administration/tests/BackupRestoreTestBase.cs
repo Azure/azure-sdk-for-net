@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Security.KeyVault.Tests;
 using Azure.Storage;
 using Azure.Storage.Sas;
 using NUnit.Framework;
@@ -54,7 +53,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         // The service polls every second, so wait a bit to make sure the operation appears completed.
         protected async Task WaitForOperationAsync() =>
-            await DelayAsync(KeyVaultTestEnvironment.DefaultPollingInterval);
+            await DelayAsync(TimeSpan.FromSeconds(2));
 
         private string GenerateSasToken()
         {

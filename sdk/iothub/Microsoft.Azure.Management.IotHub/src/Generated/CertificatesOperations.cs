@@ -473,7 +473,9 @@ namespace Microsoft.Azure.Management.IotHub
         /// ETag of the Certificate. Do not specify for creating a brand new
         /// certificate. Required to update an existing certificate.
         /// </param>
-        /// <param name='properties'>
+        /// <param name='certificate'>
+        /// base-64 representation of the X509 leaf certificate .cer file or just .pem
+        /// file content.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -496,7 +498,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CertificateDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), CertificateProperties properties = default(CertificateProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), string certificate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -525,10 +527,10 @@ namespace Microsoft.Azure.Management.IotHub
                     throw new ValidationException(ValidationRules.Pattern, "certificateName", "^[A-Za-z0-9-._]{1,64}$");
                 }
             }
-            CertificateDescription certificateDescription = new CertificateDescription();
-            if (properties != null)
+            CertificateBodyDescription certificateDescription = new CertificateBodyDescription();
+            if (certificate != null)
             {
-                certificateDescription.Properties = properties;
+                certificateDescription.Certificate = certificate;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

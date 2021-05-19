@@ -201,12 +201,11 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>
     {
-        protected CertificateOperation() { }
         public CertificateOperation(Azure.Security.KeyVault.Certificates.CertificateClient client, string name) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public virtual Azure.Security.KeyVault.Certificates.CertificateOperationProperties Properties { get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.CertificateOperationProperties Properties { get { throw null; } }
         public override Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -306,7 +305,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class DeleteCertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.DeletedCertificate>
     {
-        protected DeleteCertificateOperation() { }
+        internal DeleteCertificateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -387,7 +386,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class RecoverDeletedCertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>
     {
-        protected RecoverDeletedCertificateOperation() { }
+        internal RecoverDeletedCertificateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

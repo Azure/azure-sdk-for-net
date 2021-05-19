@@ -32,5 +32,3 @@ extends:
     Artifacts:
     - name: Azure.Monitor.OpenTelemetry.Exporter
       safeName: MicrosoftOpenTelemetryExporterAzureMonitor
-    - name: Azure.Monitor.Query
-      safeName: AzureMonitorQuery

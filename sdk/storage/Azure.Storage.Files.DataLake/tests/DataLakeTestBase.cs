@@ -25,11 +25,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         DataLakeClientOptions.ServiceVersion.V2020_04_08,
         DataLakeClientOptions.ServiceVersion.V2020_06_12,
         DataLakeClientOptions.ServiceVersion.V2020_08_04,
-        StorageVersionExtensions.LatestVersion,
-        StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
         LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
-    public abstract class DataLakeTestBase : StorageTestBase<DataLakeTestEnvironment>
+    public abstract class DataLakeTestBase : StorageTestBase
     {
         protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";

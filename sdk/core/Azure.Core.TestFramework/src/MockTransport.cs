@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
@@ -13,7 +12,7 @@ namespace Azure.Core.TestFramework
     public class MockTransport : HttpPipelineTransport
     {
         private readonly object _syncObj = new object();
-        private readonly Func<HttpMessage, MockResponse> _responseFactory;
+        private readonly Func<MockRequest, MockResponse> _responseFactory;
 
         public AsyncGate<MockRequest, MockResponse> RequestGate { get; }
 
@@ -29,7 +28,7 @@ namespace Azure.Core.TestFramework
         public MockTransport(params MockResponse[] responses)
         {
             var requestIndex = 0;
-            _responseFactory = _ =>
+            _responseFactory = req =>
             {
                 lock (_syncObj)
                 {
@@ -38,16 +37,10 @@ namespace Azure.Core.TestFramework
             };
         }
 
-        public MockTransport(Func<MockRequest, MockResponse> responseFactory): this(req => responseFactory((MockRequest)req.Request))
-        {
-        }
-
-        private MockTransport(Func<HttpMessage, MockResponse> responseFactory)
+        public MockTransport(Func<MockRequest, MockResponse> responseFactory)
         {
             _responseFactory = responseFactory;
         }
-
-        public static MockTransport FromMessageCallback(Func<HttpMessage, MockResponse> responseFactory) => new MockTransport(responseFactory);
 
         public override Request CreateRequest()
             => new MockRequest();
@@ -88,7 +81,7 @@ namespace Azure.Core.TestFramework
             }
             else
             {
-                message.Response = _responseFactory(message);
+                message.Response = _responseFactory(request);
             }
 
             message.Response.ClientRequestId = request.ClientRequestId;

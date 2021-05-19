@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(CloudErrorConverter))]
     public partial class CloudError
     {
         internal static CloudError DeserializeCloudError(JsonElement element)
@@ -68,19 +65,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new CloudError(code, message, target.Value, Optional.ToList(details));
-        }
-
-        internal partial class CloudErrorConverter : JsonConverter<CloudError>
-        {
-            public override void Write(Utf8JsonWriter writer, CloudError model, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-            public override CloudError Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeCloudError(document.RootElement);
-            }
         }
     }
 }

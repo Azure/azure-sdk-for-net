@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
     /// <summary> The AttestationType. </summary>
     public readonly partial struct AttestationType : IEquatable<AttestationType>

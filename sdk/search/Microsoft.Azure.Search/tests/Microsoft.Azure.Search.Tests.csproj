@@ -15,11 +15,8 @@
     <ExcludeFromTest>false</ExcludeFromTest>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-  </ItemGroup>
-
   <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
     <ProjectReference Include="..\src\Microsoft.Azure.Search.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.Management.Search\tests\Microsoft.Azure.Management.Search.Tests.csproj" />

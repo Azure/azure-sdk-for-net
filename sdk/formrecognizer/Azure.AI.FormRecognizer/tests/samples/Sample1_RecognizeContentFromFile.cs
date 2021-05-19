@@ -21,12 +21,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:FormRecognizerRecognizeFormContentFromFile
-#if SNIPPET
-            string filePath = "filePath";
-#else
             string filePath = FormRecognizerTestEnvironment.CreatePath("Invoice_1.pdf");
-#endif
+
+            #region Snippet:FormRecognizerRecognizeFormContentFromFile
+            //@@ string filePath = "filePath";
             using var stream = new FileStream(filePath, FileMode.Open);
 
             Response<FormPageCollection> response = await client.StartRecognizeContentAsync(stream).WaitForCompletionAsync();

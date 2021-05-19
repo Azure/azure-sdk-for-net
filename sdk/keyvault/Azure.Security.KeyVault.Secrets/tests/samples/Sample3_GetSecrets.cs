@@ -48,9 +48,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             IEnumerable<SecretProperties> secrets = client.GetPropertiesOfSecrets();
             foreach (SecretProperties secret in secrets)
             {
-#if !SNIPPET
-                if (secret.Managed) continue;
-#endif
+                /*@@*/ if (secret.Managed) continue;
                 // Getting a disabled secret will fail, so skip disabled secrets.
                 if (!secret.Enabled.GetValueOrDefault())
                 {

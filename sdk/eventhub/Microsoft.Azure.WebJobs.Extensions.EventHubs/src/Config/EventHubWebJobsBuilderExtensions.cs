@@ -3,11 +3,9 @@
 
 using System;
 using System.Globalization;
-using System.Net;
 using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.EventHubs;
-using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,18 +71,11 @@ namespace Microsoft.Extensions.Hosting
                     {
                         options.LoadBalancingUpdateInterval = renewInterval.Value;
                     }
-
-                    var proxy = section.GetValue<string>("WebProxy");
-                    if (!string.IsNullOrEmpty(proxy))
-                    {
-                        options.WebProxy = new WebProxy(proxy);
-                    }
                 })
                 .BindOptions<EventHubOptions>();
 
             builder.Services.AddAzureClientsCore();
             builder.Services.AddSingleton<EventHubClientFactory>();
-            builder.Services.AddSingleton<CheckpointClientProvider>();
             builder.Services.Configure<EventHubOptions>(configure);
             builder.Services.PostConfigure<EventHubOptions>(ConfigureInitialOffsetOptions);
 
@@ -93,31 +84,32 @@ namespace Microsoft.Extensions.Hosting
 
         internal static void ConfigureInitialOffsetOptions(EventHubOptions options)
         {
-            OffsetType? type = options?.InitialOffsetOptions?.Type;
-            if (type.HasValue)
+            string offsetType = options?.InitialOffsetOptions?.Type?.ToLower(CultureInfo.InvariantCulture) ?? string.Empty;
+            if (!string.IsNullOrEmpty(offsetType))
             {
-                switch (type)
+                switch (offsetType)
                 {
-                    case OffsetType.FromStart:
+                    case "fromstart":
                         options.EventProcessorOptions.DefaultStartingPosition = EventPosition.Earliest;
                         break;
-                    case OffsetType.FromEnd:
+                    case "fromend":
                         options.EventProcessorOptions.DefaultStartingPosition = EventPosition.Latest;
                         break;
-                    case OffsetType.FromEnqueuedTime:
-                        if (!options.InitialOffsetOptions.EnqueuedTimeUtc.HasValue)
+                    case "fromenqueuedtime":
+                        try
                         {
-                            throw new InvalidOperationException(
-                                "A time must be specified for 'enqueuedTimeUtc', when " +
-                                "'initialOffsetOptions.type' is set to 'fromEnqueuedTime'.");
+                            DateTime enqueuedTimeUTC = DateTime.Parse(options.InitialOffsetOptions.EnqueuedTimeUTC, CultureInfo.InvariantCulture).ToUniversalTime();
+                            options.EventProcessorOptions.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTimeUTC);
                         }
-
-                        options.EventProcessorOptions.DefaultStartingPosition =
-                            EventPosition.FromEnqueuedTime(options.InitialOffsetOptions.EnqueuedTimeUtc.Value);
+                        catch (FormatException fe)
+                        {
+                            string message = $"{nameof(EventHubOptions)}:{nameof(InitialOffsetOptions)}:{nameof(InitialOffsetOptions.EnqueuedTimeUTC)} is configured with an invalid format. " +
+                                "Please use a format supported by DateTime.Parse().  e.g. 'yyyy-MM-ddTHH:mm:ssZ'";
+                            throw new InvalidOperationException(message, fe);
+                        }
                         break;
                     default:
-                        throw new InvalidOperationException(
-                            "An unsupported value was supplied for initialOffsetOptions.type");
+                        throw new InvalidOperationException("An unsupported value was supplied for initialOffsetOptions.type");
                 }
                 // If not specified, EventProcessor's default offset will apply
             }

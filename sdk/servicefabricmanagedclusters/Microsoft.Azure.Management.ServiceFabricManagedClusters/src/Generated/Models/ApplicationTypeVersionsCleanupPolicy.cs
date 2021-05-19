@@ -15,9 +15,7 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
     using System.Linq;
 
     /// <summary>
-    /// The policy used to clean up unused versions. When the policy is not
-    /// specified explicitly, the default unused application versions to keep
-    /// will be 3.
+    /// The policy used to clean up unused versions.
     /// </summary>
     public partial class ApplicationTypeVersionsCleanupPolicy
     {

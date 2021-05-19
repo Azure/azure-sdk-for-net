@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Compute.Tests
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, "VMScaleSetDoesNotExist"));
 
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
             var getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmScaleSet.Name);
             ValidateVMScaleSet(inputVMScaleSet, getResponse);
 
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Compute.Tests
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, "VMScaleSetDoesNotExist"));
 
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
             var getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmScaleSet.Name);
             ValidateVMScaleSet(inputVMScaleSet, getResponse);
 
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Compute.Tests
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, "VMScaleSetDoesNotExist"));
 
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
             var getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmScaleSet.Name);
             ValidateVMScaleSet(inputVMScaleSet, getResponse);
 

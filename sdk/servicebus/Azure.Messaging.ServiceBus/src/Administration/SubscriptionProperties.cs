@@ -176,7 +176,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 Argument.AssertAtLeast(
                     value,
                     AdministrationClientConstants.MinAllowedMaxDeliveryCount,
-                    nameof(MaxDeliveryCount));
+                    nameof(AutoDeleteOnIdle));
 
                 _maxDeliveryCount = value;
             }

@@ -34,10 +34,7 @@ namespace ServiceFabricManagedClusters.Tests
             string rg,
             string rgLocation,
             string clusterName,
-            string sku,
-            string clusterUpgradeMode = ClusterUpgradeMode.Automatic,
-            string clusterUpgradeCadence = ClusterUpgradeCadence.Wave0,
-            bool zonalResiliency = false)
+            string sku)
         {
             var testTP = "123BDACDCDFB2C7B250192C6078E47D1E1DB119B";
             var userName = "vmadmin";
@@ -59,9 +56,7 @@ namespace ServiceFabricManagedClusters.Tests
                         IsAdmin = true,
                         Thumbprint = testTP
                     }
-                },
-                clusterUpgradeMode: clusterUpgradeMode,
-                zonalResiliency: zonalResiliency);
+                });
 
             resouceClient.ResourceGroups.CreateOrUpdate(
                 rg,
@@ -70,11 +65,11 @@ namespace ServiceFabricManagedClusters.Tests
             var cluster = serviceFabricMcClient.ManagedClusters.CreateOrUpdate(rg, clusterName, newCluster);
             Assert.NotNull(cluster);
             
-            Assert.Equal(ManagedResourceProvisioningState.Succeeded, cluster.ProvisioningState);
-            Assert.Equal(ClusterState.WaitingForNodes, cluster.ClusterState);
-            Assert.NotNull(cluster.Sku);
+            Assert.Equal("Succeeded", cluster.ProvisioningState);
+            Assert.Equal("WaitingForNodes", cluster.ClusterState);
+            Assert.NotNull(cluster.Sku.Name);
             Assert.Equal(sku, cluster.Sku.Name);
-            Assert.Equal(ClusterUpgradeCadence.Wave0, cluster.ClusterUpgradeCadence);
+            Assert.Equal("Wave0", cluster.ClusterUpgradeCadence);
             Assert.Equal(userName, cluster.AdminUserName);
             Assert.Equal(clusterName, cluster.DnsName);
             Assert.Equal($"{clusterName}.southcentralus.cloudapp.azure.com", cluster.Fqdn);
@@ -88,8 +83,6 @@ namespace ServiceFabricManagedClusters.Tests
             Assert.True(cluster.Clients[0].IsAdmin);
             Assert.Equal(testTP, cluster.Clients[0].Thumbprint);
             Assert.False(cluster.EnableAutoOSUpgrade);
-            Assert.Equal(clusterUpgradeMode, cluster.ClusterUpgradeMode);
-            Assert.Equal(zonalResiliency, cluster.ZonalResiliency);
 
             return cluster;
         }
@@ -100,16 +93,15 @@ namespace ServiceFabricManagedClusters.Tests
             string clusterName,
             string nodeTypeName,
             bool isPrimary,
-            int vmInstanceCount,
-            string vmSize = "Standard_D2",
-            string vmImagePublisher = "MicrosoftWindowsServer",
-            string vmImageOffer = "WindowsServer",
-            string vmImageSku = "2019-Datacenter",
-            string vmImageVersion = "latest",
-            int dataDiskSizeGB = 100,
-            string dataDiskType = DiskType.StandardSSDLRS,
-            bool isStateless = false)
+            int vmInstanceCount)
         {
+            var vmSize = "Standard_D2";
+            var vmImagePublisher = "MicrosoftWindowsServer";
+            var vmImageOffer = "WindowsServer";
+            var vmImageSku = "2019-Datacenter";
+            var vmImageVersion = "latest";
+            var dataDiskSizeGB = 100;
+
             var newNodeType = new NodeType(
                 isPrimary: isPrimary,
                 vmInstanceCount: vmInstanceCount,
@@ -118,13 +110,12 @@ namespace ServiceFabricManagedClusters.Tests
                 vmImagePublisher: vmImagePublisher,
                 vmImageOffer: vmImageOffer,
                 vmImageSku: vmImageSku,
-                vmImageVersion: vmImageVersion,
-                dataDiskType: dataDiskType,
-                isStateless: isStateless);
+                vmImageVersion: vmImageVersion
+                );
 
             var nodeType = serviceFabricMcClient.NodeTypes.CreateOrUpdate(rg, clusterName, nodeTypeName, newNodeType);
             Assert.NotNull(nodeType);
-            Assert.Equal(ManagedResourceProvisioningState.Succeeded, nodeType.ProvisioningState);
+            Assert.Equal("Succeeded", nodeType.ProvisioningState);
             Assert.Equal(isPrimary, nodeType.IsPrimary);
             Assert.Equal(vmImagePublisher, nodeType.VmImagePublisher);
             Assert.Equal(vmImageOffer, nodeType.VmImageOffer);
@@ -133,8 +124,6 @@ namespace ServiceFabricManagedClusters.Tests
             Assert.Equal(vmSize, nodeType.VmSize);
             Assert.Equal(vmInstanceCount, nodeType.VmInstanceCount);
             Assert.Equal(dataDiskSizeGB, nodeType.DataDiskSizeGB);
-            Assert.Equal(dataDiskType, nodeType.DataDiskType);
-            Assert.Equal(isStateless, nodeType.IsStateless);
 
             return nodeType;
         }
@@ -151,7 +140,7 @@ namespace ServiceFabricManagedClusters.Tests
             while (true)
             {
                 var cluster = serviceFabricMcClient.ManagedClusters.Get(resourceGroupName, clusterName);
-                if (cluster.ClusterState == ClusterState.Ready)
+                if (cluster.ClusterState == "Ready")
                 {
                     break;
                 }

@@ -44,9 +44,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// AzureKeyVault, then the URI is required.</param>
         /// <param name="thumbprint">Thumbprint of the key.</param>
         /// <param name="creationDate">The key creation date.</param>
-        /// <param name="autoRotationEnabled">Key auto rotation opt-in flag.
-        /// Either true or false.</param>
-        public ManagedInstanceKey(string serverKeyType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string uri = default(string), string thumbprint = default(string), System.DateTime? creationDate = default(System.DateTime?), bool? autoRotationEnabled = default(bool?))
+        public ManagedInstanceKey(string serverKeyType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string uri = default(string), string thumbprint = default(string), System.DateTime? creationDate = default(System.DateTime?))
             : base(id, name, type)
         {
             Kind = kind;
@@ -54,7 +52,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             Uri = uri;
             Thumbprint = thumbprint;
             CreationDate = creationDate;
-            AutoRotationEnabled = autoRotationEnabled;
             CustomInit();
         }
 
@@ -95,12 +92,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationDate")]
         public System.DateTime? CreationDate { get; private set; }
-
-        /// <summary>
-        /// Gets key auto rotation opt-in flag. Either true or false.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.autoRotationEnabled")]
-        public bool? AutoRotationEnabled { get; private set; }
 
         /// <summary>
         /// Validate the object.

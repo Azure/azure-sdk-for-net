@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
     /// <summary> The result of a call to retrieve policy certificates. </summary>
-    internal partial class PolicyCertificatesResult
+    public partial class PolicyCertificatesResult
     {
 
         /// <summary> Initializes a new instance of PolicyCertificatesResult. </summary>

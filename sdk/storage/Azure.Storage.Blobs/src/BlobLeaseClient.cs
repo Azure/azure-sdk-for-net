@@ -44,15 +44,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public Uri Uri => BlobClient?.Uri ?? BlobContainerClient?.Uri;
 
-        private string _leaseId;
         /// <summary>
         /// Gets the Lease ID for this lease.
         /// </summary>
-        public virtual string LeaseId
-        {
-            get => Volatile.Read(ref _leaseId);
-            private set => Volatile.Write(ref _leaseId, value);
-        }
+        public virtual string LeaseId { get; private set; }
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
@@ -304,14 +299,13 @@ namespace Azure.Storage.Blobs.Specialized
                         tagCondition = leaseConditions?.TagConditions;
                     }
 
-                    Response<BlobLease> response;
                     if (BlobClient != null)
                     {
-                        ResponseWithHeaders<BlobAcquireLeaseHeaders> blobClientResponse;
+                        ResponseWithHeaders<BlobAcquireLeaseHeaders> response;
 
                         if (async)
                         {
-                            blobClientResponse = await BlobClient.BlobRestClient.AcquireLeaseAsync(
+                            response = await BlobClient.BlobRestClient.AcquireLeaseAsync(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
@@ -324,7 +318,7 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         else
                         {
-                            blobClientResponse = BlobClient.BlobRestClient.AcquireLease(
+                            response = BlobClient.BlobRestClient.AcquireLease(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
@@ -335,9 +329,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            blobClientResponse.ToBlobLease(),
-                            blobClientResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                     else
                     {
@@ -348,11 +342,11 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(conditions.IfNoneMatch));
                         }
 
-                        ResponseWithHeaders<ContainerAcquireLeaseHeaders> containerClientResponse;
+                        ResponseWithHeaders<ContainerAcquireLeaseHeaders> response;
 
                         if (async)
                         {
-                            containerClientResponse = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
+                            response = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
@@ -362,7 +356,7 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         else
                         {
-                            containerClientResponse = BlobContainerClient.ContainerRestClient.AcquireLease(
+                            response = BlobContainerClient.ContainerRestClient.AcquireLease(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
@@ -370,12 +364,10 @@ namespace Azure.Storage.Blobs.Specialized
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            containerClientResponse.ToBlobLease(),
-                            containerClientResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
-                    LeaseId = response.Value.LeaseId;
-                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -526,14 +518,13 @@ namespace Azure.Storage.Blobs.Specialized
                         tagConditions = ((BlobLeaseRequestConditions)conditions).TagConditions;
                     }
 
-                    Response<BlobLease> response;
                     if (BlobClient != null)
                     {
-                        ResponseWithHeaders<BlobRenewLeaseHeaders> blobClientResponse;
+                        ResponseWithHeaders<BlobRenewLeaseHeaders> response;
 
                         if (async)
                         {
-                            blobClientResponse = await BlobClient.BlobRestClient.RenewLeaseAsync(
+                            response = await BlobClient.BlobRestClient.RenewLeaseAsync(
                                 leaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -545,7 +536,7 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         else
                         {
-                            blobClientResponse = BlobClient.BlobRestClient.RenewLease(
+                            response = BlobClient.BlobRestClient.RenewLease(
                                 leaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -555,9 +546,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            blobClientResponse.ToBlobLease(),
-                            blobClientResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                     else
                     {
@@ -568,11 +559,11 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(conditions.IfNoneMatch));
                         }
 
-                        ResponseWithHeaders<ContainerRenewLeaseHeaders> containerClientResponse;
+                        ResponseWithHeaders<ContainerRenewLeaseHeaders> response;
 
                         if (async)
                         {
-                            containerClientResponse = await BlobContainerClient.ContainerRestClient.RenewLeaseAsync(
+                            response = await BlobContainerClient.ContainerRestClient.RenewLeaseAsync(
                                 leaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -581,20 +572,17 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         else
                         {
-                            containerClientResponse = BlobContainerClient.ContainerRestClient.RenewLease(
+                            response = BlobContainerClient.ContainerRestClient.RenewLease(
                                 leaseId: LeaseId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            containerClientResponse.ToBlobLease(),
-                            containerClientResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
-
-                    LeaseId = response.Value.LeaseId;
-                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -972,14 +960,13 @@ namespace Azure.Storage.Blobs.Specialized
                         tagCondition = ((BlobLeaseRequestConditions)conditions).TagConditions;
                     }
 
-                    Response<BlobLease> response;
                     if (BlobClient != null)
                     {
-                        ResponseWithHeaders<BlobChangeLeaseHeaders> blobClientResponse;
+                        ResponseWithHeaders<BlobChangeLeaseHeaders> response;
 
                         if (async)
                         {
-                            blobClientResponse = await BlobClient.BlobRestClient.ChangeLeaseAsync(
+                            response = await BlobClient.BlobRestClient.ChangeLeaseAsync(
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
@@ -992,7 +979,7 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         else
                         {
-                            blobClientResponse = BlobClient.BlobRestClient.ChangeLease(
+                            response = BlobClient.BlobRestClient.ChangeLease(
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
@@ -1003,9 +990,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            blobClientResponse.ToBlobLease(),
-                            blobClientResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                     else
                     {
@@ -1016,11 +1003,11 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(conditions.IfNoneMatch));
                         }
 
-                        ResponseWithHeaders<ContainerChangeLeaseHeaders> containerClientResponse;
+                        ResponseWithHeaders<ContainerChangeLeaseHeaders> response;
 
                         if (async)
                         {
-                            containerClientResponse = await BlobContainerClient.ContainerRestClient.ChangeLeaseAsync(
+                            response = await BlobContainerClient.ContainerRestClient.ChangeLeaseAsync(
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
@@ -1030,7 +1017,7 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         else
                         {
-                            containerClientResponse = BlobContainerClient.ContainerRestClient.ChangeLease(
+                            response = BlobContainerClient.ContainerRestClient.ChangeLease(
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 ifModifiedSince: conditions?.IfModifiedSince,
@@ -1038,13 +1025,10 @@ namespace Azure.Storage.Blobs.Specialized
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            containerClientResponse.ToBlobLease(),
-                            containerClientResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
-
-                    LeaseId = response.Value.LeaseId;
-                    return response;
                 }
                 catch (Exception ex)
                 {

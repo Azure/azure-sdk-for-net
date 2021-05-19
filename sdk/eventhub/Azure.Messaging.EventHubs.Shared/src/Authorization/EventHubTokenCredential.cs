@@ -18,33 +18,46 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <summary>The default scope used for token authentication with EventHubs.</summary>
         private const string DefaultScope = "https://eventhubs.azure.net/.default";
 
-        /// <summary>The <see cref="TokenCredential" /> that forms the basis of this security token.</summary>
-        private readonly TokenCredential _credential;
+        /// <summary>
+        ///   The Event Hubs resource to which the token is intended to serve as authorization.
+        /// </summary>
+        ///
+        public string Resource { get; }
 
         /// <summary>
         ///   Indicates whether the credential is based on an Event Hubs
-        ///   shared access policy.
+        ///   shared access signature.
         /// </summary>
         ///
-        /// <value><c>true</c> if the credential should be considered a shared access credential; otherwise, <c>false</c>.</value>
+        /// <value><c>true</c> if the credential should be considered a SAS credential; otherwise, <c>false</c>.</value>
         ///
-        public bool IsSharedAccessCredential { get; }
+        public bool IsSharedAccessSignatureCredential { get; }
+
+        /// <summary>
+        ///   The <see cref="TokenCredential" /> that forms the basis of this security token.
+        /// </summary>
+        ///
+        private TokenCredential Credential { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubTokenCredential" /> class.
         /// </summary>
         ///
         /// <param name="tokenCredential">The <see cref="TokenCredential" /> on which to base the token.</param>
+        /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
         ///
-        public EventHubTokenCredential(TokenCredential tokenCredential)
+        public EventHubTokenCredential(TokenCredential tokenCredential,
+                                       string eventHubResource)
         {
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            Argument.AssertNotNullOrEmpty(eventHubResource, nameof(eventHubResource));
 
-            _credential = tokenCredential;
+            Credential = tokenCredential;
+            Resource = eventHubResource;
 
-            IsSharedAccessCredential =
-                (tokenCredential is SharedAccessCredential)
-                || ((tokenCredential as EventHubTokenCredential)?.IsSharedAccessCredential == true);
+            IsSharedAccessSignatureCredential =
+                (tokenCredential is SharedAccessSignatureCredential)
+                || ((tokenCredential as EventHubTokenCredential)?.IsSharedAccessSignatureCredential == true);
         }
 
         /// <summary>
@@ -58,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
         public override AccessToken GetToken(TokenRequestContext requestContext,
-                                             CancellationToken cancellationToken) => _credential.GetToken(requestContext, cancellationToken);
+                                             CancellationToken cancellationToken) => Credential.GetToken(requestContext, cancellationToken);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
@@ -71,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
-                                                             CancellationToken cancellationToken) => _credential.GetTokenAsync(requestContext, cancellationToken);
+                                                             CancellationToken cancellationToken) => Credential.GetTokenAsync(requestContext, cancellationToken);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for

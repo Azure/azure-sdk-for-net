@@ -21,8 +21,6 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 To recognize business cards from a URI, use the `StartRecognizeBusinessCardsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
-For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/businesscardfields).
-
 ```C# Snippet:FormRecognizerSampleRecognizeBusinessCardsFromUri
 Uri businessCardUri = <businessCardUri>;
 
@@ -220,8 +218,6 @@ foreach (RecognizedForm businessCard in businessCards)
 ## Recognize business cards from a given file
 
 To recognize business cards from a given file, use the `StartRecognizeBusinessCards` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
-
-For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/businesscardfields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
 string businessCardsPath = "<businessCardsPath>";

@@ -33,7 +33,7 @@ UriBuilder builder = new UriBuilder(blobStorageUrl)
 };
 
 // Start the backup.
-KeyVaultBackupOperation backupOperation = Client.StartBackup(builder.Uri, sasToken);
+BackupOperation backupOperation = Client.StartBackup(builder.Uri, sasToken);
 
 // Wait for completion of the BackupOperation.
 while (!backupOperation.HasCompleted)
@@ -54,7 +54,7 @@ Alternatively, it is possible to [generate a SAS token in Storage Explorer](http
 
 ```C# Snippet:HelloFullRestoreSync
 // Start the restore using the backupBlobUri returned from a previous BackupOperation.
-KeyVaultRestoreOperation restoreOperation = Client.StartRestore(folderUri, sasToken);
+RestoreOperation restoreOperation = Client.StartRestore(folderUri, sasToken);
 
 // Wait for completion of the RestoreOperation.
 while (!restoreOperation.HasCompleted)

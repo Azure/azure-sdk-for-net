@@ -51,9 +51,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             IEnumerable<KeyProperties> keys = client.GetPropertiesOfKeys();
             foreach (KeyProperties key in keys)
             {
-#if !SNIPPET
-                if (key.Managed) continue;
-#endif
+                /*@@*/ if (key.Managed) continue;
                 KeyVaultKey keyWithType = client.GetKey(key.Name);
                 Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.KeyType}");
             }

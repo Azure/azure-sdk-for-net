@@ -16,51 +16,6 @@ namespace Microsoft.Azure.Management.StorageCache
     public static partial class StorageTargetsExtensions
     {
             /// <summary>
-            /// Tells a storage target to refresh its DNS information.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Target resource group.
-            /// </param>
-            /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
-            /// </param>
-            /// <param name='storageTargetName'>
-            /// Name of Storage Target.
-            /// </param>
-            public static void DnsRefresh(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName)
-            {
-                operations.DnsRefreshAsync(resourceGroupName, cacheName, storageTargetName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tells a storage target to refresh its DNS information.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Target resource group.
-            /// </param>
-            /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
-            /// </param>
-            /// <param name='storageTargetName'>
-            /// Name of Storage Target.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DnsRefreshAsync(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DnsRefreshWithHttpMessagesAsync(resourceGroupName, cacheName, storageTargetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Returns a list of Storage Targets for the specified Cache.
             /// </summary>
             /// <param name='operations'>
@@ -70,8 +25,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             public static StorageTargetsResult ListByCache(this IStorageTargets operations, string resourceGroupName, string cacheName)
             {
@@ -88,8 +43,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -116,15 +71,15 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='storageTargetName'>
             /// Name of Storage Target.
             /// </param>
-            public static void Delete(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName)
+            public static object Delete(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName)
             {
-                operations.DeleteAsync(resourceGroupName, cacheName, storageTargetName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, cacheName, storageTargetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -141,8 +96,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='storageTargetName'>
             /// Name of Storage Target.
@@ -150,9 +105,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteAsync(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, cacheName, storageTargetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, cacheName, storageTargetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -165,11 +123,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='storageTargetName'>
-            /// Name of Storage Target.
+            /// Name of the Storage Target. Length of name must be not greater than 80 and
+            /// chars must be in list of [-0-9a-zA-Z_] char class.
             /// </param>
             public static StorageTarget Get(this IStorageTargets operations, string resourceGroupName, string cacheName, string storageTargetName)
             {
@@ -186,11 +145,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='storageTargetName'>
-            /// Name of Storage Target.
+            /// Name of the Storage Target. Length of name must be not greater than 80 and
+            /// chars must be in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -215,11 +175,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='storageTargetName'>
-            /// Name of Storage Target.
+            /// Name of the Storage Target. Length of name must be not greater than 80 and
+            /// chars must be in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='storagetarget'>
             /// Object containing the definition of a Storage Target.
@@ -241,11 +202,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='storageTargetName'>
-            /// Name of Storage Target.
+            /// Name of the Storage Target. Length of name must be not greater than 80 and
+            /// chars must be in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='storagetarget'>
             /// Object containing the definition of a Storage Target.

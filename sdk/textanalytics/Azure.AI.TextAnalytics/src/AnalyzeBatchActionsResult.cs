@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -15,15 +16,23 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
-            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults,
             TextDocumentBatchStatistics statistics)
         {
             ExtractKeyPhrasesActionsResults = extractKeyPhrasesActionResult;
             RecognizeEntitiesActionsResults = recognizeEntitiesActionResults;
             RecognizePiiEntitiesActionsResults = recognizePiiEntitiesActionResults;
             RecognizeLinkedEntitiesActionsResults = recognizeLinkedEntitiesActionsResults;
-            AnalyzeSentimentActionsResults = analyzeSentimentActionsResults;
             Statistics = statistics;
+        }
+
+        internal AnalyzeBatchActionsResult(AnalyzeJobState jobState, IDictionary<string, int> map)
+        {
+            AnalyzeBatchActionsResult actionResults = Transforms.ConvertToAnalyzeBatchActionsResult(jobState, map);
+            ExtractKeyPhrasesActionsResults = actionResults.ExtractKeyPhrasesActionsResults;
+            RecognizeEntitiesActionsResults = actionResults.RecognizeEntitiesActionsResults;
+            RecognizePiiEntitiesActionsResults = actionResults.RecognizePiiEntitiesActionsResults;
+            RecognizeLinkedEntitiesActionsResults = actionResults.RecognizeLinkedEntitiesActionsResults;
+            Statistics = actionResults.Statistics;
         }
 
         /// <summary>
@@ -45,11 +54,6 @@ namespace Azure.AI.TextAnalytics
         /// Determines the collection of RecognizeLinkedEntitiesActionsResult.
         /// </summary>
         public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults { get; }
-
-        /// <summary>
-        /// Determines the collection of AnalyzeSentimentActionsResults.
-        /// </summary>
-        public IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentActionsResults { get; }
 
         /// <summary>
         /// Gets statistics about the operation executed and how it was processed

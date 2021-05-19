@@ -46,15 +46,10 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// </summary>
         public Uri Uri => FileClient?.Uri ?? ShareClient?.Uri;
 
-        private string _leaseId;
         /// <summary>
         /// Gets the Lease ID for this lease.
         /// </summary>
-        public virtual string LeaseId
-        {
-            get => Volatile.Read(ref _leaseId);
-            private set => Volatile.Write(ref _leaseId, value);
-        }
+        public virtual string LeaseId { get; private set; }
 
         /// <summary>
         /// <see cref="ShareClientConfiguration"/>.
@@ -108,7 +103,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public ShareLeaseClient(ShareClient client, string leaseId = null)
+        internal ShareLeaseClient(ShareClient client, string leaseId = null)
         {
             _share = client ?? throw Errors.ArgumentNull(nameof(client));
             LeaseId = leaseId ?? CreateUniqueLeaseId();
@@ -328,14 +323,13 @@ namespace Azure.Storage.Files.Shares.Specialized
                 try
                 {
                     scope.Start();
-                    Response<ShareFileLease> response;
                     if (FileClient != null)
                     {
-                        ResponseWithHeaders<FileAcquireLeaseHeaders> fileResponse;
+                        ResponseWithHeaders<FileAcquireLeaseHeaders> response;
 
                         if (async)
                         {
-                            fileResponse = await FileClient.FileRestClient.AcquireLeaseAsync(
+                            response = await FileClient.FileRestClient.AcquireLeaseAsync(
                                 duration: (int)Constants.File.Lease.InfiniteLeaseDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken)
@@ -343,15 +337,15 @@ namespace Azure.Storage.Files.Shares.Specialized
                         }
                         else
                         {
-                            fileResponse = FileClient.FileRestClient.AcquireLease(
+                            response = FileClient.FileRestClient.AcquireLease(
                                 duration: (int)Constants.File.Lease.InfiniteLeaseDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            fileResponse.ToShareFileLease(),
-                            fileResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
                     }
                     else
                     {
@@ -367,11 +361,11 @@ namespace Azure.Storage.Files.Shares.Specialized
                             serviceDuration = Constants.File.Lease.InfiniteLeaseDuration;
                         }
 
-                        ResponseWithHeaders<ShareAcquireLeaseHeaders> shareResponse;
+                        ResponseWithHeaders<ShareAcquireLeaseHeaders> response;
 
                         if (async)
                         {
-                            shareResponse = await ShareClient.ShareRestClient.AcquireLeaseAsync(
+                            response = await ShareClient.ShareRestClient.AcquireLeaseAsync(
                                 duration: (int)serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken)
@@ -379,18 +373,16 @@ namespace Azure.Storage.Files.Shares.Specialized
                         }
                         else
                         {
-                            shareResponse = ShareClient.ShareRestClient.AcquireLease(
+                            response = ShareClient.ShareRestClient.AcquireLease(
                                 duration: (int)serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            shareResponse.ToShareFileLease(),
-                            shareResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
                     }
-                    LeaseId = response.Value.LeaseId;
-                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -677,14 +669,14 @@ namespace Azure.Storage.Files.Shares.Specialized
                 try
                 {
                     scope.Start();
-                    Response<ShareFileLease> response;
+
                     if (FileClient != null)
                     {
-                        ResponseWithHeaders<FileChangeLeaseHeaders> fileResponse;
+                        ResponseWithHeaders<FileChangeLeaseHeaders> response;
 
                         if (async)
                         {
-                            fileResponse = await FileClient.FileRestClient.ChangeLeaseAsync(
+                            response = await FileClient.FileRestClient.ChangeLeaseAsync(
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 cancellationToken: cancellationToken)
@@ -692,23 +684,23 @@ namespace Azure.Storage.Files.Shares.Specialized
                         }
                         else
                         {
-                            fileResponse = FileClient.FileRestClient.ChangeLease(
+                            response = FileClient.FileRestClient.ChangeLease(
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            fileResponse.ToShareFileLease(),
-                            fileResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
                     }
                     else
                     {
-                        ResponseWithHeaders<ShareChangeLeaseHeaders> shareResponse;
+                        ResponseWithHeaders<ShareChangeLeaseHeaders> response;
 
                         if (async)
                         {
-                            shareResponse = await ShareClient.ShareRestClient.ChangeLeaseAsync(
+                            response = await ShareClient.ShareRestClient.ChangeLeaseAsync(
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 cancellationToken: cancellationToken)
@@ -716,19 +708,16 @@ namespace Azure.Storage.Files.Shares.Specialized
                         }
                         else
                         {
-                            shareResponse = ShareClient.ShareRestClient.ChangeLease(
+                            response = ShareClient.ShareRestClient.ChangeLease(
                                 leaseId: LeaseId,
                                 proposedLeaseId: proposedId,
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            shareResponse.ToShareFileLease(),
-                            shareResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
                     }
-
-                    LeaseId = response.Value.LeaseId;
-                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -1021,36 +1010,32 @@ namespace Azure.Storage.Files.Shares.Specialized
                 try
                 {
                     scope.Start();
-                    Response<ShareFileLease> response;
                     if (FileClient != null)
                     {
                         throw new InvalidOperationException($"{nameof(Renew)} only supports Share Leases");
                     }
                     else
                     {
-                        ResponseWithHeaders<ShareRenewLeaseHeaders> shareResponse;
+                        ResponseWithHeaders<ShareRenewLeaseHeaders> response;
 
                         if (async)
                         {
-                            shareResponse = await ShareClient.ShareRestClient.RenewLeaseAsync(
+                            response = await ShareClient.ShareRestClient.RenewLeaseAsync(
                                 leaseId: LeaseId,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         }
                         else
                         {
-                            shareResponse = ShareClient.ShareRestClient.RenewLease(
+                            response = ShareClient.ShareRestClient.RenewLease(
                                 leaseId: LeaseId,
                                 cancellationToken: cancellationToken);
                         }
 
-                        response = Response.FromValue(
-                            shareResponse.ToShareFileLease(),
-                            shareResponse.GetRawResponse());
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
                     }
-
-                    LeaseId = response.Value.LeaseId;
-                    return response;
                 }
                 catch (Exception ex)
                 {

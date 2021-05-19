@@ -28,23 +28,19 @@ namespace Azure.Security.KeyVault.Administration.Tests
             };
 
             // Start the backup.
-            KeyVaultBackupOperation originalBackupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
+            BackupOperation originalBackupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
             var backupOperationId = originalBackupOperation.Id;
 
             #region Snippet:ResumeBackupAsync
-#if SNIPPET
             // Construct a new KeyVaultBackupClient or use an existing one.
-            KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
-#endif
+            //@@KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
             // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-            KeyVaultBackupOperation backupOperation = new KeyVaultBackupOperation(client, backupOperationId);
-#if !SNIPPET
-            backupOperation._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
-#endif
+            BackupOperation backupOperation = new BackupOperation(client, backupOperationId);
+            /*@@*/backupOperation._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
 
             // Wait for completion of the BackupOperation.
-            Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             // Get the Uri for the location of you backup blob.
             Uri folderUri = backupResult.Value.FolderUri;
@@ -56,23 +52,19 @@ namespace Azure.Security.KeyVault.Administration.Tests
             await WaitForOperationAsync();
 
             // Start the restore using the backupBlobUri returned from a previous BackupOperation.
-            KeyVaultRestoreOperation originalRestoreOperation = await Client.StartRestoreAsync(folderUri, sasToken);
+            RestoreOperation originalRestoreOperation = await Client.StartRestoreAsync(folderUri, sasToken);
             var restoreOperationId = originalRestoreOperation.Id;
 
             #region Snippet:ResumeRestoreAsync
-#if SNIPPET
             // Construct a new KeyVaultBackupClient or use an existing one.
-            KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
-#endif
+            //@@KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
             // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-            KeyVaultRestoreOperation restoreOperation = new KeyVaultRestoreOperation(client, restoreOperationId);
-#if !SNIPPET
-            restoreOperation._operationInternal._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
-#endif
+            RestoreOperation restoreOperation = new RestoreOperation(client, restoreOperationId);
+            /*@@*/restoreOperation._operationInternal._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
 
             // Wait for completion of the RestoreOperation.
-            KeyVaultRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
+            RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
 
             Assert.That(restoreOperation.HasValue, Is.True);

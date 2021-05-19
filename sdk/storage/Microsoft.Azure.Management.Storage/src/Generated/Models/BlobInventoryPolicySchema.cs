@@ -33,11 +33,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the BlobInventoryPolicySchema class.
         /// </summary>
         /// <param name="enabled">Policy is enabled if set to true.</param>
+        /// <param name="destination">Container name where blob inventory files
+        /// are stored. Must be pre-created.</param>
         /// <param name="rules">The storage account blob inventory policy
         /// rules. The rule is applied when it is enabled.</param>
-        public BlobInventoryPolicySchema(bool enabled, IList<BlobInventoryPolicyRule> rules)
+        public BlobInventoryPolicySchema(bool enabled, string destination, IList<BlobInventoryPolicyRule> rules)
         {
             Enabled = enabled;
+            Destination = destination;
             Rules = rules;
             CustomInit();
         }
@@ -61,6 +64,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         public bool Enabled { get; set; }
 
         /// <summary>
+        /// Gets or sets container name where blob inventory files are stored.
+        /// Must be pre-created.
+        /// </summary>
+        [JsonProperty(PropertyName = "destination")]
+        public string Destination { get; set; }
+
+        /// <summary>
         /// Gets or sets the storage account blob inventory policy rules. The
         /// rule is applied when it is enabled.
         /// </summary>
@@ -81,6 +91,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Destination == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Destination");
+            }
             if (Rules == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Rules");

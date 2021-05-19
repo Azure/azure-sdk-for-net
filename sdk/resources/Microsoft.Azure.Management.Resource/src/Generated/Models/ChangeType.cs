@@ -62,12 +62,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// of the resource will change.
         /// </summary>
         [EnumMember(Value = "Modify")]
-        Modify,
-        /// <summary>
-        /// The resource is not supported by What-If.
-        /// </summary>
-        [EnumMember(Value = "Unsupported")]
-        Unsupported
+        Modify
     }
     internal static class ChangeTypeEnumExtension
     {
@@ -92,8 +87,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
                     return "NoChange";
                 case ChangeType.Modify:
                     return "Modify";
-                case ChangeType.Unsupported:
-                    return "Unsupported";
             }
             return null;
         }
@@ -114,8 +107,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
                     return ChangeType.NoChange;
                 case "Modify":
                     return ChangeType.Modify;
-                case "Unsupported":
-                    return ChangeType.Unsupported;
             }
             return null;
         }

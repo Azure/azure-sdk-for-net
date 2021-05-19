@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Credential = credential;
             CancellationToken = cancellationToken;
 
-            TokenType = (credential.IsSharedAccessCredential)
+            TokenType = (credential.IsSharedAccessSignatureCredential)
                 ? SharedAccessSignatureTokenType
                 : JsonWebTokenType;
         }

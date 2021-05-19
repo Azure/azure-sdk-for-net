@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1c9b1fa19834be47ac78fee9b7e92aa5-2cbfd130ed8de741-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-471a20ce0a25394ca3a9e989496319cd-bbed4551a1a8e14c-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "a3e55567032ead2e96e9e43aca4ac158",
         "x-ms-return-client-request-id": "true"
@@ -15,14 +15,14 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "808d0e93-9c89-4731-ba92-fd9d2bf98264",
-        "Content-Length": "6744",
+        "apim-request-id": "4044869c-aa06-4d39-a9e5-ff4a81c37610",
+        "Content-Length": "5816",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:59:15 GMT",
+        "Date": "Tue, 19 Jan 2021 17:42:28 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "430",
-        "x-request-id": "808d0e93-9c89-4731-ba92-fd9d2bf98264"
+        "x-envoy-upstream-service-time": "412",
+        "x-request-id": "4044869c-aa06-4d39-a9e5-ff4a81c37610"
       },
       "ResponseBody": {
         "value": [
@@ -39,9 +39,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 3.4,
-              "expectedValueOfRootNode": 1.8564662412054167
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -58,9 +56,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
+              "incidentStatus": "Active"
             }
           },
           {
@@ -77,9 +73,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.4,
-              "expectedValueOfRootNode": 0.23381129349099047
+              "incidentStatus": "Active"
             }
           },
           {
@@ -96,9 +90,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.6,
-              "expectedValueOfRootNode": 0.13304319424495817
+              "incidentStatus": "Active"
             }
           },
           {
@@ -115,9 +107,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
+              "incidentStatus": "Active"
             }
           },
           {
@@ -134,9 +124,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.6,
-              "expectedValueOfRootNode": 0.0
+              "incidentStatus": "Active"
             }
           },
           {
@@ -152,9 +140,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.0,
-              "expectedValueOfRootNode": 5.89638307091832
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -171,9 +157,7 @@
             },
             "property": {
               "maxSeverity": "High",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 79092033.4,
-              "expectedValueOfRootNode": 83904129.166464686
+              "incidentStatus": "Active"
             }
           },
           {
@@ -189,9 +173,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -207,9 +189,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.0,
-              "expectedValueOfRootNode": 0.21970638531468334
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -225,9 +205,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 1.0,
-              "expectedValueOfRootNode": 0.012328166585182702
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -244,9 +222,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 0.2,
-              "expectedValueOfRootNode": 0.0
+              "incidentStatus": "Active"
             }
           },
           {
@@ -263,9 +239,7 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 2.8,
-              "expectedValueOfRootNode": 0.32331066012917681
+              "incidentStatus": "Active"
             }
           },
           {
@@ -281,9 +255,7 @@
               }
             },
             "property": {
-              "incidentStatus": "Resolved",
-              "valueOfRootNode": 0.0,
-              "expectedValueOfRootNode": 1.7619857385604643
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -300,12 +272,11 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active",
-              "valueOfRootNode": 1.4,
-              "expectedValueOfRootNode": 0.00082077254676293527
+              "incidentStatus": "Active"
             }
           }
-        ]
+        ],
+        "@nextLink": null
       }
     }
   ],

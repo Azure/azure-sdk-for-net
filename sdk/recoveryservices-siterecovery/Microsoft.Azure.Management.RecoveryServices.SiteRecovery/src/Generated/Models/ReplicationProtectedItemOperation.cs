@@ -25,7 +25,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public const string TestFailoverCleanup = "TestFailoverCleanup";
         public const string Failback = "Failback";
         public const string FinalizeFailback = "FinalizeFailback";
-        public const string CancelFailover = "CancelFailover";
         public const string ChangePit = "ChangePit";
         public const string RepairReplication = "RepairReplication";
         public const string SwitchProtection = "SwitchProtection";

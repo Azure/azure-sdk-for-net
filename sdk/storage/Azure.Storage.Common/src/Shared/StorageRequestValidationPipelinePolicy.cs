@@ -21,7 +21,7 @@ namespace Azure.Storage
         /// </summary>
         public StorageRequestValidationPipelinePolicy(ClientOptions options)
         {
-            _clientDiagnostics = new StorageClientDiagnostics(options);
+            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>

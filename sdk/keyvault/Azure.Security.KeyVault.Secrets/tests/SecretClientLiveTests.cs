@@ -444,16 +444,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 RegisterForCleanup(secret.Name);
             }
 
-            List<Task> deletingSecrets = new List<Task>();
             foreach (KeyVaultSecret deletedSecret in deletedSecrets)
             {
-                // WaitForDeletedSecret disables recording, so we can wait concurrently.
-                deletingSecrets.Add(WaitForDeletedSecret(deletedSecret.Name));
+                await WaitForDeletedSecret(deletedSecret.Name);
             }
 
-            await Task.WhenAll(deletingSecrets);
-
             List<DeletedSecret> allSecrets = await Client.GetDeletedSecretsAsync().ToEnumerableAsync();
+
             foreach (KeyVaultSecret deletedSecret in deletedSecrets)
             {
                 KeyVaultSecret returnedSecret = allSecrets.Single(s => s.Name == deletedSecret.Name);

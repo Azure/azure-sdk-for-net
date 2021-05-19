@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,23 +33,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// class.
         /// </summary>
         /// <param name="vmwareSiteId">The ARM Id of the VMware site.</param>
-        /// <param name="physicalSiteId">The ARM Id of the physical
-        /// site.</param>
         /// <param name="migrationSolutionId">The Migration solution ARM
         /// Id.</param>
         /// <param name="serviceEndpoint">The service endpoint.</param>
         /// <param name="serviceResourceId">The service resource Id.</param>
-        /// <param name="serviceContainerId">The service container Id.</param>
-        /// <param name="processServers">The list of process servers.</param>
-        public VMwareV2FabricSpecificDetails(string vmwareSiteId = default(string), string physicalSiteId = default(string), string migrationSolutionId = default(string), string serviceEndpoint = default(string), string serviceResourceId = default(string), string serviceContainerId = default(string), IList<ProcessServerDetails> processServers = default(IList<ProcessServerDetails>))
+        public VMwareV2FabricSpecificDetails(string vmwareSiteId = default(string), string migrationSolutionId = default(string), string serviceEndpoint = default(string), string serviceResourceId = default(string))
         {
             VmwareSiteId = vmwareSiteId;
-            PhysicalSiteId = physicalSiteId;
             MigrationSolutionId = migrationSolutionId;
             ServiceEndpoint = serviceEndpoint;
             ServiceResourceId = serviceResourceId;
-            ServiceContainerId = serviceContainerId;
-            ProcessServers = processServers;
             CustomInit();
         }
 
@@ -65,12 +56,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmwareSiteId")]
         public string VmwareSiteId { get; private set; }
-
-        /// <summary>
-        /// Gets the ARM Id of the physical site.
-        /// </summary>
-        [JsonProperty(PropertyName = "physicalSiteId")]
-        public string PhysicalSiteId { get; private set; }
 
         /// <summary>
         /// Gets the Migration solution ARM Id.
@@ -89,18 +74,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "serviceResourceId")]
         public string ServiceResourceId { get; private set; }
-
-        /// <summary>
-        /// Gets the service container Id.
-        /// </summary>
-        [JsonProperty(PropertyName = "serviceContainerId")]
-        public string ServiceContainerId { get; private set; }
-
-        /// <summary>
-        /// Gets the list of process servers.
-        /// </summary>
-        [JsonProperty(PropertyName = "processServers")]
-        public IList<ProcessServerDetails> ProcessServers { get; private set; }
 
     }
 }

@@ -13,14 +13,14 @@ namespace Azure.AI.FormRecognizer.Training
     /// </summary>
     public class CustomFormModel
     {
-        internal CustomFormModel(Model model, FormRecognizerClientOptions.ServiceVersion serviceVersion)
+        internal CustomFormModel(Model model)
         {
             ModelId = model.ModelInfo.ModelId;
             ModelName = model.ModelInfo.ModelName;
             Status = model.ModelInfo.Status;
             TrainingStartedOn = model.ModelInfo.TrainingStartedOn;
             TrainingCompletedOn = model.ModelInfo.TrainingCompletedOn;
-            Submodels = ConvertToSubmodels(model, serviceVersion);
+            Submodels = ConvertToSubmodels(model);
             TrainingDocuments = ConvertToTrainingDocuments(model);
             Errors = model.TrainResult?.Errors ?? new List<FormRecognizerError>();
             Properties = model.ModelInfo.Properties ?? new CustomFormModelProperties();
@@ -68,17 +68,11 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// An optional, user-defined name to associate with your model.
         /// </summary>
-        /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
-        /// </remarks>
         public string ModelName { get; }
 
         /// <summary>
         /// Properties of a model, such as whether the model is a composed model or not.
         /// </summary>
-        /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
-        /// </remarks>
         [CodeGenMember("Attributes")]
         public CustomFormModelProperties Properties { get; }
 
@@ -112,13 +106,13 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }
 
-        private static IReadOnlyList<CustomFormSubmodel> ConvertToSubmodels(Model model, FormRecognizerClientOptions.ServiceVersion serviceVersion = default)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertToSubmodels(Model model)
         {
             if (model.Keys != null)
                 return ConvertFromUnlabeled(model);
 
             if (model.TrainResult != null)
-                return ConvertFromLabeled(model, serviceVersion);
+                return ConvertFromLabeled(model);
 
             if (model.ComposedTrainResults != null)
                 return ConvertFromLabeledComposedModel(model);
@@ -148,20 +142,13 @@ namespace Azure.AI.FormRecognizer.Training
             return subModels;
         }
 
-        private static IReadOnlyList<CustomFormSubmodel> ConvertFromLabeled(Model model, FormRecognizerClientOptions.ServiceVersion serviceVersion = default)
+        private static IReadOnlyList<CustomFormSubmodel> ConvertFromLabeled(Model model)
         {
-            string formType;
-            if (serviceVersion == FormRecognizerClientOptions.ServiceVersion.V2_0)
-            {
-                formType = $"form-{model.ModelInfo.ModelId}";
-            }
+            string formType = string.Empty;
+            if (string.IsNullOrEmpty(model.ModelInfo.ModelName))
+                formType = $"custom:{model.ModelInfo.ModelId}";
             else
-            {
-                if (string.IsNullOrEmpty(model.ModelInfo.ModelName))
-                    formType = $"custom:{model.ModelInfo.ModelId}";
-                else
-                    formType = $"custom:{model.ModelInfo.ModelName}";
-            }
+                formType = $"custom:{model.ModelInfo.ModelName}";
 
             return new List<CustomFormSubmodel> {
                 new CustomFormSubmodel(

@@ -27,7 +27,6 @@ namespace Azure.Storage.Blobs.Models
             bool? preventEncryptionScopeOverride = default;
             DateTimeOffset? deletedTime = default;
             int? remainingRetentionDays = default;
-            bool? isVersionLevelWormEnabled = default;
             if (element.Element("Last-Modified") is XElement lastModifiedElement)
             {
                 lastModified = lastModifiedElement.GetDateTimeOffsetValue("R");
@@ -76,11 +75,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 remainingRetentionDays = (int?)remainingRetentionDaysElement;
             }
-            if (element.Element("VersionLevelWormEnabled") is XElement versionLevelWormEnabledElement)
-            {
-                isVersionLevelWormEnabled = (bool?)versionLevelWormEnabledElement;
-            }
-            return new ContainerPropertiesInternal(lastModified, etag, leaseStatus, leaseState, leaseDuration, publicAccess, hasImmutabilityPolicy, hasLegalHold, defaultEncryptionScope, preventEncryptionScopeOverride, deletedTime, remainingRetentionDays, isVersionLevelWormEnabled);
+            return new ContainerPropertiesInternal(lastModified, etag, leaseStatus, leaseState, leaseDuration, publicAccess, hasImmutabilityPolicy, hasLegalHold, defaultEncryptionScope, preventEncryptionScopeOverride, deletedTime, remainingRetentionDays);
         }
     }
 }

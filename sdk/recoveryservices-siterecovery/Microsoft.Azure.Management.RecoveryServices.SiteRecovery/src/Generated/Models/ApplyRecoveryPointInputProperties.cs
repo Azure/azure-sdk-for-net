@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,10 +31,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the ApplyRecoveryPointInputProperties
         /// class.
         /// </summary>
+        /// <param name="recoveryPointId">The recovery point Id.</param>
         /// <param name="providerSpecificDetails">Provider specific input for
         /// applying recovery point.</param>
-        /// <param name="recoveryPointId">The recovery point Id.</param>
-        public ApplyRecoveryPointInputProperties(ApplyRecoveryPointProviderSpecificInput providerSpecificDetails, string recoveryPointId = default(string))
+        public ApplyRecoveryPointInputProperties(string recoveryPointId = default(string), ApplyRecoveryPointProviderSpecificInput providerSpecificDetails = default(ApplyRecoveryPointProviderSpecificInput))
         {
             RecoveryPointId = recoveryPointId;
             ProviderSpecificDetails = providerSpecificDetails;
@@ -59,18 +58,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "providerSpecificDetails")]
         public ApplyRecoveryPointProviderSpecificInput ProviderSpecificDetails { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ProviderSpecificDetails == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ProviderSpecificDetails");
-            }
-        }
     }
 }

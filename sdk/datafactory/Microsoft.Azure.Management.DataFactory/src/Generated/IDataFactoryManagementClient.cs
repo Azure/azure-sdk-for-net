@@ -155,20 +155,5 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </summary>
         IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; }
 
-        /// <summary>
-        /// Gets the IPrivateEndPointConnectionsOperations.
-        /// </summary>
-        IPrivateEndPointConnectionsOperations PrivateEndPointConnections { get; }
-
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionOperations.
-        /// </summary>
-        IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkResourcesOperations.
-        /// </summary>
-        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
-
     }
 }

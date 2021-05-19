@@ -67,11 +67,6 @@ namespace Microsoft.Azure.Management.StorageCache
         IUsageModels UsageModels { get; }
 
         /// <summary>
-        /// Gets the IAscOperations.
-        /// </summary>
-        IAscOperations AscOperations { get; }
-
-        /// <summary>
         /// Gets the ICaches.
         /// </summary>
         ICaches Caches { get; }

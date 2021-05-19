@@ -130,7 +130,7 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CUserDelegationKey\u003E\u003CSignedOid\u003Ec4f48289-bb84-4086-b250-6f94a8f64cee\u003C/SignedOid\u003E\u003CSignedTid\u003E72f988bf-86f1-41af-91ab-2d7cd011db47\u003C/SignedTid\u003E\u003CSignedStart\u003E2021-02-19T18:58:14Z\u003C/SignedStart\u003E\u003CSignedExpiry\u003E2021-02-19T19:58:14Z\u003C/SignedExpiry\u003E\u003CSignedService\u003Eb\u003C/SignedService\u003E\u003CSignedVersion\u003E2020-06-12\u003C/SignedVersion\u003E\u003CValue\u003Ec6Gi9MFOGm5jWa5u3M1MZS0P1fkDu3x\u002B1KsWRQ4yyRM=\u003C/Value\u003E\u003C/UserDelegationKey\u003E"
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-9f00ca53-2e3a-7e8f-13f7-269098422f16/test-directory-e561f68f-454d-6570-7705-c0908d3ad560?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-02-19T18%3A58%3A14Z\u0026ske=2021-02-19T19%3A58%3A14Z\u0026sks=b\u0026skv=2020-06-12\u0026sv=2020-08-04\u0026st=2021-02-19T17%3A58%3A14Z\u0026se=2021-02-19T19%3A58%3A14Z\u0026sr=d\u0026sp=racwdlmeop\u0026sdd=1\u0026sig=Sanitized",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-9f00ca53-2e3a-7e8f-13f7-269098422f16/test-directory-e561f68f-454d-6570-7705-c0908d3ad560?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-02-19T18%3A58%3A14Z\u0026ske=2021-02-19T19%3A58%3A14Z\u0026sks=b\u0026skv=2020-06-12\u0026sv=2020-06-12\u0026st=2021-02-19T17%3A58%3A14Z\u0026se=2021-02-19T19%3A58%3A14Z\u0026sr=d\u0026sp=racwdlmeop\u0026sdd=1\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

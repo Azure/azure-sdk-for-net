@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary> The list of purchased phone numbers. </summary>
     internal partial class PurchasedPhoneNumbers

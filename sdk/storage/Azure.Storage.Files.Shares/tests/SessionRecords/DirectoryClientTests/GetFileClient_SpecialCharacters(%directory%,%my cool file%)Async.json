@@ -203,7 +203,7 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanmcccanary3.file.core.windows.net/\u0022 ShareName=\u0022test-share-ef7d5134-4243-0b88-9a4a-531e9de3ecda\u0022 DirectoryPath=\u0022directory\u0022\u003E\u003CEntries\u003E\u003CFile\u003E\u003CName\u003Emy cool file\u003C/Name\u003E\u003CProperties\u003E\u003CContent-Length\u003E1024\u003C/Content-Length\u003E\u003C/Properties\u003E\u003C/File\u003E\u003C/Entries\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-ef7d5134-4243-0b88-9a4a-531e9de3ecda/directory/my cool file?sv=2020-08-04\u0026st=2021-01-26T18%3A27%3A09Z\u0026se=2021-01-26T20%3A27%3A09Z\u0026sr=f\u0026sp=rcwd\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-ef7d5134-4243-0b88-9a4a-531e9de3ecda/directory/my cool file?sv=2020-06-12\u0026st=2021-01-26T18%3A27%3A09Z\u0026se=2021-01-26T20%3A27%3A09Z\u0026sr=f\u0026sp=rcwd\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

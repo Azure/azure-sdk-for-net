@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(DynamicsCrmLinkedServiceConverter))]
     public partial class DynamicsCrmLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -96,7 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType");
-                writer.WriteObjectValue(ServicePrincipalCredentialType);
+                writer.WriteStringValue(ServicePrincipalCredentialType.Value.ToString());
             }
             if (Optional.IsDefined(ServicePrincipalCredential))
             {
@@ -133,7 +130,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> username = default;
             Optional<SecretBase> password = default;
             Optional<object> servicePrincipalId = default;
-            Optional<object> servicePrincipalCredentialType = default;
+            Optional<DynamicsServicePrincipalCredentialType> servicePrincipalCredentialType = default;
             Optional<SecretBase> servicePrincipalCredential = default;
             Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
@@ -286,7 +283,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalCredentialType = property0.Value.GetObject();
+                            servicePrincipalCredentialType = new DynamicsServicePrincipalCredentialType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalCredential"))
@@ -315,20 +312,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsCrmLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password.Value, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential.Value, encryptedCredential.Value);
-        }
-
-        internal partial class DynamicsCrmLinkedServiceConverter : JsonConverter<DynamicsCrmLinkedService>
-        {
-            public override void Write(Utf8JsonWriter writer, DynamicsCrmLinkedService model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DynamicsCrmLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDynamicsCrmLinkedService(document.RootElement);
-            }
+            return new DynamicsCrmLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password.Value, servicePrincipalId.Value, Optional.ToNullable(servicePrincipalCredentialType), servicePrincipalCredential.Value, encryptedCredential.Value);
         }
     }
 }

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary> Long running operation. </summary>
     internal partial class PhoneNumberOperation

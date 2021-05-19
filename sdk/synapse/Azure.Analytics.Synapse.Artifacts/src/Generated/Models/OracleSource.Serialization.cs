@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(OracleSourceConverter))]
     public partial class OracleSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -38,16 +35,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("partitionSettings");
                 writer.WriteObjectValue(PartitionSettings);
-            }
-            if (Optional.IsCollectionDefined(AdditionalColumns))
-            {
-                writer.WritePropertyName("additionalColumns");
-                writer.WriteStartArray();
-                foreach (var item in AdditionalColumns)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -80,7 +67,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> queryTimeout = default;
             Optional<OraclePartitionOption> partitionOption = default;
             Optional<OraclePartitionSettings> partitionSettings = default;
-            Optional<IList<AdditionalColumns>> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -129,21 +115,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     partitionSettings = OraclePartitionSettings.DeserializeOraclePartitionSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("additionalColumns"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<AdditionalColumns> array = new List<AdditionalColumns>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.AdditionalColumns.DeserializeAdditionalColumns(item));
-                    }
-                    additionalColumns = array;
-                    continue;
-                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
@@ -182,20 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OracleSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, oracleReaderQuery.Value, queryTimeout.Value, Optional.ToNullable(partitionOption), partitionSettings.Value, Optional.ToList(additionalColumns));
-        }
-
-        internal partial class OracleSourceConverter : JsonConverter<OracleSource>
-        {
-            public override void Write(Utf8JsonWriter writer, OracleSource model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override OracleSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeOracleSource(document.RootElement);
-            }
+            return new OracleSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, oracleReaderQuery.Value, queryTimeout.Value, Optional.ToNullable(partitionOption), partitionSettings.Value);
         }
     }
 }

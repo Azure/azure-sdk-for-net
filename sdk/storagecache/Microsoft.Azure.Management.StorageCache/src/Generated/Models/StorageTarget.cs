@@ -30,17 +30,13 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the StorageTarget class.
         /// </summary>
-        /// <param name="targetType">Type of the Storage Target. Possible
-        /// values include: 'nfs3', 'clfs', 'unknown', 'blobNfs'</param>
         /// <param name="name">Name of the Storage Target.</param>
         /// <param name="id">Resource ID of the Storage Target.</param>
         /// <param name="type">Type of the Storage Target;
         /// Microsoft.StorageCache/Cache/StorageTarget</param>
-        /// <param name="location">Region name string.</param>
-        /// <param name="systemData">The system meta data relating to this
-        /// resource.</param>
         /// <param name="junctions">List of Cache namespace junctions to target
         /// for namespace associations.</param>
+        /// <param name="targetType">Type of the Storage Target.</param>
         /// <param name="provisioningState">ARM provisioning state, see
         /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
         /// Possible values include: 'Succeeded', 'Failed', 'Cancelled',
@@ -49,10 +45,8 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <param name="clfs">Properties when targetType is clfs.</param>
         /// <param name="unknown">Properties when targetType is
         /// unknown.</param>
-        /// <param name="blobNfs">Properties when targetType is
-        /// blobNfs.</param>
-        public StorageTarget(string targetType, string name = default(string), string id = default(string), string type = default(string), string location = default(string), SystemData systemData = default(SystemData), IList<NamespaceJunction> junctions = default(IList<NamespaceJunction>), string provisioningState = default(string), Nfs3Target nfs3 = default(Nfs3Target), ClfsTarget clfs = default(ClfsTarget), UnknownTarget unknown = default(UnknownTarget), BlobNfsTarget blobNfs = default(BlobNfsTarget))
-            : base(name, id, type, location, systemData)
+        public StorageTarget(string name = default(string), string id = default(string), string type = default(string), IList<NamespaceJunction> junctions = default(IList<NamespaceJunction>), string targetType = default(string), string provisioningState = default(string), Nfs3Target nfs3 = default(Nfs3Target), ClfsTarget clfs = default(ClfsTarget), UnknownTarget unknown = default(UnknownTarget))
+            : base(name, id, type)
         {
             Junctions = junctions;
             TargetType = targetType;
@@ -60,7 +54,6 @@ namespace Microsoft.Azure.Management.StorageCache.Models
             Nfs3 = nfs3;
             Clfs = clfs;
             Unknown = unknown;
-            BlobNfs = blobNfs;
             CustomInit();
         }
 
@@ -77,8 +70,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public IList<NamespaceJunction> Junctions { get; set; }
 
         /// <summary>
-        /// Gets or sets type of the Storage Target. Possible values include:
-        /// 'nfs3', 'clfs', 'unknown', 'blobNfs'
+        /// Gets or sets type of the Storage Target.
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetType")]
         public string TargetType { get; set; }
@@ -111,12 +103,6 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public UnknownTarget Unknown { get; set; }
 
         /// <summary>
-        /// Gets or sets properties when targetType is blobNfs.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.blobNfs")]
-        public BlobNfsTarget BlobNfs { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -124,10 +110,6 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TargetType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TargetType");
-            }
             if (Nfs3 != null)
             {
                 Nfs3.Validate();

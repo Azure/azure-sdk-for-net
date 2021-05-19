@@ -49,7 +49,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// in the image.</param>
         /// <param name="brands">Array of brands detected in the image.</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        public ImageAnalysis(IList<Category> categories = default(IList<Category>), AdultInfo adult = default(AdultInfo), ColorInfo color = default(ColorInfo), ImageType imageType = default(ImageType), IList<ImageTag> tags = default(IList<ImageTag>), ImageDescriptionDetails description = default(ImageDescriptionDetails), IList<FaceDescription> faces = default(IList<FaceDescription>), IList<DetectedObject> objects = default(IList<DetectedObject>), IList<DetectedBrand> brands = default(IList<DetectedBrand>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata), string modelVersion = default(string))
+        public ImageAnalysis(IList<Category> categories = default(IList<Category>), AdultInfo adult = default(AdultInfo), ColorInfo color = default(ColorInfo), ImageType imageType = default(ImageType), IList<ImageTag> tags = default(IList<ImageTag>), ImageDescriptionDetails description = default(ImageDescriptionDetails), IList<FaceDescription> faces = default(IList<FaceDescription>), IList<DetectedObject> objects = default(IList<DetectedObject>), IList<DetectedBrand> brands = default(IList<DetectedBrand>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
             Categories = categories;
             Adult = adult;
@@ -62,7 +62,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
             Brands = brands;
             RequestId = requestId;
             Metadata = metadata;
-            ModelVersion = modelVersion;
             CustomInit();
         }
 
@@ -140,11 +139,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public ImageMetadata Metadata { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "modelVersion")]
-        public string ModelVersion { get; set; }
 
     }
 }

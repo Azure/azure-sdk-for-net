@@ -17,44 +17,36 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            string resourceId = TestEnvironment.TargetResourceId;
+            string resourceRegion = TestEnvironment.TargetResourceRegion;
 
             #region Snippet:FormRecognizerSampleCreateCopySourceClient
-#if SNIPPET
-            string endpoint = "<source_endpoint>";
-            string apiKey = "<source_apiKey>";
-#endif
+            //@@ string endpoint = "<source_endpoint>";
+            //@@ string apiKey = "<source_apiKey>";
             var sourcecredential = new AzureKeyCredential(apiKey);
             var sourceClient = new FormTrainingClient(new Uri(endpoint), sourcecredential);
             #endregion
 
             // For the purpose of this sample, we are going to create a trained model to copy. Please note that
             // if you already have a model, this is not necessary.
-#if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
-#else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-#endif
+            //@@ Uri trainingFileUri = <trainingFileUri>;
             TrainingOperation operation = await sourceClient.StartTrainingAsync(trainingFileUri, useTrainingLabels: false);
             Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
             CustomFormModel model = operationResponse.Value;
 
+            string modelId = model.ModelId;
+
             #region Snippet:FormRecognizerSampleCreateCopyTargetClient
-#if SNIPPET
-            string endpoint = "<target_endpoint>";
-            string apiKey = "<target_apiKey>";
-#endif
+            //@@ string endpoint = "<target_endpoint>";
+            //@@ string apiKey = "<target_apiKey>";
             var targetCredential = new AzureKeyCredential(apiKey);
             var targetClient = new FormTrainingClient(new Uri(endpoint), targetCredential);
             #endregion
 
             #region Snippet:FormRecognizerSampleGetCopyAuthorization
-#if SNIPPET
-            string resourceId = "<resourceId>";
-            string resourceRegion = "<region>";
-#else
-            string resourceId = TestEnvironment.TargetResourceId;
-            string resourceRegion = TestEnvironment.TargetResourceRegion;
-#endif
+            //@@ string resourceId = "<resourceId>";
+            //@@ string resourceRegion = "<region>";
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, resourceRegion);
             #endregion
 
@@ -67,11 +59,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
 
             #region Snippet:FormRecognizerSampleCopyModel
-#if SNIPPET
-            string modelId = "<source_modelId>";
-#else
-            string modelId = model.ModelId;
-#endif
+            //@@ string modelId = "<source_modelId>";
             CustomFormModelInfo newModel = await sourceClient.StartCopyModelAsync(modelId, targetCopyAuth).WaitForCompletionAsync();
 
             Console.WriteLine($"Original model ID => {modelId}");

@@ -21,7 +21,6 @@ namespace Azure.AI.FormRecognizer
     internal partial class FormRecognizerRestClient
     {
         private string endpoint;
-        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -29,21 +28,15 @@ namespace Azure.AI.FormRecognizer
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
-        /// <param name="apiVersion"> Form Recognizer API version (for example: v2.0). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public FormRecognizerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public FormRecognizerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
 
             this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -55,8 +48,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -67,7 +59,7 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Other type of content is ignored. </summary>
+        /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainRequest"/> is null. </exception>
@@ -90,7 +82,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Other type of content is ignored. </summary>
+        /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainRequest"/> is null. </exception>
@@ -120,8 +112,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             if (includeKeys != null)
@@ -184,8 +175,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             request.Uri = uri;
@@ -225,25 +215,20 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, FormContentType contentType, bool? includeTextDetails, IEnumerable<string> pages, Stream fileStream)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, FormContentType contentType, bool? includeTextDetails, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyze", false);
             if (includeTextDetails != null)
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
-            }
-            if (pages != null)
-            {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -255,16 +240,15 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, FormContentType contentType, bool? includeTextDetails = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, includeTextDetails, pages, fileStream);
+            using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, includeTextDetails, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
@@ -276,16 +260,15 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, FormContentType contentType, bool? includeTextDetails = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, includeTextDetails, pages, fileStream);
+            using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, includeTextDetails, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
@@ -297,25 +280,20 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, IEnumerable<string> pages, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyze", false);
             if (includeTextDetails != null)
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
-            }
-            if (pages != null)
-            {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -329,15 +307,14 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, pages, fileStream);
+            using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
@@ -349,15 +326,14 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, pages, fileStream);
+            using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeWithCustomModelHeaders(message.Response);
             switch (message.Response.Status)
@@ -376,8 +352,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
@@ -438,8 +413,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copy", false);
@@ -507,8 +481,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copyResults/", false);
@@ -569,8 +542,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/copyAuthorization", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -626,8 +598,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/compose", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -696,15 +667,14 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(FormContentType contentType, bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, Stream fileStream)
+        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(ContentType1 contentType, bool? includeTextDetails, FormRecognizerLocale? locale, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/businessCard/analyze", false);
             if (includeTextDetails != null)
             {
@@ -713,10 +683,6 @@ namespace Azure.AI.FormRecognizer
             if (locale != null)
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
-            }
-            if (pages != null)
-            {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -728,16 +694,15 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(ContentType1 contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeBusinessCardAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
+            using var message = CreateAnalyzeBusinessCardAsyncRequest(contentType, includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -749,16 +714,15 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(ContentType1 contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeBusinessCardAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
+            using var message = CreateAnalyzeBusinessCardAsyncRequest(contentType, includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -770,15 +734,14 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeBusinessCardAsyncRequest(bool? includeTextDetails, FormRecognizerLocale? locale, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/businessCard/analyze", false);
             if (includeTextDetails != null)
             {
@@ -787,10 +750,6 @@ namespace Azure.AI.FormRecognizer
             if (locale != null)
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
-            }
-            if (pages != null)
-            {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -804,15 +763,14 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders>> AnalyzeBusinessCardAsyncAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeBusinessCardAsyncRequest(includeTextDetails, locale, pages, fileStream);
+            using var message = CreateAnalyzeBusinessCardAsyncRequest(includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -824,15 +782,14 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given business card document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeBusinessCardAsyncHeaders> AnalyzeBusinessCardAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeBusinessCardAsyncRequest(includeTextDetails, locale, pages, fileStream);
+            using var message = CreateAnalyzeBusinessCardAsyncRequest(includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeBusinessCardAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -851,8 +808,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/businessCard/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -902,15 +858,14 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(FormContentType contentType, bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, Stream fileStream)
+        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(ContentType1 contentType, bool? includeTextDetails, FormRecognizerLocale? locale, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/invoice/analyze", false);
             if (includeTextDetails != null)
             {
@@ -919,10 +874,6 @@ namespace Azure.AI.FormRecognizer
             if (locale != null)
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
-            }
-            if (pages != null)
-            {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -934,16 +885,15 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(ContentType1 contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeInvoiceAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
+            using var message = CreateAnalyzeInvoiceAsyncRequest(contentType, includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeInvoiceAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -955,16 +905,15 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(ContentType1 contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeInvoiceAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
+            using var message = CreateAnalyzeInvoiceAsyncRequest(contentType, includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeInvoiceAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -976,15 +925,14 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(bool? includeTextDetails, FormRecognizerLocale? locale, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/invoice/analyze", false);
             if (includeTextDetails != null)
             {
@@ -993,10 +941,6 @@ namespace Azure.AI.FormRecognizer
             if (locale != null)
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
-            }
-            if (pages != null)
-            {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1010,15 +954,14 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeInvoiceAsyncRequest(includeTextDetails, locale, pages, fileStream);
+            using var message = CreateAnalyzeInvoiceAsyncRequest(includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeInvoiceAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1030,15 +973,14 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeInvoiceAsyncRequest(includeTextDetails, locale, pages, fileStream);
+            using var message = CreateAnalyzeInvoiceAsyncRequest(includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeInvoiceAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1057,8 +999,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/invoice/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -1108,23 +1049,22 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeIdDocumentAsyncRequest(FormContentType contentType, bool? includeTextDetails, IEnumerable<string> pages, Stream fileStream)
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(ContentType1 contentType, bool? includeTextDetails, FormRecognizerLocale? locale, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
-            uri.AppendPath("/prebuilt/idDocument/analyze", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
+            uri.AppendPath("/prebuilt/receipt/analyze", false);
             if (includeTextDetails != null)
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null)
+            if (locale != null)
             {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
+                uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1136,17 +1076,17 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract field text and semantic values from a given ID document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeIdDocumentAsyncHeaders>> AnalyzeIdDocumentAsyncAsync(FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(ContentType1 contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeIdDocumentAsyncRequest(contentType, includeTextDetails, pages, fileStream);
+            using var message = CreateAnalyzeReceiptAsyncRequest(contentType, includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FormRecognizerAnalyzeIdDocumentAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -1156,17 +1096,17 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract field text and semantic values from a given ID document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeIdDocumentAsyncHeaders> AnalyzeIdDocumentAsync(FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(ContentType1 contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeIdDocumentAsyncRequest(contentType, includeTextDetails, pages, fileStream);
+            using var message = CreateAnalyzeReceiptAsyncRequest(contentType, includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
-            var headers = new FormRecognizerAnalyzeIdDocumentAsyncHeaders(message.Response);
+            var headers = new FormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -1176,23 +1116,22 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeIdDocumentAsyncRequest(bool? includeTextDetails, IEnumerable<string> pages, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, FormRecognizerLocale? locale, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
-            uri.AppendPath("/prebuilt/idDocument/analyze", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
+            uri.AppendPath("/prebuilt/receipt/analyze", false);
             if (includeTextDetails != null)
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null)
+            if (locale != null)
             {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
+                uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1206,144 +1145,14 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract field text and semantic values from a given ID document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
-        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeIdDocumentAsyncHeaders>> AnalyzeIdDocumentAsyncAsync(bool? includeTextDetails = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateAnalyzeIdDocumentAsyncRequest(includeTextDetails, pages, fileStream);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FormRecognizerAnalyzeIdDocumentAsyncHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Extract field text and semantic values from a given ID document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
-        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeIdDocumentAsyncHeaders> AnalyzeIdDocumentAsync(bool? includeTextDetails = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateAnalyzeIdDocumentAsyncRequest(includeTextDetails, pages, fileStream);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FormRecognizerAnalyzeIdDocumentAsyncHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetAnalyzeIdDocumentResultRequest(Guid resultId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
-            uri.AppendPath("/prebuilt/idDocument/analyzeResults/", false);
-            uri.AppendPath(resultId, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Track the progress and obtain the result of the analyze ID operation. </summary>
-        /// <param name="resultId"> Analyze operation result identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AnalyzeOperationResult>> GetAnalyzeIdDocumentResultAsync(Guid resultId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetAnalyzeIdDocumentResultRequest(resultId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Track the progress and obtain the result of the analyze ID operation. </summary>
-        /// <param name="resultId"> Analyze operation result identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeOperationResult> GetAnalyzeIdDocumentResult(Guid resultId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetAnalyzeIdDocumentResultRequest(resultId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(FormContentType contentType, bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, Stream fileStream)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
-            uri.AppendPath("/prebuilt/receipt/analyze", false);
-            if (includeTextDetails != null)
-            {
-                uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
-            }
-            if (locale != null)
-            {
-                uri.AppendQuery("locale", locale.Value.ToString(), true);
-            }
-            if (pages != null)
-            {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (fileStream != null)
-            {
-                request.Headers.Add("Content-Type", contentType.ToSerialString());
-                request.Content = RequestContent.Create(fileStream);
-            }
-            return message;
-        }
-
-        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
-        /// <param name="contentType"> Upload file type. </param>
+        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeReceiptAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
+            using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, locale, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1355,90 +1164,14 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
-        /// <param name="contentType"> Upload file type. </param>
+        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(FormContentType contentType, bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeReceiptAsyncRequest(contentType, includeTextDetails, locale, pages, fileStream);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, FormRecognizerLocale? locale, IEnumerable<string> pages, SourcePath fileStream)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
-            uri.AppendPath("/prebuilt/receipt/analyze", false);
-            if (includeTextDetails != null)
-            {
-                uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
-            }
-            if (locale != null)
-            {
-                uri.AppendQuery("locale", locale.Value.ToString(), true);
-            }
-            if (pages != null)
-            {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (fileStream != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(fileStream);
-                request.Content = content;
-            }
-            return message;
-        }
-
-        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
-        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
-        /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, locale, pages, fileStream);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
-        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
-        /// <param name="locale"> Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, FormRecognizerLocale? locale = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, locale, pages, fileStream);
+            using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, locale, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeReceiptAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1457,8 +1190,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/receipt/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -1508,27 +1240,22 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(FormContentType contentType, IEnumerable<string> pages, FormRecognizerLanguage? language, FormReadingOrder? readingOrder, Stream fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(ContentType1 contentType, FormRecognizerLanguage? language, IEnumerable<string> pages, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/layout/analyze", false);
-            if (pages != null)
-            {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
-            }
             if (language != null)
             {
                 uri.AppendQuery("language", language.Value.ToString(), true);
             }
-            if (readingOrder != null)
+            if (pages != null)
             {
-                uri.AppendQuery("readingOrder", readingOrder.Value.ToSerialString(), true);
+                uri.AppendQueryDelimited("Pages", pages, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1542,14 +1269,13 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="language"> Currently, only Afrikaans (‘af’), Albanian (‘sq’), Asturian (‘ast’), Basque (‘eu’), Bislama (‘bi’), Breton (‘br’), Catalan (‘ca’), Cebuano (‘ceb’), Chamorro (‘ch’), Cornish (‘kw’), Corsican (‘co’), Crimean Tatar - Latin script(‘crh’), Czech (‘cs’), Danish (‘da’), Dutch (‘nl’), English (&apos;en&apos;), Estonian (‘et’), Fijian (‘fj’), Filipino (‘fil’), Finnish (‘fi’), French (‘fr’), Friulian (‘fur’), Galician (‘gl’), German (‘de’), Gilbertese (‘gil’), Greenlandic (‘kl’), Haitian Creole (‘ht’), Hani (‘hni’), Hmong Daw (‘mww’), Hungarian (‘hu’), Indonesian (‘id’), Interlingua (‘ia’), Inuktitut (‘iu’), Irish (‘ga’), Italian (‘it’), Japanese (‘ja’), Javanese (‘jv’), Kabuverdianu (‘kea’), Kachin (‘kac’), Kara-Kalpak (‘kaa’), Kashubian (‘csb’), Khasi (‘kha’), Korean (‘ko’), Kurdish - Latin script (‘ku’), K’iche’ (‘quc’), Luxembourgish (‘lb’), Malay (‘ms’), Manx (‘gv’), Neapolitan (‘nap’), Norwegian (‘no’), Occitan (‘oc’), Polish (‘pl’), Portuguese (‘pt’), Romansh (‘rm’), Scots (‘sco’), Scottish Gaelic (‘gd’), simplified Chinese (‘zh-Hans’), Slovenian (‘sl’), Spanish (‘es’), Swahili (‘sw’), Swedish (‘sv’), Tatar - Latin script (‘tt’), Tetum (‘tet’), traditional Chinese (‘zh-Hant’), Turkish (‘tr’), Upper Sorbian (‘hsb’), Uzbek (‘uz’), Volapük (‘vo’), Walser (‘wae’), Western Frisian (‘fy’), Yucatec Maya (‘yua’), Zhuang (‘za’) and Zulu (‘zu’) are supported (print – seventy-three languages and handwritten – English only). Layout supports auto language identification and multi language documents, so only provide a language code if you would like to force the documented to be processed as that specific language. </param>
-        /// <param name="readingOrder"> Reading order algorithm to sort the text lines returned. Supported reading orders include: basic(default), natural. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="language"> The BCP-47 language code of the text in the document. Currently, only English (&apos;en&apos;), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt&apos;), simplified Chinese (&apos;zh-Hans&apos;) and Spanish (&apos;es&apos;) are supported (print – nine languages and handwritten – English only). Layout supports auto language identification and multi language documents, so only provide a language code if you would like to force the documented to be processed as that specific language. </param>
+        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormContentType contentType, IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(ContentType1 contentType, FormRecognizerLanguage? language = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeLayoutAsyncRequest(contentType, pages, language, readingOrder, fileStream);
+            using var message = CreateAnalyzeLayoutAsyncRequest(contentType, language, pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1563,14 +1289,13 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="language"> Currently, only Afrikaans (‘af’), Albanian (‘sq’), Asturian (‘ast’), Basque (‘eu’), Bislama (‘bi’), Breton (‘br’), Catalan (‘ca’), Cebuano (‘ceb’), Chamorro (‘ch’), Cornish (‘kw’), Corsican (‘co’), Crimean Tatar - Latin script(‘crh’), Czech (‘cs’), Danish (‘da’), Dutch (‘nl’), English (&apos;en&apos;), Estonian (‘et’), Fijian (‘fj’), Filipino (‘fil’), Finnish (‘fi’), French (‘fr’), Friulian (‘fur’), Galician (‘gl’), German (‘de’), Gilbertese (‘gil’), Greenlandic (‘kl’), Haitian Creole (‘ht’), Hani (‘hni’), Hmong Daw (‘mww’), Hungarian (‘hu’), Indonesian (‘id’), Interlingua (‘ia’), Inuktitut (‘iu’), Irish (‘ga’), Italian (‘it’), Japanese (‘ja’), Javanese (‘jv’), Kabuverdianu (‘kea’), Kachin (‘kac’), Kara-Kalpak (‘kaa’), Kashubian (‘csb’), Khasi (‘kha’), Korean (‘ko’), Kurdish - Latin script (‘ku’), K’iche’ (‘quc’), Luxembourgish (‘lb’), Malay (‘ms’), Manx (‘gv’), Neapolitan (‘nap’), Norwegian (‘no’), Occitan (‘oc’), Polish (‘pl’), Portuguese (‘pt’), Romansh (‘rm’), Scots (‘sco’), Scottish Gaelic (‘gd’), simplified Chinese (‘zh-Hans’), Slovenian (‘sl’), Spanish (‘es’), Swahili (‘sw’), Swedish (‘sv’), Tatar - Latin script (‘tt’), Tetum (‘tet’), traditional Chinese (‘zh-Hant’), Turkish (‘tr’), Upper Sorbian (‘hsb’), Uzbek (‘uz’), Volapük (‘vo’), Walser (‘wae’), Western Frisian (‘fy’), Yucatec Maya (‘yua’), Zhuang (‘za’) and Zulu (‘zu’) are supported (print – seventy-three languages and handwritten – English only). Layout supports auto language identification and multi language documents, so only provide a language code if you would like to force the documented to be processed as that specific language. </param>
-        /// <param name="readingOrder"> Reading order algorithm to sort the text lines returned. Supported reading orders include: basic(default), natural. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="language"> The BCP-47 language code of the text in the document. Currently, only English (&apos;en&apos;), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt&apos;), simplified Chinese (&apos;zh-Hans&apos;) and Spanish (&apos;es&apos;) are supported (print – nine languages and handwritten – English only). Layout supports auto language identification and multi language documents, so only provide a language code if you would like to force the documented to be processed as that specific language. </param>
+        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormContentType contentType, IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(ContentType1 contentType, FormRecognizerLanguage? language = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeLayoutAsyncRequest(contentType, pages, language, readingOrder, fileStream);
+            using var message = CreateAnalyzeLayoutAsyncRequest(contentType, language, pages, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1582,27 +1307,22 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(IEnumerable<string> pages, FormRecognizerLanguage? language, FormReadingOrder? readingOrder, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(FormRecognizerLanguage? language, IEnumerable<string> pages, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/layout/analyze", false);
-            if (pages != null)
-            {
-                uri.AppendQueryDelimited("pages", pages, ",", true);
-            }
             if (language != null)
             {
                 uri.AppendQuery("language", language.Value.ToString(), true);
             }
-            if (readingOrder != null)
+            if (pages != null)
             {
-                uri.AppendQuery("readingOrder", readingOrder.Value.ToSerialString(), true);
+                uri.AppendQueryDelimited("Pages", pages, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1617,14 +1337,13 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="language"> Currently, only Afrikaans (‘af’), Albanian (‘sq’), Asturian (‘ast’), Basque (‘eu’), Bislama (‘bi’), Breton (‘br’), Catalan (‘ca’), Cebuano (‘ceb’), Chamorro (‘ch’), Cornish (‘kw’), Corsican (‘co’), Crimean Tatar - Latin script(‘crh’), Czech (‘cs’), Danish (‘da’), Dutch (‘nl’), English (&apos;en&apos;), Estonian (‘et’), Fijian (‘fj’), Filipino (‘fil’), Finnish (‘fi’), French (‘fr’), Friulian (‘fur’), Galician (‘gl’), German (‘de’), Gilbertese (‘gil’), Greenlandic (‘kl’), Haitian Creole (‘ht’), Hani (‘hni’), Hmong Daw (‘mww’), Hungarian (‘hu’), Indonesian (‘id’), Interlingua (‘ia’), Inuktitut (‘iu’), Irish (‘ga’), Italian (‘it’), Japanese (‘ja’), Javanese (‘jv’), Kabuverdianu (‘kea’), Kachin (‘kac’), Kara-Kalpak (‘kaa’), Kashubian (‘csb’), Khasi (‘kha’), Korean (‘ko’), Kurdish - Latin script (‘ku’), K’iche’ (‘quc’), Luxembourgish (‘lb’), Malay (‘ms’), Manx (‘gv’), Neapolitan (‘nap’), Norwegian (‘no’), Occitan (‘oc’), Polish (‘pl’), Portuguese (‘pt’), Romansh (‘rm’), Scots (‘sco’), Scottish Gaelic (‘gd’), simplified Chinese (‘zh-Hans’), Slovenian (‘sl’), Spanish (‘es’), Swahili (‘sw’), Swedish (‘sv’), Tatar - Latin script (‘tt’), Tetum (‘tet’), traditional Chinese (‘zh-Hant’), Turkish (‘tr’), Upper Sorbian (‘hsb’), Uzbek (‘uz’), Volapük (‘vo’), Walser (‘wae’), Western Frisian (‘fy’), Yucatec Maya (‘yua’), Zhuang (‘za’) and Zulu (‘zu’) are supported (print – seventy-three languages and handwritten – English only). Layout supports auto language identification and multi language documents, so only provide a language code if you would like to force the documented to be processed as that specific language. </param>
-        /// <param name="readingOrder"> Reading order algorithm to sort the text lines returned. Supported reading orders include: basic(default), natural. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="language"> The BCP-47 language code of the text in the document. Currently, only English (&apos;en&apos;), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt&apos;), simplified Chinese (&apos;zh-Hans&apos;) and Spanish (&apos;es&apos;) are supported (print – nine languages and handwritten – English only). Layout supports auto language identification and multi language documents, so only provide a language code if you would like to force the documented to be processed as that specific language. </param>
+        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormRecognizerLanguage? language = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeLayoutAsyncRequest(pages, language, readingOrder, fileStream);
+            using var message = CreateAnalyzeLayoutAsyncRequest(language, pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1637,14 +1356,13 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
-        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
-        /// <param name="language"> Currently, only Afrikaans (‘af’), Albanian (‘sq’), Asturian (‘ast’), Basque (‘eu’), Bislama (‘bi’), Breton (‘br’), Catalan (‘ca’), Cebuano (‘ceb’), Chamorro (‘ch’), Cornish (‘kw’), Corsican (‘co’), Crimean Tatar - Latin script(‘crh’), Czech (‘cs’), Danish (‘da’), Dutch (‘nl’), English (&apos;en&apos;), Estonian (‘et’), Fijian (‘fj’), Filipino (‘fil’), Finnish (‘fi’), French (‘fr’), Friulian (‘fur’), Galician (‘gl’), German (‘de’), Gilbertese (‘gil’), Greenlandic (‘kl’), Haitian Creole (‘ht’), Hani (‘hni’), Hmong Daw (‘mww’), Hungarian (‘hu’), Indonesian (‘id’), Interlingua (‘ia’), Inuktitut (‘iu’), Irish (‘ga’), Italian (‘it’), Japanese (‘ja’), Javanese (‘jv’), Kabuverdianu (‘kea’), Kachin (‘kac’), Kara-Kalpak (‘kaa’), Kashubian (‘csb’), Khasi (‘kha’), Korean (‘ko’), Kurdish - Latin script (‘ku’), K’iche’ (‘quc’), Luxembourgish (‘lb’), Malay (‘ms’), Manx (‘gv’), Neapolitan (‘nap’), Norwegian (‘no’), Occitan (‘oc’), Polish (‘pl’), Portuguese (‘pt’), Romansh (‘rm’), Scots (‘sco’), Scottish Gaelic (‘gd’), simplified Chinese (‘zh-Hans’), Slovenian (‘sl’), Spanish (‘es’), Swahili (‘sw’), Swedish (‘sv’), Tatar - Latin script (‘tt’), Tetum (‘tet’), traditional Chinese (‘zh-Hant’), Turkish (‘tr’), Upper Sorbian (‘hsb’), Uzbek (‘uz’), Volapük (‘vo’), Walser (‘wae’), Western Frisian (‘fy’), Yucatec Maya (‘yua’), Zhuang (‘za’) and Zulu (‘zu’) are supported (print – seventy-three languages and handwritten – English only). Layout supports auto language identification and multi language documents, so only provide a language code if you would like to force the documented to be processed as that specific language. </param>
-        /// <param name="readingOrder"> Reading order algorithm to sort the text lines returned. Supported reading orders include: basic(default), natural. </param>
-        /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
+        /// <param name="language"> The BCP-47 language code of the text in the document. Currently, only English (&apos;en&apos;), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt&apos;), simplified Chinese (&apos;zh-Hans&apos;) and Spanish (&apos;es&apos;) are supported (print – nine languages and handwritten – English only). Layout supports auto language identification and multi language documents, so only provide a language code if you would like to force the documented to be processed as that specific language. </param>
+        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormRecognizerLanguage? language = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeLayoutAsyncRequest(pages, language, readingOrder, fileStream);
+            using var message = CreateAnalyzeLayoutAsyncRequest(language, pages, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1663,8 +1381,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/layout/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -1721,8 +1438,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "full", true);
             request.Uri = uri;
@@ -1777,8 +1493,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "summary", true);
             request.Uri = uri;
@@ -1833,8 +1548,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

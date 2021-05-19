@@ -15,14 +15,20 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static RepositoryProperties DeserializeRepositoryProperties(JsonElement element)
         {
-            string imageName = default;
-            DateTimeOffset createdTime = default;
-            DateTimeOffset lastUpdateTime = default;
-            int manifestCount = default;
-            int tagCount = default;
-            RepositoryWriteableProperties changeableAttributes = default;
+            Optional<string> registry = default;
+            Optional<string> imageName = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> lastUpdateTime = default;
+            Optional<int> manifestCount = default;
+            Optional<int> tagCount = default;
+            Optional<ContentProperties> changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("registry"))
+                {
+                    registry = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("imageName"))
                 {
                     imageName = property.Value.GetString();
@@ -30,31 +36,56 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    createdTime = property.Value.GetDateTimeOffset("O");
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("lastUpdateTime"))
                 {
-                    lastUpdateTime = property.Value.GetDateTimeOffset("O");
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastUpdateTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("manifestCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     manifestCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("tagCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     tagCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("changeableAttributes"))
                 {
-                    changeableAttributes = RepositoryWriteableProperties.DeserializeRepositoryWriteableProperties(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    changeableAttributes = ContentProperties.DeserializeContentProperties(property.Value);
                     continue;
                 }
             }
-            return new RepositoryProperties(imageName, createdTime, lastUpdateTime, manifestCount, tagCount, changeableAttributes);
+            return new RepositoryProperties(registry.Value, imageName.Value, createdTime, lastUpdateTime, manifestCount, tagCount, changeableAttributes.Value);
         }
     }
 }

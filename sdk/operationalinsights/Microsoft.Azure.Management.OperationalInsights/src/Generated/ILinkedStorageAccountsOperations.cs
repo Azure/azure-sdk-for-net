@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </param>
         /// <param name='dataSourceType'>
         /// Linked storage accounts type. Possible values include:
-        /// 'CustomLogs', 'AzureWatson', 'Query', 'Alerts'
+        /// 'CustomLogs', 'AzureWatson'
         /// </param>
         /// <param name='storageAccountIds'>
         /// Linked storage accounts resources ids.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </param>
         /// <param name='dataSourceType'>
         /// Linked storage accounts type. Possible values include:
-        /// 'CustomLogs', 'AzureWatson', 'Query', 'Alerts'
+        /// 'CustomLogs', 'AzureWatson'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </param>
         /// <param name='dataSourceType'>
         /// Linked storage accounts type. Possible values include:
-        /// 'CustomLogs', 'AzureWatson', 'Query', 'Alerts'
+        /// 'CustomLogs', 'AzureWatson'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

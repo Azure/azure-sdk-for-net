@@ -497,12 +497,11 @@
           }
         },
         "targets": {
-            "readOnly": true,
-            "description": "Job target.",
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/TargetStatus"
-            }
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TargetStatus"
+          }
         }
       }
     },

@@ -21,16 +21,14 @@ namespace Azure.AI.MetricsAdvisor.Samples
         [Test]
         public void CreateMetricsAdvisorClient()
         {
-            #region Snippet:CreateMetricsAdvisorClient
-#if SNIPPET
-            string endpoint = "<endpoint>";
-            string subscriptionKey = "<subscriptionKey>";
-            string apiKey = "<apiKey>";
-#else
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
             string apiKey = MetricsAdvisorApiKey;
-#endif
+
+            #region Snippet:CreateMetricsAdvisorClient
+            //@@ string endpoint = "<endpoint>";
+            //@@ string subscriptionKey = "<subscriptionKey>";
+            //@@ string apiKey = "<apiKey>";
             var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
             var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
             #endregion
@@ -39,12 +37,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
         [Test]
         public void CreateMetricsAdvisorClientWithAad()
         {
-            #region Snippet:CreateMetricsAdvisorClientWithAad
-#if SNIPPET
-            string endpoint = "<endpoint>";
-#else
             string endpoint = MetricsAdvisorUri;
-#endif
+
+            #region Snippet:CreateMetricsAdvisorClientWithAad
+            //@@ string endpoint = "<endpoint>";
             var client = new MetricsAdvisorClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
@@ -52,16 +48,14 @@ namespace Azure.AI.MetricsAdvisor.Samples
         [Test]
         public void CreateMetricsAdvisorAdministrationClient()
         {
-            #region Snippet:CreateMetricsAdvisorAdministrationClient
-#if SNIPPET
-            string endpoint = "<endpoint>";
-            string subscriptionKey = "<subscriptionKey>";
-            string apiKey = "<apiKey>";
-#else
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
             string apiKey = MetricsAdvisorApiKey;
-#endif
+
+            #region Snippet:CreateMetricsAdvisorAdministrationClient
+            //@@ string endpoint = "<endpoint>";
+            //@@ string subscriptionKey = "<subscriptionKey>";
+            //@@ string apiKey = "<apiKey>";
             var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
             #endregion
@@ -70,12 +64,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
         [Test]
         public void CreateMetricsAdvisorAdministrationClientWithAad()
         {
-            #region Snippet:CreateMetricsAdvisorAdministrationClientWithAad
-#if SNIPPET
-            string endpoint = "<endpoint>";
-#else
             string endpoint = MetricsAdvisorUri;
-#endif
+
+            #region Snippet:CreateMetricsAdvisorAdministrationClientWithAad
+            //@@ string endpoint = "<endpoint>";
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }

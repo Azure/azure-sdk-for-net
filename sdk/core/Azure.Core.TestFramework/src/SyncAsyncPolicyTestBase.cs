@@ -17,16 +17,11 @@ namespace Azure.Core.TestFramework
         {
         }
 
-        protected Task<Response> SendRequestAsync(HttpPipeline pipeline, Action<Request> requestAction, bool bufferResponse = true, CancellationToken cancellationToken = default)
-        {
-            return SendRequestAsync(pipeline, message => requestAction(message.Request), bufferResponse, cancellationToken);
-        }
-
-        protected async Task<Response> SendRequestAsync(HttpPipeline pipeline, Action<HttpMessage> messageAction, bool bufferResponse = true, CancellationToken cancellationToken = default)
+        protected async Task<Response> SendRequestAsync(HttpPipeline pipeline, Action<Request> requestAction, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
             HttpMessage message = pipeline.CreateMessage();
             message.BufferResponse = bufferResponse;
-            messageAction(message);
+            requestAction(message.Request);
 
             if (IsAsync)
             {
@@ -40,25 +35,20 @@ namespace Azure.Core.TestFramework
             return message.Response;
         }
 
-        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Action<HttpMessage> messageAction, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true, CancellationToken cancellationToken = default)
+        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Action<Request> requestAction, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
             await Task.Yield();
 
             var pipeline = new HttpPipeline(transport, new[] { policy }, responseClassifier);
-            return await SendRequestAsync(pipeline, messageAction, bufferResponse, cancellationToken);
-        }
-
-        protected Task<Response> SendRequestAsync(HttpPipelineTransport transport, Action<Request> requestAction, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true, CancellationToken cancellationToken = default)
-        {
-            return SendRequestAsync(transport, message => requestAction(message.Request), policy, responseClassifier, bufferResponse, cancellationToken);
+            return await SendRequestAsync(pipeline, requestAction, bufferResponse, cancellationToken);
         }
 
         protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true, Uri uri = null, CancellationToken cancellationToken = default)
         {
-            return await SendRequestAsync(transport, message =>
+            return await SendRequestAsync(transport, request =>
             {
-                message.Request.Method = RequestMethod.Get;
-                message.Request.Uri.Reset(uri ?? new Uri("http://example.com"));
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(uri ?? new Uri("http://example.com"));
             }, policy, responseClassifier, bufferResponse, cancellationToken);
         }
     }

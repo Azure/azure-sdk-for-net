@@ -32,10 +32,5 @@ namespace Azure.AI.TextAnalytics
         /// EntityLinkingTasks
         /// </summary>
         internal IList<EntityLinkingTask> EntityLinkingTasks { get; set; }
-
-        /// <summary>
-        /// SentimentAnalysisTasks
-        /// </summary>
-        internal IList<SentimentAnalysisTask> SentimentAnalysisTasks { get; set; }
     }
 }

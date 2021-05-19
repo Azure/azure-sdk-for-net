@@ -33,13 +33,12 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// <param name="id">ARM id of the resource.</param>
         /// <param name="name">Name of the configuration.</param>
         /// <param name="type">The type of the resource.</param>
-        public DatadogSingleSignOnResource(string id = default(string), string name = default(string), string type = default(string), DatadogSingleSignOnProperties properties = default(DatadogSingleSignOnProperties), SystemData systemData = default(SystemData))
+        public DatadogSingleSignOnResource(string id = default(string), string name = default(string), string type = default(string), DatadogSingleSignOnProperties properties = default(DatadogSingleSignOnProperties))
         {
             Id = id;
             Name = name;
             Type = type;
             Properties = properties;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -70,11 +69,6 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public DatadogSingleSignOnProperties Properties { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
     }
 }

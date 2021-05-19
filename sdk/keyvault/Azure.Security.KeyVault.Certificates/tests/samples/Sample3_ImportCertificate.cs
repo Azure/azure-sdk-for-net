@@ -23,11 +23,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             #region Snippet:CertificatesSample3ImportPfxCertificate
             string name = $"cert-{Guid.NewGuid()}";
-#if SNIPPET
-            byte[] pfx = File.ReadAllBytes("certificate.pfx");
-#else
-            byte[] pfx = Convert.FromBase64String(s_pfxBase64);
-#endif
+            //@@ byte[] pfx = File.ReadAllBytes("certificate.pfx");
+            /*@@*/ byte[] pfx = Convert.FromBase64String(s_pfxBase64);
             ImportCertificateOptions importOptions = new ImportCertificateOptions(name, pfx)
             {
                 Policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=contoso.com")
@@ -67,11 +64,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             #region Snippet:CertificatesSample3ImportPemCertificate
             string name = $"cert-{Guid.NewGuid()}";
-#if SNIPPET
-            byte[] pem = File.ReadAllBytes("certificate.cer");
-#else
-            byte[] pem = Encoding.ASCII.GetBytes(s_pem);
-#endif
+            //@@ byte[] pem = File.ReadAllBytes("certificate.cer");
+            /*@@*/ byte[] pem = Encoding.ASCII.GetBytes(s_pem);
             ImportCertificateOptions importOptions = new ImportCertificateOptions(name, pem)
             {
                 Policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=contoso.com")

@@ -45,9 +45,10 @@ To create a table, invoke `CreateTable` with the table name.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+
 string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTable(tableName);
-Console.WriteLine($"The created table's name is {table.Name}.");
+Console.WriteLine($"The created table's name is {table.TableName}.");
 ```
 
 ### Using `TableClient`
@@ -66,6 +67,7 @@ To delete the table, invoke `DeleteTable` with the table name.
 
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
+
 string tableName = "OfficeSupplies1p1";
 serviceClient.DeleteTable(tableName);
 ```

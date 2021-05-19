@@ -46,22 +46,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the job name.
+        /// Gets or sets the job name.
         /// </summary>
         [JsonProperty(PropertyName = "jobName")]
-        public string JobName { get; private set; }
+        public string JobName { get; set; }
 
         /// <summary>
-        /// Gets the ARM Id of the job being executed.
+        /// Gets or sets the ARM Id of the job being executed.
         /// </summary>
         [JsonProperty(PropertyName = "jobId")]
-        public string JobId { get; private set; }
+        public string JobId { get; set; }
 
         /// <summary>
-        /// Gets the start time of the job.
+        /// Gets or sets the start time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
-        public System.DateTime? StartTime { get; private set; }
+        public System.DateTime? StartTime { get; set; }
 
     }
 }

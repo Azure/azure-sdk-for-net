@@ -35,12 +35,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the ObjectReplicationPolicy class.
         /// </summary>
-        /// <param name="sourceAccount">Required. Source account name. It
-        /// should be full resource id if allowCrossTenantReplication set to
-        /// false.</param>
+        /// <param name="sourceAccount">Required. Source account name.</param>
         /// <param name="destinationAccount">Required. Destination account
-        /// name. It should be full resource id if allowCrossTenantReplication
-        /// set to false.</param>
+        /// name.</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -82,15 +79,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         public System.DateTime? EnabledTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets required. Source account name. It should be full
-        /// resource id if allowCrossTenantReplication set to false.
+        /// Gets or sets required. Source account name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourceAccount")]
         public string SourceAccount { get; set; }
 
         /// <summary>
-        /// Gets or sets required. Destination account name. It should be full
-        /// resource id if allowCrossTenantReplication set to false.
+        /// Gets or sets required. Destination account name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.destinationAccount")]
         public string DestinationAccount { get; set; }

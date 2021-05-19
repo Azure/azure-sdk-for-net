@@ -25,7 +25,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> composeTime = default;
             Optional<string> type = default;
             Optional<long> version = default;
-            Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -89,18 +88,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("transactionId"))
-                {
-                    transactionId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("threadId"))
                 {
                     threadId = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsChatMessageEditedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value, Optional.ToNullable(editTime));
+            return new AcsChatMessageEditedInThreadEventData(threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value, Optional.ToNullable(editTime));
         }
 
         internal partial class AcsChatMessageEditedInThreadEventDataConverter : JsonConverter<AcsChatMessageEditedInThreadEventData>

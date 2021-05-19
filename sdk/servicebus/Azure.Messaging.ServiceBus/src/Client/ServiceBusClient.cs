@@ -80,7 +80,6 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-                GC.SuppressFinalize(this);
             }
             catch (Exception ex)
             {
@@ -116,10 +115,6 @@ namespace Azure.Messaging.ServiceBus
         /// If the connection string specifies a specific entity name, any subsequent calls to
         /// <see cref="CreateSender(string)"/>, <see cref="CreateReceiver(string)"/>,
         /// <see cref="CreateProcessor(string)"/> etc. must still specify the same entity name.
-        ///
-        /// The connection string will recognize and apply properties populated by the
-        /// Azure portal such as Endpoint, SharedAccessKeyName, SharedAccessKey, and EntityPath.
-        /// Other values will be ignored; to configure the processor, please use the <see cref="ServiceBusClientOptions" />.
         /// </remarks>
         public ServiceBusClient(string connectionString) :
             this(connectionString, new ServiceBusClientOptions())
@@ -139,10 +134,6 @@ namespace Azure.Messaging.ServiceBus
         /// If the connection string specifies a specific entity name, any subsequent calls to
         /// <see cref="CreateSender(string)"/>, <see cref="CreateReceiver(string)"/>,
         /// <see cref="CreateProcessor(string)"/> etc. must still specify the same entity name.
-        ///
-        /// The connection string will recognize and apply properties populated by the
-        /// Azure portal such as Endpoint, SharedAccessKeyName, SharedAccessKey, and EntityPath.
-        /// Other values will be ignored; to configure the processor, please use the <see cref="ServiceBusClientOptions" />.
         /// </remarks>
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
@@ -151,7 +142,6 @@ namespace Azure.Messaging.ServiceBus
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
             Plugins = _options.Plugins;
-            TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
@@ -161,13 +151,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="credential">The <see cref="AzureNamedKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
-        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
-        public ServiceBusClient(
-            string fullyQualifiedNamespace,
-            AzureNamedKeyCredential credential,
-            ServiceBusClientOptions options = default) :
-                this(fullyQualifiedNamespace, (object)credential, options)
+        /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
+        internal ServiceBusClient(string fullyQualifiedNamespace, ServiceBusSharedAccessKeyCredential credential) :
+            this(fullyQualifiedNamespace, credential, new ServiceBusClientOptions())
         {
         }
 
@@ -177,14 +163,22 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="credential">The <see cref="AzureSasCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
+        /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
-        public ServiceBusClient(
+        internal ServiceBusClient(
             string fullyQualifiedNamespace,
-            AzureSasCredential credential,
-            ServiceBusClientOptions options = default) :
-                this(fullyQualifiedNamespace, (object)credential, options)
+            ServiceBusSharedAccessKeyCredential credential,
+            ServiceBusClientOptions options)
         {
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
+            Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
+            Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
+            Connection = new ServiceBusConnection(
+                fullyQualifiedNamespace,
+                credential,
+                _options);
+            Plugins = _options.Plugins;
+            Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
         /// <summary>
@@ -195,7 +189,7 @@ namespace Azure.Messaging.ServiceBus
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential) :
-            this(fullyQualifiedNamespace, (object)credential, new ServiceBusClientOptions())
+            this(fullyQualifiedNamespace, credential, new ServiceBusClientOptions())
         {
         }
 
@@ -210,33 +204,16 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(
             string fullyQualifiedNamespace,
             TokenCredential credential,
-            ServiceBusClientOptions options) :
-                this(fullyQualifiedNamespace, (object)credential, options)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
-        /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
-        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
-        private ServiceBusClient(
-            string fullyQualifiedNamespace,
-            object credential,
             ServiceBusClientOptions options)
         {
-            Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
             _options = options?.Clone() ?? new ServiceBusClientOptions();
+            Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
-            Connection = ServiceBusConnection.CreateWithCredential(
+            Connection = new ServiceBusConnection(
                 fullyQualifiedNamespace,
                 credential,
                 _options);
             Plugins = _options.Plugins;
-            TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 

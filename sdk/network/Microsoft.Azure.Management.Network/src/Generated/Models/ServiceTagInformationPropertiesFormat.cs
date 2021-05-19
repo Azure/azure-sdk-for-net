@@ -39,14 +39,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="systemService">The name of system service.</param>
         /// <param name="addressPrefixes">The list of IP address
         /// prefixes.</param>
-        /// <param name="state">The state of the service tag.</param>
-        public ServiceTagInformationPropertiesFormat(string changeNumber = default(string), string region = default(string), string systemService = default(string), IList<string> addressPrefixes = default(IList<string>), string state = default(string))
+        public ServiceTagInformationPropertiesFormat(string changeNumber = default(string), string region = default(string), string systemService = default(string), IList<string> addressPrefixes = default(IList<string>))
         {
             ChangeNumber = changeNumber;
             Region = region;
             SystemService = systemService;
             AddressPrefixes = addressPrefixes;
-            State = state;
             CustomInit();
         }
 
@@ -78,12 +76,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "addressPrefixes")]
         public IList<string> AddressPrefixes { get; private set; }
-
-        /// <summary>
-        /// Gets the state of the service tag.
-        /// </summary>
-        [JsonProperty(PropertyName = "state")]
-        public string State { get; private set; }
 
     }
 }

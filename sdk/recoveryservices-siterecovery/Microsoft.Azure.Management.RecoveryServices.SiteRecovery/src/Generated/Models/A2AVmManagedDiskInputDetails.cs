@@ -10,12 +10,11 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// A2A managed disk input details.
+    /// Azure VM managed disk input details.
     /// </summary>
     public partial class A2AVmManagedDiskInputDetails
     {
@@ -47,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// encryption set Id.</param>
         /// <param name="diskEncryptionInfo">The recovery disk encryption
         /// information (for one / single pass flows).</param>
-        public A2AVmManagedDiskInputDetails(string diskId, string primaryStagingAzureStorageAccountId, string recoveryResourceGroupId, string recoveryReplicaDiskAccountType = default(string), string recoveryTargetDiskAccountType = default(string), string recoveryDiskEncryptionSetId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
+        public A2AVmManagedDiskInputDetails(string diskId = default(string), string primaryStagingAzureStorageAccountId = default(string), string recoveryResourceGroupId = default(string), string recoveryReplicaDiskAccountType = default(string), string recoveryTargetDiskAccountType = default(string), string recoveryDiskEncryptionSetId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
         {
             DiskId = diskId;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
@@ -109,26 +108,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "diskEncryptionInfo")]
         public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (DiskId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DiskId");
-            }
-            if (PrimaryStagingAzureStorageAccountId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PrimaryStagingAzureStorageAccountId");
-            }
-            if (RecoveryResourceGroupId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RecoveryResourceGroupId");
-            }
-        }
     }
 }

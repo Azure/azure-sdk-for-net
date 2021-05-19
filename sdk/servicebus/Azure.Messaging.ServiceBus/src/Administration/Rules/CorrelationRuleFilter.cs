@@ -52,9 +52,8 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         internal override RuleFilter Clone() =>
-            new CorrelationRuleFilter
+            new CorrelationRuleFilter(CorrelationId)
             {
-                CorrelationId = CorrelationId,
                 MessageId = MessageId,
                 To = To,
                 ReplyTo = ReplyTo,

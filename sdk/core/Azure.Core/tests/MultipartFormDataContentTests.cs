@@ -57,12 +57,10 @@ namespace Azure.Core.Tests
         [Test]
         public void Ctor_GoodBoundary_Success()
         {
-            // cSpell:disable
             // RFC 2046 Section 5.1.1
             // boundary := 0*69<bchars> bcharsnospace
             // bchars := bcharsnospace / " "
             // bcharsnospace := DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_" / "," / "-" / "." / "/" / ":" / "=" / "?"
-            // cSpell:enable
             new MultipartFormDataContent("09");
             new MultipartFormDataContent("az");
             new MultipartFormDataContent("AZ");
@@ -262,7 +260,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void Dispose_Empty_Success()
+        public void Dispose_Empty_Sucess()
         {
             var content = new MultipartFormDataContent();
             content.Dispose();

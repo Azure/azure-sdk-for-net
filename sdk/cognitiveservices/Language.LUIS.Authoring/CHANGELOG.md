@@ -7,7 +7,7 @@
 - ExampleId attribute in label APIs could not hold int values
 - ArmTokenParameter parameter name had a typo
 
-## 3.2.0-preview.3 (2020-06-01)
+## 3.2.0-preview.3 (Unreleased)
 ### Added
 - Enable nesting of children in luis models
 - Flag to indicate if a feature is required

@@ -14,7 +14,7 @@ namespace Azure.Core.TestFramework
     public class RecordedTestSanitizer
     {
         public const string SanitizeValue = "Sanitized";
-        private List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers { get; } = new();
+        public List<string> JsonPathSanitizers { get; } = new List<string>();
 
         /// <summary>
         /// This is just a temporary workaround to avoid breaking tests that need to be re-recorded
@@ -31,11 +31,6 @@ namespace Azure.Core.TestFramework
         };
 
         public List<string> SanitizedHeaders { get; } = new List<string> { "Authorization" };
-
-        public void AddJsonPathSanitizer(string jsonPath, Func<JToken, JToken> sanitizer = null)
-        {
-            JsonPathSanitizers.Add((jsonPath, sanitizer ?? (_ => JToken.FromObject(SanitizeValue))));
-        }
 
         public virtual string SanitizeUri(string uri)
         {
@@ -71,11 +66,11 @@ namespace Azure.Core.TestFramework
                     jsonO = JToken.Parse(body);
                 }
 
-                foreach (var (jsonPath, sanitizer) in JsonPathSanitizers)
+                foreach (string jsonPath in JsonPathSanitizers)
                 {
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
                     {
-                        token.Replace(sanitizer(token));
+                        token.Replace(JToken.FromObject(SanitizeValue));
                     }
                 }
                 return JsonConvert.SerializeObject(jsonO, SerializerSettings);

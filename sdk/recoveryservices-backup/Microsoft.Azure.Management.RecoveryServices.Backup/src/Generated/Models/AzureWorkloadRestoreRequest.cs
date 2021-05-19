@@ -43,18 +43,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recoveryMode">Defines whether the current recovery
         /// mode is file restore or database restore. Possible values include:
         /// 'Invalid', 'FileRecovery', 'WorkloadRecovery'</param>
-        /// <param name="targetVirtualMachineId">This is the complete ARM Id of
-        /// the target VM
-        /// For e.g.
-        /// /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}</param>
-        public AzureWorkloadRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string), string targetVirtualMachineId = default(string))
+        public AzureWorkloadRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string))
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;
             PropertyBag = propertyBag;
             TargetInfo = targetInfo;
             RecoveryMode = recoveryMode;
-            TargetVirtualMachineId = targetVirtualMachineId;
             CustomInit();
         }
 
@@ -97,14 +92,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryMode")]
         public string RecoveryMode { get; set; }
-
-        /// <summary>
-        /// Gets or sets this is the complete ARM Id of the target VM
-        /// For e.g.
-        /// /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
-        /// </summary>
-        [JsonProperty(PropertyName = "targetVirtualMachineId")]
-        public string TargetVirtualMachineId { get; set; }
 
     }
 }

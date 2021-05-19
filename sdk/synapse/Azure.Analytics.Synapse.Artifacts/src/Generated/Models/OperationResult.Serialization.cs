@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(OperationResultConverter))]
     public partial class OperationResult
     {
         internal static OperationResult DeserializeOperationResult(JsonElement element)
@@ -74,19 +71,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new OperationResult(status.Value, code.Value, message.Value, target.Value, Optional.ToList(details));
-        }
-
-        internal partial class OperationResultConverter : JsonConverter<OperationResult>
-        {
-            public override void Write(Utf8JsonWriter writer, OperationResult model, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-            public override OperationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeOperationResult(document.RootElement);
-            }
         }
     }
 }

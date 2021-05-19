@@ -1,16 +1,7 @@
 # Release History
 
-## 1.1.0-beta.3 (2021-05-11)
+## 1.1.0-beta.2 (Unreleased)
 
-### Key Bug Fixes
-
-- `FeatureFlagFilter` now allows parameter modification.
-
-## 1.1.0-beta.2 (2021-04-06)
-
-### Breaking changes
-
-- The `AddSyncToken` method renamed to `UpdateSyncToken`.
 
 ## 1.1.0-beta.1 (2021-03-09)
 

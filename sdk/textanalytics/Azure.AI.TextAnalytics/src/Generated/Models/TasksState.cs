@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {

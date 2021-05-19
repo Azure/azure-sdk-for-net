@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// This is the replication status of the gallery image version.
+    /// This is the replication status of the gallery Image Version.
     /// </summary>
     public partial class ReplicationStatus
     {

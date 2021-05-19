@@ -217,13 +217,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost(builder =>
                 {
-                    builder.AddEventHubs(options => options.InitialOffsetOptions.Type = OffsetType.FromEnd);
+                    builder.AddEventHubs(options => options.InitialOffsetOptions.Type = "FromEnd");
                 })
                 .ConfigureServices(services =>
                     {
                         services.Configure<EventHubOptions>(options =>
                         {
-                            options.InitialOffsetOptions.Type = OffsetType.FromStart;
+                            options.InitialOffsetOptions.Type = "FromStart";
                         });
                     })
                 .Build();
@@ -242,13 +242,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var host = new HostBuilder()
                  .ConfigureDefaultTestHost(builder =>
                  {
-                     builder.AddEventHubs(options => options.InitialOffsetOptions.Type = OffsetType.FromStart);
+                     builder.AddEventHubs(options => options.InitialOffsetOptions.Type = "FromStart");
                  })
                  .ConfigureServices(services =>
                  {
                      services.Configure<EventHubOptions>(options =>
                      {
-                         options.InitialOffsetOptions.Type = OffsetType.FromEnd;
+                         options.InitialOffsetOptions.Type = "FromEnd";
                      });
                  })
                  .Build();
@@ -267,14 +267,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var host = new HostBuilder()
                  .ConfigureDefaultTestHost(builder =>
                  {
-                     builder.AddEventHubs(options => options.InitialOffsetOptions.Type = OffsetType.FromStart);
+                     builder.AddEventHubs(options => options.InitialOffsetOptions.Type = "FromStart");
                  })
                  .ConfigureServices(services =>
                  {
                      services.Configure<EventHubOptions>(options =>
                      {
-                         options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
-                         options.InitialOffsetOptions.EnqueuedTimeUtc = DateTimeOffset.UtcNow;
+                         options.InitialOffsetOptions.Type = "FromEnqueuedTime";
+                         options.InitialOffsetOptions.EnqueuedTimeUTC = DateTimeOffset.UtcNow.ToString();
                      });
                  })
                  .Build();
@@ -285,8 +285,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var eventProcessorOptions = options.EventProcessorOptions;
             Assert.AreEqual(
-                EventPosition.FromEnqueuedTime(options.InitialOffsetOptions.EnqueuedTimeUtc.Value),
-                eventProcessorOptions.DefaultStartingPosition);
+                EventPosition.FromEnqueuedTime(DateTime.Parse(options.InitialOffsetOptions.EnqueuedTimeUTC,
+                CultureInfo.InvariantCulture).ToUniversalTime()), eventProcessorOptions.DefaultStartingPosition);
         }
 
         internal static EventProcessorHostPartition GetPartitionContext(string partitionId = "0", string eventHubPath = "path",

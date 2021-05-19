@@ -48,12 +48,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConnection())
                 .Throws(expectedException);
 
-            mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
-
             // Delay the return from the error handler by slightly longer than cancellation is triggered in
             // order to validate that the handler call does not block or delay other processor operations.
 
@@ -103,12 +97,6 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Throws(expectedException);
-
-            mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
 
             mockLogger
                 .Setup(log => log.EventProcessorTaskError(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
@@ -504,7 +492,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLogger
-                .Setup(log => log.EventProcessorPartitionProcessingStartComplete(secondPartition, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(log => log.EventProcessorPartitionProcessingStartComplete(secondPartition, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockLoadBalancer
@@ -552,15 +540,15 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<EventProcessorPartition>(value => value.PartitionId == firstPartiton),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Once);
 
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<EventProcessorPartition>(value => value.PartitionId == secondPartition),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Once);
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
@@ -594,7 +582,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
             mockLogger
-                .Setup(log => log.EventProcessorPartitionProcessingStartComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(log => log.EventProcessorPartitionProcessingStartComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(() =>
                 {
                     if (Interlocked.Increment(ref startProcessingCalls) >= expectedProcessingCalls)
@@ -740,11 +728,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
-                .Callback(() => startCompletionSource.TrySetResult(true))
                 .Returns(Mock.Of<TransportConsumer>());
 
             mockProcessor
-                .Setup(processor => processor.CreatePartitionProcessor(It.IsAny<EventProcessorPartition>(), It.IsAny<CancellationTokenSource>(), It.IsAny<EventPosition?>()))
+                .Setup(processor => processor.CreatePartitionProcessor(It.IsAny<EventProcessorPartition>(), It.IsAny<EventPosition>(), It.IsAny<CancellationTokenSource>()))
+                .Callback(() => startCompletionSource.TrySetResult(true))
                 .CallBase();
 
             mockProcessor
@@ -874,15 +862,15 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<EventProcessorPartition>(value => value.PartitionId == firstPartiton),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Once);
 
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<EventProcessorPartition>(value => value.PartitionId == secondPartition),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Once);
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
@@ -937,8 +925,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConsumer.Object);
 
             mockProcessor
-                .Setup(processor => processor.CreatePartitionProcessor(It.IsAny<EventProcessorPartition>(), It.IsAny<CancellationTokenSource>(), It.IsAny<EventPosition?>()))
-                .Returns((EventProcessorPartition partition, CancellationTokenSource source, EventPosition? overridePosition) =>
+                .Setup(processor => processor.CreatePartitionProcessor(It.IsAny<EventProcessorPartition>(), It.IsAny<EventPosition>(), It.IsAny<CancellationTokenSource>()))
+                .Returns((EventProcessorPartition partition, EventPosition position, CancellationTokenSource source) =>
                 {
                     if (firstProcessorCreate)
                     {
@@ -959,8 +947,8 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<EventProcessorPartition>(value => value.PartitionId == partitionId),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Exactly(2));
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
@@ -1007,7 +995,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
-                .Returns(Mock.Of<TransportConsumer>())
+                .Returns(Mock.Of<TransportConsumer>());
+
+            mockProcessor
+                .Setup(processor => processor.CreatePartitionProcessor(It.IsAny<EventProcessorPartition>(), It.IsAny<EventPosition>(), It.IsAny<CancellationTokenSource>()))
+                .Returns((EventProcessorPartition partition, EventPosition position, CancellationTokenSource cancellation) =>
+                {
+                    return new EventProcessor<EventProcessorPartition>.PartitionProcessor(Task.Delay(Timeout.Infinite, cancellation.Token), partition, () => default, cancellation);
+                })
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockProcessor
@@ -1022,7 +1017,10 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             mockProcessor
-                .Verify(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), expectedStartingPosition, mockConnection.Object, It.IsAny<EventProcessorOptions>()),
+                .Verify(processor => processor.CreatePartitionProcessor(
+                    It.Is<EventProcessorPartition>(value => value.PartitionId == partitionId),
+                    expectedStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Once);
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
@@ -1090,8 +1088,8 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<CustomPartition>(value => ((value.PartitionId == partitionId) && (value.Description == expectedDescription))),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Once);
 
             mockProcessor
@@ -1173,14 +1171,15 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     mockProcessor.Object.Identifier,
                     mockProcessor.Object.EventHubName,
-                    mockProcessor.Object.ConsumerGroup),
+                    mockProcessor.Object.ConsumerGroup,
+                    options.DefaultStartingPosition.ToString()),
                  Times.Once);
 
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<EventProcessorPartition>(value => value.PartitionId == partitionId),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Once);
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
@@ -1238,8 +1237,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<TransportConsumer>());
 
             mockProcessor
-                .Setup(processor => processor.CreatePartitionProcessor(It.IsAny<EventProcessorPartition>(), It.IsAny<CancellationTokenSource>(), It.IsAny<EventPosition?>()))
-                .Returns((EventProcessorPartition partition, CancellationTokenSource cancellation, EventPosition? overridePosition) =>
+                .Setup(processor => processor.CreatePartitionProcessor(It.IsAny<EventProcessorPartition>(), It.IsAny<EventPosition>(), It.IsAny<CancellationTokenSource>()))
+                .Returns((EventProcessorPartition partition, EventPosition position, CancellationTokenSource cancellation) =>
                 {
                     if (firstProcessorCreate)
                     {
@@ -1270,14 +1269,15 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     mockProcessor.Object.Identifier,
                     mockProcessor.Object.EventHubName,
-                    mockProcessor.Object.ConsumerGroup),
+                    mockProcessor.Object.ConsumerGroup,
+                    options.DefaultStartingPosition.ToString()),
                  Times.Exactly(2));
 
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<EventProcessorPartition>(value => value.PartitionId == partitionId),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Exactly(2));
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
@@ -1331,8 +1331,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<TransportConsumer>());
 
             mockProcessor
-                .Setup(processor => processor.CreatePartitionProcessor(It.IsAny<EventProcessorPartition>(), It.IsAny<CancellationTokenSource>(), It.IsAny<EventPosition?>()))
-                .Returns((EventProcessorPartition partition, CancellationTokenSource cancellation, EventPosition? overridePosition) =>
+                .Setup(processor => processor.CreatePartitionProcessor(It.IsAny<EventProcessorPartition>(), It.IsAny<EventPosition>(), It.IsAny<CancellationTokenSource>()))
+                .Returns((EventProcessorPartition partition, EventPosition position, CancellationTokenSource cancellation) =>
                 {
                     if (firstProcessorCreate)
                     {
@@ -1368,8 +1368,8 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<EventProcessorPartition>(value => value.PartitionId == partitionId),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Exactly(2));
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
@@ -1455,8 +1455,8 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<EventProcessorPartition>(value => value.PartitionId == partitionId),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Once);
 
             cancellationSource.Cancel();
@@ -1532,8 +1532,8 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Verify(processor => processor.CreatePartitionProcessor(
                     It.Is<EventProcessorPartition>(value => value.PartitionId == partitionId),
-                    It.IsAny<CancellationTokenSource>(),
-                    It.IsAny<EventPosition?>()),
+                    options.DefaultStartingPosition,
+                    It.IsAny<CancellationTokenSource>()),
                 Times.Once);
 
             cancellationSource.Cancel();

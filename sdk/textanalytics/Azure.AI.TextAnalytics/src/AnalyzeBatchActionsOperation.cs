@@ -24,47 +24,47 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Total actions failed in the operation
         /// </summary>
-        public virtual int ActionsFailed => _actionsFailed;
+        public int ActionsFailed => _actionsFailed;
 
         /// <summary>
         /// Total actions in progress in the operation
         /// </summary>
-        public virtual int ActionsInProgress => _actionsInProgress;
+        public int ActionsInProgress => _actionsInProgress;
 
         /// <summary>
         /// Total actions succeeded in the operation
         /// </summary>
-        public virtual int ActionsSucceeded => _actionSucceeded;
-
-        /// <summary>
-        /// Total actions executed in the operation.
-        /// </summary>
-        public virtual int ActionsTotal => _actionsTotal;
+        public int ActionsSucceeded => _actionSucceeded;
 
         /// <summary>
         /// Time when the operation was created on.
         /// </summary>
-        public virtual DateTimeOffset CreatedOn => _createdOn;
+        public DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
         /// Display Name of the operation
         /// </summary>
-        public virtual string DisplayName => _displayName;
+        public string DisplayName => _displayName;
 
         /// <summary>
         /// Time when the operation will expire.
         /// </summary>
-        public virtual DateTimeOffset? ExpiresOn => _expiresOn;
+        public DateTimeOffset? ExpiresOn => _expiresOn;
 
         /// <summary>
         /// Time when the operation was last modified on.
         /// </summary>
-        public virtual DateTimeOffset LastModified => _lastModified;
+        public DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
         /// The current status of the operation.
         /// </summary>
-        public virtual TextAnalyticsOperationStatus Status => _status;
+        public TextAnalyticsOperationStatus Status => _status;
+
+        /// <summary>
+        /// Total actions executed in the operation
+        /// </summary>
+        public int TotalActions => _totalActions;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
@@ -90,7 +90,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         private bool _hasCompleted;
 
-        private int _actionsTotal;
+        private int _totalActions;
         private int _actionsFailed;
         private int _actionSucceeded;
         private int _actionsInProgress;
@@ -158,14 +158,6 @@ namespace Azure.AI.TextAnalytics
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
             Id = operationLocation.Split('/').Last();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeBatchActionsOperation"/> class. This constructor
-        /// is intended to be used for mocking only.
-        /// </summary>
-        protected AnalyzeBatchActionsOperation()
-        {
         }
 
         /// <summary>
@@ -256,7 +248,7 @@ namespace Azure.AI.TextAnalytics
                     _actionsFailed = update.Value.Tasks.Failed;
                     _actionsInProgress = update.Value.Tasks.InProgress;
                     _actionSucceeded = update.Value.Tasks.Completed;
-                    _actionsTotal = update.Value.Tasks.Total;
+                    _totalActions = update.Value.Tasks.Total;
 
                     // TODO - Remove PartiallySucceeded once service deploys this to WestUS2
                     if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded ||
@@ -266,7 +258,7 @@ namespace Azure.AI.TextAnalytics
                     {
                         // we need to first assign a value and then mark the operation as completed to avoid race conditions
                         var nextLink = update.Value.NextLink;
-                        var value = Transforms.ConvertToAnalyzeBatchActionsResult(update.Value, _idToIndexMap);
+                        var value = Transforms.ConvertToAnalyzeOperationResult(update.Value, _idToIndexMap);
                         _firstPage = Page.FromValues(new List<AnalyzeBatchActionsResult>() { value }, nextLink, _response);
                         _hasCompleted = true;
                     }
@@ -296,9 +288,9 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(nextLink).ConfigureAwait(false);
+                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(nextLink, _showStats).ConfigureAwait(false);
 
-                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeBatchActionsResult(jobState.Value, _idToIndexMap);
+                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception)
@@ -325,9 +317,9 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(nextLink);
+                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(nextLink, _showStats);
 
-                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeBatchActionsResult(jobState.Value, _idToIndexMap);
+                    AnalyzeBatchActionsResult result = Transforms.ConvertToAnalyzeOperationResult(jobState.Value, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeBatchActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception)

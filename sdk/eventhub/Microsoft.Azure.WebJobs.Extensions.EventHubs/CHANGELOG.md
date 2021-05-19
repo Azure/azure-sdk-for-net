@@ -1,22 +1,7 @@
 # Release History
 
-## 5.0.0-beta.5 (2021-05-11)
+## 5.0.0-beta.4 (Unreleased)
 
-### Changes
-
-#### Key Bug Fixes
-
-- The web proxy specified in configuration is now respected.
-
-#### New Features
-
-- Added support for specifying `accountName` or `blobServiceUri` for the checkpoint connection.
-
-## 5.0.0-beta.4 (2021-04-06)
-
-### Changes
-
-- Single dispatch triggers were disabled.
 
 ## 5.0.0-beta.3 (2021-03-11)
 

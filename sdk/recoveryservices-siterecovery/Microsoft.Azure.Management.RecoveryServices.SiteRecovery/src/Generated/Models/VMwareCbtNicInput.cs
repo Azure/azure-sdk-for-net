@@ -37,15 +37,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetStaticIPAddress">The static IP address.</param>
         /// <param name="isSelectedForMigration">A value indicating whether
         /// this NIC is selected for migration.</param>
-        /// <param name="targetNicName">Target NIC name.</param>
-        public VMwareCbtNicInput(string nicId, string isPrimaryNic, string targetSubnetName = default(string), string targetStaticIPAddress = default(string), string isSelectedForMigration = default(string), string targetNicName = default(string))
+        public VMwareCbtNicInput(string nicId, string isPrimaryNic, string targetSubnetName = default(string), string targetStaticIPAddress = default(string), string isSelectedForMigration = default(string))
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
             TargetSubnetName = targetSubnetName;
             TargetStaticIPAddress = targetStaticIPAddress;
             IsSelectedForMigration = isSelectedForMigration;
-            TargetNicName = targetNicName;
             CustomInit();
         }
 
@@ -84,12 +82,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "isSelectedForMigration")]
         public string IsSelectedForMigration { get; set; }
-
-        /// <summary>
-        /// Gets or sets target NIC name.
-        /// </summary>
-        [JsonProperty(PropertyName = "targetNicName")]
-        public string TargetNicName { get; set; }
 
         /// <summary>
         /// Validate the object.

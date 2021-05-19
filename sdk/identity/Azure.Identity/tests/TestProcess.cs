@@ -12,14 +12,13 @@ namespace Azure.Identity.Tests
 {
     internal sealed class TestProcess : IProcess
     {
-        private static readonly Lazy<Func<string, DataReceivedEventArgs>> s_createDataReceivedEventArgs = new Lazy<Func<string, DataReceivedEventArgs>>(
-            () =>
-            {
-                ConstructorInfo constructor = typeof(DataReceivedEventArgs).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)[0];
-                ParameterExpression dataParameter = Expression.Parameter(typeof(string), "data");
-                NewExpression callConstructor = Expression.New(constructor, dataParameter);
-                return Expression.Lambda<Func<string, DataReceivedEventArgs>>(callConstructor, dataParameter).Compile();
-            });
+        private static readonly Lazy<Func<string, DataReceivedEventArgs>> s_createDataReceivedEventArgs = new Lazy<Func<string, DataReceivedEventArgs>>(() =>
+        {
+            ConstructorInfo constructor = typeof(DataReceivedEventArgs).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)[0];
+            ParameterExpression dataParameter = Expression.Parameter(typeof(string), "data");
+            NewExpression callConstructor = Expression.New(constructor, dataParameter);
+            return Expression.Lambda<Func<string, DataReceivedEventArgs>>(callConstructor, dataParameter).Compile();
+        });
 
         private bool _hasStarted;
         private bool _hasExited;
@@ -39,9 +38,6 @@ namespace Azure.Identity.Tests
         public int? CodeOnExit { get; set; }
         public int Timeout { get; set; }
         public Exception ExceptionOnProcessKill { get; set; }
-
-        // An Action that will throw if the ProcessStartInfo conditions are met.
-        public Action<TestProcess> ExceptionOnStartHandler { get; set; }
 
         public void Dispose() { }
 
@@ -78,11 +74,6 @@ namespace Azure.Identity.Tests
 
         public bool Start()
         {
-            if (ExceptionOnStartHandler != null)
-            {
-                ExceptionOnStartHandler(this);
-            }
-
             if (FailedToStart)
             {
                 return false;
@@ -129,15 +120,14 @@ namespace Azure.Identity.Tests
                 return;
             }
 
-            Task.Run(
-                () =>
+            Task.Run(() =>
+            {
+                if (data != default)
                 {
-                    if (data != default)
-                    {
-                        handler(this, CreateDataReceivedEventArgs(data));
-                    }
-                    handler(this, CreateDataReceivedEventArgs(null));
-                });
+                    handler(this, CreateDataReceivedEventArgs(data));
+                }
+                handler(this, CreateDataReceivedEventArgs(null));
+            });
         }
 
         public void Kill()
@@ -151,8 +141,8 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public void BeginOutputReadLine() { }
-        public void BeginErrorReadLine() { }
+        public void BeginOutputReadLine() {}
+        public void BeginErrorReadLine() {}
 
         private static DataReceivedEventArgs CreateDataReceivedEventArgs(string data) => s_createDataReceivedEventArgs.Value(data);
     }

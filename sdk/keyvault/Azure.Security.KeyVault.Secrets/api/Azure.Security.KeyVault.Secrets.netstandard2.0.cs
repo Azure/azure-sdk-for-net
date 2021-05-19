@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Secrets
     }
     public partial class DeleteSecretOperation : Azure.Operation<Azure.Security.KeyVault.Secrets.DeletedSecret>
     {
-        protected DeleteSecretOperation() { }
+        internal DeleteSecretOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Secrets
     }
     public partial class RecoverDeletedSecretOperation : Azure.Operation<Azure.Security.KeyVault.Secrets.SecretProperties>
     {
-        protected RecoverDeletedSecretOperation() { }
+        internal RecoverDeletedSecretOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

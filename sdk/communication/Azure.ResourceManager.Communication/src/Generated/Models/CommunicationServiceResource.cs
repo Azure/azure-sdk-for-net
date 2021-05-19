@@ -20,10 +20,9 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Initializes a new instance of CommunicationServiceResource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="type"> The type of the service - e.g. &quot;Microsoft.Communication/CommunicationServices&quot;. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
         /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
@@ -32,9 +31,8 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="location"> The Azure location where the CommunicationService is running. </param>
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
-        internal CommunicationServiceResource(string id, string name, string type, SystemData systemData, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location, IDictionary<string, string> tags) : base(id, name, type)
+        internal CommunicationServiceResource(string id, string name, string type, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location, IDictionary<string, string> tags) : base(id, name, type)
         {
-            SystemData = systemData;
             ProvisioningState = provisioningState;
             HostName = hostName;
             DataLocation = dataLocation;
@@ -45,8 +43,6 @@ namespace Azure.ResourceManager.Communication.Models
             Tags = tags;
         }
 
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> FQDN of the CommunicationService instance. </summary>

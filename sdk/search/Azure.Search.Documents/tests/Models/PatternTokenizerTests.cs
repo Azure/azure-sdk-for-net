@@ -24,13 +24,7 @@ namespace Azure.Search.Documents.Tests.Models
             using JsonDocument doc = JsonDocument.Parse(stream.ToArray());
             PatternTokenizer actual = LexicalTokenizer.DeserializeLexicalTokenizer(doc.RootElement) as PatternTokenizer;
 
-            CollectionAssert.AreEqual(expected.Flags, actual.Flags);
-
-            if (expected.Flags.Count == 0)
-            {
-                Assert.IsNull(actual.FlagsInternal);
-                Assert.IsNull(expected.FlagsInternal);
-            }
+            CollectionAssert.AreEqual(expected.Flags, actual?.Flags);
         }
 
         private static IEnumerable<PatternTokenizer> RoundtripsRegexFlagsData

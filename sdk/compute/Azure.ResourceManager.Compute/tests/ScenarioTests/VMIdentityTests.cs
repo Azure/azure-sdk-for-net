@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 };
 
                 var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imgageRef , addUserIdentity);
-                VirtualMachine vmResult = returnTwoVM.Response;
-                inputVM = returnTwoVM.Input;
+                VirtualMachine vmResult = returnTwoVM.Item1;
+                inputVM = returnTwoVM.Item2;
                 Assert.AreEqual(ResourceIdentityType.SystemAssignedUserAssigned, vmResult.Identity.Type);
                 Assert.NotNull(vmResult.Identity.PrincipalId);
                 Assert.NotNull(vmResult.Identity.TenantId);

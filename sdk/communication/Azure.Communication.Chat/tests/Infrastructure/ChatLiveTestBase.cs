@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 
@@ -19,7 +20,7 @@ namespace Azure.Communication.Chat.Tests
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.LiveTestDynamicConnectionString,
+                    TestEnvironment.ConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions())));
 
         /// <summary>
@@ -35,20 +36,13 @@ namespace Azure.Communication.Chat.Tests
             }
 
             CommunicationTokenCredential communicationTokenCredential = new CommunicationTokenCredential(token);
-            return InstrumentClient(new ChatClient(TestEnvironment.LiveTestDynamicEndpoint, communicationTokenCredential,
-                CreateChatClientOptionsWithCorrelationVectorLogs()));
+            return InstrumentClient(new ChatClient(TestEnvironment.Endpoint, communicationTokenCredential,
+                InstrumentClientOptions(new ChatClientOptions())));
         }
 
         protected ChatThreadClient GetInstrumentedChatThreadClient(ChatClient chatClient, string threadId)
         {
             return InstrumentClient(chatClient.GetChatThreadClient(threadId));
-        }
-
-        private ChatClientOptions CreateChatClientOptionsWithCorrelationVectorLogs()
-        {
-            ChatClientOptions chatClientOptions = new ChatClientOptions();
-            chatClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
-            return InstrumentClientOptions(chatClientOptions);
         }
     }
 }

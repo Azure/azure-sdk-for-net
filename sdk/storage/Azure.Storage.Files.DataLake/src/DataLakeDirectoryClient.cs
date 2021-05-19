@@ -2434,15 +2434,6 @@ namespace Azure.Storage.Files.DataLake
         public override Uri GenerateSasUri(DataLakeSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-
-            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
-            builder = DataLakeSasBuilder.DeepCopy(builder);
-
-            // Assign builder's IsDirectory, FileSystemName, and Path, if they are null.
-            builder.IsDirectory ??= GetType() == typeof(DataLakeDirectoryClient);
-            builder.FileSystemName ??= FileSystemName;
-            builder.Path ??= Path;
-
             if (!builder.IsDirectory.GetValueOrDefault(false))
             {
                 throw Errors.SasIncorrectResourceType(
@@ -2467,7 +2458,7 @@ namespace Azure.Storage.Files.DataLake
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri)
             {
-                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
+                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
         }

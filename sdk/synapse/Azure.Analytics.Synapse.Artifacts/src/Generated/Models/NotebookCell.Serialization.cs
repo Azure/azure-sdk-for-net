@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(NotebookCellConverter))]
     public partial class NotebookCell : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -120,19 +117,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new NotebookCell(cellType, metadata, source, attachments.Value, Optional.ToList(outputs), additionalProperties);
-        }
-
-        internal partial class NotebookCellConverter : JsonConverter<NotebookCell>
-        {
-            public override void Write(Utf8JsonWriter writer, NotebookCell model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override NotebookCell Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeNotebookCell(document.RootElement);
-            }
         }
     }
 }

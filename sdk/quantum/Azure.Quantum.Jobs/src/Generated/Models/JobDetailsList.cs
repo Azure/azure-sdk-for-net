@@ -16,21 +16,19 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> Initializes a new instance of JobDetailsList. </summary>
         internal JobDetailsList()
         {
-            Value = new ChangeTrackingList<JobDetails>();
+            Values = new ChangeTrackingList<JobDetails>();
         }
 
         /// <summary> Initializes a new instance of JobDetailsList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="values"> . </param>
         /// <param name="count"> Total records count number. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal JobDetailsList(IReadOnlyList<JobDetails> value, long? count, string nextLink)
+        internal JobDetailsList(IReadOnlyList<JobDetails> values, long? count, string nextLink)
         {
-            Value = value;
+            Values = values;
             Count = count;
             NextLink = nextLink;
         }
-
-        public IReadOnlyList<JobDetails> Value { get; }
         /// <summary> Total records count number. </summary>
         public long? Count { get; }
         /// <summary> Link to the next page of results. </summary>

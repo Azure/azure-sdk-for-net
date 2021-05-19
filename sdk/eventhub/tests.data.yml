@@ -6,6 +6,5 @@ extends:
     MaxParallel: 6
     ServiceDirectory: eventhub
     SDKType: data
-    TimeoutInMinutes: 240
+    TimeoutInMinutes: 190
     Clouds: 'Public,Canary'
-    SupportedClouds: 'Public,UsGov,China,Canary'

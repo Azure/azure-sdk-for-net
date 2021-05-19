@@ -7,10 +7,7 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Represents a form that has been recognized by a trained or prebuilt model.
-    /// The <see cref="Fields"/> property contains the form fields that were extracted from the
-    /// form. Tables, text lines/words, and selection marks are extracted per page and found in the
-    /// <see cref="Pages"/> property.
+    /// Represents a form that has been recognized by a trained model.
     /// </summary>
     public class RecognizedForm
     {
@@ -76,9 +73,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Model identifier of model used to analyze form if not using a prebuilt model.
         /// </summary>
-        /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
-        /// </remarks>
         public string ModelId { get; }
 
         /// <summary>
@@ -86,9 +80,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// Value is 1.0 when recognition is done against a single labeled model.
         /// If recognition is based on a composed model, value is between [0.0, 1.0].
         /// </summary>
-        /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
-        /// </remarks>
         public float? FormTypeConfidence { get; }
 
         /// <summary>

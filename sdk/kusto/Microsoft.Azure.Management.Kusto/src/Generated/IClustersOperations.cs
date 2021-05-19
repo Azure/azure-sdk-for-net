@@ -61,16 +61,6 @@ namespace Microsoft.Azure.Management.Kusto
         /// The Kusto cluster parameters supplied to the CreateOrUpdate
         /// operation.
         /// </param>
-        /// <param name='ifMatch'>
-        /// The ETag of the cluster. Omit this value to always overwrite the
-        /// current cluster. Specify the last-seen ETag value to prevent
-        /// accidentally overwriting concurrent changes.
-        /// </param>
-        /// <param name='ifNoneMatch'>
-        /// Set to '*' to allow a new cluster to be created, but to prevent
-        /// updating an existing cluster. Other values will result in a 412
-        /// Pre-condition Failed response.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -86,7 +76,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Cluster>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, string ifMatch = default(string), string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Cluster>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a Kusto cluster.
         /// </summary>
@@ -99,11 +89,6 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The Kusto cluster parameters supplied to the Update operation.
         /// </param>
-        /// <param name='ifMatch'>
-        /// The ETag of the cluster. Omit this value to always overwrite the
-        /// current cluster. Specify the last-seen ETag value to prevent
-        /// accidentally overwriting concurrent changes.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -119,7 +104,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdate parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a Kusto cluster.
         /// </summary>
@@ -327,7 +312,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// Checks that the cluster name is valid and is not already in use.
         /// </summary>
         /// <param name='location'>
-        /// Azure location (region) name.
+        /// Azure location.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the cluster.
@@ -463,16 +448,6 @@ namespace Microsoft.Azure.Management.Kusto
         /// The Kusto cluster parameters supplied to the CreateOrUpdate
         /// operation.
         /// </param>
-        /// <param name='ifMatch'>
-        /// The ETag of the cluster. Omit this value to always overwrite the
-        /// current cluster. Specify the last-seen ETag value to prevent
-        /// accidentally overwriting concurrent changes.
-        /// </param>
-        /// <param name='ifNoneMatch'>
-        /// Set to '*' to allow a new cluster to be created, but to prevent
-        /// updating an existing cluster. Other values will result in a 412
-        /// Pre-condition Failed response.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -488,7 +463,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Cluster>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, string ifMatch = default(string), string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Cluster>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a Kusto cluster.
         /// </summary>
@@ -501,11 +476,6 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The Kusto cluster parameters supplied to the Update operation.
         /// </param>
-        /// <param name='ifMatch'>
-        /// The ETag of the cluster. Omit this value to always overwrite the
-        /// current cluster. Specify the last-seen ETag value to prevent
-        /// accidentally overwriting concurrent changes.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -521,7 +491,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Cluster>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdate parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Cluster>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a Kusto cluster.
         /// </summary>
