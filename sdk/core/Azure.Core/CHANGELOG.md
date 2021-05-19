@@ -2,6 +2,9 @@
 
 ## 1.15.0-beta.1 (Unreleased)
 
+### Added
+
+- Types to represent `GeoJson` primitives.
 
 ## 1.14.0 (2021-05-11)
 

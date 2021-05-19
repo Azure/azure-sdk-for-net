@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -8,6 +8,12 @@ namespace Azure.Core.GeoJson
     /// <summary>
     /// Represents a point geometry.
     /// </summary>
+    /// <example>
+    /// Creating a point:
+    /// <code snippet="Snippet:CreatePoint">
+    /// var point = new GeoPoint(-122.091954, 47.607148);
+    /// </code>
+    /// </example>
     public sealed class GeoPoint : GeoObject
     {
         /// <summary>

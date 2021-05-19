@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -9,6 +9,40 @@ namespace Azure.Core.GeoJson
     /// <summary>
     /// Represents a polygon consisting of outer ring and optional inner rings.
     /// </summary>
+    /// <example>
+    /// Creating a polygon:
+    /// <code snippet="Snippet:CreatePolygon">
+    /// var polygon = new GeoPolygon(new[]
+    /// {
+    ///     new GeoPosition(-122.108727, 47.649383),
+    ///     new GeoPosition(-122.081538, 47.640846),
+    ///     new GeoPosition(-122.078634, 47.576066),
+    ///     new GeoPosition(-122.112686, 47.578559)
+    /// });
+    /// </code>
+    /// Creating a polygon with holes:
+    /// <code snippet="Snippet:CreatePolygonWithHoles">
+    /// var polygon = new GeoPolygon(new[]
+    /// {
+    ///     // Outer ring
+    ///     new GeoLinearRing(new[]
+    ///     {
+    ///         new GeoPosition(-122.108727, 47.649383),
+    ///         new GeoPosition(-122.081538, 47.640846),
+    ///         new GeoPosition(-122.078634, 47.576066),
+    ///         new GeoPosition(-122.112686, 47.578559)
+    ///     }),
+    ///     // Inner ring
+    ///     new GeoLinearRing(new[]
+    ///     {
+    ///         new GeoPosition(-122.102370, 47.607370),
+    ///         new GeoPosition(-122.083488, 47.608007),
+    ///         new GeoPosition(-122.085419, 47.597879),
+    ///         new GeoPosition(-122.107005, 47.596895)
+    ///     })
+    /// });
+    /// </code>
+    /// </example>
     public sealed class GeoPolygon : GeoObject
     {
         /// <summary>
