@@ -6,7 +6,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     /// <summary>
     /// Service Bus entity type.
     /// </summary>
-    public enum EntityType
+    public enum ServiceBusEntityType
     {
         /// <summary>
         /// Service Bus Queue

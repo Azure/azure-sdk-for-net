@@ -2,30 +2,33 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 using Newtonsoft.Json;
 using System.Globalization;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
     // Convert from Message --> T
     internal class MessageToPocoConverter<TElement> : IConverter<ServiceBusReceivedMessage, TElement>
     {
-        public MessageToPocoConverter()
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
+
+        public MessageToPocoConverter(JsonSerializerSettings jsonSerializerSettings)
         {
+            _jsonSerializerSettings = jsonSerializerSettings;
         }
 
         public TElement Convert(ServiceBusReceivedMessage message)
         {
-            // 1. If ContentType is "application/json" deserialize as JSON
+            // 1. If ContentType is "application/json" or binding to a JObject deserialize as JSON
             // 2. If ContentType is not "application/json" attempt to deserialize using Message.GetBody, which will handle cases like XML object serialization
             // 3. If this deserialization fails, do a final attempt at JSON deserialization to catch cases where the content type might be incorrect
 
-            if (message.ContentType == ContentTypes.ApplicationJson)
+            if (message.ContentType == ContentTypes.ApplicationJson ||
+                typeof(TElement) == typeof(JObject))
             {
                 return DeserializeJsonObject(message);
             }
@@ -43,13 +46,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             }
         }
 
-        private static TElement DeserializeJsonObject(ServiceBusReceivedMessage message)
+        private TElement DeserializeJsonObject(ServiceBusReceivedMessage message)
         {
             string contents = StrictEncodings.Utf8.GetString(message.Body.ToArray());
 
             try
             {
-                return JsonConvert.DeserializeObject<TElement>(contents, Constants.JsonSerializerSettings);
+                return JsonConvert.DeserializeObject<TElement>(contents, _jsonSerializerSettings);
             }
             catch (JsonException e)
             {

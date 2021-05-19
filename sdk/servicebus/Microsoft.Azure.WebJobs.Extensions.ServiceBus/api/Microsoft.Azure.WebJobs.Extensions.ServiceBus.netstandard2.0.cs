@@ -13,11 +13,10 @@ namespace Microsoft.Azure.WebJobs
     [System.Diagnostics.DebuggerDisplayAttribute("{QueueOrTopicName,nq}")]
     public sealed partial class ServiceBusAttribute : System.Attribute, Microsoft.Azure.WebJobs.IConnectionProvider
     {
-        public ServiceBusAttribute(string queueOrTopicName) { }
-        public ServiceBusAttribute(string queueOrTopicName, Microsoft.Azure.WebJobs.ServiceBus.EntityType entityType) { }
+        public ServiceBusAttribute(string queueOrTopicName, Microsoft.Azure.WebJobs.ServiceBus.ServiceBusEntityType serviceBusEntityType = Microsoft.Azure.WebJobs.ServiceBus.ServiceBusEntityType.Queue) { }
         public string Connection { get { throw null; } set { } }
-        public Microsoft.Azure.WebJobs.ServiceBus.EntityType EntityType { get { throw null; } set { } }
         public string QueueOrTopicName { get { throw null; } }
+        public Microsoft.Azure.WebJobs.ServiceBus.ServiceBusEntityType ServiceBusEntityType { get { throw null; } set { } }
     }
     [Microsoft.Azure.WebJobs.ConnectionProviderAttribute(typeof(Microsoft.Azure.WebJobs.ServiceBusAccountAttribute))]
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
@@ -36,19 +35,6 @@ namespace Microsoft.Azure.WebJobs
 }
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
-    public static partial class Constants
-    {
-        public const string AzureWebsiteSku = "WEBSITE_SKU";
-        public const string DefaultConnectionSettingStringName = "AzureWebJobsServiceBus";
-        public const string DefaultConnectionStringName = "ServiceBus";
-        public const string DynamicSku = "Dynamic";
-        public static Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { throw null; } }
-    }
-    public enum EntityType
-    {
-        Queue = 0,
-        Topic = 1,
-    }
     public partial class MessageProcessor
     {
         public MessageProcessor(Azure.Messaging.ServiceBus.ServiceBusProcessor processor) { }
@@ -69,6 +55,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public virtual Microsoft.Azure.WebJobs.ServiceBus.SessionMessageProcessor CreateSessionMessageProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, string entityPath) { throw null; }
         public virtual Azure.Messaging.ServiceBus.ServiceBusSessionProcessor CreateSessionProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, string entityPath) { throw null; }
     }
+    public enum ServiceBusEntityType
+    {
+        Queue = 0,
+        Topic = 1,
+    }
     public partial class ServiceBusMessageActions
     {
         internal ServiceBusMessageActions() { }
@@ -84,6 +75,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public bool AutoCompleteMessages { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusRetryOptions ClientRetryOptions { get { throw null; } set { } }
         public System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ExceptionHandler { get { throw null; } set { } }
+        public Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { throw null; } set { } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
         public int MaxConcurrentCalls { get { throw null; } set { } }
         public int MaxConcurrentSessions { get { throw null; } set { } }
@@ -99,11 +91,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         internal ServiceBusSessionMessageActions() { }
         public virtual System.Threading.Tasks.Task<System.BinaryData> GetSessionStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SetSessionStateAsync(System.BinaryData sessionState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServiceBusWebJobsStartup : Microsoft.Azure.WebJobs.Hosting.IWebJobsStartup
-    {
-        public ServiceBusWebJobsStartup() { }
-        public void Configure(Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { }
     }
     public partial class SessionMessageProcessor
     {
