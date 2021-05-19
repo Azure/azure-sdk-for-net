@@ -64,7 +64,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         private readonly TextAnalyticsRestClient _serviceClient;
 
-        private OperationInternal<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> _operationInternal;
+        private readonly OperationInternal<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> _operationInternal;
 
         /// <summary>
         /// Provides tools for exception creation in case of failure.
