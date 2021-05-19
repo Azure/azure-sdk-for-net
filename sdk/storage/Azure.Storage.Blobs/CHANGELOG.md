@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.9.0-beta.5 (Unreleased)
-
+- Fixed bug where Client Side Encryption during large transactions (greater than max int value) would throw an exception.
 
 ## 12.9.0-beta.4 (2021-05-12)
 - Added support for service version 2020-08-04.
