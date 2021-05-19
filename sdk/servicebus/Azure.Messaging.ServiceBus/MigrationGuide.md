@@ -18,6 +18,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
       - [Consistency](#consistency)
       - [Connection Pooling](#connection-pooling)
     - [Client constructors](#client-constructors)
+      - [Service bus client](#service-bus-client)
       - [Administration client](#administration-client)
     - [Sending messages](#sending-messages)
     - [Receiving messages](#receiving-messages)
@@ -80,6 +81,8 @@ By making this connection sharing be implicit to a `ServiceBusClient` instance, 
 
 ### Client constructors
 
+#### Service bus client
+
 While we continue to support connection strings when constructing a client, the main difference is when using Azure Active Directory. We now use the new [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) library to share a single authentication solution between clients of different Azure services.
 
 Authenticate with Active Directory:
@@ -100,11 +103,23 @@ ServiceBusClient client = new ServiceBusClient(connectionString);
 
 #### Administration client
 
-This replaces the `ManagementClient` from `Microsoft.Azure.ServiceBus`. For example usage please see the sample for [creating a subscription with a connection string](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample08_Administration.cs).
+This replaces the `ManagementClient` from `Microsoft.Azure.ServiceBus`. For example usage please see the sample for [creating a subscription with a connection string](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample07_CrudOperations.md).
 
-```C# Snippet:ServiceBusAdministrationClient
+
+Authenticate with Active Directory:
+
+```C# Snippet:ServiceBusAdministrationClientAAD
+// Create a ServiceBusAdministrationClient that will authenticate using default credentials
+string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
+ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+```
+
+Authenticate with connection string:
+
+```C# Snippet:ServiceBusAdministrationClientConnectionString
+// Create a ServiceBusAdministrationClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-ServiceBusAdministrationClient client = = new ServiceBusAdministrationClient(connectionString);
+ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(connectionString);
 ```
 
 ### Sending messages
