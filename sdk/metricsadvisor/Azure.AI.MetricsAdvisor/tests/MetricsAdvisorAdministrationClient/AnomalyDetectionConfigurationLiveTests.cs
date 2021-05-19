@@ -334,6 +334,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateDetectionConfigurationWithMinimumSetupAndGetInstance(bool useTokenCredential)
         {
             // Set required parameters of the configuration to be created.
@@ -455,6 +456,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateDetectionConfigurationWithMinimumSetupAndNewInstance()
         {
             // Set required parameters of the configuration to be created.
@@ -576,6 +578,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateDetectionConfigurationWithEveryMemberAndGetInstance()
         {
             // Set parameters of the configuration to be created.
@@ -718,6 +721,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateDetectionConfigurationWithEveryMemberAndNewInstance()
         {
             // Set parameters of the configuration to be created.
