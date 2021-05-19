@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -22,11 +18,11 @@ namespace Azure.ResourceManager.Core.Tests
             _ = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"));
             _ = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"));
             int count = 0;
-            await foreach(var rg in Client.DefaultSubscription.GetResourceGroups().ListAsync())
+            await foreach (var rg in Client.DefaultSubscription.GetResourceGroups().ListAsync())
             {
                 count++;
             }
-            Assert.Greater(count, 2);
+            Assert.GreaterOrEqual(count, 2);
         }
 
         [TestCase]
@@ -56,6 +52,12 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
             ResourceGroup rg2 = await Client.DefaultSubscription.GetResourceGroups().GetAsync(rgName);
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.AreEqual(rg.Data.Tags, rg2.Data.Tags);
         }
     }
 }

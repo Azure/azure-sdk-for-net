@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Core
         protected ResourceGroup()
         {
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroup"/> class.
         /// </summary>
