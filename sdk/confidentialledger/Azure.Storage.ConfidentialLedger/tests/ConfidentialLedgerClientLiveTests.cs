@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -11,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Storage.ConfidentialLedger.Tests
@@ -63,6 +61,8 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetLedgerEntries()
         {
+            await PostLedgerEntry();
+
             var result = await Client.GetLedgerEntriesAsync();
 
             var nextLinkDetails = GetNextLinkDetails(result);
@@ -79,6 +79,8 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetLedgerEntry()
         {
+            await PostLedgerEntry();
+
             var result = await Client.GetLedgerEntriesAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
@@ -97,6 +99,8 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetReceipt()
         {
+            await PostLedgerEntry();
+
             var result = await Client.GetLedgerEntriesAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
@@ -115,6 +119,8 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetTransactionStatus()
         {
+            await PostLedgerEntry();
+
             var result = await Client.GetLedgerEntriesAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
@@ -175,6 +181,8 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetCurrentLedgerEntry()
         {
+            await PostLedgerEntry();
+
             var result = await Client.GetCurrentLedgerEntryAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 

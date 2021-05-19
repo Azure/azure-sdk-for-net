@@ -19,5 +19,6 @@
 
   <ItemGroup>
     <Folder Include="SessionRecords" />
+    <Folder Include="SessionRecords\ConfidentialLedgerClientLiveTests" />
   </ItemGroup>
 </Project>
