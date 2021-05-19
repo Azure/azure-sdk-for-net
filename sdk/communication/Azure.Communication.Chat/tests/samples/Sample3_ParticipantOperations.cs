@@ -16,7 +16,7 @@ namespace Azure.Communication.Chat.Tests.samples
         [Test]
         public async Task GetAddRemoveMembersAsync()
         {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
+            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
             Response<CommunicationUserIdentifier> joshResponse = await communicationIdentityClient.CreateUserAsync();
             CommunicationUserIdentifier josh = joshResponse.Value;
             Response<CommunicationUserIdentifier> gloriaResponse = await communicationIdentityClient.CreateUserAsync();
@@ -27,13 +27,13 @@ namespace Azure.Communication.Chat.Tests.samples
             AccessToken joshTokenResponse = await communicationIdentityClient.GetTokenAsync(josh, new[] { CommunicationTokenScope.Chat });
 
             ChatClient chatClient = new ChatClient(
-                TestEnvironment.LiveTestDynamicEndpoint,
+                TestEnvironment.Endpoint,
                 new CommunicationTokenCredential(joshTokenResponse.Token));
 
             var chatParticipant = new ChatParticipant(josh)
             {
                 DisplayName = "Josh",
-                ShareHistoryTime = DateTimeOffset.MinValue
+                ShareHistoryTime = DateTime.MinValue
             };
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);

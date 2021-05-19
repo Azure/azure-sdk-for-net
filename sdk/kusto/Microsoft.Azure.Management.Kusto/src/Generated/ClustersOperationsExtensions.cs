@@ -78,19 +78,9 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            /// <param name='ifMatch'>
-            /// The ETag of the cluster. Omit this value to always overwrite the current
-            /// cluster. Specify the last-seen ETag value to prevent accidentally
-            /// overwriting concurrent changes.
-            /// </param>
-            /// <param name='ifNoneMatch'>
-            /// Set to '*' to allow a new cluster to be created, but to prevent updating an
-            /// existing cluster. Other values will result in a 412 Pre-condition Failed
-            /// response.
-            /// </param>
-            public static Cluster CreateOrUpdate(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters, string ifMatch = default(string), string ifNoneMatch = default(string))
+            public static Cluster CreateOrUpdate(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, clusterName, parameters, ifMatch, ifNoneMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -108,22 +98,12 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            /// <param name='ifMatch'>
-            /// The ETag of the cluster. Omit this value to always overwrite the current
-            /// cluster. Specify the last-seen ETag value to prevent accidentally
-            /// overwriting concurrent changes.
-            /// </param>
-            /// <param name='ifNoneMatch'>
-            /// Set to '*' to allow a new cluster to be created, but to prevent updating an
-            /// existing cluster. Other values will result in a 412 Pre-condition Failed
-            /// response.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> CreateOrUpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters, string ifMatch = default(string), string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> CreateOrUpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, ifMatch, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -144,14 +124,9 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The Kusto cluster parameters supplied to the Update operation.
             /// </param>
-            /// <param name='ifMatch'>
-            /// The ETag of the cluster. Omit this value to always overwrite the current
-            /// cluster. Specify the last-seen ETag value to prevent accidentally
-            /// overwriting concurrent changes.
-            /// </param>
-            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdate parameters, string ifMatch = default(string))
+            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdate parameters)
             {
-                return operations.UpdateAsync(resourceGroupName, clusterName, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -169,17 +144,12 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The Kusto cluster parameters supplied to the Update operation.
             /// </param>
-            /// <param name='ifMatch'>
-            /// The ETag of the cluster. Omit this value to always overwrite the current
-            /// cluster. Specify the last-seen ETag value to prevent accidentally
-            /// overwriting concurrent changes.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdate parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -520,7 +490,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// Azure location (region) name.
+            /// Azure location.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster.
@@ -537,7 +507,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// Azure location (region) name.
+            /// Azure location.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster.
@@ -734,19 +704,9 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            /// <param name='ifMatch'>
-            /// The ETag of the cluster. Omit this value to always overwrite the current
-            /// cluster. Specify the last-seen ETag value to prevent accidentally
-            /// overwriting concurrent changes.
-            /// </param>
-            /// <param name='ifNoneMatch'>
-            /// Set to '*' to allow a new cluster to be created, but to prevent updating an
-            /// existing cluster. Other values will result in a 412 Pre-condition Failed
-            /// response.
-            /// </param>
-            public static Cluster BeginCreateOrUpdate(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters, string ifMatch = default(string), string ifNoneMatch = default(string))
+            public static Cluster BeginCreateOrUpdate(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, clusterName, parameters, ifMatch, ifNoneMatch).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -764,22 +724,12 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The Kusto cluster parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            /// <param name='ifMatch'>
-            /// The ETag of the cluster. Omit this value to always overwrite the current
-            /// cluster. Specify the last-seen ETag value to prevent accidentally
-            /// overwriting concurrent changes.
-            /// </param>
-            /// <param name='ifNoneMatch'>
-            /// Set to '*' to allow a new cluster to be created, but to prevent updating an
-            /// existing cluster. Other values will result in a 412 Pre-condition Failed
-            /// response.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> BeginCreateOrUpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters, string ifMatch = default(string), string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> BeginCreateOrUpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, ifMatch, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -800,14 +750,9 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The Kusto cluster parameters supplied to the Update operation.
             /// </param>
-            /// <param name='ifMatch'>
-            /// The ETag of the cluster. Omit this value to always overwrite the current
-            /// cluster. Specify the last-seen ETag value to prevent accidentally
-            /// overwriting concurrent changes.
-            /// </param>
-            public static Cluster BeginUpdate(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdate parameters, string ifMatch = default(string))
+            public static Cluster BeginUpdate(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdate parameters)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, clusterName, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -825,17 +770,12 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The Kusto cluster parameters supplied to the Update operation.
             /// </param>
-            /// <param name='ifMatch'>
-            /// The ETag of the cluster. Omit this value to always overwrite the current
-            /// cluster. Specify the last-seen ETag value to prevent accidentally
-            /// overwriting concurrent changes.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> BeginUpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdate parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> BeginUpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

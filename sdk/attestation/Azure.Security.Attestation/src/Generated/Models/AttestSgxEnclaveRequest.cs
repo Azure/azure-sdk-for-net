@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
     /// <summary> Attestation request for Intel SGX enclaves. </summary>
     internal partial class AttestSgxEnclaveRequest

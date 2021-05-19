@@ -10,12 +10,11 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// A2A disk input details.
+    /// Azure VM disk input details.
     /// </summary>
     public partial class A2AVmDiskInputDetails
     {
@@ -35,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// storage account Id.</param>
         /// <param name="primaryStagingAzureStorageAccountId">The primary
         /// staging storage account Id.</param>
-        public A2AVmDiskInputDetails(string diskUri, string recoveryAzureStorageAccountId, string primaryStagingAzureStorageAccountId)
+        public A2AVmDiskInputDetails(string diskUri = default(string), string recoveryAzureStorageAccountId = default(string), string primaryStagingAzureStorageAccountId = default(string))
         {
             DiskUri = diskUri;
             RecoveryAzureStorageAccountId = recoveryAzureStorageAccountId;
@@ -66,26 +65,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "primaryStagingAzureStorageAccountId")]
         public string PrimaryStagingAzureStorageAccountId { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (DiskUri == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DiskUri");
-            }
-            if (RecoveryAzureStorageAccountId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RecoveryAzureStorageAccountId");
-            }
-            if (PrimaryStagingAzureStorageAccountId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PrimaryStagingAzureStorageAccountId");
-            }
-        }
     }
 }

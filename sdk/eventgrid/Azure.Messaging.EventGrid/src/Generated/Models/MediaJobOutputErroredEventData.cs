@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Job output error event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobOutputErrored event. </summary>
+    /// <summary> Job output error event data. </summary>
     public partial class MediaJobOutputErroredEventData : MediaJobOutputStateChangeEventData
     {
         /// <summary> Initializes a new instance of MediaJobOutputErroredEventData. </summary>

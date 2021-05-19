@@ -15,25 +15,14 @@ namespace Azure.ResourceManager.Communication.Models
         internal static Operation DeserializeOperation(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<bool> isDataAction = default;
             Optional<OperationDisplay> display = default;
-            Optional<Origin> origin = default;
-            Optional<ActionType> actionType = default;
+            Optional<string> origin = default;
+            Optional<OperationProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isDataAction"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    isDataAction = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("display"))
@@ -48,26 +37,21 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (property.NameEquals("origin"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    origin = new Origin(property.Value.GetString());
+                    origin = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionType = new ActionType(property.Value.GetString());
+                    properties = OperationProperties.DeserializeOperationProperties(property.Value);
                     continue;
                 }
             }
-            return new Operation(name.Value, Optional.ToNullable(isDataAction), display.Value, Optional.ToNullable(origin), Optional.ToNullable(actionType));
+            return new Operation(name.Value, display.Value, origin.Value, properties.Value);
         }
     }
 }

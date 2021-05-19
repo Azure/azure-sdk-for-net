@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -19,7 +18,7 @@ namespace SnippetGenerator
     {
         private const string _snippetPrefix = "Snippet:";
         private readonly string _directory;
-        private readonly Lazy<Task<List<Snippet>>> _snippets;
+        private readonly Lazy<List<Snippet>> _snippets;
         private static readonly Regex _markdownOnlyRegex = new Regex(
             @"(?<indent>\s*)//@@\s*(?<line>.*)",
             RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
@@ -29,15 +28,14 @@ namespace SnippetGenerator
             RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
-        private static string[] _snippetPreprocessorSymbols = new [] {"SNIPPET"};
 
         public DirectoryProcessor(string directory)
         {
             _directory = directory;
-            _snippets = new Lazy<Task<List<Snippet>>>(DiscoverSnippetsAsync);
+            _snippets = new Lazy<List<Snippet>>(DiscoverSnippets);
         }
 
-        public async Task ProcessAsync()
+        public void Process()
         {
 
             List<string> files = new List<string>();
@@ -46,10 +44,9 @@ namespace SnippetGenerator
 
             foreach (var file in files)
             {
-                async ValueTask<string> SnippetProvider(string s)
+                string SnippetProvider(string s)
                 {
-                    var snippets = await _snippets.Value;
-                    var selectedSnippets = snippets.Where(snip => snip.Name == s).ToArray();
+                    var selectedSnippets = _snippets.Value.Where(snip => snip.Name == s).ToArray();
                     if (selectedSnippets.Length > 1)
                     {
                         throw new InvalidOperationException($"Multiple snippets with the name '{s}' defined '{_directory}'");
@@ -65,16 +62,16 @@ namespace SnippetGenerator
                     return FormatSnippet(selectedSnippet.Text);
                 }
 
-                var originalText = await File.ReadAllTextAsync(file);
+                var originalText = File.ReadAllText(file);
 
                 string text;
                 switch (Path.GetExtension(file))
                 {
                     case ".md":
-                        text = await MarkdownProcessor.ProcessAsync(originalText, SnippetProvider);
+                        text = MarkdownProcessor.Process(originalText, SnippetProvider);
                         break;
                     case ".cs":
-                        text = await CSharpProcessor.ProcessAsync(originalText, SnippetProvider);
+                        text = CSharpProcessor.Process(originalText, SnippetProvider);
                         break;
                     default:
                         throw new NotSupportedException(file);
@@ -83,14 +80,14 @@ namespace SnippetGenerator
                 if (text != originalText)
                 {
                     _utf8EncodingWithoutBOM = new UTF8Encoding(false);
-                    await File.WriteAllTextAsync(file, text, _utf8EncodingWithoutBOM);
+                    File.WriteAllText(file, text, _utf8EncodingWithoutBOM);
                 }
             }
         }
 
-        private async Task<List<Snippet>> DiscoverSnippetsAsync()
+        private List<Snippet> DiscoverSnippets()
         {
-            var snippets = await GetSnippetsInDirectoryAsync(_directory);
+            var snippets = GetSnippetsInDirectory(_directory);
             Console.WriteLine($"Discovered snippets:");
 
             foreach (var snippet in snippets)
@@ -202,22 +199,16 @@ namespace SnippetGenerator
         private static bool IsRegionLine(string line) =>
             _regionRegex.IsMatch(line);
 
-        private async Task<List<Snippet>> GetSnippetsInDirectoryAsync(string baseDirectory)
+        private List<Snippet> GetSnippetsInDirectory(string baseDirectory)
         {
             var list = new List<Snippet>();
             foreach (var file in Directory.GetFiles(baseDirectory, "*.cs", SearchOption.AllDirectories))
             {
                 try
                 {
-                    var text = await File.ReadAllTextAsync(file);
-                    if (!text.Contains($"#region {_snippetPrefix}"))
-                    {
-                        continue;
-                    }
-
                     var syntaxTree = CSharpSyntaxTree.ParseText(
-                        text,
-                        new CSharpParseOptions(LanguageVersion.Preview, preprocessorSymbols: _snippetPreprocessorSymbols),
+                        File.ReadAllText(file),
+                        new CSharpParseOptions(LanguageVersion.Preview),
                         path: file);
 
                     list.AddRange(GetAllSnippets(syntaxTree));
@@ -234,9 +225,6 @@ namespace SnippetGenerator
         private Snippet[] GetAllSnippets(SyntaxTree syntaxTree)
         {
             var snippets = new List<Snippet>();
-            var newRoot = PreprocessorDirectiveRemover.Instance.Visit(syntaxTree.GetRoot());
-            syntaxTree = syntaxTree.WithRootAndOptions(newRoot, syntaxTree.Options);
-
             var directiveWalker = new DirectiveWalker();
             directiveWalker.Visit(syntaxTree.GetRoot());
 
@@ -263,41 +251,6 @@ namespace SnippetGenerator
             return snippets.ToArray();
         }
 
-        class PreprocessorDirectiveRemover : CSharpSyntaxRewriter
-        {
-            public static PreprocessorDirectiveRemover Instance = new PreprocessorDirectiveRemover();
-            private PreprocessorDirectiveRemover() : base(visitIntoStructuredTrivia: true)
-            {
-            }
-
-            public override SyntaxTrivia VisitTrivia(SyntaxTrivia trivia)
-            {
-                if (trivia.Kind() == SyntaxKind.DisabledTextTrivia)
-                    return SyntaxFactory.Whitespace("");
-
-                return base.VisitTrivia(trivia);
-            }
-
-            public override SyntaxNode VisitIfDirectiveTrivia(IfDirectiveTriviaSyntax node)
-            {
-                return null;
-            }
-
-            public override SyntaxNode VisitElifDirectiveTrivia(ElifDirectiveTriviaSyntax node)
-            {
-                return null;
-            }
-
-            public override SyntaxNode VisitElseDirectiveTrivia(ElseDirectiveTriviaSyntax node)
-            {
-                return null;
-            }
-
-            public override SyntaxNode VisitEndIfDirectiveTrivia(EndIfDirectiveTriviaSyntax node)
-            {
-                return null;
-            }
-        }
         class DirectiveWalker : CSharpSyntaxWalker
         {
             private Stack<RegionDirectiveTriviaSyntax> _regions = new Stack<RegionDirectiveTriviaSyntax>();

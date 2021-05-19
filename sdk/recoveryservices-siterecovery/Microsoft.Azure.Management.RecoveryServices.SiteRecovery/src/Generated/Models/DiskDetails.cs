@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Onprem disk details data.
+    /// On-prem disk details data.
     /// </summary>
     public partial class DiskDetails
     {

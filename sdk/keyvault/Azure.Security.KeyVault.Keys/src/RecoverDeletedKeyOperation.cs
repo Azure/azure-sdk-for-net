@@ -28,9 +28,6 @@ namespace Azure.Security.KeyVault.Keys
             _response = response.GetRawResponse();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecoverDeletedKeyOperation" /> for mocking. </summary>
-        protected RecoverDeletedKeyOperation() {}
-
         /// <inheritdoc/>
         public override string Id => _value.Id.ToString();
 

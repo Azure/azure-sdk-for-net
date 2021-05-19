@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="properties">The input properties to apply recovery
         /// point.</param>
-        public ApplyRecoveryPointInput(ApplyRecoveryPointInputProperties properties)
+        public ApplyRecoveryPointInput(ApplyRecoveryPointInputProperties properties = default(ApplyRecoveryPointInputProperties))
         {
             Properties = properties;
             CustomInit();
@@ -49,22 +48,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "properties")]
         public ApplyRecoveryPointInputProperties Properties { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
-            if (Properties != null)
-            {
-                Properties.Validate();
-            }
-        }
     }
 }

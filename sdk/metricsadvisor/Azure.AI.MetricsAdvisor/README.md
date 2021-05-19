@@ -201,7 +201,7 @@ string sqlServerQuery = "<query>";
 
 var dataFeed = new DataFeed();
 
-dataFeed.Name = "<dataFeedName>";
+dataFeed.Name = "Sample data feed";
 dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
 dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
@@ -254,7 +254,7 @@ var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
 var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
 {
-    MaxPageSize = 5
+    TopCount = 5
 };
 
 Console.WriteLine("Ingestion statuses:");
@@ -283,7 +283,7 @@ Create an [`AnomalyDetectionConfiguration`](#data-point-anomaly) to tell the ser
 
 ```C# Snippet:CreateDetectionConfigurationAsync
 string metricId = "<metricId>";
-string configurationName = "<configurationName>";
+string configurationName = "Sample anomaly detection configuration";
 
 var detectionConfiguration = new AnomalyDetectionConfiguration()
 {
@@ -317,7 +317,7 @@ Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfigu
 Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and the [`WebNotificationHook`](#notification-hook) classes as means of subscribing to [alerts](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailNotificationHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
 ```C# Snippet:CreateHookAsync
-string hookName = "<hookName>";
+string hookName = "Sample hook";
 
 var emailHook = new EmailNotificationHook()
 {
@@ -341,7 +341,8 @@ Create an [`AnomalyAlertConfiguration`](#anomaly-alert) to tell the service whic
 ```C# Snippet:CreateAlertConfigurationAsync
 string hookId = "<hookId>";
 string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
-string configurationName = "<configurationName>";
+
+string configurationName = "Sample anomaly alert configuration";
 
 AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
 {
@@ -373,7 +374,7 @@ var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.UtcNow;
 var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyTime)
 {
-    MaxPageSize = 5
+    TopCount = 5
 };
 
 int alertCount = 0;
@@ -399,7 +400,7 @@ Once you know an alert's ID, list the [anomalies](#data-point-anomaly) that trig
 string alertConfigurationId = "<alertConfigurationId>";
 string alertId = "<alertId>";
 
-var options = new GetAnomaliesForAlertOptions() { MaxPageSize = 3 };
+var options = new GetAnomaliesForAlertOptions() { TopCount = 3 };
 
 int anomalyCount = 0;
 
@@ -407,13 +408,6 @@ await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(alertConfigu
 {
     Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
     Console.WriteLine($"Metric ID: {anomaly.MetricId}");
-    Console.WriteLine($"Anomaly value: {anomaly.Value}");
-
-    if (anomaly.ExpectedValue.HasValue)
-    {
-        Console.WriteLine($"Anomaly expected value: {anomaly.ExpectedValue}");
-    }
-
     Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
     Console.WriteLine($"Anomaly detected at: {anomaly.CreatedTime}");
     Console.WriteLine($"Status: {anomaly.Status}");

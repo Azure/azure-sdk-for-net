@@ -100,7 +100,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         ///
         public override void Run(CancellationToken cancellationToken)
         {
-            FileClient.ReadTo(Stream.Null, cancellationToken: cancellationToken);
+            FileClient.Read(cancellationToken);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         ///
         public async override Task RunAsync(CancellationToken cancellationToken)
         {
-            await FileClient.ReadToAsync(Stream.Null, cancellationToken:cancellationToken);
+            await FileClient.ReadAsync(cancellationToken);
         }
     }
 }

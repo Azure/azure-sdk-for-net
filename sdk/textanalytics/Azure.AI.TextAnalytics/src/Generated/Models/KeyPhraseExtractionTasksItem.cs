@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The TasksStateTasksKeyPhraseExtractionTasksItem. </summary>
     internal partial class KeyPhraseExtractionTasksItem : TaskState
@@ -24,12 +24,10 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
-        /// <param name="results"> . </param>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, KeyPhraseResult results) : base(lastUpdateDateTime, name, status)
+        /// <param name="resultsInternal"> . </param>
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, KeyPhraseResult resultsInternal) : base(lastUpdateDateTime, name, status)
         {
-            Results = results;
+            ResultsInternal = resultsInternal;
         }
-
-        public KeyPhraseResult Results { get; }
     }
 }

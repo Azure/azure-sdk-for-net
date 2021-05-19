@@ -83,7 +83,6 @@ namespace Azure.Core
             RemoveHeader(name);
             AddHeader(name, value);
         }
-
         /// <summary>
         /// Removes the header from the collection.
         /// </summary>
@@ -104,7 +103,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the response HTTP headers.
         /// </summary>
-        public RequestHeaders Headers => new(this);
+        public RequestHeaders Headers => new RequestHeaders(this);
 
         /// <summary>
         /// Frees resources held by this <see cref="Response"/> instance.

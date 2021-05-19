@@ -11,8 +11,8 @@ namespace Azure.AI.AnomalyDetector.Tests
         public AnomalyDetectorRecordedTestSanitizer()
             : base()
         {
-            AddJsonPathSanitizer("$..accessToken");
-            AddJsonPathSanitizer("$..source");
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..source");
             // TODO: Remove when re-recording
             LegacyConvertJsonDateTokens = true;
         }

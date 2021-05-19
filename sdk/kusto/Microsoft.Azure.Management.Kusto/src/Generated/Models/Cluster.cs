@@ -37,12 +37,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="location">The geo-location where the resource
         /// lives</param>
         /// <param name="sku">The SKU of the cluster.</param>
-        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="zones">The availability zones of the cluster.</param>
         /// <param name="identity">The identity of the cluster, if
@@ -78,9 +78,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// if double encryption is enabled.</param>
         /// <param name="engineType">The engine type. Possible values include:
         /// 'V2', 'V3'</param>
-        /// <param name="etag">A unique read-only string that changes whenever
-        /// the resource is updated.</param>
-        public Cluster(string location, AzureSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string engineType = default(string), string etag = default(string))
+        public Cluster(string location, AzureSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), Identity identity = default(Identity), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), string stateReason = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), OptimizedAutoscale optimizedAutoscale = default(OptimizedAutoscale), bool? enableDiskEncryption = default(bool?), bool? enableStreamingIngest = default(bool?), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), bool? enablePurge = default(bool?), LanguageExtensionsList languageExtensions = default(LanguageExtensionsList), bool? enableDoubleEncryption = default(bool?), string engineType = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -101,7 +99,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
             LanguageExtensions = languageExtensions;
             EnableDoubleEncryption = enableDoubleEncryption;
             EngineType = engineType;
-            Etag = etag;
             CustomInit();
         }
 
@@ -137,12 +134,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string State { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioned state of the resource. Possible values
+        /// Gets the provisioned state of the resource. Possible values
         /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets the cluster URI.
@@ -225,13 +222,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.engineType")]
         public string EngineType { get; set; }
-
-        /// <summary>
-        /// Gets a unique read-only string that changes whenever the resource
-        /// is updated.
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; private set; }
 
         /// <summary>
         /// Validate the object.

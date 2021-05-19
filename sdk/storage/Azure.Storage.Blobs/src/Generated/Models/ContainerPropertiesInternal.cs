@@ -40,8 +40,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="preventEncryptionScopeOverride"> . </param>
         /// <param name="deletedTime"> . </param>
         /// <param name="remainingRetentionDays"> . </param>
-        /// <param name="isVersionLevelWormEnabled"> Indicates if version level worm is enabled on this container. </param>
-        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? isVersionLevelWormEnabled)
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -55,7 +54,6 @@ namespace Azure.Storage.Blobs.Models
             PreventEncryptionScopeOverride = preventEncryptionScopeOverride;
             DeletedTime = deletedTime;
             RemainingRetentionDays = remainingRetentionDays;
-            IsVersionLevelWormEnabled = isVersionLevelWormEnabled;
         }
 
         public DateTimeOffset LastModified { get; }
@@ -70,7 +68,5 @@ namespace Azure.Storage.Blobs.Models
         public bool? PreventEncryptionScopeOverride { get; }
         public DateTimeOffset? DeletedTime { get; }
         public int? RemainingRetentionDays { get; }
-        /// <summary> Indicates if version level worm is enabled on this container. </summary>
-        public bool? IsVersionLevelWormEnabled { get; }
     }
 }

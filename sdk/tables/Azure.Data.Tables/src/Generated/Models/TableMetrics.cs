@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Data.Tables;
-
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The Metrics. </summary>
@@ -24,7 +22,7 @@ namespace Azure.Data.Tables.Models
         /// <param name="enabled"> Indicates whether metrics are enabled for the Table service. </param>
         /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
         /// <param name="retentionPolicy"> The retention policy. </param>
-        internal TableMetrics(string version, bool enabled, bool? includeApis, TableRetentionPolicy retentionPolicy)
+        internal TableMetrics(string version, bool enabled, bool? includeApis, RetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;
@@ -37,6 +35,6 @@ namespace Azure.Data.Tables.Models
         /// <summary> Indicates whether metrics are enabled for the Table service. </summary>
         public bool Enabled { get; set; }
         /// <summary> The retention policy. </summary>
-        public TableRetentionPolicy RetentionPolicy { get; set; }
+        public RetentionPolicy RetentionPolicy { get; set; }
     }
 }

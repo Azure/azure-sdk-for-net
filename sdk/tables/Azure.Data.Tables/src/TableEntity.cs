@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices.ComTypes;
 using Azure.Core;
 
 namespace Azure.Data.Tables
@@ -48,8 +49,8 @@ namespace Azure.Data.Tables
         /// <value>A <see cref="DateTimeOffset"/> containing the timestamp of the entity.</value>
         public DateTimeOffset? Timestamp
         {
-            get { return GetValue<DateTimeOffset?>(TableConstants.PropertyNames.Timestamp); }
-            set { _properties[TableConstants.PropertyNames.Timestamp] = value; }
+            get { return GetValue<DateTimeOffset?>(TableConstants.PropertyNames.TimeStamp); }
+            set { _properties[TableConstants.PropertyNames.TimeStamp] = value; }
         }
 
         /// <summary>
@@ -102,16 +103,6 @@ namespace Azure.Data.Tables
         /// <returns>The value of the property.</returns>
         /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="string" />.</exception>
         public string GetString(string key) => GetValue<string>(key);
-
-        /// <summary>
-        /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="BinaryData"/> property called
-        /// <paramref name="key"/>.
-        /// </summary>
-        /// <param name="key">The name of the property.</param>
-        /// <returns>The value of the property.</returns>
-        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type byte array.</exception>
-        public BinaryData GetBinaryData(string key) => GetValue<BinaryData>(key);
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
@@ -236,15 +227,7 @@ namespace Azure.Data.Tables
 
             if (type != null)
             {
-                var valueType = value.GetType();
-                if (type == typeof(BinaryData) && valueType == typeof(byte[]))
-                {
-                    value = new BinaryData(value);
-                }
-                else
-                {
-                    EnforceType(type, valueType);
-                }
+                EnforceType(type, value.GetType());
             }
 
             return value;

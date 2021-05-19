@@ -79,25 +79,10 @@ namespace Azure.Security.Attestation
             {
                 throw new JsonException();
             }
-            string number;
-            if (reader.TryGetInt32(out int intNumber))
-            {
-                number = intNumber.ToString(CultureInfo.InvariantCulture);
-            }
-            else if (reader.TryGetInt64(out long longNumber))
-            {
-                number = longNumber.ToString(CultureInfo.InvariantCulture);
-            }
-            else if (reader.TryGetDouble(out double doubleValue))
-            {
-                number = doubleValue.ToString(CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                throw new JsonException($"Unable to convert {reader.GetString()} to number");
-            }
+
+            Int32 numberValue = reader.GetInt32();
             reader.Read();
-            return number;
+            return numberValue.ToString(CultureInfo.InvariantCulture);
         }
 
         internal static string SerializeJsonBoolean(ref Utf8JsonReader reader, JsonSerializerOptions options)

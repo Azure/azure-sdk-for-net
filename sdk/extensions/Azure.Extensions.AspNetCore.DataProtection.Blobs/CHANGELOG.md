@@ -2,12 +2,7 @@
 
 ## 1.3.0-beta.1 (Unreleased)
 
-
-## 1.2.1 (2021-05-14)
-
 ### Changes
-
-- Dependency versions updated.
 
 #### Key Bug Fixes
 
@@ -39,6 +34,6 @@
 
 - Package renamed to Azure.Extensions.AspNetCore.DataProtection.Blobs
 
-## 1.0.0-preview.1 (2020-03-02)
+## 1.0.0-preview.1 (2020)
 
 - Initial preview of the Azure.AspNetCore.DataProtection.Blobs library

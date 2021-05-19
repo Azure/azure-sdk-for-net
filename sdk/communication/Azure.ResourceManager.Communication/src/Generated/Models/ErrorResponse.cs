@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
+    /// <summary> Error response indicating why the requested operation could not be performed. </summary>
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="error"> The error object. </param>
-        internal ErrorResponse(ErrorDetail error)
+        /// <param name="error"> The error. </param>
+        internal ErrorResponse(ErrorResponseError error)
         {
             Error = error;
         }
 
-        /// <summary> The error object. </summary>
-        public ErrorDetail Error { get; }
+        /// <summary> The error. </summary>
+        public ErrorResponseError Error { get; }
     }
 }

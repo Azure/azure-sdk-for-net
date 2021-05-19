@@ -33,12 +33,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="objects">An array of detected objects.</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        public DetectResult(IList<DetectedObject> objects = default(IList<DetectedObject>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata), string modelVersion = default(string))
+        public DetectResult(IList<DetectedObject> objects = default(IList<DetectedObject>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
             Objects = objects;
             RequestId = requestId;
             Metadata = metadata;
-            ModelVersion = modelVersion;
             CustomInit();
         }
 
@@ -63,11 +62,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public ImageMetadata Metadata { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "modelVersion")]
-        public string ModelVersion { get; set; }
 
     }
 }

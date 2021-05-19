@@ -22,7 +22,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             IdsOfHooksToAlert = new ChangeTrackingList<string>();
             MetricAlertConfigurations = new ChangeTrackingList<MetricAnomalyAlertConfiguration>();
-            SplitAlertByDimensions = new ChangeTrackingList<string>();
         }
 
         /// <summary>
@@ -60,9 +59,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// A description of the <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
         public string Description { get; set; }
-
-        // TODO: expose it as part of 1.0.0-beta.4
-        internal IList<string> SplitAlertByDimensions { get; }
 
         /// <summary>
         /// Create a patch model from the current <see cref="AnomalyAlertConfiguration"/>

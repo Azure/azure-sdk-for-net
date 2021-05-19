@@ -73,10 +73,9 @@ namespace Azure.Core.Tests
 
             #region Snippet:AzureNamedKeyCredential_Deconstruct
             var credential = new AzureNamedKeyCredential("SomeName", "SomeKey");
-
-#if !SNIPPET
-            credential.Update(expectedName, expectedKey);
-#endif
+            /*@@*/
+            /*@@*/ credential.Update(expectedName, expectedKey);
+            /*@@*/
             (string name, string key) = credential;
             #endregion
 

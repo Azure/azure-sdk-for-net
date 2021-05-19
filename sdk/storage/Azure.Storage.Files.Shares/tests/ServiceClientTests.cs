@@ -135,6 +135,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         [NonParallelizable]
         public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
         {
@@ -435,7 +436,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = TestConstants.Create(this);
+            var constants = new TestConstants(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -470,7 +471,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_GetShareClient()
         {
             // Arrange
-            var constants = TestConstants.Create(this);
+            var constants = new TestConstants(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -526,16 +527,15 @@ namespace Azure.Storage.Files.Shares.Tests
         public void GenerateAccountSas_RequiredParameters()
         {
             // Arrange
-            TestConstants constants = TestConstants.Create(this);
-            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            var constants = new TestConstants(this);
+            var fileEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (fileEndpoint, fileSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            ShareServiceClient serviceClient = InstrumentClient(
-                new ShareServiceClient(
-                    serviceUri,
-                    constants.Sas.SharedKeyCredential,
-                    GetOptions()));
+            ShareServiceClient serviceClient = InstrumentClient(new ShareServiceClient(connectionString, GetOptions()));
 
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(
@@ -545,56 +545,59 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, AccountSasServices.Files, resourceTypes);
-            ShareUriBuilder expectedUri = new ShareUriBuilder(serviceUri)
+            UriBuilder expectedUri = new UriBuilder(fileEndpoint)
             {
-                Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+                Query = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString()
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
         }
 
         [RecordedTest]
         public void GenerateAccountSas_Builder()
         {
-            TestConstants constants = TestConstants.Create(this);
-            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            var constants = new TestConstants(this);
+            var fileEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (fileEndpoint, fileSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             AccountSasServices services = AccountSasServices.Files;
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            ShareServiceClient serviceClient = InstrumentClient(
-                new ShareServiceClient(
-                    serviceUri,
-                    constants.Sas.SharedKeyCredential,
-                    GetOptions()));
+            ShareServiceClient serviceClient = InstrumentClient(new ShareServiceClient(connectionString, GetOptions()));
 
-            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
+            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
+            {
+                StartsOn = startsOn
+            };
 
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
 
             // Assert
-            AccountSasBuilder sasBuilder2 = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
-            ShareUriBuilder expectedUri = new ShareUriBuilder(serviceUri)
+            AccountSasBuilder sasBuilder2 = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
             {
-                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+                StartsOn = startsOn
             };
-            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            UriBuilder expectedUri = new UriBuilder(fileEndpoint);
+            expectedUri.Query += sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
         }
 
         [RecordedTest]
         public void GenerateAccountSas_WrongService_Service()
         {
-            TestConstants constants = TestConstants.Create(this);
-            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            var constants = new TestConstants(this);
+            var fileEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (fileEndpoint, fileSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             AccountSasServices services = AccountSasServices.Blobs; // Wrong Service
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
-            ShareServiceClient serviceClient = InstrumentClient(
-                new ShareServiceClient(
-                    serviceUri,
-                    constants.Sas.SharedKeyCredential,
-                    GetOptions()));
+            ShareServiceClient serviceClient = InstrumentClient(new ShareServiceClient(connectionString, GetOptions()));
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
             {
@@ -603,9 +606,16 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             // Act
-            TestHelper.AssertExpectedException(
-                () => serviceClient.GenerateAccountSasUri(sasBuilder),
-                new InvalidOperationException("SAS Uri cannot be generated. builder.Services does specify Files. builder.Services must either specify Files or specify all Services are accessible in the value."));
+            try
+            {
+                Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+
+                Assert.Fail("FileServiceClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                // the correct exception came back
+            }
         }
         #endregion
 

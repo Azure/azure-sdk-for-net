@@ -22,13 +22,6 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
-        /// <remarks>
-        /// This property has been deprecated and we will always use the latest
-        /// storage SAS version of the Storage service supported. This change
-        /// does not have any impact on how your application generates or makes
-        /// use of SAS tokens.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
@@ -192,9 +185,10 @@ namespace Azure.Storage.Sas
             {
                 throw Errors.AccountSasMissingData();
             }
-
-            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
-
+            if (string.IsNullOrEmpty(Version))
+            {
+                Version = SasQueryParameters.DefaultSasVersion;
+            }
             var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
             var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 

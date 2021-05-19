@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='connectionName'>
             /// The name of connection.
             /// </param>
-            public static void Delete(this IConnectionOperations operations, string resourceGroupName, string automationAccountName, string connectionName)
+            public static Connection Delete(this IConnectionOperations operations, string resourceGroupName, string automationAccountName, string connectionName)
             {
-                operations.DeleteAsync(resourceGroupName, automationAccountName, connectionName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, automationAccountName, connectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -61,9 +61,12 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IConnectionOperations operations, string resourceGroupName, string automationAccountName, string connectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Connection> DeleteAsync(this IConnectionOperations operations, string resourceGroupName, string automationAccountName, string connectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, connectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, connectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

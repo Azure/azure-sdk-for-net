@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal partial class OperationListResult
+    public partial class OperationListResult
     {
         internal static OperationListResult DeserializeOperationListResult(JsonElement element)
         {

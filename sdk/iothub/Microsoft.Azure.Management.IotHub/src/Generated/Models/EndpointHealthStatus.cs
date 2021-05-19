@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.IotHub.Models
     {
         public const string Unknown = "unknown";
         public const string Healthy = "healthy";
-        public const string Degraded = "degraded";
         public const string Unhealthy = "unhealthy";
         public const string Dead = "dead";
     }

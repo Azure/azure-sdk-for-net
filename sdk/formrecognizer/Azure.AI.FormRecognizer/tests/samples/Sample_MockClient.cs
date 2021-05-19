@@ -11,7 +11,7 @@ using Azure.AI.FormRecognizer.Training;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.AI.FormRecognizer.Samples
+namespace Azure.AI.FormRecognizer.Tests
 {
     public partial class FormRecognizerSamples
     {

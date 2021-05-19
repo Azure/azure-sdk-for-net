@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal static partial class KeyTypeExtensions
+    internal static class KeyTypeExtensions
     {
         public static string ToSerialString(this KeyType value) => value switch
         {

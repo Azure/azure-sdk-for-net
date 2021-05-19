@@ -30,7 +30,7 @@ namespace Azure.Data.Tables
             foreach (var item in tableEntityProperties)
             {
                 // Remove the ETag property, as it does not need to be serialized
-                if (item.Key == TableConstants.PropertyNames.ETag || item.Key == TableConstants.PropertyNames.Timestamp)
+                if (item.Key == TableConstants.PropertyNames.ETag)
                 {
                     continue;
                 }
@@ -40,7 +40,6 @@ namespace Azure.Data.Tables
                 switch (item.Value)
                 {
                     case byte[] _:
-                    case BinaryData _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
                         break;
                     case long _:
@@ -73,7 +72,7 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static void CastAndRemoveAnnotations(this IReadOnlyList<IDictionary<string, object>> entityList)
         {
-            var typeAnnotationsWithKeys = new Dictionary<string, (string TypeAnnotation, string AnnotationKey)>();
+            var typeAnnotationsWithKeys = new Dictionary<string, (string typeAnnotation, string annotationKey)>();
 
             foreach (var entity in entityList)
             {
@@ -84,9 +83,9 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Cleans a Dictionary of its Odata type annotations, while using them to cast its entities accordingly.
         /// </summary>
-        internal static void CastAndRemoveAnnotations(this IDictionary<string, object> entity, Dictionary<string, (string TypeAnnotation, string AnnotationKey)>? typeAnnotationsWithKeys = null)
+        internal static void CastAndRemoveAnnotations(this IDictionary<string, object> entity, Dictionary<string, (string typeAnnotation, string annotationKey)>? typeAnnotationsWithKeys = null)
         {
-            typeAnnotationsWithKeys ??= new Dictionary<string, (string TypeAnnotation, string AnnotationKey)>();
+            typeAnnotationsWithKeys ??= new Dictionary<string, (string typeAnnotation, string annotationKey)>();
             var spanOdataSuffix = TableConstants.Odata.OdataTypeString.AsSpan();
 
             typeAnnotationsWithKeys.Clear();
@@ -98,14 +97,14 @@ namespace Azure.Data.Tables
                 if (iSuffix > 0)
                 {
                     // This property is an Odata annotation. Save it in the typeAnnoations dictionary.
-                    typeAnnotationsWithKeys[spanPropertyName.Slice(0, iSuffix).ToString()] = ((entity[propertyName] as string)!, propertyName);
+                    typeAnnotationsWithKeys[spanPropertyName.Slice(0, iSuffix).ToString()] = (typeAnnotation: (entity[propertyName] as string)!, annotationKey: propertyName);
                 }
             }
 
             // Iterate through the types that are serialized as string by default and Parse them as the correct type, as indicated by the type annotations.
             foreach (var annotation in typeAnnotationsWithKeys.Keys)
             {
-                entity[annotation] = typeAnnotationsWithKeys[annotation].TypeAnnotation switch
+                entity[annotation] = typeAnnotationsWithKeys[annotation].typeAnnotation switch
                 {
                     TableConstants.Odata.EdmBinary => Convert.FromBase64String(entity[annotation] as string),
                     TableConstants.Odata.EdmDateTime => DateTimeOffset.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
@@ -115,14 +114,14 @@ namespace Azure.Data.Tables
                 };
 
                 // Remove the type annotation property from the dictionary.
-                entity.Remove(typeAnnotationsWithKeys[annotation].AnnotationKey);
+                entity.Remove(typeAnnotationsWithKeys[annotation].annotationKey);
             }
 
             // The Timestamp property is not annotated, since it is a known system property
             // so we must cast it without a type annotation
-            if (entity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var value) && value is string)
+            if (entity.TryGetValue(TableConstants.PropertyNames.TimeStamp, out var value) && value is string)
             {
-                entity[TableConstants.PropertyNames.Timestamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.Timestamp] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                entity[TableConstants.PropertyNames.TimeStamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.TimeStamp] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
 
             // Remove odata metadata.
@@ -193,17 +192,9 @@ namespace Azure.Data.Tables
                     }
                     else
                     {
-                        if (propertyValue is null)
-                        {
-                            continue;
-                        }
                         if (property.PropertyType.IsEnum)
                         {
                             typeActions[typeof(Enum)](property, propertyValue, result);
-                        }
-                        else if (Nullable.GetUnderlyingType(property.PropertyType)?.IsEnum ?? false)
-                        {
-                            SetNullableEnumValue(property, propertyValue, result);
                         }
                         else
                         {
@@ -224,7 +215,6 @@ namespace Azure.Data.Tables
         private static Dictionary<Type, Action<PropertyInfo, object, object>> typeActions = new Dictionary<Type, Action<PropertyInfo, object, object>>
         {
             {typeof(byte[]), (property, propertyValue, result) =>  property.SetValue(result, Convert.FromBase64String(propertyValue as string))},
-            {typeof(BinaryData), (property, propertyValue, result) =>  property.SetValue(result, BinaryData.FromBytes(Convert.FromBase64String(propertyValue as string)))},
             {typeof(long), (property, propertyValue, result) =>  property.SetValue(result, long.Parse(propertyValue as string, CultureInfo.InvariantCulture))},
             {typeof(long?), (property, propertyValue, result) =>  property.SetValue(result, long.Parse(propertyValue as string, CultureInfo.InvariantCulture))},
             {typeof(double), (property, propertyValue, result) =>  property.SetValue(result, propertyValue)},
@@ -241,9 +231,6 @@ namespace Azure.Data.Tables
             {typeof(int), (property, propertyValue, result) =>  property.SetValue(result, (int)propertyValue)},
             {typeof(int?), (property, propertyValue, result) =>  property.SetValue(result, (int?)propertyValue)},
             {typeof(Enum), (property, propertyValue, result) =>  property.SetValue(result, Enum.Parse(property.PropertyType, propertyValue as string ))},
-            {typeof(Nullable), (property, propertyValue, result) =>  property.SetValue(result, Enum.Parse(property.PropertyType, propertyValue as string ))},
         };
-
-        private static Action<PropertyInfo, object, object> SetNullableEnumValue = (property, propertyValue, result) => property.SetValue(result, Enum.Parse(property.PropertyType.GenericTypeArguments[0], propertyValue as string));
     }
 }

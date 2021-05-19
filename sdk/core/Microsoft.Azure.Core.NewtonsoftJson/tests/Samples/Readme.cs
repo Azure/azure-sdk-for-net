@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Core.NewtonsoftJson.Tests.Samples
         [Test]
         public void SearchSample()
         {
-            // cspell:word Aragorn Sauron's
             MockResponse response = new MockResponse(200);
             response.SetContent(@"{
                 ""value"": [
@@ -50,9 +49,7 @@ namespace Microsoft.Azure.Core.NewtonsoftJson.Tests.Samples
 
             SearchClientOptions clientOptions = new SearchClientOptions
             {
-#if !SNIPPET
-                Transport = new MockTransport(response),
-#endif
+                /*@@*/ Transport = new MockTransport(response),
                 Serializer = new NewtonsoftJsonObjectSerializer(serializerSettings)
             };
 

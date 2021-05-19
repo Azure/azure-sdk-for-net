@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -206,7 +205,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                           CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
-            Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
             Argument.AssertAtLeast(maximumEventCount, 1, nameof(maximumEventCount));
 
             var receivedEventCount = 0;
@@ -216,6 +214,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var operationId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             var link = default(ReceivingAmqpLink);
             var retryDelay = default(TimeSpan?);
+            var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedEvents = default(List<EventData>);
             var lastReceivedEvent = default(EventData);
 
@@ -237,63 +236,52 @@ namespace Azure.Messaging.EventHubs.Amqp
                         link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                        var messagesReceived = await Task.Factory.FromAsync<(ReceivingAmqpLink, int, TimeSpan), IEnumerable<AmqpMessage>>
+                        var messagesReceived = await Task.Factory.FromAsync
                         (
-                            static (arguments, callback, state) =>
-                            {
-                                var (link, maximumEventCount, waitTime) = arguments;
-                                return link.BeginReceiveMessages(maximumEventCount, waitTime, callback, link);
-                            },
-                            static asyncResult =>
-                            {
-                                var link = (ReceivingAmqpLink)asyncResult.AsyncState;
-                                var received = link.EndReceiveMessages(asyncResult, out var amqpMessages);
-
-                                return received ? amqpMessages : null;
-                            },
-                            (link, maximumEventCount, waitTime),
-                            default
+                            (callback, state) => link.BeginReceiveMessages(maximumEventCount, waitTime, callback, state),
+                            (asyncResult) => link.EndReceiveMessages(asyncResult, out amqpMessages),
+                            TaskCreationOptions.RunContinuationsAsynchronously
                         ).ConfigureAwait(false);
 
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                        // If no messages were received, then just return the empty set.
-
-                        if (messagesReceived == null)
-                        {
-                            return EmptyEventSet;
-                        }
-
                         // If event messages were received, then package them for consumption and
                         // return them.
 
-                        foreach (AmqpMessage message in messagesReceived)
+                        if ((messagesReceived) && (amqpMessages != null))
                         {
                             receivedEvents ??= new List<EventData>();
 
-                            link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
-                            receivedEvents.Add(MessageConverter.CreateEventFromMessage(message));
-                            message.Dispose();
+                            foreach (AmqpMessage message in amqpMessages)
+                            {
+                                link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
+                                receivedEvents.Add(MessageConverter.CreateEventFromMessage(message));
+                                message.Dispose();
+                            }
 
                             receivedEventCount = receivedEvents.Count;
-                        }
 
-                        if (receivedEventCount > 0)
-                        {
-                            lastReceivedEvent = receivedEvents[receivedEventCount - 1];
-
-                            if (lastReceivedEvent.Offset > long.MinValue)
+                            if (receivedEventCount > 0)
                             {
-                                CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset, false);
+                                lastReceivedEvent = receivedEvents[receivedEventCount - 1];
+
+                                if (lastReceivedEvent.Offset > long.MinValue)
+                                {
+                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset, false);
+                                }
+
+                                if (TrackLastEnqueuedEventProperties)
+                                {
+                                    LastReceivedEvent = lastReceivedEvent;
+                                }
                             }
 
-                            if (TrackLastEnqueuedEventProperties)
-                            {
-                                LastReceivedEvent = lastReceivedEvent;
-                            }
+                            return receivedEvents;
                         }
 
-                        return receivedEvents ?? EmptyEventSet;
+                        // No events were available.
+
+                        return EmptyEventSet;
                     }
                     catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ServiceTimeout)
                     {

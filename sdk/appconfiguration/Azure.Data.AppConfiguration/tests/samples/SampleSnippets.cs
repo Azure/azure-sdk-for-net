@@ -20,9 +20,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:CreateConfigurationClient
-#if SNIPPET
-            string connectionString = "<connection_string>";
-#endif
+            //@@ string connectionString = "<connection_string>";
             var client = new ConfigurationClient(connectionString);
             #endregion Snippet:CreateConfigurationClient
         }
@@ -33,9 +31,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var endpoint = TestEnvironment.Endpoint;
 
             #region Snippet:CreateConfigurationClientTokenCredential
-#if SNIPPET
-            string endpoint = "<endpoint>";
-#endif
+            //@@ string endpoint = "<endpoint>";
             var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
@@ -46,9 +42,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:CreateConfigurationSetting
-#if SNIPPET
-            string connectionString = "<connection_string>";
-#endif
+            //@@ string connectionString = "<connection_string>";
             var client = new ConfigurationClient(connectionString);
             var settingToCreate = new ConfigurationSetting("some_key", "some_value");
             ConfigurationSetting setting = client.SetConfigurationSetting(settingToCreate);
@@ -65,9 +59,7 @@ namespace Azure.Data.AppConfiguration.Samples
             setupClient.SetConfigurationSetting("some_key", "some_value");
 
             #region Snippet:GetConfigurationSetting
-#if SNIPPET
-            string connectionString = "<connection_string>";
-#endif
+            //@@ string connectionString = "<connection_string>";
             var client = new ConfigurationClient(connectionString);
             ConfigurationSetting setting = client.GetConfigurationSetting("some_key");
             #endregion Snippet:GetConfigurationSetting
@@ -79,9 +71,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:UpdateConfigurationSetting
-#if SNIPPET
-            string connectionString = "<connection_string>";
-#endif
+            //@@ string connectionString = "<connection_string>";
             var client = new ConfigurationClient(connectionString);
             ConfigurationSetting setting = client.SetConfigurationSetting("some_key", "new_value");
             #endregion Snippet:UpdateConfigurationSetting
@@ -93,9 +83,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:DeleteConfigurationSetting
-#if SNIPPET
-            string connectionString = "<connection_string>";
-#endif
+            //@@ string connectionString = "<connection_string>";
             var client = new ConfigurationClient(connectionString);
             client.DeleteConfigurationSetting("some_key");
             #endregion Snippet:DeleteConfigurationSetting
@@ -109,9 +97,7 @@ namespace Azure.Data.AppConfiguration.Samples
             try
             {
                 #region Snippet:ThrowNotFoundError
-#if SNIPPET
-                string connectionString = "<connection_string>";
-#endif
+                //@@ string connectionString = "<connection_string>";
                 var client = new ConfigurationClient(connectionString);
                 ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
                 #endregion Snippet:ThrowNotFoundError

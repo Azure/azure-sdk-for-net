@@ -10,10 +10,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
-    [CodeGenModel("PolicyCertificatesResult")]
-    internal partial class PolicyCertificatesResult
+    [JsonConverter(typeof(PolicyCertificatesResultConverter))]
+    public partial class PolicyCertificatesResult
     {
         private IReadOnlyList<X509Certificate2> _certificateList;
         private object _statelock = new object();

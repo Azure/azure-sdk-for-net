@@ -4,7 +4,7 @@
   "parameters": {
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "tagsa2"
+      "defaultValue": "tagsa1"
     },
     "managementGroupName": {
       "type": "string",
@@ -12,7 +12,7 @@
     },
     "subscriptionId": {
       "type": "string",
-      "defaultValue": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
+      "defaultValue": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
     }
   },
   "variables": {

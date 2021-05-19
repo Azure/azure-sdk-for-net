@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The role scope. </summary>
     public readonly partial struct KeyVaultRoleScope : IEquatable<KeyVaultRoleScope>

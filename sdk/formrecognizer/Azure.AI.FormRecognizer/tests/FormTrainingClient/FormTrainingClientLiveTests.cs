@@ -25,8 +25,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormTrainingClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormTrainingClientLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion)
+        public FormTrainingClientLiveTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
@@ -38,7 +38,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20997")]
         public async Task StartTrainingCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormTrainingClient(useTokenCredential: true);
@@ -46,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
 
-            CustomFormModel model = await operation.WaitForCompletionAsync();
+            CustomFormModel model = await operation.WaitForCompletionAsync(PollingInterval);
 
             // Sanity check to make sure we got an actual response back from the service.
             Assert.IsNotNull(model.ModelId);
@@ -66,14 +65,13 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingFilesUri = new Uri(singlePage ? TestEnvironment.BlobContainerSasUrl : TestEnvironment.MultipageBlobContainerSasUrl);
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
 
             CustomFormModel model = operation.Value;
 
             Assert.IsNotNull(model.ModelId);
-            Assert.IsNull(model.ModelName);
             Assert.IsNotNull(model.Properties);
             Assert.IsFalse(model.Properties.IsComposedModel);
             Assert.IsNotNull(model.TrainingStartedOn);
@@ -110,7 +108,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task CheckFormTypeinSubmodelAndRecognizedForm(bool labeled)
         {
             var client = CreateFormTrainingClient();
@@ -119,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             TrainingOperation trainingOperation = await client.StartTrainingAsync(trainingFilesUri, labeled);
-            await trainingOperation.WaitForCompletionAsync();
+            await trainingOperation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(trainingOperation.HasValue);
 
             CustomFormModel model = trainingOperation.Value;
@@ -127,7 +124,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
             RecognizeCustomFormsOperation recognizeOperation = await formClient.StartRecognizeCustomFormsFromUriAsync(model.ModelId, uri);
-            await recognizeOperation.WaitForCompletionAsync();
+            await recognizeOperation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(recognizeOperation.HasValue);
 
             RecognizedForm form = recognizeOperation.Value.Single();
@@ -136,24 +133,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Max = FormRecognizerClientOptions.ServiceVersion.V2_0)]
-        public async Task StartCreateComposedModelWithV2()
-        {
-            var client = CreateFormTrainingClient();
-
-            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
-            await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
-
-            var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds));
-            Assert.AreEqual("404", ex.ErrorCode);
-        }
-
-        [RecordedTest]
         [TestCase(false)]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20997")]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
+        [TestCase(true)]
         public async Task StartCreateComposedModel(bool useTokenCredential)
         {
             var client = CreateFormTrainingClient(useTokenCredential);
@@ -164,7 +145,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
             CreateComposedModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, "My composed model");
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
 
@@ -222,7 +203,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartCreateComposedModelFailsWithInvalidId()
         {
             var client = CreateFormTrainingClient();
@@ -245,7 +225,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var filter = new TrainingFileFilter { IncludeSubfolders = true, Prefix = "subfolder" };
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { TrainingFileFilter = filter});
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
             Assert.AreEqual(CustomFormModelStatus.Ready, operation.Value.Status);
@@ -260,12 +240,11 @@ namespace Azure.AI.FormRecognizer.Tests
             var filter = new TrainingFileFilter { IncludeSubfolders = true, Prefix = "invalidPrefix" };
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { TrainingFileFilter = filter });
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
             Assert.AreEqual("2014", ex.ErrorCode);
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartTrainingWithLabelsModelName()
         {
             var client = CreateFormTrainingClient();
@@ -274,14 +253,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: true, modelName);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
             Assert.AreEqual(modelName, operation.Value.ModelName);
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
+        [Ignore("Current bug on the service side returns null for model name.")]
         public async Task StartTrainingWithNoLabelsModelName()
         {
             var client = CreateFormTrainingClient();
@@ -290,13 +269,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, modelName);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
             Assert.AreEqual(modelName, operation.Value.ModelName);
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/19375")]
         public async Task StartTrainingError()
         {
             var client = CreateFormTrainingClient();
@@ -304,7 +284,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var containerUrl = new Uri("https://someUrl");
 
             TrainingOperation operation = await client.StartTrainingAsync(containerUrl, useTrainingLabels: false);
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
             Assert.AreEqual("2001", ex.ErrorCode);
 
             Assert.False(operation.HasValue);
@@ -312,8 +292,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20997")]
-        [TestCase(false, true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20997")]
+        [TestCase(true, true)]
+        [TestCase(false, true)]
         [TestCase(true, false)]
         [TestCase(false, false)]
         public async Task TrainingOps(bool labeled, bool useTokenCredential)
@@ -323,7 +303,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, labeled);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
 
@@ -396,7 +376,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20997")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task CopyModel(bool useTokenCredential)
         {
@@ -411,7 +391,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(operation.HasValue);
 
             CustomFormModelInfo modelCopied = operation.Value;
@@ -423,7 +403,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task CopyModelWithLabelsAndModelName()
         {
             var sourceClient = CreateFormTrainingClient();
@@ -439,7 +418,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(operation.HasValue);
 
             CustomFormModelInfo modelCopied = operation.Value;
@@ -452,9 +431,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20997")]
+        [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task CopyComposedModel(bool useTokenCredential)
         {
             var sourceClient = CreateFormTrainingClient(useTokenCredential);
@@ -469,14 +447,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
             string modelName = "My composed model";
             CreateComposedModelOperation operation = await sourceClient.StartCreateComposedModelAsync(modelIds, modelName);
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(operation.HasValue);
             CustomFormModel composedModel = operation.Value;
 
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
 
             CopyModelOperation copyOperation = await sourceClient.StartCopyModelAsync(composedModel.ModelId, targetAuth);
-            await copyOperation.WaitForCompletionAsync();
+            await copyOperation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(copyOperation.HasValue);
             CustomFormModelInfo modelCopied = copyOperation.Value;
 
@@ -492,7 +470,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
+        [Ignore("Current bug on the service side returns null for model name.")]
         public async Task CopyModelWithoutLabelsAndModelName()
         {
             var sourceClient = CreateFormTrainingClient();
@@ -508,7 +486,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(operation.HasValue);
 
             CustomFormModelInfo modelCopied = operation.Value;
@@ -549,7 +527,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
+            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
         }
 
         [RecordedTest]

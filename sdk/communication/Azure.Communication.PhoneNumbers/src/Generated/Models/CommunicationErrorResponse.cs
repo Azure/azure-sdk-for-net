@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationErrorResponse

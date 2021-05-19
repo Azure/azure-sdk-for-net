@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
     /// <summary> The result of the operation. </summary>
     public readonly partial struct PolicyModification : IEquatable<PolicyModification>

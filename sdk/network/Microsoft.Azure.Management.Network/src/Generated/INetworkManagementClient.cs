@@ -481,11 +481,6 @@ namespace Microsoft.Azure.Management.Network
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
 
         /// <summary>
-        /// Gets the IVirtualNetworkGatewayNatRulesOperations.
-        /// </summary>
-        IVirtualNetworkGatewayNatRulesOperations VirtualNetworkGatewayNatRules { get; }
-
-        /// <summary>
         /// Gets the IVirtualNetworkTapsOperations.
         /// </summary>
         IVirtualNetworkTapsOperations VirtualNetworkTaps { get; }

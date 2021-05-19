@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Ingest track discontinuity detected event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventTrackDiscontinuityDetected event. </summary>
+    /// <summary> Ingest track discontinuity detected event data. </summary>
     public partial class MediaLiveEventTrackDiscontinuityDetectedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventTrackDiscontinuityDetectedEventData. </summary>

@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(FileServerReadSettingsConverter))]
     public partial class FileServerReadSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -34,25 +31,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("wildcardFileName");
                 writer.WriteObjectValue(WildcardFileName);
             }
-            if (Optional.IsDefined(FileListPath))
-            {
-                writer.WritePropertyName("fileListPath");
-                writer.WriteObjectValue(FileListPath);
-            }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery");
                 writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
-            }
-            if (Optional.IsDefined(PartitionRootPath))
-            {
-                writer.WritePropertyName("partitionRootPath");
-                writer.WriteObjectValue(PartitionRootPath);
-            }
-            if (Optional.IsDefined(DeleteFilesAfterCompletion))
-            {
-                writer.WritePropertyName("deleteFilesAfterCompletion");
-                writer.WriteObjectValue(DeleteFilesAfterCompletion);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
@@ -63,11 +45,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("modifiedDatetimeEnd");
                 writer.WriteObjectValue(ModifiedDatetimeEnd);
-            }
-            if (Optional.IsDefined(FileFilter))
-            {
-                writer.WritePropertyName("fileFilter");
-                writer.WriteObjectValue(FileFilter);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -89,13 +66,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> recursive = default;
             Optional<object> wildcardFolderPath = default;
             Optional<object> wildcardFileName = default;
-            Optional<object> fileListPath = default;
             Optional<bool> enablePartitionDiscovery = default;
-            Optional<object> partitionRootPath = default;
-            Optional<object> deleteFilesAfterCompletion = default;
             Optional<object> modifiedDatetimeStart = default;
             Optional<object> modifiedDatetimeEnd = default;
-            Optional<object> fileFilter = default;
             string type = default;
             Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
@@ -132,16 +105,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     wildcardFileName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("fileListPath"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    fileListPath = property.Value.GetObject();
-                    continue;
-                }
                 if (property.NameEquals("enablePartitionDiscovery"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -150,26 +113,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     enablePartitionDiscovery = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("partitionRootPath"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    partitionRootPath = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("deleteFilesAfterCompletion"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    deleteFilesAfterCompletion = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeStart"))
@@ -192,16 +135,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     modifiedDatetimeEnd = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("fileFilter"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    fileFilter = property.Value.GetObject();
-                    continue;
-                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
@@ -220,20 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FileServerReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, fileFilter.Value);
-        }
-
-        internal partial class FileServerReadSettingsConverter : JsonConverter<FileServerReadSettings>
-        {
-            public override void Write(Utf8JsonWriter writer, FileServerReadSettings model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override FileServerReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeFileServerReadSettings(document.RootElement);
-            }
+            return new FileServerReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
         }
     }
 }

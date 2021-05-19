@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
     /// <summary>
     /// Represents the standard claims in the body of an RFC 7515 Json Web Token.
@@ -36,19 +35,19 @@ namespace Azure.Security.Attestation
         /// Expiration time for the token.
         /// </summary>
         [JsonPropertyName("exp")]
-        public double? ExpirationTime{ get; set; }
+        public long ExpirationTime{ get; set; }
 
         /// <summary>
         /// Time before which this token is not valid.
         /// </summary>
         [JsonPropertyName("nbf")]
-        public double? NotBeforeTime { get; set; }
+        public long NotBeforeTime { get; set; }
 
         /// <summary>
         /// Time at which this token was issued.
         /// </summary>
         [JsonPropertyName("iat")]
-        public double? IssuedAtTime { get; set; }
+        public long IssuedAtTime { get; set; }
 
         /// <summary>
         /// Unique identifier for this token.

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The result of the List Alias(Disaster Recovery configuration) operation. </summary>
-    internal partial class ArmDisasterRecoveryListResult
+    public partial class ArmDisasterRecoveryListResult
     {
         /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>
         internal ArmDisasterRecoveryListResult()

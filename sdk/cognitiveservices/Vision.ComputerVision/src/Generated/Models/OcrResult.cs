@@ -50,13 +50,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// detected, the value is 'NotDetected'.</param>
         /// <param name="regions">An array of objects, where each object
         /// represents a region of recognized text.</param>
-        public OcrResult(string language = default(string), double textAngle = default(double), string orientation = default(string), IList<OcrRegion> regions = default(IList<OcrRegion>), string modelVersion = default(string))
+        public OcrResult(string language = default(string), double textAngle = default(double), string orientation = default(string), IList<OcrRegion> regions = default(IList<OcrRegion>))
         {
             Language = language;
             TextAngle = textAngle;
             Orientation = orientation;
             Regions = regions;
-            ModelVersion = modelVersion;
             CustomInit();
         }
 
@@ -105,11 +104,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         [JsonProperty(PropertyName = "regions")]
         public IList<OcrRegion> Regions { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "modelVersion")]
-        public string ModelVersion { get; set; }
 
     }
 }

@@ -16,23 +16,20 @@ namespace Azure.Core.Tests
         private readonly AsyncLocal<bool> _collectThisStack;
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
-        private readonly Action<ProducedDiagnosticScope> _scopeStartCallback;
 
         public List<ProducedDiagnosticScope> Scopes { get; } = new List<ProducedDiagnosticScope>();
 
-        public ClientDiagnosticListener(string name, bool asyncLocal = false, Action<ProducedDiagnosticScope> scopeStartCallback = default)
-            : this(n => n == name, asyncLocal, scopeStartCallback)
+        public ClientDiagnosticListener(string name, bool asyncLocal = false): this(n => n == name, asyncLocal)
         {
         }
 
-        public ClientDiagnosticListener(Func<string, bool> filter, bool asyncLocal = false, Action<ProducedDiagnosticScope> scopeStartCallback = default)
+        public ClientDiagnosticListener(Func<string, bool> filter, bool asyncLocal = false)
         {
             if (asyncLocal)
             {
                 _collectThisStack = new AsyncLocal<bool> { Value = true };
             }
             _sourceNameFilter = filter;
-            _scopeStartCallback = scopeStartCallback;
             DiagnosticListener.AllListeners.Subscribe(this);
         }
 
@@ -72,7 +69,6 @@ namespace Azure.Core.Tests
                     };
 
                     Scopes.Add(scope);
-                    _scopeStartCallback?.Invoke(scope);
                 }
                 else if (value.Key.EndsWith(stopSuffix))
                 {
@@ -148,10 +144,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        public ProducedDiagnosticScope AssertScopeStarted(string name, params KeyValuePair<string, string>[] expectedAttributes) =>
-            AssertScopeStartedInternal(name, false, expectedAttributes);
-
-        private ProducedDiagnosticScope AssertScopeStartedInternal(string name, bool remove, params KeyValuePair<string, string>[] expectedAttributes)
+        public ProducedDiagnosticScope AssertScopeStarted(string name, params KeyValuePair<string, string>[] expectedAttributes)
         {
             lock (Scopes)
             {
@@ -167,11 +160,6 @@ namespace Azure.Core.Tests
                             }
                         }
 
-                        if (remove)
-                        {
-                            Scopes.Remove(producedDiagnosticScope);
-                        }
-
                         return producedDiagnosticScope;
                     }
                 }
@@ -179,16 +167,9 @@ namespace Azure.Core.Tests
             }
         }
 
-        public ProducedDiagnosticScope AssertScope(string name, params KeyValuePair<string, string>[] expectedAttributes) =>
-            AssertScopeInternal(name, false, expectedAttributes);
-
-        public ProducedDiagnosticScope AssertAndRemoveScope(string name, params KeyValuePair<string, string>[] expectedAttributes) =>
-            AssertScopeInternal(name, true, expectedAttributes);
-
-        private ProducedDiagnosticScope AssertScopeInternal(string name, bool remove,
-            params KeyValuePair<string, string>[] expectedAttributes)
+        public ProducedDiagnosticScope AssertScope(string name, params KeyValuePair<string, string>[] expectedAttributes)
         {
-            ProducedDiagnosticScope scope = AssertScopeStartedInternal(name, remove, expectedAttributes);
+            ProducedDiagnosticScope scope = AssertScopeStarted(name, expectedAttributes);
             if (!scope.IsCompleted)
             {
                 throw new InvalidOperationException($"'{name}' is not completed");

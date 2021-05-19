@@ -24,22 +24,16 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
-            #region Snippet:CreateDataFeedAsync
-#if SNIPPET
-            string sqlServerConnectionString = "<connectionString>";
-            string sqlServerQuery = "<query>";
-#else
             string sqlServerConnectionString = SqlServerConnectionString;
             string sqlServerQuery = SqlServerQuery;
-#endif
+
+            #region Snippet:CreateDataFeedAsync
+            //@@ string sqlServerConnectionString = "<connectionString>";
+            //@@ string sqlServerQuery = "<query>";
 
             var dataFeed = new DataFeed();
 
-#if SNIPPET
-            dataFeed.Name = "<dataFeedName>";
-#else
-            dataFeed.Name = GetUniqueName();
-#endif
+            dataFeed.Name = "Sample data feed";
             dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
             dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
@@ -170,7 +164,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var options = new GetDataFeedsOptions()
             {
                 GetDataFeedsFilter = filter,
-                MaxPageSize = 5
+                TopCount = 5
             };
 
             int dataFeedCount = 0;

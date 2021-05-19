@@ -4,7 +4,9 @@
 using System;
 using System.Collections;
 using System.Text;
+#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
+#endif
 using Microsoft.Spatial;
 using NUnit.Framework;
 
@@ -151,6 +153,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("Foo eq 'bar'", SearchFilter.Create($"Foo eq {sb}"));
         }
 
+#if EXPERIMENTAL_SPATIAL
         [Test]
         public void Points()
         {
@@ -163,7 +166,7 @@ namespace Azure.Search.Documents.Tests
         [Test]
         public void Polygons()
         {
-            GeoLineString line = new GeoLineString(
+            GeoLine line = new GeoLine(
                 new[]
                 {
                     new GeoPosition(0, 0),
@@ -175,18 +178,19 @@ namespace Azure.Search.Documents.Tests
                 "geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')",
                 SearchFilter.Create($"geo.intersects(Foo, {line})"));
 
-            GeoPolygon polygon = new GeoPolygon(line.Coordinates);
+            GeoPolygon polygon = new GeoPolygon(new[] { line });
             Assert.AreEqual(
                 "geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')",
                 SearchFilter.Create($"geo.intersects(Foo, {polygon})"));
 
             Assert.Throws<ArgumentException>(() => SearchFilter.Create(
-                $"{new GeoLineString(new[] { new GeoPosition(0, 0) })}"));
+                $"{new GeoLine(new[] { new GeoPosition(0, 0) })}"));
             Assert.Throws<ArgumentException>(() => SearchFilter.Create(
-                $"{new GeoLineString(new[] { new GeoPosition(0, 0), new GeoPosition(0, 0), new GeoPosition(0, 0), new GeoPosition(1, 1) })}"));
+                $"{new GeoLine(new[] { new GeoPosition(0, 0), new GeoPosition(0, 0), new GeoPosition(0, 0), new GeoPosition(1, 1) })}"));
             Assert.Throws<ArgumentException>(() => SearchFilter.Create(
-                $"{new GeoPolygon(new[] { new GeoLinearRing(line.Coordinates), new GeoLinearRing(line.Coordinates) })}"));
+                $"{new GeoPolygon(new[] { line, line })}"));
         }
+#endif
 
         [TestCaseSource(nameof(GetMicrosoftSpatialPointsData))]
         public void MicrosoftSpatialPoints(string filter) =>

@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(SparkJobDefinitionConverter))]
     public partial class SparkJobDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -86,19 +83,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SparkJobDefinition(description.Value, targetBigDataPool, requiredSparkVersion.Value, language.Value, jobProperties, additionalProperties);
-        }
-
-        internal partial class SparkJobDefinitionConverter : JsonConverter<SparkJobDefinition>
-        {
-            public override void Write(Utf8JsonWriter writer, SparkJobDefinition model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override SparkJobDefinition Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeSparkJobDefinition(document.RootElement);
-            }
         }
     }
 }

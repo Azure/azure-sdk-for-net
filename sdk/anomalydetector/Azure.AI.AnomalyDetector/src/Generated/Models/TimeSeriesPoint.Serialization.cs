@@ -15,11 +15,8 @@ namespace Azure.AI.AnomalyDetector.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Timestamp))
-            {
-                writer.WritePropertyName("timestamp");
-                writer.WriteStringValue(Timestamp.Value, "O");
-            }
+            writer.WritePropertyName("timestamp");
+            writer.WriteStringValue(Timestamp, "O");
             writer.WritePropertyName("value");
             writer.WriteNumberValue(Value);
             writer.WriteEndObject();

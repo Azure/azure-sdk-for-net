@@ -19,6 +19,5 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public const string ClientConnection = "ClientConnection";
         public const string ServerConnection = "ServerConnection";
         public const string RESTAPI = "RESTAPI";
-        public const string Trace = "Trace";
     }
 }

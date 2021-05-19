@@ -2,18 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
+using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
-using Microsoft.Extensions.Azure;
+using Microsoft.Azure.WebJobs.Host.Config;
 using Azure.Messaging.ServiceBus;
-using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
@@ -22,24 +23,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
         private readonly INameResolver _nameResolver;
         private readonly ServiceBusOptions _options;
         private readonly MessagingProvider _messagingProvider;
+        private readonly IConfiguration _configuration;
         private readonly ILoggerFactory _loggerFactory;
         private readonly IConverterManager _converterManager;
-        private readonly ServiceBusClientFactory _clientFactory;
 
-        public ServiceBusTriggerAttributeBindingProvider(
-            INameResolver nameResolver,
-            ServiceBusOptions options,
-            MessagingProvider messagingProvider,
-            ILoggerFactory loggerFactory,
-            IConverterManager converterManager,
-            ServiceBusClientFactory clientFactory)
+        public ServiceBusTriggerAttributeBindingProvider(INameResolver nameResolver, ServiceBusOptions options, MessagingProvider messagingProvider, IConfiguration configuration,
+            ILoggerFactory loggerFactory, IConverterManager converterManager)
         {
             _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _messagingProvider = messagingProvider ?? throw new ArgumentNullException(nameof(messagingProvider));
+            _configuration = configuration;
             _loggerFactory = loggerFactory;
             _converterManager = converterManager;
-            _clientFactory = clientFactory;
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
@@ -57,27 +53,33 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
                 return Task.FromResult<ITriggerBinding>(null);
             }
 
-            attribute.Connection = _nameResolver.ResolveWholeString(attribute.Connection);
-            string entityPath;
+            string queueName = null;
+            string topicName = null;
+            string subscriptionName = null;
+            string entityPath = null;
             EntityType entityType;
+
             if (attribute.QueueName != null)
             {
-                var queueName = _nameResolver.ResolveWholeString(attribute.QueueName);
+                queueName = Resolve(attribute.QueueName);
                 entityPath = queueName;
                 entityType = EntityType.Queue;
             }
             else
             {
-                var topicName = _nameResolver.ResolveWholeString(attribute.TopicName);
-                var subscriptionName = _nameResolver.ResolveWholeString(attribute.SubscriptionName);
+                topicName = Resolve(attribute.TopicName);
+                subscriptionName = Resolve(attribute.SubscriptionName);
                 entityPath = EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName);
                 entityType = EntityType.Topic;
             }
 
+            attribute.Connection = Resolve(attribute.Connection);
+            ServiceBusAccount account = new ServiceBusAccount(_options, _configuration, attribute);
+
             Func<ListenerFactoryContext, bool, Task<IListener>> createListener =
             (factoryContext, singleDispatch) =>
             {
-                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, entityType, entityPath, attribute.IsSessionsEnabled, factoryContext.Executor, _options, attribute.Connection, _messagingProvider, _loggerFactory, singleDispatch, _clientFactory);
+                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, entityType, entityPath, attribute.IsSessionsEnabled, factoryContext.Executor, _options, account, _messagingProvider, _loggerFactory, singleDispatch);
                 return Task.FromResult(listener);
             };
 
@@ -86,6 +88,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 #pragma warning restore 618
 
             return Task.FromResult<ITriggerBinding>(binding);
+        }
+
+        private string Resolve(string queueName)
+        {
+            if (_nameResolver == null)
+            {
+                return queueName;
+            }
+
+            return _nameResolver.ResolveWholeString(queueName);
         }
     }
 }

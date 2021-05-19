@@ -8,7 +8,6 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
@@ -44,7 +43,7 @@ namespace Azure.Data.Tables.Models
             string version = default;
             bool enabled = default;
             bool? includeApis = default;
-            TableRetentionPolicy retentionPolicy = default;
+            RetentionPolicy retentionPolicy = default;
             if (element.Element("Version") is XElement versionElement)
             {
                 version = (string)versionElement;
@@ -59,7 +58,7 @@ namespace Azure.Data.Tables.Models
             }
             if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
             {
-                retentionPolicy = TableRetentionPolicy.DeserializeTableRetentionPolicy(retentionPolicyElement);
+                retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
             }
             return new TableMetrics(version, enabled, includeApis, retentionPolicy);
         }

@@ -19,16 +19,10 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a data flow. </summary>
     public partial class DataFlowCreateOrUpdateDataFlowOperation : Operation<DataFlowResource>, IOperationSource<DataFlowResource>
     {
-        private readonly OperationInternals<DataFlowResource> _operation;
-
-        /// <summary> Initializes a new instance of DataFlowCreateOrUpdateDataFlowOperation for mocking. </summary>
-        protected DataFlowCreateOrUpdateDataFlowOperation()
-        {
-        }
-
+        private readonly ArmOperationHelpers<DataFlowResource> _operation;
         internal DataFlowCreateOrUpdateDataFlowOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<DataFlowResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowCreateOrUpdateDataFlowOperation");
+            _operation = new ArmOperationHelpers<DataFlowResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowCreateOrUpdateDataFlowOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

@@ -329,9 +329,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     Domain = option.DomainFilter.HasValue ? option.DomainFilter.Value.GetString() : (PiiTaskParametersDomain?)null,
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
-                    StringIndexType = option.StringIndexType,
-                    LoggingOptOut = option.DisableServiceLogs
-                    // Categories are not enabled because of https://github.com/Azure/azure-sdk-for-net/issues/19237
+                    StringIndexType = option.StringIndexType
                 }
             };
         }
@@ -343,8 +341,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new EntityLinkingTaskParameters()
                 {
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
-                    StringIndexType = option.StringIndexType,
-                    LoggingOptOut = option.DisableServiceLogs
+                    StringIndexType = option.StringIndexType
                 }
             };
         }
@@ -356,8 +353,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new EntitiesTaskParameters()
                 {
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
-                    StringIndexType = option.StringIndexType,
-                    LoggingOptOut = option.DisableServiceLogs
+                    StringIndexType = option.StringIndexType
                 }
             };
         }
@@ -369,21 +365,6 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new KeyPhrasesTaskParameters()
                 {
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
-                    LoggingOptOut = option.DisableServiceLogs
-                }
-            };
-        }
-
-        internal static SentimentAnalysisTask ConvertToSentimentAnalysisTask(AnalyzeSentimentOptions option)
-        {
-            return new SentimentAnalysisTask()
-            {
-                Parameters = new SentimentAnalysisTaskParameters()
-                {
-                    ModelVersion = option.ModelVersion,
-                    StringIndexType = option.StringIndexType,
-                    LoggingOptOut = option.DisableServiceLogs,
-                    OpinionMining = option.IncludeOpinionMining
                 }
             };
         }
@@ -436,16 +417,42 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
-        internal static IList<SentimentAnalysisTask> ConvertFromAnalyzeSentimentOptionsToTasks(IReadOnlyCollection<AnalyzeSentimentOptions> analyzeSentimentOptions)
+        internal static AnalyzeBatchActionsResult ConvertToAnalyzeOperationResult(AnalyzeJobState jobState, IDictionary<string, int> map)
         {
-            List<SentimentAnalysisTask> list = new List<SentimentAnalysisTask>();
+            return new AnalyzeBatchActionsResult(jobState, map);
+        }
 
-            foreach (AnalyzeSentimentOptions option in analyzeSentimentOptions)
+        internal static IReadOnlyList<KeyPhraseExtractionTasksItem> ConvertToKeyPhraseExtractionTasks(IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<KeyPhraseExtractionTasksItem>();
+            foreach (KeyPhraseExtractionTasksItem task in keyPhraseExtractionTasks)
             {
-                list.Add(ConvertToSentimentAnalysisTask(option));
+                collection.Add(new KeyPhraseExtractionTasksItem(task, idToIndexMap));
             }
 
-            return list;
+            return collection;
+        }
+
+        internal static IReadOnlyList<EntityRecognitionPiiTasksItem> ConvertToEntityRecognitionPiiTasks(IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<EntityRecognitionPiiTasksItem>();
+            foreach (EntityRecognitionPiiTasksItem task in entityRecognitionPiiTasks)
+            {
+                collection.Add(new EntityRecognitionPiiTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
+        }
+
+        internal static IReadOnlyList<EntityRecognitionTasksItem> ConvertToEntityRecognitionTasks(IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<EntityRecognitionTasksItem>();
+            foreach (EntityRecognitionTasksItem task in entityRecognitionTasks)
+            {
+                collection.Add(new EntityRecognitionTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
         }
 
         private static string[] parseActionErrorTarget(string targetReference)
@@ -474,7 +481,6 @@ namespace Azure.AI.TextAnalytics
             IDictionary<int, TextAnalyticsErrorInternal> entitiesRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> entitiesPiiRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
             IDictionary<int, TextAnalyticsErrorInternal> entitiesLinkingRecognitionErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
-            IDictionary<int, TextAnalyticsErrorInternal> analyzeSentimentErrors = new Dictionary<int, TextAnalyticsErrorInternal>();
 
             if (jobState.Errors.Any())
             {
@@ -500,10 +506,6 @@ namespace Azure.AI.TextAnalytics
                     {
                         entitiesLinkingRecognitionErrors.Add(taskIndex, error);
                     }
-                    else if ("sentimentAnalysisTasks".Equals(taskName))
-                    {
-                        analyzeSentimentErrors.Add(taskIndex, error);
-                    }
                     else
                     {
                         throw new InvalidOperationException($"Invalid task name in target reference - {taskName}");
@@ -511,35 +513,12 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            return new AnalyzeBatchActionsResult(
-                ConvertToExtractKeyPhrasesActionResults(jobState, map, keyPhraseErrors),
-                ConvertToRecognizeEntitiesActionsResults(jobState, map, entitiesRecognitionErrors),
-                ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors),
-                ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
-                ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
-                jobState.Statistics);
-        }
+            var extractKeyPhrasesActionResult = ConvertToExtractKeyPhrasesActionResults(jobState, map, keyPhraseErrors);
+            var recognizeEntitiesActionResults = ConvertToRecognizeEntitiesActionsResults(jobState, map, entitiesRecognitionErrors);
+            var recognizePiiEntitiesActionResults = ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors);
+            var recognizeLinkedEntitiesActionsResults = ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors);
 
-        private static IReadOnlyCollection<AnalyzeSentimentActionResult> ConvertToAnalyzeSentimentActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
-        {
-            var collection = new List<AnalyzeSentimentActionResult>();
-            int index = 0;
-            foreach (SentimentAnalysisTasksItem task in jobState.Tasks.SentimentAnalysisTasks)
-            {
-                tasksErrors.TryGetValue(index, out TextAnalyticsErrorInternal taskError);
-
-                if (taskError != null)
-                {
-                    collection.Add(new AnalyzeSentimentActionResult(null, task.LastUpdateDateTime, taskError));
-                }
-                else
-                {
-                    collection.Add(new AnalyzeSentimentActionResult(ConvertToAnalyzeSentimentResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, null));
-                }
-                index++;
-            }
-
-            return collection;
+            return new AnalyzeBatchActionsResult(extractKeyPhrasesActionResult, recognizeEntitiesActionResults, recognizePiiEntitiesActionResults, recognizeLinkedEntitiesActionsResults, jobState.Statistics);
         }
 
         private static IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> ConvertToRecognizeLinkedEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
@@ -556,7 +535,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 else
                 {
-                    collection.Add(new RecognizeLinkedEntitiesActionResult(ConvertToRecognizeLinkedEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, null));
+                    collection.Add(new RecognizeLinkedEntitiesActionResult(ConvertToRecognizeLinkedEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, null));
                 }
                 index++;
             }
@@ -564,7 +543,7 @@ namespace Azure.AI.TextAnalytics
             return collection;
         }
 
-        private static IReadOnlyCollection<ExtractKeyPhrasesActionResult> ConvertToExtractKeyPhrasesActionResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        internal static IReadOnlyCollection<ExtractKeyPhrasesActionResult> ConvertToExtractKeyPhrasesActionResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
             var collection = new List<ExtractKeyPhrasesActionResult>();
             int index = 0;
@@ -578,7 +557,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 else
                 {
-                    collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, null));
+                    collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, null));
                 }
                 index++;
             }
@@ -586,7 +565,7 @@ namespace Azure.AI.TextAnalytics
             return collection;
         }
 
-        private static IReadOnlyCollection<RecognizePiiEntitiesActionResult> ConvertToRecognizePiiEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        internal static IReadOnlyCollection<RecognizePiiEntitiesActionResult> ConvertToRecognizePiiEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
             var collection = new List<RecognizePiiEntitiesActionResult>();
             int index = 0;
@@ -600,7 +579,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 else
                 {
-                    collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, taskError));
+                    collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, taskError));
                 }
                 index++;
             }
@@ -608,7 +587,7 @@ namespace Azure.AI.TextAnalytics
             return collection;
         }
 
-        private static IReadOnlyCollection<RecognizeEntitiesActionResult> ConvertToRecognizeEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
+        internal static IReadOnlyCollection<RecognizeEntitiesActionResult> ConvertToRecognizeEntitiesActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
         {
             var collection = new List<RecognizeEntitiesActionResult>();
             int index = 0;
@@ -624,7 +603,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 else
                 {
-                    collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, taskError));
+                    collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap), task.LastUpdateDateTime, taskError));
                 }
                 index++;
             }

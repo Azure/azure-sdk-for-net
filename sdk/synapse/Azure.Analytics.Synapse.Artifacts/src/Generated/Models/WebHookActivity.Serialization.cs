@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(WebHookActivityConverter))]
     public partial class WebHookActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -222,19 +219,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new WebHookActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, method, url, timeout.Value, headers.Value, body.Value, authentication.Value, reportStatusOnCallBack.Value);
-        }
-
-        internal partial class WebHookActivityConverter : JsonConverter<WebHookActivity>
-        {
-            public override void Write(Utf8JsonWriter writer, WebHookActivity model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override WebHookActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWebHookActivity(document.RootElement);
-            }
         }
     }
 }

@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(ErrorContractConverter))]
     internal partial class ErrorContract
     {
         internal static ErrorContract DeserializeErrorContract(JsonElement element)
@@ -32,19 +29,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new ErrorContract(error.Value);
-        }
-
-        internal partial class ErrorContractConverter : JsonConverter<ErrorContract>
-        {
-            public override void Write(Utf8JsonWriter writer, ErrorContract model, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-            public override ErrorContract Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeErrorContract(document.RootElement);
-            }
         }
     }
 }

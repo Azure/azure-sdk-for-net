@@ -25,6 +25,11 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            Uri officeSuppliesUri = new Uri(trainingFileUrl);
+            Uri officeEquipmentUri = new Uri(trainingFileUrl);
+            Uri furnitureUri = new Uri(trainingFileUrl);
+            Uri cleaningSuppliesUri = new Uri(trainingFileUrl);
+
             #region Snippet:FormRecognizerSampleTrainVariousModels
             // For this sample, you can use the training forms found in the `trainingFiles` folder.
             // Upload the forms to your storage container and then generate a container SAS URL.
@@ -33,44 +38,28 @@ namespace Azure.AI.FormRecognizer.Samples
 
             bool useLabels = true;
 
-#if SNIPPET
-            Uri officeSuppliesUri = <purchaseOrderOfficeSuppliesUri>;
-#else
-            Uri officeSuppliesUri = new Uri(trainingFileUrl);
-#endif
+            //@@ Uri officeSuppliesUri = <purchaseOrderOfficeSuppliesUri>;
             string suppliesModelName = "Purchase order - Office supplies";
 
             TrainingOperation suppliesOperation = await client.StartTrainingAsync(officeSuppliesUri, useLabels, suppliesModelName);
             Response<CustomFormModel> suppliesOperationResponse = await suppliesOperation.WaitForCompletionAsync();
             CustomFormModel officeSuppliesModel = suppliesOperationResponse.Value;
 
-#if SNIPPET
-            Uri officeEquipmentUri = <purchaseOrderOfficeEquipmentUri>;
-#else
-            Uri officeEquipmentUri = new Uri(trainingFileUrl);
-#endif
+            //@@ Uri officeEquipmentUri = <purchaseOrderOfficeEquipmentUri>;
             string equipmentModelName = "Purchase order - Office Equipment";
 
             TrainingOperation equipmentOperation = await client.StartTrainingAsync(officeEquipmentUri, useLabels, equipmentModelName);
             Response<CustomFormModel> equipmentOperationResponse = await equipmentOperation.WaitForCompletionAsync();
             CustomFormModel officeEquipmentModel = equipmentOperationResponse.Value;
 
-#if SNIPPET
-            Uri furnitureUri = <purchaseOrderFurnitureUri>;
-#else
-            Uri furnitureUri = new Uri(trainingFileUrl);
-#endif
+            //@@ Uri furnitureUri = <purchaseOrderFurnitureUri>;
             string furnitureModelName = "Purchase order - Furniture";
 
             TrainingOperation furnitureOperation = await client.StartTrainingAsync(furnitureUri, useLabels, furnitureModelName);
             Response<CustomFormModel> furnitureOperationResponse = await furnitureOperation.WaitForCompletionAsync();
             CustomFormModel furnitureModel = furnitureOperationResponse.Value;
 
-#if SNIPPET
-            Uri cleaningSuppliesUri = <purchaseOrderCleaningSuppliesUri>;
-#else
-            Uri cleaningSuppliesUri = new Uri(trainingFileUrl);
-#endif
+            //@@ Uri cleaningSuppliesUri = <purchaseOrderCleaningSuppliesUri>;
             string cleaningModelName = "Purchase order - Cleaning Supplies";
 
             TrainingOperation cleaningOperation = await client.StartTrainingAsync(cleaningSuppliesUri, useLabels, cleaningModelName);
@@ -123,13 +112,11 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #endregion
 
+            string purchaseOrderFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
+
             #region Snippet:FormRecognizerSampleRecognizeCustomFormWithComposedModel
 
-#if SNIPPET
-            string purchaseOrderFilePath = "<purchaseOrderFilePath>";
-#else
-            string purchaseOrderFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
-#endif
+            //@@ string purchaseOrderFilePath = "<purchaseOrderFilePath>";
             FormRecognizerClient recognizeClient = client.GetFormRecognizerClient();
             using var stream = new FileStream(purchaseOrderFilePath, FileMode.Open);
 

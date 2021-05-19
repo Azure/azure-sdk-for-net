@@ -42,12 +42,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recoveryMode">Defines whether the current recovery
         /// mode is file restore or database restore. Possible values include:
         /// 'Invalid', 'FileRecovery', 'WorkloadRecovery'</param>
-        /// <param name="targetVirtualMachineId">This is the complete ARM Id of
-        /// the target VM
-        /// For e.g.
-        /// /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}</param>
-        public AzureWorkloadSAPHanaRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string), string targetVirtualMachineId = default(string))
-            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId)
+        public AzureWorkloadSAPHanaRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string))
+            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode)
         {
             CustomInit();
         }

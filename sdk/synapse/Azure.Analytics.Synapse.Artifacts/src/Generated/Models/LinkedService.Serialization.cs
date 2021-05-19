@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(LinkedServiceConverter))]
     public partial class LinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -76,7 +73,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AzureDataLakeAnalytics": return AzureDataLakeAnalyticsLinkedService.DeserializeAzureDataLakeAnalyticsLinkedService(element);
                     case "AzureDataLakeStore": return AzureDataLakeStoreLinkedService.DeserializeAzureDataLakeStoreLinkedService(element);
                     case "AzureDatabricks": return AzureDatabricksLinkedService.DeserializeAzureDatabricksLinkedService(element);
-                    case "AzureDatabricksDeltaLake": return AzureDatabricksDeltaLakeLinkedService.DeserializeAzureDatabricksDeltaLakeLinkedService(element);
                     case "AzureFileStorage": return AzureFileStorageLinkedService.DeserializeAzureFileStorageLinkedService(element);
                     case "AzureFunction": return AzureFunctionLinkedService.DeserializeAzureFunctionLinkedService(element);
                     case "AzureKeyVault": return AzureKeyVaultLinkedService.DeserializeAzureKeyVaultLinkedService(element);
@@ -125,7 +121,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Marketo": return MarketoLinkedService.DeserializeMarketoLinkedService(element);
                     case "MicrosoftAccess": return MicrosoftAccessLinkedService.DeserializeMicrosoftAccessLinkedService(element);
                     case "MongoDb": return MongoDbLinkedService.DeserializeMongoDbLinkedService(element);
-                    case "MongoDbAtlas": return MongoDbAtlasLinkedService.DeserializeMongoDbAtlasLinkedService(element);
                     case "MongoDbV2": return MongoDbV2LinkedService.DeserializeMongoDbV2LinkedService(element);
                     case "MySql": return MySqlLinkedService.DeserializeMySqlLinkedService(element);
                     case "Netezza": return NetezzaLinkedService.DeserializeNetezzaLinkedService(element);
@@ -152,9 +147,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapTable": return SapTableLinkedService.DeserializeSapTableLinkedService(element);
                     case "ServiceNow": return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element);
                     case "Sftp": return SftpServerLinkedService.DeserializeSftpServerLinkedService(element);
-                    case "SharePointOnlineList": return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element);
                     case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element);
-                    case "Snowflake": return SnowflakeLinkedService.DeserializeSnowflakeLinkedService(element);
                     case "Spark": return SparkLinkedService.DeserializeSparkLinkedService(element);
                     case "SqlServer": return SqlServerLinkedService.DeserializeSqlServerLinkedService(element);
                     case "Square": return SquareLinkedService.DeserializeSquareLinkedService(element);
@@ -229,19 +222,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties);
-        }
-
-        internal partial class LinkedServiceConverter : JsonConverter<LinkedService>
-        {
-            public override void Write(Utf8JsonWriter writer, LinkedService model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override LinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeLinkedService(document.RootElement);
-            }
         }
     }
 }

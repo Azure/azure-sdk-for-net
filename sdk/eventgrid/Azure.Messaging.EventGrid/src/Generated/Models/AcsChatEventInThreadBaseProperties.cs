@@ -16,16 +16,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> Initializes a new instance of AcsChatEventInThreadBaseProperties. </summary>
-        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
-        internal AcsChatEventInThreadBaseProperties(string transactionId, string threadId)
+        internal AcsChatEventInThreadBaseProperties(string threadId)
         {
-            TransactionId = transactionId;
             ThreadId = threadId;
         }
 
-        /// <summary> The transaction id will be used as co-relation vector. </summary>
-        public string TransactionId { get; }
         /// <summary> The chat thread id. </summary>
         public string ThreadId { get; }
     }

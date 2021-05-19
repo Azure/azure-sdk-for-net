@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {

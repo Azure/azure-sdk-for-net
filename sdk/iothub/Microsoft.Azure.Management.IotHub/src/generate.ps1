@@ -4,7 +4,7 @@
 
 try
 {
-	Start-AutoRestCodeGeneration -ResourceProvider "iothub/resource-manager" -AutoRestVersion "v2"
+	Start-AutoRestCodeGeneration -ResourceProvider "iothub/resource-manager" -AutoRestVersion "v2" -ConfigFileTag "package-2020-03"
 }
 catch
 {

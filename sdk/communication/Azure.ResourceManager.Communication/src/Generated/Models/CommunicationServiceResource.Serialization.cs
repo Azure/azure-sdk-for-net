@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.Communication.Models
 
         internal static CommunicationServiceResource DeserializeCommunicationServiceResource(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> id = default;
@@ -59,16 +58,6 @@ namespace Azure.ResourceManager.Communication.Models
             Optional<string> immutableResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
@@ -152,7 +141,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new CommunicationServiceResource(id.Value, name.Value, type.Value, systemData.Value, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, immutableResourceId.Value, location.Value, Optional.ToDictionary(tags));
+            return new CommunicationServiceResource(id.Value, name.Value, type.Value, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, immutableResourceId.Value, location.Value, Optional.ToDictionary(tags));
         }
     }
 }

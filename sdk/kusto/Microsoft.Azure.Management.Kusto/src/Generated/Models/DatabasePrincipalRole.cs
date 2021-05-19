@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string Ingestor = "Ingestor";
         public const string Monitor = "Monitor";
         public const string User = "User";
-        public const string UnrestrictedViewer = "UnrestrictedViewer";
+        public const string UnrestrictedViewers = "UnrestrictedViewers";
         public const string Viewer = "Viewer";
     }
 }

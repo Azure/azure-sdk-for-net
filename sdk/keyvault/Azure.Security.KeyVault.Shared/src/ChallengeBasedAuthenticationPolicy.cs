@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault
 {
-    internal class ChallengeBasedAuthenticationPolicy : BearerTokenAuthenticationPolicy
+    internal class ChallengeBasedAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
     {
         private static ConcurrentDictionary<string, AuthorityScope> _scopeCache = new ConcurrentDictionary<string, AuthorityScope>();
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
@@ -19,15 +19,8 @@ namespace Azure.Security.KeyVault
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
         { }
 
-        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestAsync(Azure.Core.HttpMessage)" />
-        protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
-            => AuthorizeRequestInternal(message, true);
-
-        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequest(Azure.Core.HttpMessage)" />
-        protected override void AuthorizeRequest(HttpMessage message)
-            => AuthorizeRequestInternal(message, false).EnsureCompleted();
-
-        private async ValueTask AuthorizeRequestInternal(HttpMessage message, bool async)
+        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthenticateRequestOnChallengeAsync(HttpMessage, bool)" />
+        protected override async Task AuthenticateRequestAsync(HttpMessage message, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
@@ -45,14 +38,7 @@ namespace Azure.Security.KeyVault
             {
                 // We fetched the scope from the cache, but we have not initialized the Scopes in the base yet.
                 var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
-                if (async)
-                {
-                    await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
-                }
-                else
-                {
-                    AuthenticateAndAuthorizeRequest(message, context);
-                }
+                await SetAuthorizationHeader(message, context, async).ConfigureAwait(false);
                 return;
             }
 
@@ -60,22 +46,11 @@ namespace Azure.Security.KeyVault
             // As a result, before we know the auth scheme we need to avoid sending an unprotected body to Key Vault.
             // We don't currently support this enhanced auth scheme in the SDK but we still don't want to send any unprotected data to vaults which require it.
 
-            // Do not overwrite previous contents if retrying after initial request failed (e.g. timeout).
-            if (!message.TryGetProperty(KeyVaultStashedContentKey, out _))
-            {
-                message.SetProperty(KeyVaultStashedContentKey, message.Request.Content);
-                message.Request.Content = null;
-            }
+            message.SetProperty(KeyVaultStashedContentKey, message.Request.Content);
+            message.Request.Content = null;
         }
 
-        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestOnChallengeAsync" />
-        protected override ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
-            => AuthorizeRequestOnChallengeAsyncInternal(message, true);
-
-        protected override bool AuthorizeRequestOnChallenge(HttpMessage message)
-            => AuthorizeRequestOnChallengeAsyncInternal(message, false).EnsureCompleted();
-
-        private async ValueTask<bool> AuthorizeRequestOnChallengeAsyncInternal(HttpMessage message, bool async)
+        protected override async ValueTask<bool> AuthenticateRequestOnChallengeAsync(HttpMessage message, bool async)
         {
             if (message.Request.Content == null && message.TryGetProperty(KeyVaultStashedContentKey, out var content))
             {
@@ -107,14 +82,7 @@ namespace Azure.Security.KeyVault
             }
 
             var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
-            if (async)
-            {
-                await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
-            }
-            else
-            {
-                AuthenticateAndAuthorizeRequest(message, context);
-            }
+            await SetAuthorizationHeader(message, context, async).ConfigureAwait(false);
             return true;
         }
 
@@ -125,7 +93,6 @@ namespace Azure.Security.KeyVault
                 Authority = authrority;
                 Scopes = scopes;
             }
-
             public string Authority { get; }
 
             public string[] Scopes { get; }

@@ -19,16 +19,10 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a trigger. </summary>
     public partial class TriggerCreateOrUpdateTriggerOperation : Operation<TriggerResource>, IOperationSource<TriggerResource>
     {
-        private readonly OperationInternals<TriggerResource> _operation;
-
-        /// <summary> Initializes a new instance of TriggerCreateOrUpdateTriggerOperation for mocking. </summary>
-        protected TriggerCreateOrUpdateTriggerOperation()
-        {
-        }
-
+        private readonly ArmOperationHelpers<TriggerResource> _operation;
         internal TriggerCreateOrUpdateTriggerOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<TriggerResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TriggerCreateOrUpdateTriggerOperation");
+            _operation = new ArmOperationHelpers<TriggerResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TriggerCreateOrUpdateTriggerOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

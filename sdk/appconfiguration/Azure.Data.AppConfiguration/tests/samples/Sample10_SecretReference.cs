@@ -20,9 +20,7 @@ namespace Azure.Data.AppConfiguration.Samples
 
             #region Snippet:Sample_CreateSecretReference
             var secretId = "https://keyvault_name.vault.azure.net/secrets/<secret_name>";
-#if !SNIPPET
-            secretId = TestEnvironment.SecretId;
-#endif
+            /*@@*/ secretId = TestEnvironment.SecretId;
             var secretReferenceSetting = new SecretReferenceConfigurationSetting("setting", new Uri(secretId));
             #endregion
 

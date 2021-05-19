@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 VirtualMachineScaleSet inputVMScaleSet;
                 var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, dummyImageRef , vmScaleSetCustomizer: useVMMImage);
-                VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
-                inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
+                VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
+                inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
                 // Validate the VMM Plan field
                 ValidateMarketplaceVMScaleSetPlanField(vmScaleSet, img);
 

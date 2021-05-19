@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
             ? TimeSpan.Zero
-            : KeyVaultTestEnvironment.DefaultPollingInterval;
+            : TimeSpan.FromSeconds(2);
 
         public KeyClient Client { get; private set; }
 
@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         private KeyVaultTestEventListener _listener;
 
         protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode /* RecordedTestMode.Record */)
+            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment() /* RecordedTestMode.Record */)
         {
             _serviceVersion = serviceVersion;
         }
@@ -251,7 +251,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        protected Task WaitForDeletedKey(string name, TimeSpan? delay = null)
+        protected Task WaitForDeletedKey(string name)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -260,12 +260,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= KeyVaultTestEnvironment.DefaultPollingInterval;
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: delay.Value);
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: PollingInterval);
             }
         }
 
-        protected Task WaitForPurgedKey(string name, TimeSpan? delay = null)
+        protected Task WaitForPurgedKey(string name)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -274,7 +273,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= KeyVaultTestEnvironment.DefaultPollingInterval;
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
@@ -285,7 +283,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     {
                         return (Response)null;
                     }
-                }, delay: delay.Value);
+                }, delay: PollingInterval);
             }
         }
 

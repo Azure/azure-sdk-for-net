@@ -190,11 +190,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         IReplicationPoliciesOperations ReplicationPolicies { get; }
 
         /// <summary>
-        /// Gets the IReplicationProtectionIntentsOperations.
-        /// </summary>
-        IReplicationProtectionIntentsOperations ReplicationProtectionIntents { get; }
-
-        /// <summary>
         /// Gets the IReplicationRecoveryPlansOperations.
         /// </summary>
         IReplicationRecoveryPlansOperations ReplicationRecoveryPlans { get; }

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -35,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// AzureEnableProtectionInput object. For San provider, it will be
         /// SanEnableProtectionInput object. For HyperVReplicaAzure provider,
         /// it can be null.</param>
-        public AddDisksInputProperties(AddDisksProviderSpecificInput providerSpecificDetails)
+        public AddDisksInputProperties(AddDisksProviderSpecificInput providerSpecificDetails = default(AddDisksProviderSpecificInput))
         {
             ProviderSpecificDetails = providerSpecificDetails;
             CustomInit();
@@ -55,18 +54,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "providerSpecificDetails")]
         public AddDisksProviderSpecificInput ProviderSpecificDetails { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ProviderSpecificDetails == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ProviderSpecificDetails");
-            }
-        }
     }
 }

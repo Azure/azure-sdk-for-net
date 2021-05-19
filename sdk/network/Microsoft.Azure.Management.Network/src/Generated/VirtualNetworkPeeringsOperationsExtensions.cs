@@ -129,14 +129,9 @@ namespace Microsoft.Azure.Management.Network
             /// Parameters supplied to the create or update virtual network peering
             /// operation.
             /// </param>
-            /// <param name='syncRemoteAddressSpace'>
-            /// Parameter indicates the intention to sync the peering with the current
-            /// address space on the remote vNet after it's updated. Possible values
-            /// include: 'true'
-            /// </param>
-            public static VirtualNetworkPeering CreateOrUpdate(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, string syncRemoteAddressSpace = default(string))
+            public static VirtualNetworkPeering CreateOrUpdate(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,17 +153,12 @@ namespace Microsoft.Azure.Management.Network
             /// Parameters supplied to the create or update virtual network peering
             /// operation.
             /// </param>
-            /// <param name='syncRemoteAddressSpace'>
-            /// Parameter indicates the intention to sync the peering with the current
-            /// address space on the remote vNet after it's updated. Possible values
-            /// include: 'true'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkPeering> CreateOrUpdateAsync(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, string syncRemoteAddressSpace = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkPeering> CreateOrUpdateAsync(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -276,14 +266,9 @@ namespace Microsoft.Azure.Management.Network
             /// Parameters supplied to the create or update virtual network peering
             /// operation.
             /// </param>
-            /// <param name='syncRemoteAddressSpace'>
-            /// Parameter indicates the intention to sync the peering with the current
-            /// address space on the remote vNet after it's updated. Possible values
-            /// include: 'true'
-            /// </param>
-            public static VirtualNetworkPeering BeginCreateOrUpdate(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, string syncRemoteAddressSpace = default(string))
+            public static VirtualNetworkPeering BeginCreateOrUpdate(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -305,17 +290,12 @@ namespace Microsoft.Azure.Management.Network
             /// Parameters supplied to the create or update virtual network peering
             /// operation.
             /// </param>
-            /// <param name='syncRemoteAddressSpace'>
-            /// Parameter indicates the intention to sync the peering with the current
-            /// address space on the remote vNet after it's updated. Possible values
-            /// include: 'true'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkPeering> BeginCreateOrUpdateAsync(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, string syncRemoteAddressSpace = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkPeering> BeginCreateOrUpdateAsync(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

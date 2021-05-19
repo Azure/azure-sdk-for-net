@@ -81,27 +81,14 @@ namespace DataFactory.Tests.JsonSamples
                 value : ""fakeConnString"",
                 type : ""SecureString""
             },
-           
-        }
-    }
-}";
-
-        [JsonSample]
-        public const string AzureBlobStorageLinkedServiceWithservicePrincipal = @"
-{
-    name: ""Test-Windows-Azure-Blob-Storage-account-linkedService-servicePrincipal"",
-    properties:
-    {
-        type: ""AzureBlobStorage"",
-        typeProperties:
-        {
-            connectionString: ""fakeConnString"",
-            serviceEndpoint: ""fakeserviceEndpoint"",
-            accountKind: ""Storage"",
-            servicePrincipalKey: {
-                value : ""fakeservicePrincipalKey"",
-                type : ""SecureString""
-            },
+            accountKey: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
         }
     }
 }";
@@ -169,39 +156,6 @@ namespace DataFactory.Tests.JsonSamples
             password: {
                 value : ""fakepassword"",
                 type : ""SecureString""
-            }
-        }
-    }
-}";
-        [JsonSample]
-        public const string HDISLinkedServiceWithSqlAlwaysEncryptedProperties = @"
-{
-    name: ""Test-HDIS-LinkedService"",
-    properties:
-    {
-        type: ""SqlServer"",
-        connectVia: {
-            referenceName : ""Connection1"",
-            type : ""IntegrationRuntimeReference""
-        },
-        typeProperties:
-        {
-            connectionString: {
-                value : ""fakeConnString"",
-                type : ""SecureString""
-            },
-            userName: ""WindowsAuthUserName"",
-            password: {
-                value : ""fakepassword"",
-                type : ""SecureString""
-            },
-            alwaysEncryptedSettings: {
-                alwaysEncryptedAkvAuthType: ""ServicePrincipal"",
-                servicePrincipalId: ""fakeServicePrincipalId"",
-                servicePrincipalKey: {
-                   value : ""fakeServicePrincipalKey"",
-                   type : ""SecureString""
-                }
             }
         }
     }
@@ -662,26 +616,6 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
-        [JsonSample]
-        public const string CosmosDbLinkedServiceAADAuth = @"
-{
-    name: ""LinkedService-CosmosDb"",
-    properties:
-    {
-        type: ""CosmosDb"",
-        typeProperties: {
-            servicePrincipalId: ""fakeservicePrincipalId"",
-            servicePrincipalCredentialType: ""ServicePrincipalKey"",
-            servicePrincipalCredential: {
-                value : ""fakeservicePrincipalCredential"",
-                type : ""SecureString""
-            },
-            tenant: ""faketenant"",
-            azureCloudType: ""fakeazureCloudType"",
-            connectionMode: ""Gateway"",
-        }
-    }
-}";
 
         [JsonSample]
         public const string TeradataLinkedService = @"
@@ -880,7 +814,6 @@ namespace DataFactory.Tests.JsonSamples
         typeProperties:
         {
             authenticationType: ""Basic"",
-            authHeaders: ""fakeauthHeaders"",
             url : ""http://localhost/webhdfs/v1/"",
             userName: ""admin"",
             password : {
@@ -1525,7 +1458,6 @@ namespace DataFactory.Tests.JsonSamples
         typeProperties:
         {
             url : ""fakeUrl"",
-            authHeaders: ""fakeHeaders"",
             authenticationType : ""Basic"",
             userName : ""fakeName"",
             password : {
@@ -1572,32 +1504,6 @@ namespace DataFactory.Tests.JsonSamples
             userName : ""fakeName"",
             password : {
                 value : ""fakePassword"",
-                type : ""SecureString""
-            }
-        }
-    }
-}";
-
-        [JsonSample]
-        public const string SftpServerLinkedServiceWithMultiFactor = @"
-{
-    name: ""SftpServerLinkedService"",
-    properties:
-    {
-        type: ""Sftp"",
-        description: ""test description"",
-        typeProperties:
-        {
-            host : ""fakeHost"",
-            authenticationType : ""MultiFactor"",
-            userName : ""fakeName"",
-            password : {
-                value : ""fakePassword"",
-                type : ""SecureString""
-            },
-            privateKeyPath: ""fakeprivateKeyPath"",
-            privateKeyContent : {
-                value : ""fakeprivateKeyContent"",
                 type : ""SecureString""
             }
         }
@@ -3089,46 +2995,6 @@ namespace DataFactory.Tests.JsonSamples
                 value : ""fakeKey"",
                 type : ""SecureString""
             }
-        }
-    }
-}";
-
-        [JsonSample]
-        public const string AmazonS3CompatibleLinkedService = @"
-{
-    name: ""AmazonS3CompatibleLinkedService"",
-    properties:
-    {
-        type: ""AmazonS3Compatible"",
-        description: ""test description"",
-        typeProperties:
-        {
-            accessKeyId : ""fakeaccessKeyId"",
-            secretAccessKey : {
-                value : ""fakeKey"",
-                type : ""SecureString""
-            },
-            serviceUrl : ""fakeserviceUrl"",
-            forcePathStyle : ""fakeforcePathStyle""
-        }
-    }
-}";
-        [JsonSample]
-        public const string OracleCloudStorageLinkedService = @"
-{
-    name: ""OracleCloudStorageLinkedService"",
-    properties:
-    {
-        type: ""OracleCloudStorage"",
-        description: ""test description"",
-        typeProperties:
-        {
-            accessKeyId : ""fakeaccessKeyId"",
-            secretAccessKey : {
-                value : ""fakeKey"",
-                type : ""SecureString""
-            },
-            serviceUrl : ""fakeserviceUrl""
         }
     }
 }";

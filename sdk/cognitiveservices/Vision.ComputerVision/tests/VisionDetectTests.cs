@@ -21,7 +21,6 @@ namespace ComputerVisionSDK.Tests
                 {
                     DetectResult result = client.DetectObjectsInStreamAsync(stream).Result;
 
-                    Assert.Matches("^\\d{4}-\\d{2}-\\d{2}(-preview)?$", result.ModelVersion);
                     Assert.NotNull(result.Objects);
                     Assert.Equal(5, result.Objects.Count);
                     Assert.Equal("person", result.Objects[0].ObjectProperty);
@@ -57,7 +56,6 @@ namespace ComputerVisionSDK.Tests
                 {
                     DetectResult result = client.DetectObjectsAsync(GetTestImageUrl("satya.jpg")).Result;
 
-                    Assert.Matches("^\\d{4}-\\d{2}-\\d{2}(-preview)?$", result.ModelVersion);
                     Assert.NotNull(result.Objects);
                     Assert.Equal(1, result.Objects.Count);
 
@@ -68,27 +66,6 @@ namespace ComputerVisionSDK.Tests
                     Assert.Equal(260, firstObject.Rectangle.H);
                     Assert.Equal(228, firstObject.Rectangle.W);
                     Assert.Equal(0.956, result.Objects[0].Confidence);
-                }
-            }
-        }
-
-        [Fact]
-        public void DetectImageModelVersionTest()
-        {
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                HttpMockServer.Initialize(this.GetType(), "DetectImageModelVersionTest");
-
-                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
-                using (FileStream stream = new FileStream(GetTestImagePath("people.jpg"), FileMode.Open))
-                {
-                    const string targetModelVersion = "2021-04-01";
-
-                    DetectResult result = client.DetectObjectsInStreamAsync(
-                        stream,
-                        modelVersion: targetModelVersion).Result;
-
-                    Assert.Equal(targetModelVersion, result.ModelVersion);
                 }
             }
         }

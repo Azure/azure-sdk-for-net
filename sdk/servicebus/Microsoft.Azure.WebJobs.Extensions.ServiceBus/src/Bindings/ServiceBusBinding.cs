@@ -4,7 +4,6 @@
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Converters;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -15,27 +14,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
     {
         private readonly string _parameterName;
         private readonly IArgumentBinding<ServiceBusEntity> _argumentBinding;
+        private readonly ServiceBusAccount _account;
         private readonly IBindableServiceBusPath _path;
         private readonly IAsyncObjectToTypeConverter<ServiceBusEntity> _converter;
+        private readonly EntityType _entityType;
         private readonly MessagingProvider _messagingProvider;
-        private readonly ServiceBusClientFactory _clientFactory;
-        private readonly ServiceBusAttribute _attribute;
 
-        public ServiceBusBinding(
-            string parameterName,
-            IArgumentBinding<ServiceBusEntity> argumentBinding,
-            IBindableServiceBusPath path,
-            ServiceBusAttribute attribute,
-            MessagingProvider messagingProvider,
-            ServiceBusClientFactory clientFactory)
+        public ServiceBusBinding(string parameterName, IArgumentBinding<ServiceBusEntity> argumentBinding, ServiceBusAccount account, IBindableServiceBusPath path, ServiceBusAttribute attr, MessagingProvider messagingProvider)
         {
             _parameterName = parameterName;
             _argumentBinding = argumentBinding;
+            _account = account;
             _path = path;
+            _entityType = attr.EntityType;
             _messagingProvider = messagingProvider;
-            _clientFactory = clientFactory;
-            _attribute = attribute;
-            _converter = new OutputConverter<string>(new StringToServiceBusEntityConverter(_attribute, _path, _messagingProvider, _clientFactory));
+            _converter = new OutputConverter<string>(new StringToServiceBusEntityConverter(account, _path, _entityType, _messagingProvider));
         }
 
         public bool FromAttribute
@@ -48,12 +41,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             context.CancellationToken.ThrowIfCancellationRequested();
 
             string boundQueueName = _path.Bind(context.BindingData);
-            var messageSender = _messagingProvider.CreateMessageSender(_clientFactory.CreateClientFromSetting(_attribute.Connection), boundQueueName);
+            var messageSender = _messagingProvider.CreateMessageSender(boundQueueName, _account.ConnectionString);
 
             var entity = new ServiceBusEntity
             {
                 MessageSender = messageSender,
-                EntityType = _attribute.EntityType
+                EntityType = _entityType
             };
 
             return await BindAsync(entity, context.ValueContext).ConfigureAwait(false);

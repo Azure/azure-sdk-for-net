@@ -35,14 +35,11 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// Analytics cluster.</param>
         /// <param name="keyVersion">The version of the key associated with the
         /// Log Analytics cluster.</param>
-        /// <param name="keyRsaSize">Selected key minimum required
-        /// size.</param>
-        public KeyVaultProperties(string keyVaultUri = default(string), string keyName = default(string), string keyVersion = default(string), int? keyRsaSize = default(int?))
+        public KeyVaultProperties(string keyVaultUri = default(string), string keyName = default(string), string keyVersion = default(string))
         {
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
             KeyVersion = keyVersion;
-            KeyRsaSize = keyRsaSize;
             CustomInit();
         }
 
@@ -71,12 +68,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "keyVersion")]
         public string KeyVersion { get; set; }
-
-        /// <summary>
-        /// Gets or sets selected key minimum required size.
-        /// </summary>
-        [JsonProperty(PropertyName = "keyRsaSize")]
-        public int? KeyRsaSize { get; set; }
 
     }
 }

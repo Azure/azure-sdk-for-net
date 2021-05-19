@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
     /// <summary> The result of an attestation operation. </summary>
     internal partial class AttestationResponse

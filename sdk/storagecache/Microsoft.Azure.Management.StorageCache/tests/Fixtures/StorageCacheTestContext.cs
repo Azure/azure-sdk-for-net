@@ -39,8 +39,6 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// </summary>
         private bool disposedValue = false;
 
-        public List<string> notes;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageCacheTestContext"/> class.
         /// </summary>
@@ -51,8 +49,6 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             [System.Runtime.CompilerServices.CallerMemberName]
             string methodName = ".ctor")
         {
-            notes = new List<string>();
-            notes.Add($"StorageCacheTestContext Ctor Suite Object Name {suiteObject.GetType().Name}, methodName {methodName}");
             this.mockContext = MockContext.Start(suiteObject.GetType().Name, methodName);
             this.RegisterSubscriptionForResource("Microsoft.StorageCache");
         }
@@ -66,7 +62,6 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         public TServiceClient GetClient<TServiceClient>(DelegatingHandler delegationHandler = null)
             where TServiceClient : class, IDisposable
         {
-            notes.Add("StorageCacheTestContext GetClient");
             if (this.serviceClientCache.TryGetValue(typeof(TServiceClient), out IDisposable clientObject))
             {
                 return (TServiceClient)clientObject;
@@ -90,13 +85,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// <returns>ResourceGroup object.</returns>
         public ResourceGroup GetOrCreateResourceGroup(string resourceGroupName, string location)
         {
-            notes.Add("SCTContext Get or create resouce group");
             ResourceManagementClient resourceClient = this.GetClient<ResourceManagementClient>();
             ResourceGroup resourceGroup = this.GetResourceGroupIfExists(resourceGroupName);
 
             if (resourceGroup == null)
             {
-                notes.Add("SCTContext Creating new resource group");
                 resourceGroup = resourceClient.ResourceGroups.CreateOrUpdate(
                 resourceGroupName,
                 new ResourceGroup
@@ -104,9 +97,6 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                     Location = location,
                     Tags = new Dictionary<string, string>() { { resourceGroupName, DateTime.UtcNow.ToString("u") } },
                 });
-            } else
-            {
-                notes.Add("SCTContext Resource Group already exists.");
             }
 
             return resourceGroup;
@@ -120,7 +110,6 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// <returns>VirtualNetwork object.</returns>
         public VirtualNetwork GetOrCreateVirtualNetwork(ResourceGroup resourceGroup, string virtualNetworkName)
         {
-            notes.Add("Get or Create Vnet");
             NetworkManagementClient networkManagementClient = this.GetClient<NetworkManagementClient>();
             VirtualNetwork virtualNetwork = null;
             try
@@ -160,7 +149,6 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// <returns>Subnet object.</returns>
         public Subnet GetOrCreateSubnet(ResourceGroup resourceGroup, VirtualNetwork virtualNetwork, string subnetName)
         {
-            notes.Add("GetOrCreateSubnet");
             NetworkManagementClient networkManagementClient = this.GetClient<NetworkManagementClient>();
             Subnet subNet = null;
             try
@@ -197,8 +185,6 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// <returns>Cache object if cache exists else null.</returns>
         public Cache GetCacheIfExists(ResourceGroup resourceGroup, string cacheName)
         {
-            notes.Add("GetCacheIfExists");
-
             StorageCacheManagementClient storagecacheManagementClient = this.GetClient<StorageCacheManagementClient>();
             storagecacheManagementClient.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
             try
@@ -225,7 +211,6 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// <returns>ResourceGroup object if resource group exists else null.</returns>
         public ResourceGroup GetResourceGroupIfExists(string resourceGroupName)
         {
-            notes.Add($"SCTContext GetResourceGroupIfExists {resourceGroupName}");
             ResourceManagementClient resourceManagementClient = this.GetClient<ResourceManagementClient>();
             try
             {
@@ -250,7 +235,6 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// <param name="providerName">Resource provider name.</param>
         public void RegisterSubscriptionForResource(string providerName)
         {
-            notes.Add($"StorageCacheTestContext RegisterSubscription {providerName}");
             ResourceManagementClient resourceManagementClient = this.GetClient<ResourceManagementClient>();
             var reg = resourceManagementClient.Providers.Register(providerName);
             StorageCacheTestUtilities.ThrowIfTrue(reg == null, $"Failed to register provider {providerName}");

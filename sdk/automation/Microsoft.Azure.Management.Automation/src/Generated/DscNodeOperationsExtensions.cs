@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='nodeId'>
             /// The node id.
             /// </param>
-            public static void Delete(this IDscNodeOperations operations, string resourceGroupName, string automationAccountName, string nodeId)
+            public static DscNode Delete(this IDscNodeOperations operations, string resourceGroupName, string automationAccountName, string nodeId)
             {
-                operations.DeleteAsync(resourceGroupName, automationAccountName, nodeId).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, automationAccountName, nodeId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -62,9 +62,12 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDscNodeOperations operations, string resourceGroupName, string automationAccountName, string nodeId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DscNode> DeleteAsync(this IDscNodeOperations operations, string resourceGroupName, string automationAccountName, string nodeId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, nodeId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, nodeId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

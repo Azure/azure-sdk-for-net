@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// HyperV Replica Blue policy input.
     /// </summary>
     [Newtonsoft.Json.JsonObject("HyperVReplica2012R2")]
-    public partial class HyperVReplicaBluePolicyInput : HyperVReplicaPolicyInput
+    public partial class HyperVReplicaBluePolicyInput : PolicyProviderSpecificInput
     {
         /// <summary>
         /// Initializes a new instance of the HyperVReplicaBluePolicyInput
@@ -32,6 +32,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the HyperVReplicaBluePolicyInput
         /// class.
         /// </summary>
+        /// <param name="replicationFrequencyInSeconds">A value indicating the
+        /// replication interval.</param>
         /// <param name="recoveryPoints">A value indicating the number of
         /// recovery points.</param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours">A value
@@ -52,12 +54,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// authentication type.</param>
         /// <param name="replicaDeletion">A value indicating whether the VM has
         /// to be auto deleted.</param>
-        /// <param name="replicationFrequencyInSeconds">A value indicating the
-        /// replication interval.</param>
-        public HyperVReplicaBluePolicyInput(int? recoveryPoints = default(int?), int? applicationConsistentSnapshotFrequencyInHours = default(int?), string compression = default(string), string initialReplicationMethod = default(string), string onlineReplicationStartTime = default(string), string offlineReplicationImportPath = default(string), string offlineReplicationExportPath = default(string), int? replicationPort = default(int?), int? allowedAuthenticationType = default(int?), string replicaDeletion = default(string), int? replicationFrequencyInSeconds = default(int?))
-            : base(recoveryPoints, applicationConsistentSnapshotFrequencyInHours, compression, initialReplicationMethod, onlineReplicationStartTime, offlineReplicationImportPath, offlineReplicationExportPath, replicationPort, allowedAuthenticationType, replicaDeletion)
+        public HyperVReplicaBluePolicyInput(int? replicationFrequencyInSeconds = default(int?), int? recoveryPoints = default(int?), int? applicationConsistentSnapshotFrequencyInHours = default(int?), string compression = default(string), string initialReplicationMethod = default(string), string onlineReplicationStartTime = default(string), string offlineReplicationImportPath = default(string), string offlineReplicationExportPath = default(string), int? replicationPort = default(int?), int? allowedAuthenticationType = default(int?), string replicaDeletion = default(string))
         {
             ReplicationFrequencyInSeconds = replicationFrequencyInSeconds;
+            RecoveryPoints = recoveryPoints;
+            ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHours;
+            Compression = compression;
+            InitialReplicationMethod = initialReplicationMethod;
+            OnlineReplicationStartTime = onlineReplicationStartTime;
+            OfflineReplicationImportPath = offlineReplicationImportPath;
+            OfflineReplicationExportPath = offlineReplicationExportPath;
+            ReplicationPort = replicationPort;
+            AllowedAuthenticationType = allowedAuthenticationType;
+            ReplicaDeletion = replicaDeletion;
             CustomInit();
         }
 
@@ -71,6 +80,69 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "replicationFrequencyInSeconds")]
         public int? ReplicationFrequencyInSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the number of recovery points.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryPoints")]
+        public int? RecoveryPoints { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the application consistent
+        /// frequency.
+        /// </summary>
+        [JsonProperty(PropertyName = "applicationConsistentSnapshotFrequencyInHours")]
+        public int? ApplicationConsistentSnapshotFrequencyInHours { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether compression has to be
+        /// enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "compression")]
+        public string Compression { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IR is online.
+        /// </summary>
+        [JsonProperty(PropertyName = "initialReplicationMethod")]
+        public string InitialReplicationMethod { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the online IR start time.
+        /// </summary>
+        [JsonProperty(PropertyName = "onlineReplicationStartTime")]
+        public string OnlineReplicationStartTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the offline IR import path.
+        /// </summary>
+        [JsonProperty(PropertyName = "offlineReplicationImportPath")]
+        public string OfflineReplicationImportPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the offline IR export path.
+        /// </summary>
+        [JsonProperty(PropertyName = "offlineReplicationExportPath")]
+        public string OfflineReplicationExportPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the recovery HTTPS port.
+        /// </summary>
+        [JsonProperty(PropertyName = "replicationPort")]
+        public int? ReplicationPort { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the authentication type.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowedAuthenticationType")]
+        public int? AllowedAuthenticationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the VM has to be auto
+        /// deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "replicaDeletion")]
+        public string ReplicaDeletion { get; set; }
 
     }
 }

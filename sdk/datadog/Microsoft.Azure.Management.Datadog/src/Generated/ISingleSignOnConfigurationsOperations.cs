@@ -28,7 +28,8 @@ namespace Microsoft.Azure.Management.Datadog
         /// resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group to which the Datadog resource
+        /// belongs.
         /// </param>
         /// <param name='monitorName'>
         /// Monitor resource name
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="ResourceProviderDefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -53,13 +54,13 @@ namespace Microsoft.Azure.Management.Datadog
         /// Configures single-sign-on for this resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group to which the Datadog resource
+        /// belongs.
         /// </param>
         /// <param name='monitorName'>
         /// Monitor resource name
         /// </param>
         /// <param name='configurationName'>
-        /// Configuration name
         /// </param>
         /// <param name='properties'>
         /// </param>
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="ResourceProviderDefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -83,13 +84,13 @@ namespace Microsoft.Azure.Management.Datadog
         /// Gets the datadog single sign-on resource for the given Monitor.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group to which the Datadog resource
+        /// belongs.
         /// </param>
         /// <param name='monitorName'>
         /// Monitor resource name
         /// </param>
         /// <param name='configurationName'>
-        /// Configuration name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="ResourceProviderDefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -111,13 +112,13 @@ namespace Microsoft.Azure.Management.Datadog
         /// Configures single-sign-on for this resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group to which the Datadog resource
+        /// belongs.
         /// </param>
         /// <param name='monitorName'>
         /// Monitor resource name
         /// </param>
         /// <param name='configurationName'>
-        /// Configuration name
         /// </param>
         /// <param name='properties'>
         /// </param>
@@ -127,7 +128,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="ResourceProviderDefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -150,7 +151,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="ResourceProviderDefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

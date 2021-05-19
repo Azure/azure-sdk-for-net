@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Initializes a new instance of TextAppearance. </summary>
         /// <param name="style"> An object representing the style of the text line. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="style"/> is null. </exception>
-        internal TextAppearance(Style style)
+        internal TextAppearance(TextStyle style)
         {
             if (style == null)
             {
@@ -24,5 +24,8 @@ namespace Azure.AI.FormRecognizer.Models
 
             Style = style;
         }
+
+        /// <summary> An object representing the style of the text line. </summary>
+        public TextStyle Style { get; }
     }
 }

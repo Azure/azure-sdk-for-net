@@ -25,11 +25,6 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("model-version");
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Optional.IsDefined(LoggingOptOut))
-            {
-                writer.WritePropertyName("loggingOptOut");
-                writer.WriteBooleanValue(LoggingOptOut.Value);
-            }
             if (Optional.IsCollectionDefined(PiiCategories))
             {
                 writer.WritePropertyName("pii-categories");

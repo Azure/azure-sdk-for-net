@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Result of the request to list Event Hub operations. It contains a list of operations and a URL link to get the next set of results. </summary>
-    internal partial class OperationListResult
+    public partial class OperationListResult
     {
         /// <summary> Initializes a new instance of OperationListResult. </summary>
         internal OperationListResult()

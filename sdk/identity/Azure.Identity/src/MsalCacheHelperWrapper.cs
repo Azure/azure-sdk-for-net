@@ -64,6 +64,14 @@ namespace Azure.Identity
         }
 
         /// <summary>
+        /// Clears the token store.
+        /// </summary>
+        public virtual void Clear()
+        {
+            _helper.Clear();
+        }
+
+        /// <summary>
         /// Extracts the token cache data from the persistent store
         /// </summary>
         /// <remarks>

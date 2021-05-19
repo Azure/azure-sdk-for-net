@@ -3,7 +3,6 @@
 
 using System;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace SnippetGenerator
 {
@@ -13,14 +12,14 @@ namespace SnippetGenerator
         private static readonly Regex _snippetRegex = new Regex("```\\s*?C#[ ]*?(?<name>[\\w:]+).*?```",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
-        public static async Task<string> ProcessAsync(string markdown, Func<string, ValueTask<string>> snippetProvider)
+        public static string Process(string markdown, Func<string, string> snippetProvider)
         {
-            return await _snippetRegex.ReplaceAsync(markdown, async match =>
+            return _snippetRegex.Replace(markdown, match =>
             {
                 var matchGroup = match.Groups["name"];
                 if (matchGroup.Success)
                 {
-                    return string.Format(_snippetFormat, matchGroup.Value, Environment.NewLine, await snippetProvider(matchGroup.Value));
+                    return string.Format(_snippetFormat, matchGroup.Value, Environment.NewLine, snippetProvider(matchGroup.Value));
                 }
 
                 return match.Value;

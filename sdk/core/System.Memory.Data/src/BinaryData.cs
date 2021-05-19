@@ -24,11 +24,6 @@ namespace System
         private readonly ReadOnlyMemory<byte> _bytes;
 
         /// <summary>
-        /// Returns an empty BinaryData.
-        /// </summary>
-        public static BinaryData Empty { get; } = new BinaryData(ReadOnlyMemory<byte>.Empty);
-
-        /// <summary>
         /// Creates a <see cref="BinaryData"/> instance by wrapping the
         /// provided byte array.
         /// </summary>

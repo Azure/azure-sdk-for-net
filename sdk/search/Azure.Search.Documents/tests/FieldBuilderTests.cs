@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Tests
         {
             get
             {
-                (SearchFieldDataType DataType, string FieldName)[] primitiveSubFieldTestData = new[]
+                (SearchFieldDataType dataType, string fieldName)[] primitiveSubFieldTestData = new[]
                 {
                     (SearchFieldDataType.String, nameof(ReflectableComplexObject.Name)),
                     (SearchFieldDataType.Int32, nameof(ReflectableComplexObject.Rating)),
@@ -52,10 +52,10 @@ namespace Azure.Search.Documents.Tests
                     nameof(ReflectableModel.ComplexICollection)
                 };
 
-                IEnumerable<(SearchFieldDataType DataType, string)> allSubFieldTestData =
+                IEnumerable<(SearchFieldDataType dataType, string)> allSubFieldTestData =
                     from topLevelFieldName in complexFields
                     from typeAndField in primitiveSubFieldTestData
-                    select (typeAndField.DataType, topLevelFieldName + "/" + typeAndField.FieldName);
+                    select (typeAndField.dataType, topLevelFieldName + "/" + typeAndField.fieldName);
 
                 (SearchFieldDataType, string)[] primitiveFieldTestData = new[]
                 {
@@ -66,7 +66,9 @@ namespace Azure.Search.Documents.Tests
                     (SearchFieldDataType.Boolean, nameof(ReflectableModel.Flag)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.Time)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset)),
+#if EXPERIMENTAL_SPATIAL
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPoint)),
+#endif
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint)),
                 };
 
@@ -121,11 +123,13 @@ namespace Azure.Search.Documents.Tests
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetIEnumerable)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetList)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetICollection)),
+#if EXPERIMENTAL_SPATIAL
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointArray)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointIList)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointIEnumerable)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointList)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointICollection)),
+#endif
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointArray)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIList)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIEnumerable)),
@@ -466,12 +470,12 @@ namespace Azure.Search.Documents.Tests
             }
         }
 
-        private static IEnumerable<(Type ModelType, SearchFieldDataType DataType, string FieldName)> CombineTestData(
+        private static IEnumerable<(Type, SearchFieldDataType, string)> CombineTestData(
             IEnumerable<Type> modelTypes,
-            IEnumerable<(SearchFieldDataType DataType, string FieldName)> testData) =>
+            IEnumerable<(SearchFieldDataType dataType, string fieldName)> testData) =>
             from type in modelTypes
             from tuple in testData
-            select (type, tuple.DataType, tuple.FieldName);
+            select (type, tuple.dataType, tuple.fieldName);
 
         private static IList<SearchField> BuildForType(Type modelType) => new FieldBuilder().Build(modelType);
 

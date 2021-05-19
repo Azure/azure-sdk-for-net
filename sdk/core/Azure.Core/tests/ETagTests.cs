@@ -80,11 +80,11 @@ namespace Azure.Core.Tests
         }
 
         [Theory]
-        [TestCase("hello")]
-        [TestCase("\"hello")]
-        [TestCase("hello\"")]
-        [TestCase("W/\"hello")]
-        [TestCase("W/hello\"")]
+        [TestCase("lalala")]
+        [TestCase("\"lalala")]
+        [TestCase("lalala\"")]
+        [TestCase("W/\"lalala")]
+        [TestCase("W/lalala\"")]
         public void ThrowsForEtagsWithoutQuotes(string value)
         {
             Assert.Throws<ArgumentException>(() => ETag.Parse(value));

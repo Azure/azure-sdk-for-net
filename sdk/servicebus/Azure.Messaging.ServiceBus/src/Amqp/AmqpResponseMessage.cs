@@ -61,8 +61,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return (TValue)Map[key];
         }
 
-        // returning list for better performance
-        public List<TValue> GetListValue<TValue>(MapKey key)
+        public IEnumerable<TValue> GetListValue<TValue>(MapKey key)
         {
             if (Map == null)
             {
@@ -70,15 +69,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             var list = (List<object>)Map[key];
-            // not optimized for empty lists due to the generic nature of this method
-            var values = new List<TValue>(list.Count);
-            // not using foreach for better performance
-            for (var index = 0; index < list.Count; index++)
-            {
-                var item = list[index];
-                values.Add((TValue)item);
-            }
-            return values;
+
+            return list.Cast<TValue>();
         }
 
         public AmqpSymbol GetResponseErrorCondition()

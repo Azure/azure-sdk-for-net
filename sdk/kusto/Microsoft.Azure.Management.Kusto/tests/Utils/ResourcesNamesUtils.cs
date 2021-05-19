@@ -6,9 +6,9 @@ namespace Kusto.Tests.Utils
 {
     public static class ResourcesNamesUtils
     {
-        public static string GetDatabaseChildFullName(string clusterName, string databaseName, string nestedResouceName)
+        public static string GetDataConnectionFullName(string clusterName, string databaseName, string eventhubConnectionName)
         {
-            return $"{clusterName}/{databaseName}/{nestedResouceName}";
+            return $"{clusterName}/{databaseName}/{eventhubConnectionName}";
         }
 
         public static string GetAttachedDatabaseConfigurationName(string clusterName, string attachedDatabaseConfigurationName)

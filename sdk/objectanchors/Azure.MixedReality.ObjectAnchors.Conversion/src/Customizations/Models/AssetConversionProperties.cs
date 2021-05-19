@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -56,11 +55,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// </summary>
         [CodeGenMember("IngestionConfiguration")]
         public AssetConversionConfiguration ConversionConfiguration { get; internal set; }
-
-        /// <summary>
-        /// The error code of the AOA asset conversion job
-        /// </summary>
-        public ConversionErrorCode ErrorCode { get; }
 
         /// <summary>
         /// The file type of the original 3D asset. Examples include: &quot;ply&quot;, &quot;obj&quot;, &quot;fbx&quot;, &quot;glb&quot;, &quot;gltf&quot;, etc.

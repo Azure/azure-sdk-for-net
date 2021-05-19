@@ -20,7 +20,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string PremiumLRS = "Premium_LRS";
         public const string StandardSSDLRS = "StandardSSD_LRS";
         public const string UltraSSDLRS = "UltraSSD_LRS";
-        public const string PremiumZRS = "Premium_ZRS";
-        public const string StandardSSDZRS = "StandardSSD_ZRS";
     }
 }

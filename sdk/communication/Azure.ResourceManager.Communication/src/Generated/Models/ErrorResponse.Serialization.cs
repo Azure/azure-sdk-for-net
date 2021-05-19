@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            Optional<ErrorDetail> error = default;
+            Optional<ErrorResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Communication.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    error = ErrorResponseError.DeserializeErrorResponseError(property.Value);
                     continue;
                 }
             }

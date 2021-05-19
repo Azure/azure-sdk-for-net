@@ -4,12 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Core;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
-    [CodeGenModel("CertificateModification")]
-    public partial struct PolicyCertificateResolution
+    public partial struct CertificateModification
     {
     }
 }

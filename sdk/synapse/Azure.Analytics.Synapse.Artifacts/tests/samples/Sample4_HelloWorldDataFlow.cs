@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeleteDataFlow
             DataFlowDeleteDataFlowOperation deleteOperation = client.StartDeleteDataFlow(dataFlowName);
-            await deleteOperation.WaitForCompletionResponseAsync();
+            await deleteOperation.WaitForCompletionAsync();
             #endregion
         }
     }

@@ -44,14 +44,14 @@ namespace Microsoft.Azure.Management.Datadog
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// The Microsoft Azure subscription ID.
+        /// </summary>
+        public string SubscriptionId { get; set; }
+
+        /// <summary>
         /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
-
-        /// <summary>
-        /// The ID of the target subscription.
-        /// </summary>
-        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -72,9 +72,29 @@ namespace Microsoft.Azure.Management.Datadog
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IMarketplaceAgreementsOperations.
+        /// Gets the IApiKeysOperations.
         /// </summary>
-        public virtual IMarketplaceAgreementsOperations MarketplaceAgreements { get; private set; }
+        public virtual IApiKeysOperations ApiKeys { get; private set; }
+
+        /// <summary>
+        /// Gets the IHostsOperations.
+        /// </summary>
+        public virtual IHostsOperations Hosts { get; private set; }
+
+        /// <summary>
+        /// Gets the ILinkedResourcesOperations.
+        /// </summary>
+        public virtual ILinkedResourcesOperations LinkedResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IMonitoredResourcesOperations.
+        /// </summary>
+        public virtual IMonitoredResourcesOperations MonitoredResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Gets the IMonitorsOperations.
@@ -82,9 +102,9 @@ namespace Microsoft.Azure.Management.Datadog
         public virtual IMonitorsOperations Monitors { get; private set; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IRefreshSetPasswordOperations.
         /// </summary>
-        public virtual IOperations Operations { get; private set; }
+        public virtual IRefreshSetPasswordOperations RefreshSetPassword { get; private set; }
 
         /// <summary>
         /// Gets the ITagRulesOperations.
@@ -337,13 +357,17 @@ namespace Microsoft.Azure.Management.Datadog
         /// </summary>
         private void Initialize()
         {
-            MarketplaceAgreements = new MarketplaceAgreementsOperations(this);
-            Monitors = new MonitorsOperations(this);
+            ApiKeys = new ApiKeysOperations(this);
+            Hosts = new HostsOperations(this);
+            LinkedResources = new LinkedResourcesOperations(this);
+            MonitoredResources = new MonitoredResourcesOperations(this);
             Operations = new Operations(this);
+            Monitors = new MonitorsOperations(this);
+            RefreshSetPassword = new RefreshSetPasswordOperations(this);
             TagRules = new TagRulesOperations(this);
             SingleSignOnConfigurations = new SingleSignOnConfigurationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-03-01";
+            ApiVersion = "2020-02-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

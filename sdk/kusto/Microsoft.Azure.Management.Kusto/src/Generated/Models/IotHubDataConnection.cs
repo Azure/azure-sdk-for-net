@@ -40,12 +40,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="consumerGroup">The iot hub consumer group.</param>
         /// <param name="sharedAccessPolicyName">The name of the share access
         /// policy</param>
-        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tableName">The table where the data should be
         /// ingested. Optionally the table information can be added to each
@@ -132,12 +132,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string SharedAccessPolicyName { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioned state of the resource. Possible values
+        /// Gets the provisioned state of the resource. Possible values
         /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

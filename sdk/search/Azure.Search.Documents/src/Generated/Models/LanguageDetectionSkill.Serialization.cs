@@ -16,30 +16,6 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultCountryHint))
-            {
-                if (DefaultCountryHint != null)
-                {
-                    writer.WritePropertyName("defaultCountryHint");
-                    writer.WriteStringValue(DefaultCountryHint);
-                }
-                else
-                {
-                    writer.WriteNull("defaultCountryHint");
-                }
-            }
-            if (Optional.IsDefined(ModelVersion))
-            {
-                if (ModelVersion != null)
-                {
-                    writer.WritePropertyName("modelVersion");
-                    writer.WriteStringValue(ModelVersion);
-                }
-                else
-                {
-                    writer.WriteNull("modelVersion");
-                }
-            }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
@@ -76,8 +52,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static LanguageDetectionSkill DeserializeLanguageDetectionSkill(JsonElement element)
         {
-            Optional<string> defaultCountryHint = default;
-            Optional<string> modelVersion = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -86,26 +60,6 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultCountryHint"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        defaultCountryHint = null;
-                        continue;
-                    }
-                    defaultCountryHint = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("modelVersion"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        modelVersion = null;
-                        continue;
-                    }
-                    modelVersion = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("@odata.type"))
                 {
                     odataType = property.Value.GetString();
@@ -147,7 +101,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LanguageDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultCountryHint.Value, modelVersion.Value);
+            return new LanguageDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs);
         }
     }
 }

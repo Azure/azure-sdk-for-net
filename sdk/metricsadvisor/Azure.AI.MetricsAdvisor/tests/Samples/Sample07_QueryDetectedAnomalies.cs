@@ -28,20 +28,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var endTime = DateTimeOffset.UtcNow;
             var options = new GetAnomaliesForDetectionConfigurationOptions(startTime, endTime)
             {
-                MaxPageSize = 3
+                TopCount = 3
             };
 
             int anomalyCount = 0;
 
             await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(detectionConfigurationId, options))
             {
-                Console.WriteLine($"Anomaly value: {anomaly.Value}");
-
-                if (anomaly.ExpectedValue.HasValue)
-                {
-                    Console.WriteLine($"Anomaly expected value: {anomaly.ExpectedValue}");
-                }
-
                 Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
                 Console.WriteLine($"Severity: {anomaly.Severity}");
                 Console.WriteLine("Series key:");
@@ -71,16 +64,14 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
 
-            #region Snippet:GetAnomaliesForAlertAsync
-#if SNIPPET
-            string alertConfigurationId = "<alertConfigurationId>";
-            string alertId = "<alertId>";
-#else
             string alertConfigurationId = AlertConfigurationId;
             string alertId = AlertId;
-#endif
 
-            var options = new GetAnomaliesForAlertOptions() { MaxPageSize = 3 };
+            #region Snippet:GetAnomaliesForAlertAsync
+            //@@ string alertConfigurationId = "<alertConfigurationId>";
+            //@@ string alertId = "<alertId>";
+
+            var options = new GetAnomaliesForAlertOptions() { TopCount = 3 };
 
             int anomalyCount = 0;
 
@@ -88,13 +79,6 @@ namespace Azure.AI.MetricsAdvisor.Samples
             {
                 Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
                 Console.WriteLine($"Metric ID: {anomaly.MetricId}");
-                Console.WriteLine($"Anomaly value: {anomaly.Value}");
-
-                if (anomaly.ExpectedValue.HasValue)
-                {
-                    Console.WriteLine($"Anomaly expected value: {anomaly.ExpectedValue}");
-                }
-
                 Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
                 Console.WriteLine($"Anomaly detected at: {anomaly.CreatedTime}");
                 Console.WriteLine($"Status: {anomaly.Status}");

@@ -22,251 +22,6 @@ namespace Microsoft.Azure.Management.Datadog
     public static partial class MonitorsOperationsExtensions
     {
             /// <summary>
-            /// List the api keys for a given monitor resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            public static IPage<DatadogApiKey> ListApiKeys(this IMonitorsOperations operations, string resourceGroupName, string monitorName)
-            {
-                return operations.ListApiKeysAsync(resourceGroupName, monitorName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List the api keys for a given monitor resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<DatadogApiKey>> ListApiKeysAsync(this IMonitorsOperations operations, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListApiKeysWithHttpMessagesAsync(resourceGroupName, monitorName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get the default api key.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            public static DatadogApiKey GetDefaultKey(this IMonitorsOperations operations, string resourceGroupName, string monitorName)
-            {
-                return operations.GetDefaultKeyAsync(resourceGroupName, monitorName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the default api key.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<DatadogApiKey> GetDefaultKeyAsync(this IMonitorsOperations operations, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetDefaultKeyWithHttpMessagesAsync(resourceGroupName, monitorName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Set the default api key.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            /// <param name='body'>
-            /// </param>
-            public static void SetDefaultKey(this IMonitorsOperations operations, string resourceGroupName, string monitorName, DatadogApiKey body = default(DatadogApiKey))
-            {
-                operations.SetDefaultKeyAsync(resourceGroupName, monitorName, body).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Set the default api key.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            /// <param name='body'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task SetDefaultKeyAsync(this IMonitorsOperations operations, string resourceGroupName, string monitorName, DatadogApiKey body = default(DatadogApiKey), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.SetDefaultKeyWithHttpMessagesAsync(resourceGroupName, monitorName, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List the hosts for a given monitor resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            public static IPage<DatadogHost> ListHosts(this IMonitorsOperations operations, string resourceGroupName, string monitorName)
-            {
-                return operations.ListHostsAsync(resourceGroupName, monitorName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List the hosts for a given monitor resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<DatadogHost>> ListHostsAsync(this IMonitorsOperations operations, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListHostsWithHttpMessagesAsync(resourceGroupName, monitorName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List all Azure resources associated to the same Datadog organization as the
-            /// target resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            public static IPage<LinkedResource> ListLinkedResources(this IMonitorsOperations operations, string resourceGroupName, string monitorName)
-            {
-                return operations.ListLinkedResourcesAsync(resourceGroupName, monitorName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all Azure resources associated to the same Datadog organization as the
-            /// target resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<LinkedResource>> ListLinkedResourcesAsync(this IMonitorsOperations operations, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListLinkedResourcesWithHttpMessagesAsync(resourceGroupName, monitorName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List the resources currently being monitored by the Datadog monitor
-            /// resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            public static IPage<MonitoredResource> ListMonitoredResources(this IMonitorsOperations operations, string resourceGroupName, string monitorName)
-            {
-                return operations.ListMonitoredResourcesAsync(resourceGroupName, monitorName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List the resources currently being monitored by the Datadog monitor
-            /// resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<MonitoredResource>> ListMonitoredResourcesAsync(this IMonitorsOperations operations, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListMonitoredResourcesWithHttpMessagesAsync(resourceGroupName, monitorName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// List all monitors under the specified subscription.
             /// </summary>
             /// <param name='operations'>
@@ -301,7 +56,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             public static IPage<DatadogMonitorResource> ListByResourceGroup(this IMonitorsOperations operations, string resourceGroupName)
             {
@@ -315,7 +70,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -335,7 +90,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -352,7 +107,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -375,7 +130,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -394,7 +149,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -419,7 +174,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -438,7 +193,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -463,7 +218,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -480,7 +235,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -494,53 +249,13 @@ namespace Microsoft.Azure.Management.Datadog
             }
 
             /// <summary>
-            /// Refresh the set password link and return a latest one.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            public static DatadogSetPasswordLink RefreshSetPasswordLink(this IMonitorsOperations operations, string resourceGroupName, string monitorName)
-            {
-                return operations.RefreshSetPasswordLinkAsync(resourceGroupName, monitorName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Refresh the set password link and return a latest one.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='monitorName'>
-            /// Monitor resource name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<DatadogSetPasswordLink> RefreshSetPasswordLinkAsync(this IMonitorsOperations operations, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.RefreshSetPasswordLinkWithHttpMessagesAsync(resourceGroupName, monitorName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Create a monitor resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -559,7 +274,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -584,7 +299,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -601,7 +316,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to which the Datadog resource belongs.
             /// </param>
             /// <param name='monitorName'>
             /// Monitor resource name
@@ -612,146 +327,6 @@ namespace Microsoft.Azure.Management.Datadog
             public static async Task BeginDeleteAsync(this IMonitorsOperations operations, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, monitorName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List the api keys for a given monitor resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<DatadogApiKey> ListApiKeysNext(this IMonitorsOperations operations, string nextPageLink)
-            {
-                return operations.ListApiKeysNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List the api keys for a given monitor resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<DatadogApiKey>> ListApiKeysNextAsync(this IMonitorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListApiKeysNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List the hosts for a given monitor resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<DatadogHost> ListHostsNext(this IMonitorsOperations operations, string nextPageLink)
-            {
-                return operations.ListHostsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List the hosts for a given monitor resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<DatadogHost>> ListHostsNextAsync(this IMonitorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListHostsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List all Azure resources associated to the same Datadog organization as the
-            /// target resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<LinkedResource> ListLinkedResourcesNext(this IMonitorsOperations operations, string nextPageLink)
-            {
-                return operations.ListLinkedResourcesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all Azure resources associated to the same Datadog organization as the
-            /// target resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<LinkedResource>> ListLinkedResourcesNextAsync(this IMonitorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListLinkedResourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List the resources currently being monitored by the Datadog monitor
-            /// resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<MonitoredResource> ListMonitoredResourcesNext(this IMonitorsOperations operations, string nextPageLink)
-            {
-                return operations.ListMonitoredResourcesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List the resources currently being monitored by the Datadog monitor
-            /// resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<MonitoredResource>> ListMonitoredResourcesNextAsync(this IMonitorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListMonitoredResourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>

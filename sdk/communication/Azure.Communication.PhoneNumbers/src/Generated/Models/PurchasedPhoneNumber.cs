@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary> Represents a purchased phone number. </summary>
     public partial class PurchasedPhoneNumber

@@ -101,7 +101,9 @@ namespace Microsoft.Azure.Management.IotHub
         /// ETag of the Certificate. Do not specify for creating a brand new
         /// certificate. Required to update an existing certificate.
         /// </param>
-        /// <param name='properties'>
+        /// <param name='certificate'>
+        /// base-64 representation of the X509 leaf certificate .cer file or
+        /// just .pem file content.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -118,7 +120,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CertificateDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), CertificateProperties properties = default(CertificateProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CertificateDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), string certificate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an X509 certificate.
         /// </summary>

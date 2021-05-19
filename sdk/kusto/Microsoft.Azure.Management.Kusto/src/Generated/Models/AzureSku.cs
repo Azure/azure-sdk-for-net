@@ -34,9 +34,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// 'Standard_DS13_v2+1TB_PS', 'Standard_DS13_v2+2TB_PS',
         /// 'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
         /// 'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
-        /// 'Standard_L16s', 'Standard_L8s_v2', 'Standard_L16s_v2',
-        /// 'Standard_D11_v2', 'Standard_D12_v2', 'Standard_L4s', 'Dev(No
-        /// SLA)_Standard_D11_v2', 'Standard_E64i_v3', 'Standard_E80ids_v4',
+        /// 'Standard_L16s', 'Standard_D11_v2', 'Standard_D12_v2',
+        /// 'Standard_L4s', 'Dev(No SLA)_Standard_D11_v2', 'Standard_E64i_v3',
         /// 'Standard_E2a_v4', 'Standard_E4a_v4', 'Standard_E8a_v4',
         /// 'Standard_E16a_v4', 'Standard_E8as_v4+1TB_PS',
         /// 'Standard_E8as_v4+2TB_PS', 'Standard_E16as_v4+3TB_PS',
@@ -63,9 +62,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// 'Standard_DS13_v2+1TB_PS', 'Standard_DS13_v2+2TB_PS',
         /// 'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
         /// 'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
-        /// 'Standard_L16s', 'Standard_L8s_v2', 'Standard_L16s_v2',
-        /// 'Standard_D11_v2', 'Standard_D12_v2', 'Standard_L4s', 'Dev(No
-        /// SLA)_Standard_D11_v2', 'Standard_E64i_v3', 'Standard_E80ids_v4',
+        /// 'Standard_L16s', 'Standard_D11_v2', 'Standard_D12_v2',
+        /// 'Standard_L4s', 'Dev(No SLA)_Standard_D11_v2', 'Standard_E64i_v3',
         /// 'Standard_E2a_v4', 'Standard_E4a_v4', 'Standard_E8a_v4',
         /// 'Standard_E16a_v4', 'Standard_E8as_v4+1TB_PS',
         /// 'Standard_E8as_v4+2TB_PS', 'Standard_E16as_v4+3TB_PS',

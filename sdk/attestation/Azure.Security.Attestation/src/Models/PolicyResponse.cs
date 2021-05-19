@@ -4,11 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Core;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
-    [CodeGenModel("PolicyResponse")]
     internal partial class PolicyResponse
     {
     }

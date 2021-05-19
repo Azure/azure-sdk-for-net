@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Update recovery plan input.
+            /// Update recovery plan input
             /// </param>
             public static RecoveryPlan Update(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, UpdateRecoveryPlanInput input)
             {
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Update recovery plan input.
+            /// Update recovery plan input
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -225,50 +225,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute cancel failover of the recovery plan.
-            /// </summary>
-            /// <remarks>
-            /// The operation to cancel the failover of a recovery plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='recoveryPlanName'>
-            /// Recovery plan name.
-            /// </param>
-            public static RecoveryPlan FailoverCancel(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName)
-            {
-                return operations.FailoverCancelAsync(recoveryPlanName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Execute cancel failover of the recovery plan.
-            /// </summary>
-            /// <remarks>
-            /// The operation to cancel the failover of a recovery plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='recoveryPlanName'>
-            /// Recovery plan name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RecoveryPlan> FailoverCancelAsync(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.FailoverCancelWithHttpMessagesAsync(recoveryPlanName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Execute commit failover of the recovery plan.
             /// </summary>
             /// <remarks>
-            /// The operation to commit the failover of a recovery plan.
+            /// The operation to commit the fail over of a recovery plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -285,7 +245,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Execute commit failover of the recovery plan.
             /// </summary>
             /// <remarks>
-            /// The operation to commit the failover of a recovery plan.
+            /// The operation to commit the fail over of a recovery plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -403,7 +363,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan test failover input.
+            /// Failover input.
             /// </param>
             public static RecoveryPlan TestFailover(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, RecoveryPlanTestFailoverInput input)
             {
@@ -423,7 +383,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan test failover input.
+            /// Failover input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -449,7 +409,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan test failover cleanup input.
+            /// Test failover cleanup input.
             /// </param>
             public static RecoveryPlan TestFailoverCleanup(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, RecoveryPlanTestFailoverCleanupInput input)
             {
@@ -469,7 +429,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan test failover cleanup input.
+            /// Test failover cleanup input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -486,7 +446,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Execute unplanned failover of the recovery plan.
             /// </summary>
             /// <remarks>
-            /// The operation to start the unplanned failover of a recovery plan.
+            /// The operation to start the failover of a recovery plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -495,7 +455,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan unplanned failover input.
+            /// Failover input.
             /// </param>
             public static RecoveryPlan UnplannedFailover(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, RecoveryPlanUnplannedFailoverInput input)
             {
@@ -506,7 +466,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Execute unplanned failover of the recovery plan.
             /// </summary>
             /// <remarks>
-            /// The operation to start the unplanned failover of a recovery plan.
+            /// The operation to start the failover of a recovery plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -515,7 +475,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan unplanned failover input.
+            /// Failover input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -624,7 +584,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Update recovery plan input.
+            /// Update recovery plan input
             /// </param>
             public static RecoveryPlan BeginUpdate(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, UpdateRecoveryPlanInput input)
             {
@@ -644,7 +604,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Update recovery plan input.
+            /// Update recovery plan input
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -658,50 +618,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute cancel failover of the recovery plan.
-            /// </summary>
-            /// <remarks>
-            /// The operation to cancel the failover of a recovery plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='recoveryPlanName'>
-            /// Recovery plan name.
-            /// </param>
-            public static RecoveryPlan BeginFailoverCancel(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName)
-            {
-                return operations.BeginFailoverCancelAsync(recoveryPlanName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Execute cancel failover of the recovery plan.
-            /// </summary>
-            /// <remarks>
-            /// The operation to cancel the failover of a recovery plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='recoveryPlanName'>
-            /// Recovery plan name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RecoveryPlan> BeginFailoverCancelAsync(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginFailoverCancelWithHttpMessagesAsync(recoveryPlanName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Execute commit failover of the recovery plan.
             /// </summary>
             /// <remarks>
-            /// The operation to commit the failover of a recovery plan.
+            /// The operation to commit the fail over of a recovery plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -718,7 +638,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Execute commit failover of the recovery plan.
             /// </summary>
             /// <remarks>
-            /// The operation to commit the failover of a recovery plan.
+            /// The operation to commit the fail over of a recovery plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -836,7 +756,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan test failover input.
+            /// Failover input.
             /// </param>
             public static RecoveryPlan BeginTestFailover(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, RecoveryPlanTestFailoverInput input)
             {
@@ -856,7 +776,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan test failover input.
+            /// Failover input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -882,7 +802,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan test failover cleanup input.
+            /// Test failover cleanup input.
             /// </param>
             public static RecoveryPlan BeginTestFailoverCleanup(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, RecoveryPlanTestFailoverCleanupInput input)
             {
@@ -902,7 +822,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan test failover cleanup input.
+            /// Test failover cleanup input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -919,7 +839,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Execute unplanned failover of the recovery plan.
             /// </summary>
             /// <remarks>
-            /// The operation to start the unplanned failover of a recovery plan.
+            /// The operation to start the failover of a recovery plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -928,7 +848,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan unplanned failover input.
+            /// Failover input.
             /// </param>
             public static RecoveryPlan BeginUnplannedFailover(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, RecoveryPlanUnplannedFailoverInput input)
             {
@@ -939,7 +859,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Execute unplanned failover of the recovery plan.
             /// </summary>
             /// <remarks>
-            /// The operation to start the unplanned failover of a recovery plan.
+            /// The operation to start the failover of a recovery plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -948,7 +868,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Recovery plan name.
             /// </param>
             /// <param name='input'>
-            /// Recovery plan unplanned failover input.
+            /// Failover input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using NUnit.Framework;
-
 namespace Azure.Core.TestFramework
 {
     /// <summary>
@@ -19,11 +16,5 @@ namespace Azure.Core.TestFramework
         }
 
         protected TEnvironment TestEnvironment { get; }
-
-        [OneTimeSetUp]
-        public async ValueTask WaitForEnvironment()
-        {
-            await TestEnvironment.WaitForEnvironmentAsync();
-        }
     }
 }

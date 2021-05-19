@@ -44,7 +44,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// </summary>
         /// <param name="clientErrorDetails"> Information about the cause of a ClientError AssetConversionStatus. </param>
         /// <param name="serverErrorDetails"> Information about the cause of a ServerError AssetConversionStatus. </param>
-        /// <param name="conversionErrorCode">The error code of the AOA asset conversion job</param>
         /// <param name="jobId"> Identifier for the AOA Asset Conversion Job. </param>
         /// <param name="outputModelUri"> The URI for downloading the generated AOA Model. </param>
         /// <param name="assetConversionStatus"> The status of the AOA asset conversion job </param>
@@ -56,7 +55,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public static AssetConversionProperties AssetConversionProperties(
             string clientErrorDetails,
             string serverErrorDetails,
-            ConversionErrorCode conversionErrorCode,
             Guid? jobId,
             Uri outputModelUri,
             AssetConversionStatus? assetConversionStatus,
@@ -68,7 +66,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             return new AssetConversionProperties(
             clientErrorDetails,
             serverErrorDetails,
-            conversionErrorCode,
             jobId,
             outputModelUri.AbsoluteUri,
             assetConversionStatus,

@@ -38,7 +38,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         }
 
         [TestCase("FuncWithString")]
-        [TestCase("FuncWithBinaryData")]
         [TestCase("FuncWithTextReader")]
         [TestCase("FuncWithStreamRead")]
         [TestCase("FuncWithBlockBlob")]
@@ -60,7 +59,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         }
 
         [TestCase("FuncWithOutString")]
-        [TestCase("FuncWithOutBinaryData")]
         [TestCase("FuncWithStreamWriteNoop")]
         [TestCase("FuncWithTextWriter")]
         [TestCase("FuncWithStreamWrite")]
@@ -605,16 +603,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             public static void FuncWithOutStringNull([Blob(BlobPath)] out string content)
             {
                 content = null;
-            }
-
-            public static void FuncWithBinaryData([Blob(BlobPath)] BinaryData content)
-            {
-                Assert.Null(content);
-            }
-
-            public static void FuncWithOutBinaryData([Blob(BlobPath)] out BinaryData content)
-            {
-                content = BinaryData.FromString("ignore");
             }
 
             public static void FuncWithT([Blob(BlobPath)] CustomDataObject value)

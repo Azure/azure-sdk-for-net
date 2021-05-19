@@ -143,10 +143,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Identity != null)
-            {
-                Identity.Validate();
-            }
             if (RepoConfiguration != null)
             {
                 RepoConfiguration.Validate();

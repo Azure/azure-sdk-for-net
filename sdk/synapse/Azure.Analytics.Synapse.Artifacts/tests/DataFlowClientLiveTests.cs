@@ -63,13 +63,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string newFlowName = Recording.GenerateAssetName("DataFlow2");
 
             DataFlowRenameDataFlowOperation renameOperation = await client.StartRenameDataFlowAsync (resource.Name, new ArtifactRenameRequest () { NewName = newFlowName } );
-            await renameOperation.WaitForCompletionResponseAsync();
+            await renameOperation.WaitForCompletionAsync();
 
             DataFlowResource dataFlow = await client.GetDataFlowAsync (newFlowName);
             Assert.AreEqual (newFlowName, dataFlow.Name);
 
             DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync (newFlowName);
-            await operation.WaitForCompletionResponseAsync();
+            await operation.WaitForCompletionAsync();
         }
 
         [RecordedTest]

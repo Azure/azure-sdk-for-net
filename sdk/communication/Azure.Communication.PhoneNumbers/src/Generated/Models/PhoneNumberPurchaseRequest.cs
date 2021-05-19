@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary> The phone number search purchase request. </summary>
     internal partial class PhoneNumberPurchaseRequest

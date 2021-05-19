@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "137",
+        "Content-Type": "application/json",
+        "Date": "Tue, 16 Mar 2021 20:49:36 GMT",
+        "traceparent": "00-209fe1a0db236b45af2b1fce422d4e5a-fd7b252fbc485d46-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210316.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "7568aaf16445377673efcc7b9c206283",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "phoneNumberType": "tollFree",
+        "assignmentType": "person",
+        "capabilities": {
+          "calling": "outbound",
+          "sms": "none"
+        },
+        "areaCode": "212",
+        "quantity": 1
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Tue, 16 Mar 2021 20:49:37 GMT",
+        "MS-CV": "BleLmqZGLEu4Z\u002BvFwQbfHg.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "04BlRYAAAAACIxrdmAeL5SZ845b1EmaZ5WVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "1358ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidInput",
+          "message": "We are unable to find phone plans to match your requested capabilities.",
+          "target": "areacode"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=3z7dN2ZEcANlOejjlHaJUfqdC4SyuzdiHbaMcFR0tNRK37KDZ14HUuhIybbBgt6oSQwUwu5TnF5cYFm22Lh/xg==",
+    "RandomSeed": "146039084"
+  }
+}

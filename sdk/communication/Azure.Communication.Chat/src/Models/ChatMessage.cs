@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Communication.Chat
 {
@@ -24,10 +23,9 @@ namespace Azure.Communication.Chat
             }
             DeletedOn = chatMessageInternal.DeletedOn;
             EditedOn = chatMessageInternal.EditedOn;
-            Metadata = chatMessageInternal.Metadata;
         }
 
-        internal ChatMessage(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn, IReadOnlyDictionary<string, string> metadata)
+        internal ChatMessage(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
         {
             Id = id;
             Type = type;
@@ -39,7 +37,6 @@ namespace Azure.Communication.Chat
             Sender = new CommunicationUserIdentifier(senderId);
             DeletedOn = deletedOn;
             EditedOn = editedOn;
-            Metadata = metadata;
         }
 
         /// <summary> The id of the chat message. This id is server generated. </summary>
@@ -62,7 +59,5 @@ namespace Azure.Communication.Chat
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? EditedOn { get; }
-        /// <summary> Properties </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

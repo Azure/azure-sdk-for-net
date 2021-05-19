@@ -234,7 +234,7 @@ namespace Azure.Core
                     substring = Uri.EscapeDataString(substring);
                 }
                 _pathAndQuery.Insert(_queryIndex, substring);
-                _queryIndex += substring.Length;
+                _queryIndex += value.Length;
             }
             else
             {

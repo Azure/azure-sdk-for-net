@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -31,21 +30,6 @@ namespace Azure.Storage.Files.DataLake.Models
                 }
             }
             return new StorageErrorError(code.Value, message.Value);
-        }
-
-        internal static StorageErrorError DeserializeStorageErrorError(XElement element)
-        {
-            string code = default;
-            string message = default;
-            if (element.Element("Code") is XElement codeElement)
-            {
-                code = (string)codeElement;
-            }
-            if (element.Element("Message") is XElement messageElement)
-            {
-                message = (string)messageElement;
-            }
-            return new StorageErrorError(code, message);
         }
     }
 }

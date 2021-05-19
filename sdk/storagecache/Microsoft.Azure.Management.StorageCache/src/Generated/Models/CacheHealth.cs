@@ -7,8 +7,6 @@
 namespace Microsoft.Azure.Management.StorageCache.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,13 +31,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// 'Stopping', 'Stopped', 'Upgrading', 'Flushing'</param>
         /// <param name="statusDescription">Describes explanation of
         /// state.</param>
-        /// <param name="conditions">Outstanding conditions that need to be
-        /// investigated and resolved.</param>
-        public CacheHealth(string state = default(string), string statusDescription = default(string), IList<Condition> conditions = default(IList<Condition>))
+        public CacheHealth(string state = default(string), string statusDescription = default(string))
         {
             State = state;
             StatusDescription = statusDescription;
-            Conditions = conditions;
             CustomInit();
         }
 
@@ -61,13 +56,6 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </summary>
         [JsonProperty(PropertyName = "statusDescription")]
         public string StatusDescription { get; set; }
-
-        /// <summary>
-        /// Gets outstanding conditions that need to be investigated and
-        /// resolved.
-        /// </summary>
-        [JsonProperty(PropertyName = "conditions")]
-        public IList<Condition> Conditions { get; private set; }
 
     }
 }

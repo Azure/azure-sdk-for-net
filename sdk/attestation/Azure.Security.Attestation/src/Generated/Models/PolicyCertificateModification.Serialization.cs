@@ -5,27 +5,13 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
-    [JsonConverter(typeof(PolicyCertificateModificationConverter))]
-    internal partial class PolicyCertificateModification : IUtf8JsonSerializable
+    public partial class PolicyCertificateModification
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(InternalPolicyCertificate))
-            {
-                writer.WritePropertyName("policyCertificate");
-                writer.WriteObjectValue(InternalPolicyCertificate);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static PolicyCertificateModification DeserializePolicyCertificateModification(JsonElement element)
         {
             Optional<JsonWebKey> policyCertificate = default;
@@ -43,19 +29,6 @@ namespace Azure.Security.Attestation
                 }
             }
             return new PolicyCertificateModification(policyCertificate.Value);
-        }
-
-        internal partial class PolicyCertificateModificationConverter : JsonConverter<PolicyCertificateModification>
-        {
-            public override void Write(Utf8JsonWriter writer, PolicyCertificateModification model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override PolicyCertificateModification Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializePolicyCertificateModification(document.RootElement);
-            }
         }
     }
 }

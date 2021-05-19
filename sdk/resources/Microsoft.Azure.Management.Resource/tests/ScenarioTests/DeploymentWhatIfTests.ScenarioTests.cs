@@ -190,7 +190,7 @@ namespace ResourceGroups.Tests
                 Assert.NotEmpty(result.Changes);
 
                 WhatIfChange storageAccountChange = result.Changes.FirstOrDefault(change =>
-                    change.ResourceId.EndsWith("Microsoft.Storage/storageAccounts/wendysdktestsa"));
+                    change.ResourceId.EndsWith("Microsoft.Storage/storageAccounts/ramokaSATestAnother"));
 
                 Assert.NotNull(storageAccountChange);
                 Assert.Equal(ChangeType.Modify, storageAccountChange.ChangeType);
@@ -311,6 +311,7 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
+                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
                     Assert.Null(change.Before);
                     Assert.Null(change.After);
                     Assert.Null(change.Delta);
@@ -488,6 +489,7 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
+                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
                     Assert.Null(change.Before);
                     Assert.Null(change.After);
                     Assert.Null(change.Delta);
@@ -526,7 +528,10 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
-                    Assert.True(change.Before != null || change.After != null);
+                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
+                    Assert.Null(change.Before);
+                    Assert.NotNull(change.After);
+                    Assert.Null(change.Delta);
                 });
             }
         }
@@ -590,8 +595,10 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
+                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
                     Assert.Null(change.Before);
                     Assert.Null(change.After);
+                    Assert.Null(change.Delta);
                 });
             }
         }
@@ -626,7 +633,10 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
-                    Assert.True(change.Before != null || change.After != null);
+                    Assert.True(change.ChangeType == ChangeType.Create);
+                    Assert.Null(change.Before);
+                    Assert.NotNull(change.After);
+                    Assert.Null(change.Delta);
                 });
             }
         }

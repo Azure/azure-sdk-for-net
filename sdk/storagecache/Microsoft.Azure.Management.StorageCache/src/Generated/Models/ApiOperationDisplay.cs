@@ -31,13 +31,11 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// Microsoft.StorageCache</param>
         /// <param name="resource">Resource on which the operation is
         /// performed: Cache, etc.</param>
-        /// <param name="description">The description of the operation</param>
-        public ApiOperationDisplay(string operation = default(string), string provider = default(string), string resource = default(string), string description = default(string))
+        public ApiOperationDisplay(string operation = default(string), string provider = default(string), string resource = default(string))
         {
             Operation = operation;
             Provider = provider;
             Resource = resource;
-            Description = description;
             CustomInit();
         }
 
@@ -64,12 +62,6 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }
-
-        /// <summary>
-        /// Gets or sets the description of the operation
-        /// </summary>
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
 
     }
 }

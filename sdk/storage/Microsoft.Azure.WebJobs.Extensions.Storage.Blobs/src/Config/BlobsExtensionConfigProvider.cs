@@ -200,7 +200,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 typeof(AppendBlobClient),
                 typeof(TextReader),
                 typeof(Stream),
-                typeof(BinaryData),
                 typeof(string)
             };
 
@@ -319,7 +318,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             var container = client.GetBlobContainerClient(path.ContainerName);
             var blob = await container.GetBlobReferenceFromServerAsync(path.BlobName).ConfigureAwait(false);
 
-            return blob.Client;
+            return blob.Item1;
         }
 
         // BlobClient is simplified version of BlockBlobClient, i.e. upload results in creation of block blob.

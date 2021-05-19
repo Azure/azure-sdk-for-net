@@ -44,22 +44,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// storage account.</param>
         /// <param name="diskEncryptionInfo">The recovery os disk encryption
         /// information.</param>
-        /// <param name="tfoAzureVMName">The user given name for Test Failover
-        /// VM.</param>
         /// <param name="recoveryProximityPlacementGroupId">The recovery
         /// proximity placement group Id.</param>
-        /// <param name="recoveryVirtualMachineScaleSetId">The recovery virtual
-        /// machine scale set Id.</param>
-        public A2AUpdateReplicationProtectedItemInput(string recoveryCloudServiceId = default(string), string recoveryResourceGroupId = default(string), IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default(IList<A2AVmManagedDiskUpdateDetails>), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string tfoAzureVMName = default(string), string recoveryProximityPlacementGroupId = default(string), string recoveryVirtualMachineScaleSetId = default(string))
+        /// <param name="tfoAzureVMName">The user given name for test failover
+        /// VM.</param>
+        public A2AUpdateReplicationProtectedItemInput(string recoveryCloudServiceId = default(string), string recoveryResourceGroupId = default(string), IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default(IList<A2AVmManagedDiskUpdateDetails>), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string recoveryProximityPlacementGroupId = default(string), string tfoAzureVMName = default(string))
         {
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
             ManagedDiskUpdateDetails = managedDiskUpdateDetails;
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
             DiskEncryptionInfo = diskEncryptionInfo;
-            TfoAzureVMName = tfoAzureVMName;
             RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
-            RecoveryVirtualMachineScaleSetId = recoveryVirtualMachineScaleSetId;
+            TfoAzureVMName = tfoAzureVMName;
             CustomInit();
         }
 
@@ -99,22 +96,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the user given name for Test Failover VM.
-        /// </summary>
-        [JsonProperty(PropertyName = "tfoAzureVMName")]
-        public string TfoAzureVMName { get; set; }
-
-        /// <summary>
         /// Gets or sets the recovery proximity placement group Id.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryProximityPlacementGroupId")]
         public string RecoveryProximityPlacementGroupId { get; set; }
 
         /// <summary>
-        /// Gets or sets the recovery virtual machine scale set Id.
+        /// Gets or sets the user given name for test failover VM.
         /// </summary>
-        [JsonProperty(PropertyName = "recoveryVirtualMachineScaleSetId")]
-        public string RecoveryVirtualMachineScaleSetId { get; set; }
+        [JsonProperty(PropertyName = "tfoAzureVMName")]
+        public string TfoAzureVMName { get; set; }
 
     }
 }

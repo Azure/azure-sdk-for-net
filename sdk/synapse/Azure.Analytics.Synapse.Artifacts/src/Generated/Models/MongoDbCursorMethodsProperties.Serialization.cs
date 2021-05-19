@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(MongoDbCursorMethodsPropertiesConverter))]
     public partial class MongoDbCursorMethodsProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -101,19 +98,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new MongoDbCursorMethodsProperties(project.Value, sort.Value, skip.Value, limit.Value, additionalProperties);
-        }
-
-        internal partial class MongoDbCursorMethodsPropertiesConverter : JsonConverter<MongoDbCursorMethodsProperties>
-        {
-            public override void Write(Utf8JsonWriter writer, MongoDbCursorMethodsProperties model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override MongoDbCursorMethodsProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeMongoDbCursorMethodsProperties(document.RootElement);
-            }
         }
     }
 }

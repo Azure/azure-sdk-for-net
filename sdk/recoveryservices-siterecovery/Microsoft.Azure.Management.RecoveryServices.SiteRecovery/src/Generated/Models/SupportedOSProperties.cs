@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Supported operating systems properties.
+    /// Properties model for supported OS API.
     /// </summary>
     public partial class SupportedOSProperties
     {
@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the SupportedOSProperties class.
         /// </summary>
-        /// <param name="supportedOsList">The supported operating systems
-        /// property list.</param>
+        /// <param name="supportedOsList">The supported OS List.</param>
         public SupportedOSProperties(IList<SupportedOSProperty> supportedOsList = default(IList<SupportedOSProperty>))
         {
             SupportedOsList = supportedOsList;
@@ -45,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the supported operating systems property list.
+        /// Gets or sets the supported OS List.
         /// </summary>
         [JsonProperty(PropertyName = "supportedOsList")]
         public IList<SupportedOSProperty> SupportedOsList { get; set; }

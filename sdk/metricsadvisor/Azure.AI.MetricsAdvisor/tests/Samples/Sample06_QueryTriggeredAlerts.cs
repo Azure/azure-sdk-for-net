@@ -21,18 +21,16 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
 
-            #region Snippet:GetAlertsAsync
-#if SNIPPET
-            string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
-#else
             string anomalyAlertConfigurationId = AlertConfigurationId;
-#endif
+
+            #region Snippet:GetAlertsAsync
+            //@@ string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
 
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;
             var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyTime)
             {
-                MaxPageSize = 5
+                TopCount = 5
             };
 
             int alertCount = 0;

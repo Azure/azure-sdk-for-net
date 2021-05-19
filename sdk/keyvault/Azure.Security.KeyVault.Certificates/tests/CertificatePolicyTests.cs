@@ -135,7 +135,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.CreatedOn);
             Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1482188947), policy.UpdatedOn);
 
-            const string expectedJson = @"{
+            using (JsonStream json = new JsonStream())
+            {
+                JsonWriterOptions options = new JsonWriterOptions
+                {
+                    Indented = true,
+                };
+
+                json.WriteObject(policy, options);
+
+                string expectedJson = @"{
   ""key_props"": {
     ""kty"": ""RSA"",
     ""reuse_key"": false,
@@ -167,17 +176,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
   ]
 }";
 
-            using JsonStream expectedStream = new JsonStream();
-            using (Utf8JsonWriter expectedWriter = expectedStream.CreateWriter())
-            {
-                using JsonDocument expectedDocument = JsonDocument.Parse(expectedJson);
-                expectedDocument.WriteTo(expectedWriter);
+                Assert.AreEqual(expectedJson, json.ToString());
             }
-
-            using JsonStream actualStream = new JsonStream();
-            actualStream.WriteObject(policy);
-
-            Assert.AreEqual(expectedStream.ToString(), actualStream.ToString());
         }
 
         [Test]

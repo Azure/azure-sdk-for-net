@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(DynamicsLinkedServiceConverter))]
     public partial class DynamicsLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -59,22 +56,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName");
-                writer.WriteObjectValue(HostName);
+                writer.WriteStringValue(HostName);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
-                writer.WriteObjectValue(Port);
+                writer.WriteStringValue(Port);
             }
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri");
-                writer.WriteObjectValue(ServiceUri);
+                writer.WriteStringValue(ServiceUri);
             }
             if (Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName");
-                writer.WriteObjectValue(OrganizationName);
+                writer.WriteStringValue(OrganizationName);
             }
             writer.WritePropertyName("authenticationType");
             writer.WriteStringValue(AuthenticationType.ToString());
@@ -125,10 +122,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<object>> annotations = default;
             DynamicsDeploymentType deploymentType = default;
-            Optional<object> hostName = default;
-            Optional<object> port = default;
-            Optional<object> serviceUri = default;
-            Optional<object> organizationName = default;
+            Optional<string> hostName = default;
+            Optional<string> port = default;
+            Optional<string> serviceUri = default;
+            Optional<string> organizationName = default;
             DynamicsAuthenticationType authenticationType = default;
             Optional<object> username = default;
             Optional<SecretBase> password = default;
@@ -206,42 +203,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("hostName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            hostName = property0.Value.GetObject();
+                            hostName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("port"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            port = property0.Value.GetObject();
+                            port = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("serviceUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            serviceUri = property0.Value.GetObject();
+                            serviceUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("organizationName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            organizationName = property0.Value.GetObject();
+                            organizationName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"))
@@ -316,19 +293,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DynamicsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password.Value, servicePrincipalId.Value, Optional.ToNullable(servicePrincipalCredentialType), servicePrincipalCredential.Value, encryptedCredential.Value);
-        }
-
-        internal partial class DynamicsLinkedServiceConverter : JsonConverter<DynamicsLinkedService>
-        {
-            public override void Write(Utf8JsonWriter writer, DynamicsLinkedService model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DynamicsLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDynamicsLinkedService(document.RootElement);
-            }
         }
     }
 }

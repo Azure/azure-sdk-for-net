@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -261,11 +260,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        /// <remarks>
-        ///   The caller is assumed to hold ownership over the message once it has been created, including
-        ///   ensuring proper disposal.
-        /// </remarks>
-        ///
         private static AmqpMessage BuildAmqpBatchFromMessages(IEnumerable<AmqpMessage> source,
                                                               string partitionKey)
         {
@@ -307,22 +301,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The <see cref="AmqpMessage" /> constructed from the source event.</returns>
         ///
-        /// <remarks>
-        ///   The caller is assumed to hold ownership over the message once it has been created, including
-        ///   ensuring proper disposal.
-        /// </remarks>
-        ///
         private static AmqpMessage BuildAmqpMessageFromEvent(EventData source,
                                                              string partitionKey)
         {
-            if (!MemoryMarshal.TryGetArray(source.EventBody.ToMemory(), out var bodySegment))
-            {
-                bodySegment = new ArraySegment<byte>(source.EventBody.ToArray());
-            }
+            var bodyBytes = source.EventBody.ToMemory();
+            var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
+            var message = AmqpMessage.Create(new Data { Value = body });
 
-            var message = AmqpMessage.Create(new Data { Value = bodySegment });
-
-            if ((source.HasProperties) && (source.Properties.Count > 0))
+            if (source.Properties?.Count > 0)
             {
                 message.ApplicationProperties ??= new ApplicationProperties();
 
@@ -368,21 +354,19 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static EventData BuildEventFromAmqpMessage(AmqpMessage source)
         {
-            var body = (source.BodyType.HasFlag(SectionFlag.Data))
-                ? ReadAmqpDataBody(source.DataBody)
-                : new BinaryData(ReadOnlyMemory<byte>.Empty);
+            ReadOnlyMemory<byte> body = (source.BodyType.HasFlag(SectionFlag.Data))
+                ? ReadStreamToMemory(source.BodyStream)
+                : ReadOnlyMemory<byte>.Empty;
 
             ParsedAnnotations systemAnnotations = ParseSystemAnnotations(source);
 
             // If there were application properties associated with the message, translate them
             // to the event.
 
-            var properties = default(Dictionary<string, object>);
+            var properties = new Dictionary<string, object>();
 
             if (source.Sections.HasFlag(SectionFlag.ApplicationProperties))
             {
-                properties = new Dictionary<string, object>();
-
                 foreach (KeyValuePair<MapKey, object> pair in source.ApplicationProperties.Map)
                 {
                     if (TryCreateEventPropertyForAmqpProperty(pair.Value, out object propertyValue))
@@ -417,7 +401,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static ParsedAnnotations ParseSystemAnnotations(AmqpMessage source)
         {
-            var systemProperties = new ParsedAnnotations();
+            var systemProperties = new ParsedAnnotations
+            {
+                ServiceAnnotations = new Dictionary<string, object>()
+            };
 
             object amqpValue;
             object propertyValue;
@@ -426,9 +413,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if (source.Sections.HasFlag(SectionFlag.MessageAnnotations))
             {
-                systemProperties.ServiceAnnotations ??= new Dictionary<string, object>();
-
-                var annotations = source.MessageAnnotations.Map;
+                Annotations annotations = source.MessageAnnotations.Map;
                 var processed = new HashSet<string>();
 
                 if ((annotations.TryGetValue(AmqpProperty.EnqueuedTime, out amqpValue))
@@ -525,13 +510,12 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if (source.Sections.HasFlag(SectionFlag.Properties))
             {
-                var properties = source.Properties;
+                Properties properties = source.Properties;
 
                 void conditionalAdd(string name, object value, bool condition)
                 {
                     if (condition)
                     {
-                        systemProperties.ServiceAnnotations ??= new Dictionary<string, object>();
                         systemProperties.ServiceAnnotations.Add(name, value);
                     }
                 }
@@ -766,62 +750,31 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return new ArraySegment<byte>();
             }
 
-            switch (stream)
-            {
-                case BufferListStream bufferListStream:
-                    return bufferListStream.ReadBytes((int)stream.Length);
+            using var memStream = new MemoryStream(StreamBufferSizeInBytes);
+            stream.CopyTo(memStream, StreamBufferSizeInBytes);
 
-                default:
-                {
-                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStream.ToArray());
-                }
-            }
+            return new ArraySegment<byte>(memStream.ToArray());
         }
 
         /// <summary>
-        ///   Reads the data body of an AMQP message, transforming it for use
-        ///   as the body of an <see cref="EventData" /> instance.
+        ///   Converts a stream to a set of memory bytes.
         /// </summary>
         ///
-        /// <param name="body">The body data set of an AMQP message.</param>
+        /// <param name="stream">The stream to read and capture in memory.</param>
         ///
-        /// <returns>A <see cref="BinaryData" /> representation of the <paramref name="body"/>.</returns>
+        /// <returns>The set of memory bytes containing the stream data.</returns>
         ///
-        private static BinaryData ReadAmqpDataBody(IEnumerable<Data> body)
+        private static ReadOnlyMemory<byte> ReadStreamToMemory(Stream stream)
         {
-            var writer = new ArrayBufferWriter<byte>();
-
-            foreach (var data in body)
+            if (stream == null)
             {
-                var dataBytes = GetDataBytes(data);
-                dataBytes.CopyTo(writer.GetMemory(dataBytes.Length));
-
-                writer.Advance(dataBytes.Length);
+                return ReadOnlyMemory<byte>.Empty;
             }
 
-            return (writer.WrittenCount > 0)
-                ? BinaryData.FromBytes(writer.WrittenMemory)
-                : new BinaryData(Array.Empty<byte>());
-        }
+            using var memStream = new MemoryStream(StreamBufferSizeInBytes);
+            stream.CopyTo(memStream, StreamBufferSizeInBytes);
 
-        /// <summary>
-        ///   Gets the bytes that comprise an AMQP data instance.
-        /// </summary>
-        ///
-        /// <param name="data">The data to read the bytes from.</param>
-        ///
-        /// <returns>The set of bytes extracted from the <paramref name="data" />.</returns>
-        ///
-        private static ReadOnlyMemory<byte> GetDataBytes(Data data)
-        {
-            return data.Value switch
-            {
-                byte[] byteArray => byteArray,
-                ArraySegment<byte> segment => segment,
-                _ => ReadOnlyMemory<byte>.Empty
-            };
+            return new ReadOnlyMemory<byte>(memStream.ToArray());
         }
 
         /// <summary>

@@ -29,5 +29,5 @@ foreach (TriggerResource trigger in triggers)
 
 ```C# Snippet:DeleteTrigger
 TriggerDeleteTriggerOperation deleteOperation = client.StartDeleteTrigger(triggerName);
-await deleteOperation.WaitForCompletionResponseAsync();
+await deleteOperation.WaitForCompletionAsync();
 ```

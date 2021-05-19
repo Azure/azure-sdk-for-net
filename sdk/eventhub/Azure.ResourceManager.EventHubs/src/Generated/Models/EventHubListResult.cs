@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The result of the List EventHubs operation. </summary>
-    internal partial class EventHubListResult
+    public partial class EventHubListResult
     {
         /// <summary> Initializes a new instance of EventHubListResult. </summary>
         internal EventHubListResult()

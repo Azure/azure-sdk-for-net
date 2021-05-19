@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -50,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Tests
             "Seattle"
         };
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeLinkedEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -59,7 +58,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeLinkedEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -68,7 +67,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeLinkedEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -77,7 +76,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeLinkedEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -99,7 +98,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [RecordedTest]
+        [Test]
         public void RecognizeLinkedEntitiesBatchWithInvalidDocumentBatch()
         {
             TextAnalyticsClient client = GetClient();
@@ -119,7 +118,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocumentBatch, ex.ErrorCode);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeLinkedEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -134,12 +133,11 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeLinkedEntitiesBatchConvenienceWithStatisticsTest()
         {
-            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", options);
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
@@ -148,35 +146,9 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
-
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
-        [RecordedTest]
-        public async Task RecognizeLinkedEntitiesBatchConvenienceWithRecognizeLinkedEntitiesOptionsStatisticsTest()
-        {
-            RecognizeLinkedEntitiesOptions options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
-            TextAnalyticsClient client = GetClient();
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", options);
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "0", s_document1ExpectedOutput },
-                { "1", s_document2ExpectedOutput },
-            };
-
-            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
-
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
-        }
-
-        [RecordedTest]
+        [Test]
         public async Task RecognizeLinkedEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -191,12 +163,11 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeLinkedEntitiesBatchWithStatisticsTest()
         {
-            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, options);
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
@@ -205,35 +176,9 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
-
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
-        [RecordedTest]
-        public async Task RecognizeLinkedEntitiesBatchWithRecognizeLinkedEntitiesOptionsStatisticsTest()
-        {
-            RecognizeLinkedEntitiesOptions options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
-            TextAnalyticsClient client = GetClient();
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, options);
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "1", s_document1ExpectedOutput },
-                { "3", s_document1ExpectedOutput },
-            };
-
-            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
-
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
-            Assert.IsTrue(options.IncludeStatistics);
-            Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
-        }
-
-        [RecordedTest]
+        [Test]
         public void RecognizeLinkedEntitiesBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -243,7 +188,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeLinkedEntitiesBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();

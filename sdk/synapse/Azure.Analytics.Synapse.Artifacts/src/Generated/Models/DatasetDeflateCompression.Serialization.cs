@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(DatasetDeflateCompressionConverter))]
     public partial class DatasetDeflateCompression : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -22,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level");
-                writer.WriteObjectValue(Level);
+                writer.WriteStringValue(Level.Value.ToString());
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -36,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetDeflateCompression DeserializeDatasetDeflateCompression(JsonElement element)
         {
-            Optional<object> level = default;
+            Optional<DatasetCompressionLevel> level = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -49,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = property.Value.GetObject();
+                    level = new DatasetCompressionLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -60,20 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetDeflateCompression(type, additionalProperties, level.Value);
-        }
-
-        internal partial class DatasetDeflateCompressionConverter : JsonConverter<DatasetDeflateCompression>
-        {
-            public override void Write(Utf8JsonWriter writer, DatasetDeflateCompression model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DatasetDeflateCompression Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDatasetDeflateCompression(document.RootElement);
-            }
+            return new DatasetDeflateCompression(type, additionalProperties, Optional.ToNullable(level));
         }
     }
 }

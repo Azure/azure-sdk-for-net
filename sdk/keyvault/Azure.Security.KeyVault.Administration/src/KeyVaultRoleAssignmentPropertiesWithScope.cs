@@ -7,6 +7,6 @@ namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role assignment properties with scope. </summary>
     [CodeGenModel("RoleAssignmentPropertiesWithScope")]
-    public partial class KeyVaultRoleAssignmentProperties
+    public partial class KeyVaultRoleAssignmentPropertiesWithScope
     { }
 }

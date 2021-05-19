@@ -17,6 +17,7 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             #region Snippet:FormRecognizerSampleTrainModelWithForms
             // For this sample, you can use the training forms found in the `trainingFiles` folder.
@@ -24,11 +25,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // For instructions on setting up forms for training in an Azure Storage Blob Container, see
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
-#if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
-#else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-#endif
+            //@@ Uri trainingFileUri = <trainingFileUri>;
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My Model");

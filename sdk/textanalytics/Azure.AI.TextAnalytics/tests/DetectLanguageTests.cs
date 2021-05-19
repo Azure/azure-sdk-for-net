@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -43,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -54,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(language);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -65,7 +64,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(language);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageWithCountryHintTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -76,7 +75,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(language);
         }
 
-        [RecordedTest]
+        [Test]
         public void DetectLanguageWithErrorCountryHintTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -86,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidCountryHint, ex.ErrorCode);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageWithNoneCountryHintTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -97,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(language);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageWithNoneDefaultCountryHintTest()
         {
             var options = new TextAnalyticsClientOptions()
@@ -113,7 +112,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(language);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -128,7 +127,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -149,7 +148,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -165,7 +164,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("(Unknown)", results[3].PrimaryLanguage.Name);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -187,7 +186,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("(Unknown)", results[3].PrimaryLanguage.Name);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -209,7 +208,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [RecordedTest]
+        [Test]
         public void DetectLanguageBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -220,7 +219,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task DetectLanguageBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();

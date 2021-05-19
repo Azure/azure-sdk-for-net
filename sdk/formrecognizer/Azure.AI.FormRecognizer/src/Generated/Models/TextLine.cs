@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.FormRecognizer;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -42,12 +43,14 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Initializes a new instance of TextLine. </summary>
         /// <param name="text"> The text content of the line. </param>
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
+        /// <param name="language"> The detected language of this line, if different from the overall page language. </param>
         /// <param name="words"> List of words in the text line. </param>
         /// <param name="appearance"> Text appearance properties. </param>
-        internal TextLine(string text, IReadOnlyList<float> boundingBox, IReadOnlyList<TextWord> words, TextAppearance appearance)
+        internal TextLine(string text, IReadOnlyList<float> boundingBox, FormRecognizerLanguage? language, IReadOnlyList<TextWord> words, TextAppearance appearance)
         {
             Text = text;
             BoundingBox = boundingBox;
+            Language = language;
             Words = words;
             Appearance = appearance;
         }
@@ -56,6 +59,8 @@ namespace Azure.AI.FormRecognizer.Models
         public string Text { get; }
         /// <summary> Bounding box of an extracted line. </summary>
         public IReadOnlyList<float> BoundingBox { get; }
+        /// <summary> The detected language of this line, if different from the overall page language. </summary>
+        public FormRecognizerLanguage? Language { get; }
         /// <summary> List of words in the text line. </summary>
         public IReadOnlyList<TextWord> Words { get; }
         /// <summary> Text appearance properties. </summary>

@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "managementGroupName": {
-      "value": "tag-mg-sdk"
+      "value": "testMG"
     },
     "subscriptionId": {
-      "value": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
+        "value": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
     }
   }
 }

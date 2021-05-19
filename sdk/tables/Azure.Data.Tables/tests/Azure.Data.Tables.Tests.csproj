@@ -20,9 +20,10 @@
     <ProjectReference Include="..\src\Azure.Data.Tables.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />
   </ItemGroup>
+
 </Project>

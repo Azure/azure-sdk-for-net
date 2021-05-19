@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal static partial class UnavailableReasonExtensions
+    internal static class UnavailableReasonExtensions
     {
         public static string ToSerialString(this UnavailableReason value) => value switch
         {

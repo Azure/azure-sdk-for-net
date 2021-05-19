@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary> Status of operation. </summary>
-    internal readonly partial struct PhoneNumberOperationStatus : IEquatable<PhoneNumberOperationStatus>
+    public readonly partial struct PhoneNumberOperationStatus : IEquatable<PhoneNumberOperationStatus>
     {
         private readonly string _value;
 

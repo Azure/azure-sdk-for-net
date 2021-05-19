@@ -5,36 +5,17 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Security.Attestation
+namespace Azure.Security.Attestation.Models
 {
-    [JsonConverter(typeof(PolicyCertificatesModificationResultConverter))]
-    public partial class PolicyCertificatesModificationResult : IUtf8JsonSerializable
+    public partial class PolicyCertificatesModificationResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(CertificateThumbprint))
-            {
-                writer.WritePropertyName("x-ms-certificate-thumbprint");
-                writer.WriteStringValue(CertificateThumbprint);
-            }
-            if (Optional.IsDefined(CertificateResolution))
-            {
-                writer.WritePropertyName("x-ms-policycertificates-result");
-                writer.WriteStringValue(CertificateResolution.Value.ToString());
-            }
-            writer.WriteEndObject();
-        }
-
         internal static PolicyCertificatesModificationResult DeserializePolicyCertificatesModificationResult(JsonElement element)
         {
             Optional<string> xMsCertificateThumbprint = default;
-            Optional<PolicyCertificateResolution> xMsPolicycertificatesResult = default;
+            Optional<CertificateModification> xMsPolicycertificatesResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-certificate-thumbprint"))
@@ -49,24 +30,11 @@ namespace Azure.Security.Attestation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    xMsPolicycertificatesResult = new PolicyCertificateResolution(property.Value.GetString());
+                    xMsPolicycertificatesResult = new CertificateModification(property.Value.GetString());
                     continue;
                 }
             }
             return new PolicyCertificatesModificationResult(xMsCertificateThumbprint.Value, Optional.ToNullable(xMsPolicycertificatesResult));
-        }
-
-        internal partial class PolicyCertificatesModificationResultConverter : JsonConverter<PolicyCertificatesModificationResult>
-        {
-            public override void Write(Utf8JsonWriter writer, PolicyCertificatesModificationResult model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override PolicyCertificatesModificationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializePolicyCertificatesModificationResult(document.RootElement);
-            }
         }
     }
 }

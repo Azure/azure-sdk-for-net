@@ -38,8 +38,6 @@ namespace Azure.Core.Tests
                 new object[] { RequestContent.Create(new ReadOnlyMemory<byte>(new byte[10])), 10 },
                 new object[] { RequestContent.Create(new ReadOnlyMemory<byte>(new byte[10]).Slice(5)), 5 },
                 new object[] { RequestContent.Create(new ReadOnlySequence<byte>(new byte[10])), 10 },
-                new object[] { RequestContent.Create(new BinaryData("Hello, world")), 12 },
-                new object[] { RequestContent.Create(new BinaryData(new byte[10])), 10 },
             };
 
         [TestCaseSource(nameof(ContentWithLength))]
@@ -88,7 +86,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CanSetContentLengthOverMaxInt()
+        public async Task CanSetContentLenghtOverMaxInt()
         {
             long contentLength = 0;
             using TestServer testServer = new TestServer(
@@ -575,7 +573,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task RequestIdCanBeOverridden()
+        public async Task RequestIdCanBeOverriden()
         {
             using TestServer testServer = new TestServer(context => { });
             var transport = GetTransport();

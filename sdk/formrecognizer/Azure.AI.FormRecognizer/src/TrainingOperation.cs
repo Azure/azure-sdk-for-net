@@ -10,8 +10,7 @@ namespace Azure.AI.FormRecognizer.Training
     /// </summary>
     public class TrainingOperation : CreateCustomFormModelOperation
     {
-        internal TrainingOperation(string location, FormRecognizerRestClient allOperations, ClientDiagnostics diagnostics, FormRecognizerClientOptions.ServiceVersion serviceVersion)
-            : base(location, allOperations, diagnostics, serviceVersion) { }
+        internal TrainingOperation(string location, FormRecognizerRestClient allOperations, ClientDiagnostics diagnostics) : base(location, allOperations, diagnostics) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TrainingOperation"/> class which

@@ -133,10 +133,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string HighIopsSupported { get; set; }
 
         /// <summary>
-        /// Gets or sets the supported HyperV Generations.
+        /// Gets the supported HyperV Generations.
         /// </summary>
         [JsonProperty(PropertyName = "hyperVGenerations")]
-        public IList<string> HyperVGenerations { get; set; }
+        public IList<string> HyperVGenerations { get; private set; }
 
     }
 }

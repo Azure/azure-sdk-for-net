@@ -15,10 +15,10 @@ namespace Azure.Quantum.Jobs.Tests
         public QuantumJobClientRecordedTestSanitizer()
             : base()
         {
-            AddJsonPathSanitizer("$..containerUri");
-            AddJsonPathSanitizer("$..inputDataUri");
-            AddJsonPathSanitizer("$..outputDataUri");
-            AddJsonPathSanitizer("$..sasUri");
+            JsonPathSanitizers.Add("$..containerUri");
+            JsonPathSanitizers.Add("$..inputDataUri");
+            JsonPathSanitizers.Add("$..outputDataUri");
+            JsonPathSanitizers.Add("$..sasUri");
         }
     }
 }

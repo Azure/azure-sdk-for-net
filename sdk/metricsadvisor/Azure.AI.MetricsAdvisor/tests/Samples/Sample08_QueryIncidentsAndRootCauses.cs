@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var options = new GetIncidentsForDetectionConfigurationOptions(startTime, endTime)
             {
                 DimensionsToFilter = new List<DimensionKey>() { groupKey1, groupKey2 },
-                MaxPageSize = 3
+                TopCount = 3
             };
 
             int incidentCount = 0;
@@ -51,13 +51,6 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Last associated anomaly occurred at: {incident.LastTime}");
                 Console.WriteLine($"Status: {incident.Status}");
                 Console.WriteLine($"Severity: {incident.Severity}");
-                Console.WriteLine($"Value of root node anomaly: {incident.ValueOfRootNode}");
-
-                if (incident.ExpectedValueOfRootNode.HasValue)
-                {
-                    Console.WriteLine($"Expected value of root node anomaly: {incident.ExpectedValueOfRootNode}");
-                }
-
                 Console.WriteLine("Series key:");
 
                 foreach (KeyValuePair<string, string> keyValuePair in incident.DimensionKey.AsDictionary())
@@ -88,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             string alertConfigurationId = AlertConfigurationId;
             string alertId = AlertId;
 
-            var options = new GetIncidentsForAlertOptions() { MaxPageSize = 3 };
+            var options = new GetIncidentsForAlertOptions() { TopCount = 3 };
 
             int incidentCount = 0;
 
@@ -101,13 +94,6 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Last associated anomaly occurred at: {incident.LastTime}");
                 Console.WriteLine($"Status: {incident.Status}");
                 Console.WriteLine($"Severity: {incident.Severity}");
-                Console.WriteLine($"Value of root node anomaly: {incident.ValueOfRootNode}");
-
-                if (incident.ExpectedValueOfRootNode.HasValue)
-                {
-                    Console.WriteLine($"Expected value of root node anomaly: {incident.ExpectedValueOfRootNode}");
-                }
-
                 Console.WriteLine("Series key:");
 
                 foreach (KeyValuePair<string, string> keyValuePair in incident.DimensionKey.AsDictionary())

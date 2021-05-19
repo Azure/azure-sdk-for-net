@@ -41,6 +41,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
@@ -95,6 +100,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         IManagementGroupsOperations ManagementGroups { get; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IOperationStatusesOperations.
         /// </summary>
         IOperationStatusesOperations OperationStatuses { get; }
@@ -108,6 +118,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }
+
+        /// <summary>
+        /// Gets the IWorkspacesOperations.
+        /// </summary>
+        IWorkspacesOperations Workspaces { get; }
+
+        /// <summary>
+        /// Gets the IDeletedWorkspacesOperations.
+        /// </summary>
+        IDeletedWorkspacesOperations DeletedWorkspaces { get; }
+
+        /// <summary>
+        /// Gets the IClustersOperations.
+        /// </summary>
+        IClustersOperations Clusters { get; }
 
         /// <summary>
         /// Gets the IStorageInsightConfigsOperations.
@@ -138,31 +163,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets the IWorkspacePurgeOperations.
         /// </summary>
         IWorkspacePurgeOperations WorkspacePurge { get; }
-
-        /// <summary>
-        /// Gets the ITablesOperations.
-        /// </summary>
-        ITablesOperations Tables { get; }
-
-        /// <summary>
-        /// Gets the IClustersOperations.
-        /// </summary>
-        IClustersOperations Clusters { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IWorkspacesOperations.
-        /// </summary>
-        IWorkspacesOperations Workspaces { get; }
-
-        /// <summary>
-        /// Gets the IDeletedWorkspacesOperations.
-        /// </summary>
-        IDeletedWorkspacesOperations DeletedWorkspaces { get; }
 
     }
 }

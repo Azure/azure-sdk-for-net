@@ -32,12 +32,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="result">Model-specific response.</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        public DomainModelResults(object result = default(object), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata), string modelVersion = default(string))
+        public DomainModelResults(object result = default(object), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
             Result = result;
             RequestId = requestId;
             Metadata = metadata;
-            ModelVersion = modelVersion;
             CustomInit();
         }
 
@@ -62,11 +61,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public ImageMetadata Metadata { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "modelVersion")]
-        public string ModelVersion { get; set; }
 
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal partial class EHNamespaceListResult
+    public partial class EHNamespaceListResult
     {
         internal static EHNamespaceListResult DeserializeEHNamespaceListResult(JsonElement element)
         {

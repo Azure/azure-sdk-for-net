@@ -207,7 +207,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version);
             _fileRestClient = BuildFileRestClient(_uri);
         }
@@ -308,7 +308,7 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version);
             _fileRestClient = BuildFileRestClient(fileUri);
         }
@@ -1878,7 +1878,7 @@ namespace Azure.Storage.Files.Shares
                                 async,
                                 cancellationToken)
                                 .EnsureCompleted()
-                                .ContentStream,
+                                .Item2,
                         async startOffset =>
                             (await StartDownloadAsync(
                                 range,
@@ -1888,7 +1888,7 @@ namespace Azure.Storage.Files.Shares
                                 async,
                                 cancellationToken)
                                 .ConfigureAwait(false))
-                                .ContentStream,
+                                .Item2,
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
@@ -1944,7 +1944,7 @@ namespace Azure.Storage.Files.Shares
         /// <returns>
         /// <see cref="Response{ShareFileDownloadInfo}"/> and a <see cref="Stream"/>.
         /// </returns>
-        private async Task<(Response<ShareFileDownloadInfo> Response, Stream ContentStream)> StartDownloadAsync(
+        private async Task<(Response<ShareFileDownloadInfo>, Stream)> StartDownloadAsync(
             HttpRange range = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
@@ -5509,14 +5509,6 @@ namespace Azure.Storage.Files.Shares
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-
-            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
-            builder = ShareSasBuilder.DeepCopy(builder);
-
-            // Assign builder's ShareName and Path, if they are null.
-            builder.ShareName ??= ShareName;
-            builder.FilePath ??= Path;
-
             if (!builder.ShareName.Equals(ShareName, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(

@@ -87,12 +87,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
-            public static void Delete(this ICaches operations, string resourceGroupName, string cacheName)
+            public static object Delete(this ICaches operations, string resourceGroupName, string cacheName)
             {
-                operations.DeleteAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -105,15 +105,18 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -126,8 +129,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             public static Cache Get(this ICaches operations, string resourceGroupName, string cacheName)
             {
@@ -144,8 +147,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -168,8 +171,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cache'>
             /// Object containing the user-selectable properties of the new Cache. If
@@ -191,8 +194,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cache'>
             /// Object containing the user-selectable properties of the new Cache. If
@@ -220,8 +223,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cache'>
             /// Object containing the user-selectable properties of the Cache. If read-only
@@ -243,8 +246,8 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cache'>
             /// Object containing the user-selectable properties of the Cache. If read-only
@@ -263,7 +266,8 @@ namespace Microsoft.Azure.Management.StorageCache
             }
 
             /// <summary>
-            /// Tells a Cache to write generate debug info for support to process.
+            /// Tells a Cache to write all dirty data to the Storage Target(s). During the
+            /// flush, clients will see errors returned until the flush is complete.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -272,33 +276,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
-            public static void DebugInfo(this ICaches operations, string resourceGroupName, string cacheName)
+            public static object Flush(this ICaches operations, string resourceGroupName, string cacheName)
             {
-                operations.DebugInfoAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tells a Cache to write generate debug info for support to process.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Target resource group.
-            /// </param>
-            /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DebugInfoAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DebugInfoWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                return operations.FlushAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -312,34 +295,18 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
-            /// </param>
-            public static void Flush(this ICaches operations, string resourceGroupName, string cacheName)
-            {
-                operations.FlushAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tells a Cache to write all dirty data to the Storage Target(s). During the
-            /// flush, clients will see errors returned until the flush is complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Target resource group.
-            /// </param>
-            /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task FlushAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> FlushAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.FlushWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.FlushWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -352,12 +319,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
-            public static void Start(this ICaches operations, string resourceGroupName, string cacheName)
+            public static object Start(this ICaches operations, string resourceGroupName, string cacheName)
             {
-                operations.StartAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
+                return operations.StartAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -370,15 +337,18 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task StartAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> StartAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.StartWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.StartWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -391,12 +361,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
-            public static void Stop(this ICaches operations, string resourceGroupName, string cacheName)
+            public static object Stop(this ICaches operations, string resourceGroupName, string cacheName)
             {
-                operations.StopAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
+                return operations.StopAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -409,15 +379,18 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task StopAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> StopAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.StopWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.StopWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -431,12 +404,12 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
-            public static void UpgradeFirmware(this ICaches operations, string resourceGroupName, string cacheName)
+            public static object UpgradeFirmware(this ICaches operations, string resourceGroupName, string cacheName)
             {
-                operations.UpgradeFirmwareAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
+                return operations.UpgradeFirmwareAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -450,15 +423,18 @@ namespace Microsoft.Azure.Management.StorageCache
             /// Target resource group.
             /// </param>
             /// <param name='cacheName'>
-            /// Name of Cache. Length of name must not be greater than 80 and chars must be
-            /// from the [-0-9a-zA-Z_] char class.
+            /// Name of Cache. Length of name must be not greater than 80 and chars must be
+            /// in list of [-0-9a-zA-Z_] char class.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpgradeFirmwareAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> UpgradeFirmwareAsync(this ICaches operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpgradeFirmwareWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpgradeFirmwareWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

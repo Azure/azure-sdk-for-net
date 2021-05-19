@@ -15,17 +15,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
-                if (ConnectionString != null)
-                {
-                    writer.WritePropertyName("connectionString");
-                    writer.WriteStringValue(ConnectionString);
-                }
-                else
-                {
-                    writer.WriteNull("connectionString");
-                }
+                writer.WritePropertyName("connectionString");
+                writer.WriteStringValue(ConnectionString);
+            }
+            else
+            {
+                writer.WriteNull("connectionString");
             }
             if (Query != null)
             {
@@ -41,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static SqlSourceParameter DeserializeSqlSourceParameter(JsonElement element)
         {
-            Optional<string> connectionString = default;
+            string connectionString = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -66,7 +63,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new SqlSourceParameter(connectionString.Value, query);
+            return new SqlSourceParameter(connectionString, query);
         }
     }
 }

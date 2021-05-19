@@ -12,20 +12,9 @@ namespace Azure.Identity.Tests
     {
         public Func<ProcessStartInfo, IProcess> CreateHandler { get; set; }
 
-        public TestProcessService(IProcess process, bool preservePassedStartInfo)
+        public TestProcessService()
         {
-            if (preservePassedStartInfo)
-            {
-                CreateHandler = psi =>
-                {
-                    process.StartInfo = psi;
-                    return process;
-                };
-            }
-            else
-            {
-                CreateHandler = _ => process;
-            }
+            CreateHandler = psi => new TestProcess { StartInfo = psi };
         }
 
         public TestProcessService(params IProcess[] processes)

@@ -100,7 +100,7 @@ namespace Azure.Core.Tests.Buffers
             using MemoryStream ms = new MemoryStream();
 
             // Put some data in memory
-            PopulateMemoryWithData(totalNativeMemory.Memory);
+            PopulatMemoryWithData(totalNativeMemory.Memory);
 
             // create the individual segments
             BufferSegment start = new BufferSegment(totalNativeMemory.Memory.Slice(0, 0)); // have an empty start segment
@@ -123,7 +123,7 @@ namespace Azure.Core.Tests.Buffers
 
         private static ReadOnlySequence<byte> CreateSequenceFromMemory(Memory<byte> totalMemory)
         {
-            PopulateMemoryWithData(totalMemory);
+            PopulatMemoryWithData(totalMemory);
 
             // create the individual segments
             BufferSegment start = new BufferSegment(totalMemory.Slice(0, 2));
@@ -135,7 +135,7 @@ namespace Azure.Core.Tests.Buffers
             return new ReadOnlySequence<byte>(start, 0, last, 2); // the last segment has length 2
         }
 
-        private static void PopulateMemoryWithData(Memory<byte> totalMemory)
+        private static void PopulatMemoryWithData(Memory<byte> totalMemory)
         {
             // populate the memory with some data.
             for (byte i = 0; i < totalMemory.Length; i++)

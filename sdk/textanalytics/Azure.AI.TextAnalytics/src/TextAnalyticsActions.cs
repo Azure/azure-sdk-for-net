@@ -32,10 +32,5 @@ namespace Azure.AI.TextAnalytics
         /// Recognize Linked Entities actions configurations.
         /// </summary>
         public IReadOnlyCollection<RecognizeLinkedEntitiesOptions> RecognizeLinkedEntitiesOptions { get; set; }
-
-        /// <summary>
-        /// Analyze Sentiment actions configurations.
-        /// </summary>
-        public IReadOnlyCollection<AnalyzeSentimentOptions> AnalyzeSentimentOptions { get; set; }
     }
 }

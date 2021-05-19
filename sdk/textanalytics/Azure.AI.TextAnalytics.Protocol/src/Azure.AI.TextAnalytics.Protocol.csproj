@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing 
+    over raw text, and features like Language Detection, Sentiment Analysis, Key Phrase Extraction, Named Entity Recognition,
+    Personally Identifiable Information (PII) Recognition, Linked Entity Recognition, Text Analytics for Health, and more.</Description>
+    <AssemblyTitle>Microsoft Azure.AI.TextAnalytics client library</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="System.Text.Json" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

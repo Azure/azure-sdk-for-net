@@ -14,6 +14,9 @@ The Name of the Service Directory
 .PARAMETER PackageName
 The Name of the Package
 
+.PARAMETER PackageDirName
+Used in the case where the package directory name is different from the package name. e.g in cognitiveservice packages
+
 .PARAMETER NewVersionString
 Use this to overide version incement logic and set a version specified by this parameter
 
@@ -28,6 +31,9 @@ Update-PkgVersion.ps1 -ServiceDirectory core -PackageName Azure.Core -NewVersion
 Updating package version for Azure.Core with a specified verion and release date
 Update-PkgVersion.ps1 -ServiceDirectory core -PackageName Azure.Core -NewVersionString 2.0.5 -ReleaseDate "2020-05-01"
 
+Updating package version for Microsoft.Azure.CognitiveServices.AnomalyDetector
+Update-PkgVersion.ps1 -ServiceDirectory cognitiveservices -PackageName Microsoft.Azure.CognitiveServices.AnomalyDetector -PackageDirName AnomalyDetector
+
 #>
 
 [CmdletBinding()]
@@ -38,14 +44,16 @@ Param (
   [string] $ServiceDirectory,
   [Parameter(Mandatory=$True)]
   [string] $PackageName,
+  [string] $PackageDirName,
   [string] $NewVersionString,
   [string] $ReleaseDate
 )
 
-. (Join-Path $PSScriptRoot ".." common scripts common.ps1)
-
-$pkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
-$csprojPath = Join-Path $pkgProperties.DirectoryPath src "${PackageName}.csproj"
+. ${PSScriptRoot}\..\common\scripts\SemVer.ps1
+# Obtain Current Package Version
+if ([System.String]::IsNullOrEmpty($PackageDirName)) { $PackageDirName = $PackageName }
+$changelogPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "CHANGELOG.md"
+$csprojPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "src" "${PackageName}.csproj"
 $csproj = new-object xml
 $csproj.PreserveWhitespace = $true
 $csproj.Load($csprojPath)
@@ -60,13 +68,13 @@ if ([System.String]::IsNullOrEmpty($NewVersionString)) {
   $packageSemVer.IncrementAndSetToPrerelease()
 
   & "${PSScriptRoot}/../common/scripts/Update-ChangeLog.ps1" -Version $packageSemVer.ToString() `
-  -ChangelogPath $pkgProperties.ChangeLogPath -Unreleased $True
+  -ServiceDirectory $ServiceDirectory -PackageName $PackageName -Unreleased $True
 }
 else {
   $packageSemVer = [AzureEngSemanticVersion]::new($NewVersionString)
 
   & "${PSScriptRoot}/../common/scripts/Update-ChangeLog.ps1" -Version $packageSemVer.ToString() `
-  -ChangelogPath $pkgProperties.ChangeLogPath -Unreleased $False `
+  -ServiceDirectory $ServiceDirectory -PackageName $PackageName -Unreleased $False `
   -ReplaceLatestEntryTitle $True -ReleaseDate $ReleaseDate
 }
 

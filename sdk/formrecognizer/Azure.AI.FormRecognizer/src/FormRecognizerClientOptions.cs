@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer
     /// </summary>
     public class FormRecognizerClientOptions : ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2_1;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2_1_Preview_2;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientOptions"/> class which allows
@@ -32,15 +32,15 @@ namespace Azure.AI.FormRecognizer
         public enum ServiceVersion
         {
             /// <summary>
-            /// The Version 2.0 of the service.
+            /// The V2.0 of the service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             V2_0 = 1,
 
             /// <summary>
-            /// The version 2.1 of the service.
+            /// Version 2.1-preview.2
             /// </summary>
-            V2_1 = 2,
+            V2_1_Preview_2 = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer
             return version switch
             {
                 ServiceVersion.V2_0 => "v2.0",
-                ServiceVersion.V2_1 => "v2.1",
+                ServiceVersion.V2_1_Preview_2 => "v2.1-preview.2",
                 _ => throw new NotSupportedException($"The service version {version} is not supported."),
             };
         }
@@ -74,10 +74,6 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics.LoggedQueryParameters.Add("includeKeys");
             Diagnostics.LoggedQueryParameters.Add("includeTextDetails");
-            Diagnostics.LoggedQueryParameters.Add("language");
-            Diagnostics.LoggedQueryParameters.Add("locale");
-            Diagnostics.LoggedQueryParameters.Add("pages");
-            Diagnostics.LoggedQueryParameters.Add("readingOrder");
             Diagnostics.LoggedQueryParameters.Add("op");
         }
     }

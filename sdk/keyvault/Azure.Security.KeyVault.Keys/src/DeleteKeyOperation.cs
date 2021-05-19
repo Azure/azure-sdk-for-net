@@ -34,9 +34,6 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteKeyOperation" /> for mocking. </summary>
-        protected DeleteKeyOperation() {}
-
         /// <inheritdoc/>
         public override string Id => _value.Id.ToString();
 

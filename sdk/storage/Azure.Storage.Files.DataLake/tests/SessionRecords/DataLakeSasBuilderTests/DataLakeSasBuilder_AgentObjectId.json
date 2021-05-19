@@ -101,7 +101,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-d44a872e-d6fe-6e24-ed74-d835abf2c265/test-file-ea6d54a0-9828-4631-4779-401cf1ce0e0b?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-02-19T18%3A57%3A58Z\u0026ske=2021-02-19T19%3A57%3A59Z\u0026sks=b\u0026skv=2020-06-12\u0026sv=2020-08-04\u0026st=2021-02-19T17%3A57%3A59Z\u0026se=2021-02-19T19%3A57%3A59Z\u0026sr=c\u0026sp=racwdlmeop\u0026suoid=09746fae-6af7-89f8-0f7a-7ebeb4d3b46e\u0026sig=Sanitized\u0026resource=file",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-d44a872e-d6fe-6e24-ed74-d835abf2c265/test-file-ea6d54a0-9828-4631-4779-401cf1ce0e0b?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-02-19T18%3A57%3A58Z\u0026ske=2021-02-19T19%3A57%3A59Z\u0026sks=b\u0026skv=2020-06-12\u0026sv=2020-06-12\u0026st=2021-02-19T17%3A57%3A59Z\u0026se=2021-02-19T19%3A57%3A59Z\u0026sr=c\u0026sp=racwdlmeop\u0026suoid=09746fae-6af7-89f8-0f7a-7ebeb4d3b46e\u0026sig=Sanitized\u0026resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

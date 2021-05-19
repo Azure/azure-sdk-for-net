@@ -2,7 +2,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ApplicationDefinitionsCreateOrUpdateByIdOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.ApplicationDefinition>
     {
-        protected ApplicationDefinitionsCreateOrUpdateByIdOperation() { }
+        internal ApplicationDefinitionsCreateOrUpdateByIdOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ApplicationDefinitionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.ApplicationDefinition>
     {
-        protected ApplicationDefinitionsCreateOrUpdateOperation() { }
+        internal ApplicationDefinitionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ApplicationDefinitionsDeleteByIdOperation : Azure.Operation<Azure.Response>
     {
-        protected ApplicationDefinitionsDeleteByIdOperation() { }
+        internal ApplicationDefinitionsDeleteByIdOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ApplicationDefinitionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        protected ApplicationDefinitionsDeleteOperation() { }
+        internal ApplicationDefinitionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ApplicationsCreateOrUpdateByIdOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.Application>
     {
-        protected ApplicationsCreateOrUpdateByIdOperation() { }
+        internal ApplicationsCreateOrUpdateByIdOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ApplicationsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.Application>
     {
-        protected ApplicationsCreateOrUpdateOperation() { }
+        internal ApplicationsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ApplicationsDeleteByIdOperation : Azure.Operation<Azure.Response>
     {
-        protected ApplicationsDeleteByIdOperation() { }
+        internal ApplicationsDeleteByIdOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ApplicationsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        protected ApplicationsDeleteOperation() { }
+        internal ApplicationsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsCreateOrUpdateAtManagementGroupScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentExtended>
     {
-        protected DeploymentsCreateOrUpdateAtManagementGroupScopeOperation() { }
+        internal DeploymentsCreateOrUpdateAtManagementGroupScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsCreateOrUpdateAtScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentExtended>
     {
-        protected DeploymentsCreateOrUpdateAtScopeOperation() { }
+        internal DeploymentsCreateOrUpdateAtScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsCreateOrUpdateAtSubscriptionScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentExtended>
     {
-        protected DeploymentsCreateOrUpdateAtSubscriptionScopeOperation() { }
+        internal DeploymentsCreateOrUpdateAtSubscriptionScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsCreateOrUpdateAtTenantScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentExtended>
     {
-        protected DeploymentsCreateOrUpdateAtTenantScopeOperation() { }
+        internal DeploymentsCreateOrUpdateAtTenantScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentExtended>
     {
-        protected DeploymentsCreateOrUpdateOperation() { }
+        internal DeploymentsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentScriptsCreateOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentScript>
     {
-        protected DeploymentScriptsCreateOperation() { }
+        internal DeploymentScriptsCreateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsDeleteAtManagementGroupScopeOperation : Azure.Operation<Azure.Response>
     {
-        protected DeploymentsDeleteAtManagementGroupScopeOperation() { }
+        internal DeploymentsDeleteAtManagementGroupScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsDeleteAtScopeOperation : Azure.Operation<Azure.Response>
     {
-        protected DeploymentsDeleteAtScopeOperation() { }
+        internal DeploymentsDeleteAtScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsDeleteAtSubscriptionScopeOperation : Azure.Operation<Azure.Response>
     {
-        protected DeploymentsDeleteAtSubscriptionScopeOperation() { }
+        internal DeploymentsDeleteAtSubscriptionScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsDeleteAtTenantScopeOperation : Azure.Operation<Azure.Response>
     {
-        protected DeploymentsDeleteAtTenantScopeOperation() { }
+        internal DeploymentsDeleteAtTenantScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        protected DeploymentsDeleteOperation() { }
+        internal DeploymentsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsValidateAtManagementGroupScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentValidateResult>
     {
-        protected DeploymentsValidateAtManagementGroupScopeOperation() { }
+        internal DeploymentsValidateAtManagementGroupScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsValidateAtScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentValidateResult>
     {
-        protected DeploymentsValidateAtScopeOperation() { }
+        internal DeploymentsValidateAtScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsValidateAtSubscriptionScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentValidateResult>
     {
-        protected DeploymentsValidateAtSubscriptionScopeOperation() { }
+        internal DeploymentsValidateAtSubscriptionScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsValidateAtTenantScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentValidateResult>
     {
-        protected DeploymentsValidateAtTenantScopeOperation() { }
+        internal DeploymentsValidateAtTenantScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsValidateOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.DeploymentValidateResult>
     {
-        protected DeploymentsValidateOperation() { }
+        internal DeploymentsValidateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsWhatIfAtSubscriptionScopeOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.WhatIfOperationResult>
     {
-        protected DeploymentsWhatIfAtSubscriptionScopeOperation() { }
+        internal DeploymentsWhatIfAtSubscriptionScopeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class DeploymentsWhatIfOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.WhatIfOperationResult>
     {
-        protected DeploymentsWhatIfOperation() { }
+        internal DeploymentsWhatIfOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourceGroupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        protected ResourceGroupsDeleteOperation() { }
+        internal ResourceGroupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourceGroupsExportTemplateOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>
     {
-        protected ResourceGroupsExportTemplateOperation() { }
+        internal ResourceGroupsExportTemplateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourcesCreateOrUpdateByIdOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.GenericResource>
     {
-        protected ResourcesCreateOrUpdateByIdOperation() { }
+        internal ResourcesCreateOrUpdateByIdOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourcesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.GenericResource>
     {
-        protected ResourcesCreateOrUpdateOperation() { }
+        internal ResourcesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourcesDeleteByIdOperation : Azure.Operation<Azure.Response>
     {
-        protected ResourcesDeleteByIdOperation() { }
+        internal ResourcesDeleteByIdOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourcesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        protected ResourcesDeleteOperation() { }
+        internal ResourcesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourcesMoveResourcesOperation : Azure.Operation<Azure.Response>
     {
-        protected ResourcesMoveResourcesOperation() { }
+        internal ResourcesMoveResourcesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourcesUpdateByIdOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.GenericResource>
     {
-        protected ResourcesUpdateByIdOperation() { }
+        internal ResourcesUpdateByIdOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourcesUpdateOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.GenericResource>
     {
-        protected ResourcesUpdateOperation() { }
+        internal ResourcesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourcesValidateMoveResourcesOperation : Azure.Operation<Azure.Response>
     {
-        protected ResourcesValidateMoveResourcesOperation() { }
+        internal ResourcesValidateMoveResourcesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

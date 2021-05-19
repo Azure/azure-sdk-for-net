@@ -20,7 +20,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
 {
-    public abstract partial class StorageTestBase<TEnvironment> : RecordedTestBase<TEnvironment> where TEnvironment : StorageTestEnvironment, new()
+    public abstract class StorageTestBase : RecordedTestBase
     {
         static StorageTestBase()
         {
@@ -33,7 +33,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
             Sanitizer = new StorageRecordedTestSanitizer();
         }

@@ -16,4 +16,3 @@ extends:
       policySigningCertificate2: $(policySigningCertificate2)
       isolatedSigningCertificate: $(isolatedSigningCertificate)
       serializedIsolatedSigningKey: $(serializedIsolatedSigningKey)
-      locationShortName: $(locationShortName)

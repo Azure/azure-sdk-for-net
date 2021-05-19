@@ -15,28 +15,18 @@ namespace Azure.AI.AnomalyDetector.Models
     {
         internal static ChangePointDetectResponse DeserializeChangePointDetectResponse(JsonElement element)
         {
-            Optional<int> period = default;
-            Optional<IReadOnlyList<bool>> isChangePoint = default;
-            Optional<IReadOnlyList<float>> confidenceScores = default;
+            int period = default;
+            IReadOnlyList<bool> isChangePoint = default;
+            IReadOnlyList<float> confidenceScores = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("period"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     period = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("isChangePoint"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<bool> array = new List<bool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -47,11 +37,6 @@ namespace Azure.AI.AnomalyDetector.Models
                 }
                 if (property.NameEquals("confidenceScores"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -61,7 +46,7 @@ namespace Azure.AI.AnomalyDetector.Models
                     continue;
                 }
             }
-            return new ChangePointDetectResponse(Optional.ToNullable(period), Optional.ToList(isChangePoint), Optional.ToList(confidenceScores));
+            return new ChangePointDetectResponse(period, isChangePoint, confidenceScores);
         }
     }
 }

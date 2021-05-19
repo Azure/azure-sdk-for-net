@@ -16,9 +16,7 @@ namespace Microsoft.Azure.Management.Datadog.Models
     /// </summary>
     public static class MarketplaceSubscriptionStatus
     {
-        public const string Provisioning = "Provisioning";
         public const string Active = "Active";
         public const string Suspended = "Suspended";
-        public const string Unsubscribed = "Unsubscribed";
     }
 }

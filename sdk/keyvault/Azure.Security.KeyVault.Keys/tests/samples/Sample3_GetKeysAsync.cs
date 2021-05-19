@@ -53,9 +53,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // So, for each returned key we call GetKey to get the actual key.
             await foreach (KeyProperties key in client.GetPropertiesOfKeysAsync())
             {
-#if !SNIPPET
-                if (key.Managed) continue;
-#endif
+                /*@@*/ if (key.Managed) continue;
                 KeyVaultKey keyWithType = await client.GetKeyAsync(key.Name);
                 Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.KeyType}");
             }

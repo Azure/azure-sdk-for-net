@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceName'>
-            /// Maintenance Configuration Name
+            /// Resource Identifier
             /// </param>
             public static MaintenanceConfiguration Get(this IPublicMaintenanceConfigurationsOperations operations, string resourceName)
             {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceName'>
-            /// Maintenance Configuration Name
+            /// Resource Identifier
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

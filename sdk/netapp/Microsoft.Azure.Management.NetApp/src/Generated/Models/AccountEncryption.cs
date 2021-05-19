@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Initializes a new instance of the AccountEncryption class.
         /// </summary>
         /// <param name="keySource">Encryption Key Source. Possible values are:
-        /// 'Microsoft.NetApp'.</param>
+        /// 'Microsoft.NetApp'. Possible values include:
+        /// 'Microsoft.NetApp'</param>
         public AccountEncryption(string keySource = default(string))
         {
             KeySource = keySource;
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
 
         /// <summary>
         /// Gets or sets encryption Key Source. Possible values are:
-        /// 'Microsoft.NetApp'.
+        /// 'Microsoft.NetApp'. Possible values include: 'Microsoft.NetApp'
         /// </summary>
         [JsonProperty(PropertyName = "keySource")]
         public string KeySource { get; set; }

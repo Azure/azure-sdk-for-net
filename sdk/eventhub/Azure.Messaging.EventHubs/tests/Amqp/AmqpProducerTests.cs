@@ -7,9 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
-using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
@@ -224,31 +222,6 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.Object.CloseAsync(CancellationToken.None);
 
             Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CreateBatchAsyncEnsuresConnectionNotClosed()
-        {
-            var endpoint = new Uri("amqps://not.real.com");
-            var eventHub = "eventHubName";
-            var partition = "3";
-            var options = new EventHubProducerClientOptions();
-            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
-            var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
-
-            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
-            scope.Dispose();
-
-            var producer = new AmqpProducer(eventHub, partition, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
-            await producer.CloseAsync(CancellationToken.None);
-
-            Assert.That(async () => await producer.CreateBatchAsync(new CreateBatchOptions(), CancellationToken.None),
-                Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>
@@ -687,31 +660,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ReadInitializationPublishingPropertiesAsyncEnsuresConnectionNotClosed()
-        {
-            var endpoint = new Uri("amqps://not.real.com");
-            var eventHub = "eventHubName";
-            var partition = "3";
-            var options = new EventHubProducerClientOptions();
-            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
-            var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
-
-            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
-            scope.Dispose();
-
-            var producer = new AmqpProducer(eventHub, partition, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
-            await producer.CloseAsync(CancellationToken.None);
-
-            Assert.That(async () => await producer.ReadInitializationPublishingPropertiesAsync(CancellationToken.None),
-                Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
         public async Task ReadInitializationPublishingPropertiesAsyncEnsuresPropertiesArePopulated()
         {
             var expectedProperties = new PartitionPublishingProperties(false, null, null, null);
@@ -1075,30 +1023,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void SendEnumerableEnsuresConnectionNotClosed()
-        {
-            var endpoint = new Uri("amqps://not.real.com");
-            var eventHub = "eventHubName";
-            var partition = "3";
-            var options = new EventHubProducerClientOptions();
-            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
-            var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
-
-            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
-            var producer = new AmqpProducer(eventHub, partition, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
-
-            scope.Dispose();
-
-            Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendEventOptions(), CancellationToken.None),
-                Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpProducer.SendAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
         public async Task SendEnumerableUsesThePartitionKey()
         {
             var expectedPartitionKey = "some key";
@@ -1409,30 +1333,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.Object.CloseAsync(CancellationToken.None);
             Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, "ns", "eh", new SendEventOptions()), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpProducer.SendAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void SendBatchEnsuresConnectionNotClosed()
-        {
-            var endpoint = new Uri("amqps://not.real.com");
-            var eventHub = "eventHubName";
-            var partition = "3";
-            var options = new EventHubProducerClientOptions();
-            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
-            var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
-
-            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
-            var producer = new AmqpProducer(eventHub, partition, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
-
-            scope.Dispose();
-
-            Assert.That(async () => await producer.SendAsync(EventHubsModelFactory.EventDataBatch(2048, new List<EventData>()), CancellationToken.None),
-                Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>

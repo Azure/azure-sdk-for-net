@@ -12,6 +12,7 @@ using NUnit.Framework.Interfaces;
 
 namespace Azure.Core.TestFramework
 {
+    [Category("Recorded")]
     public abstract class RecordedTestBase : ClientTestBase
     {
         protected RecordedTestSanitizer Sanitizer { get; set; }
@@ -45,7 +46,7 @@ namespace Azure.Core.TestFramework
             get => _saveDebugRecordingsOnFailure;
             set
             {
-                if (value && TestEnvironment.GlobalIsRunningInCI)
+                if (value && !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID")))
                 {
                     throw new AssertionException($"Setting {nameof(SaveDebugRecordingsOnFailure)} must not be merged");
                 }
@@ -56,11 +57,15 @@ namespace Azure.Core.TestFramework
         private bool _saveDebugRecordingsOnFailure;
         protected bool ValidateClientInstrumentation { get; set; }
 
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
+        protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
+        {
+        }
+
+        protected RecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
-            Mode = mode ?? TestEnvironment.GlobalTestMode;
+            Mode = mode;
         }
 
         public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
@@ -134,15 +139,15 @@ namespace Azure.Core.TestFramework
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
-                test.Properties.ContainsKey("_SkipRecordings"))
+                test.Properties.ContainsKey("SkipRecordings"))
             {
-                throw new IgnoreException((string) test.Properties.Get("_SkipRecordings"));
+                throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
             }
 
             if (Mode == RecordedTestMode.Live &&
-                test.Properties.ContainsKey("_SkipLive"))
+                test.Properties.ContainsKey("SkipLive"))
             {
-                throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
+                throw new IgnoreException((string) test.Properties.Get("SkipLive"));
             }
 
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
@@ -171,22 +176,5 @@ namespace Azure.Core.TestFramework
             ValidateClientInstrumentation = false;
             return base.InstrumentClient(clientType, client, preInterceptors);
         }
-
-        protected internal T InstrumentOperation<T>(T operation) where T: Operation
-        {
-            return (T) InstrumentOperation(typeof(T), operation);
-        }
-
-        protected internal override object InstrumentOperation(Type operationType, object operation)
-        {
-            return ProxyGenerator.CreateClassProxyWithTarget(
-                operationType,
-                new[] {typeof(IInstrumented)},
-                operation,
-                new GetOriginalInterceptor(operation),
-                new OperationInterceptor(Mode == RecordedTestMode.Playback));
-        }
-
-        protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);
     }
 }

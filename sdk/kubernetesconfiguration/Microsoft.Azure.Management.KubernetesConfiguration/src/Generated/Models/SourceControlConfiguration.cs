@@ -35,11 +35,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// <summary>
         /// Initializes a new instance of the SourceControlConfiguration class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="systemData">Top level metadata
-        /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/common-api-contracts.md#system-metadata-for-all-azure-resources</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="repositoryUrl">Url of the SourceControl
         /// Repository.</param>
         /// <param name="operatorNamespace">The namespace to which this
@@ -70,8 +71,10 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// 'Running', 'Succeeded', 'Failed'</param>
         /// <param name="complianceStatus">Compliance Status of the
         /// Configuration</param>
-        public SourceControlConfiguration(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string repositoryUrl = default(string), string operatorNamespace = default(string), string operatorInstanceName = default(string), string operatorType = default(string), string operatorParams = default(string), IDictionary<string, string> configurationProtectedSettings = default(IDictionary<string, string>), string operatorScope = default(string), string repositoryPublicKey = default(string), string sshKnownHostsContents = default(string), bool? enableHelmOperator = default(bool?), HelmOperatorProperties helmOperatorProperties = default(HelmOperatorProperties), string provisioningState = default(string), ComplianceStatus complianceStatus = default(ComplianceStatus))
-            : base(id, name, type, systemData)
+        /// <param name="systemData">Top level metadata
+        /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/common-api-contracts.md#system-metadata-for-all-azure-resources</param>
+        public SourceControlConfiguration(string id = default(string), string name = default(string), string type = default(string), string repositoryUrl = default(string), string operatorNamespace = default(string), string operatorInstanceName = default(string), string operatorType = default(string), string operatorParams = default(string), IDictionary<string, string> configurationProtectedSettings = default(IDictionary<string, string>), string operatorScope = default(string), string repositoryPublicKey = default(string), string sshKnownHostsContents = default(string), bool? enableHelmOperator = default(bool?), HelmOperatorProperties helmOperatorProperties = default(HelmOperatorProperties), string provisioningState = default(string), ComplianceStatus complianceStatus = default(ComplianceStatus), SystemData systemData = default(SystemData))
+            : base(id, name, type)
         {
             RepositoryUrl = repositoryUrl;
             OperatorNamespace = operatorNamespace;
@@ -86,6 +89,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
             HelmOperatorProperties = helmOperatorProperties;
             ProvisioningState = provisioningState;
             ComplianceStatus = complianceStatus;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -182,6 +186,13 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.complianceStatus")]
         public ComplianceStatus ComplianceStatus { get; private set; }
+
+        /// <summary>
+        /// Gets or sets top level metadata
+        /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/common-api-contracts.md#system-metadata-for-all-azure-resources
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
     }
 }

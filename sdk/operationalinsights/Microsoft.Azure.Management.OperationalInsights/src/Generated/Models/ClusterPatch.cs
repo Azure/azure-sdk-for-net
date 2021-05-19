@@ -37,13 +37,11 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         /// <param name="keyVaultProperties">The associated key
         /// properties.</param>
-        /// <param name="identity">The identity of the resource.</param>
         /// <param name="sku">The sku properties.</param>
         /// <param name="tags">Resource tags.</param>
-        public ClusterPatch(KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), Identity identity = default(Identity), ClusterSku sku = default(ClusterSku), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ClusterPatch(KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), ClusterSku sku = default(ClusterSku), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             KeyVaultProperties = keyVaultProperties;
-            Identity = identity;
             Sku = sku;
             Tags = tags;
             CustomInit();
@@ -61,12 +59,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public KeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets the identity of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public Identity Identity { get; set; }
-
-        /// <summary>
         /// Gets or sets the sku properties.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
@@ -78,18 +70,5 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Identity != null)
-            {
-                Identity.Validate();
-            }
-        }
     }
 }

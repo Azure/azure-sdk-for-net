@@ -89,7 +89,9 @@ namespace Azure.Storage.Queues
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
+#pragma warning disable AZC0010 // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575 - prepare for STG 77 beta release.
         public QueueClientOptions(ServiceVersion version = LatestVersion)
+#pragma warning restore AZC0010
         {
             if (ServiceVersion.V2019_02_02 <= version
                 && version <= StorageVersionExtensions.MaxVersion)

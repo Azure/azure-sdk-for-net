@@ -5,13 +5,11 @@ using System;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
 using Microsoft.Azure.WebJobs.ServiceBus.Triggers;
-using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -26,30 +24,29 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
     internal class ServiceBusExtensionConfigProvider : IExtensionConfigProvider
     {
         private readonly INameResolver _nameResolver;
+        private readonly IConfiguration _configuration;
         private readonly ILoggerFactory _loggerFactory;
         private readonly ServiceBusOptions _options;
         private readonly MessagingProvider _messagingProvider;
         private readonly IConverterManager _converterManager;
-        private readonly ServiceBusClientFactory _clientFactory;
 
         /// <summary>
         /// Creates a new <see cref="ServiceBusExtensionConfigProvider"/> instance.
         /// </summary>
         ///// <param name="options">The <see cref="ServiceBusOptions"></see> to use./></param>
-        public ServiceBusExtensionConfigProvider(
-            IOptions<ServiceBusOptions> options,
+        public ServiceBusExtensionConfigProvider(IOptions<ServiceBusOptions> options,
             MessagingProvider messagingProvider,
             INameResolver nameResolver,
+            IConfiguration configuration,
             ILoggerFactory loggerFactory,
-            IConverterManager converterManager,
-            ServiceBusClientFactory clientFactory)
+            IConverterManager converterManager)
         {
             _options = options.Value;
             _messagingProvider = messagingProvider;
             _nameResolver = nameResolver;
+            _configuration = configuration;
             _loggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
             _converterManager = converterManager;
-            _clientFactory = clientFactory;
         }
 
         /// <summary>
@@ -85,12 +82,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
                 .AddOpenConverter<ServiceBusReceivedMessage, OpenType.Poco>(typeof(MessageToPocoConverter<>));
 
             // register our trigger binding provider
-            ServiceBusTriggerAttributeBindingProvider triggerBindingProvider = new ServiceBusTriggerAttributeBindingProvider(_nameResolver, _options, _messagingProvider, _loggerFactory, _converterManager, _clientFactory);
+            ServiceBusTriggerAttributeBindingProvider triggerBindingProvider = new ServiceBusTriggerAttributeBindingProvider(_nameResolver, _options, _messagingProvider, _configuration, _loggerFactory, _converterManager);
             context.AddBindingRule<ServiceBusTriggerAttribute>()
                 .BindToTrigger(triggerBindingProvider);
 
             // register our binding provider
-            ServiceBusAttributeBindingProvider bindingProvider = new ServiceBusAttributeBindingProvider(_nameResolver, _messagingProvider, _clientFactory);
+            ServiceBusAttributeBindingProvider bindingProvider = new ServiceBusAttributeBindingProvider(_nameResolver, _options, _configuration, _messagingProvider);
             context.AddBindingRule<ServiceBusAttribute>().Bind(bindingProvider);
         }
 

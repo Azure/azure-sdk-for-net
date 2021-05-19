@@ -51,21 +51,19 @@ namespace Azure.Identity
                 {
                     available = connectTask.Wait(ImdsAvailableTimeoutMs, cancellationToken) && client.Connected;
                 }
-
-                if (available)
-                {
-                    AzureIdentityEventSource.Singleton.ImdsEndpointFound(s_imdsEndpoint);
-                }
-                else
-                {
-                    AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint, "Establishing a connection timed out or failed without exception." );
-                }
             }
-            catch (Exception e)
+            catch
             {
-                AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint, e);
-
                 available = false;
+            }
+
+            if (available)
+            {
+                AzureIdentityEventSource.Singleton.ImdsEndpointFound(s_imdsEndpoint);
+            }
+            else
+            {
+                AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint);
             }
 
             return available ? new ImdsManagedIdentitySource(options.Pipeline, options.ClientId) : default;
