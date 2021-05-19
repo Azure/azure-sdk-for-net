@@ -53,7 +53,7 @@ namespace Azure.Messaging.WebPubSub
             string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expireAfter);
 
             var clientEndpoint = new UriBuilder(endpoint);
-            clientEndpoint.Scheme = "wss";
+            clientEndpoint.Scheme = _endpoint.Scheme == "http" ? "ws" : "wss";
             var uriString = $"{clientEndpoint}client/hubs/{_hub}?access_token={token}";
 
             return new Uri(uriString);
