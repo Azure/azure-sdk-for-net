@@ -123,6 +123,13 @@ namespace Azure.Containers.ContainerRegistry
             V1_0 = 1,
         }
     }
+    public static partial class ContainerRegistryModelFactory
+    {
+        public static Azure.Containers.ContainerRegistry.ArtifactManifestProperties ArtifactManifestProperties(string registryLoginServer, string repositoryName, string digest, long? size, System.DateTimeOffset createdOn, System.DateTimeOffset lastUpdatedOn, Azure.Containers.ContainerRegistry.ArtifactArchitecture? architecture, Azure.Containers.ContainerRegistry.ArtifactOperatingSystem? operatingSystem, System.Collections.Generic.IReadOnlyList<Azure.Containers.ContainerRegistry.ArtifactManifestReference> manifestReferences, System.Collections.Generic.IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead) { throw null; }
+        public static Azure.Containers.ContainerRegistry.ArtifactManifestReference ArtifactManifestReference(string digest, Azure.Containers.ContainerRegistry.ArtifactArchitecture architecture, Azure.Containers.ContainerRegistry.ArtifactOperatingSystem operatingSystem) { throw null; }
+        public static Azure.Containers.ContainerRegistry.ArtifactTagProperties ArtifactTagProperties(string registryLoginServer, string repositoryName, string name, string digest, System.DateTimeOffset createdOn, System.DateTimeOffset lastUpdatedOn, bool? canDelete, bool? canWrite, bool? canList, bool? canRead) { throw null; }
+        public static Azure.Containers.ContainerRegistry.RepositoryProperties RepositoryProperties(string registryLoginServer, string name, System.DateTimeOffset createdOn, System.DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, bool? teleportEnabled) { throw null; }
+    }
     public partial class ContainerRepository
     {
         protected ContainerRepository() { }
