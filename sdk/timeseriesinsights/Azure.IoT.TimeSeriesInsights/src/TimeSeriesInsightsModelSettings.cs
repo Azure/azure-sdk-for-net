@@ -51,7 +51,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// IReadOnlyList&lt;TimeSeriesIdProperty&gt; timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
         /// foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
         /// {
-        ///     Console.WriteLine($&quot;Time Series Id property name : &apos;{property.Name}&apos;, type : &apos;{property.Type}&apos;.&quot;);
+        ///     Console.WriteLine($&quot;Time Series Id property name : &apos;{property.Name}&apos;, type : &apos;{property.PropertyType}&apos;.&quot;);
         /// }
         /// </code>
         /// </example>
