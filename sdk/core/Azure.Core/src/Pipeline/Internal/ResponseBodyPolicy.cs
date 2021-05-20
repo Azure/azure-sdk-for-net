@@ -56,6 +56,11 @@ namespace Azure.Core.Pipeline
                     ProcessNext(message, pipeline);
                 }
             }
+            catch (OperationCanceledException ex)
+            {
+                ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, _networkTimeout);
+                throw;
+            }
             finally
             {
                 message.CancellationToken = oldToken;
@@ -92,9 +97,14 @@ namespace Azure.Core.Pipeline
                     message.Response.ContentStream = bufferedStream;
                 }
                 // We dispose stream on timeout so catch and check if cancellation token was cancelled
-                catch (ObjectDisposedException)
+                catch (ObjectDisposedException ex)
                 {
-                    cts.Token.ThrowIfCancellationRequested();
+                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, _networkTimeout);
+                    throw;
+                }
+                catch (OperationCanceledException ex)
+                {
+                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, _networkTimeout);
                     throw;
                 }
             }
@@ -143,6 +153,26 @@ namespace Azure.Core.Pipeline
             {
                 cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
                 ArrayPool<byte>.Shared.Return(buffer);
+            }
+        }
+
+        /// <summary>Throws a cancellation exception if cancellation has been requested via <paramref name="originalToken"/> or <paramref name="timeoutToken"/>.</summary>
+        /// <param name="originalToken">The customer provided token.</param>
+        /// <param name="timeoutToken">The linked token that is cancelled on timeout provided token.</param>
+        /// <param name="inner">The inner exception to use.</param>
+        /// <param name="timeout">The timeout used for the operation.</param>
+#pragma warning disable CA1068 // Cancellation token has to be the last parameter
+        internal static void ThrowIfCancellationRequestedOrTimeout(CancellationToken originalToken, CancellationToken timeoutToken, Exception? inner, TimeSpan timeout)
+#pragma warning restore CA1068
+        {
+            CancellationTokenExtensions.ThrowIfCancellationRequested(originalToken);
+
+            if (timeoutToken.IsCancellationRequested)
+            {
+                throw CancellationTokenExtensions.CreateOperationCanceledException(
+                    inner,
+                    timeoutToken,
+                    $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}.");
             }
         }
     }

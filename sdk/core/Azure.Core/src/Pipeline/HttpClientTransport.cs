@@ -120,9 +120,9 @@ namespace Azure.Core.Pipeline
                 }
             }
             // HttpClient on NET5 throws OperationCanceledException from sync call sites, normalize to TaskCanceledException
-            catch (OperationCanceledException)
+            catch (OperationCanceledException e) when (CancellationTokenExtensions.ShouldWrapInOperationCanceledException(e, message.CancellationToken))
             {
-                throw new TaskCanceledException();
+                throw CancellationTokenExtensions.CreateOperationCanceledException(e, message.CancellationToken);
             }
             catch (HttpRequestException e)
             {

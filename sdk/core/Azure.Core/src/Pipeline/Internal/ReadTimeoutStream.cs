@@ -38,6 +38,11 @@ namespace Azure.Core.Pipeline
                 source.Token.ThrowIfCancellationRequested();
                 throw;
             }
+            catch (OperationCanceledException ex)
+            {
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+                throw;
+            }
             finally
             {
                 StopTimeout(source, dispose);
@@ -57,6 +62,11 @@ namespace Azure.Core.Pipeline
             catch (ObjectDisposedException)
             {
                 source.Token.ThrowIfCancellationRequested();
+                throw;
+            }
+            catch (OperationCanceledException ex)
+            {
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
                 throw;
             }
             finally
