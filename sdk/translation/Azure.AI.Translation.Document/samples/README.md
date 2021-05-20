@@ -21,6 +21,12 @@ Azure Cognitive Services Document Translation is a cloud service that translates
 - [Start Translation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/Sample1_StartTranslation.md)
 - [Poll Documents Status](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/Sample2_PollIndividualDocuments.md)
 - [Operations History](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/Sample3_OperationsHistory.md)
+- [Authentication (code sample)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/CodeSamples/SampleAuthentication.cs)
+- [Check Documents Status (code sample)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/CodeSamples/SampleCheckDocumentStatuses.cs)
+- [Create Translation Job (code sample)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/CodeSamples/SampleCreateTranslationJob.cs)
+- [Create Translation Job With Glossaries (code sample)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/CodeSamples/SampleTranslationWithGlossaries.cs)
+- [List All Submitted Jobs (code sample)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/CodeSamples/SampleListAllSubmittedJobs.cs)
+- [Create Storage Containers And Submit Job (code sample)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/CodeSamples/SampleTranslationWithAzureBlob.cs)
 
 ## Advanced samples
 - [Multiple Inputs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/Sample4_MultipleInputs.md)
