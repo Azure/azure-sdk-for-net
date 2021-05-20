@@ -31,8 +31,8 @@ USAGE:
     Optional environment variables - if not set, they will be created for you
     6) AZURE_STORAGE_SOURCE_CONTAINER_NAME - the name of your source container
     7) AZURE_STORAGE_TARGET_CONTAINER_NAME - the name of your target container
-    8) AZURE_DOCUMENT_NAME - the name and file extension of your document in this directory
-        e.g. "mydocument.txt"
+    8) AZURE_DOCUMENT_PATH - (optional) the path and file extension of your document in this directory
+        e.g. "path/mydocument.txt"
 **/
 
 namespace DocumentTranslatorSamples
@@ -48,6 +48,7 @@ namespace DocumentTranslatorSamples
             var storageAccountKey = Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_KEY");
             var sourceContainerName = Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_CONTAINER_NAME");
             var targetContainerName = Environment.GetEnvironmentVariable("AZURE_STORAGE_TARGET_CONTAINER_NAME");
+            var documentPath = Environment.GetEnvironmentVariable("AZURE_DOCUMENT_PATH");
 
             // Create source and target storage containers
             BlobServiceClient blobServiceClient = new BlobServiceClient(storageEndpoint, new StorageSharedKeyCredential(storageAccountName, storageAccountKey));
@@ -55,9 +56,20 @@ namespace DocumentTranslatorSamples
             BlobContainerClient targetContainerClient = await blobServiceClient.CreateBlobContainerAsync(targetContainerName ?? "translation-target-container").ConfigureAwait(false);
 
             // Upload blob (file) to the source container
-            BlobClient srcBlobClient = sourceContainerClient.GetBlobClient("example_source_document.txt");
-            BlobClient tgtBlobClient = targetContainerClient.GetBlobClient("example_target_document.txt");
-            await srcBlobClient.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Hello.\nThis is a testing text.")), true).ConfigureAwait(false);
+            BlobClient srcBlobClient = sourceContainerClient.GetBlobClient(string.IsNullOrWhiteSpace(documentPath) ? Path.GetFileName(documentPath) : "example_source_document.txt");
+
+            if (!string.IsNullOrWhiteSpace(documentPath))
+            {
+                using (FileStream uploadFileStream = File.OpenRead(documentPath))
+                {
+                    await srcBlobClient.UploadAsync(uploadFileStream, true).ConfigureAwait(false);
+                }
+            }
+            else
+            {
+                await srcBlobClient.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Hello.\nThis is a testing text.")), true).ConfigureAwait(false);
+            }
+
             Console.WriteLine($"Uploaded document {srcBlobClient.Uri} to source storage container");
 
             // Generate SAS tokens for source & target
