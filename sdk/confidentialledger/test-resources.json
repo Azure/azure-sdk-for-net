@@ -55,7 +55,7 @@
     },
     "CONFIDENTIALLEDGER_IDENTITY_URL": {
       "type": "string",
-      "value": "[format('https://identity.accledger.azure.com/ledgerIdentity/{0}', parameters('baseName'))]"
+      "value": "https://identity.accledger.azure.com/"
     },
     "CONFIDENTIALLEDGER_CLIENT_OBJECTID": {
       "type": "string",
