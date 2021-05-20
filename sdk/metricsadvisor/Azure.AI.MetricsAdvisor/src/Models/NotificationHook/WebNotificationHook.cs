@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        internal WebNotificationHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators, WebhookHookParameter hookParameter)
+        internal WebNotificationHook(HookType hookType, string id, string name, string description, Uri externalLink, IReadOnlyList<string> administrators, WebhookHookParameter hookParameter)
             : base(hookType, id, name, description, externalLink, administrators)
         {
             HookType = hookType;
@@ -71,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         internal WebhookHookParameter HookParameter => new WebhookHookParameter()
         {
-            Endpoint = Endpoint,
+            Endpoint = Endpoint.AbsoluteUri,
             Username = Username,
             Password = Password,
             CertificateKey = CertificateKey,
