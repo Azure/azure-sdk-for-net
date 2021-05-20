@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        private string GetApiVersion(CancellationToken cancellationToken)
+        protected string GetApiVersion(CancellationToken cancellationToken)
         {
             string version = ClientOptions.ApiVersions.TryGetApiVersion(Id.ResourceType, cancellationToken);
             if (version is null)

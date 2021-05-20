@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ProviderOperations.ResourceType;
+        //protected override ResourceType ValidResourceType => ProviderOperations.ResourceType;
 
         private ProviderRestOperations RestClient
         {
@@ -150,35 +150,16 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <summary> Gets the specified resource provider. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public override Response<ProviderData> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.Get");
-            scope.Start();
-            try
-            {
-                return RestClient.Get(resourceProviderNamespace, expand, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <inheritdoc/>
-        public override Response<GenericResource> Get(CancellationToken cancellationToken = default)
+        public override Response<Provider> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.Get");
+            using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var result = RestClient.GetById(Id, apiVersion, cancellationToken);
-                return Response.FromValue(new GenericResource(this, result), result.GetRawResponse());
+                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {

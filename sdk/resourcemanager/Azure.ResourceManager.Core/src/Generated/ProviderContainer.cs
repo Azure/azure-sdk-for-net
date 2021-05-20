@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ProviderData> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ProvidersOperations.Get");
+            using var scope = Diagnostics.CreateScope("ProvidersOperations.Get");
             scope.Start();
             try
             {
