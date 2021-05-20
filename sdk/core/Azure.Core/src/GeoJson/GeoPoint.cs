@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Core.GeoJson
+namespace Azure.GeoJson
 {
     /// <summary>
     /// Represents a point geometry.

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.GeoJson;
+using Azure.GeoJson;
 using NUnit.Framework;
 
 namespace Azure.Core.Samples
@@ -25,7 +25,7 @@ namespace Azure.Core.Samples
                 new GeoPosition(-122.108727, 47.649383),
                 new GeoPosition(-122.081538, 47.640846),
                 new GeoPosition(-122.078634, 47.576066),
-                new GeoPosition(-122.112686, 47.578559)
+                new GeoPosition(-122.112686, 47.578559),
             });
             #endregion
         }
@@ -39,7 +39,8 @@ namespace Azure.Core.Samples
                 new GeoPosition(-122.108727, 47.649383),
                 new GeoPosition(-122.081538, 47.640846),
                 new GeoPosition(-122.078634, 47.576066),
-                new GeoPosition(-122.112686, 47.578559)
+                new GeoPosition(-122.112686, 47.578559),
+                new GeoPosition(-122.108727, 47.649383),
             });
             #endregion
         }
@@ -55,7 +56,9 @@ namespace Azure.Core.Samples
                     new GeoPosition(-122.108727, 47.649383),
                     new GeoPosition(-122.081538, 47.640846),
                     new GeoPosition(-122.078634, 47.576066),
-                    new GeoPosition(-122.112686, 47.578559)
+                    new GeoPosition(-122.112686, 47.578559),
+                    // Last position same as first
+                    new GeoPosition(-122.108727, 47.649383),
                 }),
                 // Inner ring
                 new GeoLinearRing(new[]
@@ -63,7 +66,9 @@ namespace Azure.Core.Samples
                     new GeoPosition(-122.102370, 47.607370),
                     new GeoPosition(-122.083488, 47.608007),
                     new GeoPosition(-122.085419, 47.597879),
-                    new GeoPosition(-122.107005, 47.596895)
+                    new GeoPosition(-122.107005, 47.596895),
+                    // Last position same as first
+                    new GeoPosition(-122.102370, 47.607370),
                 })
             });
             #endregion

@@ -4,8 +4,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
-namespace Azure.Core.GeoJson
+namespace Azure.GeoJson
 {
     /// <summary>
     /// Represents a geometry that is composed of multiple <see cref="GeoPolygon"/>.
