@@ -12,7 +12,7 @@ using Azure.Test.Perf;
 
 namespace Azure.Containers.ContainerRegistry.Perf
 {
-    public sealed class ListArtifacts : PerfTest<PerfOptions>
+    public sealed class ListArtifacts : ContainerRegistryPerfTest<PerfOptions>
     {
         private readonly ContainerRegistryClient _client;
 
@@ -25,6 +25,11 @@ namespace Azure.Containers.ContainerRegistry.Perf
         {
             // Global setup code that runs once at the beginning of test execution.
             await base.GlobalSetupAsync();
+
+            string repository = $"library/node";
+            string tag = "test-perf";
+
+            await ImportImage(PerfTestEnvironment.Instance.Registry, repository, tag);
         }
 
         public override async Task SetupAsync()
