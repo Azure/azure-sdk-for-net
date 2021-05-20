@@ -562,7 +562,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(hook.Administrators, Is.Not.Null.And.Not.Empty);
                 Assert.That(hook.Administrators.Any(admin => admin == null || admin == string.Empty), Is.False);
                 Assert.That(hook.Description, Is.Not.Null);
-                Assert.That(hook.ExternalLink, Is.Not.Null);
 
                 if (hook is EmailNotificationHook)
                 {
