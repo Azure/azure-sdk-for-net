@@ -6,6 +6,13 @@
 - Renamed `AnalyzeBatchActionsOperation` to `AnalyzeActionsOperation`.
 - Renamed `AnalyzeBatchActionsResult` to `AnalyzeActionsResult`.
 - Renamed `AnalyzeBatchActionsOptions` to `AnalyzeActionsOptions`.
+- `TextAnalyticsActions` now takes `xxAction` types, instead of `xxOptions` types. Renames and types are as follow:
+  - `ExtractKeyPhrasesOptions` changed to new type `ExtractKeyPhrasesActions`.
+  - `RecognizeEntitiesOptions` changed to new type `RecognizeEntitiesActions`.
+  - `RecognizePiiEntitiesOptions` changed to new type `RecognizePiiEntitiesActions`.
+  - `RecognizeLinkedEntitiesOptions` changed to new type `RecognizeLinkedEntitiesActions`.
+  - `AnalyzeSentimentOptions` changed to new type `AnalyzeSentimentActions`.
+- Renamed type `TextAnalyticsActionDetails` to `TextAnalyticsActionResult`.
 
 ## 5.1.0-beta.7 (2021-05-18)
 ### New features

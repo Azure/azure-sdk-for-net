@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.9.0-beta.5 (Unreleased)
-
+- Fixed bug where Client Side Encryption during large transactions (greater than max int value) would throw an exception.
 
 ## 12.9.0-beta.4 (2021-05-12)
 - Added support for service version 2020-08-04.
@@ -10,6 +10,12 @@
 - Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a BlobSasBuilder parameter.
 - Fixed bug where BlobBaseClient.Exists() would not function correctly on blobs encrypted with CPK.
 - Includes all updates and fixes from 12.8.2 and 12.8.3
+
+## 12.8.3 (2021-04-27)
+- Fixed bug where Stream returned by BlockBlobClient.OpenWrite could corrupt blocks if flushed between writes.
+
+## 12.8.2 (2021-04-27)
+- This release contains bug fixes to improve quality.
 
 ## 12.9.0-beta.3 (2021-04-09)
 - This release contains bug fixes to improve quality.
@@ -180,9 +186,3 @@ excellent developer experience.  It was created following the Azure SDK Design
 Guidelines for .NET at https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html.
 
 For more information, please visit: https://aka.ms/azure-sdk-preview1-net.
-## 12.8.3 (2020-04-27)
-- Fixed bug where Stream returned by BlockBlobClient.OpenWrite could corrupt blocks if flushed between writes.
-
-## 12.8.2 (2020-04-27)
-- This release contains bug fixes to improve quality.
-

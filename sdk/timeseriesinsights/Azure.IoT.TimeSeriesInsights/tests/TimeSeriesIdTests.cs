@@ -59,15 +59,15 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 {
                     // Get the instance with a null item in its Id
                     Response<InstancesOperationResult[]> getInstanceWithNullInId = await instancesClient
-                        .GetAsync(new List<TimeSeriesId> { idWithNull })
+                        .GetByIdAsync(new List<TimeSeriesId> { idWithNull })
                         .ConfigureAwait(false);
 
                     getInstanceWithNullInId.Value.Length.Should().Be(1);
 
                     InstancesOperationResult resultItem = getInstanceWithNullInId.Value.First();
                     resultItem.Instance.Should().NotBeNull();
-                    resultItem.Instance.TimeSeriesId.ToArray().Length.Should().Be(3);
-                    resultItem.Instance.TimeSeriesId.ToArray()[1].Should().BeNull();
+                    resultItem.Instance.TimeSeriesId.ToStringArray().Length.Should().Be(3);
+                    resultItem.Instance.TimeSeriesId.ToStringArray()[1].Should().BeNull();
 
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);
@@ -78,7 +78,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 try
                 {
                     Response<TimeSeriesOperationError[]> deleteInstancesResponse = await instancesClient
-                        .DeleteAsync(timeSeriesInstances.Select((instance) => instance.TimeSeriesId))
+                        .DeleteByIdAsync(timeSeriesInstances.Select((instance) => instance.TimeSeriesId))
                         .ConfigureAwait(false);
 
                     // Assert that the response array does not have any error object set
@@ -116,7 +116,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var tsiId = new TimeSeriesId(key1);
 
             // Act
-            var idAsArray = tsiId.ToArray();
+            var idAsArray = tsiId.ToStringArray();
 
             // Assert
             idAsArray.Should().Equal(new string[] { key1 });
@@ -131,7 +131,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var tsiId = new TimeSeriesId(key1, key2);
 
             // Act
-            var idAsArray = tsiId.ToArray();
+            var idAsArray = tsiId.ToStringArray();
 
             // Assert
             idAsArray.Should().Equal(new string[] { key1, key2 });
@@ -147,7 +147,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var tsiId = new TimeSeriesId(key1, key2, key3);
 
             // Act
-            var idAsArray = tsiId.ToArray();
+            var idAsArray = tsiId.ToStringArray();
 
             // Assert
             idAsArray.Should().Equal(new string[] { key1, key2, key3 });

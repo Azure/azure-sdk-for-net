@@ -363,6 +363,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> UpdateDataFeedAsync(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
+            /*
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
             if (!string.IsNullOrEmpty(dataFeed.Id) && !dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
@@ -382,6 +383,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(ex);
                 throw;
             }
+            */
+            await Task.CompletedTask.ConfigureAwait(false);
+            return default;
         }
 
         /// <summary>
@@ -397,6 +401,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
         public virtual Response UpdateDataFeed(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
+            /*
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
             if (!string.IsNullOrEmpty(dataFeed.Id) && !dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
@@ -416,6 +421,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(ex);
                 throw;
             }
+            */
+            return default;
         }
 
         /// <summary>
@@ -868,6 +875,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> UpdateDetectionConfigurationAsync(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
+            /*
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
             if (!string.IsNullOrEmpty(detectionConfiguration.Id) && !detectionConfigurationId.Equals(detectionConfiguration.Id, StringComparison.OrdinalIgnoreCase))
@@ -888,6 +896,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
+            */
+
+            await Task.CompletedTask.ConfigureAwait(false);
+            return default;
         }
 
         /// <summary>
@@ -903,6 +915,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Response UpdateDetectionConfiguration(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
+            /*
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
             if (!string.IsNullOrEmpty(detectionConfiguration.Id) && !detectionConfigurationId.Equals(detectionConfiguration.Id, StringComparison.OrdinalIgnoreCase))
@@ -923,6 +936,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
+            */
+            return default;
         }
 
         /// <summary>
@@ -945,7 +960,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricGuid, cancellationToken).ConfigureAwait(false);
+                    Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricGuid, null, null, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -978,7 +993,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricGuid, cancellationToken);
+                    Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricGuid, null, null, cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1156,6 +1171,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> UpdateAlertConfigurationAsync(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
+            /*
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             if (!string.IsNullOrEmpty(alertConfiguration.Id) && !alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
@@ -1176,6 +1192,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
+            */
+
+            await Task.CompletedTask.ConfigureAwait(false);
+            return default;
         }
 
         /// <summary>
@@ -1191,6 +1211,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
         public virtual Response UpdateAlertConfiguration(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
+            /*
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             if (!string.IsNullOrEmpty(alertConfiguration.Id) && !alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
@@ -1211,6 +1232,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
+            */
+
+            return default;
         }
 
         /// <summary>
@@ -1291,7 +1315,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, cancellationToken).ConfigureAwait(false);
+                    Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, null, null, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1324,7 +1348,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(detectionConfigurationGuid, cancellationToken);
+                    Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(detectionConfigurationGuid, null, null, cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1492,6 +1516,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
         public virtual async Task<Response> UpdateHookAsync(string hookId, NotificationHook hook, CancellationToken cancellationToken = default)
         {
+            /*
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
 
@@ -1509,6 +1534,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
+            */
+
+            await Task.CompletedTask.ConfigureAwait(false);
+            return default;
         }
 
         /// <summary>
@@ -1524,6 +1553,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
         public virtual Response UpdateHook(string hookId, NotificationHook hook, CancellationToken cancellationToken = default)
         {
+            /*
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
 
@@ -1541,6 +1571,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
+            */
+
+            return default;
         }
 
         /// <summary>

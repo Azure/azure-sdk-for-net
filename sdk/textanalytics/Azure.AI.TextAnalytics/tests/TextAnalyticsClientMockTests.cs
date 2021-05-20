@@ -677,14 +677,14 @@ namespace Azure.AI.TextAnalytics.Tests
                 "Elon Musk is the CEO of SpaceX and Tesla."
             };
 
-            var options = new ExtractKeyPhrasesOptions()
+            var actions = new ExtractKeyPhrasesAction()
             {
                 DisableServiceLogs = true
             };
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { options },
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { actions },
             };
 
             await client.StartAnalyzeActionsAsync(documents, batchActions);
@@ -715,14 +715,14 @@ namespace Azure.AI.TextAnalytics.Tests
                 "Elon Musk is the CEO of SpaceX and Tesla."
             };
 
-            var options = new RecognizeEntitiesOptions()
+            var actions = new RecognizeEntitiesAction()
             {
                 DisableServiceLogs = true
             };
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { options },
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { actions },
             };
 
             await client.StartAnalyzeActionsAsync(documents, batchActions);
@@ -753,14 +753,14 @@ namespace Azure.AI.TextAnalytics.Tests
                 "Elon Musk is the CEO of SpaceX and Tesla."
             };
 
-            var options = new RecognizeLinkedEntitiesOptions()
+            var actions = new RecognizeLinkedEntitiesAction()
             {
                 DisableServiceLogs = true
             };
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { options },
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { actions },
             };
 
             await client.StartAnalyzeActionsAsync(documents, batchActions);
@@ -791,14 +791,14 @@ namespace Azure.AI.TextAnalytics.Tests
                 "Elon Musk is the CEO of SpaceX and Tesla."
             };
 
-            var options = new RecognizePiiEntitiesOptions()
+            var actions = new RecognizePiiEntitiesAction()
             {
                 DisableServiceLogs = true
             };
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { options },
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { actions },
             };
 
             await client.StartAnalyzeActionsAsync(documents, batchActions);
