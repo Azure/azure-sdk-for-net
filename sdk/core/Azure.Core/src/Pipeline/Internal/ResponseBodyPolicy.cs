@@ -58,7 +58,7 @@ namespace Azure.Core.Pipeline
             }
             catch (OperationCanceledException ex)
             {
-                ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, _networkTimeout);
+                ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
                 throw;
             }
             finally
@@ -99,18 +99,18 @@ namespace Azure.Core.Pipeline
                 // We dispose stream on timeout so catch and check if cancellation token was cancelled
                 catch (ObjectDisposedException ex)
                 {
-                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, _networkTimeout);
+                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
                     throw;
                 }
                 // We dispose stream on timeout so catch and check if cancellation token was cancelled
                 catch (IOException ex)
                 {
-                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, _networkTimeout);
+                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
                     throw;
                 }
                 catch (OperationCanceledException ex)
                 {
-                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, _networkTimeout);
+                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
                     throw;
                 }
             }
