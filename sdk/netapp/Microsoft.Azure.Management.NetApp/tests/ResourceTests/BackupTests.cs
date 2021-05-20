@@ -19,7 +19,7 @@ using Polly.Contrib.WaitAndRetry;
 
 namespace NetApp.Tests.ResourceTests
 {
-    public class BackupTests : TestBase
+    public class AnfBackupTests : TestBase
     {
         private const int delay = 5000;
         [Fact]
@@ -150,8 +150,14 @@ namespace NetApp.Tests.ResourceTests
         }
 
         private void WaitForBackupDeleteSucceeded(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = ResourceUtils.volumeBackupAccountName1, string poolName = ResourceUtils.poolName1, string volumeName = ResourceUtils.backupVolumeName1, string backupName = ResourceUtils.backupName1)
-        {            
-            var delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(5), retryCount: 5); // use jitter strategy in the retry algorithm to prevent retries bunching into further spikes of load
+        {
+            var maxDelay = TimeSpan.FromSeconds(45);
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
+            {
+                maxDelay = TimeSpan.FromMilliseconds(500);
+            }
+            var delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(5), retryCount: 5)
+                .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks))); // use jitter strategy in the retry algorithm to prevent retries bunching into further spikes of load, with ceiling on delays (for larger retrycount) 
 
             var policy = Policy
                 .Handle<CloudException>() // retry if delete is not Succeeded, sometimes timeout in backend calls cause 'Max retry attempts exceeded.' in RP, second attempt usually succeds
@@ -165,13 +171,19 @@ namespace NetApp.Tests.ResourceTests
         private void WaitForBackupSucceeded(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = ResourceUtils.volumeBackupAccountName1, string poolName = ResourceUtils.poolName1, string volumeName = ResourceUtils.backupVolumeName1, string backupName = ResourceUtils.backupName1)
         {
             var maxDelay = TimeSpan.FromSeconds(45);
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
+            {
+                maxDelay = TimeSpan.FromMilliseconds(500);
+            }
+
             var delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(5), retryCount: 20)
                     .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks))); // use jitter strategy in the retry algorithm to prevent retries bunching into further spikes of load, with ceiling on delays (for larger retrycount) 
             var policy = Policy
                 .HandleResult<Backup>(b => !b.ProvisioningState.Equals("Succeeded")) // retry if Provisioning state is not Succeeded 
                 .WaitAndRetry(delay);
 
-            policy.Execute(() => GetBackup(netAppMgmtClient, ResourceUtils.resourceGroup, accountName, poolName, volumeName, backupName)            
+            policy.Execute(() => 
+            GetBackup(netAppMgmtClient, ResourceUtils.resourceGroup, accountName, poolName, volumeName, backupName)            
                 );
         }
 
@@ -183,7 +195,7 @@ namespace NetApp.Tests.ResourceTests
 
         private static string GetSessionsDirectoryPath()
         {
-            string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.BackupTests).GetTypeInfo().Assembly.Location;
+            string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.AnfBackupTests).GetTypeInfo().Assembly.Location;
             return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
     }
