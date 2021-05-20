@@ -49,6 +49,7 @@ param(
 Set-StrictMode -Version 3
 
 . ${PSScriptRoot}\common.ps1
+. ${PSScriptRoot}\apiview-helper.ps1
 
 function Get-ReleaseDay($baseDate)
 {
@@ -64,54 +65,6 @@ function Get-ReleaseDay($baseDate)
   return $baseDate;
 }
 
-function Check-ApiReviewStatus($packageName, $language)
-{
-  # Get API view URL and API Key to check status
-  Login-AzAccount
-  $url = Get-AzKeyvaultSecret -VaultName "AzureSDKPrepRelease-KV" -Name APIURL -AsPlainText
-  $apiKey = Get-AzKeyvaultSecret -VaultName "AzureSDKPrepRelease-KV" -Name APIKEY -AsPlainText
-
-  $lang = $language
-  # Update language name to match those in API cosmos DB. Cosmos SQL is case sensitive and handling this within the query makes it slow.
-  if($lang -eq 'javascript'){
-    $lang = "JavaScript"
-  }
-  elseif ($lang -eq "dotnet"){
-    $lang = "C#"
-  }
-  elseif ($lang -eq "java"){
-    $lang = "Java"
-  }
-  elseif ($lang -eq "python"){
-    $lang = "Python"
-  }
-
-  $headers = @{ "ApiKey" = $apiKey }
-  $body = @{
-    language = $lang
-    packageName = $packageName
-  }
-
-  try
-  {
-    $Response = Invoke-WebRequest $url -Method 'GET' -Headers $headers -Body $body
-    Write-Host "Response: $($Response.Content)"
-    if ($Response.StatusCode -eq '200')
-    {
-      Write-Host "API Review is approved for package $($packageName)"
-    }
-    else
-    {
-      Write-Error "API Review is not approved for package $($packageName). Please get automatic API review approved by architects."
-      Write-Host "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
-    }
-  }
-  catch
-  {
-    Write-Host "Exception details: $($_.Exception.Response)"
-    Write-Host "Failed to check API review status for package $($PackageName). You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
-  }
-}
 
 $ErrorPreference = 'Stop'
 
@@ -179,7 +132,12 @@ if ($null -eq $newVersionParsed)
 # Check API status if version is GA
 if (-not $newVersionParsed.IsPrerelease)
 {
-  Check-ApiReviewStatus -PackageName $packageProperties.Name -Language $LanguageDisplayName
+  $isApproved = Check-ApiReviewStatus -PackageName $packageProperties.Name -Language $LanguageDisplayName
+  if (-not $isApproved)
+  {
+    Write-Error "API review is not approved in APIView system."
+    exit 1
+  }
 }
 
 &$EngCommonScriptsDir/Update-DevOps-Release-WorkItem.ps1 `
