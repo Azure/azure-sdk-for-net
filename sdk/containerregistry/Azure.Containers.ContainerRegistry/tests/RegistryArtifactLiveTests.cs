@@ -12,7 +12,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public RegistryArtifactLiveTests(bool isAsync) : base(isAsync)
+        public RegistryArtifactLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -144,14 +144,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await artifact.DeleteAsync();
 
             // Assert
-
-            // This will be removed, pending investigation into potential race condition.
-            // https://github.com/azure/azure-sdk-for-net/issues/19699
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
-
             Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetManifestPropertiesAsync(); });
         }
 
@@ -365,14 +357,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await artifact.DeleteTagAsync(tag);
 
             // Assert
-
-            // This will be removed, pending investigation into potential race condition.
-            // https://github.com/azure/azure-sdk-for-net/issues/19699
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
-
             Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetTagPropertiesAsync(tag); });
         }
         #endregion
