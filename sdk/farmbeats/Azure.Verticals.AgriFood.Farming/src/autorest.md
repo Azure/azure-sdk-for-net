@@ -7,8 +7,8 @@ title: FarmBeats
 input-file: https://github.com/Azure/azure-rest-api-specs/blob/683e3f4849ee1d84629d0d0fa17789e80a9cee08/specification/agfood/data-plane/Microsoft.AgFoodPlatform/preview/2021-03-31-preview/agfood.json
 namespace: Azure.Verticals.AgriFood.Farming
 low-level-client: true
-credential-types: TokenCredential
-credential-scopes: https://farmbeats.azure.net/.default
+security: AADToken
+security-scopes: https://farmbeats.azure.net/.default
 ```
 
 # Model endpoint parameter as a url, not a string.
