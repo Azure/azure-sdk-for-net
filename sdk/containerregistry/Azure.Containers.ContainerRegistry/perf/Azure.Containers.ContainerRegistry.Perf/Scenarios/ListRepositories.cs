@@ -21,45 +21,19 @@ namespace Azure.Containers.ContainerRegistry.Perf
             _client = new ContainerRegistryClient(new Uri(PerfTestEnvironment.Instance.Endpoint), PerfTestEnvironment.Instance.Credential);
         }
 
-        public override async Task GlobalSetupAsync()
-        {
-            // Global setup code that runs once at the beginning of test execution.
-            await base.GlobalSetupAsync();
-        }
-
-        public override async Task SetupAsync()
-        {
-            // Individual test-level setup code that runs for each instance of the test.
-            await base.SetupAsync();
-        }
-
-        public override async Task CleanupAsync()
-        {
-            // Individual test-level cleanup code that runs for each instance of the test.
-            await base.CleanupAsync();
-        }
-
-        public override async Task GlobalCleanupAsync()
-        {
-            // Global cleanup code that runs once at the end of test execution.
-            await base.GlobalCleanupAsync();
-        }
-
         public override void Run(CancellationToken cancellationToken)
         {
-            var names = new List<string>();
             foreach (var repositoryName in _client.GetRepositoryNames())
             {
-                names.Add(repositoryName);
+                _client.GetRepository(repositoryName);
             }
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            var names = new List<string>();
             await foreach (var repositoryName in _client.GetRepositoryNamesAsync())
             {
-                names.Add(repositoryName);
+                _client.GetRepository(repositoryName);
             }
         }
     }

@@ -32,45 +32,21 @@ namespace Azure.Containers.ContainerRegistry.Perf
             await ImportImage(PerfTestEnvironment.Instance.Registry, repository, tag);
         }
 
-        public override async Task SetupAsync()
-        {
-            // Individual test-level setup code that runs for each instance of the test.
-            await base.SetupAsync();
-        }
-
-        public override async Task CleanupAsync()
-        {
-            // Individual test-level cleanup code that runs for each instance of the test.
-            await base.CleanupAsync();
-        }
-
-        public override async Task GlobalCleanupAsync()
-        {
-            // Global cleanup code that runs once at the end of test execution.
-            await base.GlobalCleanupAsync();
-        }
-
         public override void Run(CancellationToken cancellationToken)
         {
-            var artifactNames = new List<string>();
-
             var repository = _client.GetRepository($"library/node");
             foreach (var manifest in repository.GetManifests())
             {
-                var artifact = _client.GetArtifact($"library/node", manifest.Digest);
-                artifactNames.Add(artifact.FullyQualifiedName);
+                 _client.GetArtifact($"library/node", manifest.Digest);
             }
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            var artifactNames = new List<string>();
-
             var repository = _client.GetRepository($"library/node");
             await foreach (var manifest in repository.GetManifestsAsync())
             {
-                var artifact = _client.GetArtifact($"library/node", manifest.Digest);
-                artifactNames.Add(artifact.FullyQualifiedName);
+                _client.GetArtifact($"library/node", manifest.Digest);
             }
         }
     }
