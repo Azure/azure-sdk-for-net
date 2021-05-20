@@ -15,8 +15,6 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series instances are the time series themselves. In most cases, the deviceId or assetId is the unique identifier of the asset in the environment. Instances have descriptive information associated with them called instance fields. At a minimum, instance fields include hierarchy information. They can also include useful, descriptive data like the manufacturer, operator, or the last service date. </summary>
     public partial class TimeSeriesInstance
     {
-        /// <summary> This represents the type that this instance belongs to. Never null. </summary>
-        public string TypeId { get; set; }
         /// <summary> Optional name of the instance which is unique in an environment. Names acts as a mutable alias or display name of the time series instance. Mutable, may be null. </summary>
         public string Name { get; set; }
         /// <summary> This optional field contains description about the instance. </summary>
