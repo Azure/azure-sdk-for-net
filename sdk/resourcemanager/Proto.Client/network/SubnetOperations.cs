@@ -77,15 +77,15 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override Response<Subnet> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(Operations.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken),
-                n => new Subnet(this, new SubnetData(n)));
+            var response = Operations.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+            return Response.FromValue(new Subnet(this, new SubnetData(response.Value)), response.GetRawResponse());
         }
         
         /// <inheritdoc/>
         public override async Task<Response<Subnet>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(await Operations.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken),
-                n => new Subnet(this, new SubnetData(n)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new Subnet(this, new SubnetData(response.Value)), response.GetRawResponse());
         }
     }
 }

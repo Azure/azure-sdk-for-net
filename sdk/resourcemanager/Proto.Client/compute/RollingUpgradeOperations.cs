@@ -45,16 +45,14 @@ namespace Proto.Compute
         // Individual methods will be generated as they are declared
         public Response<RollingUpgrade> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<RollingUpgrade, Azure.ResourceManager.Compute.Models.RollingUpgradeStatusInfo>(
-                Operations.GetLatest(ParentId.ResourceGroupName, ParentId.Name, cancellationToken),
-                v => new RollingUpgrade(Parent, new RollingUpgradeStatusInfo(v)));
+            var response = Operations.GetLatest(ParentId.ResourceGroupName, ParentId.Name, cancellationToken);
+            return Response.FromValue(new RollingUpgrade(Parent, new RollingUpgradeStatusInfo(response.Value)), response.GetRawResponse());
         }
 
         public async Task<Response<RollingUpgrade>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<RollingUpgrade, Azure.ResourceManager.Compute.Models.RollingUpgradeStatusInfo>(
-                await Operations.GetLatestAsync(ParentId.ResourceGroupName, ParentId.Name, cancellationToken),
-                v => new RollingUpgrade(Parent, new RollingUpgradeStatusInfo(v)));
+            var response = await Operations.GetLatestAsync(ParentId.ResourceGroupName, ParentId.Name, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new RollingUpgrade(Parent, new RollingUpgradeStatusInfo(response.Value)), response.GetRawResponse());
         }
 
         // Note: Singleton may have different operations such as GET/PUT/PATCH/POST or a combination of these

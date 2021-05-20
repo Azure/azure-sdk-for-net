@@ -78,15 +78,15 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override Response<LoadBalancer> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<LoadBalancer, Azure.ResourceManager.Network.Models.LoadBalancer>(Operations.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken),
-                n => new LoadBalancer(this, new LoadBalancerData(n)));
+            var response = Operations.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+            return Response.FromValue(new LoadBalancer(this, new LoadBalancerData(response.Value)), response.GetRawResponse());
         }
         
         /// <inheritdoc/>
         public override async Task<Response<LoadBalancer>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<LoadBalancer, Azure.ResourceManager.Network.Models.LoadBalancer>(await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken),
-                n => new LoadBalancer(this, new LoadBalancerData(n)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken);
+            return Response.FromValue(new LoadBalancer(this, new LoadBalancerData(response.Value)), response.GetRawResponse());
         }
     }
 }

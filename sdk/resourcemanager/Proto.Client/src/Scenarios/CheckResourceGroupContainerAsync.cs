@@ -1,8 +1,7 @@
-﻿using Azure.ResourceManager.Core;
-using Proto.Compute;
+﻿using Azure.Identity;
+using Azure.ResourceManager.Core;
 using System;
 using System.Threading.Tasks;
-using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -28,8 +27,7 @@ namespace Proto.Client
             CleanUp.Add(resourceGroup.Id);
             var rgOps = subscription.GetResourceGroups().Get(Context.RgName);
             var resourceGroupContainer = subscription.GetResourceGroups();
-            var rg = new Azure.ResourceManager.Resources.Models.ResourceGroup("East US");
-            var resourceGroupData = new ResourceGroupData(rg);
+            var resourceGroupData = new ResourceGroupData("East US");
 
             ShouldThrow<ArgumentNullException>(
                 () => resourceGroupContainer.Construct(null),
