@@ -19,8 +19,8 @@ using System.Threading.Tasks;
 FILE: SampleTranslationWithAzureBlob.cs
 DESCRIPTION:
     This sample demonstrates how to use Azure Blob Storage to set up the necessary resources to create a translation
-    job. Run the sample to create containers, upload documents, and generate SAS tokens for the source/target
-    containers. Once the job is completed, use the storage library to download your documents locally.
+    operation. Run the sample to create containers, upload documents, and generate SAS tokens for the source/target
+    containers. Once the operation is completed, use the storage library to download your documents locally.
 
 PREREQUISITE:
     This sample requires you install Azure.Storage.Blobs nuget package:
@@ -83,30 +83,21 @@ namespace DocumentTranslatorSamples
 
             var documentTranslationClient = new DocumentTranslationClient(endpoint, new AzureKeyCredential(key));
 
-            var jobRequest = new List<DocumentTranslationInput>()
-            {
-                new DocumentTranslationInput(
-                    source: new TranslationSource(srcSasUri),
-                    targets: new List<TranslationTarget>()
-                        {
-                            new TranslationTarget(targetUri: tgtSasUri, languageCode: "es")
-                        }
-                    )
-            };
+            var operationRequest = new DocumentTranslationInput(srcSasUri, tgtSasUri, "es");
 
-            // Submit the translation job and wait for it to finish
-            var jobResult = await documentTranslationClient.StartTranslationAsync(jobRequest).ConfigureAwait(false);
-            await jobResult.WaitForCompletionAsync().ConfigureAwait(false);
+            // Submit the translation operation and wait for it to finish
+            var operationResult = await documentTranslationClient.StartTranslationAsync(operationRequest).ConfigureAwait(false);
+            await operationResult.WaitForCompletionAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Job status: {jobResult.Status}");
-            Console.WriteLine($"Job created on: {jobResult.CreatedOn}");
-            Console.WriteLine($"Job last updated on: {jobResult.LastModified}");
-            Console.WriteLine($"Total number of translations on documents: {jobResult.DocumentsTotal}");
+            Console.WriteLine($"Operation status: {operationResult.Status}");
+            Console.WriteLine($"Operation created on: {operationResult.CreatedOn}");
+            Console.WriteLine($"Operation last updated on: {operationResult.LastModified}");
+            Console.WriteLine($"Total number of translations on documents: {operationResult.DocumentsTotal}");
             Console.WriteLine("\nOf total documents...");
-            Console.WriteLine($"{jobResult.DocumentsFailed} failed");
-            Console.WriteLine($"{jobResult.DocumentsSucceeded} succeeded");
+            Console.WriteLine($"{operationResult.DocumentsFailed} failed");
+            Console.WriteLine($"{operationResult.DocumentsSucceeded} succeeded");
 
-            await foreach (var document in jobResult.GetAllDocumentStatusesAsync())
+            await foreach (var document in operationResult.GetAllDocumentStatusesAsync())
             {
                 if (document.Status == TranslationStatus.Succeeded)
                 {
