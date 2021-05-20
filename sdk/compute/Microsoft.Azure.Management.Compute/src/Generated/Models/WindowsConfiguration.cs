@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="timeZone">Specifies the time zone of the virtual
         /// machine. e.g. "Pacific Standard Time". &lt;br&gt;&lt;br&gt;
         /// Possible values can be
-        /// [TimeZoneInfo.Id](https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id)
+        /// [TimeZoneInfo.Id](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id)
         /// value from time zones returned by
-        /// [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.getsystemtimezones).</param>
+        /// [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.getsystemtimezones).</param>
         /// <param name="additionalUnattendContent">Specifies additional
         /// base-64 encoded XML formatted information that can be included in
         /// the Unattend.xml file, which is used by Windows Setup.</param>
@@ -96,9 +96,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies the time zone of the virtual machine. e.g.
         /// "Pacific Standard Time". &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
         /// Possible values can be
-        /// [TimeZoneInfo.Id](https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id)
+        /// [TimeZoneInfo.Id](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id)
         /// value from time zones returned by
-        /// [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.getsystemtimezones).
+        /// [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.getsystemtimezones).
         /// </summary>
         [JsonProperty(PropertyName = "timeZone")]
         public string TimeZone { get; set; }
