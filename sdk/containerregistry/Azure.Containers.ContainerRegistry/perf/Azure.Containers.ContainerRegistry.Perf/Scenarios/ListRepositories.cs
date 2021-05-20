@@ -12,11 +12,11 @@ using Azure.Test.Perf;
 
 namespace Azure.Containers.ContainerRegistry.Perf
 {
-    public sealed class ListArtifacts : ContainerRegistryPerfTest<PerfOptions>
+    public sealed class ListRepositories : ContainerRegistryPerfTest<PerfOptions>
     {
         private readonly ContainerRegistryClient _client;
 
-        public ListArtifacts(PerfOptions options) : base(options)
+        public ListRepositories(PerfOptions options) : base(options)
         {
             _client = new ContainerRegistryClient(new Uri(PerfTestEnvironment.Instance.Endpoint), PerfTestEnvironment.Instance.Credential);
         }
@@ -25,11 +25,6 @@ namespace Azure.Containers.ContainerRegistry.Perf
         {
             // Global setup code that runs once at the beginning of test execution.
             await base.GlobalSetupAsync();
-
-            string repository = $"library/node";
-            string tag = "test-perf";
-
-            await ImportImage(PerfTestEnvironment.Instance.Registry, repository, tag);
         }
 
         public override async Task SetupAsync()
@@ -52,25 +47,19 @@ namespace Azure.Containers.ContainerRegistry.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            var artifactNames = new List<string>();
-
-            var repository = _client.GetRepository($"library/node");
-            foreach (var manifest in repository.GetManifests())
+            var names = new List<string>();
+            foreach (var repositoryName in _client.GetRepositoryNames())
             {
-                var artifact = _client.GetArtifact($"library/node", manifest.Digest);
-                artifactNames.Add(artifact.FullyQualifiedName);
+                names.Add(repositoryName);
             }
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            var artifactNames = new List<string>();
-
-            var repository = _client.GetRepository($"library/node");
-            await foreach (var manifest in repository.GetManifestsAsync())
+            var names = new List<string>();
+            await foreach (var repositoryName in _client.GetRepositoryNamesAsync())
             {
-                var artifact = _client.GetArtifact($"library/node", manifest.Digest);
-                artifactNames.Add(artifact.FullyQualifiedName);
+                names.Add(repositoryName);
             }
         }
     }
