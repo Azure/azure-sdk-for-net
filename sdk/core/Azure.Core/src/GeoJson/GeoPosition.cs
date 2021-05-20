@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
-namespace Azure.Core.GeoJson
+namespace Azure.GeoJson
 {
     /// <summary>
-    ///
+    /// Represents a single spatial position with altitude, longitude, and optional latitude.
     /// </summary>
     public readonly struct GeoPosition : IEquatable<GeoPosition>
     {
@@ -96,7 +97,7 @@ namespace Azure.Core.GeoJson
         }
 
         /// <summary>
-        ///
+        /// Get the value of coordinate component using its index.
         /// </summary>
         /// <param name="index"></param>
         public double this[int index]
@@ -116,7 +117,7 @@ namespace Azure.Core.GeoJson
         }
 
         /// <summary>
-        ///
+        /// Returns the count of the coordinate components.
         /// </summary>
         public int Count => Altitude == null ? 2 : 3;
     }

@@ -4,8 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
-namespace Azure.Core.GeoJson
+namespace Azure.GeoJson
 {
     /// <summary>
     /// Represents a linear ring that's a part of a polygon

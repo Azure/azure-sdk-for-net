@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
-namespace Azure.Core.GeoJson
+namespace Azure.GeoJson
 {
     /// <summary>
     /// Represents information about the coordinate range of the <see cref="GeoObject"/>.
@@ -61,8 +62,12 @@ namespace Azure.Core.GeoJson
         }
 
         /// <inheritdoc />
-        public bool Equals(GeoBoundingBox other)
+        public bool Equals(GeoBoundingBox? other)
         {
+            if (other == null)
+            {
+                return false;
+            }
             return West.Equals(other.West) &&
                    South.Equals(other.South) &&
                    East.Equals(other.East) &&
@@ -84,9 +89,9 @@ namespace Azure.Core.GeoJson
         }
 
         /// <summary>
-        ///
+        /// Gets the component of the <see cref="GeoBoundingBox"/> based on it's index.
         /// </summary>
-        /// <param name="index"></param>
+        /// <param name="index">The index of the bounding box component.</param>
         public double this[int index]
         {
             get

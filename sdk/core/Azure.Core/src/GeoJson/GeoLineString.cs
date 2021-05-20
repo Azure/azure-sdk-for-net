@@ -1,14 +1,26 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Core.GeoJson
+namespace Azure.GeoJson
 {
     /// <summary>
     /// Represents a line geometry that consists of multiple coordinates.
     /// </summary>
+    /// <example>
+    /// Creating a line:
+    /// <code snippet="Snippet:CreateLineString">
+    /// var line = new GeoLineString(new[]
+    /// {
+    ///     new GeoPosition(-122.108727, 47.649383),
+    ///     new GeoPosition(-122.081538, 47.640846),
+    ///     new GeoPosition(-122.078634, 47.576066),
+    ///     new GeoPosition(-122.112686, 47.578559),
+    /// });
+    /// </code>
+    /// </example>
     public sealed class GeoLineString : GeoObject
     {
         /// <summary>
@@ -27,7 +39,7 @@ namespace Azure.Core.GeoJson
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
         public GeoLineString(IEnumerable<GeoPosition> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
-            Coordinates = new GeoArray<GeoPosition>(coordinates.ToArray());;
+            Coordinates = new GeoArray<GeoPosition>(coordinates.ToArray());
         }
 
         /// <summary>

@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Linq;
-using Azure.Core.GeoJson;
+using Azure.GeoJson;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class SpatialGeoArrayTest
+    public class GeoArrayTests
     {
         [Test]
         public void PointCoordinatesWork()

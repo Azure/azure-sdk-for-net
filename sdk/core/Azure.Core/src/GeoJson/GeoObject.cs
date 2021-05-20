@@ -6,8 +6,9 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
 
-namespace Azure.Core.GeoJson
+namespace Azure.GeoJson
 {
     /// <summary>
     /// A base type for all spatial types.

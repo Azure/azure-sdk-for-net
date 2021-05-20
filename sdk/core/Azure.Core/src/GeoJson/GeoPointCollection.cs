@@ -3,10 +3,10 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
+using Azure.Core;
 
-namespace Azure.Core.GeoJson
+namespace Azure.GeoJson
 {
     /// <summary>
     /// Represents a geometry that is composed of multiple <see cref="GeoPoint"/>.
@@ -34,9 +34,6 @@ namespace Azure.Core.GeoJson
             Points = points.ToArray();
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         internal IReadOnlyList<GeoPoint> Points { get; }
 
         /// <inheritdoc />
@@ -45,6 +42,7 @@ namespace Azure.Core.GeoJson
             return Points.GetEnumerator();
         }
 
+        /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

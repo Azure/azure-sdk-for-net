@@ -1,14 +1,54 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
-namespace Azure.Core.GeoJson
+namespace Azure.GeoJson
 {
     /// <summary>
     /// Represents a polygon consisting of outer ring and optional inner rings.
     /// </summary>
+    /// <example>
+    /// Creating a polygon:
+    /// <code snippet="Snippet:CreatePolygon">
+    /// var polygon = new GeoPolygon(new[]
+    /// {
+    ///     new GeoPosition(-122.108727, 47.649383),
+    ///     new GeoPosition(-122.081538, 47.640846),
+    ///     new GeoPosition(-122.078634, 47.576066),
+    ///     new GeoPosition(-122.112686, 47.578559),
+    ///     new GeoPosition(-122.108727, 47.649383),
+    /// });
+    /// </code>
+    /// Creating a polygon with holes:
+    /// <code snippet="Snippet:CreatePolygonWithHoles">
+    /// var polygon = new GeoPolygon(new[]
+    /// {
+    ///     // Outer ring
+    ///     new GeoLinearRing(new[]
+    ///     {
+    ///         new GeoPosition(-122.108727, 47.649383),
+    ///         new GeoPosition(-122.081538, 47.640846),
+    ///         new GeoPosition(-122.078634, 47.576066),
+    ///         new GeoPosition(-122.112686, 47.578559),
+    ///         // Last position same as first
+    ///         new GeoPosition(-122.108727, 47.649383),
+    ///     }),
+    ///     // Inner ring
+    ///     new GeoLinearRing(new[]
+    ///     {
+    ///         new GeoPosition(-122.102370, 47.607370),
+    ///         new GeoPosition(-122.083488, 47.608007),
+    ///         new GeoPosition(-122.085419, 47.597879),
+    ///         new GeoPosition(-122.107005, 47.596895),
+    ///         // Last position same as first
+    ///         new GeoPosition(-122.102370, 47.607370),
+    ///     })
+    /// });
+    /// </code>
+    /// </example>
     public sealed class GeoPolygon : GeoObject
     {
         /// <summary>
@@ -46,7 +86,7 @@ namespace Azure.Core.GeoJson
         public IReadOnlyList<GeoLinearRing> Rings { get; }
 
         /// <summary>
-        /// Returns the outer right of the polygon
+        /// Returns the outer ring of the polygon.
         /// </summary>
         public GeoLinearRing OuterRing => Rings[0];
 
