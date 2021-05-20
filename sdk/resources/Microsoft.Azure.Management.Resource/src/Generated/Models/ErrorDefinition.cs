@@ -14,25 +14,27 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Error response.
+    /// Error description and code explaining why resource name is invalid.
     /// </summary>
-    public partial class ErrorResponse
+    public partial class ErrorDefinition
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ErrorDefinition class.
         /// </summary>
-        public ErrorResponse()
+        public ErrorDefinition()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ErrorDefinition class.
         /// </summary>
-        /// <param name="error">The error details.</param>
-        public ErrorResponse(ErrorDefinition error = default(ErrorDefinition))
+        /// <param name="message">Description of the error.</param>
+        /// <param name="code">Code of the error.</param>
+        public ErrorDefinition(string message = default(string), string code = default(string))
         {
-            Error = error;
+            Message = message;
+            Code = code;
             CustomInit();
         }
 
@@ -42,10 +44,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error details.
+        /// Gets or sets description of the error.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorDefinition Error { get; set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
+
+        /// <summary>
+        /// Gets or sets code of the error.
+        /// </summary>
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
     }
 }
