@@ -14,7 +14,7 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release are
+        This is a public release of the Azure Compute SDK. Included with this release is:
         1. Restore Points API.
         2. UserData property added to VM and VMSS resources.
         3. Deep Deletion of Disks API.
