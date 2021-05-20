@@ -43,14 +43,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Description { get; set; }
 
         /// <summary> Optional field which enables a customized redirect, such as for troubleshooting notes. </summary>
-        public string ExternalLink { get; set; }
+        public Uri ExternalLink { get; set; }
 
         internal static HookInfoPatch GetPatchModel(NotificationHook hook)
         {
             return hook switch
             {
-                EmailNotificationHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, /*HookParameter = h.HookParameter,*/ Admins = h.Administrators },
-                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, /*HookParameter = h.HookParameter,*/ Admins = h.Administrators },
+                EmailNotificationHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink.AbsoluteUri, /*HookParameter = h.HookParameter,*/ Admins = h.Administrators },
+                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink.AbsoluteUri, /*HookParameter = h.HookParameter,*/ Admins = h.Administrators },
                 _ => throw new InvalidOperationException("Unknown AlertingHook type.")
             };
         }
