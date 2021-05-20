@@ -14,6 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress(nameof(NotificationHook), typeof(string))]
     public partial class NotificationHook
     {
+        internal NotificationHook()
+        {
+        }
+
         internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)
         {
             HookType = hookType;
@@ -55,7 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Used by CodeGen during serialization.
         /// </summary>
         [CodeGenMember("ExternalLink")]
-        internal string InternalExternalLink => ExternalLink.AbsoluteUri;
+        internal string InternalExternalLink => ExternalLink?.AbsoluteUri;
 
         internal static HookInfoPatch GetPatchModel(NotificationHook hook)
         {
