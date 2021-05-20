@@ -11,6 +11,8 @@ namespace Azure.IoT.TimeSeriesInsights
     [CodeGenModel("TimeSeriesIdProperty")]
     public partial class TimeSeriesIdProperty
     {
+        // This class declaration changes the class name and property name; do not remove.
+
         /// <summary> Initializes a new instance of TimeSeriesIdProperty. </summary>
         /// <param name="name"> The name of the property. </param>
         /// <param name="type"> The type of the property. Currently, only &quot;String&quot; is supported. </param>

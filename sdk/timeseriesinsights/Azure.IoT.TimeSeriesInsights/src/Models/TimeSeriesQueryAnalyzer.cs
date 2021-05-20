@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// QueryAnalyzer allows a user to query for pages of data.
+    /// Allows a user to query for pages of data.
     /// </summary>
     public class TimeSeriesQueryAnalyzer
     {
@@ -25,7 +25,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public double? Progress { get; internal set; }
 
         /// <summary>
-        /// Initializes a new instance of the QueryAnalyzer class.
+        /// Initializes a new instance of the TimeSeriesQueryAnalyzer class.
         /// </summary>
         /// <param name="queryClient">The query REST client that talks to the Time Series Insights service.</param>
         /// <param name="queryRequest">The query request payload.</param>
