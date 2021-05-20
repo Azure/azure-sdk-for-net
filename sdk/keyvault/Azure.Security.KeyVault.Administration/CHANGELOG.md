@@ -2,6 +2,9 @@
 
 ## 4.0.0-beta.6 (Unreleased)
 
+### Breaking Changes
+
+- Changed `KeyVaultBackupClient.StartSelectiveRestore` and `StartSelectiveRestoreAsync` to `StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`.
 
 ## 4.0.0-beta.5 (2021-05-11)
 
