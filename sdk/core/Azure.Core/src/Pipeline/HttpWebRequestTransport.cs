@@ -95,12 +95,12 @@ namespace Azure.Core.Pipeline
             // ObjectDisposedException might be thrown if the request is aborted during the content upload via SSL
             catch (ObjectDisposedException) when (message.CancellationToken.IsCancellationRequested)
             {
-                CancellationTokenExtensions.ThrowIfCancellationRequested(message.CancellationToken);
+                CancellationHelper.ThrowIfCancellationRequested(message.CancellationToken);
             }
             catch (WebException webException)
             {
                 // WebException is thrown in the case of .Abort() call
-                CancellationTokenExtensions.ThrowIfCancellationRequested(message.CancellationToken);
+                CancellationHelper.ThrowIfCancellationRequested(message.CancellationToken);
                 throw new RequestFailedException(0, webException.Message);
             }
         }

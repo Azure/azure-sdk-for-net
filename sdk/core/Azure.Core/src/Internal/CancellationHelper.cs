@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     // Copy of https://github.com/dotnet/runtime/blob/b6dda7b719eab464d417904a4f4501b42cc10cdb/src/libraries/System.Net.Http/src/System/Net/Http/CancellationHelper.cs#L10
-    internal static class CancellationTokenExtensions
+    internal static class CancellationHelper
     {
         /// <summary>The default message used by <see cref="OperationCanceledException"/>.</summary>
         private static readonly string s_cancellationMessage = new OperationCanceledException().Message; // use same message as the default ctor

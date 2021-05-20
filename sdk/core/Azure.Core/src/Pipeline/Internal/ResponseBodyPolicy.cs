@@ -171,11 +171,11 @@ namespace Azure.Core.Pipeline
         internal static void ThrowIfCancellationRequestedOrTimeout(CancellationToken originalToken, CancellationToken timeoutToken, Exception? inner, TimeSpan timeout)
 #pragma warning restore CA1068
         {
-            CancellationTokenExtensions.ThrowIfCancellationRequested(originalToken);
+            CancellationHelper.ThrowIfCancellationRequested(originalToken);
 
             if (timeoutToken.IsCancellationRequested)
             {
-                throw CancellationTokenExtensions.CreateOperationCanceledException(
+                throw CancellationHelper.CreateOperationCanceledException(
                     inner,
                     timeoutToken,
                     $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. " +
