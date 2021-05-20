@@ -1,5 +1,8 @@
 # Release History
 
+## 12.7.3 (2021-05-20)
+- This release contains bug fixes to improve quality.
+
 ## 12.7.2 (2021-04-02)
 - Fixed bug in SasQueryParameters causing services (ss) reorder when parsing externally provided URI.
 

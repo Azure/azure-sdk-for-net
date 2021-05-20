@@ -233,17 +233,23 @@ namespace Azure.Storage
 
             if (offset < 0)
             {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be less than 0.");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
             if (offset > buffer.Length)
             {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot exceed {nameof(buffer)} length.");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
             if (count < 0)
             {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentOutOfRangeException($"{nameof(count)} cannot be less than 0.");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
         }
 
