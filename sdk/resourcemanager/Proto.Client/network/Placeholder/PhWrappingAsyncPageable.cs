@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure;
+using Azure.ResourceManager.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
