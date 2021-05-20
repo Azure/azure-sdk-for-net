@@ -184,7 +184,7 @@ namespace Azure.Core.Tests
             {
                 message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
             }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false));
-            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.3. " +
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.03. " +
                             "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
         }
 
