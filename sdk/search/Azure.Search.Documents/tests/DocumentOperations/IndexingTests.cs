@@ -8,8 +8,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
-using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
+using Azure.GeoJson;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
