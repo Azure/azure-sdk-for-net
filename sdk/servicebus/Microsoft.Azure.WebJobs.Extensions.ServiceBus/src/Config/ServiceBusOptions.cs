@@ -140,6 +140,20 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public TimeSpan? SessionIdleTimeout { get; set; }
 
         /// <summary>
+        /// Gets or sets the JSON serialization settings to use when binding to POCOs.
+        /// </summary>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public JsonSerializerSettings JsonSerializerSettings { get; set; } = new()
+        {
+            // The default value, DateParseHandling.DateTime, drops time zone information from DateTimeOffets.
+            // This value appears to work well with both DateTimes (without time zone information) and DateTimeOffsets.
+            DateParseHandling = DateParseHandling.DateTimeOffset,
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented
+        };
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+
+        /// <summary>
         /// Formats the options as JSON objects for display.
         /// </summary>
         /// <returns>Options formatted as JSON.</returns>

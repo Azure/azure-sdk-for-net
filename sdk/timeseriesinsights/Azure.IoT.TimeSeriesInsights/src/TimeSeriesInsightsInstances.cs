@@ -183,11 +183,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
         /// </exception>
-        public virtual async Task<Response<InstancesOperationResult[]>> GetAsync(
+        public virtual async Task<Response<InstancesOperationResult[]>> GetByNameAsync(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetByName)}");
             scope.Start();
 
             try
@@ -226,7 +226,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// List of instance or error objects corresponding by position to the array in the request. Instance object is set when operation is successful
         /// and error object is set when operation is unsuccessful.
         /// </returns>
-        /// <seealso cref="GetAsync(IEnumerable{string}, CancellationToken)">
+        /// <seealso cref="GetByNameAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
@@ -235,11 +235,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
         /// </exception>
-        public virtual Response<InstancesOperationResult[]> Get(
+        public virtual Response<InstancesOperationResult[]> GetByName(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetByName)}");
             scope.Start();
 
             try
@@ -289,7 +289,7 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     tsId,
         /// };
         ///
-        /// Response&lt;InstancesOperationResult[]&gt; getByIdsResult = await instancesClient.GetAsync(timeSeriesIds);
+        /// Response&lt;InstancesOperationResult[]&gt; getByIdsResult = await instancesClient.GetByIdAsync(timeSeriesIds);
         ///
         /// // The response of calling the API contains a list of instance or error objects corresponding by position to the array in the request.
         /// // Instance object is set when operation is successful and error object is set when operation is unsuccessful.
@@ -314,11 +314,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
         /// </exception>
-        public virtual async Task<Response<InstancesOperationResult[]>> GetAsync(
+        public virtual async Task<Response<InstancesOperationResult[]>> GetByIdAsync(
             IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetById)}");
             scope.Start();
 
             try
@@ -357,7 +357,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// List of instance or error objects corresponding by position to the array in the request. Instance object is set when operation is successful
         /// and error object is set when operation is unsuccessful.
         /// </returns>
-        /// <seealso cref="GetAsync(IEnumerable{TimeSeriesId}, CancellationToken)">
+        /// <seealso cref="GetByIdAsync(IEnumerable{TimeSeriesId}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
@@ -366,11 +366,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
         /// </exception>
-        public virtual Response<InstancesOperationResult[]> Get(
+        public virtual Response<InstancesOperationResult[]> GetById(
             IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetById)}");
             scope.Start();
 
             try
@@ -565,7 +565,7 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     tsId,
         /// };
         ///
-        /// Response&lt;InstancesOperationResult[]&gt; getInstancesByIdResult = await instancesClient.GetAsync(instanceIdsToGet);
+        /// Response&lt;InstancesOperationResult[]&gt; getInstancesByIdResult = await instancesClient.GetByIdAsync(instanceIdsToGet);
         ///
         /// TimeSeriesInstance instanceResult = getInstancesByIdResult.Value[0].Instance;
         /// Console.WriteLine($&quot;Retrieved Time Series Insights instance with Id &apos;{instanceResult.TimeSeriesId}&apos; and name &apos;{instanceResult.Name}&apos;.&quot;);
@@ -707,7 +707,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// };
         ///
         /// Response&lt;TimeSeriesOperationError[]&gt; deleteInstanceErrors = await instancesClient
-        ///     .DeleteAsync(instancesToDelete);
+        ///     .DeleteByIdAsync(instancesToDelete);
         ///
         /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter
         /// // array in the request. If the error object is set to null, this means the operation was a success.
@@ -732,11 +732,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
         /// </exception>
-        public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteAsync(
+        public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteByNameAsync(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Delete)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteByName)}");
             scope.Start();
 
             try
@@ -775,7 +775,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// List of error objects corresponding by position to the array in the request. Null means the instance has been deleted, or did not exist.
         /// Error object is set when operation is unsuccessful.
         /// </returns>
-        /// <seealso cref="DeleteAsync(IEnumerable{string}, CancellationToken)">
+        /// <seealso cref="DeleteByNameAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
@@ -784,11 +784,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
         /// </exception>
-        public virtual Response<TimeSeriesOperationError[]> Delete(
+        public virtual Response<TimeSeriesOperationError[]> DeleteByName(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Delete)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteByName)}");
             scope.Start();
 
             try
@@ -835,11 +835,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
         /// </exception>
-        public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteAsync(
+        public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteByIdAsync(
             IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Delete)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteById)}");
             scope.Start();
 
             try
@@ -878,7 +878,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// List of error objects corresponding by position to the array in the request. Null means the instance has been deleted, or did not exist.
         /// Error object is set when operation is unsuccessful.
         /// </returns>
-        /// <seealso cref="DeleteAsync(IEnumerable{TimeSeriesId}, CancellationToken)">
+        /// <seealso cref="DeleteByIdAsync(IEnumerable{TimeSeriesId}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
@@ -887,11 +887,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
         /// </exception>
-        public virtual Response<TimeSeriesOperationError[]> Delete(
+        public virtual Response<TimeSeriesOperationError[]> DeleteById(
             IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Delete)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteById)}");
             scope.Start();
 
             try

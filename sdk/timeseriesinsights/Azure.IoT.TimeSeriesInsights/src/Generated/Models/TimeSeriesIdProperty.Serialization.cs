@@ -15,7 +15,7 @@ namespace Azure.IoT.TimeSeriesInsights
         internal static TimeSeriesIdProperty DeserializeTimeSeriesIdProperty(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<TimeSeriesIdPropertyTypes> type = default;
+            Optional<TimeSeriesIdPropertyType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -30,7 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new TimeSeriesIdPropertyTypes(property.Value.GetString());
+                    type = new TimeSeriesIdPropertyType(property.Value.GetString());
                     continue;
                 }
             }

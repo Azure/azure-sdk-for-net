@@ -15,7 +15,7 @@ This is a models-only SDK. All client operations are done using the [Microsoft A
 
 ### Authenticate the client
 
-The client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
+The client is coming from Azure IoT SDK. You will need to obtain an IoT device connection string in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
 
 ```C# Snippet:Azure_VideoAnalyzerSamples_ConnectionString
 String connectionString = "connectionString";
@@ -36,7 +36,7 @@ Install the Azure IoT Hub SDk for .NET with NuGet:
 
 ### Prerequisites
 
-- You need an active [Azure subscription][azure_sub] and an [IoT device connection string][iot_device_connection_string] to use this package.
+- You need an active [Azure subscription][azure_sub] and an IoT device connection string to use this package.
 - You will need to use the version of the SDK that corresponds to the version of the Video Analyzer Edge module you are using.
 
     | SDK  | Video Analyzer Edge Module  |
@@ -202,8 +202,6 @@ This project has adopted the
 see the Code of Conduct FAQ or contact opencode@microsoft.com with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fvideoanalyzer%2Fazure-media-videoanalyzer-edge%2FREADME.png)
-
 
 <!-- LINKS -->
 [azure_cli]: https://docs.microsoft.com/cli/azure
@@ -214,16 +212,17 @@ additional questions or comments.
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 
-[package]: TODO://link-to-published-package <!-- https://msazure.visualstudio.com/One/_workitems/edit/9946084 WorkItem to track all all TODO links-->
+[package]:https://aka.ms/ava/sdk/client/net
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mediaservices
 [samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
 
-[doc_direct_methods]: TODO://link-to-published-doc
-[doc_pipelines]: TODO://link-to-published-doc
-[doc_product]: TODO://link-to-published-doc
+[doc_direct_methods]:https://go.microsoft.com/fwlink/?linkid=2162396
+[doc_pipelines]: https://go.microsoft.com/fwlink/?linkid=2162396
+[doc_product]: https://go.microsoft.com/fwlink/?linkid=2162396
 
 [iot-device-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices.Client/
 [iot-hub-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices/
-[iot_device_connection_string]: TODO://link-to-published-doc
 
 [github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fvideoanalyzer%2Fazure-media-videoanalyzer-edge%2FREADME.png)

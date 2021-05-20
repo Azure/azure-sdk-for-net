@@ -16,6 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceType.AzureDataLakeStorageGen2;
         }
 
-        public AzureDataLakeStorageGen2Parameter DataSourceParameter { get; set; }
+        public AzureDataLakeStorageGen2ParameterPatch DataSourceParameter { get; set; }
     }
 }

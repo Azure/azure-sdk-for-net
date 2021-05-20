@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     /// </summary>
     public class MessagingProvider
     {
-        private readonly ServiceBusOptions _options;
+        internal ServiceBusOptions Options { get; }
 
         private readonly ConcurrentDictionary<string, ServiceBusSender> _messageSenderCache = new();
         private readonly ConcurrentDictionary<string, ServiceBusReceiver> _messageReceiverCache = new();
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         public MessagingProvider(IOptions<ServiceBusOptions> options)
         {
-            _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
+            Options = options?.Value ?? throw new ArgumentNullException(nameof(options));
         }
 
         public virtual ServiceBusClient CreateClient(string connectionString)
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
             return _clientCache.GetOrAdd(
                 connectionString,
-                (_) => new ServiceBusClient(connectionString, _options.ToClientOptions()));
+                (_) => new ServiceBusClient(connectionString, Options.ToClientOptions()));
         }
 
         public virtual ServiceBusClient CreateClient(string fullyQualifiedNamespace, TokenCredential credential)
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
             return _clientCache.GetOrAdd(
                 fullyQualifiedNamespace,
-                (_) => new ServiceBusClient(fullyQualifiedNamespace, credential, _options.ToClientOptions()));
+                (_) => new ServiceBusClient(fullyQualifiedNamespace, credential, Options.ToClientOptions()));
         }
 
         public virtual MessageProcessor CreateMessageProcessor(ServiceBusClient client, string entityPath)
@@ -67,18 +67,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             // processors cannot be shared across listeners since there is a limit of 1 event handler in the Service Bus SDK.
 
             ServiceBusProcessor processor;
-            if (ServiceBusEntityPathHelper.ParseEntityType(entityPath) == EntityType.Topic)
+            if (ServiceBusEntityPathHelper.ParseEntityType(entityPath) == ServiceBusEntityType.Topic)
             {
                 // entityPath for a subscription is "{TopicName}/Subscriptions/{SubscriptionName}"
                 ServiceBusEntityPathHelper.ParseTopicAndSubscription(entityPath, out string topic, out string subscription);
-                processor = client.CreateProcessor(topic, subscription, _options.ToProcessorOptions());
+                processor = client.CreateProcessor(topic, subscription, Options.ToProcessorOptions());
             }
             else
             {
                 // entityPath for a queue is "{QueueName}"
-                processor = client.CreateProcessor(entityPath, _options.ToProcessorOptions());
+                processor = client.CreateProcessor(entityPath, Options.ToProcessorOptions());
             }
-            processor.ProcessErrorAsync += _options.ExceptionReceivedHandler;
+            processor.ProcessErrorAsync += Options.ExceptionReceivedHandler;
             return processor;
         }
 
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 entityPath,
                 new ServiceBusReceiverOptions
                 {
-                    PrefetchCount = _options.PrefetchCount
+                    PrefetchCount = Options.PrefetchCount
                 }));
         }
 
@@ -117,18 +117,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
 
             ServiceBusSessionProcessor processor;
-            if (ServiceBusEntityPathHelper.ParseEntityType(entityPath) == EntityType.Topic)
+            if (ServiceBusEntityPathHelper.ParseEntityType(entityPath) == ServiceBusEntityType.Topic)
             {
                 // entityPath for a subscription is "{TopicName}/Subscriptions/{SubscriptionName}"
                 ServiceBusEntityPathHelper.ParseTopicAndSubscription(entityPath, out string topic, out string subscription);
-                processor = client.CreateSessionProcessor(topic, subscription, _options.ToSessionProcessorOptions());
+                processor = client.CreateSessionProcessor(topic, subscription, Options.ToSessionProcessorOptions());
             }
             else
             {
                 // entityPath for a queue is "{QueueName}"
-                processor = client.CreateSessionProcessor(entityPath, _options.ToSessionProcessorOptions());
+                processor = client.CreateSessionProcessor(entityPath, Options.ToSessionProcessorOptions());
             }
-            processor.ProcessErrorAsync += _options.ExceptionReceivedHandler;
+            processor.ProcessErrorAsync += Options.ExceptionReceivedHandler;
             return processor;
         }
     }
