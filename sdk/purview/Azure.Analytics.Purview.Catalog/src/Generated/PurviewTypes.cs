@@ -18,8 +18,6 @@ namespace Azure.Analytics.Purview.Catalog
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
-        private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -27,6 +25,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Initializes a new instance of PurviewTypes for mocking. </summary>
         protected PurviewTypes()
         {
+        }
+
+        /// <summary> Initializes a new instance of PurviewTypes. </summary>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public PurviewTypes(Uri endpoint, PurviewCatalogClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+
+            options ??= new PurviewCatalogClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() });
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
         /// <summary> Get the classification definition for the given GUID. </summary>

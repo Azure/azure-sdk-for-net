@@ -18,8 +18,6 @@ namespace Azure.Storage.ConfidentialLedger
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
-        private readonly string[] AuthorizationScopes = { "https://confidential-ledger.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
         private Uri ledgerUri;
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -31,24 +29,17 @@ namespace Azure.Storage.ConfidentialLedger
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
+        public ConfidentialLedgerClient(Uri ledgerUri, ConfidentialLedgerClientOptions options = null)
         {
             if (ledgerUri == null)
             {
                 throw new ArgumentNullException(nameof(ledgerUri));
             }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
 
             options ??= new ConfidentialLedgerClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() });
             this.ledgerUri = ledgerUri;
             apiVersion = options.Version;
         }
