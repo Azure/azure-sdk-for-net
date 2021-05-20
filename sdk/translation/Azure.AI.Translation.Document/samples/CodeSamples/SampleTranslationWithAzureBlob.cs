@@ -21,6 +21,11 @@ DESCRIPTION:
     This sample demonstrates how to use Azure Blob Storage to set up the necessary resources to create a translation
     job. Run the sample to create containers, upload documents, and generate SAS tokens for the source/target
     containers. Once the job is completed, use the storage library to download your documents locally.
+
+PREREQUISITE:
+    This sample requires you install Azure.Storage.Blobs nuget package:
+    https://www.nuget.org/packages/Azure.Storage.Blobs
+
 USAGE:
     Set the environment variables with your own values before running the sample:
     1) AZURE_DOCUMENT_TRANSLATION_ENDPOINT - the endpoint to your Document Translation resource.
