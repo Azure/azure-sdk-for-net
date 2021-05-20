@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Core
+namespace Proto.Network
 {
     /// <summary>
     /// This class allows performing conversions on pages of data as they are accessed - used in the prototype to convett

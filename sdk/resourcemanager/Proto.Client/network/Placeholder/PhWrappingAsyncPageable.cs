@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Azure.ResourceManager.Core
+namespace Proto.Network
 {
     /// <summary>
     /// Returns an AsyncPageable that transforms each page of contents  after they are retrieved from the server

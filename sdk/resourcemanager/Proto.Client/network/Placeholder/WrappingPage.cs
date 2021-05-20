@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.ResourceManager.Core
+namespace Proto.Network
 {
     /// <summary>
     /// A class representing a wrapper over <see cref="Page{TOperations}"/>
