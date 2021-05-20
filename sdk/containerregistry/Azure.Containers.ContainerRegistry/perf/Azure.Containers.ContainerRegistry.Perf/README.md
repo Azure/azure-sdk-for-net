@@ -1,4 +1,4 @@
-﻿# Azure Search performance tests
+﻿# Azure Container Registry performance tests
 
 This folder contains performance tests for the [Azure Container Registry client library for .NET](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/containerregistry/Azure.Containers.ContainerRegistry) and its associated ecosystem.  The artifacts in this library are intended to be used primarily with the Azure SDK engineering system's testing infrastructure, but may also be run as stand-alone applications from the command line.
 
