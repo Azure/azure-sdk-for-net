@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for IntegrationRuntimeEntityReferenceType.
+    /// Defines values for JsonFormatFilePattern.
     /// </summary>
-    public static class IntegrationRuntimeEntityReferenceType
+    public static class JsonFormatFilePattern
     {
-        public const string IntegrationRuntimeReference = "IntegrationRuntimeReference";
-        public const string LinkedServiceReference = "LinkedServiceReference";
-        public const string CredentialReference = "CredentialReference";
+        public const string SetOfObjects = "setOfObjects";
+        public const string ArrayOfObjects = "arrayOfObjects";
     }
 }

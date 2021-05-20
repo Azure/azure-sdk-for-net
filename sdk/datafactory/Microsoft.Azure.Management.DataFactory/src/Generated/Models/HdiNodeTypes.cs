@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for IntegrationRuntimeEntityReferenceType.
+    /// Defines values for HdiNodeTypes.
     /// </summary>
-    public static class IntegrationRuntimeEntityReferenceType
+    public static class HdiNodeTypes
     {
-        public const string IntegrationRuntimeReference = "IntegrationRuntimeReference";
-        public const string LinkedServiceReference = "LinkedServiceReference";
-        public const string CredentialReference = "CredentialReference";
+        public const string Headnode = "Headnode";
+        public const string Workernode = "Workernode";
+        public const string Zookeeper = "Zookeeper";
     }
 }

@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for IntegrationRuntimeEntityReferenceType.
+    /// Defines values for DatasetCompressionLevel.
     /// </summary>
-    public static class IntegrationRuntimeEntityReferenceType
+    public static class DatasetCompressionLevel
     {
-        public const string IntegrationRuntimeReference = "IntegrationRuntimeReference";
-        public const string LinkedServiceReference = "LinkedServiceReference";
-        public const string CredentialReference = "CredentialReference";
+        public const string Optimal = "Optimal";
+        public const string Fastest = "Fastest";
     }
 }
