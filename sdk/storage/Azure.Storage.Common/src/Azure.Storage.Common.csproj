@@ -18,7 +18,7 @@
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core" VersionOverride="1.14.0"/>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
