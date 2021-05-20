@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             EmailsToAlert = new ChangeTrackingList<string>();
         }
 
-        internal EmailNotificationHook(HookType hookType, string id, string name, string description, Uri externalLink, IReadOnlyList<string> administrators, EmailHookParameter hookParameter)
+        internal EmailNotificationHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators, EmailHookParameter hookParameter)
             : base(hookType, id, name, description, externalLink, administrators)
         {
             HookType = hookType;
