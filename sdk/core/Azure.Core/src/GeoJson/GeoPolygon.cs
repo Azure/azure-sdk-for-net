@@ -18,7 +18,8 @@ namespace Azure.GeoJson
     ///     new GeoPosition(-122.108727, 47.649383),
     ///     new GeoPosition(-122.081538, 47.640846),
     ///     new GeoPosition(-122.078634, 47.576066),
-    ///     new GeoPosition(-122.112686, 47.578559)
+    ///     new GeoPosition(-122.112686, 47.578559),
+    ///     new GeoPosition(-122.108727, 47.649383),
     /// });
     /// </code>
     /// Creating a polygon with holes:
@@ -31,7 +32,9 @@ namespace Azure.GeoJson
     ///         new GeoPosition(-122.108727, 47.649383),
     ///         new GeoPosition(-122.081538, 47.640846),
     ///         new GeoPosition(-122.078634, 47.576066),
-    ///         new GeoPosition(-122.112686, 47.578559)
+    ///         new GeoPosition(-122.112686, 47.578559),
+    ///         // Last position same as first
+    ///         new GeoPosition(-122.108727, 47.649383),
     ///     }),
     ///     // Inner ring
     ///     new GeoLinearRing(new[]
@@ -39,7 +42,9 @@ namespace Azure.GeoJson
     ///         new GeoPosition(-122.102370, 47.607370),
     ///         new GeoPosition(-122.083488, 47.608007),
     ///         new GeoPosition(-122.085419, 47.597879),
-    ///         new GeoPosition(-122.107005, 47.596895)
+    ///         new GeoPosition(-122.107005, 47.596895),
+    ///         // Last position same as first
+    ///         new GeoPosition(-122.102370, 47.607370),
     ///     })
     /// });
     /// </code>

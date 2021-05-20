@@ -17,7 +17,7 @@ namespace Azure.GeoJson
     ///     new GeoPosition(-122.108727, 47.649383),
     ///     new GeoPosition(-122.081538, 47.640846),
     ///     new GeoPosition(-122.078634, 47.576066),
-    ///     new GeoPosition(-122.112686, 47.578559)
+    ///     new GeoPosition(-122.112686, 47.578559),
     /// });
     /// </code>
     /// </example>
