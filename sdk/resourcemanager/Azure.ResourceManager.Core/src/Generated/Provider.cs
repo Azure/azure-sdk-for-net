@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="providerData"></param>
         /// <exception cref="ArgumentNullException"> If <see cref="ArmClientOptions"/> or <see cref="TokenCredential"/> is null. </exception>
         internal Provider(OperationsBase operations, ProviderData providerData)
-            : base(operations.Diagnostics, operations.Pipeline, operations.Id, operations.BaseUri)
+            : base(operations, providerData.Id)
         {
             Data = providerData;
         }

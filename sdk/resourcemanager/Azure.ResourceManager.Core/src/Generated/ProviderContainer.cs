@@ -58,23 +58,117 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <summary> Gets the specified resource provider. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProviderData> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        /// <inheritdoc />
+        public override Response<Provider> Get(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.Get");
+            using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
             try
             {
-                return RestClient.Get(resourceProviderNamespace, expand, cancellationToken);
+                var result = RestClient.Get(resourceProviderNamespace, null, cancellationToken);
+                return Response.FromValue(new Provider(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <inheritdoc />
+        public override async Task<Response<Provider>> GetAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default) // base does not have string expand 2nd parameter
+        {
+            using var scope = Diagnostics.CreateScope("ProviderContainer.Get");
+            scope.Start();
+
+            try
+            {
+                var result = await RestClient.GetAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Provider(Parent, result), result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets all resource providers for a subscription. </summary>
+        /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ProviderData> List(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Page<ProviderData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("ProvidersOperations.List");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.List(top, expand, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ProviderData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("ProvidersOperations.List");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListNextPage(nextLink, top, expand, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets all resource providers for a subscription. </summary>
+        /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ProviderData> ListAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ProviderData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("ProvidersOperations.List");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListAsync(top, expand, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ProviderData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("ProvidersOperations.List");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListNextPageAsync(nextLink, top, expand, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

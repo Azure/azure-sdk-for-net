@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public class ApiVersions
     {
-        private ProviderOperations ProviderOperations;
+        private ProviderRestOperations ProviderRestOperations;
         private ArmClientOptions _clientOptions;
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Core
         {
             BuildApiTable(clientOptions);
             _clientOptions = clientOptions;
-            ProviderOperations = null;
+            ProviderRestOperations = null;
         }
 
         /// <summary>
@@ -36,12 +36,11 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         internal void SetProviderClient(TokenCredential credential, Uri baseUri, string subscription)
         {
-            //change to new ProviderOperations
-            ProviderOperations = new ResourcesManagementClient(
-            baseUri,
-            subscription,
-            credential,
-            _clientOptions.Convert<ResourcesManagementClientOptions>()).Providers;
+            ProviderRestOperations = new ProviderRestOperations(
+                new Azure.Core.Pipeline.ClientDiagnostics(_clientOptions),
+                ManagementPipelineBuilder.Build(credential, baseUri, _clientOptions),
+                subscription,
+                baseUri);
         }
 
         private ConcurrentDictionary<string, PropertyWrapper> _loadedResourceToApiVersions = new ConcurrentDictionary<string, PropertyWrapper>();
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Core
             Response<ProviderData> results;
             try
             {
-                results = ProviderOperations.Get(resourceType.Namespace, null, cancellationToken);
+                results = ProviderRestOperations.Get(resourceType.Namespace, null, cancellationToken);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.Core
             Response<ProviderData> results;
             try
             {
-                results = await ProviderOperations.GetAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
+                results = await ProviderRestOperations.GetAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.Core
             {
                 return val;
             }
-            return ProviderOperations == null ? null : LoadApiVersion(resourceType.ToString(), cancellationToken);
+            return ProviderRestOperations == null ? null : LoadApiVersion(resourceType.ToString(), cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Core
             {
                 return val;
             }
-            return ProviderOperations == null ? null : await LoadApiVersionAsync(resourceType.ToString(), cancellationToken).ConfigureAwait(false);
+            return ProviderRestOperations == null ? null : await LoadApiVersionAsync(resourceType.ToString(), cancellationToken).ConfigureAwait(false);
         }
 
         private bool TryGetApiVersion(string resourceType, out string val)
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Core
         internal ApiVersions Clone()
         {
             ApiVersions copy = new ApiVersions(_clientOptions);
-            copy.ProviderOperations = ProviderOperations;
+            copy.ProviderRestOperations = ProviderRestOperations;
             copy._loadedResourceToApiVersions = new ConcurrentDictionary<string, PropertyWrapper>(_loadedResourceToApiVersions);
             copy._nonLoadedResourceToApiVersion = new ConcurrentDictionary<string, string>(_nonLoadedResourceToApiVersion);
             return copy;
