@@ -68,9 +68,7 @@ namespace Proto.Authorization
         public override Response<RoleAssignment> Create(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = Operations.Create(Id, name, resourceDetails.ToModel(), cancellationToken);
-            return new PhArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
-                response,
-                a => new RoleAssignment(this, new RoleAssignmentData(a)));
+            return Response.FromValue(new RoleAssignment(this, new RoleAssignmentData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -84,9 +82,7 @@ namespace Proto.Authorization
         public async override Task<Response<RoleAssignment>> CreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = await Operations.CreateAsync(Id, name, resourceDetails.ToModel(), cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
-                response,
-                a => new RoleAssignment(this, new RoleAssignmentData(a)));
+            return Response.FromValue(new RoleAssignment(this, new RoleAssignmentData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>

@@ -88,15 +88,15 @@ namespace Proto.Network
         /// <inheritdoc />
         public override Response<PublicIpAddress> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken),
-                n => new PublicIpAddress(this, new PublicIPAddressData(n)));
+            var response = Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+            return Response.FromValue(new PublicIpAddress(this, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc />
         public override async Task<Response<PublicIpAddress>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken),
-                n => new PublicIpAddress(this, new PublicIPAddressData(n)));
+            var response = await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new PublicIpAddress(this, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc />
@@ -106,8 +106,8 @@ namespace Proto.Network
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new PublicIpAddress(this, new PublicIPAddressData(n)));
+            var response = Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken);
+            return Response.FromValue(new PublicIpAddress(this, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc />
@@ -117,8 +117,8 @@ namespace Proto.Network
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new PublicIpAddress(this, new PublicIPAddressData(n)));
+            var response = await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new PublicIpAddress(this, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc />
@@ -148,8 +148,8 @@ namespace Proto.Network
         {
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new PublicIpAddress(this, new PublicIPAddressData(n)));
+            var response = Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken);
+            return Response.FromValue(new PublicIpAddress(this, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -157,8 +157,8 @@ namespace Proto.Network
         {
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new PublicIpAddress(this, new PublicIPAddressData(n)));
+            var response = await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new PublicIpAddress(this, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -186,8 +186,8 @@ namespace Proto.Network
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new PublicIpAddress(this, new PublicIPAddressData(n)));
+            var response = Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken);
+            return Response.FromValue(new PublicIpAddress(this, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
@@ -197,8 +197,8 @@ namespace Proto.Network
             var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
-                n => new PublicIpAddress(this, new PublicIPAddressData(n)));
+            var response = await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new PublicIpAddress(this, new PublicIPAddressData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>

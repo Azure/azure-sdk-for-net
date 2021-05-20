@@ -6,17 +6,13 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
     /// A class representing the operations that can be performed over a specific ResourceGroup.
     /// </summary>
-    public class ResourceGroupOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, ResourceGroup>,
-        ITaggableResource<ResourceGroupResourceIdentifier, ResourceGroup>, IDeletableResource
+    public class ResourceGroupOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, ResourceGroup>
     {
         /// <summary>
         /// Name of the CreateOrUpdate() method in [Resource]Container classes.
@@ -70,11 +66,11 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private ResourceGroupsOperations Operations => new ResourcesManagementClient(
-            BaseUri,
+        private ResourceGroupsRestOperations RestClient => new ResourceGroupsRestOperations(
+            Diagnostics,
+            Pipeline,
             Id.SubscriptionId,
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).ResourceGroups;
+            BaseUri);
 
         private ResourcesRestOperations GenericRestClient => new ResourcesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
 
@@ -90,7 +86,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartDelete(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -111,7 +108,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return await Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -124,18 +122,19 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="Operation"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="ResourceGroupDeleteOperation"/> operation for this resource. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual Operation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ResourceGroupDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
 
             try
             {
-                return new PhVoidArmOperation(Operations.StartDelete(Id.Name, cancellationToken));
+                var originalResponse = RestClient.Delete(Id.Name, cancellationToken);
+                return new ResourceGroupDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -148,18 +147,67 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Operation"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ResourceGroupDeleteOperation"/> operation for this resource. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
 
             try
             {
-                return new PhVoidArmOperation(await Operations.StartDeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
+                var originalResponse = await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ResourceGroupDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Captures the specified resource group as a template. </summary>
+        /// <param name="parameters"> Parameters for exporting the template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ResourceGroupsExportTemplateOperation StartExportTemplate(ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartExportTemplate");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.ExportTemplate(Id.Name, parameters, cancellationToken);
+                return new ResourceGroupsExportTemplateOperation(Diagnostics, Pipeline, RestClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Captures the specified resource group as a template. </summary>
+        /// <param name="parameters"> Parameters for exporting the template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ResourceGroupsExportTemplateOperation> StartExportTemplateAsync(ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartExportTemplate");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.ExportTemplateAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new ResourceGroupsExportTemplateOperation(Diagnostics, Pipeline, RestClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -176,10 +224,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(Id.Name, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var originalResponse = RestClient.Get(Id.Name, cancellationToken);
+                return Response.FromValue(new ResourceGroup(this, originalResponse), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,12 +242,46 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
-                g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(this, originalResponse), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource group. If a field is unspecified, the current value is retained. </summary>
+        /// <param name="parameters"> Parameters supplied to update a resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ResourceGroup> Update(ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Update");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.Update(Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new ResourceGroup(this, originalResponse), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource group. If a field is unspecified, the current value is retained. </summary>
+        /// <param name="parameters"> Parameters supplied to update a resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ResourceGroup>> UpdateAsync(ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Update");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.UpdateAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ResourceGroup(this, originalResponse), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,14 +307,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource(cancellationToken);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags[key] = value;
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var operation = StartAddTag(key, value, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -260,15 +334,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags[key] = value;
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var operation = await StartAddTagAsync(key, value, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -287,7 +354,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual Operation<ResourceGroup> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual ResourceGroupCreateOrUpdateOperation StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -301,10 +368,8 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var originalResponse = RestClient.Update(Id.Name, patch, cancellationToken);
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -323,7 +388,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<Operation<ResourceGroup>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupCreateOrUpdateOperation> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -337,12 +402,8 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                    g =>
-                    {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
-                    });
+                var originalResponse = await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -395,7 +456,7 @@ namespace Azure.ResourceManager.Core
         /// <exception cref="ArgumentNullException"> Model cannot be null. </exception>
         public virtual Task<Response<TOperations>> CreateResourceAsync<TContainer, TIdentifier, TOperations, TResource>(string name, TResource model, CancellationToken cancellationToken = default)
             where TResource : TrackedResource<TIdentifier>
-            where TOperations : ResourceOperationsBase<TIdentifier,TOperations>
+            where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
             where TContainer : ResourceContainerBase<TIdentifier, TOperations, TResource>
             where TIdentifier : SubscriptionResourceIdentifier
         {
@@ -427,13 +488,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource(cancellationToken);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(tags);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var operation = StartSetTags(tags, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -458,15 +514,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(tags);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                    g =>
-                    {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
-                    });
+                var operation = await StartSetTagsAsync(tags, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -484,7 +533,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual Operation<ResourceGroup> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual ResourceGroupCreateOrUpdateOperation StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
@@ -497,10 +546,8 @@ namespace Azure.ResourceManager.Core
                 var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var originalResponse = RestClient.Update(Id.Name, patch, cancellationToken);
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -518,7 +565,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<Operation<ResourceGroup>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupCreateOrUpdateOperation> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
@@ -531,12 +578,8 @@ namespace Azure.ResourceManager.Core
                 ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                    g =>
-                    {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
-                    });
+                var originalResponse = await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -561,14 +604,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource(cancellationToken);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags.Remove(key);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var operation = StartRemoveTag(key, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -593,16 +630,8 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
-                var patch = new ResourceGroupPatchable();
-                patch.Tags.ReplaceWith(resource.Data.Tags);
-                patch.Tags.Remove(key);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                    g =>
-                    {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
-                    });
+                var operation = await StartRemoveTagAsync(key, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -620,7 +649,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual Operation<ResourceGroup> StartRemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual ResourceGroupCreateOrUpdateOperation StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -634,10 +663,8 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+                var originalResponse = RestClient.Update(Id.Name, patch, cancellationToken);
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -655,7 +682,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<Operation<ResourceGroup>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupCreateOrUpdateOperation> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -669,12 +696,8 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                    g =>
-                    {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
-                    });
+                var originalResponse = await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {

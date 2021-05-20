@@ -14,7 +14,7 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing collection of VirtualMachine and their operations over a ResourceGroup.
     /// </summary>
-    public class VirtualMachineImageContainer : ContainerBase<SubscriptionResourceIdentifier>
+    public class VirtualMachineImageContainer : ContainerBase
     {
         private string _subscriptionId;
 
