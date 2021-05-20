@@ -18,6 +18,8 @@ namespace Azure.Analytics.Purview.Scanning
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
         private string classificationRuleName;
         private readonly string apiVersion;
@@ -31,8 +33,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Initializes a new instance of PurviewClassificationRuleClient. </summary>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
         /// <param name="classificationRuleName"> The String to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PurviewClassificationRuleClient(Uri endpoint, string classificationRuleName, PurviewScanningServiceClientOptions options = null)
+        public PurviewClassificationRuleClient(Uri endpoint, string classificationRuleName, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -42,10 +45,16 @@ namespace Azure.Analytics.Purview.Scanning
             {
                 throw new ArgumentNullException(nameof(classificationRuleName));
             }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             options ??= new PurviewScanningServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() });
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
             this.endpoint = endpoint;
             this.classificationRuleName = classificationRuleName;
             apiVersion = options.Version;

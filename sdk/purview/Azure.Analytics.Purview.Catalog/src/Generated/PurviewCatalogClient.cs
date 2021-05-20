@@ -18,6 +18,8 @@ namespace Azure.Analytics.Purview.Catalog
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -29,17 +31,24 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Initializes a new instance of PurviewCatalogClient. </summary>
         /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PurviewCatalogClient(Uri endpoint, PurviewCatalogClientOptions options = null)
+        public PurviewCatalogClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             options ??= new PurviewCatalogClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() });
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }

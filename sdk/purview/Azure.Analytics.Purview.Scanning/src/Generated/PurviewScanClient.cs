@@ -18,6 +18,8 @@ namespace Azure.Analytics.Purview.Scanning
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
+        private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
         private string dataSourceName;
         private string scanName;
@@ -33,8 +35,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
         /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="scanName"> The String to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PurviewScanClient(Uri endpoint, string dataSourceName, string scanName, PurviewScanningServiceClientOptions options = null)
+        public PurviewScanClient(Uri endpoint, string dataSourceName, string scanName, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -48,10 +51,16 @@ namespace Azure.Analytics.Purview.Scanning
             {
                 throw new ArgumentNullException(nameof(scanName));
             }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             options ??= new PurviewScanningServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() });
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
             this.endpoint = endpoint;
             this.dataSourceName = dataSourceName;
             this.scanName = scanName;
