@@ -102,6 +102,12 @@ namespace Azure.Core.Pipeline
                     ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, _networkTimeout);
                     throw;
                 }
+                // We dispose stream on timeout so catch and check if cancellation token was cancelled
+                catch (IOException ex)
+                {
+                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, _networkTimeout);
+                    throw;
+                }
                 catch (OperationCanceledException ex)
                 {
                     ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, _networkTimeout);
@@ -172,7 +178,8 @@ namespace Azure.Core.Pipeline
                 throw CancellationTokenExtensions.CreateOperationCanceledException(
                     inner,
                     timeoutToken,
-                    $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}.");
+                    $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. " +
+                    $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.");
             }
         }
     }
