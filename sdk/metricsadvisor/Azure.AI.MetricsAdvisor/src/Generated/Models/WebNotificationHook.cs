@@ -13,5 +13,19 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The WebhookHookInfo. </summary>
     public partial class WebNotificationHook : NotificationHook
     {
+
+        /// <summary> Initializes a new instance of WebNotificationHook. </summary>
+        /// <param name="hookType"> hook type. </param>
+        /// <param name="id"> Hook unique id. </param>
+        /// <param name="name"> hook unique name. </param>
+        /// <param name="description"> hook description. </param>
+        /// <param name="externalLink"> hook external link. </param>
+        /// <param name="administrators"> hook administrators. </param>
+        /// <param name="hookParameter"> . </param>
+        internal WebNotificationHook(HookType hookType, string id, string name, string description, Uri externalLink, IReadOnlyList<string> administrators, WebhookHookParameter hookParameter) : base(hookType, id, name, description, externalLink, administrators)
+        {
+            HookParameter = hookParameter;
+            HookType = hookType;
+        }
     }
 }

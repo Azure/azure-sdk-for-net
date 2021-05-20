@@ -13,5 +13,19 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The EmailHookInfo. </summary>
     public partial class EmailNotificationHook : NotificationHook
     {
+
+        /// <summary> Initializes a new instance of EmailNotificationHook. </summary>
+        /// <param name="hookType"> hook type. </param>
+        /// <param name="id"> Hook unique id. </param>
+        /// <param name="name"> hook unique name. </param>
+        /// <param name="description"> hook description. </param>
+        /// <param name="externalLink"> hook external link. </param>
+        /// <param name="administrators"> hook administrators. </param>
+        /// <param name="hookParameter"> . </param>
+        internal EmailNotificationHook(HookType hookType, string id, string name, string description, Uri externalLink, IReadOnlyList<string> administrators, EmailHookParameter hookParameter) : base(hookType, id, name, description, externalLink, administrators)
+        {
+            HookParameter = hookParameter;
+            HookType = hookType;
+        }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -30,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(ExternalLink))
             {
                 writer.WritePropertyName("externalLink");
-                writer.WriteStringValue(ExternalLink);
+                writer.WriteStringValue(ExternalLink.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
@@ -42,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> hookId = default;
             string hookName = default;
             Optional<string> description = default;
-            Optional<string> externalLink = default;
+            Optional<Uri> externalLink = default;
             Optional<IReadOnlyList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +74,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("externalLink"))
                 {
-                    externalLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    externalLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("admins"))
