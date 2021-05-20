@@ -65,7 +65,6 @@ function Get-ReleaseDay($baseDate)
   return $baseDate;
 }
 
-
 $ErrorPreference = 'Stop'
 
 $packageProperties = $null
