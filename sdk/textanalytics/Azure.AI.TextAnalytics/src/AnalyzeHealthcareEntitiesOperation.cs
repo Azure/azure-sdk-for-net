@@ -258,7 +258,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> GetValuesAsync() => _operationInternal.Value;
+        public override AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> GetValuesAsync(CancellationToken cancellationToken = default) => _operationInternal.Value;
 
         /// <summary>
         /// Gets the final result of the long-running operation in synchronously.
@@ -266,7 +266,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override Pageable<AnalyzeHealthcareEntitiesResultCollection> GetValues()
+        public override Pageable<AnalyzeHealthcareEntitiesResultCollection> GetValues(CancellationToken cancellationToken = default)
         {
             // Validates that the operation has completed successfully.
             _ = _operationInternal.Value;
@@ -276,7 +276,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(nextLink);
+                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(nextLink, cancellationToken);
 
                     AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -290,14 +290,14 @@ namespace Azure.AI.TextAnalytics
             return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
         }
 
-        private AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> CreateOperationValueAsync()
+        private AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> CreateOperationValueAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AnalyzeHealthcareEntitiesResultCollection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 //diagnostics scope?
                 try
                 {
-                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(nextLink).ConfigureAwait(false);
+                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
 
                     AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -331,7 +331,7 @@ namespace Azure.AI.TextAnalytics
                 AnalyzeHealthcareEntitiesResultCollection value = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(response.Value.Results, _idToIndexMap);
                 _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { value }, nextLink, rawResponse);
 
-                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync());
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync(cancellationToken));
             }
             else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
             {
