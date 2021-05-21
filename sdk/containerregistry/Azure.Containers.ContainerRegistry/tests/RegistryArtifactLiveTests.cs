@@ -137,21 +137,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(TestEnvironment.Registry, repository, tag);
+                await ImportImageAsync(TestEnvironment.Registry, repository, tag);
             }
 
             // Act
             await artifact.DeleteAsync();
 
             // Assert
-
-            // This will be removed, pending investigation into potential race condition.
-            // https://github.com/azure/azure-sdk-for-net/issues/19699
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
-
             Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetManifestPropertiesAsync(); });
         }
 
@@ -275,7 +267,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(registry, _repositoryName, "newest");
+                await ImportImageAsync(registry, _repositoryName, "newest");
             }
 
             // Act
@@ -358,21 +350,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(TestEnvironment.Registry, _repositoryName, tag);
+                await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tag);
             }
 
             // Act
             await artifact.DeleteTagAsync(tag);
 
             // Assert
-
-            // This will be removed, pending investigation into potential race condition.
-            // https://github.com/azure/azure-sdk-for-net/issues/19699
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
-
             Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetTagPropertiesAsync(tag); });
         }
         #endregion
