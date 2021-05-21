@@ -207,6 +207,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     receiveMode: receiveMode,
                     sessionId: SessionId,
                     isSessionReceiver: isSessionReceiver,
+                    isProcessor: isProcessor,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (isSessionReceiver)
                 {
@@ -284,35 +285,39 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
-                    var (receiver, maxMessages, maxWaitTime) = value;
+                    var (receiver, maxMessages, maxWaitTime, isProcessor) = value;
                     return await receiver.ReceiveMessagesAsyncInternal(
                         maxMessages,
                         maxWaitTime,
                         timeout,
+                        isProcessor,
                         token).ConfigureAwait(false);
                 },
-                (this, maxMessages, maxWaitTime),
+                (this, maxMessages, maxWaitTime, isProcessor),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Receives a list of <see cref="ServiceBusMessage" /> from the Service Bus entity.
+        /// Receives a list of <see cref="ServiceBusReceivedMessage" /> from the Service Bus entity.
         /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages to receive.</param>
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.
         ///     If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
+        /// <param name="isProcessor">Whether or not the receiver is being used by a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The list of <see cref="ServiceBusMessage" /> from the Service Bus entity this receiver is associated with. If no messages are present, an empty list is returned.</returns>
         private async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsyncInternal(
             int maxMessages,
             TimeSpan? maxWaitTime,
             TimeSpan timeout,
+            bool isProcessor,
             CancellationToken cancellationToken)
         {
             var link = default(ReceivingAmqpLink);
+            CancellationTokenRegistration registration;
 
             ThrowIfSessionLockLost();
 
@@ -330,11 +335,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     new TaskCompletionSource<IEnumerable<AmqpMessage>>(TaskCreationOptions
                         .RunContinuationsAsynchronously);
 
-                using var registration = cancellationToken.Register(static state =>
+                // Only allow cancelling in-flight receives when it is from a processor.
+                // This would occur when the processor is stopped or closed by the user.
+                if (isProcessor)
                 {
-                    var tcs = (TaskCompletionSource<IEnumerable<AmqpMessage>>)state;
-                    tcs.TrySetCanceled();
-                }, receiveMessagesCompletionSource, useSynchronizationContext: false);
+                    registration = cancellationToken.Register(static state =>
+                    {
+                        var tcs = (TaskCompletionSource<IEnumerable<AmqpMessage>>)state;
+                        tcs.TrySetCanceled();
+                    }, receiveMessagesCompletionSource, useSynchronizationContext: false);
+                }
 
                 // in case BeginReceiveRemoteMessages throws exception will be materialized on the synchronous path
                 _ = Task.Factory
@@ -411,6 +421,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     .Throw();
 
                 throw; // will never be reached
+            }
+            finally
+            {
+                if (isProcessor)
+                {
+                    registration.Dispose();
+                }
             }
         }
 

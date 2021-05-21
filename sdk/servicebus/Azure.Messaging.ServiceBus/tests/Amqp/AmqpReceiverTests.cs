@@ -170,6 +170,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
+                   It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
@@ -188,6 +189,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
+                   It.IsAny<bool>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()),
                 Times.Exactly(1 + retryOptions.MaxRetries));
@@ -227,6 +229,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
+                   It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
@@ -245,6 +248,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
+                   It.IsAny<bool>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()),
                 Times.Exactly(1 + retryOptions.MaxRetries));
@@ -292,6 +296,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
+                   It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
@@ -309,6 +314,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
+                   It.IsAny<bool>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()),
                 Times.Exactly(1 + retryOptions.MaxRetries));
@@ -352,6 +358,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
+                   It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
@@ -370,6 +377,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<uint>(),
                    It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
+                   It.IsAny<bool>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -408,6 +416,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
+                   It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
@@ -426,6 +435,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                     It.IsAny<uint>(),
                     It.IsAny<ServiceBusReceiveMode>(),
                     It.IsAny<string>(),
+                    It.IsAny<bool>(),
                     It.IsAny<bool>(),
                     It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -464,6 +474,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
+                   It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
@@ -482,6 +493,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                     It.IsAny<uint>(),
                     It.IsAny<ServiceBusReceiveMode>(),
                     It.IsAny<string>(),
+                    It.IsAny<bool>(),
                     It.IsAny<bool>(),
                     It.IsAny<CancellationToken>()),
                 Times.Once());
