@@ -122,6 +122,84 @@ namespace Monitor.Tests.Scenarios
                 insightsClient.DataCollectionRules.Delete(ResourceGroupName, dcrName);
             }
         }
+
+        [Fact]
+        [Trait("Category", "Scenario")]
+        public void ErrorResponseDcrTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var dcrName = "dcrError";
+                MonitorManagementClient insightsClient = GetMonitorManagementClient(context, handler);
+
+                var dcrWithBadStream = new DataCollectionRuleResource
+                {
+                    Location = "eastus2euap",
+                    DataSources = new DataCollectionRuleDataSources
+                    {
+                        PerformanceCounters = new List<PerfCounterDataSource>
+                            {
+                                new PerfCounterDataSource
+                                {
+                                    Name = "perfCounterDataSource1",
+                                    Streams = new List<string> { "Microsoft-UnknownStream" },
+                                    SamplingFrequencyInSeconds = 10,
+                                    CounterSpecifiers = new List<string>
+                                    {
+                                        "\\Memory\\% Committed Bytes In Use",
+                                        "\\Memory\\Available Bytes",
+                                        "\\Network Interface(*)\\Bytes Received/sec",
+                                    }
+                                }
+                            }
+                    },
+                    Destinations = new DataCollectionRuleDestinations
+                    {
+                        AzureMonitorMetrics = new DestinationsSpecAzureMonitorMetrics { Name = "ammDestination" }
+                    },
+                    DataFlows = new List<DataFlow>
+                        {
+                            new DataFlow
+                            {
+                                Streams = new List<string>{ "Microsoft-UnknownStream" },
+                                Destinations = new List<string>{ "ammDestination" }
+                            }
+                        }
+                };
+
+                try
+                {
+                    insightsClient.DataCollectionRules.Create(ResourceGroupName, dcrName, dcrWithBadStream);
+                    Assert.True(false, "ErrorResponseException expected");
+                }
+                catch (ErrorResponseException monitorError) 
+                {
+                    Assert.NotNull(monitorError.Body?.Error);
+                    Assert.Equal("Operation returned an invalid status code 'BadRequest'", monitorError.Message);
+
+                    var errorDetail = monitorError.Body.Error;
+                    Assert.Equal("Data collection rule is invalid", errorDetail.Message);
+                    Assert.Equal("InvalidPayload", errorDetail.Code);
+
+                    Assert.NotNull(errorDetail.Details);
+                    Assert.Equal(2, errorDetail.Details.Count);
+
+                    var errorDetailOne = errorDetail.Details[0];
+                    Assert.Equal("InvalidStream", errorDetailOne.Code);
+                    Assert.Equal("'Streams' item 0 must have one of the allowed values: Microsoft-InsightsMetrics,Microsoft-Perf.", errorDetailOne.Message);
+                    Assert.Equal("Properties.DataSources.PerformanceCounters[0].Streams[0]", errorDetailOne.Target);
+
+                    var errorDetailTwo = errorDetail.Details[1];
+                    Assert.Equal("InvalidStream", errorDetailTwo.Code);
+                    Assert.Equal("'Streams' item 0 must have one of the allowed values: Microsoft-AntiMalwareStatus,Microsoft-Auditd,Microsoft-CiscoAsa,Microsoft-CommonSecurityLog,Microsoft-ComputerGroup,Microsoft-ConfigurationChange,Microsoft-ContainerInventory,Microsoft-ContainerLog,Microsoft-ContainerLogV2,Microsoft-ContainerNodeInventory,Microsoft-DefenderForSqlAlerts,Microsoft-DefenderForSqlLogins,Microsoft-DefenderForSqlScanEvents,Microsoft-DefenderForSqlScanResults,Microsoft-DefenderForSqlTelemetry,Microsoft-Event,Microsoft-FirewallLog,Microsoft-HealthStateChange,Microsoft-Heartbeat,Microsoft-InsightsMetrics,Microsoft-KubeEvents,Microsoft-KubeHealth,Microsoft-KubeMonAgentEvents,Microsoft-KubeNodeInventory,Microsoft-KubePodInventory,Microsoft-KubePVInventory,Microsoft-KubeServices,Microsoft-NWConnectionMonitorPathResult,Microsoft-NWConnectionMonitorTestResult,Microsoft-OperationLog,Microsoft-OperationJson,Microsoft-Perf,Microsoft-ProcessInvestigator,Microsoft-ProtectionStatus,Microsoft-RomeDetectionEvent,Microsoft-SecurityBaseline,Microsoft-SecurityBaselineSummary,Microsoft-SecurityEvent,Microsoft-ServiceMap,Microsoft-SqlAtpStatus-DefenderForSql,Microsoft-Syslog,Microsoft-WindowsEvent,Microsoft-WorkloadDiagnosticLogs,Microsoft-CommonSecurityLog-Raw.", errorDetailTwo.Message);
+                    Assert.Equal("Properties.DataFlows[0].Streams[0]", errorDetailTwo.Target);
+                }
+                catch (System.Exception)
+                {
+                    Assert.True(false, "General exception not expected");
+                }
+            }
+        }
         #endregion
 
         #region DCRA
