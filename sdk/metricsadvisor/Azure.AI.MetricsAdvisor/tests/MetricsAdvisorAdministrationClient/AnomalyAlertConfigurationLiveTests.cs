@@ -174,8 +174,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string hookName0 = Recording.GenerateAlphaNumericId("hook");
             string hookName1 = Recording.GenerateAlphaNumericId("hook");
 
-            var hookToCreate0 = new WebNotificationHook() { Name = hookName0, Endpoint = "http://contoso.com" };
-            var hookToCreate1 = new WebNotificationHook() { Name = hookName1, Endpoint = "http://contoso.com" };
+            var hookToCreate0 = new WebNotificationHook() { Name = hookName0, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate1 = new WebNotificationHook() { Name = hookName1, Endpoint = new Uri("http://contoso.com/") };
 
             await using var disposableHook0 = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate0);
             await using var disposableHook1 = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate1);
@@ -356,7 +356,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Anomaly Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = "http://contoso.com" };
+            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
@@ -472,7 +472,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Anomaly Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = "http://contoso.com" };
+            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
@@ -587,7 +587,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Anomaly Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = "http://contoso.com" };
+            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
@@ -729,7 +729,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Configure the Metric Anomaly Alert Configurations to be used.
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = "http://contoso.com" };
+            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
             var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();

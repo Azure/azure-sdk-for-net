@@ -1058,7 +1058,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal NotificationHook() { }
         public System.Collections.Generic.IReadOnlyList<string> Administrators { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public string ExternalLink { get { throw null; } set { } }
+        public System.Uri ExternalLink { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }
@@ -1141,7 +1141,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public WebNotificationHook() { }
         public string CertificateKey { get { throw null; } set { } }
         public string CertificatePassword { get { throw null; } set { } }
-        public string Endpoint { get { throw null; } set { } }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
