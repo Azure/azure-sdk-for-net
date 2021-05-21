@@ -685,6 +685,18 @@ namespace Azure.Messaging.EventHubs.Primitives
                     {
                         consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, startingPosition, connection, Options);
 
+                        // Register for notification when the cancellation token is triggered.  Attempt to close the consumer
+                        // in response to force-close the link and short-circuit any receive operation that is blocked and
+                        // awaiting timeout.
+
+                        using var cancellationRegistration = cancellationSource.Token.Register(static state =>
+                        {
+                            // Because this is a best-effort attempt and exceptions are expected and not relevant to
+                            // callers, use a fire-and-forget approach rather than awaiting.
+
+                            _ = ((TransportConsumer)state).CloseAsync(CancellationToken.None);
+                        }, consumer, useSynchronizationContext: false);
+
                         // Allow the core dispatching loop to apply an additional set of retries over any provided by the consumer
                         // itself, as a processor should be as resilient as possible and retain partition ownership if processing is
                         // able to make forward progress.  If the retries are exhausted or a non-retriable exception occurs, the
@@ -718,6 +730,14 @@ namespace Azure.Messaging.EventHubs.Primitives
                                 // Do not log; this is an expected scenario when partition processing is asked to stop.
 
                                 throw;
+                            }
+                            catch (EventHubsException ex)
+                                when ((ex.Reason == EventHubsException.FailureReason.ClientClosed) && (cancellationSource.IsCancellationRequested))
+                            {
+                                // Do not log as an exception; this is an expected scenario when partition processing is asked to stop.
+
+                                Logger.EventProcessorPartitionProcessingStopConsumerClose(partition.PartitionId, Identifier, EventHubName, ConsumerGroup);
+                                throw new TaskCanceledException();
                             }
                             catch (Exception ex) when (ex.IsNotType<DeveloperCodeException>())
                             {
