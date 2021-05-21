@@ -53,10 +53,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// network interfaces.</param>
         /// <param name="enableIPForwarding">Whether IP forwarding enabled on
         /// this NIC.</param>
-        /// <param name="deleteOption">Specify what happens to the network
-        /// interface when the VM is deleted. Possible values include:
-        /// 'Delete', 'Detach'</param>
-        public VirtualMachineScaleSetNetworkConfiguration(string name, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, string id = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), bool? enableIPForwarding = default(bool?), string deleteOption = default(string))
+        public VirtualMachineScaleSetNetworkConfiguration(string name, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, string id = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), bool? enableIPForwarding = default(bool?))
             : base(id)
         {
             Name = name;
@@ -67,7 +64,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             DnsSettings = dnsSettings;
             IpConfigurations = ipConfigurations;
             EnableIPForwarding = enableIPForwarding;
-            DeleteOption = deleteOption;
             CustomInit();
         }
 
@@ -128,13 +124,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableIPForwarding")]
         public bool? EnableIPForwarding { get; set; }
-
-        /// <summary>
-        /// Gets or sets specify what happens to the network interface when the
-        /// VM is deleted. Possible values include: 'Delete', 'Detach'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deleteOption")]
-        public string DeleteOption { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -184,10 +184,8 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the dedicated host.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. 'InstanceView' will
-            /// retrieve the list of instance views of the dedicated host. 'UserData' is
-            /// not supported for dedicated host. Possible values include: 'instanceView',
-            /// 'userData'
+            /// The expand expression to apply on the operation. Possible values include:
+            /// 'instanceView'
             /// </param>
             public static DedicatedHost Get(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
@@ -210,10 +208,8 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the dedicated host.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. 'InstanceView' will
-            /// retrieve the list of instance views of the dedicated host. 'UserData' is
-            /// not supported for dedicated host. Possible values include: 'instanceView',
-            /// 'userData'
+            /// The expand expression to apply on the operation. Possible values include:
+            /// 'instanceView'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

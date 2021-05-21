@@ -51,10 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
         /// values are: 'IPv4' and 'IPv6'. Possible values include: 'IPv4',
         /// 'IPv6'</param>
-        /// <param name="deleteOption">Specify what happens to the public IP
-        /// when the VM is deleted. Possible values include: 'Delete',
-        /// 'Detach'</param>
-        public VirtualMachineScaleSetPublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes = default(int?), VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings), IList<VirtualMachineScaleSetIpTag> ipTags = default(IList<VirtualMachineScaleSetIpTag>), SubResource publicIPPrefix = default(SubResource), string publicIPAddressVersion = default(string), string deleteOption = default(string), PublicIPAddressSku sku = default(PublicIPAddressSku))
+        public VirtualMachineScaleSetPublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes = default(int?), VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings), IList<VirtualMachineScaleSetIpTag> ipTags = default(IList<VirtualMachineScaleSetIpTag>), SubResource publicIPPrefix = default(SubResource), string publicIPAddressVersion = default(string))
         {
             Name = name;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
@@ -62,8 +59,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             IpTags = ipTags;
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
-            DeleteOption = deleteOption;
-            Sku = sku;
             CustomInit();
         }
 
@@ -115,18 +110,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string PublicIPAddressVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets specify what happens to the public IP when the VM is
-        /// deleted. Possible values include: 'Delete', 'Detach'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deleteOption")]
-        public string DeleteOption { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public PublicIPAddressSku Sku { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -141,10 +124,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (DnsSettings != null)
             {
                 DnsSettings.Validate();
-            }
-            if (Sku != null)
-            {
-                Sku.Validate();
             }
         }
     }

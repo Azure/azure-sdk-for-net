@@ -142,16 +142,6 @@ namespace Microsoft.Azure.Management.Compute
         IImagesOperations Images { get; }
 
         /// <summary>
-        /// Gets the IRestorePointCollectionsOperations.
-        /// </summary>
-        IRestorePointCollectionsOperations RestorePointCollections { get; }
-
-        /// <summary>
-        /// Gets the IRestorePointsOperations.
-        /// </summary>
-        IRestorePointsOperations RestorePoints { get; }
-
-        /// <summary>
         /// Gets the IVirtualMachineScaleSetExtensionsOperations.
         /// </summary>
         IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; }
