@@ -2,19 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry;
 using Azure.Test.Perf;
 
 namespace Azure.Containers.ContainerRegistry.Perf
 {
-    public sealed class ListArtifacts : ContainerRegistryPerfTest<PerfOptions>
+    public sealed class ListArtifacts : ContainerRegistryPerfTest
     {
         private readonly ContainerRegistryClient _client;
+        private ContainerRepository _repository;
 
         public ListArtifacts(PerfOptions options) : base(options)
         {
@@ -29,13 +26,19 @@ namespace Azure.Containers.ContainerRegistry.Perf
             string repository = $"library/node";
             string tag = "test-perf";
 
-            await ImportImage(PerfTestEnvironment.Instance.Registry, repository, tag);
+            await ImportImageAsync(PerfTestEnvironment.Instance.Registry, repository, tag);
+        }
+
+        public override async Task SetupAsync()
+        {
+            await base.SetupAsync();
+
+            _repository = _client.GetRepository($"library/node");
         }
 
         public override void Run(CancellationToken cancellationToken)
         {
-            var repository = _client.GetRepository($"library/node");
-            foreach (var manifest in repository.GetManifests())
+            foreach (var manifest in _repository.GetManifests())
             {
                  _client.GetArtifact($"library/node", manifest.Digest);
             }
@@ -43,8 +46,7 @@ namespace Azure.Containers.ContainerRegistry.Perf
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            var repository = _client.GetRepository($"library/node");
-            await foreach (var manifest in repository.GetManifestsAsync())
+            await foreach (var manifest in _repository.GetManifestsAsync())
             {
                 _client.GetArtifact($"library/node", manifest.Digest);
             }

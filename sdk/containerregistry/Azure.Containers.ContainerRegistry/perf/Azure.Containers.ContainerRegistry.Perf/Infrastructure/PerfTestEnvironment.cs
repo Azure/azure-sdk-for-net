@@ -20,12 +20,12 @@ namespace Azure.Containers.ContainerRegistry.Perf
         /// The endpoint of the Container Registry resource to test against.
         /// </summary>
         /// <value>The endpoint, read from the "CONTAINERREGISTRY_ENDPOINT" environment variable.</value>
-        public string Endpoint => GetRecordedVariable("CONTAINERREGISTRY_ENDPOINT");
+        public string Endpoint => GetVariable("CONTAINERREGISTRY_ENDPOINT");
 
         /// <summary>
         /// The name of the registry to test against.
         /// </summary>
         /// <value>The registry name, read from the "CONTAINERREGISTRY_REGISTRY_NAME" environment variable.</value>
-        public string Registry => GetRecordedVariable("CONTAINERREGISTRY_REGISTRY_NAME");
+        public string Registry => GetVariable("CONTAINERREGISTRY_REGISTRY_NAME");
     }
 }

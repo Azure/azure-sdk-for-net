@@ -15,18 +15,18 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Azure.Containers.ContainerRegistry.Perf
 {
-    public abstract class ContainerRegistryPerfTest<TOptions> : PerfTest<TOptions> where TOptions : PerfOptions
+    public abstract class ContainerRegistryPerfTest : PerfTest<PerfOptions>
     {
-        public ContainerRegistryPerfTest(TOptions options) : base(options)
+        public ContainerRegistryPerfTest(PerfOptions options) : base(options)
         {
         }
 
-        public async Task ImportImage(string registry, string repository, string tag)
+        public async Task ImportImageAsync(string registry, string repository, string tag)
         {
-            await ImportImage(registry, repository, new List<string>() { tag });
+            await ImportImageAsync(registry, repository, new List<string>() { tag });
         }
 
-        public async Task ImportImage(string registry, string repository, List<string> tags)
+        public async Task ImportImageAsync(string registry, string repository, List<string> tags)
         {
             var credential = new AzureCredentials(
                 new ServicePrincipalLoginInformation
