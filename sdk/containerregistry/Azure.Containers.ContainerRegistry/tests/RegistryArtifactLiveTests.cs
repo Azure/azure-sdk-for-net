@@ -12,7 +12,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public RegistryArtifactLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public RegistryArtifactLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -137,7 +137,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(TestEnvironment.Registry, repository, tag);
+                await ImportImageAsync(TestEnvironment.Registry, repository, tag);
             }
 
             // Act
@@ -267,7 +267,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(registry, _repositoryName, "newest");
+                await ImportImageAsync(registry, _repositoryName, "newest");
             }
 
             // Act
@@ -350,7 +350,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(TestEnvironment.Registry, _repositoryName, tag);
+                await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tag);
             }
 
             // Act

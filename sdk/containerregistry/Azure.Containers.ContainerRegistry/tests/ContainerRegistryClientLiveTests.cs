@@ -10,7 +10,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -117,7 +117,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(registry, repository, tags);
+                    await ImportImageAsync(registry, repository, tags);
                 }
 
                 // Act
@@ -138,7 +138,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Clean up - put the repository with tags back.
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(registry, repository, tags);
+                    await ImportImageAsync(registry, repository, tags);
                 }
             }
         }

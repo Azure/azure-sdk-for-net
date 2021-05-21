@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ContainerRepositoryLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(TestEnvironment.Registry, _repositoryName, tags);
+                    await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tags);
                 }
 
                 // Act
@@ -122,7 +122,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Clean up - put the repository with tags back.
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(TestEnvironment.Registry, _repositoryName, tags);
+                    await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tags);
                 }
             }
         }
@@ -248,7 +248,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(TestEnvironment.Registry, repositoryName, tag);
+                    await ImportImageAsync(TestEnvironment.Registry, repositoryName, tag);
                 }
 
                 // Act
