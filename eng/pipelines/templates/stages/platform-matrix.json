@@ -37,9 +37,9 @@
           }
       },
       "TestMode": {
-          "netcoreapp21_Coverage_Record": {
+          "netcoreapp21_Coverage_or_Record": {
               "SupportsRecording": true,
-              "CollectCoverage": true,
+              "CollectCoverage": false,
               "TestTargetFramework": "netcoreapp2.1"
           },
           "net5.0": {
