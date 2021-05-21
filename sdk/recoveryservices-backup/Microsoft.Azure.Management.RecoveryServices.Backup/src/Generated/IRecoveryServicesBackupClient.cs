@@ -69,6 +69,36 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
 
         /// <summary>
+        /// Gets the IProtectionIntentOperations.
+        /// </summary>
+        IProtectionIntentOperations ProtectionIntent { get; }
+
+        /// <summary>
+        /// Gets the IBackupStatusOperations.
+        /// </summary>
+        IBackupStatusOperations BackupStatus { get; }
+
+        /// <summary>
+        /// Gets the IFeatureSupportOperations.
+        /// </summary>
+        IFeatureSupportOperations FeatureSupport { get; }
+
+        /// <summary>
+        /// Gets the IBackupProtectionIntentOperations.
+        /// </summary>
+        IBackupProtectionIntentOperations BackupProtectionIntent { get; }
+
+        /// <summary>
+        /// Gets the IBackupUsageSummariesOperations.
+        /// </summary>
+        IBackupUsageSummariesOperations BackupUsageSummaries { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IBackupResourceVaultConfigsOperations.
         /// </summary>
         IBackupResourceVaultConfigsOperations BackupResourceVaultConfigs { get; }
@@ -244,6 +274,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         ISecurityPINsOperations SecurityPINs { get; }
 
         /// <summary>
+        /// Gets the IRecoveryPointsRecommendedForMoveOperations.
+        /// </summary>
+        IRecoveryPointsRecommendedForMoveOperations RecoveryPointsRecommendedForMove { get; }
+
+        /// <summary>
+        /// Gets the IBackupUsageSummariesCRROperations.
+        /// </summary>
+        IBackupUsageSummariesCRROperations BackupUsageSummariesCRR { get; }
+
+        /// <summary>
         /// Gets the IAadPropertiesOperations.
         /// </summary>
         IAadPropertiesOperations AadProperties { get; }
@@ -287,36 +327,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IBackupProtectedItemsCrrOperations.
         /// </summary>
         IBackupProtectedItemsCrrOperations BackupProtectedItemsCrr { get; }
-
-        /// <summary>
-        /// Gets the IProtectionIntentOperations.
-        /// </summary>
-        IProtectionIntentOperations ProtectionIntent { get; }
-
-        /// <summary>
-        /// Gets the IBackupStatusOperations.
-        /// </summary>
-        IBackupStatusOperations BackupStatus { get; }
-
-        /// <summary>
-        /// Gets the IFeatureSupportOperations.
-        /// </summary>
-        IFeatureSupportOperations FeatureSupport { get; }
-
-        /// <summary>
-        /// Gets the IBackupProtectionIntentOperations.
-        /// </summary>
-        IBackupProtectionIntentOperations BackupProtectionIntent { get; }
-
-        /// <summary>
-        /// Gets the IBackupUsageSummariesOperations.
-        /// </summary>
-        IBackupUsageSummariesOperations BackupUsageSummaries { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
 
         /// <summary>
         /// Fetches operation status for data move operation on vault
@@ -381,6 +391,35 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<AzureOperationResponse> BMSTriggerDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, TriggerDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Move recovery point from one datastore to another store.
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='fabricName'>
+        /// </param>
+        /// <param name='containerName'>
+        /// </param>
+        /// <param name='protectedItemName'>
+        /// </param>
+        /// <param name='recoveryPointId'>
+        /// </param>
+        /// <param name='parameters'>
+        /// Move Resource Across Tiers Request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> MoveRecoveryPointWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, MoveRPAcrossTiersRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Prepares source vault for Data Move operation
         /// </summary>
         /// <param name='vaultName'>
@@ -421,6 +460,35 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse> BeginBMSTriggerDataMoveWithHttpMessagesAsync(string vaultName, string resourceGroupName, TriggerDataMoveRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Move recovery point from one datastore to another store.
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='fabricName'>
+        /// </param>
+        /// <param name='containerName'>
+        /// </param>
+        /// <param name='protectedItemName'>
+        /// </param>
+        /// <param name='recoveryPointId'>
+        /// </param>
+        /// <param name='parameters'>
+        /// Move Resource Across Tiers Request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginMoveRecoveryPointWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, string recoveryPointId, MoveRPAcrossTiersRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

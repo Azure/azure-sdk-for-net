@@ -3,14 +3,15 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Analytics.Synapse.Samples;
+using Azure.Core.TestFramework;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Identity;
 using NUnit.Framework;
 using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class Sample4_HelloWorldDataFlow : SampleFixture
+    public partial class Sample4_HelloWorldDataFlow : SamplesBase<SynapseTestEnvironment>
     {
         [Test]
         public async Task DataFlowSample()
@@ -46,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeleteDataFlow
             DataFlowDeleteDataFlowOperation deleteOperation = client.StartDeleteDataFlow(dataFlowName);
-            await deleteOperation.WaitForCompletionAsync();
+            await deleteOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

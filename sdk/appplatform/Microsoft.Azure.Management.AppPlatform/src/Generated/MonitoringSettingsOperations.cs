@@ -83,6 +83,17 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </return>
         public async Task<AzureOperationResponse<MonitoringSettingResource>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -331,6 +342,17 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </return>
         public async Task<AzureOperationResponse<MonitoringSettingResource>> BeginUpdatePutWithHttpMessagesAsync(string resourceGroupName, string serviceName, MonitoringSettingResource monitoringSettingResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -346,6 +368,10 @@ namespace Microsoft.Azure.Management.AppPlatform
             if (monitoringSettingResource == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "monitoringSettingResource");
+            }
+            if (monitoringSettingResource != null)
+            {
+                monitoringSettingResource.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -556,6 +582,17 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </return>
         public async Task<AzureOperationResponse<MonitoringSettingResource>> BeginUpdatePatchWithHttpMessagesAsync(string resourceGroupName, string serviceName, MonitoringSettingResource monitoringSettingResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");

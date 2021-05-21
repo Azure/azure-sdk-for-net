@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatchersSetFlowLogConfigurationOperation : Operation<FlowLogInformation>, IOperationSource<FlowLogInformation>
     {
         private readonly ArmOperationHelpers<FlowLogInformation> _operation;
+
+        /// <summary> Initializes a new instance of NetworkWatchersSetFlowLogConfigurationOperation for mocking. </summary>
+        protected NetworkWatchersSetFlowLogConfigurationOperation()
+        {
+        }
+
         internal NetworkWatchersSetFlowLogConfigurationOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<FlowLogInformation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersSetFlowLogConfigurationOperation");

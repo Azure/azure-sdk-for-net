@@ -1,5 +1,15 @@
 # Release History
 
+## 13.0.0 (2021-01-01)
+### REST API version
+- This version targets REST API version 2021-01-01.
+
+### Features
+- Added new `Extensions` property to `VirtualMachineConfiguration` on pools to specify virtual machine extensions for nodes
+- Added the ability to specify availability zones using a new property `NodePlacementConfiguration` on `VirtualMachineConfiguration`
+- Added a new `Identity` property on `Pool` to specify a managed identity
+- **[Breaking]** Removed `BeginCreate` and `BeginCreateAsync` certificate operation methods. Certificate operations are not long running operations so these were incorrect.
+
 ## 12.0.0 (2020-09-17)
 ### REST API version
 - This version targets REST API version 2020-09-01.

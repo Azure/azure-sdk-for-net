@@ -59,11 +59,13 @@ namespace Azure.Messaging.ServiceBus
     {
         protected ServiceBusClient() { }
         public ServiceBusClient(string connectionString) { }
+        public ServiceBusClient(string fullyQualifiedNamespace, Azure.AzureNamedKeyCredential credential, Azure.Messaging.ServiceBus.ServiceBusClientOptions options = null) { }
+        public ServiceBusClient(string fullyQualifiedNamespace, Azure.AzureSasCredential credential, Azure.Messaging.ServiceBus.ServiceBusClientOptions options = null) { }
         public ServiceBusClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential) { }
         public ServiceBusClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
         public ServiceBusClient(string connectionString, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
-        public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { get { throw null; } }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> AcceptNextSessionAsync(string queueName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> AcceptNextSessionAsync(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -85,6 +87,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusClientOptions
     {
         public ServiceBusClientOptions() { }
+        public bool EnableCrossEntityTransactions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusRetryOptions RetryOptions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
         public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
@@ -168,6 +171,7 @@ namespace Azure.Messaging.ServiceBus
         public string Subject { get { throw null; } set { } }
         public System.TimeSpan TimeToLive { get { throw null; } set { } }
         public string To { get { throw null; } set { } }
+        public string TransactionPartitionKey { get { throw null; } set { } }
         public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         public override string ToString() { throw null; }
     }
@@ -180,32 +184,27 @@ namespace Azure.Messaging.ServiceBus
         public void Dispose() { }
         public bool TryAddMessage(Azure.Messaging.ServiceBus.ServiceBusMessage message) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public static partial class ServiceBusModelFactory
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.ServiceBus.Administration.QueueProperties QueueProperties(string name, System.TimeSpan lockDuration = default(System.TimeSpan), long maxSizeInMegabytes = (long)0, bool requiresDuplicateDetection = false, bool requiresSession = false, System.TimeSpan defaultMessageTimeToLive = default(System.TimeSpan), System.TimeSpan autoDeleteOnIdle = default(System.TimeSpan), bool deadLetteringOnMessageExpiration = false, System.TimeSpan duplicateDetectionHistoryTimeWindow = default(System.TimeSpan), int maxDeliveryCount = 0, bool enableBatchedOperations = false, Azure.Messaging.ServiceBus.Administration.EntityStatus status = default(Azure.Messaging.ServiceBus.Administration.EntityStatus), string forwardTo = null, string forwardDeadLetteredMessagesTo = null, string userMetadata = null, bool enablePartitioning = false) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.ServiceBus.Administration.RuleProperties RuleProperties(string name, Azure.Messaging.ServiceBus.Administration.RuleFilter filter = null, Azure.Messaging.ServiceBus.Administration.RuleAction action = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Messaging.ServiceBus.ServiceBusMessageBatch ServiceBusMessageBatch(long batchSizeBytes, System.Collections.Generic.IList<Azure.Messaging.ServiceBus.ServiceBusMessage> batchMessageStore, Azure.Messaging.ServiceBus.CreateMessageBatchOptions batchOptions = null, System.Func<Azure.Messaging.ServiceBus.ServiceBusMessage, bool> tryAddCallback = null) { throw null; }
         public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage ServiceBusReceivedMessage(System.BinaryData body = null, string messageId = null, string partitionKey = null, string viaPartitionKey = null, string sessionId = null, string replyToSessionId = null, System.TimeSpan timeToLive = default(System.TimeSpan), string correlationId = null, string subject = null, string to = null, string contentType = null, string replyTo = null, System.DateTimeOffset scheduledEnqueueTime = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, object> properties = null, System.Guid lockTokenGuid = default(System.Guid), int deliveryCount = 0, System.DateTimeOffset lockedUntil = default(System.DateTimeOffset), long sequenceNumber = (long)-1, string deadLetterSource = null, long enqueuedSequenceNumber = (long)0, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.ServiceBus.Administration.SubscriptionProperties SubscriptionProperties(string topicName, string subscriptionName, System.TimeSpan lockDuration = default(System.TimeSpan), bool requiresSession = false, System.TimeSpan defaultMessageTimeToLive = default(System.TimeSpan), System.TimeSpan autoDeleteOnIdle = default(System.TimeSpan), bool deadLetteringOnMessageExpiration = false, int maxDeliveryCount = 0, bool enableBatchedOperations = false, Azure.Messaging.ServiceBus.Administration.EntityStatus status = default(Azure.Messaging.ServiceBus.Administration.EntityStatus), string forwardTo = null, string forwardDeadLetteredMessagesTo = null, string userMetadata = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.ServiceBus.Administration.TopicProperties TopicProperties(string name, long maxSizeInMegabytes = (long)0, bool requiresDuplicateDetection = false, System.TimeSpan defaultMessageTimeToLive = default(System.TimeSpan), System.TimeSpan autoDeleteOnIdle = default(System.TimeSpan), System.TimeSpan duplicateDetectionHistoryTimeWindow = default(System.TimeSpan), bool enableBatchedOperations = false, Azure.Messaging.ServiceBus.Administration.EntityStatus status = default(Azure.Messaging.ServiceBus.Administration.EntityStatus), bool enablePartitioning = false) { throw null; }
     }
     public partial class ServiceBusProcessor : System.IAsyncDisposable
     {
         protected ServiceBusProcessor() { }
-        public bool AutoCompleteMessages { get { throw null; } }
-        public string EntityPath { get { throw null; } }
-        public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { get { throw null; } }
-        public bool IsProcessing { get { throw null; } }
-        public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
-        public int MaxConcurrentCalls { get { throw null; } }
-        public int PrefetchCount { get { throw null; } }
-        public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
+        public virtual bool AutoCompleteMessages { get { throw null; } }
+        public virtual string EntityPath { get { throw null; } }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
+        public virtual bool IsProcessing { get { throw null; } }
+        public virtual System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
+        public virtual int MaxConcurrentCalls { get { throw null; } }
+        public virtual int PrefetchCount { get { throw null; } }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ProcessErrorAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessMessageEventArgs, System.Threading.Tasks.Task> ProcessMessageAsync { add { } remove { } }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -214,6 +213,8 @@ namespace Azure.Messaging.ServiceBus
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnProcessErrorAsync(Azure.Messaging.ServiceBus.ProcessErrorEventArgs args) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnProcessMessageAsync(Azure.Messaging.ServiceBus.ProcessMessageEventArgs args) { throw null; }
         public virtual System.Threading.Tasks.Task StartProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task StopProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -227,6 +228,7 @@ namespace Azure.Messaging.ServiceBus
         public int MaxConcurrentCalls { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
+        public Azure.Messaging.ServiceBus.SubQueue SubQueue { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -260,6 +262,7 @@ namespace Azure.Messaging.ServiceBus
         public string Subject { get { throw null; } }
         public System.TimeSpan TimeToLive { get { throw null; } }
         public string To { get { throw null; } }
+        public string TransactionPartitionKey { get { throw null; } }
         public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         public override string ToString() { throw null; }
     }
@@ -271,11 +274,11 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusReceiver : System.IAsyncDisposable
     {
         protected ServiceBusReceiver() { }
-        public string EntityPath { get { throw null; } }
-        public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { get { throw null; } }
-        public int PrefetchCount { get { throw null; } }
-        public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
+        public virtual string EntityPath { get { throw null; } }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
+        public virtual int PrefetchCount { get { throw null; } }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
         public virtual System.Threading.Tasks.Task AbandonMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -341,9 +344,9 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusSender : System.IAsyncDisposable
     {
         protected ServiceBusSender() { }
-        public string EntityPath { get { throw null; } }
-        public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { get { throw null; } }
+        public virtual string EntityPath { get { throw null; } }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
         public virtual System.Threading.Tasks.Task CancelScheduledMessageAsync(long sequenceNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CancelScheduledMessagesAsync(System.Collections.Generic.IEnumerable<long> sequenceNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -365,16 +368,18 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusSessionProcessor : System.IAsyncDisposable
     {
         protected ServiceBusSessionProcessor() { }
-        public bool AutoCompleteMessages { get { throw null; } }
-        public string EntityPath { get { throw null; } }
-        public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { get { throw null; } }
-        public bool IsProcessing { get { throw null; } }
-        public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
-        public int MaxConcurrentCallsPerSession { get { throw null; } }
-        public int MaxConcurrentSessions { get { throw null; } }
-        public int PrefetchCount { get { throw null; } }
-        public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
+        public virtual bool AutoCompleteMessages { get { throw null; } }
+        public virtual string EntityPath { get { throw null; } }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
+        protected internal virtual Azure.Messaging.ServiceBus.ServiceBusProcessor InnerProcessor { get { throw null; } }
+        public virtual bool IsClosed { get { throw null; } }
+        public virtual bool IsProcessing { get { throw null; } }
+        public virtual System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
+        public virtual int MaxConcurrentCallsPerSession { get { throw null; } }
+        public virtual int MaxConcurrentSessions { get { throw null; } }
+        public virtual int PrefetchCount { get { throw null; } }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
+        public virtual System.TimeSpan? SessionIdleTimeout { get { throw null; } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ProcessErrorAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessSessionMessageEventArgs, System.Threading.Tasks.Task> ProcessMessageAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessSessionEventArgs, System.Threading.Tasks.Task> SessionClosingAsync { add { } remove { } }
@@ -385,6 +390,10 @@ namespace Azure.Messaging.ServiceBus
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnProcessErrorAsync(Azure.Messaging.ServiceBus.ProcessErrorEventArgs args) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnProcessSessionMessageAsync(Azure.Messaging.ServiceBus.ProcessSessionMessageEventArgs args) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnSessionClosingAsync(Azure.Messaging.ServiceBus.ProcessSessionEventArgs args) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task OnSessionInitializingAsync(Azure.Messaging.ServiceBus.ProcessSessionEventArgs args) { throw null; }
         public virtual System.Threading.Tasks.Task StartProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task StopProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -399,6 +408,7 @@ namespace Azure.Messaging.ServiceBus
         public int MaxConcurrentSessions { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } set { } }
+        public System.TimeSpan? SessionIdleTimeout { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SessionIds { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -410,8 +420,8 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusSessionReceiver : Azure.Messaging.ServiceBus.ServiceBusReceiver
     {
         protected ServiceBusSessionReceiver() { }
-        public string SessionId { get { throw null; } }
-        public System.DateTimeOffset SessionLockedUntil { get { throw null; } }
+        public virtual string SessionId { get { throw null; } }
+        public virtual System.DateTimeOffset SessionLockedUntil { get { throw null; } }
         public virtual System.Threading.Tasks.Task<System.BinaryData> GetSessionStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task RenewSessionLockAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task SetSessionStateAsync(System.BinaryData sessionState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -709,6 +719,8 @@ namespace Azure.Messaging.ServiceBus.Administration
     {
         protected ServiceBusAdministrationClient() { }
         public ServiceBusAdministrationClient(string connectionString) { }
+        public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.AzureNamedKeyCredential credential, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options = null) { }
+        public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.AzureSasCredential credential, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options = null) { }
         public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential) { }
         public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options) { }
         public ServiceBusAdministrationClient(string connectionString, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options) { }

@@ -21,6 +21,7 @@ namespace Azure.AI.MetricsAdvisor
         {
             StartTime = startTime;
             EndTime = endTime;
+            DimensionToFilter = new DimensionKey();
         }
 
         /// <summary>
@@ -37,19 +38,19 @@ namespace Azure.AI.MetricsAdvisor
         /// Filters the result by series. Only anomalies detected in the time series group specified will
         /// be returned.
         /// </summary>
-        public DimensionKey DimensionToFilter { get; set; }
+        public DimensionKey DimensionToFilter { get; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to
         /// be skipped.
         /// </summary>
-        public int? SkipCount { get; set; }
+        public int? Skip { get; set; }
 
         /// <summary>
         /// If set, specifies the maximum limit of items returned in each page of results. Note:
         /// unless the number of pages enumerated from the service is limited, the service will
         /// return an unlimited number of total items.
         /// </summary>
-        public int? TopCount { get; set; }
+        public int? MaxPageSize { get; set; }
     }
 }

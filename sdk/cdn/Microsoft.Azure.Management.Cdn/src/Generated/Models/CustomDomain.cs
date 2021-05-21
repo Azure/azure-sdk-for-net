@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// required to deliver content in China.</param>
         /// <param name="provisioningState">Provisioning status of the custom
         /// domain.</param>
-        public CustomDomain(string hostName, string id = default(string), string name = default(string), string type = default(string), string resourceState = default(string), string customHttpsProvisioningState = default(string), string customHttpsProvisioningSubstate = default(string), string validationData = default(string), string provisioningState = default(string))
-            : base(id, name, type)
+        public CustomDomain(string hostName, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string resourceState = default(string), string customHttpsProvisioningState = default(string), string customHttpsProvisioningSubstate = default(string), string validationData = default(string), string provisioningState = default(string))
+            : base(id, name, type, systemData)
         {
             HostName = hostName;
             ResourceState = resourceState;

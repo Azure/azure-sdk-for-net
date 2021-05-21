@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of previewed features. </summary>
-    public partial class FeatureOperationsListResult
+    internal partial class FeatureOperationsListResult
     {
         /// <summary> Initializes a new instance of FeatureOperationsListResult. </summary>
         internal FeatureOperationsListResult()

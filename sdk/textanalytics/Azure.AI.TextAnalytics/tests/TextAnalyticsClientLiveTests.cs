@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -12,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Tests
     {
         public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync) { }
 
-        [Test]
+        [RecordedTest]
         public async Task TextWithEmoji()
         {
             TextAnalyticsClient client = GetClient();
@@ -23,9 +24,33 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, entities.Count);
             Assert.AreEqual("Microsoft", entities.FirstOrDefault().Text);
             Assert.AreEqual(3, entities.FirstOrDefault().Offset);
+            Assert.AreEqual(9, entities.FirstOrDefault().Length);
         }
 
-        [Test]
+        [RecordedTest]
+        public async Task TextWithStringIndexType()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = "👨 Microsoft the company.";
+
+            RecognizeEntitiesResultCollection responseWithUnicodeCodePoint = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en", new TextAnalyticsRequestOptions() { StringIndexType = StringIndexType.UnicodeCodePoint });
+            RecognizeEntitiesResultCollection responseWithUtf16CodeUnit = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en");
+
+            var entitiesWithUnicodeCodePoint = responseWithUnicodeCodePoint.FirstOrDefault().Entities;
+            var entitiesWithUtf16CodeUnit = responseWithUtf16CodeUnit.FirstOrDefault().Entities;
+
+            Assert.AreEqual(1, entitiesWithUnicodeCodePoint.Count);
+            Assert.AreEqual("Microsoft", entitiesWithUnicodeCodePoint.FirstOrDefault().Text);
+            Assert.AreEqual(2, entitiesWithUnicodeCodePoint.FirstOrDefault().Offset);
+            Assert.AreEqual(9, entitiesWithUnicodeCodePoint.FirstOrDefault().Length);
+
+            Assert.AreEqual(1, entitiesWithUtf16CodeUnit.Count);
+            Assert.AreEqual("Microsoft", entitiesWithUtf16CodeUnit.FirstOrDefault().Text);
+            Assert.AreEqual(3, entitiesWithUtf16CodeUnit.FirstOrDefault().Offset);
+            Assert.AreEqual(9, entitiesWithUtf16CodeUnit.FirstOrDefault().Length);
+        }
+
+        [RecordedTest]
         public async Task TextWithDiacriticsNFC()
         {
             TextAnalyticsClient client = GetClient();
@@ -36,9 +61,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, entities.Count);
             Assert.AreEqual("Microsoft", entities.FirstOrDefault().Text);
             Assert.AreEqual(4, entities.FirstOrDefault().Offset);
+            Assert.AreEqual(9, entities.FirstOrDefault().Length);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TextInKoreanNFC()
         {
             TextAnalyticsClient client = GetClient();
@@ -49,9 +75,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, entities.Count);
             Assert.AreEqual("Bill Gates", entities.FirstOrDefault().Text);
             Assert.AreEqual(3, entities.FirstOrDefault().Offset);
+            Assert.AreEqual(10, entities.FirstOrDefault().Length);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task EntitiesCategories()
         {
             TextAnalyticsClient client = GetClient();
@@ -69,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(EntityCategory.Location, entities[2].Category);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RotateApiKey()
         {
             // Instantiate a client that will be used to call the service.

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Response for Import/Export Get operation. </summary>
-    public partial class ImportExportResponse : Resource
+    public partial class ImportExportResponse : ProxyResource
     {
         /// <summary> Initializes a new instance of ImportExportResponse. </summary>
         public ImportExportResponse()

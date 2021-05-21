@@ -13,11 +13,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
+                #region Snippet:ServiceBusCompleteMessage
+#if SNIPPET
+                string connectionString = "<connection_string>";
+                string queueName = "<queue_name>";
+#else
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
-                #region Snippet:ServiceBusCompleteMessage
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
+#endif
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
@@ -39,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // complete the message, thereby deleting it from the service
                 await receiver.CompleteMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNull(await GetNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
             }
         }
 
@@ -71,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
                 await receiver.AbandonMessageAsync(receivedMessage);
                 #endregion
-                Assert.IsNotNull(GetNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
+                Assert.IsNotNull(CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
             }
         }
 

@@ -73,7 +73,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeLeaseClient(DataLakePathClient client, string leaseId = null)
         {
             _blobLeaseClient = new BlobLeaseClient(client.BlobClient, leaseId);
-            _clientDiagnostics = client.ClientDiagnostics;
+            _clientDiagnostics = client.ClientConfiguration.ClientDiagnostics;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeLeaseClient(DataLakeFileSystemClient client, string leaseId = null)
         {
             _blobLeaseClient = new BlobLeaseClient(client.ContainerClient, leaseId);
-            _clientDiagnostics = client.ClientDiagnostics;
+            _clientDiagnostics = client.ClientConfiguration.ClientDiagnostics;
         }
         #endregion ctors
 

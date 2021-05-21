@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Web.BackupOperationCompleted event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.BackupOperationCompleted event. </summary>
     public partial class WebBackupOperationCompletedEventData
     {
         /// <summary> Initializes a new instance of WebBackupOperationCompletedEventData. </summary>

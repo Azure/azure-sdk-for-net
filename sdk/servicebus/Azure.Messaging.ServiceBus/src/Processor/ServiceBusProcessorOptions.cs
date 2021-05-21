@@ -19,6 +19,9 @@ namespace Azure.Messaging.ServiceBus
         /// maximize throughput by allowing the processor to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public int PrefetchCount
         {
             get
@@ -58,6 +61,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public TimeSpan MaxAutoLockRenewalDuration
         {
             get => _maxAutoRenewDuration;
@@ -74,6 +80,9 @@ namespace Azure.Messaging.ServiceBus
         /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         internal TimeSpan? MaxReceiveWaitTime
         {
             get => _maxReceiveWaitTime;
@@ -96,6 +105,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The maximum number of concurrent calls to the message handler.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
         public int MaxConcurrentCalls
         {
             get => _maxConcurrentCalls;
@@ -107,6 +119,11 @@ namespace Azure.Messaging.ServiceBus
             }
         }
         private int _maxConcurrentCalls = 1;
+
+        /// <summary>
+        /// Gets or sets the subqueue to connect the processor to. By default, the processor will not connect to a subqueue.
+        /// </summary>
+        public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -150,7 +167,8 @@ namespace Azure.Messaging.ServiceBus
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime,
-                MaxConcurrentCalls = MaxConcurrentCalls
+                MaxConcurrentCalls = MaxConcurrentCalls,
+                SubQueue = SubQueue
             };
         }
     }

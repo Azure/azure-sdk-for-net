@@ -7,8 +7,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
@@ -16,7 +18,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Pipeline
 {
-    internal sealed partial class ClientDiagnostics : DiagnosticScopeFactory
+    internal class ClientDiagnostics : DiagnosticScopeFactory
     {
         private const string DefaultMessage = "Service request failed.";
 
@@ -36,28 +38,61 @@ namespace Azure.Core.Pipeline
         /// message, code, and details in a service specific manner.
         /// </summary>
         /// <param name="content">The error content.</param>
+        /// <param name="responseHeaders">The response headers.</param>
         /// <param name="message">The error message.</param>
         /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-#pragma warning disable CA1822 // Member can be static
-        partial void ExtractFailureContent(
+        protected virtual void ExtractFailureContent(
             string? content,
+            ResponseHeaders responseHeaders,
             ref string? message,
             ref string? errorCode,
-            ref IDictionary<string, string>? additionalInfo);
-#pragma warning restore CA1822
+            ref IDictionary<string, string>? additionalInfo)
+        {
+            try
+            {
+                // Optimistic check for JSON object we expect
+                if (content == null ||
+                    !content.StartsWith("{", StringComparison.OrdinalIgnoreCase)) return;
+
+                string? parsedMessage = null;
+                using JsonDocument document = JsonDocument.Parse(content);
+                if (document.RootElement.TryGetProperty("error", out var errorProperty))
+                {
+                    if (errorProperty.TryGetProperty("code", out var codeProperty))
+                    {
+                        errorCode = codeProperty.GetString();
+                    }
+                    if (errorProperty.TryGetProperty("message", out var messageProperty))
+                    {
+                        parsedMessage = messageProperty.GetString();
+                    }
+                }
+
+                // Make sure we parsed a message so we don't overwrite the value with null
+                if (parsedMessage != null)
+                {
+                    message = parsedMessage;
+                }
+            }
+            catch (Exception)
+            {
+                // Ignore any failures - unexpected content will be
+                // included verbatim in the detailed error message
+            }
+        }
 
         public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             var content = await ReadContentAsync(response, true).ConfigureAwait(false);
-            ExtractFailureContent(content, ref message, ref errorCode, ref additionalInfo);
+            ExtractFailureContent(content, response.Headers, ref message, ref errorCode, ref additionalInfo);
             return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }
 
         public RequestFailedException CreateRequestFailedException(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             string? content = ReadContentAsync(response, false).EnsureCompleted();
-            ExtractFailureContent(content, ref message, ref errorCode, ref additionalInfo);
+            ExtractFailureContent(content, response.Headers, ref message, ref errorCode, ref additionalInfo);
             return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }
 

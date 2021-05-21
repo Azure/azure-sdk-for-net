@@ -28,10 +28,10 @@ To publish events to any topic in an Event Domain, push the events to the domain
 List<EventGridEvent> eventsList = new List<EventGridEvent>
 {
     new EventGridEvent(
-        "This is the event data",
         "ExampleEventSubject",
         "Example.EventType",
-        "1.0")
+        "1.0",
+        "This is the event data")
     {
         Topic = "MyTopic"
     }

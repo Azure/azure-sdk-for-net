@@ -3,6 +3,7 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Azure.Management.ManagedServiceIdentity;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -32,6 +33,7 @@ namespace Compute.Tests
         protected ComputeManagementClient m_CrpClient;
         protected StorageManagementClient m_SrpClient;
         protected NetworkManagementClient m_NrpClient;
+        protected ManagedServiceIdentityClient m_MsiClient;
 
         protected bool m_initialized = false;
         protected object m_lock = new object();
@@ -51,6 +53,7 @@ namespace Compute.Tests
                         m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         m_NrpClient = ComputeManagementTestUtilities.GetNetworkManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        m_MsiClient = ComputeManagementTestUtilities.GetManagedServiceIdentityClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                         m_subId = m_CrpClient.SubscriptionId;
                         if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
@@ -161,7 +164,7 @@ namespace Compute.Tests
 
         protected string getDefaultDiskEncryptionSetId()
         {
-            return "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunning-eastus2RG/providers/Microsoft.Compute/diskEncryptionSets/longlivedBvtDES";
+            return "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/diskEncryptionSets/EncryptionSetforTest";
         }
 
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
@@ -224,7 +227,7 @@ namespace Compute.Tests
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
             bool hasDiffDisks = false,
-            string vmSize = VirtualMachineSizeTypes.StandardA0,
+            string vmSize = VirtualMachineSizeTypes.StandardA1V2,
             string osDiskStorageAccountType = "Standard_LRS",
             string dataDiskStorageAccountType = "Standard_LRS",
             bool? writeAcceleratorEnabled = null,
@@ -232,6 +235,7 @@ namespace Compute.Tests
             string ppgName = null,
             string diskEncryptionSetId = null,
             bool? encryptionAtHostEnabled = null,
+            string securityType = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
             string dedicatedHostName = null)
@@ -292,6 +296,30 @@ namespace Compute.Tests
                     {
                         EncryptionAtHost = encryptionAtHostEnabled.Value
                     };
+                }
+                
+                if (securityType != null && securityType.Equals("TrustedLaunch"))
+                {
+                    if(inputVM.SecurityProfile != null)
+                    {
+                        inputVM.SecurityProfile.UefiSettings = new UefiSettings
+                        {
+                            VTpmEnabled = true,
+                            SecureBootEnabled = true
+                        };
+                    }
+                    else
+                    {
+                        inputVM.SecurityProfile = new SecurityProfile
+                        {
+                            UefiSettings = new UefiSettings
+                            {
+                                VTpmEnabled = true,
+                                SecureBootEnabled = true
+                            }
+                        };
+                    }
+
                 }
 
                 if (zones != null)
@@ -843,7 +871,7 @@ namespace Compute.Tests
         }
 
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
-            string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
+            string vmSize = "Standard_A1_v2", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             string diskEncryptionSetId = null)
         {
             // Generate Container name to hold disk VHds

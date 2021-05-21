@@ -1,0 +1,64 @@
+{
+  "@context": "dtmi:dtdl:context;2",
+  "@id": "dtmi:azure:DeviceManagement:DeviceInformation;1",
+  "@type": "Interface",
+  "displayName": "Device Information",
+  "contents": [
+    {
+      "@type": "Property",
+      "name": "manufacturer",
+      "displayName": "Manufacturer",
+      "schema": "string",
+      "description": "Company name of the device manufacturer. This could be the same as the name of the original equipment manufacturer (OEM). Ex. Contoso."
+    },
+    {
+      "@type": "Property",
+      "name": "model",
+      "displayName": "Device model",
+      "schema": "string",
+      "description": "Device model name or ID. Ex. Surface Book 2."
+    },
+    {
+      "@type": "Property",
+      "name": "swVersion",
+      "displayName": "Software version",
+      "schema": "string",
+      "description": "Version of the software on your device. This could be the version of your firmware. Ex. 1.3.45"
+    },
+    {
+      "@type": "Property",
+      "name": "osName",
+      "displayName": "Operating system name",
+      "schema": "string",
+      "description": "Name of the operating system on the device. Ex. Windows 10 IoT Core."
+    },
+    {
+      "@type": "Property",
+      "name": "processorArchitecture",
+      "displayName": "Processor architecture",
+      "schema": "string",
+      "description": "Architecture of the processor on the device. Ex. x64 or ARM."
+    },
+    {
+      "@type": "Property",
+      "name": "processorManufacturer",
+      "displayName": "Processor manufacturer",
+      "schema": "string",
+      "description": "Name of the manufacturer of the processor on the device. Ex. Intel."
+    },
+    {
+      "@type": "Property",
+      "name": "totalStorage",
+      "displayName": "Total storage",
+      "schema": "double",
+      "description": "Total available storage on the device in kilobytes. Ex. 2048000 kilobytes."
+    },
+    {
+      "@type": "Property",
+      "name": "totalMemory",
+      "displayName": "Total memory",
+      "schema": "double",
+      "description": "Total available memory on the device in kilobytes. Ex. 256000 kilobytes."
+    }
+  ]
+}

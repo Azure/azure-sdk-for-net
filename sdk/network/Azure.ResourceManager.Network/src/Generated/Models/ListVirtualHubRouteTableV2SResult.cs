@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of VirtualHubRouteTableV2s and a URL nextLink to get the next set of results. </summary>
-    public partial class ListVirtualHubRouteTableV2SResult
+    internal partial class ListVirtualHubRouteTableV2SResult
     {
         /// <summary> Initializes a new instance of ListVirtualHubRouteTableV2SResult. </summary>
         internal ListVirtualHubRouteTableV2SResult()

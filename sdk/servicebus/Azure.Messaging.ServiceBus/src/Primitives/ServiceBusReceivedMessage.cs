@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="body">The payload of the message represented as bytes.</param>
         internal ServiceBusReceivedMessage(ReadOnlyMemory<byte> body)
-            : this(new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body })))
+            : this(new AmqpAnnotatedMessage(new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegments(new ReadOnlyMemory<byte>[] { body }))))
         {
         }
 
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus
         ///    messages are kept together and in order as they are transferred.
         ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</a>.
         /// </remarks>
-        internal string TransactionPartitionKey => AmqpMessage.GetViaPartitionKey();
+        public string TransactionPartitionKey => AmqpMessage.GetViaPartitionKey();
 
         /// <summary>Gets the session identifier for a session-aware entity.</summary>
         /// <value>The session identifier. Maximum length is 128 characters.</value>
@@ -190,7 +190,7 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the application properties bag, which can be used for custom message metadata.
         /// </summary>
         /// <remarks>
-        /// Only following value types are supported:
+        /// Only the following value types are supported:
         /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
         /// </remarks>
@@ -304,7 +304,7 @@ namespace Azure.Messaging.ServiceBus
 
         internal short PartitionId { get; set; }
 
-        /// <summary>Gets or sets the original sequence number of the message.</summary>
+        /// <summary>Gets the original sequence number of the message.</summary>
         /// <value>The enqueued sequence number of the message.</value>
         /// <remarks>
         /// For messages that have been auto-forwarded, this property reflects the sequence number
@@ -328,7 +328,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the date and time of the sent time in UTC.</summary>
+        /// <summary>Gets the date and time of the sent time in UTC.</summary>
         /// <value>The enqueue time in UTC. </value>
         /// <remarks>
         ///    The UTC instant at which the message has been accepted and stored in the entity.

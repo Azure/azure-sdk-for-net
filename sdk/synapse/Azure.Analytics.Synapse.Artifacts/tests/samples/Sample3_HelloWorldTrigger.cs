@@ -3,14 +3,15 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Artifacts.Models;
-using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class Sample3_HelloWorldTrigger : SampleFixture
+    public partial class Sample3_HelloWorldTrigger : SamplesBase<SynapseTestEnvironment>
     {
         [Test]
         public async Task TriggerSample()
@@ -47,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeleteTrigger
             TriggerDeleteTriggerOperation deleteOperation = client.StartDeleteTrigger(triggerName);
-            await deleteOperation.WaitForCompletionAsync();
+            await deleteOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

@@ -11,6 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// You can specify whether a point should or shouldn't be an anomaly.
     /// </summary>
     [CodeGenModel("AnomalyFeedback")]
+    [CodeGenSuppress(nameof(MetricAnomalyFeedback), typeof(string), typeof(FeedbackDimensionFilter))]
     public partial class MetricAnomalyFeedback : MetricFeedback
     {
         /// <summary> Initializes a new instance of <see cref="MetricAnomalyFeedback"/>. </summary>

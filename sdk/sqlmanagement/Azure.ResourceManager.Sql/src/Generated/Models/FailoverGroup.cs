@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A failover group. </summary>
-    public partial class FailoverGroup : Resource
+    public partial class FailoverGroup : ProxyResource
     {
         /// <summary> Initializes a new instance of FailoverGroup. </summary>
         public FailoverGroup()

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncDatabaseIdListResult
+    internal partial class SyncDatabaseIdListResult
     {
         internal static SyncDatabaseIdListResult DeserializeSyncDatabaseIdListResult(JsonElement element)
         {

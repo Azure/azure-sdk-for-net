@@ -85,6 +85,91 @@ namespace Microsoft.Azure.Management.Synapse
         IIpFirewallRulesOperations IpFirewallRules { get; }
 
         /// <summary>
+        /// Gets the IIntegrationRuntimesOperations.
+        /// </summary>
+        IIntegrationRuntimesOperations IntegrationRuntimes { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeNodeIpAddressOperations.
+        /// </summary>
+        IIntegrationRuntimeNodeIpAddressOperations IntegrationRuntimeNodeIpAddress { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
+        /// </summary>
+        IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeNodesOperations.
+        /// </summary>
+        IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeCredentialsOperations.
+        /// </summary>
+        IIntegrationRuntimeCredentialsOperations IntegrationRuntimeCredentials { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeConnectionInfosOperations.
+        /// </summary>
+        IIntegrationRuntimeConnectionInfosOperations IntegrationRuntimeConnectionInfos { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeAuthKeysOperations.
+        /// </summary>
+        IIntegrationRuntimeAuthKeysOperations IntegrationRuntimeAuthKeys { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeMonitoringDataOperations.
+        /// </summary>
+        IIntegrationRuntimeMonitoringDataOperations IntegrationRuntimeMonitoringData { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeStatusOperations.
+        /// </summary>
+        IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; }
+
+        /// <summary>
+        /// Gets the IKeysOperations.
+        /// </summary>
+        IKeysOperations Keys { get; }
+
+        /// <summary>
+        /// Gets the ILibraryOperations.
+        /// </summary>
+        ILibraryOperations Library { get; }
+
+        /// <summary>
+        /// Gets the ILibrariesOperations.
+        /// </summary>
+        ILibrariesOperations Libraries { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkHubPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkHubPrivateLinkResourcesOperations PrivateLinkHubPrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkHubsOperations.
+        /// </summary>
+        IPrivateLinkHubsOperations PrivateLinkHubs { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsPrivateLinkHubOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsPrivateLinkHubOperations PrivateEndpointConnectionsPrivateLinkHub { get; }
+
+        /// <summary>
         /// Gets the ISqlPoolsOperations.
         /// </summary>
         ISqlPoolsOperations SqlPools { get; }
@@ -120,6 +205,16 @@ namespace Microsoft.Azure.Management.Synapse
         ISqlPoolReplicationLinksOperations SqlPoolReplicationLinks { get; }
 
         /// <summary>
+        /// Gets the ISqlPoolMaintenanceWindowsOperations.
+        /// </summary>
+        ISqlPoolMaintenanceWindowsOperations SqlPoolMaintenanceWindows { get; }
+
+        /// <summary>
+        /// Gets the ISqlPoolMaintenanceWindowOptionsOperations.
+        /// </summary>
+        ISqlPoolMaintenanceWindowOptionsOperations SqlPoolMaintenanceWindowOptions { get; }
+
+        /// <summary>
         /// Gets the ISqlPoolTransparentDataEncryptionsOperations.
         /// </summary>
         ISqlPoolTransparentDataEncryptionsOperations SqlPoolTransparentDataEncryptions { get; }
@@ -143,6 +238,11 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the ISqlPoolSensitivityLabelsOperations.
         /// </summary>
         ISqlPoolSensitivityLabelsOperations SqlPoolSensitivityLabels { get; }
+
+        /// <summary>
+        /// Gets the ISqlPoolRecommendedSensitivityLabelsOperations.
+        /// </summary>
+        ISqlPoolRecommendedSensitivityLabelsOperations SqlPoolRecommendedSensitivityLabels { get; }
 
         /// <summary>
         /// Gets the ISqlPoolSchemasOperations.
@@ -215,6 +315,41 @@ namespace Microsoft.Azure.Management.Synapse
         ISqlPoolWorkloadClassifierOperations SqlPoolWorkloadClassifier { get; }
 
         /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations WorkspaceManagedSqlServerBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations WorkspaceManagedSqlServerExtendedBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerSecurityAlertPolicyOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerSecurityAlertPolicyOperations WorkspaceManagedSqlServerSecurityAlertPolicy { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations WorkspaceManagedSqlServerVulnerabilityAssessments { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerEncryptionProtectorOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerEncryptionProtectorOperations WorkspaceManagedSqlServerEncryptionProtector { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerUsagesOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerUsagesOperations WorkspaceManagedSqlServerUsages { get; }
+
+        /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations WorkspaceManagedSqlServerRecoverableSqlPools { get; }
+
+        /// <summary>
         /// Gets the IWorkspacesOperations.
         /// </summary>
         IWorkspacesOperations Workspaces { get; }
@@ -238,106 +373,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the IRestorableDroppedSqlPoolsOperations.
         /// </summary>
         IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimesOperations.
-        /// </summary>
-        IIntegrationRuntimesOperations IntegrationRuntimes { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodeIpAddressOperations.
-        /// </summary>
-        IIntegrationRuntimeNodeIpAddressOperations IntegrationRuntimeNodeIpAddress { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
-        /// </summary>
-        IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodesOperations.
-        /// </summary>
-        IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeCredentialsOperations.
-        /// </summary>
-        IIntegrationRuntimeCredentialsOperations IntegrationRuntimeCredentials { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeConnectionInfosOperations.
-        /// </summary>
-        IIntegrationRuntimeConnectionInfosOperations IntegrationRuntimeConnectionInfos { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeAuthKeysOperations.
-        /// </summary>
-        IIntegrationRuntimeAuthKeysOperations IntegrationRuntimeAuthKeys { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeMonitoringDataOperations.
-        /// </summary>
-        IIntegrationRuntimeMonitoringDataOperations IntegrationRuntimeMonitoringData { get; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeStatusOperations.
-        /// </summary>
-        IIntegrationRuntimeStatusOperations IntegrationRuntimeStatus { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkResourcesOperations.
-        /// </summary>
-        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
-
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkHubsOperations.
-        /// </summary>
-        IPrivateLinkHubsOperations PrivateLinkHubs { get; }
-
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionsPrivateLinkHubOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsPrivateLinkHubOperations PrivateEndpointConnectionsPrivateLinkHub { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerBlobAuditingPoliciesOperations WorkspaceManagedSqlServerBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations WorkspaceManagedSqlServerExtendedBlobAuditingPolicies { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerSecurityAlertPolicyOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerSecurityAlertPolicyOperations WorkspaceManagedSqlServerSecurityAlertPolicy { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations WorkspaceManagedSqlServerVulnerabilityAssessments { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerUsagesOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerUsagesOperations WorkspaceManagedSqlServerUsages { get; }
-
-        /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations.
-        /// </summary>
-        IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations WorkspaceManagedSqlServerRecoverableSqlpools { get; }
-
-        /// <summary>
-        /// Gets the IKeysOperations.
-        /// </summary>
-        IKeysOperations Keys { get; }
 
     }
 }

@@ -15,15 +15,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
+                #region Snippet:ServiceBusProcessSessionMessages
+#if SNIPPET
+                string connectionString = "<connection_string>";
+                string queueName = "<queue_name>";
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using var client = new ServiceBusClient(connectionString);
+#else
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
-                await using var client = GetClient();
-
-                #region Snippet:ServiceBusProcessSessionMessages
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
-                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                //@@ await using var client = new ServiceBusClient(connectionString);
+                await using var client = CreateClient();
+#endif
 
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);

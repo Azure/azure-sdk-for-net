@@ -21,7 +21,7 @@ The Azure Tables client library can seamlessly target either Azure Table storage
 Install the Azure Tables client library for .NET with [NuGet][table_client_nuget_package]:
 
 ```
-dotnet add package Azure.Data.Tables --version 3.0.0-beta.3
+dotnet add package Azure.Data.Tables --prerelease
 ```
 
 ### Prerequisites
@@ -67,6 +67,19 @@ Common uses of the Table service include:
 - Quickly querying data using a clustered index
 - Accessing data using the OData protocol and LINQ filter expressions
 
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 - [Create the Table service client](#create-the-table-service-client)
@@ -95,9 +108,9 @@ Next, we can create a new table.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
-
+string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTable(tableName);
-Console.WriteLine($"The created table's name is {table.TableName}.");
+Console.WriteLine($"The created table's name is {table.Name}.");
 ```
 
 ### Get an Azure table
@@ -106,7 +119,7 @@ The set of existing Azure tables can be queries using an OData filter.
 ```C# Snippet:TablesSample3QueryTables
 // Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
 
-Pageable<TableItem> queryTableResults = serviceClient.GetTables(filter: $"TableName eq '{tableName}'");
+Pageable<TableItem> queryTableResults = serviceClient.Query(filter: $"TableName eq '{tableName}'");
 
 Console.WriteLine("The following are the names of the tables in the query results:");
 
@@ -114,7 +127,7 @@ Console.WriteLine("The following are the names of the tables in the query result
 
 foreach (TableItem table in queryTableResults)
 {
-    Console.WriteLine(table.TableName);
+    Console.WriteLine(table.Name);
 }
 ```
 
@@ -124,7 +137,7 @@ Individual tables can be deleted from the service.
 
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
-
+string tableName = "OfficeSupplies1p1";
 serviceClient.DeleteTable(tableName);
 ```
 

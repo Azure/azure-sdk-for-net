@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The server encryption protector. </summary>
-    public partial class EncryptionProtector : Resource
+    public partial class EncryptionProtector : ProxyResource
     {
         /// <summary> Initializes a new instance of EncryptionProtector. </summary>
         public EncryptionProtector()

@@ -98,7 +98,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceEndpoint,
                 credential,
                 options.TransportType,
-                options.WebProxy);
+                options.WebProxy,
+                options.EnableCrossEntityTransactions);
         }
 
         /// <summary>
@@ -128,20 +129,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
+        ///   Creates a receiver strongly aligned with the active protocol and transport, responsible
         ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
         /// </summary>
-        /// <param name="entityPath"></param>
-        ///
+        /// <param name="entityPath">The entity path to receive from.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
-        /// <param name="identifier"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="isSessionReceiver"></param>
-        ///
+        /// <param name="identifier">The identifier for the sender.</param>
+        /// <param name="sessionId">The session ID to receive messages for.</param>
+        /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
+        ///     open link operation. Only applicable for session receivers.</param>
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
-        ///
         public override TransportReceiver CreateReceiver(
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
@@ -149,7 +150,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             uint prefetchCount,
             string identifier,
             string sessionId,
-            bool isSessionReceiver)
+            bool isSessionReceiver,
+            bool isProcessor,
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
@@ -162,33 +165,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 retryPolicy,
                 identifier,
                 sessionId,
-                isSessionReceiver
-            );
-        }
-
-        /// <summary>
-        ///   Creates a rule manager strongly aligned with the active protocol and transport,
-        ///   responsible for adding, removing and getting rules from the Service Bus subscription.
-        /// </summary>
-        ///
-        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
-        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="identifier">The identifier for the rule manager.</param>
-        ///
-        /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
-        public override TransportRuleManager CreateRuleManager(
-            string subscriptionPath,
-            ServiceBusRetryPolicy retryPolicy,
-            string identifier)
-        {
-            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
-
-            return new AmqpRuleManager
-            (
-                subscriptionPath,
-                ConnectionScope,
-                retryPolicy,
-                identifier
+                isSessionReceiver,
+                isProcessor,
+                cancellationToken
             );
         }
 

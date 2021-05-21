@@ -40,7 +40,7 @@ namespace Azure.Graph.Rbac.Models
             if (Optional.IsDefined(CustomKeyIdentifier))
             {
                 writer.WritePropertyName("customKeyIdentifier");
-                writer.WriteBase64StringValue(CustomKeyIdentifier);
+                writer.WriteBase64StringValue(CustomKeyIdentifier, "D");
             }
             foreach (var item in AdditionalProperties)
             {
@@ -98,7 +98,7 @@ namespace Azure.Graph.Rbac.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    customKeyIdentifier = property.Value.GetBytesFromBase64();
+                    customKeyIdentifier = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

@@ -1,1264 +1,771 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25GYWJyaWNzL1NpdGVSZWNvdmVyeVRlc3RTaXRlMS9yZXBsaWNhdGlvblByb3RlY3Rpb25Db250YWluZXJzP2FwaS12ZXJzaW9uPTIwMTgtMDctMTA=",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers?api-version=2021-02-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9TaXRlUmVjb3ZlcnlUZXN0U2l0ZTEvcmVwbGljYXRpb25Qcm90ZWN0aW9uQ29udGFpbmVycz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bdd772d4-1d8b-49fe-9575-f9119e15929a"
+          "46cfcb62-c5d2-4841-80b6-c3f0b1900e74"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n      \"name\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"SiteRecoveryTestSite1\",\r\n        \"friendlyName\": \"SiteRecoveryTestSite1\",\r\n        \"fabricType\": \"HyperVSite\",\r\n        \"protectedItemCount\": 1,\r\n        \"pairingStatus\": \"Paired\",\r\n        \"role\": \"Primary\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11982"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "46cfcb62-c5d2-4841-80b6-c3f0b1900e74 3/19/2021 9:50:27 AM"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "46cfcb62-c5d2-4841-80b6-c3f0b1900e74"
+        ],
+        "x-ms-correlation-request-id": [
+          "a374fd8e-af4e-449f-94b4-4735f14bde3c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095027Z:a374fd8e-af4e-449f-94b4-4735f14bde3c"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:50:27 GMT"
+        ],
+        "Content-Length": [
+          "647"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:53:24 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "bdd772d4-1d8b-49fe-9575-f9119e15929a 5/15/2017 1:53:24 PM"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "bdd772d4-1d8b-49fe-9575-f9119e15929a"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14100"
-        ],
-        "x-ms-correlation-request-id": [
-          "90a60ee4-d2b3-4ff6-85c8-1eab2ddc8d08"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135324Z:90a60ee4-d2b3-4ff6-85c8-1eab2ddc8d08"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567\",\r\n      \"name\": \"cloud_eecac84c-1761-50ad-9624-a7092c581567\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"SiteRecoveryTestSite1\",\r\n        \"friendlyName\": \"SiteRecoveryTestSite1\",\r\n        \"fabricType\": \"HyperVSite\",\r\n        \"protectedItemCount\": 4,\r\n        \"pairingStatus\": \"Paired\",\r\n        \"role\": \"Primary\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c/replicationProtectedItems/vm2/recoveryPoints?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25GYWJyaWNzL1NpdGVSZWNvdmVyeVRlc3RTaXRlMS9yZXBsaWNhdGlvblByb3RlY3Rpb25Db250YWluZXJzL2Nsb3VkX2ZhMDZlMDNiLWUzMDYtNTJmNC1hMDFmLTg4Y2RlYmE2N2ExYy9yZXBsaWNhdGlvblByb3RlY3RlZEl0ZW1zL3ZtMi9yZWNvdmVyeVBvaW50cz9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectedItems/VMforSDK/recoveryPoints?api-version=2021-02-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9TaXRlUmVjb3ZlcnlUZXN0U2l0ZTEvcmVwbGljYXRpb25Qcm90ZWN0aW9uQ29udGFpbmVycy9jbG91ZF9lZWNhYzg0Yy0xNzYxLTUwYWQtOTYyNC1hNzA5MmM1ODE1NjcvcmVwbGljYXRpb25Qcm90ZWN0ZWRJdGVtcy9WTWZvclNESy9yZWNvdmVyeVBvaW50cz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3346201e-5c37-485b-a706-7b776aaa3ec4"
+          "30bdbbef-4b0f-4298-8558-4d61bbf533af"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"471fbbc7-6e8c-475f-bc97-5d89d856732c\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems/recoveryPoints\",\r\n      \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c/replicationProtectedItems/vm2/recoveryPoints/471fbbc7-6e8c-475f-bc97-5d89d856732c\",\r\n      \"properties\": {\r\n        \"recoveryPointTime\": \"2017-05-15T13:34:35.4120244Z\",\r\n        \"recoveryPointType\": \"CrashConsistent\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"bdc783bf-c86d-4fb3-ba44-bd0cd83416b4\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems/recoveryPoints\",\r\n      \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c/replicationProtectedItems/vm2/recoveryPoints/bdc783bf-c86d-4fb3-ba44-bd0cd83416b4\",\r\n      \"properties\": {\r\n        \"recoveryPointTime\": \"2017-05-15T13:39:35.4139776Z\",\r\n        \"recoveryPointType\": \"CrashConsistent\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"92eb6e67-ac18-4043-af5e-6cd5d5891810\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems/recoveryPoints\",\r\n      \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c/replicationProtectedItems/vm2/recoveryPoints/92eb6e67-ac18-4043-af5e-6cd5d5891810\",\r\n      \"properties\": {\r\n        \"recoveryPointTime\": \"2017-05-15T13:44:35.4159275Z\",\r\n        \"recoveryPointType\": \"CrashConsistent\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"fea6a87e-f27e-4e73-b297-39e81cf857c5\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems/recoveryPoints\",\r\n      \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c/replicationProtectedItems/vm2/recoveryPoints/fea6a87e-f27e-4e73-b297-39e81cf857c5\",\r\n      \"properties\": {\r\n        \"recoveryPointTime\": \"2017-05-15T13:47:31.1669721Z\",\r\n        \"recoveryPointType\": \"CrashConsistent\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11980"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "30bdbbef-4b0f-4298-8558-4d61bbf533af 3/19/2021 9:50:49 AM"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "30bdbbef-4b0f-4298-8558-4d61bbf533af"
+        ],
+        "x-ms-correlation-request-id": [
+          "0486f135-762a-47ab-852e-32c15f09ebe0"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095049Z:0486f135-762a-47ab-852e-32c15f09ebe0"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:50:48 GMT"
+        ],
+        "Content-Length": [
+          "2001"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:53:25 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "3346201e-5c37-485b-a706-7b776aaa3ec4 5/15/2017 1:53:26 PM"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "3346201e-5c37-485b-a706-7b776aaa3ec4"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14099"
-        ],
-        "x-ms-correlation-request-id": [
-          "693fb17b-5433-45ec-b86a-24d077da4d70"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135325Z:693fb17b-5433-45ec-b86a-24d077da4d70"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectedItems/VMforSDK/recoveryPoints/728eaf08-046b-4173-9de1-f62e9571ec85\",\r\n      \"name\": \"728eaf08-046b-4173-9de1-f62e9571ec85\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems/recoveryPoints\",\r\n      \"properties\": {\r\n        \"recoveryPointTime\": \"2021-03-18T18:35:52.8677177Z\",\r\n        \"recoveryPointType\": \"CrashConsistent\",\r\n        \"providerSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectedItems/VMforSDK/recoveryPoints/5173e1ed-4968-4bad-997a-d311cc061e8c\",\r\n      \"name\": \"5173e1ed-4968-4bad-997a-d311cc061e8c\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems/recoveryPoints\",\r\n      \"properties\": {\r\n        \"recoveryPointTime\": \"2021-03-18T18:40:52.9971857Z\",\r\n        \"recoveryPointType\": \"CrashConsistent\",\r\n        \"providerSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectedItems/VMforSDK/recoveryPoints/02619845-80fb-4004-83fa-289eb8d3ddcf\",\r\n      \"name\": \"02619845-80fb-4004-83fa-289eb8d3ddcf\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems/recoveryPoints\",\r\n      \"properties\": {\r\n        \"recoveryPointTime\": \"2021-03-19T09:44:51.9723838Z\",\r\n        \"recoveryPointType\": \"CrashConsistent\",\r\n        \"providerSpecificDetails\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c/replicationProtectedItems/vm2/applyRecoveryPoint?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25GYWJyaWNzL1NpdGVSZWNvdmVyeVRlc3RTaXRlMS9yZXBsaWNhdGlvblByb3RlY3Rpb25Db250YWluZXJzL2Nsb3VkX2ZhMDZlMDNiLWUzMDYtNTJmNC1hMDFmLTg4Y2RlYmE2N2ExYy9yZXBsaWNhdGlvblByb3RlY3RlZEl0ZW1zL3ZtMi9hcHBseVJlY292ZXJ5UG9pbnQ/YXBpLXZlcnNpb249MjAxOC0wNy0xMA==",
+      "RequestUri": "/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectedItems/VMforSDK/applyRecoveryPoint?api-version=2021-02-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9TaXRlUmVjb3ZlcnlUZXN0U2l0ZTEvcmVwbGljYXRpb25Qcm90ZWN0aW9uQ29udGFpbmVycy9jbG91ZF9lZWNhYzg0Yy0xNzYxLTUwYWQtOTYyNC1hNzA5MmM1ODE1NjcvcmVwbGljYXRpb25Qcm90ZWN0ZWRJdGVtcy9WTWZvclNESy9hcHBseVJlY292ZXJ5UG9pbnQ/YXBpLXZlcnNpb249MjAyMS0wMi0xMA==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"recoveryPointId\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c/replicationProtectedItems/vm2/recoveryPoints/92eb6e67-ac18-4043-af5e-6cd5d5891810\",\r\n    \"providerSpecificDetails\": {\r\n      \"instanceType\": \"HyperVReplicaAzure\",\r\n      \"vaultLocation\": \"West US\"\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"recoveryPointId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectedItems/VMforSDK/recoveryPoints/5173e1ed-4968-4bad-997a-d311cc061e8c\",\r\n    \"providerSpecificDetails\": {\r\n      \"instanceType\": \"HyperVReplicaAzure\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d1a93de2-7b5b-442a-ab0e-8246cf1bc7bc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "511"
-        ],
-        "x-ms-client-request-id": [
-          "22d846de-2cfa-40a3-a05f-372f47cfa879"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "473"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:53:26 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c/replicationProtectedItems/vm2/operationresults/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10"
+          "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectedItems/VMforSDK/operationresults/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10"
         ],
         "Retry-After": [
           "30"
         ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56",
-          "22d846de-2cfa-40a3-a05f-372f47cfa879 5/15/2017 1:53:27 PM"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-client-request-id": [
-          "22d846de-2cfa-40a3-a05f-372f47cfa879"
+        "x-ms-request-id": [
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc",
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "Azure-AsyncOperation": [
+          "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "d1a93de2-7b5b-442a-ab0e-8246cf1bc7bc"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "a846ac9a-3d35-4751-b97c-e1dbb8e6872d"
+          "3d57a51e-3246-43ea-a31c-2482fdf6dfb7"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135326Z:a846ac9a-3d35-4751-b97c-e1dbb8e6872d"
+          "CENTRALUSEUAP:20210319T095050Z:3d57a51e-3246-43ea-a31c-2482fdf6dfb7"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:50:50 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
+      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uT3BlcmF0aW9uU3RhdHVzL2Y3Mjc4YjVkLWFlZmEtNGM4ZS04ZGU5LTNmMzNjMzM1ODZmYz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11978"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "f40560a8-f6a5-4afa-912d-2af5f2d97247"
+        ],
+        "x-ms-correlation-request-id": [
+          "08e41706-0066-4498-83d2-ff6380702f32"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095120Z:08e41706-0066-4498-83d2-ff6380702f32"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:51:20 GMT"
+        ],
+        "Content-Length": [
+          "191"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:53:56 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "b80f52db-8e6d-44f7-b4ef-978af8a38066"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14087"
-        ],
-        "x-ms-correlation-request-id": [
-          "2ad626b5-93a9-4899-b636-65df4d57447f"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135357Z:2ad626b5-93a9-4899-b636-65df4d57447f"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": null,\r\n  \"id\": null,\r\n  \"name\": \"f7278b5d-aefa-4c8e-8de9-3f33c33586fc\",\r\n  \"properties\": null,\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2021-03-19T09:50:50.2215748Z\",\r\n  \"endTime\": null,\r\n  \"percentComplete\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
+      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uT3BlcmF0aW9uU3RhdHVzL2Y3Mjc4YjVkLWFlZmEtNGM4ZS04ZGU5LTNmMzNjMzM1ODZmYz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11976"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "020a0020-edd8-4add-9549-6aa7568151b9"
+        ],
+        "x-ms-correlation-request-id": [
+          "7776cac4-c1db-4798-8c92-41df26e47bbd"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095151Z:7776cac4-c1db-4798-8c92-41df26e47bbd"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:51:51 GMT"
+        ],
+        "Content-Length": [
+          "191"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:54:27 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "98d874d4-e5cd-43e7-93a9-a63e8ba5fb85"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14079"
-        ],
-        "x-ms-correlation-request-id": [
-          "d1ed0e7d-6971-40fd-a64e-57d9ee4d1cc2"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135427Z:d1ed0e7d-6971-40fd-a64e-57d9ee4d1cc2"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": null,\r\n  \"id\": null,\r\n  \"name\": \"f7278b5d-aefa-4c8e-8de9-3f33c33586fc\",\r\n  \"properties\": null,\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2021-03-19T09:50:50.2215748Z\",\r\n  \"endTime\": null,\r\n  \"percentComplete\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
+      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uT3BlcmF0aW9uU3RhdHVzL2Y3Mjc4YjVkLWFlZmEtNGM4ZS04ZGU5LTNmMzNjMzM1ODZmYz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11974"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "3817667f-782b-4d34-a129-d0040712d9ec"
+        ],
+        "x-ms-correlation-request-id": [
+          "a01a453b-4f81-4d14-953f-139d3d084e35"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095221Z:a01a453b-4f81-4d14-953f-139d3d084e35"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:52:20 GMT"
+        ],
+        "Content-Length": [
+          "191"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:54:57 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "31a09d29-afa6-40d6-92a0-b9482dba1db4"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14071"
-        ],
-        "x-ms-correlation-request-id": [
-          "96557267-4d52-4b11-b86d-1c28a01ddcd5"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135458Z:96557267-4d52-4b11-b86d-1c28a01ddcd5"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": null,\r\n  \"id\": null,\r\n  \"name\": \"f7278b5d-aefa-4c8e-8de9-3f33c33586fc\",\r\n  \"properties\": null,\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2021-03-19T09:50:50.2215748Z\",\r\n  \"endTime\": null,\r\n  \"percentComplete\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
+      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uT3BlcmF0aW9uU3RhdHVzL2Y3Mjc4YjVkLWFlZmEtNGM4ZS04ZGU5LTNmMzNjMzM1ODZmYz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11972"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "abd57153-b5f4-47d2-a263-f717eba08c83"
+        ],
+        "x-ms-correlation-request-id": [
+          "8ca771e0-7f72-4cdf-b486-964309f8ef47"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095251Z:8ca771e0-7f72-4cdf-b486-964309f8ef47"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:52:51 GMT"
+        ],
+        "Content-Length": [
+          "191"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:55:28 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "2c94a970-3151-4e7c-bf2a-d4fb1eb85f14"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14138"
-        ],
-        "x-ms-correlation-request-id": [
-          "3f92a770-b47a-48c5-bdcf-94ecd94b1422"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135528Z:3f92a770-b47a-48c5-bdcf-94ecd94b1422"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": null,\r\n  \"id\": null,\r\n  \"name\": \"f7278b5d-aefa-4c8e-8de9-3f33c33586fc\",\r\n  \"properties\": null,\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2021-03-19T09:50:50.2215748Z\",\r\n  \"endTime\": null,\r\n  \"percentComplete\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
+      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uT3BlcmF0aW9uU3RhdHVzL2Y3Mjc4YjVkLWFlZmEtNGM4ZS04ZGU5LTNmMzNjMzM1ODZmYz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11970"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "65ce3764-0a62-4b7c-bc82-5f5474988809"
+        ],
+        "x-ms-correlation-request-id": [
+          "adc59512-faac-4d91-af49-06f2a3cfac46"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095322Z:adc59512-faac-4d91-af49-06f2a3cfac46"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:53:22 GMT"
+        ],
+        "Content-Length": [
+          "191"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:55:58 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "67c9dc8a-0ba0-414e-9eeb-ed3c841211e6"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14133"
-        ],
-        "x-ms-correlation-request-id": [
-          "6673c474-c6c3-47c3-92c4-b64baa623a5c"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135558Z:6673c474-c6c3-47c3-92c4-b64baa623a5c"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": null,\r\n  \"id\": null,\r\n  \"name\": \"f7278b5d-aefa-4c8e-8de9-3f33c33586fc\",\r\n  \"properties\": null,\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2021-03-19T09:50:50.2215748Z\",\r\n  \"endTime\": null,\r\n  \"percentComplete\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
+      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uT3BlcmF0aW9uU3RhdHVzL2Y3Mjc4YjVkLWFlZmEtNGM4ZS04ZGU5LTNmMzNjMzM1ODZmYz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11968"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "f73dacf2-c270-40ea-a2cd-2c75740a64a1"
+        ],
+        "x-ms-correlation-request-id": [
+          "7bf0fe41-c658-4193-8ad7-69943670872c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095352Z:7bf0fe41-c658-4193-8ad7-69943670872c"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:53:52 GMT"
+        ],
+        "Content-Length": [
+          "191"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:56:28 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "fb45c997-a256-44f0-962e-ca9a854f7056"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14120"
-        ],
-        "x-ms-correlation-request-id": [
-          "c99cefc5-3705-4762-a399-82f860d87505"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135629Z:c99cefc5-3705-4762-a399-82f860d87505"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": null,\r\n  \"id\": null,\r\n  \"name\": \"f7278b5d-aefa-4c8e-8de9-3f33c33586fc\",\r\n  \"properties\": null,\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2021-03-19T09:50:50.2215748Z\",\r\n  \"endTime\": null,\r\n  \"percentComplete\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
+      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uT3BlcmF0aW9uU3RhdHVzL2Y3Mjc4YjVkLWFlZmEtNGM4ZS04ZGU5LTNmMzNjMzM1ODZmYz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"2017-05-15T13:56:42.631443Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"2017-05-15T13:56:42.6937737Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11966"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "d430e7b6-87c9-4f5a-b6f5-ec688f0ee7d2"
+        ],
+        "x-ms-correlation-request-id": [
+          "47838b0e-6f49-4328-94b5-73df7976da4c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095423Z:47838b0e-6f49-4328-94b5-73df7976da4c"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:54:23 GMT"
+        ],
+        "Content-Length": [
+          "191"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:56:59 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "14178325-d509-4223-972b-bd85d2de3b0b"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14112"
-        ],
-        "x-ms-correlation-request-id": [
-          "9e1a8812-60a9-4143-8904-1e050e54aab3"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135659Z:9e1a8812-60a9-4143-8904-1e050e54aab3"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": null,\r\n  \"id\": null,\r\n  \"name\": \"f7278b5d-aefa-4c8e-8de9-3f33c33586fc\",\r\n  \"properties\": null,\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2021-03-19T09:50:50.2215748Z\",\r\n  \"endTime\": null,\r\n  \"percentComplete\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
+      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uT3BlcmF0aW9uU3RhdHVzL2Y3Mjc4YjVkLWFlZmEtNGM4ZS04ZGU5LTNmMzNjMzM1ODZmYz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"2017-05-15T13:56:42.631443Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"2017-05-15T13:56:42.6937737Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11964"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "089ac6fe-4dd8-4dac-a83b-ecaa2a555e19"
+        ],
+        "x-ms-correlation-request-id": [
+          "933880cd-4057-448d-b878-43c8cc12c0f9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095453Z:933880cd-4057-448d-b878-43c8cc12c0f9"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:54:52 GMT"
+        ],
+        "Content-Length": [
+          "216"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:57:29 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "8f925db3-1a96-432e-adaf-7fb08d3a25d8"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14101"
-        ],
-        "x-ms-correlation-request-id": [
-          "be22854b-a890-4e88-aa95-712385a230f0"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135730Z:be22854b-a890-4e88-aa95-712385a230f0"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": null,\r\n  \"id\": null,\r\n  \"name\": \"f7278b5d-aefa-4c8e-8de9-3f33c33586fc\",\r\n  \"properties\": null,\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-03-19T09:50:50.2215748Z\",\r\n  \"endTime\": \"2021-03-19T09:54:25Z\",\r\n  \"percentComplete\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
+      "RequestUri": "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectedItems/VMforSDK/operationresults/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYjM2NGVkOGQtNDI3OS00YmY4LThmZDEtNTZmOGZhMGFlMDVjL3Jlc291cmNlR3JvdXBzL0FycGl0YS1haXIvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9oMmF0ZXN0L3JlcGxpY2F0aW9uRmFicmljcy9TaXRlUmVjb3ZlcnlUZXN0U2l0ZTEvcmVwbGljYXRpb25Qcm90ZWN0aW9uQ29udGFpbmVycy9jbG91ZF9lZWNhYzg0Yy0xNzYxLTUwYWQtOTYyNC1hNzA5MmM1ODE1NjcvcmVwbGljYXRpb25Qcm90ZWN0ZWRJdGVtcy9WTWZvclNESy9vcGVyYXRpb25yZXN1bHRzL2Y3Mjc4YjVkLWFlZmEtNGM4ZS04ZGU5LTNmMzNjMzM1ODZmYz9hcGktdmVyc2lvbj0yMDIxLTAyLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/2.1.4.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"2017-05-15T13:56:42.631443Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"2017-05-15T13:56:42.6937737Z\",\r\n        \"endTime\": \"2017-05-15T13:57:48.0840547Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"2017-05-15T13:57:48.146563Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11963"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc",
+          "/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/f7278b5d-aefa-4c8e-8de9-3f33c33586fc"
+        ],
+        "Azure-AsyncOperation": [
+          "https://centraluseuap.management.azure.com/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationOperationStatus/f7278b5d-aefa-4c8e-8de9-3f33c33586fc?api-version=2021-02-10"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-client-request-id": [
+          "3b343465-17a3-4908-b1ad-8cf6fa11558d"
+        ],
+        "x-ms-correlation-request-id": [
+          "498cac2b-118e-435a-a338-10fddc53990d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20210319T095453Z:498cac2b-118e-435a-a338-10fddc53990d"
+        ],
+        "Date": [
+          "Fri, 19 Mar 2021 09:54:53 GMT"
+        ],
+        "Content-Length": [
+          "6631"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:58:00 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "43aba1e3-1f5e-45ea-b311-323bfb5f4faa"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14093"
-        ],
-        "x-ms-correlation-request-id": [
-          "8f87e45a-dc94-4b84-ac74-9a7b347fd296"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135800Z:8f87e45a-dc94-4b84-ac74-9a7b347fd296"
         ]
       },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"2017-05-15T13:56:42.631443Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"2017-05-15T13:56:42.6937737Z\",\r\n        \"endTime\": \"2017-05-15T13:57:48.0840547Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"2017-05-15T13:57:48.146563Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:58:30 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "3cef98a0-d65d-472e-8a7e-d6b24ec78c67"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14085"
-        ],
-        "x-ms-correlation-request-id": [
-          "1a5e9420-bde9-418f-b04c-968024dc4025"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135830Z:1a5e9420-bde9-418f-b04c-968024dc4025"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"2017-05-15T13:56:42.631443Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"2017-05-15T13:56:42.6937737Z\",\r\n        \"endTime\": \"2017-05-15T13:57:48.0840547Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"2017-05-15T13:57:48.146563Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:59:00 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "c9ab67b8-f879-4d56-a603-3f7d9306a860"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14079"
-        ],
-        "x-ms-correlation-request-id": [
-          "d389f1f6-05bf-4105-9730-bd896da7b842"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135901Z:d389f1f6-05bf-4105-9730-bd896da7b842"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"2017-05-15T13:56:42.631443Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"2017-05-15T13:56:42.6937737Z\",\r\n        \"endTime\": \"2017-05-15T13:57:48.0840547Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"2017-05-15T13:57:48.146563Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 13:59:31 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "75aea459-0334-4634-a8c1-318ff70675bc"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14073"
-        ],
-        "x-ms-correlation-request-id": [
-          "d6f0bb7a-0395-4910-83d8-b4ff7531a6c4"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T135931Z:d6f0bb7a-0395-4910-83d8-b4ff7531a6c4"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"2017-05-15T13:56:42.631443Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"2017-05-15T13:56:42.6937737Z\",\r\n        \"endTime\": \"2017-05-15T13:57:48.0840547Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"2017-05-15T13:57:48.146563Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 14:00:01 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "5963ad2d-dbb2-4e3c-a330-a34b1bf5becd"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14148"
-        ],
-        "x-ms-correlation-request-id": [
-          "6c6862d1-4e61-4cca-a5d4-0d09a8662557"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T140001Z:6c6862d1-4e61-4cca-a5d4-0d09a8662557"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"InProgress\",\r\n    \"stateDescription\": \"InProgress\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"2017-05-15T13:56:42.631443Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"2017-05-15T13:56:42.6937737Z\",\r\n        \"endTime\": \"2017-05-15T13:57:48.0840547Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"2017-05-15T13:57:48.146563Z\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"InProgress\",\r\n        \"stateDescription\": \"InProgress\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"0001-01-01T00:00:00\",\r\n        \"endTime\": \"0001-01-01T00:00:00\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"NotStarted\",\r\n        \"stateDescription\": \"NotStarted\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"allowedActions\": [\r\n      \"Cancel\"\r\n    ],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"InProgress\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": null\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 14:00:31 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "5d1492c8-60ec-4a9c-8590-3a9b4a350358"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14141"
-        ],
-        "x-ms-correlation-request-id": [
-          "56c8dc60-af76-4378-a596-b74261174c49"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T140032Z:56c8dc60-af76-4378-a596-b74261174c49"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25Kb2JzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"Succeeded\",\r\n    \"stateDescription\": \"Completed\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"2017-05-15T13:56:42.631443Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"2017-05-15T13:56:42.6937737Z\",\r\n        \"endTime\": \"2017-05-15T13:57:48.0840547Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"2017-05-15T13:57:48.146563Z\",\r\n        \"endTime\": \"2017-05-15T14:01:02.2384797Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"2017-05-15T14:01:02.3166168Z\",\r\n        \"endTime\": \"2017-05-15T14:01:02.3166168Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"endTime\": \"2017-05-15T14:01:02Z\",\r\n    \"allowedActions\": [],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"Succeeded\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": \"2017-05-15T14:01:02Z\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 14:01:01 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "15a3cb7c-8204-43b5-a673-373353e56f37"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14135"
-        ],
-        "x-ms-correlation-request-id": [
-          "db7796ae-02e9-40c5-8af8-6d1b03b266c2"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T140102Z:db7796ae-02e9-40c5-8af8-6d1b03b266c2"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c/replicationProtectedItems/vm2/operationresults/66a0354e-5f45-4286-97e0-351790eb8f56?api-version=2018-07-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25GYWJyaWNzL1NpdGVSZWNvdmVyeVRlc3RTaXRlMS9yZXBsaWNhdGlvblByb3RlY3Rpb25Db250YWluZXJzL2Nsb3VkX2ZhMDZlMDNiLWUzMDYtNTJmNC1hMDFmLTg4Y2RlYmE2N2ExYy9yZXBsaWNhdGlvblByb3RlY3RlZEl0ZW1zL3ZtMi9vcGVyYXRpb25yZXN1bHRzLzY2YTAzNTRlLTVmNDUtNDI4Ni05N2UwLTM1MTc5MGViOGY1Nj9hcGktdmVyc2lvbj0yMDE4LTA3LTEw",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"name\": \"66a0354e-5f45-4286-97e0-351790eb8f56\",\r\n  \"properties\": {\r\n    \"activityId\": \"22d846de-2cfa-40a3-a05f-372f47cfa879 ActivityId: a846ac9a-3d35-4751-b97c-e1dbb8e6872d\",\r\n    \"scenarioName\": \"ChangePit\",\r\n    \"friendlyName\": \"Change the recovery point\",\r\n    \"state\": \"Succeeded\",\r\n    \"stateDescription\": \"Completed\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"51e9c29c-a180-4ac0-959d-a15b625f28a0\",\r\n        \"name\": \"ChangePitPreflightCheck\",\r\n        \"startTime\": \"2017-05-15T13:53:27.5056266Z\",\r\n        \"endTime\": \"2017-05-15T13:53:30.6156192Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Change the prerequisites check\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"5559af91-1aff-480e-ac42-23420dbd5a15\",\r\n        \"name\": \"ShutdownVmRecovery\",\r\n        \"startTime\": \"2017-05-15T13:53:30.678121Z\",\r\n        \"endTime\": \"2017-05-15T13:56:42.631443Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Shutdown the virtual machine on recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"ea6e7936-1231-4045-aba3-ca648bb9a4ce\",\r\n        \"name\": \"CancelFailoverRecovery\",\r\n        \"startTime\": \"2017-05-15T13:56:42.6937737Z\",\r\n        \"endTime\": \"2017-05-15T13:57:48.0840547Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Cancel failover recovery\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d1f33c41-4e13-48a3-99b2-b7edbee72508\",\r\n        \"name\": \"VmFailover\",\r\n        \"startTime\": \"2017-05-15T13:57:48.146563Z\",\r\n        \"endTime\": \"2017-05-15T14:01:02.2384797Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start failover\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"d59b1784-a246-4042-89fd-fe04196b0b01\",\r\n        \"name\": \"VmFoStartVmOnSecondary\",\r\n        \"startTime\": \"2017-05-15T14:01:02.3166168Z\",\r\n        \"endTime\": \"2017-05-15T14:01:02.3166168Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Start the replica virtual machine\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n    \"endTime\": \"2017-05-15T14:01:02Z\",\r\n    \"allowedActions\": [],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"Succeeded\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-15T13:53:27.0887478Z\",\r\n  \"endTime\": \"2017-05-15T14:01:02Z\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 15 May 2017 14:01:01 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0",
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/66a0354e-5f45-4286-97e0-351790eb8f56"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-client-request-id": [
-          "15a3cb7c-8204-43b5-a673-373353e56f37"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14135"
-        ],
-        "x-ms-correlation-request-id": [
-          "db7796ae-02e9-40c5-8af8-6d1b03b266c2"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170515T140102Z:db7796ae-02e9-40c5-8af8-6d1b03b266c2"
-        ]
-      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectedItems/VMforSDK\",\r\n  \"name\": \"VMforSDK\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems\",\r\n  \"properties\": {\r\n    \"friendlyName\": \"VMforSDK\",\r\n    \"protectedItemType\": \"HyperVVirtualMachine\",\r\n    \"protectableItemId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectableItems/e06c319f-5a90-4907-8606-6c15a92bcf22\",\r\n    \"recoveryServicesProviderId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationRecoveryServicesProviders/71f21bed-b00f-4869-9dbf-288e7cb4051d\",\r\n    \"primaryFabricFriendlyName\": \"SiteRecoveryTestSite1\",\r\n    \"primaryFabricProvider\": \"SingleHostHyperVFabric\",\r\n    \"recoveryFabricFriendlyName\": \"Microsoft Azure\",\r\n    \"recoveryFabricId\": \"Microsoft Azure\",\r\n    \"primaryProtectionContainerFriendlyName\": \"SiteRecoveryTestSite1\",\r\n    \"recoveryProtectionContainerFriendlyName\": \"Microsoft Azure\",\r\n    \"protectionState\": \"UnplannedFailoverCommitPendingStatesBegin\",\r\n    \"protectionStateDescription\": \"Failover completed\",\r\n    \"activeLocation\": \"Recovery\",\r\n    \"testFailoverState\": \"MarkedForDeletion\",\r\n    \"testFailoverStateDescription\": \"Cleaning up test environment\",\r\n    \"allowedOperations\": [\r\n      \"CompleteMigration\",\r\n      \"Commit\",\r\n      \"DisableProtection\",\r\n      \"ChangePit\"\r\n    ],\r\n    \"replicationHealth\": \"Normal\",\r\n    \"failoverHealth\": \"Normal\",\r\n    \"healthErrors\": [],\r\n    \"policyId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationPolicies/protectionprofile2\",\r\n    \"policyFriendlyName\": \"protectionprofile2\",\r\n    \"lastSuccessfulFailoverTime\": \"2021-03-19T09:44:18.6482511Z\",\r\n    \"lastSuccessfulTestFailoverTime\": \"2021-03-19T07:47:02.2222839Z\",\r\n    \"currentScenario\": {\r\n      \"scenarioName\": \"None\",\r\n      \"jobId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationJobs/None\",\r\n      \"startTime\": \"1753-01-01T01:01:01Z\"\r\n    },\r\n    \"failoverRecoveryPointId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_eecac84c-1761-50ad-9624-a7092c581567/replicationProtectedItems/VMforSDK/recoveryPoints/5173e1ed-4968-4bad-997a-d311cc061e8c\",\r\n    \"providerSpecificDetails\": {\r\n      \"instanceType\": \"HyperVReplicaAzure\",\r\n      \"azureVmDiskDetails\": [\r\n        {\r\n          \"vhdType\": \"OperatingSystem\",\r\n          \"vhdId\": \"5b9a6520-4754-46f7-bdfa-95cb3a52972f\",\r\n          \"diskId\": \"E06C319F-5A90-4907-8606-6C15A92BCF22_83F8638B-8DCA-4152-9EDA-2CA8B33039B4_0_0\",\r\n          \"vhdName\": \"VMforSDK\",\r\n          \"maxSizeMB\": \"40960\",\r\n          \"targetDiskLocation\": \"https://sah2atest2.blob.core.windows.net/asr-9e8d92e7d62be20aa3/copied-e06c319f-5a90-4907-8606-6c15a92bcf22_83f8638b-8dca-4152-9eda-2ca8b33039b4_0_0.vhd\",\r\n          \"targetDiskName\": \"VMforSDK_vhdx-VMforSDK\",\r\n          \"lunId\": \"0\",\r\n          \"diskEncryptionSetId\": null\r\n        }\r\n      ],\r\n      \"recoveryAzureVmName\": \"VMforSDK\",\r\n      \"recoveryAzureVMSize\": \"Basic_A0\",\r\n      \"recoveryAzureStorageAccount\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.Storage/storageAccounts/sah2atest2\",\r\n      \"recoveryAzureLogStorageAccountId\": null,\r\n      \"lastReplicatedTime\": \"2021-03-18T18:35:52Z\",\r\n      \"rpoInSeconds\": 38,\r\n      \"lastRpoCalculatedTime\": \"2021-03-19T09:45:30.8389301Z\",\r\n      \"vmId\": \"e06c319f-5a90-4907-8606-6c15a92bcf22\",\r\n      \"vmProtectionState\": \"UnplannedFailoverCommitPendingStatesBegin\",\r\n      \"vmProtectionStateDescription\": \"Failover completed\",\r\n      \"initialReplicationDetails\": {\r\n        \"initialReplicationType\": \"InitialReplication\",\r\n        \"initialReplicationProgressPercentage\": \"0\"\r\n      },\r\n      \"vmNics\": [\r\n        {\r\n          \"nicId\": \"TWljcm9zb2Z0OkUwNkMzMTlGLTVBOTAtNDkwNy04NjA2LTZDMTVBOTJCQ0YyMlw4MzdGQkM5MC04NDM5LTQ0MUEtOTc2Ri0wNjI4Nzk5MzVFQkY=\",\r\n          \"replicaNicId\": null,\r\n          \"sourceNicArmId\": null,\r\n          \"vMNetworkName\": \"Broadcom NetXtreme Gigabit Ethernet - Virtual Switch\",\r\n          \"recoveryVMNetworkId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.Network/virtualNetworks/vnh2atest\",\r\n          \"ipConfigs\": [\r\n            {\r\n              \"name\": null,\r\n              \"isPrimary\": true,\r\n              \"subnetName\": \"Broadcom NetXtreme Gigabit Ethernet - Virtual Switch\",\r\n              \"staticIPAddress\": null,\r\n              \"ipAddressType\": \"Static\",\r\n              \"isSeletedForFailover\": true,\r\n              \"recoverySubnetName\": \"Subnet1\",\r\n              \"recoveryStaticIPAddress\": \"\",\r\n              \"recoveryIPAddressType\": \"Dynamic\",\r\n              \"recoveryPublicIPAddressId\": \"\",\r\n              \"recoveryLBBackendAddressPoolIds\": [],\r\n              \"tfoSubnetName\": \"\",\r\n              \"tfoStaticIPAddress\": \"\",\r\n              \"tfoPublicIPAddressId\": \"\",\r\n              \"tfoLBBackendAddressPoolIds\": []\r\n            }\r\n          ],\r\n          \"selectionType\": \"SelectedByUser\",\r\n          \"recoveryNetworkSecurityGroupId\": \"\",\r\n          \"enableAcceleratedNetworkingOnRecovery\": null,\r\n          \"tfoVMNetworkId\": null,\r\n          \"tfoNetworkSecurityGroupId\": \"\",\r\n          \"enableAcceleratedNetworkingOnTfo\": null,\r\n          \"recoveryNicName\": null,\r\n          \"recoveryNicResourceGroupName\": null,\r\n          \"reuseExistingNic\": false,\r\n          \"tfoRecoveryNicName\": null,\r\n          \"tfoRecoveryNicResourceGroupName\": null,\r\n          \"tfoReuseExistingNic\": false\r\n        }\r\n      ],\r\n      \"selectedRecoveryAzureNetworkId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.Network/virtualNetworks/vnh2atest\",\r\n      \"selectedSourceNicId\": \"TWljcm9zb2Z0OkUwNkMzMTlGLTVBOTAtNDkwNy04NjA2LTZDMTVBOTJCQ0YyMlw4MzdGQkM5MC04NDM5LTQ0MUEtOTc2Ri0wNjI4Nzk5MzVFQkY=\",\r\n      \"encryption\": \"Disabled\",\r\n      \"oSDetails\": {\r\n        \"osType\": \"Windows\",\r\n        \"productType\": \"UNKNOWN\",\r\n        \"osEdition\": \"Standard\",\r\n        \"oSVersion\": \"1.1.1.1\",\r\n        \"oSMajorVersion\": \"0\",\r\n        \"oSMinorVersion\": \"0\"\r\n      },\r\n      \"sourceVmRamSizeInMB\": 1024,\r\n      \"sourceVmCpuCount\": 1,\r\n      \"enableRdpOnTargetOption\": null,\r\n      \"recoveryAzureResourceGroupId\": \"/subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/prakccyrg\",\r\n      \"recoveryAvailabilitySetId\": \"\",\r\n      \"targetAvailabilityZone\": \"\",\r\n      \"targetProximityPlacementGroupId\": \"\",\r\n      \"useManagedDisks\": \"false\",\r\n      \"licenseType\": \"WindowsServer\",\r\n      \"sqlServerLicenseType\": \"NotSpecified\",\r\n      \"lastRecoveryPointReceived\": \"2021-03-19T09:44:51.9723838Z\",\r\n      \"targetVmTags\": {},\r\n      \"seedManagedDiskTags\": null,\r\n      \"targetManagedDiskTags\": {},\r\n      \"targetNicTags\": {},\r\n      \"protectedManagedDisks\": []\r\n    },\r\n    \"recoveryContainerId\": \"/Subscriptions/b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c/resourceGroups/Arpita-air/providers/Microsoft.RecoveryServices/vaults/h2atest/replicationFabrics/d49858f157601230a6ac5862fbbc6e63bf38d23ecd96cf953767945d457fe9d5/replicationProtectionContainers/d38048d4-b460-4791-8ece-108395ee8478\",\r\n    \"eventCorrelationId\": \"06e279c7-b690-409e-bd27-5b06abaed53c\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "c183865e-6077-46f2-a3b1-deb0f4f4650a"
+    "SubscriptionId": "b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c"
   }
 }

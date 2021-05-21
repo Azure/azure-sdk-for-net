@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 - azure-event-hubs
-name: Samples for the Azure.Messaging.EventHubs client library
+name: Samples for the Azure.Messaging.EventHubs.Processor client library
 description: Samples for the Azure.Messaging.EventHubs.Processor client library
 ---
 
@@ -40,7 +40,7 @@ To quickly create a basic set of resources in Azure and to receive a connection 
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.EventHubs.Processor --version 5.3.0-beta.4
+dotnet add package Azure.Messaging.EventHubs.Processor
 ```
 
 ### Authenticate the client

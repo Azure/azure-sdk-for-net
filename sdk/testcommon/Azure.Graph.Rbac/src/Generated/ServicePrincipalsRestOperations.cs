@@ -186,7 +186,7 @@ namespace Azure.Graph.Rbac
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string objectId, ServicePrincipalBase parameters)
+        internal HttpMessage CreateUpdateRequest(string objectId, ServicePrincipalUpdateParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -212,7 +212,7 @@ namespace Azure.Graph.Rbac
         /// <param name="parameters"> Parameters to update a service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string objectId, ServicePrincipalBase parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string objectId, ServicePrincipalUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -239,7 +239,7 @@ namespace Azure.Graph.Rbac
         /// <param name="parameters"> Parameters to update a service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
-        public Response Update(string objectId, ServicePrincipalBase parameters, CancellationToken cancellationToken = default)
+        public Response Update(string objectId, ServicePrincipalUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {

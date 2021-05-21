@@ -17,6 +17,8 @@ namespace Azure.Search.Documents
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
+        private const string QueryAnswerRawSplitter = "|count-";
+
         /// <summary>
         /// Initializes a new instance of SearchOptions from a continuation
         /// token to continue fetching results from a previous search.
@@ -162,6 +164,77 @@ namespace Azure.Search.Documents
         [CodeGenMember("scoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
 
+        /// <summary> A value that specifies the language of the search query. </summary>
+        [CodeGenMember("queryLanguage")]
+        public QueryLanguage? QueryLanguage { get; set; }
+
+        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
+        [CodeGenMember("speller")]
+        public QuerySpeller? QuerySpeller { get; set; }
+
+        /// <summary> A value that specifies whether <see cref="SearchResults{T}.Answers"/> should be returned as part of the search response. </summary>
+        public QueryAnswer? QueryAnswer { get; set; }
+
+        /// <summary>
+        /// A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response.
+        /// </summary>
+        public int? QueryAnswerCount { get; set; }
+
+        /// <summary>
+        /// Constructed from <see cref="QueryAnswer"/> and <see cref="QueryAnswerCount"/>
+        /// </summary>
+        [CodeGenMember("answers")]
+        internal string QueryAnswerRaw
+        {
+            get
+            {
+                string queryAnswerStringValue = null;
+
+                if (QueryAnswer.HasValue)
+                {
+                    queryAnswerStringValue = $"{QueryAnswer.Value}{QueryAnswerRawSplitter}{QueryAnswerCount.GetValueOrDefault(1)}";
+                }
+
+                return queryAnswerStringValue;
+            }
+
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    QueryAnswer = null;
+                    QueryAnswerCount = null;
+                }
+                else
+                {
+                    if (value.Contains(QueryAnswerRawSplitter))
+                    {
+                        var queryAnswerPart = value.Substring(0, value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase));
+                        var countPart = value.Substring(value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase) + QueryAnswerRawSplitter.Length);
+
+                        if (string.IsNullOrEmpty(queryAnswerPart))
+                        {
+                            QueryAnswer = null;
+                        }
+                        else
+                        {
+                            QueryAnswer = new QueryAnswer(queryAnswerPart);
+                        }
+
+                        if (int.TryParse(countPart, out int countValue))
+                        {
+                            QueryAnswerCount = countValue;
+                        }
+                    }
+                    else
+                    {
+                        QueryAnswer = new QueryAnswer(value);
+                        QueryAnswerCount = null;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Shallow copy one SearchOptions instance to another.
         /// </summary>
@@ -172,22 +245,26 @@ namespace Azure.Search.Documents
             Debug.Assert(source != null);
             Debug.Assert(destination != null);
 
-            destination.SearchText = source.SearchText;
+            destination.Facets = source.Facets;
             destination.Filter = source.Filter;
             destination.HighlightFields = source.HighlightFields;
-            destination.SearchFields = source.SearchFields;
-            destination.Select = source.Select;
-            destination.Size = source.Size;
-            destination.OrderBy = source.OrderBy;
-            destination.IncludeTotalCount = source.IncludeTotalCount;
-            destination.Facets = source.Facets;
-            destination.ScoringParameters = source.ScoringParameters;
             destination.HighlightPostTag = source.HighlightPostTag;
             destination.HighlightPreTag = source.HighlightPreTag;
+            destination.IncludeTotalCount = source.IncludeTotalCount;
             destination.MinimumCoverage = source.MinimumCoverage;
+            destination.OrderBy = source.OrderBy;
+            destination.QueryAnswer = source.QueryAnswer;
+            destination.QueryAnswerCount = source.QueryAnswerCount;
+            destination.QueryLanguage = source.QueryLanguage;
+            destination.QuerySpeller = source.QuerySpeller;
             destination.QueryType = source.QueryType;
+            destination.ScoringParameters = source.ScoringParameters;
             destination.ScoringProfile = source.ScoringProfile;
+            destination.SearchFields = source.SearchFields;
             destination.SearchMode = source.SearchMode;
+            destination.SearchText = source.SearchText;
+            destination.Select = source.Select;
+            destination.Size = source.Size;
             destination.Skip = source.Skip;
         }
 

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Keys.Cryptography;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -14,8 +16,11 @@ using Org.BouncyCastle.X509;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -27,6 +32,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public partial class CertificateClientLiveTests : CertificatesTestBase
     {
+        // The service sends back a Retry-After header of 10s anyway.
+        private static readonly TimeSpan DefaultCertificateOperationPollingInterval = TimeSpan.FromSeconds(10);
+
+        private static MethodInfo s_clearCacheMethod;
+
         public CertificateClientLiveTests(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
@@ -43,7 +53,17 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 Client = GetClient();
 
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+                ChallengeBasedAuthenticationPolicy.ClearCache();
+
+                // Make sure the shared source copy of ChallengeBasedAuthenticationPolicy is cleared as well for Keys.
+                if (s_clearCacheMethod is null)
+                {
+                    s_clearCacheMethod = typeof(CryptographyClient).Assembly.GetType("Azure.Security.KeyVault.ChallengeBasedAuthenticationPolicy", true, false)
+                        .GetMethod(nameof(ChallengeBasedAuthenticationPolicy.ClearCache), BindingFlags.Static | BindingFlags.NonPublic)
+                        ?? throw new NotSupportedException($"{nameof(ChallengeBasedAuthenticationPolicy)}.{nameof(ChallengeBasedAuthenticationPolicy.ClearCache)} not found in {typeof(CryptographyClient).Assembly}");
+                }
+
+                s_clearCacheMethod.Invoke(null, null);
             }
         }
 
@@ -77,6 +97,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             RegisterForCleanup(certName);
 
             CertificateOperation getOperation = await Client.GetCertificateOperationAsync(certName);
+            getOperation = InstrumentOperation(getOperation);
 
             Assert.IsNotNull(getOperation);
         }
@@ -101,7 +122,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(() => WaitForCompletion(operation));
+            if (operation.HasCompleted)
+            {
+                Assert.Inconclusive("The create operation completed before it could be canceled.");
+            }
+
+            OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
+                async () => await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default),
+                $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
+
             Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -130,7 +159,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(() => WaitForCompletion(operation));
+            OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
+                async () => await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default),
+                $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
             Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -152,7 +183,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await operation.DeleteAsync();
 
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -182,7 +214,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -212,11 +245,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 certificatePolicy.IssuerName = issuerName;
 
                 operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+                operation = InstrumentOperation(operation);
 
                 RegisterForCleanup(certName);
 
-                using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-                TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+                using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+                TimeSpan pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : KeyVaultTestEnvironment.DefaultPollingInterval;
 
                 while (!operation.HasCompleted)
                 {
@@ -278,7 +312,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
-            await WaitForCompletion(operation);
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             KeyVaultCertificateWithPolicy certificateWithPolicy = await Client.GetCertificateAsync(certName);
 
@@ -308,8 +342,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = new CertificateOperation(Client, certName);
 
             // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            TimeSpan pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : KeyVaultTestEnvironment.DefaultPollingInterval;
 
             await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
 
@@ -332,7 +366,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             RegisterForCleanup(certName);
 
-            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
             CertificateProperties originalProperties = original.Properties;
             Assert.IsTrue(originalProperties.Enabled);
             Assert.IsEmpty(originalProperties.Tags);
@@ -358,7 +392,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, DefaultPolicy);
 
-            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             Assert.NotNull(original);
 
@@ -394,62 +428,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public async Task VerifyImportCertificatePem()
         {
-            const string pem =
-"-----BEGIN CERTIFICATE-----\n" +
-"MIIDqzCCApMCFC+MROpib4t03Wqzgkcod1lad6JtMA0GCSqGSIb3DQEBCwUAMIGR\n" +
-"MQswCQYDVQQGEwJVUzELMAkGA1UECAwCV0ExEDAOBgNVBAcMB1JlZG1vbmQxEjAQ\n" +
-"BgNVBAoMCU1pY3Jvc29mdDESMBAGA1UECwwJQXp1cmUgU0RLMRIwEAYDVQQDDAlB\n" +
-"enVyZSBTREsxJzAlBgkqhkiG9w0BCQEWGG9wZW5zb3VyY2VAbWljcm9zb2Z0LmNv\n" +
-"bTAeFw0yMDAyMTQyMzE3MTZaFw0yNTAyMTIyMzE3MTZaMIGRMQswCQYDVQQGEwJV\n" +
-"UzELMAkGA1UECAwCV0ExEDAOBgNVBAcMB1JlZG1vbmQxEjAQBgNVBAoMCU1pY3Jv\n" +
-"c29mdDESMBAGA1UECwwJQXp1cmUgU0RLMRIwEAYDVQQDDAlBenVyZSBTREsxJzAl\n" +
-"BgkqhkiG9w0BCQEWGG9wZW5zb3VyY2VAbWljcm9zb2Z0LmNvbTCCASIwDQYJKoZI\n" +
-"hvcNAQEBBQADggEPADCCAQoCggEBANwCTuK0OnFc8UytzzCIB5pUWqWCMZA8kWO1\n" +
-"Es84wOVupPTZHNDWKI57prj0CB5JP2yU8BkIFjhkV/9wc2KLjKwu7xaJTwBZF/i0\n" +
-"t8dPBbgiEUmK6xdbJsLXoef/XZ5AmvCKb0mimEMvL8KgeF5OHuZJuYO0zCiRNVtp\n" +
-"ZYSx2R73qhgy5klDHh346qQd5T+KbsdK3DArilT86QO1GrpBWl1GPvHJ3VZ1OO33\n" +
-"iFWfyEVgwdAtMAkWXH8Eh1/MpPE8WQk5X5pdVEu+RJLLrVbgr+cnlVzfirSVLRar\n" +
-"KZROAB3e2x8JdSqylnar/WWK11NERdiKaZr3WxAkceuVkTsKmRkCAwEAATANBgkq\n" +
-"hkiG9w0BAQsFAAOCAQEAYLfk2dBcW1mJbkVYx80ogDUy/xX3d+uuop2gZwUXuzWY\n" +
-"I4uXzSEsY37/+NKzOX6PtET3X6xENDW7AuJhTuWmTGZtPB1AjiVKLIgRwugV3Ovr\n" +
-"1DoPBIvS7iCHGGcsr7tAgYxiVATlIcczCxQG1KPhrrLSUDxkbiyUHpyroExHGBeC\n" +
-"UflT2BIO+TZ+44aYfO7vuwpu0ajfB6Rs0s/DM+uUTWCfsVvyPenObHz5HF2vxf75\n" +
-"y8pr3fYKuUvpJ45T0ZjiXyRpkBTDudU3vuYuyAP3PwO6F/ic7Rm9D1uzEI38Va+o\n" +
-"6CUh4NJnpIZIBs7T+rPwhKrUuM7BEO0CL7VTh37UzA==\n" +
-"-----END CERTIFICATE-----\n" +
-"-----BEGIN PRIVATE KEY-----\n" +
-"MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDcAk7itDpxXPFM\n" +
-"rc8wiAeaVFqlgjGQPJFjtRLPOMDlbqT02RzQ1iiOe6a49AgeST9slPAZCBY4ZFf/\n" +
-"cHNii4ysLu8WiU8AWRf4tLfHTwW4IhFJiusXWybC16Hn/12eQJrwim9JophDLy/C\n" +
-"oHheTh7mSbmDtMwokTVbaWWEsdke96oYMuZJQx4d+OqkHeU/im7HStwwK4pU/OkD\n" +
-"tRq6QVpdRj7xyd1WdTjt94hVn8hFYMHQLTAJFlx/BIdfzKTxPFkJOV+aXVRLvkSS\n" +
-"y61W4K/nJ5Vc34q0lS0WqymUTgAd3tsfCXUqspZ2q/1litdTREXYimma91sQJHHr\n" +
-"lZE7CpkZAgMBAAECggEAMRfSwoO1BtbWgWXHdezkxWtNTuFebfEWAEnHiLYBVTD7\n" +
-"XieUZoVjR2gQK/VIWnm9zVzutqc3Th4WBMny9WpuWX2fnEfHeSxoTPcGi1L207/G\n" +
-"W8LD8tJEM/YqCrrRCR8hc8twSd4eW9+LqMJmGaUVAA4zd1BAvkyou10pahLFgEMZ\n" +
-"nlYxOzz0KrniNIdQxhwfaXZYUzX5ooJYtgY74vnSOHQhepRt5HY9B7iZ6jm/3ulA\n" +
-"aJnfNbQ8YDYTS0R+OGv8RXU/jLCm5+TPwx0XFwZ6vRtWwWUUxhLV77Re9GP1xIx9\n" +
-"VnYm9W3RyOm/KD9keQMTWKT0bLGB8fC6kj2mvbjgAQKBgQDzh5sy7q9RA+GqprC8\n" +
-"8aUmkaTMXNahPPPJoLOflJ/+QlOt6YZUIn55vmicVsvFzr9hbxdTW7aQS91iAu05\n" +
-"swEyltsR0my7FXsHZnN4SBct2FimAzMLTWQr10vLLRoSR5CNpUdoXGWFOAa3LKrZ\n" +
-"aPJEM1hA3h2XDfZ7Gtxjg4ypIQKBgQDnRl9pGwd83MkoxT4CiZvNbvdBg4lXlHcA\n" +
-"JoZ9OfoOey+7WRsOFsMvQapXf+JlvixP0ldECXZyxifswvfmiR2oqYTeRbITderg\n" +
-"mwjDjN571Ui0ls5HwCBE+/iZoNmQI5INAPqsQMXwW0rx4YNXHblsJ0qT+3yFNWOF\n" +
-"m6STMH8Y+QKBgFai8JivB1nICrleMdQWF43gFIPLp2OXPpeFf0GPa1fWGtTtFifK\n" +
-"WbpP/gFYc4f8pGMyVVcHcqxlAO5EYka7ovpvZqIxfRMVcj5QuVWaN/zMUcVFsBwe\n" +
-"PTvHjSRL+FF2ejuaCAxdipRZOTJjRqivyDhxF72EB3zcr8pd5PfWLe1hAoGASJRO\n" +
-"JvcDj4zeWDwmLLewvHTBhb7Y4DJIcjSk6jHCpr7ECQB6vB4qnO73nUQV8aYP0/EH\n" +
-"z+NEV9qV9vhswd1wAFlKyFKJAxBzaI9e3becrrINghb9n4jM17lXmCbhgBmZoRkY\n" +
-"kew18itERspl5HYAlc9y2SQIPOm3VNu2dza1/EkCgYEAlTMyL6arbtJJsygzVn8l\n" +
-"gKHuURwp1cxf6hUuXKJ56xI/I1OZjMidZM0bYSznmK9SGNxlfNbIV8vNhQfiwR6t\n" +
-"HyGypSRP+h9MS9E66boXyINaOClZqiCn0pI9aiIpl3D6EbT6e7+zKljT0XmZJduK\n" +
-"BkRGMfUngiT8oVyaMtZWYPM=\n" +
-"-----END PRIVATE KEY-----\n";
+            string certificateName = Recording.GenerateId();
+            byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
 
-            string caCertificateName = Recording.GenerateId();
-            byte[] caCertificateBytes = Encoding.ASCII.GetBytes(pem);
-
-            ImportCertificateOptions options = new ImportCertificateOptions(caCertificateName, caCertificateBytes)
+            ImportCertificateOptions options = new ImportCertificateOptions(certificateName, certificateBytes)
             {
                 Policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=Azure SDK")
                 {
@@ -458,10 +440,41 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             };
 
             KeyVaultCertificateWithPolicy cert = await Client.ImportCertificateAsync(options);
-            RegisterForCleanup(caCertificateName);
+            RegisterForCleanup(certificateName);
 
-            byte[] pubBytes = Convert.FromBase64String(CaPublicKeyBase64);
-            CollectionAssert.AreEqual(pubBytes, cert.Cer);
+            certificateBytes = Convert.FromBase64String(CertificateWithV3ExtensionsBase64);
+            CollectionAssert.AreEqual(certificateBytes, cert.Cer);
+            Assert.AreEqual("CN=Azure SDK", cert.Policy.Subject);
+            Assert.AreEqual("azuresdk@microsoft.com", cert.Policy.SubjectAlternativeNames?.Emails?[0]);
+        }
+
+        [Test]
+        public async Task VerifyImportCertificatePemWithoutIssuer()
+        {
+            string certificateName = Recording.GenerateId();
+            byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
+
+            #region Snippet:CertificateClientLiveTests_VerifyImportCertificatePem
+#if SNIPPET
+            byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#endif
+
+            ImportCertificateOptions options = new ImportCertificateOptions(certificateName, certificateBytes)
+            {
+                Policy = new CertificatePolicy
+                {
+                    ContentType = CertificateContentType.Pem
+                }
+            };
+            #endregion
+
+            KeyVaultCertificateWithPolicy cert = await Client.ImportCertificateAsync(options);
+            RegisterForCleanup(certificateName);
+
+            certificateBytes = Convert.FromBase64String(CertificateWithV3ExtensionsBase64);
+            CollectionAssert.AreEqual(certificateBytes, cert.Cer);
+            Assert.AreEqual("CN=Azure SDK", cert.Policy.Subject);
+            Assert.AreEqual("azuresdk@microsoft.com", cert.Policy.SubjectAlternativeNames?.Emails?[0]);
         }
 
         [Test]
@@ -546,7 +559,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual(csrInfo.Subject.ToString(), serverCertificate.Subject);
             Assert.AreEqual(serverCertificateName, mergedServerCertificate.Name);
 
-            KeyVaultCertificateWithPolicy completedServerCertificate = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy completedServerCertificate = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             Assert.AreEqual(mergedServerCertificate.Name, completedServerCertificate.Name);
             CollectionAssert.AreEqual(mergedServerCertificate.Cer, completedServerCertificate.Cer);
@@ -688,7 +701,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
-            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             Assert.NotNull(original);
 
@@ -711,7 +724,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
 
-            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+            KeyVaultCertificateWithPolicy original = await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             Assert.NotNull(original);
 
@@ -739,7 +752,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [TestCase("application/x-pkcs12")]
-        [TestCase("application/x-pem-file", Ignore = "Investigate downlevel creation with PEM: https://github.com/Azure/azure-sdk-for-net/issues/16897")]
+        [TestCase("application/x-pem-file")]
         public async Task DownloadLatestCertificate(string contentType)
         {
             string name = Recording.GenerateId();
@@ -761,7 +774,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
 
@@ -781,7 +794,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [TestCase("application/x-pkcs12")]
-        [TestCase("application/x-pem-file", Ignore = "Investigate downlevel creation with PEM: https://github.com/Azure/azure-sdk-for-net/issues/16897")]
+        [TestCase("application/x-pem-file")]
         public async Task DownloadVersionedCertificate(string contentType)
         {
             string name = Recording.GenerateId();
@@ -803,7 +816,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
             string version = certificate.Properties.Version;
@@ -818,7 +831,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             policy.Exportable = false;
             operation = await Client.StartCreateCertificateAsync(name, policy);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             certificate = await Client.GetCertificateAsync(name);
             Assert.AreNotEqual(version, certificate.Properties.Version);
@@ -834,7 +847,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [TestCase("application/x-pkcs12")]
-        [TestCase("application/x-pem-file", Ignore = "Investigate downlevel creation with PEM: https://github.com/Azure/azure-sdk-for-net/issues/16897")]
+        [TestCase("application/x-pem-file")]
         public async Task DownloadNonExportableCertificate(string contentType)
         {
             string name = Recording.GenerateId();
@@ -856,11 +869,144 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
             Assert.IsFalse(x509certificate.HasPrivateKey);
         }
+
+        [Test]
+        public async Task DownloadECDsaCertificateSignRemoteVerifyLocal([EnumValues] CertificateContentType contentType, [EnumValues] CertificateKeyCurveName keyCurveName)
+        {
+#if NET461
+            Assert.Ignore("ECC is not supported before .NET Framework 4.7");
+#endif
+            string name = Recording.GenerateId();
+
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Ec,
+                KeyCurveName = keyCurveName,
+                Exportable = true,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DigitalSignature,
+                },
+                ContentType = contentType,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
+
+            // Sign data remotely.
+            byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));
+
+            CryptographyClient cryptoClient = GetCryptographyClient(operation.Value.KeyId);
+            SignResult result = await cryptoClient.SignDataAsync(keyCurveName.GetSignatureAlgorithm(), plaintext);
+
+            // Download the certificate and verify data locally.
+            X509Certificate2 certificate = null;
+            try
+            {
+                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
+                using ECDsa publicKey = certificate.GetECDsaPublicKey();
+
+                Assert.IsTrue(publicKey.VerifyData(plaintext, result.Signature, keyCurveName.GetHashAlgorithmName()));
+            }
+            catch (Exception ex) when (IsExpectedP256KException(ex, keyCurveName))
+            {
+                Assert.Ignore("The curve is not supported by the current platform");
+            }
+            finally
+            {
+                certificate?.Dispose();
+            }
+        }
+
+        [Test]
+        public async Task DownloadECDsaCertificateSignLocalVerifyRemote([EnumValues] CertificateContentType contentType, [EnumValues] CertificateKeyCurveName keyCurveName)
+        {
+#if NET461
+            Assert.Ignore("ECC is not supported before .NET Framework 4.7");
+#endif
+            string name = Recording.GenerateId();
+
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Ec,
+                KeyCurveName = keyCurveName,
+                Exportable = true,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DigitalSignature,
+                },
+                ContentType = contentType,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
+
+            // Download the certificate and sign data locally.
+            byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));
+
+            X509Certificate2 certificate = null;
+            try
+            {
+                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
+                using ECDsa privateKey = certificate.GetECDsaPrivateKey();
+
+                byte[] signature = privateKey.SignData(plaintext, keyCurveName.GetHashAlgorithmName());
+
+                // Verify data remotely.
+                CryptographyClient cryptoClient = GetCryptographyClient(operation.Value.KeyId);
+                VerifyResult result = await cryptoClient.VerifyDataAsync(keyCurveName.GetSignatureAlgorithm(), plaintext, signature);
+
+                Assert.IsTrue(result.IsValid);
+            }
+            catch (Exception ex) when (IsExpectedP256KException(ex, keyCurveName))
+            {
+                Assert.Ignore("The curve is not supported by the current platform");
+            }
+            finally
+            {
+                certificate?.Dispose();
+            }
+        }
+
+        public CryptographyClient GetCryptographyClient(Uri keyId) => InstrumentClient(
+                new CryptographyClient(
+                    keyId,
+                    TestEnvironment.Credential,
+                    InstrumentClientOptions(
+                        new CryptographyClientOptions
+                        {
+                            Diagnostics =
+                            {
+                                IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
+                                LoggedHeaderNames =
+                                {
+                                    "x-ms-request-id",
+                                },
+                            },
+                        }
+                    )
+                )
+            );
+
+        private static bool IsExpectedP256KException(Exception ex, CertificateKeyCurveName keyCurveName) =>
+            // OpenSSL-based implementations do not support P256K.
+            // TODO: Remove this entire check when https://github.com/Azure/azure-sdk-for-net/issues/20244 is resolved.
+            (ex is CryptographicException || ex is TargetInvocationException tiex && tiex.InnerException is ArgumentException {  ParamName: "privateKey" }) &&
+            !RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
+            keyCurveName == CertificateKeyCurveName.P256K;
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy
         {

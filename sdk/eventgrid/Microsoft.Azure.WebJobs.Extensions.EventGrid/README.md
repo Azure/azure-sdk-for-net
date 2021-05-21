@@ -43,12 +43,14 @@ Please follow the [tutorial](https://docs.microsoft.com/azure/azure-functions/fu
 
 ## Examples
 
-### Functions that uses Event Grid binding
+### Functions that uses Event Grid output binding
 
-```C# Snippet:EventGridBindingFunction
-public static class EventGridBindingFunction
+If you are using the EventGrid schema for your topic, you can output EventGridEvents.
+
+```C# Snippet:EventGridEventBindingFunction
+public static class EventGridEventBindingFunction
 {
-    [FunctionName("EventGridBindingFunction")]
+    [FunctionName("EventGridEventBindingFunction")]
     public static async Task<IActionResult> RunAsync(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
         [EventGrid(TopicEndpointUri = "EventGridEndpoint", TopicKeySetting = "EventGridKey")] IAsyncCollector<EventGridEvent> eventCollector)
@@ -60,17 +62,50 @@ public static class EventGridBindingFunction
 }
 ```
 
-### Functions that uses Event Grid trigger
-
-```C# Snippet:EventGridTriggerFunction
-public static class EventGridTriggerFunction
+If you are using the CloudEvent schema for your topic, you can output CloudEvents.
+```C# Snippet:CloudEventBindingFunction
+public static class CloudEventBindingFunction
 {
-    [FunctionName("EventGridTriggerFunction")]
+    [FunctionName("CloudEventBindingFunction")]
+    public static async Task<IActionResult> RunAsync(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+        [EventGrid(TopicEndpointUri = "EventGridEndpoint", TopicKeySetting = "EventGridKey")] IAsyncCollector<CloudEvent> eventCollector)
+    {
+        CloudEvent e = new CloudEvent("IncomingRequest", "IncomingRequest", await req.ReadAsStringAsync());
+        await eventCollector.AddAsync(e);
+        return new OkResult();
+    }
+}
+```
+
+You can also output a string or JObject and the extension will attempt to parse into the correct strongly typed event.
+
+### Functions that uses Event Grid trigger
+You can also create a function that will be executed whenever an event is delivered to your topic. Depending on the schema you have selected for your Azure Function event subscription, you can bind to either `EventGridEvent` or `CloudEvent`:
+
+```C# Snippet:EventGridEventTriggerFunction
+public static class EventGridEventTriggerFunction
+{
+    [FunctionName("EventGridEventTriggerFunction")]
     public static void Run(
         ILogger logger,
         [EventGridTrigger] EventGridEvent e)
     {
         logger.LogInformation("Event received {type} {subject}", e.EventType, e.Subject);
+    }
+}
+```
+
+And if your subscription is configured with the CloudEvent schema:
+```C# Snippet:CloudEventTriggerFunction
+public static class CloudEventTriggerFunction
+{
+    [FunctionName("CloudEventTriggerFunction")]
+    public static void Run(
+        ILogger logger,
+        [EventGridTrigger] CloudEvent e)
+    {
+        logger.LogInformation("Event received {type} {subject}", e.Type, e.Subject);
     }
 }
 ```

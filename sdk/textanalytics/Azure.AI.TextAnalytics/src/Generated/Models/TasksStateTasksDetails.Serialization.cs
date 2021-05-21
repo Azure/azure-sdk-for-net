@@ -7,17 +7,18 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class TasksStateTasksDetails
+    internal partial class TasksStateTasksDetails
     {
         internal static TasksStateTasksDetails DeserializeTasksStateTasksDetails(JsonElement element)
         {
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> name = default;
-            JobStatus status = default;
+            TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdateDateTime"))
@@ -32,7 +33,7 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new JobStatus(property.Value.GetString());
+                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
                     continue;
                 }
             }

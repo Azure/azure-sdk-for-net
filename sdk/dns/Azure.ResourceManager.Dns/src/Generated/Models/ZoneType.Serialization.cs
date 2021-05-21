@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    internal static class ZoneTypeExtensions
+    internal static partial class ZoneTypeExtensions
     {
         public static string ToSerialString(this ZoneType value) => value switch
         {

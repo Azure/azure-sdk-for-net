@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class SubnetsDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of SubnetsDeleteOperation for mocking. </summary>
+        protected SubnetsDeleteOperation()
+        {
+        }
+
         internal SubnetsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SubnetsDeleteOperation");

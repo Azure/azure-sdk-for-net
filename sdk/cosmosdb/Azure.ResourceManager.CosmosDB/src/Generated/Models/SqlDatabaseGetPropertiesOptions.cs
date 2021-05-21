@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class SqlDatabaseGetPropertiesOptions : OptionsResource
     {
         /// <summary> Initializes a new instance of SqlDatabaseGetPropertiesOptions. </summary>
-        internal SqlDatabaseGetPropertiesOptions()
+        public SqlDatabaseGetPropertiesOptions()
         {
         }
 

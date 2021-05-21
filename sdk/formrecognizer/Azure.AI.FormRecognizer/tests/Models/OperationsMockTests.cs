@@ -72,7 +72,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new RecognizeContentOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(RecognizeContentOperation)}.{nameof(RecognizeContentOperation.UpdateStatus)}");
         }
@@ -100,7 +107,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new RecognizeReceiptsOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(RecognizeReceiptsOperation)}.{nameof(RecognizeReceiptsOperation.UpdateStatus)}");
         }
@@ -128,7 +142,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new RecognizeBusinessCardsOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(RecognizeBusinessCardsOperation)}.{nameof(RecognizeBusinessCardsOperation.UpdateStatus)}");
         }
@@ -158,7 +179,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new RecognizeInvoicesOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(RecognizeInvoicesOperation)}.{nameof(RecognizeInvoicesOperation.UpdateStatus)}");
         }
@@ -171,6 +199,41 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             Assert.Throws<ArgumentNullException>(() => new RecognizeInvoicesOperation(null, client));
             Assert.Throws<ArgumentException>(() => new RecognizeInvoicesOperation(string.Empty, client));
             Assert.Throws<ArgumentNullException>(() => new RecognizeInvoicesOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
+        }
+
+        [Test]
+        public async Task RecognizeIdentityDocumentsOperationCreatesDiagnosticScopeOnUpdate()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateFormRecognizerClient(options);
+
+            var operation = new RecognizeIdentityDocumentsOperation("00000000-0000-0000-0000-000000000000", client);
+
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
+
+            testListener.AssertScope($"{nameof(RecognizeIdentityDocumentsOperation)}.{nameof(RecognizeIdentityDocumentsOperation.UpdateStatus)}");
+        }
+
+        [Test]
+        public void RecognizeIdentityDocumentsOperationRequiredParameters()
+        {
+            FormRecognizerClient client = CreateFormRecognizerClient();
+
+            Assert.Throws<ArgumentNullException>(() => new RecognizeIdentityDocumentsOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
         }
 
         [Test]
@@ -188,7 +251,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new RecognizeCustomFormsOperation("00000000-0000-0000-0000-000000000000/analyzeResults/00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(RecognizeCustomFormsOperation)}.{nameof(RecognizeCustomFormsOperation.UpdateStatus)}");
         }
@@ -224,7 +294,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new TrainingOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(CreateCustomFormModelOperation)}.{nameof(CreateCustomFormModelOperation.UpdateStatus)}");
         }
@@ -258,7 +335,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new CreateComposedModelOperation("00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(CreateCustomFormModelOperation)}.{nameof(CreateCustomFormModelOperation.UpdateStatus)}");
         }
@@ -286,7 +370,14 @@ namespace Azure.AI.FormRecognizer.Tests.Models
 
             var operation = new CopyModelOperation("00000000-0000-0000-0000-000000000000/copyresults/00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000000", client);
 
-            await operation.UpdateStatusAsync();
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
 
             testListener.AssertScope($"{nameof(CopyModelOperation)}.{nameof(CopyModelOperation.UpdateStatus)}");
         }

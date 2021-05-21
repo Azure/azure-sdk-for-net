@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraTableGetPropertiesOptions : OptionsResource
     {
         /// <summary> Initializes a new instance of CassandraTableGetPropertiesOptions. </summary>
-        internal CassandraTableGetPropertiesOptions()
+        public CassandraTableGetPropertiesOptions()
         {
         }
 

@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(
                 rgName, vmssName, storageAccountOutput, imageRef,
                 createWithManagedDisks: hasManagedDisks);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             var getResponse = (await VirtualMachineScaleSetVMsOperations.GetAsync(rgName, vmScaleSet.Name, instanceId)).Value;
 
             var imageReference = getResponse.StorageProfile.ImageReference;
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(
                 rgName, vmssName, storageAccountOutput, imageRef,
                 createWithManagedDisks: true);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             await WaitForCompletionAsync(await VirtualMachineScaleSetVMsOperations.StartStartAsync(rgName, vmScaleSet.Name, instanceId));
 
             RunCommandResult result = (await WaitForCompletionAsync(await VirtualMachineScaleSetVMsOperations.StartRunCommandAsync(rgName, vmScaleSet.Name, instanceId, new RunCommandInput("ipconfig")))).Value;
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.Compute.Tests
 
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(
                 rgName, vmssName, storageAccountOutput, imageRef, createWithManagedDisks: true, machineSizeType: VirtualMachineSizeTypes.StandardA1V2.ToString());
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             VirtualMachineScaleSetVM vmssVM = await VirtualMachineScaleSetVMsOperations.GetAsync(rgName, vmScaleSet.Name, instanceId);
 
             VirtualMachineScaleSetVM vmScaleSetVMModel = GenerateVMScaleSetVMModel(vmScaleSet, instanceId, hasManagedDisks: true);
@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
                 storageAccountOutput, imageRef, createWithManagedDisks: true);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             await VirtualMachineScaleSetVMsOperations.StartRedeployAsync(rgName, vmScaleSet.Name, instanceId);
 
             passed = true;
@@ -258,8 +258,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
                 var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef,
                     createWithManagedDisks: true);
-                vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-                inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+                vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+                inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
                 await WaitForCompletionAsync(await VirtualMachineScaleSetVMsOperations.StartPerformMaintenanceAsync(rgName, vmScaleSet.Name, instanceId));
 
                 passed = true;

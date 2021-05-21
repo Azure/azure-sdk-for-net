@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   routing or when using a partition key.
     /// </remarks>
     ///
-    public class PartitionPublishingOptions
+    internal class PartitionPublishingOptions
     {
         /// <summary>
         ///   The identifier of the producer group that this producer is associated with when publishing to the associated partition.
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <seealso cref="EventHubProducerClientOptions.EnableIdempotentPartitions" />
         ///
-        public long? ProducerGroupId  { get; set; }
+        public long? ProducerGroupId { get; set; }
 
         /// <summary>
         ///   The owner level indicates that a publishing is intended to be performed exclusively for events in the

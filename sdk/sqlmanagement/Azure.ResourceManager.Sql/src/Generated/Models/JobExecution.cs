@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An execution of a job. </summary>
-    public partial class JobExecution : Resource
+    public partial class JobExecution : ProxyResource
     {
         /// <summary> Initializes a new instance of JobExecution. </summary>
         public JobExecution()

@@ -32,5 +32,5 @@ foreach (LinkedServiceResource linkedService in linkedServices)
 
 ```C# Snippet:DeleteLinkedService
 LinkedServiceDeleteLinkedServiceOperation deleteLinkedServiceOperation = client.StartDeleteLinkedService(serviceName);
-await deleteLinkedServiceOperation.WaitForCompletionAsync();
+await deleteLinkedServiceOperation.WaitForCompletionResponseAsync();
 ```

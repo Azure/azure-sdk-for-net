@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
@@ -19,25 +20,15 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    [TestFixture(typeof(HttpClientTransport), true)]
-    [TestFixture(typeof(HttpClientTransport), false)]
-#if NETFRAMEWORK
-    [TestFixture(typeof(HttpWebRequestTransport), true)]
-    [TestFixture(typeof(HttpWebRequestTransport), false)]
-#endif
-    public class TransportFunctionalTests : PipelineTestBase
+    [TestFixture(true)]
+    [TestFixture(false)]
+    public abstract class TransportFunctionalTests : PipelineTestBase
     {
-        private readonly Type _transportType;
-
-        public TransportFunctionalTests(Type transportType, bool isAsync) : base(isAsync)
+        public TransportFunctionalTests(bool isAsync) : base(isAsync)
         {
-             _transportType = transportType;
         }
 
-        private HttpPipelineTransport GetTransport()
-        {
-            return (HttpPipelineTransport) Activator.CreateInstance(_transportType);
-        }
+        protected abstract HttpPipelineTransport GetTransport(bool https = false);
 
         public static object[] ContentWithLength =>
             new object[]
@@ -47,6 +38,8 @@ namespace Azure.Core.Tests
                 new object[] { RequestContent.Create(new ReadOnlyMemory<byte>(new byte[10])), 10 },
                 new object[] { RequestContent.Create(new ReadOnlyMemory<byte>(new byte[10]).Slice(5)), 5 },
                 new object[] { RequestContent.Create(new ReadOnlySequence<byte>(new byte[10])), 10 },
+                new object[] { RequestContent.Create(new BinaryData("Hello, world")), 12 },
+                new object[] { RequestContent.Create(new BinaryData(new byte[10])), 10 },
             };
 
         [TestCaseSource(nameof(ContentWithLength))]
@@ -95,7 +88,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task CanSetContentLenghtOverMaxInt()
+        public async Task CanSetContentLengthOverMaxInt()
         {
             long contentLength = 0;
             using TestServer testServer = new TestServer(
@@ -232,39 +225,39 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expectedMethod, httpMethod);
         }
 
-        public static object[] AllHeadersWithValuesAndType =>
-            HeadersWithValuesAndType.Concat(SpecialHeadersWithValuesAndType).ToArray();
-
-         public static object[] HeadersWithValuesAndType =>
+         public static object[] HeadersWithValues =>
             new object[]
             {
-                new object[] { "Allow", "adcde", true },
-                new object[] { "Accept", "adcde", true },
-                new object[] { "Referer", "adcde", true },
-                new object[] { "User-Agent", "adcde", true },
-                new object[] { "Content-Disposition", "adcde", true },
-                new object[] { "Content-Encoding", "adcde", true },
-                new object[] { "Content-Language", "en-US", true },
-                new object[] { "Content-Location", "adcde", true },
-                new object[] { "Content-MD5", "adcde", true },
-                new object[] { "Content-Range", "adcde", true },
-                new object[] { "Content-Type", "text/xml", true },
-                new object[] { "Expires", "11/12/19", true },
-                new object[] { "Last-Modified", "11/12/19", true },
-                new object[] { "Custom-Header", "11/12/19", false },
-            };
-
-         public static object[] SpecialHeadersWithValuesAndType =>
-             new object[]
-             {
-                 new object[] { "Range", "bytes=0-", false },
-                 new object[] { "Range", "bytes=0-100", false },
-                 new object[] { "Content-Length", "16", true },
-                 new object[] { "Date", "Tue, 12 Nov 2019 08:00:00 GMT", false }
+                // Name, value, is content, supports multiple
+                new object[] { "Allow", "adcde", true, true },
+                new object[] { "Accept", "adcde", true, true },
+                new object[] { "Referer", "adcde", true, true },
+                new object[] { "User-Agent", "adcde", true, true },
+                new object[] { "Content-Disposition", "adcde", true, true },
+                new object[] { "Content-Encoding", "adcde", true, true },
+                new object[] { "Content-Language", "en-US", true, true },
+                new object[] { "Content-Location", "adcde", true, true },
+                new object[] { "Content-MD5", "adcde", true, true },
+                new object[] { "Content-Range", "adcde", true, true },
+                new object[] { "Content-Type", "text/xml", true, true },
+                new object[] { "Expires", "11/12/19", true, true },
+                new object[] { "Last-Modified", "11/12/19", true, true },
+                new object[] { "If-Modified-Since", "Tue, 12 Nov 2019 08:00:00 GMT", false, false },
+                new object[] { "Custom-Header", "11/12/19", false, true },
+                new object[] { "Expect", "text/json", false, true },
+                new object[] { "Host", "example.com", false, false },
+                new object[] { "Keep-Alive", "true", false, true },
+                new object[] { "Referer", "example.com", false, true },
+                new object[] { "WWW-Authenticate", "Basic realm=\"Access to the staging site\", charset=\"UTF-8\"", false, true },
+                new object[] { "Custom-Header", "11/12/19", false, true },
+                new object[] { "Range", "bytes=0-", false, false },
+                new object[] { "Range", "bytes=0-100", false, false },
+                new object[] { "Content-Length", "16", true, false },
+                new object[] { "Date", "Tue, 12 Nov 2019 08:00:00 GMT", false, false },
              };
 
-         [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
-         public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
+         [TestCaseSource(nameof(HeadersWithValues))]
+         public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
          {
             StringValues httpHeaderValues = default;
 
@@ -300,14 +293,14 @@ namespace Azure.Core.Tests
              Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
          }
 
-         [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
-         public async Task CanGetAndAddRequestHeadersUppercase(string headerName, string headerValue, bool contentHeader)
+         [TestCaseSource(nameof(HeadersWithValues))]
+         public async Task CanGetAndAddRequestHeadersUppercase(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
          {
-             await CanGetAndAddRequestHeaders(headerName.ToUpperInvariant(), headerValue, contentHeader);
+             await CanGetAndAddRequestHeaders(headerName.ToUpperInvariant(), headerValue, contentHeader, supportsMultiple);
          }
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public void TryGetReturnsCorrectValuesWhenNotFound(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public void TryGetReturnsCorrectValuesWhenNotFound(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
             var transport = GetTransport();
             Request request = transport.CreateRequest();
@@ -319,9 +312,11 @@ namespace Azure.Core.Tests
             Assert.IsNull(values);
         }
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanAddMultipleValuesToRequestHeader(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanAddMultipleValuesToRequestHeader(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
+            if (!supportsMultiple) return;
+
             var anotherHeaderValue = headerValue + "1";
             var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
 
@@ -358,13 +353,14 @@ namespace Azure.Core.Tests
             StringAssert.Contains(anotherHeaderValue, httpHeaderValues.ToString());
         }
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanGetAndSetResponseHeaders(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanGetAndSetResponseHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
             using TestServer testServer = new TestServer(
                 context =>
                 {
                     context.Response.Headers.Add(headerName, headerValue);
+                    context.Response.WriteAsync("1234567890123456");
                 });
 
             var transport = GetTransport();
@@ -383,9 +379,11 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
         }
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanGetAndSetMultiValueResponseHeaders(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanGetAndSetMultiValueResponseHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
+            if (!supportsMultiple) return;
+
             var anotherHeaderValue = headerValue + "1";
             var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
 
@@ -416,13 +414,19 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, joinedHeaderValues));
         }
 
-        [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanRemoveHeaders(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanRemoveHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
+            // Some headers are required
+            bool checkOnServer = headerName != "Content-Length" && headerName != "Host";
+
             using TestServer testServer = new TestServer(
                 context =>
                 {
-                    Assert.False(context.Request.Headers.TryGetValue(headerName, out _));
+                    if (checkOnServer)
+                    {
+                        Assert.False(context.Request.Headers.TryGetValue(headerName, out _));
+                    }
                 });
 
             var transport = GetTransport();
@@ -439,8 +443,8 @@ namespace Azure.Core.Tests
             await ExecuteRequest(request, transport);
         }
 
-        [TestCaseSource(nameof(AllHeadersWithValuesAndType))]
-        public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader)
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
             StringValues httpHeaderValues = default;
 
@@ -571,7 +575,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task RequestIdCanBeOverriden()
+        public async Task RequestIdCanBeOverridden()
         {
             using TestServer testServer = new TestServer(context => { });
             var transport = GetTransport();
@@ -797,7 +801,13 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task ThrowsTaskCanceledExceptionWhenCancelled()
+        public Task ThrowsTaskCanceledExceptionWhenCancelled() => ThrowsTaskCanceledExceptionWhenCancelled(false);
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
+        public Task ThrowsTaskCanceledExceptionWhenCancelledHttps() => ThrowsTaskCanceledExceptionWhenCancelled(true);
+
+        private async Task ThrowsTaskCanceledExceptionWhenCancelled(bool https)
         {
             var testDoneTcs = new CancellationTokenSource();
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -807,21 +817,78 @@ namespace Azure.Core.Tests
                 {
                     tcs.SetResult(null);
                     await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
-                });
+                }, https);
 
             var cts = new CancellationTokenSource();
-            var transport = GetTransport();
+            var transport = GetTransport(https);
             Request request = transport.CreateRequest();
             request.Uri.Reset(testServer.Address);
 
             var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
 
-            // Wait for server to receive a request
-            await tcs.Task;
+            try
+            {
+                // Wait for server to receive a request
+                await tcs.Task.TimeoutAfterDefault();
+            }
+            catch (TimeoutException)
+            {
+                // Try to observe the request failure
+                await task.TimeoutAfterDefault();
+            }
 
             cts.Cancel();
 
-            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task);
+            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task.TimeoutAfterDefault());
+            testDoneTcs.Cancel();
+        }
+
+        [Test]
+        public Task CanCancelContentUpload() => CanCancelContentUpload(false);
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
+        public Task CanCancelContentUploadHttps() => CanCancelContentUpload(true);
+
+        private async Task CanCancelContentUpload(bool https)
+        {
+            var buffer = new byte[100];
+            var testDoneTcs = new CancellationTokenSource();
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    // read part of the request
+                    await context.Request.Body.ReadAsync(buffer, 0, 100);
+                    tcs.SetResult(null);
+                    await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+                }, https);
+
+            var cts = new CancellationTokenSource();
+            var transport = GetTransport(https);
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Post;
+            // Use infinite request content size to fill the buffers and force the upload to stall
+            request.Content = RequestContent.Create(new InfiniteStream());
+            request.Uri.Reset(testServer.Address);
+
+            var task = Task.Run(async () => await ExecuteRequest(request, transport, cts.Token));
+
+            try
+            {
+                // Wait for server to receive a request
+                await tcs.Task.TimeoutAfterDefault();
+            }
+            catch (TimeoutException)
+            {
+                // Try to observe the request failure
+                await task.TimeoutAfterDefault();
+            }
+
+            cts.Cancel();
+
+            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task.TimeoutAfterDefault());
             testDoneTcs.Cancel();
         }
 
@@ -882,6 +949,24 @@ namespace Azure.Core.Tests
             }
 
             public bool IsDisposed { get; set; }
+        }
+
+        private class InfiniteStream : ReadOnlyStream
+        {
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                return 0;
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                return count;
+            }
+
+            public override bool CanRead { get; } = true;
+            public override bool CanSeek { get; } = true;
+            public override long Length => long.MaxValue;
+            public override long Position { get; set; } = 0;
         }
     }
 }

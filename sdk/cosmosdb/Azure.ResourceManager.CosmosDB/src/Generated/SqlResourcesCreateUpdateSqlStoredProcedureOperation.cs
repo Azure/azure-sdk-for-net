@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class SqlResourcesCreateUpdateSqlStoredProcedureOperation : Operation<SqlStoredProcedureGetResults>, IOperationSource<SqlStoredProcedureGetResults>
     {
         private readonly ArmOperationHelpers<SqlStoredProcedureGetResults> _operation;
+
+        /// <summary> Initializes a new instance of SqlResourcesCreateUpdateSqlStoredProcedureOperation for mocking. </summary>
+        protected SqlResourcesCreateUpdateSqlStoredProcedureOperation()
+        {
+        }
+
         internal SqlResourcesCreateUpdateSqlStoredProcedureOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<SqlStoredProcedureGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlResourcesCreateUpdateSqlStoredProcedureOperation");

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
@@ -153,6 +154,43 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
             Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
             Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+        }
+
+        [Test]
+        public void CreatesManagedServiceIdentityCredentialsWithClientId()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            var managedIdentityCredential = (ManagedIdentityCredential)credential;
+
+            var client = (ManagedIdentityClient)typeof(ManagedIdentityCredential).GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+            var clientId = typeof(ManagedIdentityClient).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(client);
+
+            Assert.AreEqual("ConfigurationClientId", clientId);
+        }
+
+        [Test]
+        public void CreatesManagedServiceIdentityCredentials()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            var managedIdentityCredential = (ManagedIdentityCredential)credential;
+
+            var client = (ManagedIdentityClient)typeof(ManagedIdentityCredential).GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+            var clientId = typeof(ManagedIdentityClient).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(client);
+
+            Assert.Null(clientId);
         }
 
         [Test]

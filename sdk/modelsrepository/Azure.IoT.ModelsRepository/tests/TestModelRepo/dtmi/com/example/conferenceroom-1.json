@@ -1,0 +1,13 @@
+{
+  "@id": "dtmi:com:example:ConferenceRoom;1",
+  "@type": "Interface",
+  "extends": "dtmi:com:example:Room;1",
+  "contents": [
+    {
+      "@type": "Property",
+      "name": "capacity",
+      "schema": "integer"
+    }
+  ],
+  "@context": "dtmi:dtdl:context;2"
+}

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualWansCreateOrUpdateOperation : Operation<VirtualWAN>, IOperationSource<VirtualWAN>
     {
         private readonly ArmOperationHelpers<VirtualWAN> _operation;
+
+        /// <summary> Initializes a new instance of VirtualWansCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualWansCreateOrUpdateOperation()
+        {
+        }
+
         internal VirtualWansCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualWAN>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualWansCreateOrUpdateOperation");

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class DisksGrantAccessOperation : Operation<AccessUri>, IOperationSource<AccessUri>
     {
         private readonly ArmOperationHelpers<AccessUri> _operation;
+
+        /// <summary> Initializes a new instance of DisksGrantAccessOperation for mocking. </summary>
+        protected DisksGrantAccessOperation()
+        {
+        }
+
         internal DisksGrantAccessOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<AccessUri>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DisksGrantAccessOperation");

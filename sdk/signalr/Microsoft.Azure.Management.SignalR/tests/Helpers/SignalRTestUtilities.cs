@@ -72,7 +72,6 @@ namespace SignalR.Tests
                 {
                     Name = "Standard_S1",
                     Tier = "Standard",
-                    Size = "S1",
                     Capacity = capacity,
                 };
             }
@@ -82,13 +81,10 @@ namespace SignalR.Tests
                 {
                     Name = "Free_F1",
                     Tier = "Free",
-                    Size = "F1",
                 };
             }
 
             return client.SignalR.CreateOrUpdate(
-                resourceGroupName,
-                TestUtilities.GenerateName("signalr-test"),
                 new SignalRResource
                 {
                     Location = location,
@@ -128,7 +124,10 @@ namespace SignalR.Tests
                             },
                         },
                     },
-                });
+                },
+                resourceGroupName,
+                TestUtilities.GenerateName("signalr-test"));
+                
         }
 
         public static void ValidateResourceDefaultTags(TrackedResource resource)

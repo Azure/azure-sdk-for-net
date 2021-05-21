@@ -5,8 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Messaging.EventHubs.Authorization;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -16,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   variables.
     /// </summary>
     ///
-    public sealed class EventHubsTestEnvironment: TestEnvironment
+    public sealed class EventHubsTestEnvironment : TestEnvironment
     {
         /// <summary>The name of the shared access key to be used for accessing an Event Hubs namespace.</summary>
         public const string EventHubsDefaultSharedAccessKey = "RootManageSharedAccessKey";
@@ -131,7 +129,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   The location of the resource manager for the active cloud environment.
         /// </summary>
         ///
-        public new string ResourceManagerUrl  => base.ResourceManagerUrl ?? "https://management.azure.com/";
+        public new string ResourceManagerUrl => base.ResourceManagerUrl ?? "https://management.azure.com/";
 
         /// <summary>
         ///   Initializes a new instance of <see cref="EventHubsTestEnvironment"/>.

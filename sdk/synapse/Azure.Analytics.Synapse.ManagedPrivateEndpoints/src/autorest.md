@@ -5,12 +5,21 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
-```yaml
-repo: https://github.com/Azure/azure-rest-api-specs/blob/ca0ac888f84b97feaef05fad6632f41ef1a399e6
+``` yaml
+tag: package-vnet-2019-06-01-preview
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/fc5e2fbcfc3f585d38bdb1c513ce1ad2c570cf3d/specification/synapse/data-plane/readme.md
+namespace: Azure.Analytics.Synapse.ManagedPrivateEndpoints
+public-clients: true
+security: AADToken
+security-scopes: https://dev.azuresynapse.net/.default
 ```
 
+### Make Endpoint type as Uri
+
 ``` yaml
-public-clients: true
-input-file:
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/managedPrivateEndpoints.json
+directive:
+  from: swagger-document
+  where: $.parameters.Endpoint
+  transform: $.format = "url"
 ```

@@ -17,12 +17,10 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Polly" />
+    <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.ValueTuple" />
-
-    <!-- This package will be removed when v5.3.0 is released for GA as the dependency will be available from Core -->
-    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,10 +28,7 @@
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.Processor.csproj" />
   </ItemGroup>
 
-  <!-- TEMP: Use a project reference to Data; remove when published"-->
-  <!-- END TEMP-->
-
   <!-- Import Event Hubs shared source -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Testing.projitems" Label="Testing" />
-
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.BlobStorageTesting.projitems" Label="BlobStorageTesting" />
 </Project>

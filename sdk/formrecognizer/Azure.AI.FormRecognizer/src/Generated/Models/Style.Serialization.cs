@@ -6,22 +6,21 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class Style
+    internal partial class Style
     {
         internal static Style DeserializeStyle(JsonElement element)
         {
-            TextStyle name = default;
+            TextStyleName name = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = new TextStyle(property.Value.GetString());
+                    name = new TextStyleName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("confidence"))

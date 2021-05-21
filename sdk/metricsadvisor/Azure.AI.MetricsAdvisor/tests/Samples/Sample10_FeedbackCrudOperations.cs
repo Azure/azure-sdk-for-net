@@ -23,10 +23,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string metricId = MetricId;
 
-            DimensionKey groupKey = new DimensionKey();
-            groupKey.AddDimensionColumn("city", "Belo Horizonte");
+            FeedbackDimensionFilter filter = new FeedbackDimensionFilter();
 
-            FeedbackDimensionFilter filter = new FeedbackDimensionFilter(groupKey);
+            filter.DimensionFilter.AddDimensionColumn("city", "Belo Horizonte");
+
             var startTime = DateTimeOffset.Parse("2020-02-01T00:00:00Z");
             var endTime = DateTimeOffset.Parse("2020-02-03T00:00:00Z");
 
@@ -35,11 +35,11 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var anomalyFeedback = new MetricAnomalyFeedback(metricId, filter, startTime, endTime, AnomalyValue.NotAnomaly);
 
-            Response<string> response = await client.AddFeedbackAsync(anomalyFeedback);
+            Response<MetricFeedback> response = await client.AddFeedbackAsync(anomalyFeedback);
 
-            string feedbackId = response.Value;
+            MetricFeedback addedFeedback = response.Value;
 
-            Console.WriteLine($"Feedback ID: {feedbackId}");
+            Console.WriteLine($"Feedback ID: {addedFeedback.Id}");
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 StartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z"),
                 EndTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z"),
                 TimeMode = FeedbackQueryTimeMode.MetricTimestamp,
-                TopCount = 5
+                MaxPageSize = 5
             };
 
             int feedbackCount = 0;

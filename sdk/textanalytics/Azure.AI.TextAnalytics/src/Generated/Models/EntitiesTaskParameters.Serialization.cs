@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class EntitiesTaskParameters : IUtf8JsonSerializable
+    internal partial class EntitiesTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,11 @@ namespace Azure.AI.TextAnalytics
             {
                 writer.WritePropertyName("model-version");
                 writer.WriteStringValue(ModelVersion);
+            }
+            if (Optional.IsDefined(LoggingOptOut))
+            {
+                writer.WritePropertyName("loggingOptOut");
+                writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             if (Optional.IsDefined(StringIndexType))
             {

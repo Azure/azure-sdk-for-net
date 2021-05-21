@@ -180,6 +180,10 @@ namespace NetApp.Tests.ResourceTests
 
                 // clean up
                 ResourceUtils.DeletePool(netAppMgmtClient);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
                 ResourceUtils.DeleteAccount(netAppMgmtClient);
             }
         }

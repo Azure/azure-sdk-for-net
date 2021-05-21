@@ -5,16 +5,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Identity;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
-using Azure.Core.TestFramework;
 
-namespace Azure.Analytics.Synapse.Samples
+namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     /// <summary>
     /// This sample demonstrates how to create and upload a notebook using asynchronous methods of <see cref="NotebookClient"/>.
     /// </summary>
-    public partial class Sample2_HelloWorldNotebook : SampleFixture
+    public partial class Sample2_HelloWorldNotebook : SamplesBase<SynapseTestEnvironment>
     {
         [Test]
         public async Task CreateAndUploadNotebook()
@@ -60,7 +61,7 @@ namespace Azure.Analytics.Synapse.Samples
 
             #region Snippet:DeleteNotebook
             NotebookDeleteNotebookOperation deleteNotebookOperation = client.StartDeleteNotebook(notebookName);
-            await deleteNotebookOperation.WaitForCompletionAsync();
+            await deleteNotebookOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

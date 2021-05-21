@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BastionShareableLink DeserializeBastionShareableLink(JsonElement element)
         {
-            Resource vm = default;
+            VM vm = default;
             Optional<string> bsl = default;
             Optional<string> createdAt = default;
             Optional<string> message = default;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("vm"))
                 {
-                    vm = Resource.DeserializeResource(property.Value);
+                    vm = VM.DeserializeVM(property.Value);
                     continue;
                 }
                 if (property.NameEquals("bsl"))

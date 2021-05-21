@@ -8,12 +8,10 @@
     <Description>A sample pipeline policy to cache secrets, keys, and certificates in-memory.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/samples/keyvaultproxy</RepositoryUrl>
-    <IsPackable>true</IsPackable>
     <GenerateDocumentation>true</GenerateDocumentation>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
 </Project>

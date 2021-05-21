@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A sensitivity label. </summary>
-    public partial class SensitivityLabel : Resource
+    public partial class SensitivityLabel : ProxyResource
     {
         /// <summary> Initializes a new instance of SensitivityLabel. </summary>
         public SensitivityLabel()

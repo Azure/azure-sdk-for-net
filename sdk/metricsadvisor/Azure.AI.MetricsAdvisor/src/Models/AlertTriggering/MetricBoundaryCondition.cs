@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The direction of the specified boundaries. Depending on its value, <see cref="LowerBound"/>
         /// and/or <see cref="UpperBound"/> may be required.
         /// </summary>
-        public BoundaryDirection Direction { get; }
+        public BoundaryDirection Direction { get; set; }
 
         /// <summary>
         /// The minimum value a data point can assume to be able to trigger an alert. Must be set if
@@ -56,5 +56,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// If <c>false</c>, no action is taken in this scenario.
         /// </summary>
         public bool? TriggerForMissing { get; set; }
+
+        // TODO: expose it as part of 1.0.0-beta.4
+        internal ValueType? Type { get; set; }
     }
 }

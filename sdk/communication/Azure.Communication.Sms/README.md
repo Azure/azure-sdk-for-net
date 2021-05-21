@@ -1,6 +1,4 @@
 # Azure Communication SMS client library for .NET
-> Server Version: 
-Chat client: 2020-07-20-preview1
 
 This package contains a C# SDK for Azure Communication Services for SMS and Telephony.
 
@@ -11,7 +9,7 @@ This package contains a C# SDK for Azure Communication Services for SMS and Tele
 Install the Azure Communication SMS client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Sms --version 1.0.0-beta.3
+dotnet add package Azure.Communication.Sms --version 1.0.0
 ``` 
 
 ### Prerequisites
@@ -32,32 +30,75 @@ using Azure.Communication.Sms;
 SMS clients can be authenticated using the connection string acquired from an Azure Communication Resource in the [Azure Portal][azure_portal].
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
-string connectionString = "YOUR_CONNECTION_STRING"; // Find your Communication Services resource in the Azure portal
+var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
 SmsClient client = new SmsClient(connectionString);
 ```
 
-## Examples
-### Send a SMS Message
-To send a SMS message, call the `Send` or `SendAsync` function from the `SmsClient`.
-```C# Snippet:Azure_Communication_Sms_Tests_SendAsync
-SendSmsResponse result = await client.SendAsync(
-   from: new PhoneNumber("+18001230000"), // Phone number acquired on your Azure Communication resource
-   to: new PhoneNumber("+18005670000"),
-   message: "Hi");
-Console.WriteLine($"Sms id: {result.MessageId}");
+Alternatively, SMS clients can also be authenticated using a valid token credential. With this option,
+`AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication. 
+
+```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
+string endpoint = "<endpoint_url>";
+TokenCredential tokenCredential = new DefaultAzureCredential();
+SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
+## Examples
+### Send a 1:1 SMS Message
+To send a SMS message, call the `Send` or `SendAsync` function from the `SmsClient`.
+```C# Snippet:Azure_Communication_Sms_Tests_SendAsync
+SmsSendResult sendResult = await smsClient.SendAsync(
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: "<to-phone-number>", // E.164 formatted recipient phone number
+    message: "Hi");
+Console.WriteLine($"Sms id: {sendResult.MessageId}");
+```
+### Send a 1:N SMS Message
+To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
+You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
+```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptionsAsync
+var response = await smsClient.SendAsync(
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
+    message: "Weekly Promotion!",
+    options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+    {
+        Tag = "marketing", // custom tags
+    });
+foreach (SmsSendResult result in response.Value)
+{
+    Console.WriteLine($"Sms id: {result.MessageId}");
+    Console.WriteLine($"Send Result Successful: {result.Successful}");
+}
+```
 ## Troubleshooting
-All SMS operations will throw a RequestFailedException on failure.
+SMS operations will throw an exception if the request to the server fails.
+Exceptions will not be thrown if the error is caused by an individual message, only if something fails with the overall request.
+Please use the `Successful` flag to validate each individual result to verify if the message was sent.
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Troubleshooting
 try
 {
-    SendSmsResponse result = await client.SendAsync(
-       from: new PhoneNumber("+18001230000"), // Phone number acquired on your Azure Communication resource
-       to: new PhoneNumber("+18005670000"),
-       message: "Hi");
-    Console.WriteLine($"Sms id: {result.MessageId}");
+    var response = await smsClient.SendAsync(
+        from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
+        to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
+        message: "Weekly Promotion!",
+        options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+        {
+            Tag = "marketing", // custom tags
+        });
+    foreach (SmsSendResult result in response.Value)
+    {
+        if (result.Successful)
+        {
+            Console.WriteLine($"Successfully sent this message: {result.MessageId} to {result.To}.");
+        }
+        else
+        {
+            Console.WriteLine($"Something went wrong when trying to send this message {result.MessageId} to {result.To}.");
+            Console.WriteLine($"Status code {result.HttpStatusCode} and error message {result.ErrorMessage}.");
+        }
+    }
 }
 catch (RequestFailedException ex)
 {
@@ -66,7 +107,8 @@ catch (RequestFailedException ex)
 ```
 
 ## Next steps
-[Read more about SMS in Azure Communication Services][nextsteps]
+- [Read more about SMS in Azure Communication Services][nextsteps]
+- For a basic guide on how to configure Delivery Reporting for your SMS messages please refer to the [Handle SMS Events quickstart][handle_sms_events].
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
@@ -84,9 +126,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[handle_sms_events]: https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/handle-sms-events
 [package]: https://www.nuget.org/packages/Azure.Communication.Sms
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nextsteps]:https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp
 [nuget]: https://www.nuget.org/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Sms/src
-

@@ -13,8 +13,6 @@ namespace Azure.AI.MetricsAdvisor
     /// </summary>
     public class GetMetricSeriesDefinitionsOptions
     {
-        private IDictionary<string, IList<string>> _dimensionCombinationsToFilter;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMetricSeriesDefinitionsOptions"/> class.
         /// </summary>
@@ -34,29 +32,19 @@ namespace Azure.AI.MetricsAdvisor
         /// Filters the result, mapping a dimension's name to a list of possible values it can assume. Only time series
         /// with the specified dimension values will be returned.
         /// </summary>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IDictionary<string, IList<string>> DimensionCombinationsToFilter
-        {
-            get => _dimensionCombinationsToFilter;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(DimensionCombinationsToFilter));
-                _dimensionCombinationsToFilter = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IDictionary<string, IList<string>> DimensionCombinationsToFilter { get; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to
         /// be skipped.
         /// </summary>
-        public int? SkipCount { get; set; }
+        public int? Skip { get; set; }
 
         /// <summary>
         /// If set, specifies the maximum limit of items returned in each page of results. Note:
         /// unless the number of pages enumerated from the service is limited, the service will
         /// return an unlimited number of total items.
         /// </summary>
-        public int? TopCount { get; set; }
+        public int? MaxPageSize { get; set; }
     }
 }

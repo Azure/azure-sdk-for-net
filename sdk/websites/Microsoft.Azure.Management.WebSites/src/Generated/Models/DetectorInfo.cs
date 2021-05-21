@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,17 +31,33 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the DetectorInfo class.
         /// </summary>
+        /// <param name="id">Id of detector</param>
+        /// <param name="name">Name of detector</param>
         /// <param name="description">Short description of the detector and its
-        /// purpose</param>
-        /// <param name="category">Support Category</param>
-        /// <param name="subCategory">Support Sub Category</param>
-        /// <param name="supportTopicId">Support Topic Id</param>
-        public DetectorInfo(string description = default(string), string category = default(string), string subCategory = default(string), string supportTopicId = default(string))
+        /// purpose.</param>
+        /// <param name="author">Author of the detector.</param>
+        /// <param name="category">Problem category. This serves for organizing
+        /// group for detectors.</param>
+        /// <param name="supportTopicList">List of Support Topics for which
+        /// this detector is enabled.</param>
+        /// <param name="analysisType">Analysis Types for which this detector
+        /// should apply to.</param>
+        /// <param name="type">Whether this detector is an Analysis Detector or
+        /// not. Possible values include: 'Detector', 'Analysis',
+        /// 'CategoryOverview'</param>
+        /// <param name="score">Defines score of a detector to power ML based
+        /// matching.</param>
+        public DetectorInfo(string id = default(string), string name = default(string), string description = default(string), string author = default(string), string category = default(string), IList<SupportTopic> supportTopicList = default(IList<SupportTopic>), IList<string> analysisType = default(IList<string>), DetectorType? type = default(DetectorType?), double? score = default(double?))
         {
+            Id = id;
+            Name = name;
             Description = description;
+            Author = author;
             Category = category;
-            SubCategory = subCategory;
-            SupportTopicId = supportTopicId;
+            SupportTopicList = supportTopicList;
+            AnalysisType = analysisType;
+            Type = type;
+            Score = score;
             CustomInit();
         }
 
@@ -49,28 +67,60 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets short description of the detector and its purpose
+        /// Gets id of detector
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets name of detector
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets short description of the detector and its purpose.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; private set; }
 
         /// <summary>
-        /// Gets support Category
+        /// Gets author of the detector.
+        /// </summary>
+        [JsonProperty(PropertyName = "author")]
+        public string Author { get; private set; }
+
+        /// <summary>
+        /// Gets problem category. This serves for organizing group for
+        /// detectors.
         /// </summary>
         [JsonProperty(PropertyName = "category")]
         public string Category { get; private set; }
 
         /// <summary>
-        /// Gets support Sub Category
+        /// Gets list of Support Topics for which this detector is enabled.
         /// </summary>
-        [JsonProperty(PropertyName = "subCategory")]
-        public string SubCategory { get; private set; }
+        [JsonProperty(PropertyName = "supportTopicList")]
+        public IList<SupportTopic> SupportTopicList { get; private set; }
 
         /// <summary>
-        /// Gets support Topic Id
+        /// Gets analysis Types for which this detector should apply to.
         /// </summary>
-        [JsonProperty(PropertyName = "supportTopicId")]
-        public string SupportTopicId { get; private set; }
+        [JsonProperty(PropertyName = "analysisType")]
+        public IList<string> AnalysisType { get; private set; }
+
+        /// <summary>
+        /// Gets whether this detector is an Analysis Detector or not. Possible
+        /// values include: 'Detector', 'Analysis', 'CategoryOverview'
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public DetectorType? Type { get; private set; }
+
+        /// <summary>
+        /// Gets defines score of a detector to power ML based matching.
+        /// </summary>
+        [JsonProperty(PropertyName = "score")]
+        public double? Score { get; private set; }
 
     }
 }

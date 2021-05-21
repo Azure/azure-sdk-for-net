@@ -24,26 +24,31 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
             #region Snippet:CreateHookAsync
-            string hookName = "Sample hook";
-            var emailsToAlert = new List<string>()
+#if SNIPPET
+            string hookName = "<hookName>";
+#else
+            string hookName = GetUniqueName();
+#endif
+
+            var emailHook = new EmailNotificationHook()
             {
-                "email1@sample.com",
-                "email2@sample.com"
+                Name = hookName
             };
 
-            var emailHook = new EmailNotificationHook(hookName, emailsToAlert);
+            emailHook.EmailsToAlert.Add("email1@sample.com");
+            emailHook.EmailsToAlert.Add("email2@sample.com");
 
-            Response<string> response = await adminClient.CreateHookAsync(emailHook);
+            Response<NotificationHook> response = await adminClient.CreateHookAsync(emailHook);
 
-            string hookId = response.Value;
+            NotificationHook createdHook = response.Value;
 
-            Console.WriteLine($"Hook ID: {hookId}");
+            Console.WriteLine($"Hook ID: {createdHook.Id}");
             #endregion
 
             // Delete the created hook to clean up the Metrics Advisor resource. Do not perform this
             // step if you intend to keep using the hook.
 
-            await adminClient.DeleteHookAsync(hookId);
+            await adminClient.DeleteHookAsync(createdHook.Id);
         }
 
         [Test]
@@ -128,7 +133,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var options = new GetHooksOptions()
             {
-                TopCount = 5
+                MaxPageSize = 5
             };
 
             int hookCount = 0;

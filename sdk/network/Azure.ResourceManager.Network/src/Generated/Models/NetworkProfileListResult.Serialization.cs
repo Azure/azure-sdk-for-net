@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkProfileListResult
+    internal partial class NetworkProfileListResult
     {
         internal static NetworkProfileListResult DeserializeNetworkProfileListResult(JsonElement element)
         {

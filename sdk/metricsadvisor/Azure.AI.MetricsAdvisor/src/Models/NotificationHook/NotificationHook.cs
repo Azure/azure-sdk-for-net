@@ -11,13 +11,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// An alert notification to be triggered after an anomaly is detected by Metrics Advisor.
     /// </summary>
     [CodeGenModel("HookInfo")]
+    [CodeGenSuppress(nameof(NotificationHook), typeof(string))]
     public partial class NotificationHook
     {
-        internal NotificationHook(string name)
+        internal NotificationHook()
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            Name = name;
         }
 
         /// <summary>
@@ -30,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The name of the hook.
         /// </summary>
         [CodeGenMember("HookName")]
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The list of user e-mails with administrative rights to manage this hook.
@@ -51,8 +49,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return hook switch
             {
-                EmailNotificationHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, HookParameter = h.HookParameter, Admins = h.Administrators },
-                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, HookParameter = h.HookParameter, Admins = h.Administrators },
+                EmailNotificationHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, /*HookParameter = h.HookParameter,*/ Admins = h.Administrators },
+                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink, /*HookParameter = h.HookParameter,*/ Admins = h.Administrators },
                 _ => throw new InvalidOperationException("Unknown AlertingHook type.")
             };
         }

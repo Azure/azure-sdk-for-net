@@ -5,16 +5,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Identity;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
-using Azure.Core.TestFramework;
 
-namespace Azure.Analytics.Synapse.Samples
+namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
     /// <summary>
     /// This sample demonstrates how to create an empty pipline and execute it in Azure Synapse Analytics using asynchronous methods of <see cref="PipelineClient"/>.
     /// </summary>
-    public partial class Sample1_HelloWorldPipeline : SampleFixture
+    public partial class Sample1_HelloWorldPipeline : SamplesBase<SynapseTestEnvironment>
     {
         [Test]
         public async Task RunPipeline()
@@ -57,7 +58,7 @@ namespace Azure.Analytics.Synapse.Samples
 
             #region Snippet:DeletePipeline
             PipelineDeletePipelineOperation deleteOperation = client.StartDeletePipeline(pipelineName);
-            await deleteOperation.WaitForCompletionAsync();
+            await deleteOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

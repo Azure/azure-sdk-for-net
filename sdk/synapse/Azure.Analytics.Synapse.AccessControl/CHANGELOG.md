@@ -1,7 +1,19 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-preview.5 (Unreleased)
 
+
+## 1.0.0-preview.4 (2021-05-11)
+### Key Bug Fixes
+- Updated dependency versions.
+
+## 1.0.0-preview.3 (2021-02-10)
+
+### Added
+- Improved samples and documentation.
+
+### Changed
+- `AccessControlClient` is now split into `RoleAssignmentsClient` and a `RoleDefinitionsClient` with a changed API surface.
 
 ## 1.0.0-preview.2 (2020-09-01)
 - This release contains bug fixes to improve quality.

@@ -35,20 +35,28 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2020-10-31T00:00:00Z");
 
-        public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient()
+        public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {
-            return InstrumentClient(new MetricsAdvisorAdministrationClient(
-                new Uri(TestEnvironment.MetricsAdvisorUri),
-                new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                InstrumentClientOptions(new MetricsAdvisorClientsOptions())));
+            var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
+            var instrumentedOptions = GetInstrumentedOptions();
+
+            MetricsAdvisorAdministrationClient client = useTokenCredential
+                ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+
+            return InstrumentClient(client);
         }
 
-        public MetricsAdvisorClient GetMetricsAdvisorClient()
+        public MetricsAdvisorClient GetMetricsAdvisorClient(bool useTokenCredential = false)
         {
-            return InstrumentClient(new MetricsAdvisorClient(
-                new Uri(TestEnvironment.MetricsAdvisorUri),
-                new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                InstrumentClientOptions(new MetricsAdvisorClientsOptions())));
+            var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
+            var instrumentedOptions = GetInstrumentedOptions();
+
+            MetricsAdvisorClient client = useTokenCredential
+                ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+
+            return InstrumentClient(client);
         }
 
         protected void ValidateSeriesKey(DimensionKey seriesKey)
@@ -79,6 +87,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(column.Key, Is.EqualTo("city").Or.EqualTo("category"));
                 Assert.That(column.Value, Is.Not.Null.And.Not.Empty);
             }
+        }
+
+        private MetricsAdvisorClientsOptions GetInstrumentedOptions()
+        {
+            var options = new MetricsAdvisorClientsOptions();
+
+            options.Retry.MaxRetries = 6;
+
+            return InstrumentClientOptions(options);
         }
     }
 }

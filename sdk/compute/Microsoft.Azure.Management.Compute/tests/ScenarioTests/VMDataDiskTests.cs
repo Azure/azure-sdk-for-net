@@ -4,10 +4,12 @@
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Compute.Tests
@@ -40,7 +42,7 @@ namespace Compute.Tests
                         var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
                         var vhduri = vhdContainer + string.Format("/{0}.vhd", HttpMockServer.GetAssetName("TestVMDataDiskScenario", TestPrefix));
 
-                        vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
+                        vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA1V2;
                         vm.StorageProfile.DataDisks = new List<DataDisk>();
                         foreach (int index in new int[] {1, 2})
                         {
@@ -127,6 +129,76 @@ namespace Compute.Tests
                 {
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                     Assert.True(passed);
+                }
+            }
+        }
+        
+        [Fact]
+        [Trait("Name", "TestVMDataDiskScenario_ManagedDisk_ForceDetach")]
+        public void TestVMDataDiskScenario_ManagedDisk_ForceDetach()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                EnsureClientsInitialized(context);
+
+                ImageReference imageReference = GetPlatformVMImage(useWindowsImage: true);
+                string resourceGroupName = TestUtilities.GenerateName(TestPrefix);
+                string storageAccountForDisksName = TestUtilities.GenerateName(TestPrefix);
+                string availabilitySetName = TestUtilities.GenerateName(TestPrefix);
+
+                try
+                {
+                    StorageAccount storageAccountForDisks = CreateStorageAccount(resourceGroupName, storageAccountForDisksName);
+
+                    Action<VirtualMachine> addManagedDataDiskToVM = vm =>
+                    {
+                        vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
+                        vm.StorageProfile.DataDisks = new List<DataDisk>();
+
+                        var diskName = "dataDisk" + TestUtilities.GenerateGuid();
+                        var dd = new DataDisk
+                        {
+                            Caching = CachingTypes.None,
+                            DiskSizeGB = 10,
+                            CreateOption = DiskCreateOptionTypes.Empty,
+                            Lun = 0,
+                            Name = diskName,
+                            ManagedDisk = new ManagedDiskParameters()
+                            {
+                                StorageAccountType = StorageAccountType.StandardLRS
+                            }
+                        };
+                        vm.StorageProfile.DataDisks.Add(dd);
+
+                        var testStatus = new InstanceViewStatus
+                        {
+                            Code = "test",
+                            Message = "test"
+                        };
+
+                        var testStatusList = new List<InstanceViewStatus> { testStatus };
+                    };
+
+                    VirtualMachine inputVM;
+                    CreateVM(resourceGroupName, availabilitySetName, storageAccountForDisks, imageReference, out inputVM, addManagedDataDiskToVM, hasManagedDisks: true);
+
+                    VirtualMachine getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(resourceGroupName, inputVM.Name, InstanceViewTypes.InstanceView);
+                    ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse, hasManagedDisks: true);
+
+                    DataDisk diskToBeForceDetached = getVMWithInstanceViewResponse.StorageProfile.DataDisks.FirstOrDefault(disk => disk.Lun == 0);
+                    Assert.NotNull(diskToBeForceDetached);
+
+                    Helpers.MarkDataDiskToBeDetached(diskToBeForceDetached, "ForceDetach");
+
+                    var forceDetachVMResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(resourceGroupName, getVMWithInstanceViewResponse.Name, getVMWithInstanceViewResponse);
+                    Assert.Equal(0, forceDetachVMResponse.StorageProfile.DataDisks.Count);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    m_ResourcesClient.ResourceGroups.Delete(resourceGroupName);
                 }
             }
         }

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.EventGrid.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +18,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     /// Grid using a custom input schema. Currently, the only supported type of
     /// InputSchemaMapping is 'JsonInputSchemaMapping'.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("InputSchemaMapping")]
     public partial class InputSchemaMapping
     {
         /// <summary>

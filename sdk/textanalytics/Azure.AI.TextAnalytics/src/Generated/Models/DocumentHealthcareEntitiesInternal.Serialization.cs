@@ -7,17 +7,17 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics.Models;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class DocumentHealthcareEntitiesInternal
     {
         internal static DocumentHealthcareEntitiesInternal DeserializeDocumentHealthcareEntitiesInternal(JsonElement element)
         {
             string id = default;
-            IReadOnlyList<HealthcareEntity> entities = default;
+            IReadOnlyList<HealthcareEntityInternal> entities = default;
             IReadOnlyList<HealthcareRelationInternal> relations = default;
             IReadOnlyList<TextAnalyticsWarningInternal> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -30,10 +30,10 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("entities"))
                 {
-                    List<HealthcareEntity> array = new List<HealthcareEntity>();
+                    List<HealthcareEntityInternal> array = new List<HealthcareEntityInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareEntity.DeserializeHealthcareEntity(item));
+                        array.Add(HealthcareEntityInternal.DeserializeHealthcareEntityInternal(item));
                     }
                     entities = array;
                     continue;

@@ -13,7 +13,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> CosmosDB service management client. </summary>
-    public class CosmosDBManagementClient
+    public partial class CosmosDBManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

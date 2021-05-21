@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Network
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal PeerExpressRouteCircuitConnectionsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionsOperations for mocking. </summary>
         protected PeerExpressRouteCircuitConnectionsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

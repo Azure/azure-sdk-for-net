@@ -29,19 +29,40 @@ namespace Azure.AI.FormRecognizer
         public FormContentType? ContentType { get; set; }
 
         /// <summary>
+        /// When set, specifies the order in which the recognized text lines are returned. As the sorting
+        /// order depends on the detected text, it may change across images and OCR version updates. Thus,
+        /// business logic should be built upon the actual line location instead of order.
+        /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// </remarks>
+        public FormReadingOrder? ReadingOrder { get; set; }
+
+        /// <summary>
         /// The BCP-47 language code of the text in the document.
         /// Recognize Content supports auto language identification and multi language documents, so only
         /// provide a language code if you would like to force the documented to be processed as
         /// that specific language.
-        /// <para>See supported language codes <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/language-support">here</a>.</para>
         /// </summary>
-        public string Language { get; set; }
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// </remarks>
+        public FormRecognizerLanguage? Language { get; set; }
 
         /// <summary>
-        /// Custom page numbers for multi-page documents(PDF/TIFF). Input the number of the
-        /// pages you want to get OCR result. For a range of pages, use a hyphen.
-        /// Separate each page or range with a comma.
+        /// <para>
+        /// Custom page numbers for multi-page documents(PDF/TIFF). Input the page numbers
+        /// and/or ranges of pages you want to get in the result. For a range of pages, use a hyphen, like
+        /// `Pages = { "1-3", "5-6" }`. Separate each page number or range with a comma.
+        /// </para>
+        /// <para>
+        /// Although this collection cannot be set, it can be modified.
+        /// See <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#collection-initializers">collection initializer</see>.
+        /// </para>
         /// </summary>
-        public IEnumerable<string> Pages { get; set; }
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// </remarks>
+        public IList<string> Pages { get; } = new List<string>();
     }
 }

@@ -38,8 +38,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ConnectVia = connectVia;
             ProjectParameters = new ChangeTrackingDictionary<string, SsisExecutionParameter>();
             PackageParameters = new ChangeTrackingDictionary<string, SsisExecutionParameter>();
-            ProjectConnectionManagers = new ChangeTrackingDictionary<string, object>();
-            PackageConnectionManagers = new ChangeTrackingDictionary<string, object>();
+            ProjectConnectionManagers = new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>();
+            PackageConnectionManagers = new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>();
             PropertyOverrides = new ChangeTrackingDictionary<string, SsisPropertyOverride>();
             Type = "ExecuteSSISPackage";
         }
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="packageConnectionManagers"> The package level connection managers to execute the SSIS package. </param>
         /// <param name="propertyOverrides"> The property overrides to execute the SSIS package. </param>
         /// <param name="logLocation"> SSIS package execution log location. </param>
-        internal ExecuteSsisPackageActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SsisPackageLocation packageLocation, object runtime, object loggingLevel, object environmentPath, SsisExecutionCredential executionCredential, IntegrationRuntimeReference connectVia, IDictionary<string, SsisExecutionParameter> projectParameters, IDictionary<string, SsisExecutionParameter> packageParameters, IDictionary<string, object> projectConnectionManagers, IDictionary<string, object> packageConnectionManagers, IDictionary<string, SsisPropertyOverride> propertyOverrides, SsisLogLocation logLocation) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal ExecuteSsisPackageActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SsisPackageLocation packageLocation, object runtime, object loggingLevel, object environmentPath, SsisExecutionCredential executionCredential, IntegrationRuntimeReference connectVia, IDictionary<string, SsisExecutionParameter> projectParameters, IDictionary<string, SsisExecutionParameter> packageParameters, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers, IDictionary<string, SsisPropertyOverride> propertyOverrides, SsisLogLocation logLocation) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
             Runtime = runtime;
@@ -99,9 +99,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The package level parameters to execute the SSIS package. </summary>
         public IDictionary<string, SsisExecutionParameter> PackageParameters { get; }
         /// <summary> The project level connection managers to execute the SSIS package. </summary>
-        public IDictionary<string, object> ProjectConnectionManagers { get; }
+        public IDictionary<string, IDictionary<string, SsisExecutionParameter>> ProjectConnectionManagers { get; }
         /// <summary> The package level connection managers to execute the SSIS package. </summary>
-        public IDictionary<string, object> PackageConnectionManagers { get; }
+        public IDictionary<string, IDictionary<string, SsisExecutionParameter>> PackageConnectionManagers { get; }
         /// <summary> The property overrides to execute the SSIS package. </summary>
         public IDictionary<string, SsisPropertyOverride> PropertyOverrides { get; }
         /// <summary> SSIS package execution log location. </summary>

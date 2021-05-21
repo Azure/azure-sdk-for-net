@@ -1,12 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Tests.Artifacts
+namespace Azure.Analytics.Synapse.Artifacts.Tests
 {
     /// <summary>
     /// The suite of tests for the <see cref="TriggerClient"/> class.
@@ -15,47 +19,98 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class TriggerClientLiveTests : ArtifactsClientTestBase
+    public class TriggerClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TriggerClientLiveTests"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public TriggerClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [Test]
+        private TriggerClient CreateClient()
+        {
+            return InstrumentClient(new TriggerClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ArtifactsClientOptions())
+            ));
+        }
+
+        private PipelineClient CreatePipelineClient()
+        {
+            return InstrumentClient(new PipelineClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ArtifactsClientOptions())
+            ));
+        }
+
+        [RecordedTest]
         public async Task TestGetTrigger()
         {
-            await foreach (var expectedTrigger in TriggerClient.GetTriggersByWorkspaceAsync())
+            TriggerClient client = CreateClient();
+            await using DisposableTrigger singleTrigger = await DisposableTrigger.Create (client, Recording);
+
+            await foreach (var trigger in client.GetTriggersByWorkspaceAsync())
             {
-                TriggerResource actualTrigger = await TriggerClient.GetTriggerAsync(expectedTrigger.Name);
-                Assert.AreEqual(expectedTrigger.Name, actualTrigger.Name);
-                Assert.AreEqual(expectedTrigger.Id, actualTrigger.Id);
+                TriggerResource actualTrigger = await client.GetTriggerAsync(trigger.Name);
+                Assert.AreEqual(trigger.Name, actualTrigger.Name);
+                Assert.AreEqual(trigger.Id, actualTrigger.Id);
             }
         }
 
-        [Test]
-        public async Task TestCreateTrigger()
+        [RecordedTest]
+        public async Task TestDeleteSparkJob()
         {
-            string triggerName = Recording.GenerateName("Trigger");
-            TriggerCreateOrUpdateTriggerOperation operation = await TriggerClient.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence())));
-            TriggerResource trigger = await operation.WaitForCompletionAsync();
-            Assert.AreEqual(triggerName, trigger.Name);
+            TriggerClient client = CreateClient();
+
+            TriggerResource resource = await DisposableTrigger.CreateResource (client, Recording);
+
+            TriggerDeleteTriggerOperation deleteOperation = await client.StartDeleteTriggerAsync  (resource.Name);
+            await deleteOperation.WaitAndAssertSuccessfulCompletion();
         }
 
-        [Test]
-        public async Task TestDeleteTrigger()
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - Missing or invalid pipeline references for trigger but no obvious place to put pipeline?")]
+        [RecordedTest]
+        public async Task TestStartStop()
         {
-            string triggerName = Recording.GenerateName("Trigger");
+            TriggerClient client = CreateClient();
+            PipelineClient pipelineClient = CreatePipelineClient ();
 
-            TriggerCreateOrUpdateTriggerOperation createOperation = await TriggerClient.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new ScheduleTrigger(new ScheduleTriggerRecurrence())));
-            await createOperation.WaitForCompletionAsync();
+            await using DisposableTrigger trigger = await DisposableTrigger.Create (client, Recording);
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, Recording);
+            // SYNAPSE_API_ISSUE - How do we point the trigger to our pipeline
 
-            TriggerDeleteTriggerOperation deleteOperation = await TriggerClient.StartDeleteTriggerAsync(triggerName);
-            Response response = await deleteOperation.WaitForCompletionAsync();
-            Assert.AreEqual(200, response.Status);
+            TriggerStartTriggerOperation startOperation = await client.StartStartTriggerAsync (trigger.Name);
+            Response startResponse = await startOperation.WaitForCompletionResponseAsync();
+            startResponse.AssertSuccess();
+
+            TriggerStopTriggerOperation stopOperation = await client.StartStopTriggerAsync (trigger.Name);
+            Response stopResponse = await stopOperation.WaitForCompletionResponseAsync();
+            stopResponse.AssertSuccess();
+        }
+
+        [RecordedTest]
+        public async Task TestSubscribeUnsubscribe()
+        {
+            TriggerClient client = CreateClient();
+
+            await using DisposableTrigger trigger = await DisposableTrigger.Create (client, Recording);
+            TriggerSubscribeTriggerToEventsOperation subOperation = await client.StartSubscribeTriggerToEventsAsync (trigger.Name);
+            TriggerSubscriptionOperationStatus subResponse = await subOperation.WaitForCompletionAsync();
+            Assert.AreEqual (EventSubscriptionStatus.Enabled, subResponse.Status);
+
+            TriggerUnsubscribeTriggerFromEventsOperation unsubOperation = await client.StartUnsubscribeTriggerFromEventsAsync (trigger.Name);
+            TriggerSubscriptionOperationStatus unsubResponse = await unsubOperation.WaitForCompletionAsync();
+            Assert.AreEqual (EventSubscriptionStatus.Disabled, unsubResponse.Status);
+        }
+
+        [RecordedTest]
+        public async Task TestEventStatus()
+        {
+            TriggerClient client = CreateClient();
+
+            await using DisposableTrigger trigger = await DisposableTrigger.Create (client, Recording);
+            TriggerSubscriptionOperationStatus statusOperation = await client.GetEventSubscriptionStatusAsync (trigger.Name);
+            Assert.AreEqual (statusOperation.TriggerName, trigger.Name);
         }
     }
 }

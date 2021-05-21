@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class TenantCategoryExtensions
+    internal static partial class TenantCategoryExtensions
     {
         public static string ToSerialString(this TenantCategory value) => value switch
         {

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal static class ReasonExtensions
+    internal static partial class ReasonExtensions
     {
         public static string ToSerialString(this Reason value) => value switch
         {

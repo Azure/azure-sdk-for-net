@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2020-04-08";
+        public const string DefaultSasVersion = "2020-08-04";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -87,6 +87,22 @@ namespace Azure.Storage
 
         public const string FalseName = "false";
         public const string TrueName = "true";
+
+        public const string ErrorCode = "Code";
+        public const string ErrorMessage = "Message";
+
+        public const string CommaString = ",";
+        public const char CommaChar = ',';
+
+        public const string ContentTypeApplicationXml = "application/xml";
+        public const string ContentTypeApplicationJson = "application/json";
+
+        public const string ErrorPropertyKey = "error";
+        public const string DetailPropertyKey = "detail";
+        public const string MessagePropertyKey = "message";
+        public const string CodePropertyKey = "code";
+
+        public const string Iso8601Format = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
 
         /// <summary>
         /// Storage Connection String constant values.
@@ -152,6 +168,7 @@ namespace Azure.Storage
             public const string Range = "Range";
             public const string ContentRange = "Content-Range";
             public const string VersionId = "x-ms-version-id";
+            public const string LeaseTime = "x-ms-lease-time";
         }
 
         internal static class ErrorCodes
@@ -159,6 +176,8 @@ namespace Azure.Storage
             public const string InternalError = "InternalError";
             public const string OperationTimedOut = "OperationTimedOut";
             public const string ServerBusy = "ServerBusy";
+            public const string ContainerAlreadyExists = "ContainerAlreadyExists";
+            public const string BlobAlreadyExists = "BlobAlreadyExists";
         }
 
         /// <summary>
@@ -169,6 +188,8 @@ namespace Azure.Storage
             public const int HttpsPort = 443;
             public const string UriSubDomain = "blob";
             public const int QuickQueryDownloadSize = 4 * Constants.MB;
+            public const string MetadataHeaderPrefix = "x-ms-meta-";
+            public const string ObjectReplicationRulesHeaderPrefix = "x-ms-or-";
 
             internal static class Append
             {
@@ -320,6 +341,10 @@ namespace Azure.Storage
             public const string IsDirectoryKey = "hdi_isFolder";
 
             public const string FileSystemName = "FileSystem";
+
+            public const string DeletionId = "deletionid";
+
+            public const string DirectoryResourceType = "directory";
         }
 
         /// <summary>
@@ -343,6 +368,8 @@ namespace Azure.Storage
             public const string MessagesUri = "messages";
 
             public const string UriSubDomain = "queue";
+
+            public const string QueueTraitsMetadata = "metadata";
         }
 
         /// <summary>
@@ -591,6 +618,13 @@ namespace Azure.Storage
         internal static class HttpStatusCode
         {
             internal const int NotFound = 404;
+            internal const int NotModified = 304;
+        }
+
+        internal static class ServerTimeout
+        {
+            internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
+            internal const string QueryParameterKey = "timeout";
         }
     }
 }

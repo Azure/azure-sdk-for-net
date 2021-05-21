@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.1" />
+    <PackageReference Include="Microsoft.Azure.ApplicationInsights.Query" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
+
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <!--<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>-->
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netcoreapp2.1'">
+    <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
+    But this package targets NetCoreApp2.1, while all the dependent packages target NetStandard2.0.
+    To support net461 so we must reference the dependent packages.-->
+    <PackageReference Include="Microsoft.AspNetCore" VersionOverride="[2.1.1,2.2)" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" VersionOverride="[2.1.1,2.2)" />
+    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" VersionOverride="[2.1.1,2.2)" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" VersionOverride="[2.1.1,2.2)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+    <ProjectReference Include="..\Integration.Tests.AspNetCoreWebApp\Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)\HttpPipelineMessageHandler.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+</Project>

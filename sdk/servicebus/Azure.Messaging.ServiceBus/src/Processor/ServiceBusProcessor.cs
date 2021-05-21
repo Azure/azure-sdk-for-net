@@ -33,11 +33,13 @@ namespace Azure.Messaging.ServiceBus
 
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
-        private Func<ProcessSessionEventArgs, Task> _sessionInitializingAsync;
+        internal Func<ProcessSessionEventArgs, Task> _sessionInitializingAsync;
 
-        private Func<ProcessSessionEventArgs, Task> _sessionClosingAsync;
+        internal Func<ProcessSessionEventArgs, Task> _sessionClosingAsync;
 
         private readonly SemaphoreSlim _messageHandlerSemaphore;
+
+        private readonly int _maxConcurrentCalls;
 
         /// <summary>
         /// The primitive for ensuring that the service is not overloaded with
@@ -56,13 +58,13 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the fully qualified Service Bus namespace that the receiver is associated with. This is likely
         /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
-        public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
+        public virtual string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
 
         /// <summary>
         /// Gets the path of the Service Bus entity that the processor is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
-        public string EntityPath { get; private set; }
+        public virtual string EntityPath { get; private set; }
 
         /// <summary>
         /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
@@ -73,7 +75,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
-        public ServiceBusReceiveMode ReceiveMode { get; }
+        public virtual ServiceBusReceiveMode ReceiveMode { get; }
 
         /// <summary>
         /// Gets whether the processor is configured to process session entities.
@@ -85,7 +87,7 @@ namespace Azure.Messaging.ServiceBus
         /// during processing. This is intended to help maximize throughput by allowing the
         /// processor to receive from a local cache rather than waiting on a service request.
         /// </summary>
-        public int PrefetchCount { get; }
+        public virtual int PrefetchCount { get; }
 
         /// <summary>
         /// Gets whether or not this processor is currently processing messages.
@@ -94,22 +96,23 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the processor is processing messages; otherwise, <c>false</c>.
         /// </value>
-        public bool IsProcessing => ActiveReceiveTask != null;
+        public virtual bool IsProcessing => ActiveReceiveTask != null;
 
-        private readonly ServiceBusProcessorOptions _options;
+        internal ServiceBusProcessorOptions Options { get; }
 
         /// <summary>
         ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
         ///   about the associated Service Bus entity and access to transport-aware consumers.
         /// </summary>
-        private readonly ServiceBusConnection _connection;
+        internal readonly ServiceBusConnection Connection;
 
         /// <summary>Gets the maximum number of concurrent calls to the
         /// <see cref="ProcessMessageAsync"/> message handler the processor should initiate.
         /// </summary>
         ///
         /// <value>The maximum number of concurrent calls to the message handler.</value>
-        public int MaxConcurrentCalls { get; }
+        public virtual int MaxConcurrentCalls { get; }
+        internal TimeSpan? MaxReceiveWaitTime { get; }
 
         /// <summary>
         /// Gets a value that indicates whether the processor should automatically
@@ -120,7 +123,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>true to complete the message processing automatically on
         /// successful execution of the operation; otherwise, false.</value>
-        public bool AutoCompleteMessages { get; }
+        public virtual bool AutoCompleteMessages { get; }
 
         /// <summary>
         /// Gets the maximum duration within which the lock will be renewed automatically. This
@@ -131,7 +134,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
-        public TimeSpan MaxAutoLockRenewalDuration { get; }
+        public virtual TimeSpan MaxAutoLockRenewalDuration { get; }
 
         /// <summary>
         /// The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -147,7 +150,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the processor is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed
+        public virtual bool IsClosed
         {
             get => _closed;
             private set => _closed = value;
@@ -159,7 +162,8 @@ namespace Azure.Messaging.ServiceBus
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
         private readonly IList<ServiceBusPlugin> _plugins;
-        private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
+        // deliberate usage of List instead of IList for faster enumeration and less allocations
+        private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -191,36 +195,36 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(connection.RetryOptions, nameof(connection.RetryOptions));
             connection.ThrowIfClosed();
 
-            _options = options?.Clone() ?? new ServiceBusProcessorOptions();
-            _connection = connection;
-            EntityPath = entityPath;
+            Options = options?.Clone() ?? new ServiceBusProcessorOptions();
+            Connection = connection;
+            EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, Options.SubQueue);
             Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
 
-            ReceiveMode = _options.ReceiveMode;
-            PrefetchCount = _options.PrefetchCount;
-            MaxAutoLockRenewalDuration = _options.MaxAutoLockRenewalDuration;
-            MaxConcurrentCalls = _options.MaxConcurrentCalls;
+            ReceiveMode = Options.ReceiveMode;
+            PrefetchCount = Options.PrefetchCount;
+            MaxAutoLockRenewalDuration = Options.MaxAutoLockRenewalDuration;
+            MaxConcurrentCalls = Options.MaxConcurrentCalls;
+            MaxReceiveWaitTime = Options.MaxReceiveWaitTime;
             MaxConcurrentSessions = maxConcurrentSessions;
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
 
-            int maxCalls = isSessionEntity ?
+            _maxConcurrentCalls = isSessionEntity ?
                 (_sessionIds.Length > 0 ?
                     Math.Min(_sessionIds.Length, MaxConcurrentSessions) :
                     MaxConcurrentSessions) * MaxConcurrentCallsPerSession :
                 MaxConcurrentCalls;
 
             _messageHandlerSemaphore = new SemaphoreSlim(
-                maxCalls,
-                maxCalls);
-            var maxAcceptSessions = Math.Min(maxCalls, 2 * Environment.ProcessorCount);
+                _maxConcurrentCalls,
+                _maxConcurrentCalls);
+            var maxAcceptSessions = Math.Min(_maxConcurrentCalls, 2 * Environment.ProcessorCount);
             MaxConcurrentAcceptSessionsSemaphore = new SemaphoreSlim(
                 maxAcceptSessions,
                 maxAcceptSessions);
 
-            AutoCompleteMessages = _options.AutoCompleteMessages;
+            AutoCompleteMessages = Options.AutoCompleteMessages;
 
-            EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
             _plugins = plugins;
@@ -428,6 +432,41 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Invokes the process message event handler after a message has been received.
+        /// This method can be overridden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the message.</param>
+        protected internal virtual async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
+        {
+            await _processMessageAsync(args).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Invokes the error event handler when an error has occurred during processing.
+        /// This method can be overridden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the error.</param>
+        protected internal async virtual Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+        {
+            await _processErrorAsync(args).ConfigureAwait(false);
+        }
+
+        internal async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
+        {
+            await _processSessionMessageAsync(args).ConfigureAwait(false);
+        }
+
+        internal async Task OnSessionInitializingAsync(ProcessSessionEventArgs args)
+        {
+            await _sessionInitializingAsync(args).ConfigureAwait(false);
+        }
+
+        internal async Task OnSessionClosingAsync(ProcessSessionEventArgs args)
+        {
+            await _sessionClosingAsync(args).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Signals the processor to begin processing messages. Should this method be
         /// called while the processor is already running, an
         /// <see cref="InvalidOperationException"/> is thrown.
@@ -437,10 +476,16 @@ namespace Azure.Messaging.ServiceBus
         /// signal the request to cancel the start operation.  This won't affect the
         /// processor once it starts running.
         /// </param>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the processor is already running. This can be checked via the <see cref="IsProcessing"/> property.
+        ///   This can also occur if event handlers have not been specified for the <see cref="ProcessMessageAsync"/> or
+        ///   the <see cref="ProcessErrorAsync"/> events.
+        /// </exception>
         public virtual async Task StartProcessingAsync(
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusProcessor));
+            Connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             bool releaseGuard = false;
             try
@@ -514,16 +559,8 @@ namespace Azure.Messaging.ServiceBus
 
                     _receiverManagers.Add(
                         new SessionReceiverManager(
-                            _connection,
-                            FullyQualifiedNamespace,
-                            EntityPath,
-                            Identifier,
+                            this,
                             sessionId,
-                            _options,
-                            _sessionInitializingAsync,
-                            _sessionClosingAsync,
-                            _processSessionMessageAsync,
-                            _processErrorAsync,
                             MaxConcurrentAcceptSessionsSemaphore,
                             _scopeFactory,
                             _plugins,
@@ -535,13 +572,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 _receiverManagers.Add(
                     new ReceiverManager(
-                        _connection,
-                        FullyQualifiedNamespace,
-                        EntityPath,
-                        Identifier,
-                        _options,
-                        _processMessageAsync,
-                        _processErrorAsync,
+                        this,
                         _scopeFactory,
                         _plugins));
             }
@@ -606,7 +637,7 @@ namespace Azure.Messaging.ServiceBus
                     {
                         await ActiveReceiveTask.ConfigureAwait(false);
                     }
-                    catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
+                    catch (OperationCanceledException)
                     {
                         // Nothing to do here.  These exceptions are expected.
                     }
@@ -638,23 +669,64 @@ namespace Azure.Messaging.ServiceBus
         private async Task RunReceiveTaskAsync(
             CancellationToken cancellationToken)
         {
-            List<Task> tasks = new List<Task>();
+            List<Task> tasks = new List<Task>(_maxConcurrentCalls + _receiverManagers.Count);
             try
             {
-                while (!cancellationToken.IsCancellationRequested)
+                while (!cancellationToken.IsCancellationRequested && !Connection.IsClosed)
                 {
                     foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
-                        await _messageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                        // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
+                        if (!_messageHandlerSemaphore.Wait(0, CancellationToken.None))
+                        {
+                            await _messageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                        }
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
                         tasks.Add(ReceiveAndProcessMessagesAsync(receiverManager, cancellationToken));
                     }
-                    if (tasks.Count > MaxConcurrentCalls)
+
+                    if (tasks.Count > _maxConcurrentCalls)
                     {
                         tasks.RemoveAll(t => t.IsCompleted);
                     }
+                }
+
+                // If the main loop is aborting due to the connection being canceled, then
+                // force the processor to stop.
+                if (!cancellationToken.IsCancellationRequested && Connection.IsClosed)
+                {
+                    Logger.ProcessorClientClosedException(Identifier);
+
+                    // Because this is a highly unusual situation
+                    // and goes against the goal of resiliency for the processor, surface
+                    // a fatal exception with an explicit message detailing that processing
+                    // will be stopped.
+                    try
+                    {
+                        await OnProcessErrorAsync(
+                            new ProcessErrorEventArgs(
+                                new ObjectDisposedException(nameof(ServiceBusConnection), Resources.DisposedConnectionMessageProcessorMustStop),
+                                ServiceBusErrorSource.Receive,
+                                FullyQualifiedNamespace,
+                                EntityPath,
+                                cancellationToken))
+                        .ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Don't bubble up exceptions raised from customer exception handler.
+                        Logger.ProcessorErrorHandlerThrewException(ex.ToString());
+                    }
+
+                    // This call will deadlock if awaited, as StopProcessingAsync awaits
+                    // completion of this task.  The processor is already known to be in a bad
+                    // state and exceptions in StopProcessingAsync are likely and will be logged
+                    // in that call.  There is little value in surfacing those expected exceptions
+                    // to the customer error handler as well; allow StopProcessingAsync to run
+                    // in a fire-and-forget manner.
+                    _ = StopProcessingAsync(CancellationToken.None);
                 }
             }
             finally
@@ -683,7 +755,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="action">The action to invoke.</param>
         ///
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
+        /// <exception cref="InvalidOperationException">Method is invoked while the event processor is running.</exception>
         internal void EnsureNotRunningAndInvoke(Action action)
         {
             if (ActiveReceiveTask == null)
@@ -736,9 +808,12 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
-        ///   This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
+        ///   This is equivalent to calling <see cref="CloseAsync"/>.
         /// </summary>
-        public async ValueTask DisposeAsync() =>
+        public async ValueTask DisposeAsync()
+        {
             await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
     }
 }

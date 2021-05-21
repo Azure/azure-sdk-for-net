@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class CachingTypesExtensions
+    internal static partial class CachingTypesExtensions
     {
         public static string ToSerialString(this CachingTypes value) => value switch
         {
