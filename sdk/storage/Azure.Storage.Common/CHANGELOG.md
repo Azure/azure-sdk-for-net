@@ -12,7 +12,6 @@
 
 ## 12.8.0-beta.3 (2021-04-09)
 - Fixed bug in SasQueryParameters causing services (ss) reorder when parsing externally provided URI.
->>>>>>> master
 
 ## 12.7.2 (2021-04-02)
 - Fixed bug in SasQueryParameters causing services (ss) reorder when parsing externally provided URI.
