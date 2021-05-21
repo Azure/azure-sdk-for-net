@@ -255,7 +255,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
 
             /// <summary>
-            /// Retrieve the status of a take/apply snapshot operation.
+            /// Get status of a long running operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
