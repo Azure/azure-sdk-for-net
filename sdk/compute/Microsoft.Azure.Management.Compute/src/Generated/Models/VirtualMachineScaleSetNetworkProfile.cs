@@ -39,16 +39,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'.</param>
         /// <param name="networkInterfaceConfigurations">The list of network
         /// configurations.</param>
-        /// <param name="networkApiVersion">specifies the Microsoft.Network API
-        /// version used when creating networking resources in the Network
-        /// Interface Configurations for Virtual Machine Scale Set with
-        /// orchestration mode 'Flexible'. Possible values include:
-        /// '2020-11-01'</param>
-        public VirtualMachineScaleSetNetworkProfile(ApiEntityReference healthProbe = default(ApiEntityReference), IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default(IList<VirtualMachineScaleSetNetworkConfiguration>), string networkApiVersion = default(string))
+        public VirtualMachineScaleSetNetworkProfile(ApiEntityReference healthProbe = default(ApiEntityReference), IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default(IList<VirtualMachineScaleSetNetworkConfiguration>))
         {
             HealthProbe = healthProbe;
             NetworkInterfaceConfigurations = networkInterfaceConfigurations;
-            NetworkApiVersion = networkApiVersion;
             CustomInit();
         }
 
@@ -71,15 +65,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkInterfaceConfigurations")]
         public IList<VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies the Microsoft.Network API version used when
-        /// creating networking resources in the Network Interface
-        /// Configurations for Virtual Machine Scale Set with orchestration
-        /// mode 'Flexible'. Possible values include: '2020-11-01'
-        /// </summary>
-        [JsonProperty(PropertyName = "networkApiVersion")]
-        public string NetworkApiVersion { get; set; }
 
     }
 }

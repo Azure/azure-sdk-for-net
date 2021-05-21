@@ -40,15 +40,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// IP address.</param>
         /// <param name="dnsSettings">The dns settings to be applied on the
         /// publicIP addresses .</param>
-        /// <param name="deleteOption">Specify what happens to the public IP
-        /// when the VM is deleted. Possible values include: 'Delete',
-        /// 'Detach'</param>
-        public VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name = default(string), int? idleTimeoutInMinutes = default(int?), VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings), string deleteOption = default(string))
+        public VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name = default(string), int? idleTimeoutInMinutes = default(int?), VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings))
         {
             Name = name;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
-            DeleteOption = deleteOption;
             CustomInit();
         }
 
@@ -75,13 +71,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dnsSettings")]
         public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
-
-        /// <summary>
-        /// Gets or sets specify what happens to the public IP when the VM is
-        /// deleted. Possible values include: 'Delete', 'Detach'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deleteOption")]
-        public string DeleteOption { get; set; }
 
         /// <summary>
         /// Validate the object.
