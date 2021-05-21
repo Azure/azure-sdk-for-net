@@ -75,7 +75,7 @@ Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{get
 IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
 foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
 {
-    Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.Type}'.");
+    Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.PropertyType}'.");
 }
 ```
 
@@ -194,7 +194,7 @@ var timeSeriesIds = new List<TimeSeriesId>
     tsId,
 };
 
-Response<InstancesOperationResult[]> getByIdsResult = await instancesClient.GetAsync(timeSeriesIds);
+Response<InstancesOperationResult[]> getByIdsResult = await instancesClient.GetByIdAsync(timeSeriesIds);
 
 // The response of calling the API contains a list of instance or error objects corresponding by position to the array in the request.
 // Instance object is set when operation is successful and error object is set when operation is unsuccessful.
@@ -223,7 +223,7 @@ var instancesToDelete = new List<TimeSeriesId>
 };
 
 Response<TimeSeriesOperationError[]> deleteInstanceErrors = await instancesClient
-    .DeleteAsync(instancesToDelete);
+    .DeleteByIdAsync(instancesToDelete);
 
 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
 // array in the request. If the error object is set to null, this means the operation was a success.
@@ -251,7 +251,7 @@ var instanceIdsToGet = new List<TimeSeriesId>
     tsId,
 };
 
-Response<InstancesOperationResult[]> getInstancesByIdResult = await instancesClient.GetAsync(instanceIdsToGet);
+Response<InstancesOperationResult[]> getInstancesByIdResult = await instancesClient.GetByIdAsync(instanceIdsToGet);
 
 TimeSeriesInstance instanceResult = getInstancesByIdResult.Value[0].Instance;
 Console.WriteLine($"Retrieved Time Series Insights instance with Id '{instanceResult.TimeSeriesId}' and name '{instanceResult.Name}'.");
@@ -559,7 +559,7 @@ This code snippet demonstrates querying for raw events with using a time span in
 ```C# Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
 Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
 
-QueryAnalyzer humidityEventsQuery = queriesClient.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
+TimeSeriesQueryAnalyzer humidityEventsQuery = queriesClient.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
 await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
 {
     TimeSeriesValue humidityValue = point.GetValue("Humidity");
@@ -592,7 +592,7 @@ Console.WriteLine("\n\nQuery for raw temperature events over the past 10 minutes
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
 
-QueryAnalyzer temperatureEventsQuery = queriesClient.CreateEventsQuery(tsId, startTime, endTime);
+TimeSeriesQueryAnalyzer temperatureEventsQuery = queriesClient.CreateEventsQuery(tsId, startTime, endTime);
 await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync())
 {
     TimeSeriesValue temperatureValue = point.GetValue("Temperature");
@@ -625,7 +625,7 @@ Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit o
 
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
-QueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
+TimeSeriesQueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
     tsId,
     startTime,
     endTime);
@@ -656,7 +656,7 @@ var querySeriesRequestOptions = new QuerySeriesRequestOptions();
 querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
 querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
 
-QueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
+TimeSeriesQueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
     tsId,
     TimeSpan.FromMinutes(10),
     null,
@@ -689,7 +689,7 @@ var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
 aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
 aggregateSeriesRequestOptions.ProjectedVariableNames.Add(countVariableName);
 
-QueryAnalyzer query = queriesClient.CreateAggregateSeriesQuery(
+TimeSeriesQueryAnalyzer query = queriesClient.CreateAggregateSeriesQuery(
     tsId,
     startTime,
     endTime,

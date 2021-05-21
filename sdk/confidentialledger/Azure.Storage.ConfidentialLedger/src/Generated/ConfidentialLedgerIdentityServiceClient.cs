@@ -19,6 +19,7 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://confidential-ledger.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
         private Uri identityServiceUri;
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -45,7 +46,8 @@ namespace Azure.Storage.ConfidentialLedger
 
             options ??= new ConfidentialLedgerClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
             this.identityServiceUri = identityServiceUri;
             apiVersion = options.Version;

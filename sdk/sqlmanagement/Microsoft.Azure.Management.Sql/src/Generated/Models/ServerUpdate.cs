@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="administrators">The Azure Active Directory identity of
         /// the server.</param>
         /// <param name="tags">Resource tags.</param>
-        public ServerUpdate(ResourceIdentityWithUserAssignedIdentities identity = default(ResourceIdentityWithUserAssignedIdentities), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), string workspaceFeature = default(string), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ServerExternalAdministrator administrators = default(ServerExternalAdministrator), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ServerUpdate(ResourceIdentity identity = default(ResourceIdentity), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), string workspaceFeature = default(string), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ServerExternalAdministrator administrators = default(ServerExternalAdministrator), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Identity = identity;
             AdministratorLogin = administratorLogin;
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets or sets server identity
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
-        public ResourceIdentityWithUserAssignedIdentities Identity { get; set; }
+        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets administrator username for the server. Once created it

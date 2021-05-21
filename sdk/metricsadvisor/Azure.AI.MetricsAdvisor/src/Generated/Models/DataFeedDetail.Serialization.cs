@@ -174,9 +174,8 @@ namespace Azure.AI.MetricsAdvisor.Models
                     case "AzureDataExplorer": return AzureDataExplorerDataFeed.DeserializeAzureDataExplorerDataFeed(element);
                     case "AzureDataLakeStorageGen2": return AzureDataLakeStorageGen2DataFeed.DeserializeAzureDataLakeStorageGen2DataFeed(element);
                     case "AzureEventHubs": return AzureEventHubsDataFeed.DeserializeAzureEventHubsDataFeed(element);
+                    case "AzureLogAnalytics": return AzureLogAnalyticsDataFeed.DeserializeAzureLogAnalyticsDataFeed(element);
                     case "AzureTable": return AzureTableDataFeed.DeserializeAzureTableDataFeed(element);
-                    case "Elasticsearch": return ElasticsearchDataFeed.DeserializeElasticsearchDataFeed(element);
-                    case "HttpRequest": return HttpRequestDataFeed.DeserializeHttpRequestDataFeed(element);
                     case "InfluxDB": return InfluxDBDataFeed.DeserializeInfluxDBDataFeed(element);
                     case "MongoDB": return MongoDBDataFeed.DeserializeMongoDBDataFeed(element);
                     case "MySql": return MySqlDataFeed.DeserializeMySqlDataFeed(element);

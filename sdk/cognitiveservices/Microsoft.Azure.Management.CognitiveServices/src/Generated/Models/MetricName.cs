@@ -45,16 +45,16 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the name of the metric.
+        /// Gets or sets the name of the metric.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public string Value { get; private set; }
+        public string Value { get; set; }
 
         /// <summary>
-        /// Gets the friendly name of the metric.
+        /// Gets or sets the friendly name of the metric.
         /// </summary>
         [JsonProperty(PropertyName = "localizedValue")]
-        public string LocalizedValue { get; private set; }
+        public string LocalizedValue { get; set; }
 
     }
 }

@@ -8,26 +8,11 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Changeable attributes for Repository. </summary>
-    public partial class RepositoryWriteableProperties
+    internal partial class RepositoryWriteableProperties
     {
         /// <summary> Initializes a new instance of RepositoryWriteableProperties. </summary>
         public RepositoryWriteableProperties()
         {
-        }
-
-        /// <summary> Initializes a new instance of RepositoryWriteableProperties. </summary>
-        /// <param name="canDelete"> Delete enabled. </param>
-        /// <param name="canWrite"> Write enabled. </param>
-        /// <param name="canList"> List enabled. </param>
-        /// <param name="canRead"> Read enabled. </param>
-        /// <param name="teleportEnabled"> Enables Teleport functionality on new images in the repository improving Container startup performance. </param>
-        internal RepositoryWriteableProperties(bool? canDelete, bool? canWrite, bool? canList, bool? canRead, bool? teleportEnabled)
-        {
-            CanDelete = canDelete;
-            CanWrite = canWrite;
-            CanList = canList;
-            CanRead = canRead;
-            TeleportEnabled = teleportEnabled;
         }
 
         /// <summary> Delete enabled. </summary>
