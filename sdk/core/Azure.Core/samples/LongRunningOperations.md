@@ -2,7 +2,7 @@
 
 **NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. 
 
-Some operations take long time to complete and require polling for their status. Methods starting long-running operations return `*Operation<T>` types.
+Some operations take long time to complete and require polling for their status. Methods starting long-running operations return either `*Operation<T>` or `PageableOperation<T>` types.
 
 ## Awaiting completion of the operation
 
@@ -37,4 +37,73 @@ Console.WriteLine(operation.HasCompleted);
 // HasValue indicated is operation Value is available, for some operations it can return true even when operation
 // hasn't completed yet.
 Console.WriteLine(operation.HasValue);
+```
+
+## Accessing results for Pageable Operations
+
+A Pageable Operation is use when the service call returns multiple values in pages after the Long Running Operation completes. The results can be access with the `GetValues()`, `GetValuesAsync()` methods which return `Pageable<T>/AsyncPageable<T>` respectively.
+
+To access the result you can iterate over the `Pageable<T>/AsyncPageable<T>`. for more information see [Consuming Service Methods Returning Pageable/AsyncPageable](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core#consuming-service-methods-returning-asyncpageablet).
+
+### Using `Value` property
+The `Value` property will contain the `AsyncPageable<T>` results.
+
+```C#
+// create a client
+var client = new TextAnalyticsClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+// Start the operation
+AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities("document with information");
+
+await healthOperation.WaitForCompletionAsync();
+
+await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
+{
+    foreach (HealthcareEntity entity in documentsInPage[0].Entities)
+    {
+        Console.WriteLine($"    Entity: {entity.Text}");
+    }
+}
+```
+
+### Using `GetValuesAsync()`
+The `Value` property will contain the `AsyncPageable<T>` results.
+
+```C#
+// create a client
+var client = new TextAnalyticsClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+// Start the operation
+AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities("document with information");
+
+await healthOperation.WaitForCompletionAsync();
+
+await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValuesAsync())
+{
+    foreach (HealthcareEntity entity in documentsInPage[0].Entities)
+    {
+        Console.WriteLine($"    Entity: {entity.Text}");
+    }
+}
+```
+
+### Using `GetValues()`
+The `Value` property will contain the `AsyncPageable<T>` results.
+
+```C#
+// create a client
+var client = new TextAnalyticsClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+// Start the operation
+AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities("document with information");
+
+await healthOperation.WaitForCompletionAsync();
+
+foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
+{
+    foreach (HealthcareEntity entity in documentsInPage[0].Entities)
+    {
+        Console.WriteLine($"    Entity: {entity.Text}");
+    }
+}
 ```
