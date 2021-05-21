@@ -2860,25 +2860,25 @@ namespace Azure.AI.TextAnalytics
 
             options ??= new AnalyzeActionsOptions();
 
-            if (actions.RecognizePiiEntitiesOptions != null)
+            if (actions.RecognizePiiEntitiesActions != null)
             {
-                tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromPiiEntityOptionsToTasks(actions.RecognizePiiEntitiesOptions);
+                tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromRecognizePiiEntitiesActionsToTasks(actions.RecognizePiiEntitiesActions);
             }
-            if (actions.RecognizeEntitiesOptions != null)
+            if (actions.RecognizeEntitiesActions != null)
             {
-                tasks.EntityRecognitionTasks = Transforms.ConvertFromEntityOptionsToTasks(actions.RecognizeEntitiesOptions);
+                tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions);
             }
-            if (actions.ExtractKeyPhrasesOptions != null)
+            if (actions.ExtractKeyPhrasesActions != null)
             {
-                tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromKeyPhrasesOptionsToTasks(actions.ExtractKeyPhrasesOptions);
+                tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions);
             }
-            if (actions.RecognizeLinkedEntitiesOptions != null)
+            if (actions.RecognizeLinkedEntitiesActions != null)
             {
-                tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
+                tasks.EntityLinkingTasks = Transforms.ConvertFromRecognizeLinkedEntitiesActionsToTasks(actions.RecognizeLinkedEntitiesActions);
             }
-            if (actions.AnalyzeSentimentOptions != null)
+            if (actions.AnalyzeSentimentActions != null)
             {
-                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentOptionsToTasks(actions.AnalyzeSentimentOptions);
+                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions);
             }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks) { DisplayName = actions.DisplayName };
@@ -2908,25 +2908,25 @@ namespace Azure.AI.TextAnalytics
 
             options ??= new AnalyzeActionsOptions();
 
-            if (actions.RecognizePiiEntitiesOptions != null)
+            if (actions.RecognizePiiEntitiesActions != null)
             {
-                tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromPiiEntityOptionsToTasks(actions.RecognizePiiEntitiesOptions);
+                tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromRecognizePiiEntitiesActionsToTasks(actions.RecognizePiiEntitiesActions);
             }
-            if (actions.RecognizeEntitiesOptions != null)
+            if (actions.RecognizeEntitiesActions != null)
             {
-                tasks.EntityRecognitionTasks = Transforms.ConvertFromEntityOptionsToTasks(actions.RecognizeEntitiesOptions);
+                tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions);
             }
-            if (actions.ExtractKeyPhrasesOptions != null)
+            if (actions.ExtractKeyPhrasesActions != null)
             {
-                tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromKeyPhrasesOptionsToTasks(actions.ExtractKeyPhrasesOptions);
+                tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions);
             }
-            if (actions.RecognizeLinkedEntitiesOptions != null)
+            if (actions.RecognizeLinkedEntitiesActions != null)
             {
-                tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
+                tasks.EntityLinkingTasks = Transforms.ConvertFromRecognizeLinkedEntitiesActionsToTasks(actions.RecognizeLinkedEntitiesActions);
             }
-            if (actions.AnalyzeSentimentOptions != null)
+            if (actions.AnalyzeSentimentActions != null)
             {
-                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentOptionsToTasks(actions.AnalyzeSentimentOptions);
+                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions);
             }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks) { DisplayName = actions.DisplayName };

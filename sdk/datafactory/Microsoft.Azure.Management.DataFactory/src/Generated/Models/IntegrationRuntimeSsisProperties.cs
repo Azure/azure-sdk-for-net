@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// script properties for a SSIS integration runtime.</param>
         /// <param name="packageStores">Package stores for the SSIS Integration
         /// Runtime.</param>
-        public IntegrationRuntimeSsisProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeSsisCatalogInfo catalogInfo = default(IntegrationRuntimeSsisCatalogInfo), string licenseType = default(string), IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default(IntegrationRuntimeCustomSetupScriptProperties), IntegrationRuntimeDataProxyProperties dataProxyProperties = default(IntegrationRuntimeDataProxyProperties), string edition = default(string), IList<CustomSetupBase> expressCustomSetupProperties = default(IList<CustomSetupBase>), IList<PackageStore> packageStores = default(IList<PackageStore>))
+        /// <param name="managedCredential">The user-assigned managed identity
+        /// reference.</param>
+        public IntegrationRuntimeSsisProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeSsisCatalogInfo catalogInfo = default(IntegrationRuntimeSsisCatalogInfo), string licenseType = default(string), IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default(IntegrationRuntimeCustomSetupScriptProperties), IntegrationRuntimeDataProxyProperties dataProxyProperties = default(IntegrationRuntimeDataProxyProperties), string edition = default(string), IList<CustomSetupBase> expressCustomSetupProperties = default(IList<CustomSetupBase>), IList<PackageStore> packageStores = default(IList<PackageStore>), EntityReference managedCredential = default(EntityReference))
         {
             AdditionalProperties = additionalProperties;
             CatalogInfo = catalogInfo;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Edition = edition;
             ExpressCustomSetupProperties = expressCustomSetupProperties;
             PackageStores = packageStores;
+            ManagedCredential = managedCredential;
             CustomInit();
         }
 
@@ -122,6 +125,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "packageStores")]
         public IList<PackageStore> PackageStores { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user-assigned managed identity reference.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedCredential")]
+        public EntityReference ManagedCredential { get; set; }
 
         /// <summary>
         /// Validate the object.

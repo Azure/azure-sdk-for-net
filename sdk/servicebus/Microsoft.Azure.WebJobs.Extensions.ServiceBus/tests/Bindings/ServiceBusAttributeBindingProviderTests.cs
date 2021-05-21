@@ -31,7 +31,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             Mock<INameResolver> mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
             ServiceBusOptions config = new ServiceBusOptions();
             var messagingProvider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(config));
-            var factory = new ServiceBusClientFactory(_configuration, new Mock<AzureComponentFactory>().Object, messagingProvider, new AzureEventSourceLogForwarder(new NullLoggerFactory()));
+            var factory = new ServiceBusClientFactory(
+                _configuration,
+                new Mock<AzureComponentFactory>().Object,
+                messagingProvider,
+                new AzureEventSourceLogForwarder(new NullLoggerFactory()),
+                new OptionsWrapper<ServiceBusOptions>(config));
             _provider = new ServiceBusAttributeBindingProvider(mockResolver.Object, messagingProvider, factory);
         }
 

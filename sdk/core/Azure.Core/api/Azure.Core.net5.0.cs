@@ -604,6 +604,166 @@ namespace Azure.Core.Serialization
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.GeoJson
+{
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GeoArray<T> : System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public int Count { get { throw null; } }
+        public T this[int index] { get { throw null; } }
+        public Azure.GeoJson.GeoArray<T>.Enumerator GetEnumerator() { throw null; }
+        System.Collections.Generic.IEnumerator<T> System.Collections.Generic.IEnumerable<T>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public partial struct Enumerator : System.Collections.Generic.IEnumerator<T>, System.Collections.IEnumerator, System.IDisposable
+        {
+            private object _dummy;
+            private int _dummyPrimitive;
+            public T Current { get { throw null; } }
+            object System.Collections.IEnumerator.Current { get { throw null; } }
+            public void Dispose() { }
+            public bool MoveNext() { throw null; }
+            public void Reset() { }
+        }
+    }
+    public sealed partial class GeoBoundingBox : System.IEquatable<Azure.GeoJson.GeoBoundingBox>
+    {
+        public GeoBoundingBox(double west, double south, double east, double north) { }
+        public GeoBoundingBox(double west, double south, double east, double north, double? minAltitude, double? maxAltitude) { }
+        public double East { get { throw null; } }
+        public double this[int index] { get { throw null; } }
+        public double? MaxAltitude { get { throw null; } }
+        public double? MinAltitude { get { throw null; } }
+        public double North { get { throw null; } }
+        public double South { get { throw null; } }
+        public double West { get { throw null; } }
+        public bool Equals(Azure.GeoJson.GeoBoundingBox? other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public sealed partial class GeoCollection : Azure.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoObject>, System.Collections.Generic.IReadOnlyCollection<Azure.GeoJson.GeoObject>, System.Collections.Generic.IReadOnlyList<Azure.GeoJson.GeoObject>, System.Collections.IEnumerable
+    {
+        public GeoCollection(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoObject> geometries) { }
+        public GeoCollection(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoObject> geometries, Azure.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> customProperties) { }
+        public int Count { get { throw null; } }
+        public Azure.GeoJson.GeoObject this[int index] { get { throw null; } }
+        public override Azure.GeoJson.GeoObjectType Type { get { throw null; } }
+        public System.Collections.Generic.IEnumerator<Azure.GeoJson.GeoObject> GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public sealed partial class GeoJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.GeoJson.GeoObject>
+    {
+        public GeoJsonConverter() { }
+        public override bool CanConvert(System.Type typeToConvert) { throw null; }
+        public override Azure.GeoJson.GeoObject Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.GeoJson.GeoObject value, System.Text.Json.JsonSerializerOptions options) { }
+    }
+    public sealed partial class GeoLinearRing
+    {
+        public GeoLinearRing(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoPosition> coordinates) { }
+        public Azure.GeoJson.GeoArray<Azure.GeoJson.GeoPosition> Coordinates { get { throw null; } }
+    }
+    public sealed partial class GeoLineString : Azure.GeoJson.GeoObject
+    {
+        public GeoLineString(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoPosition> coordinates) { }
+        public GeoLineString(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoPosition> coordinates, Azure.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> customProperties) { }
+        public Azure.GeoJson.GeoArray<Azure.GeoJson.GeoPosition> Coordinates { get { throw null; } }
+        public override Azure.GeoJson.GeoObjectType Type { get { throw null; } }
+    }
+    public sealed partial class GeoLineStringCollection : Azure.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoLineString>, System.Collections.Generic.IReadOnlyCollection<Azure.GeoJson.GeoLineString>, System.Collections.Generic.IReadOnlyList<Azure.GeoJson.GeoLineString>, System.Collections.IEnumerable
+    {
+        public GeoLineStringCollection(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoLineString> lines) { }
+        public GeoLineStringCollection(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoLineString> lines, Azure.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> customProperties) { }
+        public Azure.GeoJson.GeoArray<Azure.GeoJson.GeoArray<Azure.GeoJson.GeoPosition>> Coordinates { get { throw null; } }
+        public int Count { get { throw null; } }
+        public Azure.GeoJson.GeoLineString this[int index] { get { throw null; } }
+        public override Azure.GeoJson.GeoObjectType Type { get { throw null; } }
+        public System.Collections.Generic.IEnumerator<Azure.GeoJson.GeoLineString> GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public abstract partial class GeoObject
+    {
+        internal GeoObject() { }
+        public Azure.GeoJson.GeoBoundingBox? BoundingBox { get { throw null; } }
+        public abstract Azure.GeoJson.GeoObjectType Type { get; }
+        public static Azure.GeoJson.GeoObject Parse(string json) { throw null; }
+        public override string ToString() { throw null; }
+        public bool TryGetCustomProperty(string name, out object? value) { throw null; }
+        public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
+    }
+    public enum GeoObjectType
+    {
+        Point = 0,
+        MultiPoint = 1,
+        Polygon = 2,
+        MultiPolygon = 3,
+        LineString = 4,
+        MultiLineString = 5,
+        GeometryCollection = 6,
+    }
+    public sealed partial class GeoPoint : Azure.GeoJson.GeoObject
+    {
+        public GeoPoint(Azure.GeoJson.GeoPosition position) { }
+        public GeoPoint(Azure.GeoJson.GeoPosition position, Azure.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> customProperties) { }
+        public GeoPoint(double longitude, double latitude) { }
+        public GeoPoint(double longitude, double latitude, double? altitude) { }
+        public Azure.GeoJson.GeoPosition Coordinates { get { throw null; } }
+        public override Azure.GeoJson.GeoObjectType Type { get { throw null; } }
+    }
+    public sealed partial class GeoPointCollection : Azure.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoPoint>, System.Collections.Generic.IReadOnlyCollection<Azure.GeoJson.GeoPoint>, System.Collections.Generic.IReadOnlyList<Azure.GeoJson.GeoPoint>, System.Collections.IEnumerable
+    {
+        public GeoPointCollection(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoPoint> points) { }
+        public GeoPointCollection(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoPoint> points, Azure.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> customProperties) { }
+        public Azure.GeoJson.GeoArray<Azure.GeoJson.GeoPosition> Coordinates { get { throw null; } }
+        public int Count { get { throw null; } }
+        public Azure.GeoJson.GeoPoint this[int index] { get { throw null; } }
+        public override Azure.GeoJson.GeoObjectType Type { get { throw null; } }
+        public System.Collections.Generic.IEnumerator<Azure.GeoJson.GeoPoint> GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public sealed partial class GeoPolygon : Azure.GeoJson.GeoObject
+    {
+        public GeoPolygon(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoLinearRing> rings) { }
+        public GeoPolygon(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoLinearRing> rings, Azure.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> customProperties) { }
+        public GeoPolygon(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoPosition> positions) { }
+        public Azure.GeoJson.GeoArray<Azure.GeoJson.GeoArray<Azure.GeoJson.GeoPosition>> Coordinates { get { throw null; } }
+        public Azure.GeoJson.GeoLinearRing OuterRing { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.GeoJson.GeoLinearRing> Rings { get { throw null; } }
+        public override Azure.GeoJson.GeoObjectType Type { get { throw null; } }
+    }
+    public sealed partial class GeoPolygonCollection : Azure.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoPolygon>, System.Collections.Generic.IReadOnlyCollection<Azure.GeoJson.GeoPolygon>, System.Collections.Generic.IReadOnlyList<Azure.GeoJson.GeoPolygon>, System.Collections.IEnumerable
+    {
+        public GeoPolygonCollection(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoPolygon> polygons) { }
+        public GeoPolygonCollection(System.Collections.Generic.IEnumerable<Azure.GeoJson.GeoPolygon> polygons, Azure.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> customProperties) { }
+        public Azure.GeoJson.GeoArray<Azure.GeoJson.GeoArray<Azure.GeoJson.GeoArray<Azure.GeoJson.GeoPosition>>> Coordinates { get { throw null; } }
+        public int Count { get { throw null; } }
+        public Azure.GeoJson.GeoPolygon this[int index] { get { throw null; } }
+        public override Azure.GeoJson.GeoObjectType Type { get { throw null; } }
+        public System.Collections.Generic.IEnumerator<Azure.GeoJson.GeoPolygon> GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GeoPosition : System.IEquatable<Azure.GeoJson.GeoPosition>
+    {
+        private readonly int _dummyPrimitive;
+        public GeoPosition(double longitude, double latitude) { throw null; }
+        public GeoPosition(double longitude, double latitude, double? altitude) { throw null; }
+        public double? Altitude { get { throw null; } }
+        public int Count { get { throw null; } }
+        public double this[int index] { get { throw null; } }
+        public double Latitude { get { throw null; } }
+        public double Longitude { get { throw null; } }
+        public bool Equals(Azure.GeoJson.GeoPosition other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.GeoJson.GeoPosition left, Azure.GeoJson.GeoPosition right) { throw null; }
+        public static bool operator !=(Azure.GeoJson.GeoPosition left, Azure.GeoJson.GeoPosition right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+}
 namespace Azure.Messaging
 {
     public partial class CloudEvent
