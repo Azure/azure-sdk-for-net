@@ -2427,8 +2427,8 @@ namespace Azure.Search.Documents.Models
         public System.Collections.Generic.IReadOnlyList<long> GetInt64Collection(string key) { throw null; }
         public Azure.Search.Documents.Models.SearchDocument GetObject(string key) { throw null; }
         public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchDocument> GetObjectCollection(string key) { throw null; }
-        public Azure.Core.GeoJson.GeoPoint GetPoint(string key) { throw null; }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoPoint> GetPointCollection(string key) { throw null; }
+        public Azure.GeoJson.GeoPoint GetPoint(string key) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<Azure.GeoJson.GeoPoint> GetPointCollection(string key) { throw null; }
         public string GetString(string key) { throw null; }
         public System.Collections.Generic.IReadOnlyList<string> GetStringCollection(string key) { throw null; }
         public bool Remove(string key) { throw null; }
