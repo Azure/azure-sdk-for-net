@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core.GeoJson;
+using Azure.GeoJson;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
