@@ -34,7 +34,10 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     string propertyDisplayName = TestUtilities.GenerateName("propertydisplay");
                     string propertyValue = TestUtilities.GenerateName("propertyValue");
-                    var createParameters = new NamedValueCreateContract(propertyDisplayName, propertyValue);
+                    var createParameters = new NamedValueCreateContract(propertyDisplayName)
+                    {
+                        Value = propertyValue
+                    };
 
                     // create a property
                     var propertyResponse = testBase.client.NamedValue.CreateOrUpdate(
@@ -53,12 +56,13 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     ValidateProperty(propertyResponse, testBase, propertyId, propertyDisplayName, propertyValue, false);
 
-                    // create  secret property
+                    // create secret property
                     string secretPropertyDisplayName = TestUtilities.GenerateName("secretPropertydisplay");
                     string secretPropertyValue = TestUtilities.GenerateName("secretPropertyValue");
                     List<string> tags = new List<string> { "secret" };
-                    var secretCreateParameters = new NamedValueCreateContract(secretPropertyDisplayName, secretPropertyValue)
+                    var secretCreateParameters = new NamedValueCreateContract(secretPropertyDisplayName)
                     {
+                        Value = secretPropertyValue,
                         Secret = true,
                         Tags = tags
                     };
