@@ -21,7 +21,7 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         private ConfidentialLedgerClient Client;
         private ConfidentialLedgerIdentityServiceClient IdentityClient;
 
-        public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync)
+        public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             // https://github.com/Azure/autorest.csharp/issues/1214
             TestDiagnostics = false;
@@ -32,7 +32,10 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         {
             Credential = TestEnvironment.Credential;
             var httpHandler = new HttpClientHandler();
-            httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
+            httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>
+            {
+                return true;
+            };
             Options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(

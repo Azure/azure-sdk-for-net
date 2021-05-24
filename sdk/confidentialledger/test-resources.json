@@ -51,7 +51,7 @@
   "outputs": {
     "CONFIDENTIALLEDGER_URL": {
       "type": "string",
-      "value": "[format('https://{0}.eastus.cloudapp.azure.com', parameters('baseName'))]"
+      "value": "[format('https://{0}.confidential-ledger.azure.com', parameters('baseName'))]"
     },
     "CONFIDENTIALLEDGER_IDENTITY_URL": {
       "type": "string",
