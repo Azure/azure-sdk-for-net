@@ -17,6 +17,8 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential
     {
+        private readonly string _tenantId;
+        private readonly TokenCredentialOptions _options;
         internal string ClientId { get; }
         internal MsalPublicClient Client {get;}
         internal CredentialPipeline Pipeline { get; }
@@ -75,12 +77,13 @@ namespace Azure.Identity
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
-            ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+            Argument.AssertNotNull(clientId, nameof(clientId));
 
+            ClientId = clientId;
+            _tenantId = tenantId;
+            _options = options;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-
             var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
-
             Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options as ITokenCacheOptions);
         }
 
@@ -182,7 +185,10 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, async, cancellationToken).ConfigureAwait(false);
+                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext, _options);
+                        AuthenticationResult result = await Client
+                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
+                            .ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
@@ -207,7 +213,9 @@ namespace Azure.Identity
 
         private async Task<AccessToken> GetTokenViaBrowserLoginAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await Client.AcquireTokenInteractiveAsync(context.Scopes, context.Claims, Prompt.SelectAccount, async, cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await Client
+                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, Prompt.SelectAccount, async, cancellationToken)
+                .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
 

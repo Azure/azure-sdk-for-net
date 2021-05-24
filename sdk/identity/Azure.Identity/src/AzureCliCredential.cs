@@ -86,7 +86,7 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken token = await RequestCliAccessTokenAsync(async, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
+                AccessToken token = await RequestCliAccessTokenAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(token);
             }
             catch (Exception e)
@@ -95,13 +95,14 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, string[] scopes, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
-            string resource = ScopeUtilities.ScopesToResource(scopes);
+            string resource = ScopeUtilities.ScopesToResource(context.Scopes);
+            string tenantId = TenantIdResolver.Resolve(null, context, null);
 
             ScopeUtilities.ValidateScope(resource);
 
-            GetFileNameAndArguments(resource, out string fileName, out string argument);
+            GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
             using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(CliProcessTimeoutMs), cancellationToken);
 
@@ -157,9 +158,13 @@ namespace Azure.Identity
                 Environment = { { "PATH", _path } }
             };
 
-        private static void GetFileNameAndArguments(string resource, out string fileName, out string argument)
+        private static void GetFileNameAndArguments(string resource, string tenantId, out string fileName, out string argument)
         {
-            string command = $"az account get-access-token --output json --resource {resource}";
+            string command = tenantId switch
+            {
+                null => $"az account get-access-token --output json --resource {resource}",
+                _ => $"az account get-access-token --output json --resource {resource} -tenant {tenantId}"
+            };
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {

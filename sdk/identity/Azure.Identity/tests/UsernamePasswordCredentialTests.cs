@@ -21,7 +21,7 @@ namespace Azure.Identity.Tests
         {
             string expInnerExMessage = Guid.NewGuid().ToString();
 
-            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); } };
+            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_,_) => { throw new MockClientException(expInnerExMessage); } };
 
             var username = Guid.NewGuid().ToString();
             var password = Guid.NewGuid().ToString();

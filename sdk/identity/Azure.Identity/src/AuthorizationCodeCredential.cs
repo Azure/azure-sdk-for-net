@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 
@@ -18,12 +17,13 @@ namespace Azure.Identity
     /// </summary>
     public class AuthorizationCodeCredential : TokenCredential
     {
-        private readonly IConfidentialClientApplication _confidentialClient;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _authCode;
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private AuthenticationRecord _record;
+        private readonly string _tenantId;
+        private readonly TokenCredentialOptions _options;
+        private readonly MsalConfidentialClient _client;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -55,26 +55,26 @@ namespace Azure.Identity
         /// See https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options)
+            : this(tenantId, clientId, clientSecret, authorizationCode, options, null)
+        {}
+
+        internal AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options, MsalConfidentialClient client)
         {
-            Validations.ValidateTenantId(tenantId, nameof(tenantId));
+            Argument.AssertNotNull(clientSecret, nameof(clientSecret));
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(authorizationCode, nameof(authorizationCode));
+            _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
+            _clientId = clientId;
+            _authCode = authorizationCode ;
+            _options = options ?? new TokenCredentialOptions();
+            _pipeline = CredentialPipeline.GetInstance(_options);
 
-            if (clientSecret is null) throw new ArgumentNullException(nameof(clientSecret));
-
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
-
-            _authCode = authorizationCode ?? throw new ArgumentNullException(nameof(authorizationCode));
-
-            options ??= new TokenCredentialOptions();
-
-            _pipeline = CredentialPipeline.GetInstance(options);
-
-            _confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
-
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions);
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called automatically by
+        /// Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -85,7 +85,8 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called automatically by
+        /// Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -101,11 +102,14 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken token = default;
+                AccessToken token;
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _options);
 
                 if (_record is null)
                 {
-                    AuthenticationResult result = await _confidentialClient.AcquireTokenByAuthorizationCode(requestContext.Scopes, _authCode).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+                    AuthenticationResult result = await _client
+                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, tenantId, _authCode, async, cancellationToken)
+                        .ConfigureAwait(false);
 
                     _record = new AuthenticationRecord(result, _clientId);
 
@@ -113,7 +117,9 @@ namespace Azure.Identity
                 }
                 else
                 {
-                    AuthenticationResult result = await _confidentialClient.AcquireTokenSilent(requestContext.Scopes, (AuthenticationAccount)_record).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+                    AuthenticationResult result = await _client
+                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, async, cancellationToken)
+                        .ConfigureAwait(false);
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }

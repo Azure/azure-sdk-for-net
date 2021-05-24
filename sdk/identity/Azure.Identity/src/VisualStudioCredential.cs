@@ -29,6 +29,7 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
+        private readonly TokenCredentialOptions _options;
         private bool tenantIdOptionProvided;
 
         /// <summary>
@@ -40,7 +41,10 @@ namespace Azure.Identity
         /// Creates a new instance of the <see cref="VisualStudioCredential"/> with the specified options.
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
-        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default) { }
+        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default)
+        {
+            _options = options;
+        }
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService)
         {
@@ -161,7 +165,8 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                if (_tenantId != default || requestContext.TenantIdHint != default)
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _options);
+                if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(_tenantId ?? requestContext.TenantIdHint);
                 }

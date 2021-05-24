@@ -23,7 +23,7 @@ namespace Azure.Identity.Tests
         {
             string expInnerExMessage = Guid.NewGuid().ToString();
 
-            var mockMsalClient = new MockMsalPublicClient() { InteractiveAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); } };
+            var mockMsalClient = new MockMsalPublicClient { InteractiveAuthFactory = (_,_) => { throw new MockClientException(expInnerExMessage); } };
 
             var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
 
@@ -47,8 +47,8 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                InteractiveAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); },
-                SilentAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); }
+                InteractiveAuthFactory = (_,_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); },
+                SilentAuthFactory = (_,_) => { throw new MockClientException(expInnerExMessage); }
             };
 
             var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
@@ -79,8 +79,8 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                InteractiveAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); },
-                SilentAuthFactory = (_) => { throw new MsalUiRequiredException("errorCode", "message"); }
+                InteractiveAuthFactory = (_,_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); },
+                SilentAuthFactory = (_,_) => { throw new MsalUiRequiredException("errorCode", "message"); }
             };
 
             var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
@@ -91,7 +91,7 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expExpiresOn, token.ExpiresOn);
 
-            mockMsalClient.InteractiveAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); };
+            mockMsalClient.InteractiveAuthFactory = (_,_) => { throw new MockClientException(expInnerExMessage); };
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -162,7 +162,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalPublicClient
             {
-                InteractiveAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5)); }
+                InteractiveAuthFactory = (_,_) => { return AuthenticationResultFactory.Create(accessToken: Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5)); }
             };
 
             var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));

@@ -27,7 +27,7 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly MsalPublicClient _client;
         private const string _commonTenant = "common";
-        private bool tenantIdOptionProvided;
+        private readonly TokenCredentialOptions _options;
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
@@ -43,12 +43,12 @@ namespace Azure.Identity
         internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem,
             IVisualStudioCodeAdapter vscAdapter)
         {
-            tenantIdOptionProvided = options?.TenantId != null;
             _tenantId = options?.TenantId ?? _commonTenant;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
+            _options = options;
         }
 
         /// <inheritdoc />
@@ -66,12 +66,9 @@ namespace Azure.Identity
             try
             {
                 GetUserSettings(out var tenant, out var environmentName);
-                if (!tenantIdOptionProvided && requestContext.TenantIdHint != default )
-                {
-                    tenant = requestContext.TenantIdHint;
-                }
+                var tenantId = TenantIdResolver.Resolve(tenant, requestContext, _options);
 
-                if (string.Equals(tenant, Constants.AdfsTenantId, StringComparison.Ordinal))
+                if (string.Equals(tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
                     throw new CredentialUnavailableException("VisualStudioCodeCredential authentication unavailable. ADFS tenant / authorities are not supported.");
                 }
@@ -79,7 +76,8 @@ namespace Azure.Identity
                 var cloudInstance = GetAzureCloudInstance(environmentName);
                 string storedCredentials = GetStoredCredentials(environmentName);
 
-                var result = await _client.AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenant, async, cancellationToken)
+                var result = await _client
+                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, async, cancellationToken)
                     .ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -142,7 +140,6 @@ namespace Azure.Identity
                 if (root.TryGetProperty("azure.tenant", out JsonElement tenantProperty))
                 {
                     tenant = tenantProperty.GetString();
-                    tenantIdOptionProvided = true;
                 }
 
                 if (root.TryGetProperty("azure.cloud", out JsonElement environmentProperty))
