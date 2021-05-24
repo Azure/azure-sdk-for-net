@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Core.GeoJson;
+using Azure.GeoJson;
 using Microsoft.Spatial;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 

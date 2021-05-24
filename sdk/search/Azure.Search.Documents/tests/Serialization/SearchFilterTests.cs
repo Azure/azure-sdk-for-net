@@ -4,7 +4,7 @@
 using System;
 using System.Collections;
 using System.Text;
-using Azure.Core.GeoJson;
+using Azure.GeoJson;
 using Microsoft.Spatial;
 using NUnit.Framework;
 
