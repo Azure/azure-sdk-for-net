@@ -3,9 +3,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
-namespace Azure.GeoJson
+namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// Represents a polygon consisting of outer ring and optional inner rings.

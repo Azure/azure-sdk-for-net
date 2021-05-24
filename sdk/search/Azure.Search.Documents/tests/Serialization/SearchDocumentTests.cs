@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Text.Json;
-using Azure.GeoJson;
+using Azure.Core.GeoJson;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
