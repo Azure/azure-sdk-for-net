@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,9 +61,12 @@ namespace Azure.Communication.Identity
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             CommunicationIdentityCreateRequest communicationIdentityCreateRequest = new CommunicationIdentityCreateRequest();
-            foreach (var value in createTokenWithScopes)
+            if (createTokenWithScopes != null)
             {
-                communicationIdentityCreateRequest.CreateTokenWithScopes.Add(value);
+                foreach (var value in createTokenWithScopes)
+                {
+                    communicationIdentityCreateRequest.CreateTokenWithScopes.Add(value);
+                }
             }
             var model = communicationIdentityCreateRequest;
             var content = new Utf8JsonRequestContent();
@@ -246,7 +250,7 @@ namespace Azure.Communication.Identity
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CommunicationIdentityAccessTokenRequest(scopes);
+            var model = new CommunicationIdentityAccessTokenRequest(scopes.ToList());
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
