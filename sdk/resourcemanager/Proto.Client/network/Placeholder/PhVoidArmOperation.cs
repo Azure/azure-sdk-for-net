@@ -4,9 +4,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Proto.Network
 {
     /// <summary>
     /// A class representing an arm operation wrapper object.
