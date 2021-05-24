@@ -7,13 +7,15 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using Azure.AI.FormRecognizer.Training;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// A factory that builds Azure.AI.FormRecognizer model types used for mocking.
     /// </summary>
-    public static class FormRecognizerModelFactory
+    [CodeGenType("FormRecognizerModelFactory")]
+    public static partial class FormRecognizerModelFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.AccountProperties"/> class.

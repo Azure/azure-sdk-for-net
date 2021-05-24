@@ -12,7 +12,7 @@ using Azure.Security.KeyVault.Storage.Models;
 namespace Azure.Security.KeyVault.Storage
 {
     /// <summary> Model factory for AzureSecurityKeyVaultStorage read-only models. </summary>
-    public static partial class AzureSecurityKeyVaultStorageModelFactory
+    internal static partial class KeyVaultStorageModelFactory
     {
         /// <summary> Initializes new instance of StorageAccountItem class. </summary>
         /// <param name="id"> Storage identifier. </param>

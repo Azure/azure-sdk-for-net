@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Model factory for AzureSecurityKeyVaultAdministration read-only models. </summary>
-    public static partial class AzureSecurityKeyVaultAdministrationModelFactory
+    public static partial class KeyVaultAdministrationModelFactory
     {
         /// <summary> Initializes new instance of KeyVaultRoleDefinition class. </summary>
         /// <param name="id"> The role definition ID. </param>

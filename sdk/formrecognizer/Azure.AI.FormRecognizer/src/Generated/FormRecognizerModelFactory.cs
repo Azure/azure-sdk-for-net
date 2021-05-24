@@ -7,22 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Model factory for FormRecognizer read-only models. </summary>
     public static partial class FormRecognizerModelFactory
     {
-        /// <summary> Initializes new instance of FormRecognizerError class. </summary>
-        /// <param name="errorCode"> . </param>
-        /// <param name="message"> . </param>
-        /// <returns> A new <see cref="Models.FormRecognizerError"/> instance for mocking. </returns>
-        public static FormRecognizerError FormRecognizerError(string errorCode = default, string message = default)
-        {
-            return new FormRecognizerError(errorCode, message);
-        }
 
         /// <summary> Initializes new instance of CustomFormModelInfo class. </summary>
         /// <param name="modelId"> Model identifier. </param>
@@ -35,14 +26,6 @@ namespace Azure.AI.FormRecognizer
         public static CustomFormModelInfo CustomFormModelInfo(string modelId = default, CustomFormModelStatus status = default, DateTimeOffset trainingStartedOn = default, DateTimeOffset trainingCompletedOn = default, string modelName = default, CustomFormModelProperties properties = default)
         {
             return new CustomFormModelInfo(modelId, status, trainingStartedOn, trainingCompletedOn, modelName, properties);
-        }
-
-        /// <summary> Initializes new instance of CustomFormModelProperties class. </summary>
-        /// <param name="isComposedModel"> Is this model composed? (default: false). </param>
-        /// <returns> A new <see cref="Training.CustomFormModelProperties"/> instance for mocking. </returns>
-        public static CustomFormModelProperties CustomFormModelProperties(bool isComposedModel = default)
-        {
-            return new CustomFormModelProperties(isComposedModel);
         }
 
         /// <summary> Initializes new instance of TrainingDocumentInfo class. </summary>
