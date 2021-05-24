@@ -1875,7 +1875,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobOpenReadOptions options,
             CancellationToken cancellationToken = default)
             => await OpenReadInternal(
-                options.Position,
+                options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
                 async: true,
