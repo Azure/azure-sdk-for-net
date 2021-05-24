@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class ComponentsIfu7BjSchemasTasksstatePropertiesTasksPropertiesEntitylinkingtasksItemsAllof1
+    internal partial class EntitiesTaskResult
     {
-        internal static ComponentsIfu7BjSchemasTasksstatePropertiesTasksPropertiesEntitylinkingtasksItemsAllof1 DeserializeComponentsIfu7BjSchemasTasksstatePropertiesTasksPropertiesEntitylinkingtasksItemsAllof1(JsonElement element)
+        internal static EntitiesTaskResult DeserializeEntitiesTaskResult(JsonElement element)
         {
-            Optional<EntityLinkingResult> results = default;
+            Optional<EntitiesResult> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
@@ -24,11 +24,11 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    results = EntityLinkingResult.DeserializeEntityLinkingResult(property.Value);
+                    results = EntitiesResult.DeserializeEntitiesResult(property.Value);
                     continue;
                 }
             }
-            return new ComponentsIfu7BjSchemasTasksstatePropertiesTasksPropertiesEntitylinkingtasksItemsAllof1(results.Value);
+            return new EntitiesTaskResult(results.Value);
         }
     }
 }
