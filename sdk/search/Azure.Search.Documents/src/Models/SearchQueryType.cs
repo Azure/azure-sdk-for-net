@@ -25,11 +25,5 @@ namespace Azure.Search.Documents.Models
         /// <para>Search text is interpreted using the Lucene query language which allows field-specific and weighted searches, as well as other advanced features.</para>
         /// </summary>
         Full,
-
-        /// <summary>
-        /// Best suited for queries expressed in natural language as opposed to keywords.
-        /// <para>Improves precision of search results by re-ranking the top search results using a ranking model trained on the Web corpus.</para>
-        /// </summary>
-        Semantic,
     }
 }

@@ -41,13 +41,6 @@ namespace Azure.Search.Documents.Models
         public IDictionary<string, IList<string>> Highlights { get; internal set; }
 
         /// <summary>
-        /// The relevance score computed by the semantic ranker for the top search results.
-        /// <para>Search results are sorted by the <see cref="RerankerScore"/> first and then by the <see cref="Score"/>.
-        /// <see cref="RerankerScore"/> is only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
-        /// </summary>
-        public double? RerankerScore { get; internal set; }
-
-        /// <summary>
         /// The document found by the search query.
         /// </summary>
         public T Document { get; internal set; }
@@ -103,11 +96,6 @@ namespace Azure.Search.Documents.Models
                             values.Add(highlightValue.GetString());
                         }
                     }
-                }
-                else if (prop.NameEquals(Constants.SearchRerankerScoreKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    result.RerankerScore = prop.Value.GetDouble();
                 }
             }
 
