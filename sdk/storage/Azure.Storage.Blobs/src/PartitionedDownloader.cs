@@ -141,7 +141,7 @@ namespace Azure.Storage.Blobs
                 // conditions to ensure the blob doesn't change while we're
                 // downloading the remaining segments
                 ETag etag = initialResponse.Value.Details.ETag;
-                BlobRequestConditions conditionsWithEtag = CreateConditionsWithEtag(conditions, etag);
+                BlobRequestConditions conditionsWithEtag = conditions.CreateConditionsWithEtag(etag);
 
                 // Create a queue of tasks that will each download one segment
                 // of the blob.  The queue maintains the order of the segments
@@ -272,7 +272,7 @@ namespace Azure.Storage.Blobs
                 // conditions to ensure the blob doesn't change while we're
                 // downloading the remaining segments
                 ETag etag = initialResponse.Value.Details.ETag;
-                BlobRequestConditions conditionsWithEtag = CreateConditionsWithEtag(conditions, etag);
+                BlobRequestConditions conditionsWithEtag = conditions.CreateConditionsWithEtag(etag);
 
                 // Download each of the remaining ranges in the blob
                 foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
@@ -314,16 +314,6 @@ namespace Azure.Storage.Blobs
             }
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
-
-        private static BlobRequestConditions CreateConditionsWithEtag(BlobRequestConditions conditions, ETag etag) =>
-            new BlobRequestConditions
-            {
-                LeaseId = conditions?.LeaseId,
-                IfMatch = etag,
-                IfNoneMatch = conditions?.IfNoneMatch,
-                IfModifiedSince = conditions?.IfModifiedSince,
-                IfUnmodifiedSince = conditions?.IfUnmodifiedSince
-            };
 
         private static async Task CopyToAsync(
             BlobDownloadStreamingResult result,
