@@ -25,7 +25,7 @@ namespace Azure.Communication.PhoneNumbers
 #pragma warning restore CA1054 // URI-like parameters should not be strings
             => new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
 
-        /// <summary> Initializes a new instance of <see cref="PhoneNumberCost"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberCost"/>. </summary>
         /// <param name="amount"> The cost amount. </param>
         /// <param name="currencyCode"> The ISO 4217 currency code for the cost amount. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
