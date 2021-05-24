@@ -48,5 +48,10 @@ namespace Azure.Identity
         /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication.
         /// </summary>
         public AuthenticationRecord AuthenticationRecord { get; set; }
+
+        /// <summary>
+        /// Avoids the account prompt and pre-populates the username of the account to login.
+        /// </summary>
+        public string LoginHint { get; set; }
     }
 }

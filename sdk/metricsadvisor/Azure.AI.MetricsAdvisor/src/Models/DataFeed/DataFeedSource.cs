@@ -68,6 +68,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return Parameter switch
             {
+                /*
                 AzureApplicationInsightsParameter p => new AzureApplicationInsightsDataFeedPatch() { DataSourceParameter = p },
                 AzureBlobParameter p => new AzureBlobDataFeedPatch() { DataSourceParameter = p },
                 AzureCosmosDBParameter p => new AzureCosmosDBDataFeedPatch() { DataSourceParameter = p },
@@ -79,6 +80,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 SqlSourceParameter p when Type == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeedPatch() { DataSourceParameter = p },
                 SqlSourceParameter p when Type == DataFeedSourceType.SqlServer => new SQLServerDataFeedPatch() { DataSourceParameter = p },
                 MongoDBParameter p => new MongoDBDataFeedPatch() { DataSourceParameter = p },
+                */
                 _ => throw new InvalidOperationException("Invalid DataFeedDetailPatch type")
             };
         }

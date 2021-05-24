@@ -2,6 +2,8 @@
 
 ## 0.1.0-preview.13 (Unreleased)
 
+### New Features
+- Added `DateTimeRange` type to represent ISO 8601 time interval.
 
 ## 0.1.0-preview.12 (2021-05-11)
 
