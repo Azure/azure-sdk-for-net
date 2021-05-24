@@ -1,0 +1,582 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/face/v1.0-preview/persons",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L3BlcnNvbnM=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"Person1\",\r\n  \"userData\": \"UserData1\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "53"
+        ]
+      },
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Location": [
+          "/face/v1.0-preview/persons/ebf1c87c-1345-40be-bb7f-6420d1f61686"
+        ],
+        "operation-location": [
+          "/face/v1.0-preview/operations/bc0a2e70-ada3-4381-b7cb-3321bac305b7"
+        ],
+        "x-envoy-upstream-service-time": [
+          "66"
+        ],
+        "apim-request-id": [
+          "54611ef0-5f18-4b5b-9f11-a6a72d4a2570"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:51 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"personId\": \"ebf1c87c-1345-40be-bb7f-6420d1f61686\"\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/persons",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L3BlcnNvbnM=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"Person2\",\r\n  \"userData\": \"UserData2\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "53"
+        ]
+      },
+      "ResponseHeaders": {
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Location": [
+          "/face/v1.0-preview/persons/503b2363-a901-4a92-a9a4-08a3748201eb"
+        ],
+        "operation-location": [
+          "/face/v1.0-preview/operations/0f5326a3-a0de-472f-83eb-d3cacae59f26"
+        ],
+        "x-envoy-upstream-service-time": [
+          "262"
+        ],
+        "apim-request-id": [
+          "a4e28bda-1131-429f-97fa-f72bc53a0704"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:52 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"personId\": \"503b2363-a901-4a92-a9a4-08a3748201eb\"\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/bc0a2e70-ada3-4381-b7cb-3321bac305b7",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvYmMwYTJlNzAtYWRhMy00MzgxLWI3Y2ItMzMyMWJhYzMwNWI3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "29"
+        ],
+        "apim-request-id": [
+          "1c9be654-35eb-4368-9720-7a20a197622b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:51 GMT"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdTime\": \"2021-06-04T06:38:52.035458Z\",\r\n  \"lastActionTime\": \"2021-06-04T06:38:52.035475Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/bc0a2e70-ada3-4381-b7cb-3321bac305b7",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvYmMwYTJlNzAtYWRhMy00MzgxLWI3Y2ItMzMyMWJhYzMwNWI3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "15"
+        ],
+        "apim-request-id": [
+          "e7978ef9-b6cc-451b-84bb-35ba04d213ea"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:52 GMT"
+        ],
+        "Content-Length": [
+          "159"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2021-06-04T06:38:52.035458Z\",\r\n  \"lastActionTime\": \"2021-06-04T06:38:52.505679Z\",\r\n  \"finishedTime\": \"2021-06-04T06:38:52.4983974Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/0f5326a3-a0de-472f-83eb-d3cacae59f26",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMGY1MzI2YTMtYTBkZS00NzJmLTgzZWItZDNjYWNhZTU5ZjI2",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "15"
+        ],
+        "apim-request-id": [
+          "e4ad1a78-3204-429c-aca5-7358cb46eb47"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:52 GMT"
+        ],
+        "Content-Length": [
+          "113"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdTime\": \"2021-06-04T06:38:53.3991839Z\",\r\n  \"lastActionTime\": \"2021-06-04T06:38:53.3992779Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/0f5326a3-a0de-472f-83eb-d3cacae59f26",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMGY1MzI2YTMtYTBkZS00NzJmLTgzZWItZDNjYWNhZTU5ZjI2",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "13"
+        ],
+        "apim-request-id": [
+          "c38c763c-bea7-4d18-be9e-37a842a66b9c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:53 GMT"
+        ],
+        "Content-Length": [
+          "161"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2021-06-04T06:38:53.3991839Z\",\r\n  \"lastActionTime\": \"2021-06-04T06:38:53.6748243Z\",\r\n  \"finishedTime\": \"2021-06-04T06:38:53.6690662Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L2R5bmFtaWNwZXJzb25ncm91cHMvZHluYW1pYy1wZXJzb24tZ3JvdXAtaWQ=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"DynamicPersonGroupName\",\r\n  \"userData\": \"User data\",\r\n  \"addPersonIds\": [\r\n    \"ebf1c87c-1345-40be-bb7f-6420d1f61686\"\r\n  ]\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "139"
+        ]
+      },
+      "ResponseHeaders": {
+        "operation-location": [
+          "/face/v1.0-preview/operations/64bbe93e-52e0-4d0d-8d60-e8ccc42511bd"
+        ],
+        "x-envoy-upstream-service-time": [
+          "377"
+        ],
+        "apim-request-id": [
+          "1b3a8b3d-9590-4cdc-9105-64e1b5498116"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:54 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/64bbe93e-52e0-4d0d-8d60-e8ccc42511bd",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvNjRiYmU5M2UtNTJlMC00ZDBkLThkNjAtZThjY2M0MjUxMWJk",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "16"
+        ],
+        "apim-request-id": [
+          "817d4eca-c037-4836-a645-9fa010a48320"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:54 GMT"
+        ],
+        "Content-Length": [
+          "267"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2021-06-04T06:38:55.1028304Z\",\r\n  \"lastActionTime\": \"2021-06-04T06:38:55.1028491Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/64bbe93e-52e0-4d0d-8d60-e8ccc42511bd",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvNjRiYmU5M2UtNTJlMC00ZDBkLThkNjAtZThjY2M0MjUxMWJk",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "14"
+        ],
+        "apim-request-id": [
+          "6fcde1c2-aa09-41c6-b6cd-7ed245a317ab"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:55 GMT"
+        ],
+        "Content-Length": [
+          "265"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2021-06-04T06:38:55.1028304Z\",\r\n  \"lastActionTime\": \"2021-06-04T06:38:55.816285Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L2R5bmFtaWNwZXJzb25ncm91cHMvZHluYW1pYy1wZXJzb24tZ3JvdXAtaWQ=",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"name\": \"UpdatedDynamicPersonGroupName\",\r\n  \"userData\": \"Updated user data\",\r\n  \"addPersonIds\": [\r\n    \"503b2363-a901-4a92-a9a4-08a3748201eb\"\r\n  ]\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "154"
+        ]
+      },
+      "ResponseHeaders": {
+        "operation-location": [
+          "/face/v1.0-preview/operations/5d8690d2-37ee-4291-9ecc-58b5f05e9a17"
+        ],
+        "x-envoy-upstream-service-time": [
+          "577"
+        ],
+        "apim-request-id": [
+          "a425b0ed-e70a-4179-881b-772443505146"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:55 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/5d8690d2-37ee-4291-9ecc-58b5f05e9a17",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvNWQ4NjkwZDItMzdlZS00MjkxLTllY2MtNThiNWYwNWU5YTE3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "1078"
+        ],
+        "apim-request-id": [
+          "cde8c2f0-7008-4b94-baf0-9feeb81bbb1a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:57 GMT"
+        ],
+        "Content-Length": [
+          "266"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2021-06-04T06:38:56.7471376Z\",\r\n  \"lastActionTime\": \"2021-06-04T06:38:56.9201616Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L2R5bmFtaWNwZXJzb25ncm91cHMvZHluYW1pYy1wZXJzb24tZ3JvdXAtaWQ=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/5.0.621.22011",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "operation-location": [
+          "/face/v1.0-preview/operations/9d5fd26c-d451-45b3-8419-4ad6b24a732d"
+        ],
+        "x-envoy-upstream-service-time": [
+          "322"
+        ],
+        "apim-request-id": [
+          "afc8b3e4-3096-411a-881a-c740ea2cef96"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 04 Jun 2021 06:38:57 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

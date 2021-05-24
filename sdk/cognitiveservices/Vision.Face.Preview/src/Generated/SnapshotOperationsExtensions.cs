@@ -266,7 +266,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AsyncStatus> GetOperationStatusAsync(this ISnapshotOperations operations, System.Guid operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> GetOperationStatusAsync(this ISnapshotOperations operations, System.Guid operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetOperationStatusWithHttpMessagesAsync(operationId, null, cancellationToken).ConfigureAwait(false))
                 {

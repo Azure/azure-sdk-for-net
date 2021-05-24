@@ -5,6 +5,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using Xunit;
 
@@ -21,7 +22,7 @@ namespace FaceSDK.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "FacePersonDirectoryPersonPositive");
+                HttpMockServer.Initialize(this.GetType(), "FacePersonDirectoryCreatePersonPositive");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
 
@@ -30,20 +31,26 @@ namespace FaceSDK.Tests
                     Name = "Person",
                     UserData = "UserData"
                 };
-                var personId = client.PersonDirectory.CreatePersonAsync(person).Result.PersonId;
+                var result = client.PersonDirectory.CreatePersonAsync(person).Result;
+                var personId = result.Body.PersonId;
                 Assert.NotNull(personId);
+                var operationLocation = result.Headers.OperationLocation;
+                Assert.NotNull(operationLocation);
+                var operationResult = GetOperationResult(client, operationLocation).Status;
+                Assert.Equal(OperationStatusType.Succeeded, operationResult);
 
                 try
                 {
                     using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
                     {
-                        var faceId1 = client.PersonDirectory.AddPersonFaceFromStreamAsync(personId.ToString(), recognitionModel, stream, detectionModel).Result.PersistedFaceId;
+                        var faceId1 = client.PersonDirectory.AddPersonFaceFromStreamAsync(personId.ToString(), recognitionModel, stream, detectionModel).Result.Body.PersistedFaceId;
                         Assert.NotNull(faceId1);
                     }
                 }
                 finally
                 {
-                    client.PersonDirectory.DeletePersonAsync(personId.ToString()).Wait();
+                    var deleteResult = client.PersonDirectory.DeletePersonAsync(personId.ToString()).Result;
+                    Assert.NotNull(deleteResult.OperationLocation);
                 }
             }
         }
@@ -53,127 +60,84 @@ namespace FaceSDK.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "FaceFindSimilarLargeFaceListPositive");
+                HttpMockServer.Initialize(this.GetType(), "FacePersonDirectoryCreateDynamicPersonGroupPositive");
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
-                Guid? faceId1 = null;
-                string largeFaceListId = "large-face-list-id";
-                client.LargeFaceList.CreateAsync(largeFaceListId, "fakeLargeFaceList", recognitionModel: recognitionModel).Wait();
-                try
+
+                var person1 = new EnrolledPerson
                 {
-                    var satyaPersistedFaceIds = AddLargeFaceListFace(client, largeFaceListId, "Satya");
-                    var gatesPersistedFaceIds = AddLargeFaceListFace(client, largeFaceListId, "Gates");
-                    client.LargeFaceList.TrainAsync(largeFaceListId).Wait();
+                    Name = "Person1",
+                    UserData = "UserData1"
+                };
+                var personResult1 = client.PersonDirectory.CreatePersonAsync(person1).Result;
+                var personId1 = personResult1.Body.PersonId;
+                Assert.NotNull(personId1);
+                var operationLocation1 = personResult1.Headers.OperationLocation;
+                Assert.NotNull(operationLocation1);
+                var personOperationResult1 = GetOperationResult(client, operationLocation1).Status;
+                Assert.Equal(OperationStatusType.Succeeded, personOperationResult1);
 
-                    var trainingStatus = WaitForTraining(client, largeFaceListId);
-                    Assert.Equal(TrainingStatusType.Succeeded, trainingStatus.Status);
-
-                    using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
-                    {
-                        faceId1 = client.Face.DetectWithStreamAsync(stream, true, detectionModel: detectionModel, recognitionModel: recognitionModel).Result[0].FaceId;
-                        Assert.NotNull(faceId1);
-                    }
-
-                    IList<SimilarFace> findSimilarResults = client.Face.FindSimilarAsync(faceId1.Value, largeFaceListId: largeFaceListId).Result;
-                    Assert.True(findSimilarResults.Count > 0);
-                    Assert.Contains(findSimilarResults[0].PersistedFaceId, satyaPersistedFaceIds);
-                    Assert.True(findSimilarResults[0].Confidence > 0.5);
-                }
-                finally
+                var person2 = new EnrolledPerson
                 {
-                    client.LargeFaceList.DeleteAsync(largeFaceListId).Wait();
-                }
+                    Name = "Person2",
+                    UserData = "UserData2"
+                };
+                var personResult2 = client.PersonDirectory.CreatePersonAsync(person2).Result;
+                var personId2 = personResult2.Body.PersonId;
+                Assert.NotNull(personId2);
+                var operationLocation2 = personResult2.Headers.OperationLocation;
+                Assert.NotNull(operationLocation2);
+                var personOperationResult2 = GetOperationResult(client, operationLocation2).Status;
+                Assert.Equal(OperationStatusType.Succeeded, personOperationResult2);
+
+                string groupId = "dynamic-person-group-id";
+                var createGroupRequest = new DynamicPersonGroupCreateRequest
+                {
+                    Name = "DynamicPersonGroupName",
+                    UserData = "User data",
+                    AddPersonIds = new List<string> { personId1.ToString() }
+                };
+                var createGroupResult = client.PersonDirectory.CreateDynamicPersonGroupAsync(groupId, createGroupRequest).Result;
+                var createGroupOperationLocation = createGroupResult.OperationLocation;
+                Assert.NotNull(createGroupOperationLocation);
+                var createGroupOperationResult = GetOperationResult(client, createGroupOperationLocation).Status;
+                Assert.Equal(OperationStatusType.Succeeded, createGroupOperationResult);
+
+                var updateGroupRequest = new DynamicPersonGroupUpdateRequest
+                {
+                    Name = "UpdatedDynamicPersonGroupName",
+                    UserData = "Updated user data",
+                    AddPersonIds = new List<string> { personId2.ToString() }
+                };
+                var updateGroupResult = client.PersonDirectory.UpdateDynamicPersonGroupAsync(groupId, updateGroupRequest).Result;
+                var updateGroupOperationLocation = updateGroupResult.OperationLocation;
+                Assert.NotNull(updateGroupOperationLocation);
+                var updateGroupOperationResult = GetOperationResult(client, updateGroupOperationLocation).Status;
+                Assert.Equal(OperationStatusType.Succeeded, updateGroupOperationResult);
+
+                var deleteGroupResult = client.PersonDirectory.DeleteDynamicPersonGroupAsync(groupId).Result;
+                var deleteGroupOperationLocation = deleteGroupResult.OperationLocation;
+                Assert.NotNull(deleteGroupOperationLocation);
             }
         }
 
-        private List<Guid?> AddFaceListFace(IFaceClient client, string faceListId, string fileName)
+        private static OperationStatus GetOperationResult(IFaceClient client, string operationLocation, int timeIntervalInMilliSeconds = 1000)
         {
-            var persistedFaceIds = new List<Guid?>();
-            for (int i = 1; i < 4; i++)
-            {
-                DetectedFace face = null;
-                using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
-                {
-                    face = client.Face.DetectWithStreamAsync(stream, true, detectionModel: detectionModel, recognitionModel: recognitionModel).Result[0];
-                }
+            Assert.True(Uri.IsWellFormedUriString(operationLocation, UriKind.RelativeOrAbsolute));
+            var operationId = Guid.Parse(operationLocation.Split('/').Last());
 
-                using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
-                {
-                    var persistedFace = client.FaceList.AddFaceFromStreamAsync(faceListId, stream, null, new List<int>{
-                        face.FaceRectangle.Left,
-                        face.FaceRectangle.Top,
-                        face.FaceRectangle.Width,
-                        face.FaceRectangle.Height },
-                        detectionModel: detectionModel).Result;
+            var operationStatus = client.PersonDirectory.GetOperationStatusAsync(operationId).Result;
 
-                    persistedFaceIds.Add(persistedFace.PersistedFaceId);
-                }
-            }
-
-            return persistedFaceIds;
-        }
-
-        private List<Guid?> AddLargeFaceListFace(IFaceClient client, string largeFaceListId, string fileName)
-        {
-            var persistedFaceIds = new List<Guid?>();
-            for (int i = 1; i < 4; i++)
-            {
-                DetectedFace face = null;
-                using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
-                {
-                    face = client.Face.DetectWithStreamAsync(stream, true, detectionModel: detectionModel, recognitionModel: recognitionModel).Result[0];
-                }
-
-                using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
-                {
-                    var persistedFace = client.LargeFaceList.AddFaceFromStreamAsync(largeFaceListId, stream, null, new List<int>{
-                        face.FaceRectangle.Left,
-                        face.FaceRectangle.Top,
-                        face.FaceRectangle.Width,
-                        face.FaceRectangle.Height },
-                        detectionModel: detectionModel).Result;
-
-                    persistedFaceIds.Add(persistedFace.PersistedFaceId);
-                }
-            }
-
-            return persistedFaceIds;
-        }
-
-        private List<Guid?> AddFaceArrayFace(IFaceClient client, string fileName)
-        {
-            var faceIdList = new List<Guid?>();
-            for (int i = 1; i < 4; i++)
-            {
-                DetectedFace face = null;
-                using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
-                {
-                    face = client.Face.DetectWithStreamAsync(stream, detectionModel: detectionModel, recognitionModel: recognitionModel).Result[0];
-                }
-
-                faceIdList.Add(face.FaceId);
-            }
-
-            return faceIdList;
-        }
-
-        private TrainingStatus WaitForTraining(
-            IFaceClient client,
-            string largeFaceListId,
-            int timeIntervalInMilliSeconds = 1000)
-        {
-            var trainingStatus = client.LargeFaceList.GetTrainingStatusAsync(largeFaceListId).Result;
-
-            while (trainingStatus?.Status != null
-                   && !trainingStatus.Status.Equals(TrainingStatusType.Succeeded)
-                   && !trainingStatus.Status.Equals(TrainingStatusType.Failed))
+            while (operationStatus != null
+                   && !operationStatus.Status.Equals(OperationStatusType.Succeeded)
+                   && !operationStatus.Status.Equals(OperationStatusType.Failed))
             {
                 Thread.Sleep(timeIntervalInMilliSeconds);
 
-                trainingStatus = client.LargeFaceList.GetTrainingStatusAsync(largeFaceListId).Result;
+                operationStatus = client.Snapshot.GetOperationStatusAsync(operationId).Result;
             }
 
-            return trainingStatus;
+            return operationStatus;
         }
     }
 }
