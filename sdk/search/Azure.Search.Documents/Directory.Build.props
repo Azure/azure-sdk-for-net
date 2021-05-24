@@ -11,7 +11,8 @@
 
     <!-- Use a Package or Project reference to Azure.Core.Experimental -->
     <AddExperimentalReference Condition="'$(UseAzureCoreExperimentalDynamic)' == 'true'">true</AddExperimentalReference>
-    <UseExperimentalProjectReference Condition="'$(UseExperimentalProjectReference)' == ''">$(UseProjectReferenceToAzureClients)</UseExperimentalProjectReference>
+    <!-- TODO: Revert to $(UseProjectReferenceToAzureClients) when Experimental ships -->
+    <UseExperimentalProjectReference Condition="'$(UseExperimentalProjectReference)' == ''">true</UseExperimentalProjectReference>
   </PropertyGroup>
 
   <!-- Add a reference to Azure.Core.Experimental -->

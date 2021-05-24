@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var name = "hookName";
-            var endpoint = "http://fakeendpoint.com";
+            var endpoint = new Uri("http://fakeendpoint.com");
 
             var genericHook = new NotificationHook() { Name = name };
             var emailHook = new EmailNotificationHook() { Name = null, EmailsToAlert = { "fake@email.com" } };
@@ -57,10 +57,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             webHook.Endpoint = null;
             Assert.That(() => adminClient.CreateHookAsync(webHook), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.CreateHook(webHook), Throws.InstanceOf<ArgumentNullException>());
-
-            webHook.Endpoint = "";
-            Assert.That(() => adminClient.CreateHookAsync(webHook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.CreateHook(webHook), Throws.InstanceOf<ArgumentException>());
 
             Assert.That(() => adminClient.CreateHookAsync(genericHook), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => adminClient.CreateHook(genericHook), Throws.InstanceOf<ArgumentException>());

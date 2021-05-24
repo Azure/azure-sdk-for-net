@@ -1791,7 +1791,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
             else if (hook is WebNotificationHook webHook)
             {
-                Argument.AssertNotNullOrEmpty(webHook.Endpoint, $"{paramName}.{nameof(WebNotificationHook.Endpoint)}");
+                Argument.AssertNotNull(webHook.Endpoint, $"{paramName}.{nameof(WebNotificationHook.Endpoint)}");
             }
             else
             {
