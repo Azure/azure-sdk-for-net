@@ -49,7 +49,7 @@ param(
 Set-StrictMode -Version 3
 
 . ${PSScriptRoot}\common.ps1
-. ${PSScriptRoot}\apiview-helper.ps1
+. ${PSScriptRoot}\Helpers\ApiView-Helpers.ps1
 
 function Get-ReleaseDay($baseDate)
 {
@@ -128,17 +128,6 @@ if ($null -eq $newVersionParsed)
   exit 1
 }
 
-# Check API status if version is GA
-if (-not $newVersionParsed.IsPrerelease)
-{
-  $isApproved = Check-ApiReviewStatus -PackageName $packageProperties.Name -Language $LanguageDisplayName
-  if (-not $isApproved)
-  {
-    Write-Error "API review is not approved in APIView system."
-    exit 1
-  }
-}
-
 &$EngCommonScriptsDir/Update-DevOps-Release-WorkItem.ps1 `
   -language $LanguageDisplayName `
   -packageName $packageProperties.Name `
@@ -151,6 +140,17 @@ if (-not $newVersionParsed.IsPrerelease)
 if ($LASTEXITCODE -ne 0) {
   Write-Error "Updating of the Devops Release WorkItem failed."
   exit 1
+}
+
+# Check API status if version is GA
+if (!$newVersionParsed.IsPrerelease)
+{
+  $isApproved = Check-ApiReviewStatus -PackageName $packageProperties.Name -packageVersion $newVersion -Language $LanguageDisplayName
+  if (!$isApproved)
+  {
+    Write-Error "API review is not approved in APIView system."
+    exit 1
+  }
 }
 
 if ($releaseTrackingOnly)

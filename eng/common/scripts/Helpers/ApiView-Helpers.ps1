@@ -1,5 +1,3 @@
-
-
 function Map-LanguageToAPiview-Filter($language)
 {
     $lang = $language
@@ -19,18 +17,28 @@ function Map-LanguageToAPiview-Filter($language)
     return $lang
 }
 
-function Check-ApiReviewStatus($packageName, $language)
+function Check-ApiReviewStatus($packageName, $packageVersion, $language)
 {
   # Get API view URL and API Key to check status
-  Login-AzAccount
-  $url = Get-AzKeyvaultSecret -VaultName "AzureSDKPrepRelease-KV" -Name APIURL -AsPlainText
-  $apiKey = Get-AzKeyvaultSecret -VaultName "AzureSDKPrepRelease-KV" -Name APIKEY -AsPlainText
-
+  Write-Host "Checking API review status"
+  try
+  {
+    az login -o none
+    $url = az keyvault secret show --name "APIURL" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
+    $apiKey = az keyvault secret show --name "APIKEY" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
+  }
+  catch
+  {
+    Write-Host "Failed to get APIView URL and API Key from Keyvault AzureSDKPrepRelease-KV. Please check and ensure you have access to this Keyvault as reader."
+    Write-Host "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details."
+  }
+  
   $lang = Map-LanguageToAPiview-Filter -language $language
   $headers = @{ "ApiKey" = $apiKey }
   $body = @{
     language = $lang
     packageName = $packageName
+    packageVersion = $packageVersion
   }
 
   try
