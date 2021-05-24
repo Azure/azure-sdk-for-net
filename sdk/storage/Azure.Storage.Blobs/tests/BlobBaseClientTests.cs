@@ -1568,7 +1568,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Upload a large blob
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            BlobClient blob = test.Container.GetBlobClient(GetNewBlobName());
             using (var stream = new MemoryStream(GetRandomBuffer(10 * Constants.KB)))
             {
                 await blob.UploadAsync(stream);
