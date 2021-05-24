@@ -9,7 +9,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary>
     /// Model factory that enables mocking for the Azure.Communication.PhoneNumbers library.
     /// </summary>
-    public static class PhoneNumbersModelFactory
+    public static partial class PhoneNumbersModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/>. </summary>
         /// <param name="id"> The id of the phone number, e.g. 14255550123. </param>
