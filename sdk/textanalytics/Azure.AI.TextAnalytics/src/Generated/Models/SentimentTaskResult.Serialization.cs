@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class Components15Gvwi3SchemasTasksstatePropertiesTasksPropertiesEntityrecognitiontasksItemsAllof1
+    internal partial class SentimentTaskResult
     {
-        internal static Components15Gvwi3SchemasTasksstatePropertiesTasksPropertiesEntityrecognitiontasksItemsAllof1 DeserializeComponents15Gvwi3SchemasTasksstatePropertiesTasksPropertiesEntityrecognitiontasksItemsAllof1(JsonElement element)
+        internal static SentimentTaskResult DeserializeSentimentTaskResult(JsonElement element)
         {
-            Optional<EntitiesResult> results = default;
+            Optional<SentimentResponse> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
@@ -24,11 +24,11 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    results = EntitiesResult.DeserializeEntitiesResult(property.Value);
+                    results = SentimentResponse.DeserializeSentimentResponse(property.Value);
                     continue;
                 }
             }
-            return new Components15Gvwi3SchemasTasksstatePropertiesTasksPropertiesEntityrecognitiontasksItemsAllof1(results.Value);
+            return new SentimentTaskResult(results.Value);
         }
     }
 }

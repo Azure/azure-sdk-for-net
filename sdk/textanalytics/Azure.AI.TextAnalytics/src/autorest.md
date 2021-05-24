@@ -6,8 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-    -  .\swagger\ta3.1p5.json
+tag: release_3_1_preview.5
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/5e1ad2fb49b88b1a17a941228f5238aba74992a6/specification/cognitiveservices/data-plane/TextAnalytics/readme.md
 ```
 
 ### Make generated models internal by default

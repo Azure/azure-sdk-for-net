@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class Components1C6O47FSchemasTasksstatePropertiesTasksPropertiesSentimentanalysistasksItemsAllof1
+    internal partial class KeyPhraseTaskResult
     {
-        internal static Components1C6O47FSchemasTasksstatePropertiesTasksPropertiesSentimentanalysistasksItemsAllof1 DeserializeComponents1C6O47FSchemasTasksstatePropertiesTasksPropertiesSentimentanalysistasksItemsAllof1(JsonElement element)
+        internal static KeyPhraseTaskResult DeserializeKeyPhraseTaskResult(JsonElement element)
         {
-            Optional<SentimentResponse> results = default;
+            Optional<KeyPhraseResult> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
@@ -24,11 +24,11 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    results = SentimentResponse.DeserializeSentimentResponse(property.Value);
+                    results = KeyPhraseResult.DeserializeKeyPhraseResult(property.Value);
                     continue;
                 }
             }
-            return new Components1C6O47FSchemasTasksstatePropertiesTasksPropertiesSentimentanalysistasksItemsAllof1(results.Value);
+            return new KeyPhraseTaskResult(results.Value);
         }
     }
 }
