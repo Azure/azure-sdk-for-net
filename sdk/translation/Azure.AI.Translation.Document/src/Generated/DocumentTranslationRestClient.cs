@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -147,7 +147,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches", false);
             if (top != null)
             {
@@ -403,7 +403,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/documents/", false);
@@ -466,7 +466,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
             request.Uri = uri;
@@ -533,7 +533,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
             request.Uri = uri;
@@ -610,7 +610,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/documents", false);
@@ -858,7 +858,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/documents/formats", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -922,7 +922,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/glossaries/formats", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -986,7 +986,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/storagesources", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1042,7 +1042,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1280,7 +1280,7 @@ namespace Azure.AI.Translation.Document
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/translator/text/batch/v1.0-preview.1", false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
