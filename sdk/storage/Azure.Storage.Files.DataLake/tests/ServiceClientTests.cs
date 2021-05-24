@@ -377,8 +377,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Response<DataLakeFileSystemClient> response = await service.UndeleteFileSystemAsync(
                 fileSystemItem.Name,
-                fileSystemItem.VersionId,
-                GetNewFileSystemName());
+                fileSystemItem.VersionId);
 
             // Assert
             await response.Value.GetPropertiesAsync();
@@ -597,6 +596,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         [NonParallelizable]
         public async Task SetPropertiesAsync_StaticWebsite()
         {

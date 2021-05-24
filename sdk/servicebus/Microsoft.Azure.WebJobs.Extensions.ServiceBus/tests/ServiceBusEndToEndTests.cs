@@ -17,6 +17,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
@@ -59,16 +61,35 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task ServiceBusBinderTest()
+        public async Task ServiceBusBinderTestAsyncCollector()
         {
-            var (jobHost, host) = BuildHost<BinderTestJobs>();
+            var (jobHost, host) = BuildHost<BinderTestJobsAsyncCollector>();
             using (jobHost)
             {
                 int numMessages = 10;
                 var args = new { message = "Test Message", numMessages = numMessages };
-                await jobHost.CallAsync(nameof(BinderTestJobs.ServiceBusBinderTest), args);
-                await jobHost.CallAsync(nameof(BinderTestJobs.ServiceBusBinderTest), args);
-                await jobHost.CallAsync(nameof(BinderTestJobs.ServiceBusBinderTest), args);
+                await jobHost.CallAsync(nameof(BinderTestJobsAsyncCollector.ServiceBusBinderTest), args);
+                await jobHost.CallAsync(nameof(BinderTestJobsAsyncCollector.ServiceBusBinderTest), args);
+                await jobHost.CallAsync(nameof(BinderTestJobsAsyncCollector.ServiceBusBinderTest), args);
+
+                var count = await CleanUpEntity(_firstQueueScope.QueueName);
+
+                Assert.AreEqual(numMessages * 3, count);
+                await jobHost.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task ServiceBusBinderTestSyncCollector()
+        {
+            var (jobHost, host) = BuildHost<BinderTestJobsSyncCollector>();
+            using (jobHost)
+            {
+                int numMessages = 10;
+                var args = new { message = "Test Message", numMessages = numMessages };
+                await jobHost.CallAsync(nameof(BinderTestJobsSyncCollector.ServiceBusBinderTest), args);
+                await jobHost.CallAsync(nameof(BinderTestJobsSyncCollector.ServiceBusBinderTest), args);
+                await jobHost.CallAsync(nameof(BinderTestJobsSyncCollector.ServiceBusBinderTest), args);
 
                 var count = await CleanUpEntity(_firstQueueScope.QueueName);
 
@@ -170,6 +191,56 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestBatch_JsonPoco()
         {
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
+        }
+
+        [Test]
+        public async Task TestSingle_JObject()
+        {
+            var (jobHost, _) = BuildHost<ServiceBusMultipleMessagesTestJob_BindToJObject>();
+            using (jobHost)
+            {
+                await WriteQueueMessage(JsonConvert.SerializeObject(new {Date = DateTimeOffset.Now}));
+                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await jobHost.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_JObject_CustomSettings()
+        {
+            var (jobHost, _) = BuildHost<ServiceBusMultipleMessagesTestJob_BindToJObject_RespectsCustomJsonSettings>(
+                configurationDelegate: host =>
+                    host.ConfigureDefaultTestHost<ServiceBusMultipleMessagesTestJob_BindToJObject_RespectsCustomJsonSettings>(b =>
+                    {
+                        b.AddServiceBus(options =>
+                        {
+                            options.JsonSerializerSettings = new JsonSerializerSettings
+                            {
+                                DateParseHandling = DateParseHandling.None
+                            };
+                        });
+                    }));
+            using (jobHost)
+            {
+                await WriteQueueMessage(JsonConvert.SerializeObject(new {Date = DateTimeOffset.Now}));
+                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await jobHost.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_OutputPoco()
+        {
+            var (jobHost, _) = BuildHost<ServiceBusOutputPocoTest>();
+            using (jobHost)
+            {
+                await jobHost.CallAsync(nameof(ServiceBusOutputPocoTest.OutputPoco));
+                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await jobHost.StopAsync();
+            }
         }
 
         [Test]
@@ -423,7 +494,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"MaxAutoLockRenewalDuration\": \"00:05:00\",",
                $"  \"MaxConcurrentCalls\": {16 * Utility.GetProcessorCount()},",
                 "  \"MaxConcurrentSessions\": 8,",
-                "  \"MaxMessages\": 1000,",
+                "  \"MaxBatchSize\": 1000,",
                 "  \"SessionIdleTimeout\": \"\"",
                 "  \"ClientRetryOptions\": {",
                 "       \"Mode\": \"Exponential\",",
@@ -556,7 +627,24 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class BinderTestJobs
+        public class ServiceBusOutputPocoTest
+        {
+            public static void OutputPoco(
+                [ServiceBus(FirstQueueNameKey)] out TestPoco output)
+            {
+                output = new TestPoco() {Value = "value", Name = "name"};
+            }
+
+            public static void TriggerPoco(
+                [ServiceBusTrigger(FirstQueueNameKey)] TestPoco received)
+            {
+                Assert.AreEqual("value", received.Value);
+                Assert.AreEqual("name", received.Name);
+                _eventWait.Set();
+            }
+        }
+
+        public class BinderTestJobsAsyncCollector
         {
             [NoAutomaticTrigger]
             public static async Task ServiceBusBinderTest(
@@ -566,7 +654,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var attribute = new ServiceBusAttribute(_firstQueueScope.QueueName)
                 {
-                    EntityType = EntityType.Queue
+                    ServiceBusEntityType = ServiceBusEntityType.Queue
                 };
 
                 var collector = await binder.BindAsync<IAsyncCollector<string>>(attribute);
@@ -577,6 +665,28 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
 
                 await collector.FlushAsync();
+            }
+        }
+
+        public class BinderTestJobsSyncCollector
+        {
+            [NoAutomaticTrigger]
+            public static void ServiceBusBinderTest(
+                string message,
+                int numMessages,
+                Binder binder)
+            {
+                var attribute = new ServiceBusAttribute(_firstQueueScope.QueueName)
+                {
+                    ServiceBusEntityType = ServiceBusEntityType.Queue
+                };
+
+                var collector = binder.Bind<ICollector<string>>(attribute);
+
+                for (int i = 0; i < numMessages; i++)
+                {
+                    collector.Add(message + i);
+                }
             }
         }
 
@@ -643,6 +753,24 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 string[] messages = array.Select(x => "{'Name': '" + x.Name + "', 'Value': 'Value'}").ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+            }
+        }
+
+        public class ServiceBusMultipleMessagesTestJob_BindToJObject
+        {
+            public static void BindToJObject([ServiceBusTrigger(FirstQueueNameKey)] JObject input)
+            {
+                Assert.AreEqual(JTokenType.Date, input["Date"].Type);
+                _eventWait.Set();
+            }
+        }
+
+        public class ServiceBusMultipleMessagesTestJob_BindToJObject_RespectsCustomJsonSettings
+        {
+            public static void BindToJObject([ServiceBusTrigger(FirstQueueNameKey)] JObject input)
+            {
+                Assert.AreEqual(JTokenType.String, input["Date"].Type);
+                _eventWait.Set();
             }
         }
 
@@ -782,50 +910,46 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public const string CustomMessagingCategory = "CustomMessagingProvider";
             private readonly ILogger _logger;
-            private readonly ServiceBusOptions _options;
 
             public CustomMessagingProvider(
                 IOptions<ServiceBusOptions> serviceBusOptions,
                 ILoggerFactory loggerFactory)
                 : base(serviceBusOptions)
             {
-                _options = serviceBusOptions.Value;
                 _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);
             }
 
-            public override MessageProcessor CreateMessageProcessor(ServiceBusClient client, string entityPath)
+            protected internal override MessageProcessor CreateMessageProcessor(ServiceBusClient client, string entityPath, ServiceBusProcessorOptions options)
             {
-                var options = new ServiceBusProcessorOptions()
-                {
-                    MaxConcurrentCalls = 3,
-                    MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin)
-                };
+                // override the options computed from ServiceBusOptions
+                options.MaxConcurrentCalls = 3;
+                options.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
 
                 var processor = client.CreateProcessor(entityPath, options);
                 var receiver = client.CreateReceiver(entityPath);
                 // TODO decide whether it makes sense to still default error handler when there is a custom provider
                 // currently user needs to set it.
                 processor.ProcessErrorAsync += args => Task.CompletedTask;
-                return new CustomMessageProcessor(processor, receiver, _logger);
+                return new CustomMessageProcessor(processor, _logger);
             }
 
             private class CustomMessageProcessor : MessageProcessor
             {
                 private readonly ILogger _logger;
 
-                public CustomMessageProcessor(ServiceBusProcessor processor, ServiceBusReceiver receiver, ILogger logger)
-                    : base(processor, receiver)
+                public CustomMessageProcessor(ServiceBusProcessor processor, ILogger logger)
+                    : base(processor)
                 {
                     _logger = logger;
                 }
 
-                public override async Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
+                protected internal override async Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor Begin called!");
                     return await base.BeginProcessingMessageAsync(messageActions, message, cancellationToken);
                 }
 
-                public override async Task CompleteProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, Executors.FunctionResult result, CancellationToken cancellationToken)
+                protected internal override async Task CompleteProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, Executors.FunctionResult result, CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor End called!");
                     await base.CompleteProcessingMessageAsync(messageActions, message, result, cancellationToken);

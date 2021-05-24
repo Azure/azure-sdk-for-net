@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus
         /// The <see cref="ServiceBusProcessor"/> that the session processor delegates to.
         /// This can be overriden for testing purposes.
         /// </summary>
-        protected virtual ServiceBusProcessor InnerProcessor { get; }
+        protected internal virtual ServiceBusProcessor InnerProcessor { get; }
 
         /// <inheritdoc cref="ServiceBusProcessor.EntityPath"/>
         public virtual string EntityPath => InnerProcessor.EntityPath;
@@ -273,13 +273,16 @@ namespace Azure.Messaging.ServiceBus
         /// request to cancel the operation.</param>
         public virtual async Task CloseAsync(
             CancellationToken cancellationToken = default) =>
-            await InnerProcessor.CloseAsync().ConfigureAwait(false);
+            await InnerProcessor.CloseAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSessionProcessor" />.
         ///   This is equivalent to calling <see cref="CloseAsync"/>.
         /// </summary>
-        public async ValueTask DisposeAsync() =>
+        public async ValueTask DisposeAsync()
+        {
             await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
     }
 }

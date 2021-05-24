@@ -150,8 +150,27 @@ namespace SignalR.Tests
             Assert.NotNull(signalr.PublicPort);
             Assert.NotNull(signalr.ServerPort);
             Assert.NotEmpty(signalr.Version);
-            Assert.Equal(3, signalr.Features.Count); // ServiceMode will be set as Default
-            Assert.Equal("Default", signalr.Features.First().Value);
+            foreach(SignalRFeature feature in signalr.Features)
+            {
+                switch (feature.Flag) 
+                {
+                    case "ServiceMode":
+                        Assert.Equal("Default", feature.Value);
+                        break;
+                    case "EnableConnectivityLogs":
+                        Assert.Equal("False", feature.Value);
+                        break;
+                    case "EnableMessagingLogs":
+                        Assert.Equal("False", feature.Value);
+                        break;
+                    case "EnableLiveTrace":
+                        Assert.Equal("False", feature.Value);
+                        break;
+                    default:
+                        Assert.True(false);
+                        break;
+                }
+            }
             Assert.Equal(1, signalr.Cors.AllowedOrigins.Count); // all origins(*) are allowed by default.
             Assert.Equal("*", signalr.Cors.AllowedOrigins.First());
             Assert.Equal("SignalR", signalr.Kind);
@@ -177,19 +196,19 @@ namespace SignalR.Tests
 
             // Update the SignalR instance
             capacity = isStandard ? 1 : 5;
-            signalr = signalrClient.SignalR.Update(resourceGroup.Name, signalr.Name, new SignalRResource
+            signalr = signalrClient.SignalR.Update( new SignalRResource()
             {
                 Tags = SignalRTestUtilities.DefaultNewTags,
-                Sku = new ResourceSku
+                Sku = new ResourceSku()
                 {
                     Name = isStandard ? "Free_F1" : "Standard_S1",
                     Tier = isStandard ? "Free" : "Standard",
                     Capacity = capacity,
                 },
-                Features = new List<SignalRFeature> {
+                Features = new List<SignalRFeature>(){
                         new SignalRFeature { Value = "Serverless" }
                     },
-                Cors = new SignalRCorsSettings
+                Cors = new SignalRCorsSettings()
                 {
                     AllowedOrigins = new List<string>
                         {
@@ -197,7 +216,7 @@ namespace SignalR.Tests
                             "https://contoso.com",
                         }
                 },
-            });
+            },resourceGroup.Name, signalr.Name);
 
             // Validate the updated SignalR instance
             SignalRTestUtilities.ValidateResourceDefaultNewTags(signalr);
@@ -222,8 +241,27 @@ namespace SignalR.Tests
             Assert.NotNull(signalr.PublicPort);
             Assert.NotNull(signalr.ServerPort);
             Assert.NotEmpty(signalr.Version);
-            Assert.Equal(3, signalr.Features.Count);
-            Assert.Equal("Serverless", signalr.Features.First().Value);
+            foreach (SignalRFeature feature in signalr.Features)
+            {
+                switch (feature.Flag)
+                {
+                    case "ServiceMode":
+                        Assert.Equal("Serverless", feature.Value);
+                        break;
+                    case "EnableConnectivityLogs":
+                        Assert.Equal("False", feature.Value);
+                        break;
+                    case "EnableMessagingLogs":
+                        Assert.Equal("False", feature.Value);
+                        break;
+                    case "EnableLiveTrace":
+                        Assert.Equal("False", feature.Value);
+                        break;
+                    default:
+                        Assert.True(false);
+                        break;
+                }
+            }
             Assert.Equal(2, signalr.Cors.AllowedOrigins.Count);
             Assert.Equal("http://example.com:12345", signalr.Cors.AllowedOrigins.First());
             Assert.Equal("https://contoso.com", signalr.Cors.AllowedOrigins.Last());
@@ -237,10 +275,10 @@ namespace SignalR.Tests
             Assert.NotEmpty(keys.SecondaryConnectionString);
 
             // Regenerate primary key
-            var newKeys1 = signalrClient.SignalR.RegenerateKey(resourceGroup.Name, signalr.Name, new RegenerateKeyParameters
+            var newKeys1 = signalrClient.SignalR.RegenerateKey(new RegenerateKeyParameters
             {
                 KeyType = "Primary",
-            });
+            },resourceGroup.Name, signalr.Name);
             // Due to a bug in SignalR RP, the result of RegenerateKey is null. UnComment following lines after we fixed it RP side
             //Assert.NotNull(newKeys1);
             //Assert.NotEqual(keys.PrimaryKey, newKeys1.PrimaryKey);
@@ -257,10 +295,11 @@ namespace SignalR.Tests
             Assert.Equal(keys.SecondaryConnectionString, newKeys1.SecondaryConnectionString);
 
             // Regenerate secondary key
-            var newKeys2 = signalrClient.SignalR.RegenerateKey(resourceGroup.Name, signalr.Name, new RegenerateKeyParameters
+            var newKeys2 = signalrClient.SignalR.RegenerateKey(new RegenerateKeyParameters
             {
                 KeyType = "Secondary",
-            });
+            },
+            resourceGroup.Name, signalr.Name);
             // Due to a bug in SignalR RP, the result of RegenerateKey is null. UnComment following lines after we fixed it RP side
             //Assert.NotNull(newKeys2);
             //Assert.Null(newKeys2.PrimaryKey);

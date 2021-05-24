@@ -20,7 +20,8 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly TokenCredentialOptions _options;
         internal string ClientId { get; }
-        internal MsalPublicClient Client {get;}
+        internal string LoginHint { get; }
+        internal MsalPublicClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
         internal bool DisableAutomaticAuthentication { get; }
         internal AuthenticationRecord Record { get; private set; }
@@ -33,8 +34,7 @@ namespace Azure.Identity
         /// </summary>
         public InteractiveBrowserCredential()
             : this(null, Constants.DeveloperSignOnClientId, null, null)
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users with the specified application.
@@ -54,8 +54,7 @@ namespace Azure.Identity
         [EditorBrowsable(EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string clientId)
             : this(null, clientId, null, null)
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users with the specified application.
@@ -66,14 +65,12 @@ namespace Azure.Identity
         /// <param name="options">The client options for the newly created <see cref="InteractiveBrowserCredential"/>.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
-            : this(Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull:true), clientId, options, null, null)
-        {
-        }
+            : this(Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull: true), clientId, options, null, null)
+        { }
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline)
             : this(tenantId, clientId, options, pipeline, null)
-        {
-        }
+        { }
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
@@ -83,6 +80,7 @@ namespace Azure.Identity
             _tenantId = tenantId;
             _options = options;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+            LoginHint = (options as InteractiveBrowserCredentialOptions)?.LoginHint;
             var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
             Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options as ITokenCacheOptions);
         }
@@ -213,12 +211,17 @@ namespace Azure.Identity
 
         private async Task<AccessToken> GetTokenViaBrowserLoginAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
         {
+            Prompt prompt = LoginHint switch
+            {
+                null => Prompt.SelectAccount,
+                _ => Prompt.NoPrompt
+            };
+
             AuthenticationResult result = await Client
-                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, Prompt.SelectAccount, async, cancellationToken)
+                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, async, cancellationToken)
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
-
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
     }

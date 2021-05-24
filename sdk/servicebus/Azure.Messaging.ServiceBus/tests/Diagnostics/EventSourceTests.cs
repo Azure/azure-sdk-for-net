@@ -329,7 +329,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
-                    false,
                     It.IsAny<CancellationToken>()))
                 .Returns(
                 Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>)
@@ -379,7 +378,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     maxMessages,
                     It.IsAny<TimeSpan?>(),
-                    false,
                     It.IsAny<CancellationToken>()))
                 .Returns(
                 Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>)
@@ -435,7 +433,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
-                    false,
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
             var receiver = new ServiceBusReceiver(
@@ -1193,7 +1190,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
-                    true,
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>) new List<ServiceBusReceivedMessage>() { new ServiceBusReceivedMessage() }));
             var processor = new ServiceBusProcessor(mockConnection.Object, "queueName", false, new ServiceBusPlugin[] { }, new ServiceBusProcessorOptions

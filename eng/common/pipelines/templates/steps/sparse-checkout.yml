@@ -20,6 +20,7 @@ steps:
     - pwsh: |
         $dir = "${{ coalesce(repo.WorkingDirectory, format('{0}/{1}', '$(System.DefaultWorkingDirectory)', repo.Name)) }}"
         New-Item $dir -ItemType Directory -Force
+      displayName: Create ${{ repo.Name }} directories
 
     - pwsh: |
         git clone --no-checkout --filter=tree:0 git://github.com/${{ repo.Name }} .
@@ -31,6 +32,7 @@ steps:
       displayName: Init sparse checkout ${{ repo.Name }}
       workingDirectory: ${{ coalesce(repo.WorkingDirectory, format('{0}/{1}', '$(System.DefaultWorkingDirectory)', repo.Name)) }}
 
-    - pwsh: git checkout ${{ repo.Commitish }}
-      displayName: Sparse checkout at ${{ repo.Commitish }}
+    - pwsh: |
+        git checkout ${{ repo.Commitish }}  # this will use the default branch if repo.Commitish is empty
+      displayName: Sparse checkout at ${{ coalesce(repo.Commitish, 'default branch') }}
       workingDirectory: ${{ coalesce(repo.WorkingDirectory, format('{0}/{1}', '$(System.DefaultWorkingDirectory)', repo.Name)) }}

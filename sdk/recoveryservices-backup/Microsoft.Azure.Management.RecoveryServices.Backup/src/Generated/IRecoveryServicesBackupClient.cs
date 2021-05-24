@@ -279,6 +279,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         IRecoveryPointsRecommendedForMoveOperations RecoveryPointsRecommendedForMove { get; }
 
         /// <summary>
+        /// Gets the IBackupUsageSummariesCRROperations.
+        /// </summary>
+        IBackupUsageSummariesCRROperations BackupUsageSummariesCRR { get; }
+
+        /// <summary>
         /// Gets the IAadPropertiesOperations.
         /// </summary>
         IAadPropertiesOperations AadProperties { get; }

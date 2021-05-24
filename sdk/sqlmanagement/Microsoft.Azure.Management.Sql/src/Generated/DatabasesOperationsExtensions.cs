@@ -138,9 +138,11 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IPage<Database> ListByServer(this IDatabasesOperations operations, string resourceGroupName, string serverName)
+            /// <param name='skipToken'>
+            /// </param>
+            public static IPage<Database> ListByServer(this IDatabasesOperations operations, string resourceGroupName, string serverName, string skipToken = default(string))
             {
-                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                return operations.ListByServerAsync(resourceGroupName, serverName, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -156,12 +158,14 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
+            /// <param name='skipToken'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Database>> ListByServerAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Database>> ListByServerAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -417,6 +421,101 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Failovers a database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to failover.
+            /// </param>
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
+            public static void Failover(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string))
+            {
+                operations.FailoverAsync(resourceGroupName, serverName, databaseName, replicaType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Failovers a database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to failover.
+            /// </param>
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task FailoverAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.FailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, replicaType, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets a list of inaccessible databases in a logical server
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static IPage<Database> ListInaccessibleByServer(this IDatabasesOperations operations, string resourceGroupName, string serverName)
+            {
+                return operations.ListInaccessibleByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of inaccessible databases in a logical server
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Database>> ListInaccessibleByServerAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListInaccessibleByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Pauses a database.
             /// </summary>
             /// <param name='operations'>
@@ -507,101 +606,6 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<Database> ResumeAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ResumeWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Failovers a database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database to failover.
-            /// </param>
-            /// <param name='replicaType'>
-            /// The type of replica to be failed over. Possible values include: 'Primary',
-            /// 'ReadableSecondary'
-            /// </param>
-            public static void Failover(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string))
-            {
-                operations.FailoverAsync(resourceGroupName, serverName, databaseName, replicaType).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Failovers a database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database to failover.
-            /// </param>
-            /// <param name='replicaType'>
-            /// The type of replica to be failed over. Possible values include: 'Primary',
-            /// 'ReadableSecondary'
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task FailoverAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.FailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, replicaType, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a list of inaccessible databases in a logical server
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            public static IPage<Database> ListInaccessibleByServer(this IDatabasesOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.ListInaccessibleByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of inaccessible databases in a logical server
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Database>> ListInaccessibleByServerAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListInaccessibleByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -965,6 +969,59 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Failovers a database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to failover.
+            /// </param>
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
+            public static void BeginFailover(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string))
+            {
+                operations.BeginFailoverAsync(resourceGroupName, serverName, databaseName, replicaType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Failovers a database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to failover.
+            /// </param>
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginFailoverAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, replicaType, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Pauses a database.
             /// </summary>
             /// <param name='operations'>
@@ -1058,59 +1115,6 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Failovers a database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database to failover.
-            /// </param>
-            /// <param name='replicaType'>
-            /// The type of replica to be failed over. Possible values include: 'Primary',
-            /// 'ReadableSecondary'
-            /// </param>
-            public static void BeginFailover(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string))
-            {
-                operations.BeginFailoverAsync(resourceGroupName, serverName, databaseName, replicaType).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Failovers a database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database to failover.
-            /// </param>
-            /// <param name='replicaType'>
-            /// The type of replica to be failed over. Possible values include: 'Primary',
-            /// 'ReadableSecondary'
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginFailoverAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, replicaType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Containers.ContainerR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{F62DCD51-5101-4427-B6C9-C24974F9DD3F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Containers.ContainerRegistry.Perf", "perf\Azure.Containers.ContainerRegistry.Perf\Azure.Containers.ContainerRegistry.Perf.csproj", "{D8B4B378-8339-44AB-BBEC-056B82A15A0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{F62DCD51-5101-4427-B6C9-C24974F9DD3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F62DCD51-5101-4427-B6C9-C24974F9DD3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F62DCD51-5101-4427-B6C9-C24974F9DD3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8B4B378-8339-44AB-BBEC-056B82A15A0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B4B378-8339-44AB-BBEC-056B82A15A0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B4B378-8339-44AB-BBEC-056B82A15A0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B4B378-8339-44AB-BBEC-056B82A15A0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

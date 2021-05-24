@@ -704,45 +704,46 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public const string CustomMessagingCategory = "CustomMessagingProvider";
             private readonly ILogger _logger;
-            private readonly ServiceBusOptions _options;
 
             public CustomMessagingProvider(
                 IOptions<ServiceBusOptions> serviceBusOptions,
                 ILoggerFactory loggerFactory)
                 : base(serviceBusOptions)
             {
-                _options = serviceBusOptions.Value;
-                _options.SessionIdleTimeout = TimeSpan.FromSeconds(90);
-                _options.MaxConcurrentSessions = 1;
                 _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);
             }
 
-            public override SessionMessageProcessor CreateSessionMessageProcessor(ServiceBusClient client,
-                string entityPath)
+            protected internal override SessionMessageProcessor CreateSessionMessageProcessor(
+                ServiceBusClient client,
+                string entityPath,
+                ServiceBusSessionProcessorOptions options)
             {
                 ServiceBusSessionProcessor processor;
+                // override the options computed from ServiceBusOptions
+                options.SessionIdleTimeout = TimeSpan.FromSeconds(90);
+                options.MaxConcurrentSessions = 1;
                 if (entityPath == _firstQueueScope.QueueName)
                 {
-                    processor = client.CreateSessionProcessor(entityPath, _options.ToSessionProcessorOptions());
+                    processor = client.CreateSessionProcessor(entityPath, options);
                 }
                 else
                 {
                     string[] arr = entityPath.Split('/');
-                    processor = client.CreateSessionProcessor(arr[0], arr[2], _options.ToSessionProcessorOptions());
+                    processor = client.CreateSessionProcessor(arr[0], arr[2], options);
                 }
 
                 processor.ProcessErrorAsync += args => Task.CompletedTask;
-                return new CustomSessionMessageProcessor(client, processor, _logger);
+                return new CustomSessionMessageProcessor(processor, _logger);
             }
 
             private class CustomSessionMessageProcessor : SessionMessageProcessor
             {
                 private readonly ILogger _logger;
 
-                public CustomSessionMessageProcessor(ServiceBusClient client,
+                public CustomSessionMessageProcessor(
                     ServiceBusSessionProcessor sessionProcessor,
                     ILogger logger)
-                    : base(client, sessionProcessor)
+                    : base(sessionProcessor)
                 {
                     _logger = logger;
                 }
@@ -757,7 +758,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 public override async Task CompleteProcessingMessageAsync(
                     ServiceBusSessionMessageActions sessionActions,
-                    ServiceBusReceivedMessage message, Executors.FunctionResult result,
+                    ServiceBusReceivedMessage message,
+                    Executors.FunctionResult result,
                     CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor End called!" + message.Body.ToString());
