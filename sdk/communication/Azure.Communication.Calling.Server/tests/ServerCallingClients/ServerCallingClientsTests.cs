@@ -240,7 +240,7 @@ namespace Azure.Communication.Calling.Server.Tests
                         AudioFileUri = "https://av.ngrok.io/audio/sample-message.wav",
                         OperationContext = Guid.NewGuid().ToString(),
                         Loop = true,
-                        ResourceId = Guid.NewGuid().ToString()
+                        AudioFileId = Guid.NewGuid().ToString()
                     }
                 }
             };

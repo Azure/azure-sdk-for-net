@@ -15,11 +15,6 @@ namespace Azure.Communication.Calling.Server
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationContext))
-            {
-                writer.WritePropertyName("operationContext");
-                writer.WriteStringValue(OperationContext);
-            }
             if (Optional.IsDefined(RecordingStateCallbackUri))
             {
                 writer.WritePropertyName("recordingStateCallbackUri");

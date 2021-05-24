@@ -30,10 +30,10 @@ namespace Azure.Communication.Calling.Server
                 writer.WritePropertyName("operationContext");
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(AudioFileId))
             {
-                writer.WritePropertyName("resourceId");
-                writer.WriteStringValue(ResourceId);
+                writer.WritePropertyName("audioFileId");
+                writer.WriteStringValue(AudioFileId);
             }
             writer.WriteEndObject();
         }
