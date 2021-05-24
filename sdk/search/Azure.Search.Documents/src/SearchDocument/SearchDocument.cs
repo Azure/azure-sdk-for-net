@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
-using Azure.Core.GeoJson;
+using Azure.GeoJson;
 
 namespace Azure.Search.Documents.Models
 {

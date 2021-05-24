@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
-using Azure.Core.GeoJson;
+using Azure.GeoJson;
 
 namespace Azure.Search.Documents
 {
