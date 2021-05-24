@@ -1851,6 +1851,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                allowModifications: options?.AllowModifications ?? false,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -1878,6 +1879,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                allowModifications: options?.AllowModifications ?? false,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1917,6 +1919,7 @@ namespace Azure.Storage.Blobs.Specialized
                 position,
                 bufferSize,
                 conditions,
+                allowModifications: false,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -1993,6 +1996,7 @@ namespace Azure.Storage.Blobs.Specialized
                 position,
                 bufferSize,
                 conditions,
+                allowModifications: false,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2050,6 +2054,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the download of the blob.
         /// </param>
+        /// <param name="allowModifications">
+        /// Whether to allow modifications during the read.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2067,6 +2074,7 @@ namespace Azure.Storage.Blobs.Specialized
             long position,
             int? bufferSize,
             BlobRequestConditions conditions,
+            bool allowModifications,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -2090,6 +2098,9 @@ namespace Azure.Storage.Blobs.Specialized
                     // This also makes sure that we fail fast if file doesn't exist.
                     var blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
 
+                    var expectedETag = blobProperties.Value.ETag;
+                    var readConditions = allowModifications ? new BlobRequestConditions() : new BlobRequestConditions { IfMatch = expectedETag };
+
                     return new LazyLoadingReadOnlyStream<BlobRequestConditions, BlobProperties>(
                         async (HttpRange range,
                         BlobRequestConditions conditions,
@@ -2109,13 +2120,14 @@ namespace Azure.Storage.Blobs.Specialized
                                 (IDownloadedContent)response.Value,
                                 response.GetRawResponse());
                         },
-                        (ETag? eTag) => new BlobRequestConditions { IfMatch = eTag },
                         async (bool async, CancellationToken cancellationToken)
                             => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                        allowModifications,
+                        expectedETag,
                         blobProperties.Value.ContentLength,
                         position,
                         bufferSize,
-                        conditions);
+                        readConditions);
                 }
                 catch (Exception ex)
                 {

@@ -2012,6 +2012,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                allowModifications: options?.AllowModifications ?? false,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2039,6 +2040,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                allowModifications: options?.AllowModifications ?? false,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2078,6 +2080,7 @@ namespace Azure.Storage.Files.Shares
                 position,
                 bufferSize,
                 conditions,
+                allowModifications: false,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2154,6 +2157,7 @@ namespace Azure.Storage.Files.Shares
                 position,
                 bufferSize,
                 conditions,
+                allowModifications: false,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2210,6 +2214,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
         /// the download of the file.
         /// </param>
+        /// <param name="allowModifications">
+        /// Whether to allow modifications during the read.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2227,6 +2234,7 @@ namespace Azure.Storage.Files.Shares
             long position,
             int? bufferSize,
             ShareFileRequestConditions conditions,
+            bool allowModifications,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -2239,6 +2247,8 @@ namespace Azure.Storage.Files.Shares
 
                 // This also makes sure that we fail fast if file doesn't exist.
                 ShareFileProperties properties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
+
+                var expectedETag = properties.ETag;
 
                 return new LazyLoadingReadOnlyStream<ShareFileRequestConditions, ShareFileProperties>(
                     async (HttpRange range,
@@ -2258,9 +2268,10 @@ namespace Azure.Storage.Files.Shares
                             (IDownloadedContent)response.Value,
                             response.GetRawResponse());
                     },
-                    (ETag? eTag) => new ShareFileRequestConditions { },
                     async (bool async, CancellationToken cancellationToken)
                         => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                    allowModifications,
+                    expectedETag,
                     properties.ContentLength,
                     position,
                     bufferSize,

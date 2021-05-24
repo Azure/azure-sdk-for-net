@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -45,17 +46,6 @@ namespace Azure.Storage
             bool rangeGetContentHash,
             bool async,
             CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Delegate for getting service-specific request contitions for etag locking.
-        /// </summary>
-        /// <param name="etag">
-        /// Etag to lock on.
-        /// </param>
-        /// <returns>
-        /// Created request conditions.
-        /// </returns>
-        public delegate TRequestConditions CreateRequestConditions(ETag? etag);
 
         /// <summary>
         /// Delegate for getting properties for the target resource.
@@ -106,6 +96,8 @@ namespace Azure.Storage
         /// </summary>
         private readonly bool _allowBlobModifications;
 
+        private readonly ETag? _expectedETag;
+
         /// <summary>
         /// Indicated the user has called Seek() since the last Read() call, and the new position is outside _buffer.
         /// </summary>
@@ -122,36 +114,36 @@ namespace Azure.Storage
         private readonly DownloadInternalAsync _downloadInternalFunc;
 
         /// <summary>
-        /// Function to create RequestConditions.
-        /// </summary>
-        private readonly CreateRequestConditions _createRequestConditionsFunc;
-
-        /// <summary>
         /// Function to get properties.
         /// </summary>
         private readonly GetPropertiesAsync _getPropertiesInternalFunc;
 
         public LazyLoadingReadOnlyStream(
             DownloadInternalAsync downloadInternalFunc,
-            CreateRequestConditions createRequestConditionsFunc,
             GetPropertiesAsync getPropertiesFunc,
+            bool allowModifications,
+            ETag? expectedETag,
             long initialLenght,
             long position = 0,
             int? bufferSize = default,
             TRequestConditions requestConditions = default)
         {
             _downloadInternalFunc = downloadInternalFunc;
-            _createRequestConditionsFunc = createRequestConditionsFunc;
             _getPropertiesInternalFunc = getPropertiesFunc;
             _position = position;
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
             _buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
+            _allowBlobModifications = allowModifications;
+            _expectedETag = expectedETag;
             _bufferPosition = 0;
             _bufferLength = 0;
             _requestConditions = requestConditions;
             _length = initialLenght;
-            _allowBlobModifications = !(_requestConditions == null && _createRequestConditionsFunc != null);
             _bufferInvalidated = false;
+            if (!_allowBlobModifications && !expectedETag.HasValue)
+            {
+                throw new ArgumentException("Expected ETag is required if modifications are allowed", nameof(expectedETag));
+            }
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -271,7 +263,11 @@ namespace Azure.Storage
             // Set _requestConditions If-Match if we are not allowing the blob to be modified.
             if (!_allowBlobModifications)
             {
-                _requestConditions = _createRequestConditionsFunc(response.GetRawResponse().Headers.ETag);
+                // TODO (kasobol-msft) find better exception.
+                if (_expectedETag.Value != response.GetRawResponse().Headers.ETag)
+                {
+                    throw new Exception("Etag doesn't match");
+                }
             }
 
             return totalCopiedBytes;
