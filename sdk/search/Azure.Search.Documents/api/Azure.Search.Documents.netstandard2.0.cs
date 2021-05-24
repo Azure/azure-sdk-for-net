@@ -2485,7 +2485,6 @@ namespace Azure.Search.Documents.Models
     {
         Simple = 0,
         Full = 1,
-        Semantic = 2,
     }
     public partial class SearchResultsPage<T> : Azure.Page<Azure.Search.Documents.Models.SearchResult<T>>
     {
@@ -2511,7 +2510,6 @@ namespace Azure.Search.Documents.Models
         internal SearchResult() { }
         public T Document { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Highlights { get { throw null; } }
-        public double? RerankerScore { get { throw null; } }
         public double? Score { get { throw null; } }
     }
     public partial class SearchSuggestion<T>
