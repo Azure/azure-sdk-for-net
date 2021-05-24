@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Linq;
+using Azure.Core.GeoJson;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
