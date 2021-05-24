@@ -1038,6 +1038,9 @@ namespace Azure.Storage.Blobs.Specialized
                         return response.GetRawResponse().AsNoBodyResponse<BlobDownloadStreamingResult>();
                     }
 
+                    BlobRequestConditions conditionsWithEtag = conditions ?? new BlobRequestConditions();
+                    conditionsWithEtag.IfMatch = response.Value.Details.ETag;
+
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
@@ -1046,7 +1049,7 @@ namespace Azure.Storage.Blobs.Specialized
                         startOffset =>
                             StartDownloadAsync(
                                     range,
-                                    conditions,
+                                    conditionsWithEtag,
                                     rangeGetContentHash,
                                     startOffset,
                                     async,
@@ -1056,7 +1059,7 @@ namespace Azure.Storage.Blobs.Specialized
                         async startOffset =>
                             (await StartDownloadAsync(
                                 range,
-                                conditions,
+                                conditionsWithEtag,
                                 rangeGetContentHash,
                                 startOffset,
                                 async,

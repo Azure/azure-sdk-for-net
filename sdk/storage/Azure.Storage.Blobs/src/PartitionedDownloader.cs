@@ -319,7 +319,7 @@ namespace Azure.Storage.Blobs
             new BlobRequestConditions
             {
                 LeaseId = conditions?.LeaseId,
-                IfMatch = conditions?.IfMatch ?? etag,
+                IfMatch = etag,
                 IfNoneMatch = conditions?.IfNoneMatch,
                 IfModifiedSince = conditions?.IfModifiedSince,
                 IfUnmodifiedSince = conditions?.IfUnmodifiedSince
