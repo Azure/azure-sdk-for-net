@@ -4,7 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.GeoJson
+namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// Represents a geometry coordinates array

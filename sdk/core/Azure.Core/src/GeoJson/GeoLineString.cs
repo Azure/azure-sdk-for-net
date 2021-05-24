@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.GeoJson
+namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// Represents a line geometry that consists of multiple coordinates.

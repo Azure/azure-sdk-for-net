@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
-using Azure.GeoJson;
+using Azure.Core.GeoJson;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents

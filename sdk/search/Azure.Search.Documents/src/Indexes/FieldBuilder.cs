@@ -11,7 +11,7 @@ using System.Reflection;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.GeoJson;
+using Azure.Core.GeoJson;
 
 namespace Azure.Search.Documents.Indexes
 {
