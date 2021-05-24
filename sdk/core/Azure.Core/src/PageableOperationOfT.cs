@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using System.Threading;
 
 #nullable enable
@@ -22,6 +23,7 @@ namespace Azure
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override AsyncPageable<T> Value => GetValuesAsync();
 
         /// <summary>

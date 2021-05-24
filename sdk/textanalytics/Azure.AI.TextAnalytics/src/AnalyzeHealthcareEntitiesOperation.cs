@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,6 +48,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> Value => _operationInternal.Value;
 
         /// <summary>
@@ -258,7 +260,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> GetValuesAsync(CancellationToken cancellationToken = default) => _operationInternal.Value;
+        public override AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> GetValuesAsync(CancellationToken cancellationToken = default) => CreateOperationValueAsync(cancellationToken);
 
         /// <summary>
         /// Gets the final result of the long-running operation in synchronously.
@@ -331,7 +333,7 @@ namespace Azure.AI.TextAnalytics
                 AnalyzeHealthcareEntitiesResultCollection value = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(response.Value.Results, _idToIndexMap);
                 _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { value }, nextLink, rawResponse);
 
-                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync(cancellationToken));
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
             else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
             {

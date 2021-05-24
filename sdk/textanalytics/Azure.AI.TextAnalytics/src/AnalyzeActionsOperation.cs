@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -85,6 +86,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override AsyncPageable<AnalyzeActionsResult> Value => _operationInternal.Value;
 
         private int _actionsTotal;
@@ -227,7 +229,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override AsyncPageable<AnalyzeActionsResult> GetValuesAsync(CancellationToken cancellationToken = default) => _operationInternal.Value;
+        public override AsyncPageable<AnalyzeActionsResult> GetValuesAsync(CancellationToken cancellationToken = default) => CreateOperationValueAsync(cancellationToken);
 
         /// <summary>
         /// Gets the final result of the long-running operation synchronously.
@@ -309,7 +311,7 @@ namespace Azure.AI.TextAnalytics
                 AnalyzeActionsResult value = Transforms.ConvertToAnalyzeActionsResult(response.Value, _idToIndexMap);
                 _firstPage = Page.FromValues(new List<AnalyzeActionsResult>() { value }, nextLink, rawResponse);
 
-                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync(cancellationToken));
+                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
 
             return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
