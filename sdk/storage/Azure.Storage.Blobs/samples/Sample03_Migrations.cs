@@ -603,6 +603,85 @@ namespace Azure.Storage.Blobs.Samples
         }
 
         [Test]
+        public async Task EditMetadata()
+        {
+            string data = "hello world";
+            var initialMetadata = new Dictionary<string, string> { { "fizz", "buzz" } };
+
+            string containerName = Randomize("sample-container");
+            var containerClient = new BlobContainerClient(ConnectionString, containerName);
+
+            try
+            {
+                containerClient.Create();
+                BlobClient blobClient = containerClient.GetBlobClient(Randomize("sample-blob"));
+                await blobClient.UploadAsync(BinaryData.FromString(data), new BlobUploadOptions { Metadata = initialMetadata });
+
+                #region Snippet:SampleSnippetsBlobMigration_EditMetadata
+                IDictionary<string, string> metadata = blobClient.GetProperties().Value.Metadata;
+                metadata.Add("foo", "bar");
+                blobClient.SetMetadata(metadata);
+                #endregion
+
+                var expectedMetadata = new Dictionary<string, string> { { "foo", "bar" }, { "fizz", "buzz" } };
+                var actualMetadata = (await blobClient.GetPropertiesAsync()).Value.Metadata;
+                Assert.AreEqual(expectedMetadata.Count, actualMetadata.Count);
+                foreach (var expectedKvp in expectedMetadata)
+                {
+                    Assert.IsTrue(actualMetadata.TryGetValue(expectedKvp.Key, out var actualValue));
+                    Assert.AreEqual(expectedKvp.Value, actualValue);
+                }
+            }
+            finally
+            {
+                await containerClient.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task EditBlobWithMetadata()
+        {
+            string data = "hello world";
+            var initialMetadata = new Dictionary<string, string> { { "fizz", "buzz" } };
+
+            string containerName = Randomize("sample-container");
+            var containerClient = new BlobContainerClient(ConnectionString, containerName);
+
+            try
+            {
+                containerClient.Create();
+                BlobClient blobClient = containerClient.GetBlobClient(Randomize("sample-blob"));
+                await blobClient.UploadAsync(BinaryData.FromString(data), new BlobUploadOptions { Metadata = initialMetadata });
+
+                #region Snippet:SampleSnippetsBlobMigration_EditBlobWithMetadata
+                // download blob content and metadata
+                BlobDownloadResult blobData = blobClient.DownloadContent();
+
+                // modify blob content
+                string modifiedBlobContent = blobData.Content + "FizzBuzz";
+
+                // reupload modified blob content while preserving metadata
+                // not adding metadata is a metadata clear
+                blobClient.Upload(
+                    BinaryData.FromString(modifiedBlobContent),
+                    new BlobUploadOptions() { Metadata = blobData.Details.Metadata });
+                #endregion
+
+                var actualMetadata = (await blobClient.GetPropertiesAsync()).Value.Metadata;
+                Assert.AreEqual(initialMetadata.Count, actualMetadata.Count);
+                foreach (var expectedKvp in initialMetadata)
+                {
+                    Assert.IsTrue(actualMetadata.TryGetValue(expectedKvp.Key, out var actualValue));
+                    Assert.AreEqual(expectedKvp.Value, actualValue);
+                }
+            }
+            finally
+            {
+                await containerClient.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
         public async Task SasBuilder()
         {
             string accountName = StorageAccountName;

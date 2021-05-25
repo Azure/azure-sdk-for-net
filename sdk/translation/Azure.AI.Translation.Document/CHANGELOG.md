@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.0.0-beta.2 (Unreleased)
-
+This version of the SDK defaults to the latest supported service version, which currently is `v1.0`.
 
 ## 1.0.0-beta.1 (2021-04-06)
 

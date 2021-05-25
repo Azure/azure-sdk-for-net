@@ -13,9 +13,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of ServicePrincipalInKVCredentialPatch. </summary>
         public ServicePrincipalInKVCredentialPatch()
         {
-            DataSourceCredentialType = new DataFeedSourceType("ServicePrincipalInKV");
+            DataSourceCredentialType = DataSourceCredentialType.ServicePrincipalInKV;
         }
 
-        public ServicePrincipalInKVParam Parameters { get; set; }
+        public ServicePrincipalInKVParamPatch Parameters { get; set; }
     }
 }

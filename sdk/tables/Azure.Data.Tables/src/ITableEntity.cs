@@ -33,7 +33,7 @@ namespace Azure.Data.Tables
         /// This property should not be set on insert or update operations (the value will be ignored).
         /// </summary>
         /// <value>A <see cref="DateTimeOffset"/> containing the timestamp of the entity.</value>
-        DateTimeOffset? Timestamp { get; }
+        DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's ETag.

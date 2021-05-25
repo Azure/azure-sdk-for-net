@@ -61,7 +61,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
                 }
             }
 
-            return data.ToDictionary(d => d.Key, v => v.Value.Value);
+            return data.ToDictionary(d => d.Key, v => v.Value.Value, StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>

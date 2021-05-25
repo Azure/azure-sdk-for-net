@@ -3,6 +3,9 @@
 ## 12.8.0-beta.5 (Unreleased)
 
 
+## 12.7.3 (2021-05-20)
+- This release contains bug fixes to improve quality.
+
 ## 12.8.0-beta.4 (2021-05-12)
 - Added ability to specify server timeout.
 - Deprecated property AccountSasBuilder.Version, so when generating SAS will always use the latest Storage Service SAS version.

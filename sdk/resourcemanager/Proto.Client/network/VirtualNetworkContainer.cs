@@ -51,10 +51,8 @@ namespace Proto.Network
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public Response<VirtualNetwork> CreateOrUpdate(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
-            return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
-                n => new VirtualNetwork(Parent, new VirtualNetworkData(n)));
+            var response = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Response.FromValue(new VirtualNetwork(Parent, new VirtualNetworkData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -68,10 +66,8 @@ namespace Proto.Network
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public async Task<Response<VirtualNetwork>> CreateOrUpdateAsync(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                n => new VirtualNetwork(Parent, new VirtualNetworkData(n)));
+            var response = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult().WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualNetwork(Parent, new VirtualNetworkData(response.Value)), response.GetRawResponse());
         }
 
         /// <summary>
@@ -219,17 +215,15 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override Response<VirtualNetwork> Get(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                Operations.Get(Id.ResourceGroupName, virtualNetworkName, cancellationToken: cancellationToken),
-               Convertor());
+            var response = Operations.Get(Id.ResourceGroupName, virtualNetworkName, cancellationToken: cancellationToken);
+            return Response.FromValue(new VirtualNetwork(Parent, new VirtualNetworkData(response.Value)), response.GetRawResponse());
         }
 
         /// <inheritdoc/>
         public override async Task<Response<VirtualNetwork>> GetAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await Operations.GetAsync(Id.ResourceGroupName, virtualNetworkName, null, cancellationToken),
-                Convertor());
+            var response = await Operations.GetAsync(Id.ResourceGroupName, virtualNetworkName, null, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new VirtualNetwork(Parent, new VirtualNetworkData(response.Value)), response.GetRawResponse());
         }
 
     }

@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Core
         {
             Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             Location = location;
+            Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
         }
 
         /// <summary>

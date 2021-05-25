@@ -266,7 +266,10 @@ namespace Azure.ResourceManager.Core
         private const string RegexDash = @"-";
         private const string RegexWhitespace = @" ";
 
-        private LocationData()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LocationData"/> class.
+        /// </summary>
+        protected LocationData()
         {
         }
 

@@ -36,9 +36,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// VolumePatchPropertiesDataProtection class.
         /// </summary>
         /// <param name="backup">Backup</param>
-        public VolumePatchPropertiesDataProtection(VolumeBackupProperties backup = default(VolumeBackupProperties))
+        /// <param name="snapshot">Snapshot</param>
+        public VolumePatchPropertiesDataProtection(VolumeBackupProperties backup = default(VolumeBackupProperties), VolumeSnapshotProperties snapshot = default(VolumeSnapshotProperties))
         {
             Backup = backup;
+            Snapshot = snapshot;
             CustomInit();
         }
 
@@ -55,6 +57,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </remarks>
         [JsonProperty(PropertyName = "backup")]
         public VolumeBackupProperties Backup { get; set; }
+
+        /// <summary>
+        /// Gets or sets snapshot
+        /// </summary>
+        /// <remarks>
+        /// Snapshot properties.
+        /// </remarks>
+        [JsonProperty(PropertyName = "snapshot")]
+        public VolumeSnapshotProperties Snapshot { get; set; }
 
     }
 }
