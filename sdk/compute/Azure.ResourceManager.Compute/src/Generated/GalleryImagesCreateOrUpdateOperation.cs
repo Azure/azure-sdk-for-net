@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryImagesCreateOrUpdateOperation : Operation<GalleryImage>, IOperationSource<GalleryImage>
     {
         private readonly ArmOperationHelpers<GalleryImage> _operation;
+
+        /// <summary> Initializes a new instance of GalleryImagesCreateOrUpdateOperation for mocking. </summary>
+        protected GalleryImagesCreateOrUpdateOperation()
+        {
+        }
+
         internal GalleryImagesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<GalleryImage>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryImagesCreateOrUpdateOperation");
