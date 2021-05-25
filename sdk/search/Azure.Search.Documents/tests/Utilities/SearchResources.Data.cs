@@ -4,8 +4,8 @@
 using System;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Azure.Core.GeoJson;
 using Azure.Core.Serialization;
-using Azure.GeoJson;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using Microsoft.Spatial;

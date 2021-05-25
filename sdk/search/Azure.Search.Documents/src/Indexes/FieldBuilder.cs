@@ -9,8 +9,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Azure.Core;
+using Azure.Core.GeoJson;
 using Azure.Core.Serialization;
-using Azure.GeoJson;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes

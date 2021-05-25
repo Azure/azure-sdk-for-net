@@ -38,7 +38,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20997")]
         public async Task StartTrainingCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormTrainingClient(useTokenCredential: true);
@@ -152,7 +151,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(false)]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20997")]
+        [TestCase(true)]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartCreateComposedModel(bool useTokenCredential)
         {
@@ -312,8 +311,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20997")]
-        [TestCase(false, true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20997")]
+        [TestCase(true, true)]
+        [TestCase(false, true)]
         [TestCase(true, false)]
         [TestCase(false, false)]
         public async Task TrainingOps(bool labeled, bool useTokenCredential)
@@ -396,7 +395,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20997")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task CopyModel(bool useTokenCredential)
         {
@@ -452,7 +451,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20997")]
+        [TestCase(true)]
         [TestCase(false)]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task CopyComposedModel(bool useTokenCredential)
