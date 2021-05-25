@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     vm.StorageProfile.OsDisk.EncryptionSettings = GetEncryptionSettings();
                     vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardD1;
                 }, waitForCompletion: false);
-            inputVM1 = returnTwoVm.Item2;
+            inputVM1 = returnTwoVm.Input;
             //Create VM with encryptionKey and KEK
             VirtualMachine inputVM2;
             returnTwoVm = await CreateVM(rgName, asName, storageAccountOutput, imageRef,
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     vm.StorageProfile.OsDisk.EncryptionSettings = GetEncryptionSettings(addKek: true);
                     vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardD1;
                 }, waitForCompletion: false);
-            inputVM2 = returnTwoVm.Item2;
+            inputVM2 = returnTwoVm.Input;
             await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVM1.Name));
             await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVM2.Name));
         }
