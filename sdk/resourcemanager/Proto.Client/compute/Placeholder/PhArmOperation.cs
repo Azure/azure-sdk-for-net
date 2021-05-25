@@ -4,9 +4,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Proto.Compute
 {
     /// <summary>
     /// A class representing an arm operation wrapper object.
@@ -22,13 +23,6 @@ namespace Azure.ResourceManager.Core
         private readonly Operation<TModel> _wrappedResponseOperation;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PhArmOperation{TOperations, TModel}"/> class for mocking.
-        /// </summary>
-        protected PhArmOperation()
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PhArmOperation{TOperations, TModel}"/> class.
         /// </summary>
         /// <param name="wrapped"> The results to wrap. </param>
@@ -36,10 +30,14 @@ namespace Azure.ResourceManager.Core
         public PhArmOperation(Operation<TModel> wrapped, Func<TModel, TOperations> converter)
         {
             if (wrapped is null)
+            {
                 throw new ArgumentNullException(nameof(wrapped));
+            }
 
             if (converter is null)
+            {
                 throw new ArgumentNullException(nameof(converter));
+            }
 
             _wrappedOperation = wrapped;
             _converter = converter;
@@ -53,16 +51,25 @@ namespace Azure.ResourceManager.Core
         public PhArmOperation(Response<TModel> wrapped, Func<TModel, TOperations> converter)
         {
             if (wrapped is null)
+            {
                 throw new ArgumentNullException(nameof(wrapped));
+            }
 
             if (converter is null)
+            {
                 throw new ArgumentNullException(nameof(converter));
+            }
 
             _wrappedResponseOperation = new PhValueArmOperation<TModel>(wrapped);
             _converter = converter;
         }
 
-        private bool _doesWrapOperation => _wrappedResponseOperation is null;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PhArmOperation{TOperations, TModel}"/> class for mocking.
+        /// </summary>
+        protected PhArmOperation()
+        {
+        }
 
         /// <inheritdoc/>
         public override string Id => _wrappedOperation?.Id;
@@ -75,6 +82,9 @@ namespace Azure.ResourceManager.Core
 
         /// <inheritdoc/>
         public override bool HasValue => _doesWrapOperation ? _wrappedOperation.HasValue : _wrappedResponseOperation.HasValue;
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:Element should begin with upper-case letter", Justification = "<Pending>")]
+        private bool _doesWrapOperation => _wrappedResponseOperation is null;
 
         /// <inheritdoc/>
         public override Response GetRawResponse()

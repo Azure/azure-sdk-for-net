@@ -4,13 +4,15 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Proto.Authorization
 {
     /// <summary>
     /// A class representing an arm operation wrapper object.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1618:Generic type parameters should be documented", Justification = "<Pending>")]
     internal class PhValueArmOperation<TOperations> : Operation<TOperations>
         where TOperations : class
     {
