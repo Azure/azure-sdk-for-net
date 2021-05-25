@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Azure.Core.GeoJson
 {
@@ -21,6 +22,7 @@ namespace Azure.Core.GeoJson
     /// });
     /// </code>
     /// </example>
+    [JsonConverter(typeof(GeoJsonConverter))]
     public sealed class GeoLineString : GeoObject
     {
         /// <summary>
