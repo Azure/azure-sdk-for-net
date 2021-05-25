@@ -31,6 +31,7 @@
     },
     "variables": {
         "logReaderRoleId": "73c42c96-874c-492b-b04d-ab87d138a893",
+        "metricPublisherRoleId": "3913510d-42f4-4e42-8a64-420c390055eb",
         "workspaceName": "[concat(parameters('baseName'), '-logs')]"
     },
     "resources": [
@@ -72,7 +73,20 @@
               "principalId": "[parameters('testApplicationOid')]",
               "scope": "[resourceGroup().id]"
             }
-          }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2019-04-01-preview",
+            "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('metricPublisherRoleId'))]",
+            "dependsOn": [
+              "[resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName'))]"
+            ],
+            "properties": {
+              "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('metricPublisherRoleId'))]",
+              "principalId": "[parameters('testApplicationOid')]",
+              "scope": "[resourceGroup().id]"
+            }
+        }
     ],
     "outputs": {
         "CONNECTION_STRING": {
@@ -97,6 +111,10 @@
         },
         "METRICS_RESOURCE_NAMESPACE": {
             "value": "Microsoft.OperationalInsights/workspaces",
+            "type": "string"
+        },
+        "LOGS_ENDPOINT": {
+            "value": "https://api.loganalytics.io/v1",
             "type": "string"
         }
     }

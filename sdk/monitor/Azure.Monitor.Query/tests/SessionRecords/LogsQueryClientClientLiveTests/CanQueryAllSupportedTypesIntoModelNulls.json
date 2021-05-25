@@ -1,23 +1,24 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/9a15b791-8d2f-436f-a734-25d128c72254/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "285",
+        "Content-Length": "331",
         "Content-Type": "application/json",
-        "traceparent": "00-5d6d1520240c2b4d973ebef7a0c55c17-d243210251551742-00",
+        "traceparent": "00-22824e2ab7089f49a80a2bd39b58dfff-39805b44d164f844-00",
         "User-Agent": [
-          "azsdk-net-Monitory.Query/1.0.0-alpha.20210420.1",
-          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "12ae3d299533e79e36e40102cdf7b0b2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)[datetime(null),bool(null),guid(null),int(null),long(null),double(null),\u0027I cant be null\u0027,timespan(null),decimal(null),]"
+        "query": "datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)[datetime(null),bool(null),guid(null),int(null),long(null),double(null),\u0027I cant be null\u0027,timespan(null),decimal(null),]",
+        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -26,13 +27,13 @@
         "Connection": "keep-alive",
         "Content-Length": "413",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 20 Apr 2021 22:37:33 GMT",
+        "Date": "Thu, 13 May 2021 21:57:48 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-6ddc976cfd-r6xwr",
+        "Via": "1.1 draft-oms-6b5d48d5bb-mlzcs",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -96,8 +97,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-20T15:37:32.1430457-07:00",
+    "DateTimeOffsetNow": "2021-05-13T14:57:47.8378945-07:00",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io/v1",
     "RandomSeed": "1837064876",
-    "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
+    "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
   }
 }

@@ -145,6 +145,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public virtual IWorkspacePurgeOperations WorkspacePurge { get; private set; }
 
         /// <summary>
+        /// Gets the ITablesOperations.
+        /// </summary>
+        public virtual ITablesOperations Tables { get; private set; }
+
+        /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         public virtual IClustersOperations Clusters { get; private set; }
@@ -153,11 +158,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
-        /// Gets the ITablesOperations.
-        /// </summary>
-        public virtual ITablesOperations Tables { get; private set; }
 
         /// <summary>
         /// Gets the IWorkspacesOperations.
@@ -425,9 +425,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
             Gateways = new GatewaysOperations(this);
             Schema = new SchemaOperations(this);
             WorkspacePurge = new WorkspacePurgeOperations(this);
+            Tables = new TablesOperations(this);
             Clusters = new ClustersOperations(this);
             Operations = new Operations(this);
-            Tables = new TablesOperations(this);
             Workspaces = new WorkspacesOperations(this);
             DeletedWorkspaces = new DeletedWorkspacesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

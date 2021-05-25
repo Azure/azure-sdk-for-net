@@ -62,6 +62,9 @@ namespace Azure.AI.FormRecognizer.Models
         public int RowCount { get; }
 
         /// <summary> Bounding box of the table. </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// </remarks>
         public FieldBoundingBox BoundingBox { get; }
 
         /// <summary>

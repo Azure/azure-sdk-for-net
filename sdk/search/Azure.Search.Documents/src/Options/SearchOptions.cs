@@ -192,12 +192,7 @@ namespace Azure.Search.Documents
 
                 if (QueryAnswer.HasValue)
                 {
-                    queryAnswerStringValue = QueryAnswer.Value.ToString();
-                }
-
-                if (QueryAnswerCount.HasValue)
-                {
-                    queryAnswerStringValue = $"{queryAnswerStringValue}{QueryAnswerRawSplitter}{QueryAnswerCount.Value}";
+                    queryAnswerStringValue = $"{QueryAnswer.Value}{QueryAnswerRawSplitter}{QueryAnswerCount.GetValueOrDefault(1)}";
                 }
 
                 return queryAnswerStringValue;

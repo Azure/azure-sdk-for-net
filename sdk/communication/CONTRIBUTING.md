@@ -26,7 +26,7 @@ If the tests are successful, we can proceed to run the tests in LIVE mode.
 
 ### Live mode
 
-Since in LIVE mode we are hitting an actual resource, we must set the appropriate environment variables to make sure the code tests against the resource we want. Set up an env variable called `AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING` for Phone Number and SMS packages and set it to the connection string of the resource you want to test against. For all other communication packages, set up an environment variable called `COMMUNICATION_CONNECTION_STRING` and set it to the connection string of the resource you want to test against.
+Since in LIVE mode we are hitting an actual resource, we must set the appropriate environment variables to make sure the code tests against the resource we want. Set up an env variable called `COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING` for Phone Number and SMS packages and set it to the connection string of the resource you want to test against. For all other communication packages, set up an environment variable called `COMMUNICATION_CONNECTION_STRING` and set it to the connection string of the resource you want to test against.
 
 Depending on which package you are testing, it may need special environment variables to test succesfully. The names of these variables can be found inside `*ClientTestEnvironment.cs` inside the test packages. Make sure to set these variables before running the tests themselves. You may need to restart your development environment after creating or updating these environment variables.
 

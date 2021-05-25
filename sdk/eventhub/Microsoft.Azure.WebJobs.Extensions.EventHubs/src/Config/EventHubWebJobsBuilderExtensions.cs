@@ -3,9 +3,11 @@
 
 using System;
 using System.Globalization;
+using System.Net;
 using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.EventHubs;
+using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -71,11 +73,18 @@ namespace Microsoft.Extensions.Hosting
                     {
                         options.LoadBalancingUpdateInterval = renewInterval.Value;
                     }
+
+                    var proxy = section.GetValue<string>("WebProxy");
+                    if (!string.IsNullOrEmpty(proxy))
+                    {
+                        options.WebProxy = new WebProxy(proxy);
+                    }
                 })
                 .BindOptions<EventHubOptions>();
 
             builder.Services.AddAzureClientsCore();
             builder.Services.AddSingleton<EventHubClientFactory>();
+            builder.Services.AddSingleton<CheckpointClientProvider>();
             builder.Services.Configure<EventHubOptions>(configure);
             builder.Services.PostConfigure<EventHubOptions>(ConfigureInitialOffsetOptions);
 

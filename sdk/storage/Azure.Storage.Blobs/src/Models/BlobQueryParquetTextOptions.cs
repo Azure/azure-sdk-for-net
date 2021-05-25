@@ -6,7 +6,8 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Parquery text configuration.
     /// </summary>
-    public class BlobQueryParquetTextOptions : BlobQueryTextOptions
+    // TODO https://github.com/Azure/azure-sdk-for-net/issues/20758
+    internal class BlobQueryParquetTextOptions : BlobQueryTextOptions
     {
     }
 }

@@ -1,7 +1,14 @@
 # Release History
 
-## 5.1.0-beta.7 (Unreleased)
+## 5.1.0-beta.7 (2021-05-18)
+### New features
+- Added property `DisableServiceLogs` to `TextAnalyticsRequestOptions`.
+- Added support for Sentiment Analysis as an action type for `StartAnalyzeBatchActions`.
+- Changed type of `IncludeOpinionMining` to `bool?`.
 
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `3.1-preview.5`.
+- Renamed type `TextElementsV8` to `TextElementV8` in model `StringIndexType`.
 
 ## 5.1.0-beta.6 (2021-04-06)
 ### New features

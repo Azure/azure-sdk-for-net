@@ -151,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                })
                .ConfigureDefaultTestHost<TJobClass>(b =>
                {
-                   b.AddServiceBus(options => options.RetryOptions.TryTimeout = TimeSpan.FromSeconds(10));
+                   b.AddServiceBus(options => options.ClientRetryOptions.TryTimeout = TimeSpan.FromSeconds(10));
                })
                .ConfigureServices(s =>
                {

@@ -371,7 +371,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual bool AutoCompleteMessages { get { throw null; } }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
-        protected virtual Azure.Messaging.ServiceBus.ServiceBusProcessor InnerProcessor { get { throw null; } }
+        protected internal virtual Azure.Messaging.ServiceBus.ServiceBusProcessor InnerProcessor { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
         public virtual bool IsProcessing { get { throw null; } }
         public virtual System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }

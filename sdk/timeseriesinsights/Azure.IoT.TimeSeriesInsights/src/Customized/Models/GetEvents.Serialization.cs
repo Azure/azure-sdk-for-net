@@ -11,7 +11,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// order to turn Time Series Ids from a strongly typed object to an list of objects that
     /// the service can understand, and vice versa.
     /// </summary>
-    public partial class GetEvents : IUtf8JsonSerializable
+    internal partial class GetEvents : IUtf8JsonSerializable
     {
         // The use of fully qualified name for IUtf8JsonSerializable is a work around until this
         // issue is fixed: https://github.com/Azure/autorest.csharp/issues/793
@@ -36,7 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 writer.WritePropertyName("projectedProperties");
                 writer.WriteStartArray();
-                foreach (EventProperty item in ProjectedProperties)
+                foreach (TimeSeriesInsightsEventProperty item in ProjectedProperties)
                 {
                     writer.WriteObjectValue(item);
                 }

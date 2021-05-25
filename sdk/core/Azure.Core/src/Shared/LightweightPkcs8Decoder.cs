@@ -145,6 +145,7 @@ namespace Azure.Core
                         int max = end + 1;
                         if (max <= i + 4)
                         {
+                            // cspell:ignore accum
                             int accum = 0;
                             for (idx = i; idx < max; idx++)
                             {

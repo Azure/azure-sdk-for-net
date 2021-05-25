@@ -14,8 +14,8 @@ namespace Azure.Data.Tables
     /// The <see cref="TableOdataFilter"/> class is used to help construct valid OData filter
     /// expressions, like the kind used by <see cref="TableClient.Query{T}(string,System.Nullable{int},System.Collections.Generic.IEnumerable{string},System.Threading.CancellationToken)"/>,
     /// <see cref="TableClient.QueryAsync{T}(string,System.Nullable{int},System.Collections.Generic.IEnumerable{string},System.Threading.CancellationToken)"/>,
-    /// <see cref="TableServiceClient.GetTables(string,System.Nullable{int},System.Threading.CancellationToken)"/>, and
-    /// <see cref="TableServiceClient.GetTablesAsync(string,System.Nullable{int},System.Threading.CancellationToken)"/>,
+    /// <see cref="TableServiceClient.Query(string,System.Nullable{int},System.Threading.CancellationToken)"/>, and
+    /// <see cref="TableServiceClient.QueryAsync(string,System.Nullable{int},System.Threading.CancellationToken)"/>,
     /// by automatically replacing, quoting, and escaping interpolated parameters.
     /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings">Constructing Filter Strings</see>.
     /// </summary>

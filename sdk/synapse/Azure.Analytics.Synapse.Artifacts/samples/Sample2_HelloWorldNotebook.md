@@ -64,5 +64,5 @@ To delete a notebook no longer needed call `StartDeleteNotebook`, passing in the
 
 ```C# Snippet:DeleteNotebook
 NotebookDeleteNotebookOperation deleteNotebookOperation = client.StartDeleteNotebook(notebookName);
-await deleteNotebookOperation.WaitForCompletionAsync();
+await deleteNotebookOperation.WaitForCompletionResponseAsync();
 ```

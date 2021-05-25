@@ -13,5 +13,8 @@ namespace Azure.Monitor.Query.Tests
         public string MetricsResource => GetRecordedVariable("METRICS_RESOURCE_ID");
         public string MetricsNamespace => GetRecordedVariable("METRICS_RESOURCE_NAMESPACE");
         public string MonitorIngestionEndpoint => GetOptionalVariable("METRICS_INGEST_SUFFIX") ?? "ods.opinsights.azure.com";
+        public string MetricsIngestionEndpoint => GetOptionalVariable("METRICS_INGEST_SUFFIX") ?? "monitoring.azure.com";
+        public Uri LogsEndpoint => new(GetRecordedVariable("LOGS_ENDPOINT"));
+        public Uri MetricsEndpoint => new(ResourceManagerUrl);
     }
 }

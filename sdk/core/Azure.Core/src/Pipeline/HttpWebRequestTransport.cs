@@ -274,6 +274,7 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 _originalContentStream?.Dispose();
+                DisposeContentStreamIfNotBuffered();
             }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
