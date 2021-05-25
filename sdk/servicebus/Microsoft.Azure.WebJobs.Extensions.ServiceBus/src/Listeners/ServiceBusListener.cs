@@ -30,6 +30,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly ServiceBusEntityType _entityType;
         private readonly string _entityPath;
         private readonly bool _isSessionsEnabled;
+        private readonly bool _autoCompleteMessagesOptionEvaluatedValue;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly ServiceBusOptions _serviceBusOptions;
         private readonly ILoggerFactory _loggerFactory;
@@ -52,6 +53,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             ServiceBusEntityType entityType,
             string entityPath,
             bool isSessionsEnabled,
+            bool autoCompleteMessagesOptionEvaluatedValue,
             ITriggeredFunctionExecutor triggerExecutor,
             ServiceBusOptions options,
             string connection,
@@ -64,6 +66,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _entityType = entityType;
             _entityPath = entityPath;
             _isSessionsEnabled = isSessionsEnabled;
+            _autoCompleteMessagesOptionEvaluatedValue = autoCompleteMessagesOptionEvaluatedValue;
             _triggerExecutor = triggerExecutor;
             _cancellationTokenSource = new CancellationTokenSource();
             _messagingProvider = messagingProvider;
@@ -84,13 +87,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 () => _messagingProvider.CreateMessageProcessor(
                     _client.Value,
                     _entityPath,
-                    options.ToProcessorOptions()));
+                    options.ToProcessorOptions(_autoCompleteMessagesOptionEvaluatedValue)));
 
             _sessionMessageProcessor = new Lazy<SessionMessageProcessor>(
                 () => _messagingProvider.CreateSessionMessageProcessor(
                     _client.Value,
                     _entityPath,
-                    options.ToSessionProcessorOptions()));
+                    options.ToSessionProcessorOptions(_autoCompleteMessagesOptionEvaluatedValue)));
 
             _scaleMonitor = new Lazy<ServiceBusScaleMonitor>(
                 () => new ServiceBusScaleMonitor(
@@ -314,7 +317,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             }
 
                             // Complete batch of messages only if the execution was successful
-                            if (_serviceBusOptions.AutoCompleteMessages && _started)
+                            if (_autoCompleteMessagesOptionEvaluatedValue && _started)
                             {
                                 if (result.Succeeded)
                                 {
