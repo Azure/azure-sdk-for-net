@@ -2,9 +2,11 @@
 
 ## 1.0.0-beta.4 (2021-05-24)
 
+- Update the title package and updates to readme
+
 ## 1.0.0-beta.3 (2021-05-24)
 
-- Update the title and description of the package and updates to readme.
+- Update the title and description of the package.
 
 ## 1.0.0-beta.2 (2021-05-19)
 
