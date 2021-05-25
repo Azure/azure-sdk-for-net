@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ namespace Azure.Identity.Tests.Mock
 {
     internal class MockMsalPublicClient : MsalPublicClient
     {
+        public DeviceCodeResult DeviceCodeResult { get; set; } = GetDeviceCodeResult();
         public List<IAccount> Accounts { get; set; }
 
         public Func<string[], string, AuthenticationResult> AuthFactory { get; set; }
@@ -24,7 +27,7 @@ namespace Azure.Identity.Tests.Mock
 
         public Func<string[], IAccount, bool, CancellationToken, AuthenticationResult> ExtendedSilentAuthFactory { get; set; }
 
-        public Func<string[], string, AuthenticationResult> DeviceCodeAuthFactory { get; set; }
+        public Func<DeviceCodeInfo, CancellationToken, AuthenticationResult> DeviceCodeAuthFactory { get; set; }
 
         public Func<string[], IPublicClientApplication> PubClientAppFactory { get; set; }
 
@@ -33,7 +36,14 @@ namespace Azure.Identity.Tests.Mock
             return new(Accounts);
         }
 
-        protected override ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordCoreAsync(string[] scopes, string claims, string username, SecureString password, string tenantId, bool async, CancellationToken cancellationToken)
+        protected override ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordCoreAsync(
+            string[] scopes,
+            string claims,
+            string username,
+            SecureString password,
+            string tenantId,
+            bool async,
+            CancellationToken cancellationToken)
         {
             Func<string[], string, AuthenticationResult> factory = UserPassAuthFactory ?? AuthFactory;
 
@@ -45,7 +55,13 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        protected override ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, bool async, CancellationToken cancellationToken)
+        protected override ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(
+            string[] scopes,
+            string claims,
+            Prompt prompt,
+            string loginHint,
+            bool async,
+            CancellationToken cancellationToken)
         {
             var interactiveAuthFactory = InteractiveAuthFactory;
             var authFactory = AuthFactory;
@@ -62,7 +78,12 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        protected override ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, IAccount account, bool async, CancellationToken cancellationToken)
+        protected override ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(
+            string[] scopes,
+            string claims,
+            IAccount account,
+            bool async,
+            CancellationToken cancellationToken)
         {
             if (ExtendedSilentAuthFactory != null)
             {
@@ -79,7 +100,13 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        protected override ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, AuthenticationRecord record, string tenantId, bool async, CancellationToken cancellationToken)
+        protected override ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(
+            string[] scopes,
+            string claims,
+            AuthenticationRecord record,
+            string tenantId,
+            bool async,
+            CancellationToken cancellationToken)
         {
             Func<string[], string, AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;
 
@@ -91,13 +118,19 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        protected override ValueTask<AuthenticationResult> AcquireTokenWithDeviceCodeCoreAsync(string[] scopes, string claims, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
+        protected override async ValueTask<AuthenticationResult> AcquireTokenWithDeviceCodeCoreAsync(
+            string[] scopes,
+            string claims,
+            Func<DeviceCodeResult, Task> deviceCodeCallback,
+            bool async,
+            CancellationToken cancellationToken)
         {
-            Func<string[], string, AuthenticationResult> factory = DeviceCodeAuthFactory ?? AuthFactory;
-
-            if (factory != null)
+            if (DeviceCodeAuthFactory != null)
             {
-                return new ValueTask<AuthenticationResult>(factory(scopes, null));
+                await deviceCodeCallback(DeviceCodeResult);
+                var result = DeviceCodeAuthFactory(new DeviceCodeInfo(DeviceCodeResult), cancellationToken);
+                cancellationToken.ThrowIfCancellationRequested();
+                return result;
             }
 
             throw new NotImplementedException();
@@ -116,6 +149,20 @@ namespace Azure.Identity.Tests.Mock
             }
 
             return new ValueTask<IPublicClientApplication>(PubClientAppFactory(clientCapabilities));
+        }
+
+        internal static DeviceCodeResult GetDeviceCodeResult(
+            string userCode = "userCode",
+            string deviceCode = "deviceCode",
+            string verificationUrl = "https://localhost",
+            DateTimeOffset expiresOn = new(),
+            long interval = 0,
+            string clientId = "clientId",
+            ISet<string> scopes = null)
+        {
+            var ctor = typeof(DeviceCodeResult).GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic).FirstOrDefault();
+            var message = $"To sign in, use a web browser to open the page {verificationUrl} and enter the code {deviceCode} to authenticate.";
+            return (DeviceCodeResult)ctor.Invoke(new object[] { userCode, deviceCode, verificationUrl, expiresOn, interval, message, clientId, scopes ?? new HashSet<string>() });
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.Identity
     {
         private readonly string _tenantId;
         private readonly TokenCredentialOptions _options;
-        internal MsalPublicClient Client { get; }
+        internal MsalPublicClient Client { get; set; }
         internal string ClientId { get; }
         internal bool DisableAutomaticAuthentication { get; }
         internal AuthenticationRecord Record { get; private set; }
@@ -215,7 +215,6 @@ namespace Azure.Identity
                 {
                     throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, inner);
                 }
-
                 return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext, async, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)

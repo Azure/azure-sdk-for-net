@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -13,43 +14,67 @@ namespace Azure.Identity.Tests
 {
     public class AuthorizationCodeCredentialTests : ClientTestBase
     {
+        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
+        private const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
+        private const string Scope = "https://vault.azure.net/.default";
+        private TokenCredentialOptions options = new TokenCredentialOptions();
+        private string authCode;
+        private string expectedToken;
+        private DateTimeOffset expiresOn;
+        private MockMsalConfidentialClient mockMsalClient;
+        private string expectedTenantId;
+        private string clientSecret = Guid.NewGuid().ToString();
+        private Func<string[], string, AuthenticationAccount, ValueTask<AuthenticationResult>> silentFactory;
+
         public AuthorizationCodeCredentialTests(bool isAsync) : base(isAsync)
         { }
 
-        [Test]
-        public async Task AuthenticateWithAuthCodeMockAsync()
+        [SetUp]
+        public void TestSetup()
         {
-            var expectedToken = Guid.NewGuid().ToString();
-            var authCode = Guid.NewGuid().ToString();
-            var clientId = Guid.NewGuid().ToString();
-            var tenantId = Guid.NewGuid().ToString();
-            var clientSecret = Guid.NewGuid().ToString();
-            string[] scopes = { "https://vault.azure.net/.default" };
-            var account = new MockAccount("username", tenantId);
-            var options = new TokenCredentialOptions();
-            var authResult = new AuthenticationResult(
+            expectedTenantId = null;
+            authCode = Guid.NewGuid().ToString();
+            expectedToken = Guid.NewGuid().ToString();
+            expiresOn = DateTimeOffset.Now.AddHours(1);
+            var result = new AuthenticationResult(
                 expectedToken,
                 false,
-                "",
-                DateTimeOffset.Now.AddHours(1),
-                default,
-                tenantId,
-                account,
                 null,
-                scopes,
+                expiresOn,
+                expiresOn,
+                TenantId,
+                new MockAccount("username"),
+                null,
+                new[] { Scope },
                 Guid.NewGuid(),
                 null,
                 "Bearer");
-            var mockMsalClient = new MockMsalConfidentialClient(authResult);
+            silentFactory = (_, _tenantId, _) =>
+            {
+                Assert.AreEqual(expectedTenantId, _tenantId);
+                return new ValueTask<AuthenticationResult>(result);
+            };
+            mockMsalClient = new MockMsalConfidentialClient(silentFactory);
+            mockMsalClient.AuthcodeFactory = (_, _tenantId, _) =>
+            {
+                Assert.AreEqual(expectedTenantId, _tenantId);
+                return result;
+            };
+        }
+
+        [Test]
+        public async Task AuthenticateWithAuthCodeMockAsync([Values(null, TenantId)] string tenantId, [Values(true, false)] bool preferHint)
+        {
+            expectedTenantId = preferHint ? tenantId : TenantId;
 
             AuthorizationCodeCredential cred = InstrumentClient(
-                new AuthorizationCodeCredential(tenantId, clientId, clientSecret, authCode, options, mockMsalClient));
+                new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockMsalClient));
 
-            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(scopes));
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }));
 
             Assert.AreEqual(token.Token, expectedToken);
 
-            AccessToken token2 = await cred.GetTokenAsync(new TokenRequestContext(scopes));
+            AccessToken token2 = await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }));
 
             Assert.AreEqual(token.Token, expectedToken);
         }
