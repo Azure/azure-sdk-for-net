@@ -7,18 +7,18 @@
 
 namespace Microsoft.Azure.Management.Compute
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
 
-    internal static partial class SdkInfo
-    {
-        public static IEnumerable<Tuple<string, string, string>> ApiInfo_ComputeManagementClient
-        {
-            get
-            {
-                return new Tuple<string, string, string>[]
-                {
+  internal static partial class SdkInfo
+  {
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_ComputeManagementClient
+      {
+          get
+          {
+              return new Tuple<string, string, string>[]
+              {
                 new Tuple<string, string, string>("Compute", "AvailabilitySets", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "CloudServiceOperatingSystems", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "CloudServiceRoleInstances", "2021-03-01"),
@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSets", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineSizes", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachines", "2021-03-01"),
-                }.AsEnumerable();
-            }
-        }
-    }
+              }.AsEnumerable();
+          }
+      }
+  }
 }
