@@ -1,13 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Mixed Reality ARR Client</AssemblyTitle>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <PackageTags>Azure MixedReality</PackageTags>
     <Authors>Microsoft</Authors>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
   
   <!-- Shared source from Azure.Core and Azure.MixedReality.Authentication -->
