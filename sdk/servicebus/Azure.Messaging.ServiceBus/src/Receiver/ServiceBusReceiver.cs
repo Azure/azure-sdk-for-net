@@ -269,7 +269,6 @@ namespace Azure.Messaging.ServiceBus
                 messages = await InnerReceiver.ReceiveMessagesAsync(
                     maxMessages,
                     maxWaitTime,
-                    isProcessor,
                     cancellationToken).ConfigureAwait(false);
                 await ApplyPlugins(messages).ConfigureAwait(false);
             }
@@ -473,11 +472,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
-        /// <param name="isProcessor"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        internal async Task OpenLinkAsync(bool isProcessor, CancellationToken cancellationToken) =>
-            await InnerReceiver.OpenLinkAsync(isProcessor, cancellationToken).ConfigureAwait(false);
+        internal async Task OpenLinkAsync(CancellationToken cancellationToken) =>
+            await InnerReceiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.

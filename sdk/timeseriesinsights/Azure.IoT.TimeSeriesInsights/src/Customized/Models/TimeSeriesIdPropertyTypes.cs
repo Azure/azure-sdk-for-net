@@ -9,7 +9,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// The type of the property. Currently, only &quot;String&quot; is supported.
     /// </summary>
     [CodeGenModel("TimeSeriesIdPropertyTypes")]
-    public readonly partial struct TimeSeriesIdPropertyTypes
+    public readonly partial struct TimeSeriesIdPropertyType
     {
     }
 }

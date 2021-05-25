@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 
@@ -41,7 +42,7 @@ namespace Azure.Monitor.Query.Tests
             }
 
             _initialized = true;
-            var metricClient = new MetricsClient(_testEnvironment.Credential);
+            var metricClient = new MetricsClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
 
             while (!await MetricsPropagated(metricClient))
             {
@@ -83,7 +84,7 @@ namespace Azure.Monitor.Query.Tests
             }
 
             var metrics = await metricClient.QueryAsync(_testEnvironment.MetricsResource, new[] {MetricName},
-                new MetricQueryOptions()
+                new MetricsQueryOptions()
                 {
                     TimeSpan = new DateTimeRange(StartTime, Duration),
                     MetricNamespace = MetricNamespace,
@@ -94,7 +95,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeries = metrics.Value.Metrics[0].Timeseries.FirstOrDefault();
+            var timeSeries = metrics.Value.Metrics[0].TimeSeries.FirstOrDefault();
             if (timeSeries == null)
             {
                 return false;

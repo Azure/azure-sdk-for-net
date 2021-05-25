@@ -22,12 +22,12 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
         /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <param name="statistics"> Any object. </param>
+        /// <param name="Statistics"> Any object. </param>
         /// <param name="error"> . </param>
-        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement statistics, ErrorDetails error)
+        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement Statistics, ErrorDetails error)
         {
             Tables = tables;
-            Statistics = statistics;
+            _statistics = Statistics;
             Error = error;
         }
 

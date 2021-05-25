@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> The DocumentStatusDetail. </summary>
+    /// <summary> Document Status Response. </summary>
     public partial class DocumentStatusResult
     {
         /// <summary> Initializes a new instance of DocumentStatusResult. </summary>

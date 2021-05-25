@@ -8,8 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "236",
         "Content-Type": "application/json",
-        "traceparent": "00-938b2a3eb668304d91f2579b7991a973-38e6e224468a9949-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-db18986c5684be4c889b72a8caa92560-18b6e563dd01c247-00",
+        "User-Agent": [
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "e7225792ee0fb81fc825b0c62e8c1f59",
         "x-ms-return-client-request-id": "true"
       },
@@ -21,12 +24,12 @@
               "prefer": " include-statistics=true"
             },
             "body": {
-              "query": "TableA1_116_CL",
-              "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
+              "query": "TableA1_123_CL",
+              "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
             },
             "path": "/query",
             "method": "POST",
-            "workspace": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+            "workspace": "50e32c19-2b4b-4152-b97e-0e02441cae60"
           }
         ]
       },
@@ -36,14 +39,14 @@
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 May 2021 18:37:25 GMT",
+        "Date": "Thu, 13 May 2021 21:58:20 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-6c84644dc4-lxnf6",
+        "Via": "1.1 draft-oms-6b5d48d5bb-6v6f7",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -52,7 +55,7 @@
             "id": "0",
             "status": 200,
             "headers": {
-              "Age": "80",
+              "Age": "5",
               "request-context": "appId=cid-v1:70941e4f-7e8f-40b7-b730-183893db0297"
             },
             "body": {
@@ -115,48 +118,48 @@
                   ],
                   "rows": [
                     [
-                      "bb1b4371-062d-414d-bef3-b0d124ff721c",
+                      "50e32c19-2b4b-4152-b97e-0e02441cae60",
                       "RestAPI",
                       "",
                       "",
-                      "2021-04-26T00:00:00Z",
+                      "2021-05-03T00:00:00Z",
                       "",
                       "",
                       1,
                       "a",
                       false,
                       0,
-                      "TableA1_116_CL",
+                      "TableA1_123_CL",
                       ""
                     ],
                     [
-                      "bb1b4371-062d-414d-bef3-b0d124ff721c",
+                      "50e32c19-2b4b-4152-b97e-0e02441cae60",
                       "RestAPI",
                       "",
                       "",
-                      "2021-04-28T00:00:00Z",
+                      "2021-05-05T00:00:00Z",
                       "",
                       "",
                       3,
                       "b",
                       true,
                       1.20000005,
-                      "TableA1_116_CL",
+                      "TableA1_123_CL",
                       ""
                     ],
                     [
-                      "bb1b4371-062d-414d-bef3-b0d124ff721c",
+                      "50e32c19-2b4b-4152-b97e-0e02441cae60",
                       "RestAPI",
                       "",
                       "",
-                      "2021-05-01T00:00:00Z",
+                      "2021-05-08T00:00:00Z",
                       "",
                       "",
                       1,
                       "c",
                       false,
                       1.10000002,
-                      "TableA1_116_CL",
+                      "TableA1_123_CL",
                       ""
                     ]
                   ]
@@ -164,7 +167,7 @@
               ],
               "statistics": {
                 "query": {
-                  "executionTime": 0.0312532,
+                  "executionTime": 0.0155881,
                   "resourceUsage": {
                     "cache": {
                       "memory": {
@@ -192,20 +195,20 @@
                       }
                     },
                     "cpu": {
-                      "user": "00:00:00.0312500",
+                      "user": "00:00:00.0156250",
                       "kernel": "00:00:00",
-                      "totalCpu": "00:00:00.0312500"
+                      "totalCpu": "00:00:00.0156250"
                     },
                     "memory": {
-                      "peakPerNode": 3670720
+                      "peakPerNode": 4719840
                     }
                   },
                   "inputDatasetStatistics": {
                     "extents": {
                       "total": 1,
                       "scanned": 1,
-                      "scannedMinDatetime": "2021-05-04T18:10:50.2570785Z",
-                      "scannedMaxDatetime": "2021-05-04T18:10:50.2570785Z"
+                      "scannedMinDatetime": "2021-05-13T21:57:06.9994202Z",
+                      "scannedMaxDatetime": "2021-05-13T21:57:06.9994202Z"
                     },
                     "rows": {
                       "total": 3,
@@ -235,8 +238,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-04T11:37:25.7173262-07:00",
+    "DateTimeOffsetNow": "2021-05-13T14:58:20.7534376-07:00",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io",
     "RandomSeed": "1838021031",
-    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+    "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
   }
 }

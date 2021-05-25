@@ -8,6 +8,7 @@
 - Response headers that were marked as `REDACTED` in error messages and logs are now exposed by default.
 
 ### Breaking Changes
+- `NotificationHook.ExternalLink` and `WebNotificationHook.Endpoint` are now of type `Uri`.
 - Renamed all `SkipCount` listing options to `Skip`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
 - Renamed all `TopCount` listing options to `MaxPageSize`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
 - Removed data feed sources `ElasticsearchDataFeedSource` and `HttpRequestDataFeedSource` as they are not supported by the service anymore. A different type of data feed source must be used for data ingestion instead.
