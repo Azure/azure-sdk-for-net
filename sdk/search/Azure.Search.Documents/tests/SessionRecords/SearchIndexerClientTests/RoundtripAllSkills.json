@@ -8,10 +8,10 @@
         "api-key": "Sanitized",
         "Content-Length": "3714",
         "Content-Type": "application/json",
-        "traceparent": "00-f5b8e741d2e3e74db966ea7035fae2e2-165e85a51ccc2446-00",
+        "traceparent": "00-3dc7b3cab8b0904592f0b4bf14997275-e85acf4a15aa084e-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
-          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210514.1",
+          "(.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "5d016cb905478992346230c9ebac18e1",
         "x-ms-return-client-request-id": "true"
@@ -316,9 +316,9 @@
         "client-request-id": "5d016cb9-0547-8992-3462-30c9ebac18e1",
         "Content-Length": "6254",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Wed, 28 Apr 2021 22:48:33 GMT",
-        "elapsed-time": "96",
-        "ETag": "W/\u00220x8D90A97C049F9D8\u0022",
+        "Date": "Fri, 14 May 2021 20:47:28 GMT",
+        "elapsed-time": "91",
+        "ETag": "W/\u00220x8D917197C9CFD03\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027fpmjeogx\u0027)?api-version=2020-06-30-Preview",
         "OData-Version": "4.0",
@@ -330,7 +330,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D90A97C049F9D8\u0022",
+        "@odata.etag": "\u00220x8D917197C9CFD03\u0022",
         "name": "fpmjeogx",
         "description": null,
         "skills": [

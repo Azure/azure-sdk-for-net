@@ -52,6 +52,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateAlertConfigurationValidatesArguments()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -70,6 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateAlertConfigurationRespectsTheCancellationToken()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();

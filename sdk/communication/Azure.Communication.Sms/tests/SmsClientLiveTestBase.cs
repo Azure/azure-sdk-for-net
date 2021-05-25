@@ -14,6 +14,16 @@ namespace Azure.Communication.Sms.Tests
         public SmsClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new SmsClientRecordedTestSanitizer();
 
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            if (TestEnvironment.ShouldIgnoreSMSTests)
+            {
+                Assert.Ignore("SMS tests are skipped " +
+                    "because sms package is not included in the TEST_PACKAGES_ENABLED variable");
+            }
+        }
+
         public SmsClient CreateSmsClient()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;

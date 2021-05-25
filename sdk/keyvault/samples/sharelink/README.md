@@ -9,89 +9,11 @@ urlFragment: share-link
 name: ShareLink
 description: Demonstrates how to generate a client for Key Vault-managed storage accounts and generate SAS tokens.
 extendedZipContent:
-# Shared/AutoRest
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/ArmOperationHelpers.cs
-  target: /Shared/AutoRest/ArmOperationHelpers.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/ChangeTrackingDictionary.cs
-  target: /Shared/AutoRest/ChangeTrackingDictionary.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/ChangeTrackingList.cs
-  target: /Shared/AutoRest/ChangeTrackingList.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/CodeGenClientAttribute.cs
-  target: /Shared/AutoRest/CodeGenClientAttribute.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/CodeGenMemberAttribute.cs
-  target: /Shared/AutoRest/CodeGenMemberAttribute.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/CodeGenModelAttribute.cs
-  target: /Shared/AutoRest/CodeGenModelAttribute.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/CodeGenSuppressAttribute.cs
-  target: /Shared/AutoRest/CodeGenSuppressAttribute.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/CodeGenTypeAttribute.cs
-  target: /Shared/AutoRest/CodeGenTypeAttribute.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/IOperationSource.cs
-  target: /Shared/AutoRest/IOperationSource.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/IUtf8JsonSerializable.cs
-  target: /Shared/AutoRest/IUtf8JsonSerializable.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/IXmlSerializable.cs
-  target: /Shared/AutoRest/IXmlSerializable.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/JsonElementExtensions.cs
-  target: /Shared/AutoRest/JsonElementExtensions.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/ManagementPipelineBuilder.cs
-  target: /Shared/AutoRest/ManagementPipelineBuilder.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/OperationFinalStateVia.cs
-  target: /Shared/AutoRest/OperationFinalStateVia.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/Optional.cs
-  target: /Shared/AutoRest/Optional.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/Page.cs
-  target: /Shared/AutoRest/Page.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/PageableHelpers.cs
-  target: /Shared/AutoRest/PageableHelpers.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/RawRequestUriBuilder.cs
-  target: /Shared/AutoRest/RawRequestUriBuilder.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/RequestHeaderExtensions.cs
-  target: /Shared/AutoRest/RequestHeaderExtensions.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/RequestUriBuilderExtensions.cs
-  target: /Shared/AutoRest/RequestUriBuilderExtensions.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/ResponseHeadersExtensions.cs
-  target: /Shared/AutoRest/ResponseHeadersExtensions.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/ResponseWithHeaders.cs
-  target: /Shared/AutoRest/ResponseWithHeaders.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/ResponseWithHeaders{T,THeaders}.cs
-  target: /Shared/AutoRest/ResponseWithHeaders{T,THeaders}.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/ResponseWithHeaders{THeaders}.cs
-  target: /Shared/AutoRest/ResponseWithHeaders{THeaders}.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/StringRequestContent.cs
-  target: /Shared/AutoRest/StringRequestContent.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/TypeFormatters.cs
-  target: /Shared/AutoRest/TypeFormatters.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/Utf8JsonRequestContent.cs
-  target: /Shared/AutoRest/Utf8JsonRequestContent.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/Utf8JsonWriterExtensions.cs
-  target: /Shared/AutoRest/Utf8JsonWriterExtensions.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/XElementExtensions.cs
-  target: /Shared/AutoRest/XElementExtensions.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/XmlWriterContent.cs
-  target: /Shared/AutoRest/XmlWriterContent.cs
-- path: /sdk/core/Azure.Core/src/Shared/AutoRest/XmlWriterExtensions.cs
-  target: /Shared/AutoRest/XmlWriterExtensions.cs
+# Package sources for AutoRest support
+- path: /nuget.config
+  target: /nuget.config
 
-# Shared/Core
-- path: /sdk/core/Azure.Core/src/Shared/ClientDiagnostics.cs
-  target: /Shared/Core/ClientDiagnostics.cs
-- path: /sdk/core/Azure.Core/src/Shared/ContentTypeUtilities.cs
-  target: /Shared/Core/ContentTypeUtilities.cs
-- path: /sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs
-  target: /Shared/Core/DiagnosticScope.cs
-- path: /sdk/core/Azure.Core/src/Shared/DiagnosticScopeFactory.cs
-  target: /Shared/Core/DiagnosticScopeFactory.cs
-- path: /sdk/core/Azure.Core/src/Shared/HashCodeBuilder.cs
-  target: /Shared/Core/HashCodeBuilder.cs
-- path: /sdk/core/Azure.Core/src/Shared/HttpMessageSanitizer.cs
-  target: /Shared/Core/HttpMessageSanitizer.cs
-- path: /sdk/core/Azure.Core/src/Shared/OperationHelpers.cs
-  target: /Shared/Core/OperationHelpers.cs
-- path: /sdk/core/Azure.Core/src/Shared/TaskExtensions.cs
-  target: /Shared/Core/TaskExtensions.cs
-
-# Share
+# Shared
 - path: /sdk/keyvault/Azure.Security.KeyVault.Shared/src/ChallengeBasedAuthenticationPolicy.cs
   target: /Shared/ChallengeBasedAuthenticationPolicy.cs
 ---
@@ -102,6 +24,12 @@ This sample demonstrates how to generate a client library for [Azure Key Vault-m
 
 > [!NOTE]
 > We recommend you use [role-based access control (RBAC)](https://docs.microsoft.com/azure/role-based-access-control/overview) to secure access to your storage accounts. You can centrally manage access for users and applications to resources in a way that is consistent across Azure, and [works with Azure Active Directory](https://docs.microsoft.com/azure/storage/common/storage-auth-aad).
+
+If you want to manage secrets, keys, or certificates, you can use our existing supported SDKs:
+
+- [Azure.Security.KeyVault.Certificates](https://www.nuget.org/packages/Azure.Security.KeyVault.Certificates)
+- [Azure.Security.KeyVault.Keys](https://www.nuget.org/packages/Azure.Security.KeyVault.Keys)
+- [Azure.Security.KeyVault.Secrets](https://www.nuget.org/packages/Azure.Security.KeyVault.Secrets)
 
 ## Getting started
 
@@ -147,13 +75,19 @@ This sample not only demonstrates how to generate SAS definitions and tokens usi
 dotnet build
 ```
 
-We have no plans to ship a package for Key Vault-managed storage accounts since RBAC is recommended, but if you need support for managerd storage accounts you can copy the REST client source into your own projects by running:
+We have no plans to ship a package for Key Vault-managed storage accounts since RBAC is recommended, but if you need support for managed storage accounts you can copy the REST client source into your own projects by running:
 
 ```bash
-dotnet msbuild /t:CopySource /p:Destination=<ProjectDirectory>
+dotnet build /t:CopySource /p:Destination=<ProjectDirectory>
 ```
 
-The sample project file and _Program.cs_ are not copied automatically - only the source necessary to build the REST client. You are welcome to copy and modify the rest of the sample source as needed.
+The sample project file and _Program.cs_ are not copied automatically. Only the source necessary to build the REST client is copied. You are welcome to copy and modify the rest of the sample source as needed.
+
+You also need to add a reference to Azure.Core in your project. In your project directory where you just copied source run:
+
+```bash
+dotnet add package Azure.Core
+```
 
 ## Using the sample
 

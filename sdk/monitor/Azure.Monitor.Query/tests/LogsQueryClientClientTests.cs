@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Tests
                 return new MockResponse(500);
             });
 
-            var client = new LogsClient(new MockCredential(), new LogsClientOptions()
+            var client = new LogsClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsClientOptions()
             {
                 Transport = mockTransport
             });
