@@ -149,9 +149,9 @@ namespace Azure.Storage.Blobs
                 // stream when each segment finishes.
                 var runningTasks = new Queue<Task<Response<BlobDownloadStreamingResult>>>();
                 runningTasks.Enqueue(initialResponseTask);
-                if (_maxWorkerCount == 1)
+                if (_maxWorkerCount <= 1)
                 {
-                    // consume initial task immediately if _maxWorkerCount is 1. Otherwise loop below would have 2 concurrent tasks.
+                    // consume initial task immediately if _maxWorkerCount is 1 (or less to be safe). Otherwise loop below would have 2 concurrent tasks.
                     await ConsumeQueuedTask().ConfigureAwait(false);
                 }
 
