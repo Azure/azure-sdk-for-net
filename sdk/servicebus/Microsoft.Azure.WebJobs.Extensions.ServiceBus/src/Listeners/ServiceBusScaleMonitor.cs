@@ -3,15 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
@@ -20,9 +19,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private const string DeadLetterQueuePath = @"/$DeadLetterQueue";
 
         private readonly string _functionId;
-        private readonly EntityType _entityType;
+        private readonly ServiceBusEntityType _serviceBusEntityType;
         private readonly string _entityPath;
-        private readonly string _connectionString;
         private readonly ScaleMonitorDescriptor _scaleMonitorDescriptor;
         private readonly bool _isListeningOnDeadLetterQueue;
         private readonly Lazy<ServiceBusReceiver> _receiver;
@@ -31,16 +29,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private DateTime _nextWarningTime;
 
-        public ServiceBusScaleMonitor(string functionId, EntityType entityType, string entityPath, string connectionString, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory)
+        public ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
         {
             _functionId = functionId;
-            _entityType = entityType;
+            _serviceBusEntityType = serviceBusEntityType;
             _entityPath = entityPath;
-            _connectionString = connectionString;
             _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(CultureInfo.InvariantCulture));
             _isListeningOnDeadLetterQueue = entityPath.EndsWith(DeadLetterQueuePath, StringComparison.OrdinalIgnoreCase);
             _receiver = receiver;
-            _administrationClient = new Lazy<ServiceBusAdministrationClient>(() => new ServiceBusAdministrationClient(_connectionString));
+            _administrationClient = new Lazy<ServiceBusAdministrationClient>(() => clientFactory.CreateAdministrationClient(connection));
             _logger = loggerFactory.CreateLogger<ServiceBusScaleMonitor>();
             _nextWarningTime = DateTime.UtcNow;
         }
@@ -61,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         public async Task<ServiceBusTriggerMetrics> GetMetricsAsync()
         {
             ServiceBusReceivedMessage message = null;
-            string entityName = _entityType == EntityType.Queue ? "queue" : "topic";
+            string entityName = _serviceBusEntityType == ServiceBusEntityType.Queue ? "queue" : "topic";
 
             try
             {
@@ -70,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 // Use PeekBySequenceNumberAsync with fromSequenceNumber = 0 to always get the first available message
                 message = await _receiver.Value.PeekMessageAsync(fromSequenceNumber: 0).ConfigureAwait(false);
 
-                if (_entityType == EntityType.Queue)
+                if (_serviceBusEntityType == ServiceBusEntityType.Queue)
                 {
                     return await GetQueueMetricsAsync(message).ConfigureAwait(false);
                 }

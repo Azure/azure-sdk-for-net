@@ -33,9 +33,9 @@ namespace Azure.Search.Documents.Tests
                 session.Variables[variable.Key] = SanitizeVariable(secrets, variable.Key, variable.Value);
             }
 
-            foreach (RecordEntry entry in session.Entries)
+            if (secrets.Count > 0)
             {
-                if (secrets.Count > 0)
+                foreach (RecordEntry entry in session.Entries)
                 {
                     SanitizeBody(secrets, entry.Request);
                     SanitizeBody(secrets, entry.Response);
@@ -96,7 +96,10 @@ namespace Azure.Search.Documents.Tests
             if (SearchTestEnvironment.StorageAccountKeyVariableName.Equals(name, StringComparison.OrdinalIgnoreCase) ||
                 SearchTestEnvironment.ClientSecretVariableName.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
-                // Assumes the secret content is destined to appear in JSON, for which certain common characters in account keys are escaped.
+                // The secret content could be embedded within a string, so add it as-is.
+                secrets.Add(value);
+
+                // Or, the secret content could appear in JSON, for which certain common characters in account keys are escaped.
                 // See https://github.com/dotnet/runtime/blob/8640eed0/src/libraries/System.Text.Json/src/System/Text/Json/Writer/JsonWriterHelper.Escaping.cs
                 string encoded = JavaScriptEncoder.Default.Encode(value);
                 secrets.Add(encoded);

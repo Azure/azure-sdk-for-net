@@ -129,7 +129,7 @@ namespace FaceSDK.Tests
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
                 {
-                    var persistedFace = client.FaceList.AddFaceFromStreamAsync(faceListId, stream, null, new List<int?>{
+                    var persistedFace = client.FaceList.AddFaceFromStreamAsync(faceListId, stream, null, new List<int>{
                         face.FaceRectangle.Left,
                         face.FaceRectangle.Top,
                         face.FaceRectangle.Width,
@@ -156,7 +156,7 @@ namespace FaceSDK.Tests
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
                 {
-                    var persistedFace = client.LargeFaceList.AddFaceFromStreamAsync(largeFaceListId, stream, null, new List<int?>{
+                    var persistedFace = client.LargeFaceList.AddFaceFromStreamAsync(largeFaceListId, stream, null, new List<int>{
                         face.FaceRectangle.Left,
                         face.FaceRectangle.Top,
                         face.FaceRectangle.Width,

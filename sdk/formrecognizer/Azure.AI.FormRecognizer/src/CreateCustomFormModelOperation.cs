@@ -22,6 +22,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
 
+        /// <summary>Service version used in this client.</summary>
+        private readonly FormRecognizerClientOptions.ServiceVersion _serviceVersion;
+
         private RequestFailedException _requestFailedException;
 
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
@@ -105,10 +108,15 @@ namespace Azure.AI.FormRecognizer.Training
         public override ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        internal CreateCustomFormModelOperation(string location, FormRecognizerRestClient allOperations, ClientDiagnostics diagnostics)
+        internal CreateCustomFormModelOperation(
+            string location,
+            FormRecognizerRestClient allOperations,
+            ClientDiagnostics diagnostics,
+            FormRecognizerClientOptions.ServiceVersion serviceVersion)
         {
             _serviceClient = allOperations;
             _diagnostics = diagnostics;
+            _serviceVersion = serviceVersion;
 
             // TODO: validate this
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -128,6 +136,7 @@ namespace Azure.AI.FormRecognizer.Training
             Id = operationId;
             _diagnostics = client.Diagnostics;
             _serviceClient = client.ServiceClient;
+            _serviceVersion = client.ServiceVersion;
         }
 
         /// <summary>
@@ -185,7 +194,7 @@ namespace Azure.AI.FormRecognizer.Training
                     if (update.Value.ModelInfo.Status == CustomFormModelStatus.Ready)
                     {
                         // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
-                        _value = new CustomFormModel(update.Value);
+                        _value = new CustomFormModel(update.Value, _serviceVersion);
                         _hasCompleted = true;
                     }
                     else if (update.Value.ModelInfo.Status == CustomFormModelStatus.Invalid)

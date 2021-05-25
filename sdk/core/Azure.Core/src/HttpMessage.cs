@@ -75,6 +75,12 @@ namespace Azure.Core
         public bool BufferResponse { get; set; }
 
         /// <summary>
+        /// Gets or sets the network timeout value for this message. If <c>null</c> the value provided in <see cref="RetryOptions.NetworkTimeout"/> would be used instead.
+        /// Defaults to <c>null</c>.
+        /// </summary>
+        internal TimeSpan? NetworkTimeout { get; set; }
+
+        /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
         /// </summary>
         /// <param name="name">The property name.</param>
@@ -99,7 +105,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> would result in exception.
+        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/> would result in exception.
         /// </summary>
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()

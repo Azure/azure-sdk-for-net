@@ -21,6 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> deleteTime = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
+            Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,13 +65,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("transactionId"))
+                {
+                    transactionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("threadId"))
                 {
                     threadId = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsChatThreadDeletedEventData(threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), deletedByCommunicationIdentifier.Value, Optional.ToNullable(deleteTime));
+            return new AcsChatThreadDeletedEventData(transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), deletedByCommunicationIdentifier.Value, Optional.ToNullable(deleteTime));
         }
 
         internal partial class AcsChatThreadDeletedEventDataConverter : JsonConverter<AcsChatThreadDeletedEventData>

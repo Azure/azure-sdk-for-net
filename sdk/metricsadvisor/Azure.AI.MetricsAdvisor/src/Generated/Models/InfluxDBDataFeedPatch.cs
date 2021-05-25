@@ -16,6 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceType.InfluxDb;
         }
 
-        public InfluxDBParameter DataSourceParameter { get; set; }
+        public InfluxDBParameterPatch DataSourceParameter { get; set; }
     }
 }

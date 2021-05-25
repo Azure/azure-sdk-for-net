@@ -23,4 +23,9 @@
     </None>
     <None Include="$(AzureStorageSharedTestSources)\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
+    <ItemGroup> 
+    <Content Include="Resources\**"> 
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
+    </Content> 
+  </ItemGroup>
 </Project>

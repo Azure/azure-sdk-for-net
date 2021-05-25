@@ -21,33 +21,40 @@ namespace Azure.Data.Tables
                 return dictEntity.ToOdataAnnotatedDictionary();
             }
 
-            var properties = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            var properties = entity.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
             var annotatedDictionary = new Dictionary<string, object>(properties.Length * 2);
 
             foreach (var prop in properties)
             {
+                // Remove the ETag and Timestamp properties, as they do not need to be serialized
+                if (prop.Name == TableConstants.PropertyNames.ETag || prop.Name == TableConstants.PropertyNames.Timestamp)
+                {
+                    continue;
+                }
+
                 annotatedDictionary[prop.Name] = prop.GetValue(entity);
 
                 switch (annotatedDictionary[prop.Name])
                 {
-                    case byte[] _:
+                    case byte[]:
+                    case BinaryData:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
                         break;
-                    case long _:
+                    case long:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmInt64;
                         // Int64 / long should be serialized as string.
                         annotatedDictionary[prop.Name] = annotatedDictionary[prop.Name].ToString();
                         break;
-                    case double _:
+                    case double:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmDouble;
                         break;
-                    case Guid _:
+                    case Guid:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmGuid;
                         break;
-                    case DateTimeOffset _:
+                    case DateTimeOffset:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
                         break;
-                    case DateTime _:
+                    case DateTime:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
                         break;
                     case Enum enumValue:
@@ -56,9 +63,6 @@ namespace Azure.Data.Tables
                         break;
                 }
             }
-
-            // Remove the ETag property, as it does not need to be serialized
-            annotatedDictionary.Remove(TableConstants.PropertyNames.ETag);
 
             return annotatedDictionary;
         }

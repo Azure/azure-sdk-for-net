@@ -159,7 +159,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authPolicy),
                 sharedKeyCredential: sharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _uri = conn.BlobEndpoint;
@@ -350,7 +350,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: clientDiagnostics ?? new ClientDiagnostics(options),
+                clientDiagnostics: clientDiagnostics ?? new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _blobServiceClient = BlobServiceClientInternals.Create(
@@ -938,10 +938,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="deleteFileSystemVersion">
         /// The version of the previously deleted file system.
         /// </param>
-        /// <param name="destinationFileSystemName">
-        /// Optional.  Use this parameter if you would like to restore the file system
-        /// under a different name.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -956,7 +952,6 @@ namespace Azure.Storage.Files.DataLake
         public virtual Response<DataLakeFileSystemClient> UndeleteFileSystem(
             string deletedFileSystemName,
             string deleteFileSystemVersion,
-            string destinationFileSystemName = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
@@ -968,7 +963,6 @@ namespace Azure.Storage.Files.DataLake
                 Response<BlobContainerClient> response = _blobServiceClient.UndeleteBlobContainer(
                     deletedFileSystemName,
                     deleteFileSystemVersion,
-                    destinationFileSystemName,
                     cancellationToken);
 
                 DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
@@ -1001,10 +995,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="deleteFileSystemVersion">
         /// The version of the previously deleted file system.
         /// </param>
-        /// <param name="destinationFileSystemName">
-        /// Optional.  Use this parameter if you would like to restore the file system
-        /// under a different name.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1019,7 +1009,6 @@ namespace Azure.Storage.Files.DataLake
         public virtual async Task<Response<DataLakeFileSystemClient>> UndeleteFileSystemAsync(
             string deletedFileSystemName,
             string deleteFileSystemVersion,
-            string destinationFileSystemName = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
@@ -1031,7 +1020,6 @@ namespace Azure.Storage.Files.DataLake
                 Response<BlobContainerClient> response = await _blobServiceClient.UndeleteBlobContainerAsync(
                     deletedFileSystemName,
                     deleteFileSystemVersion,
-                    destinationFileSystemName,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1271,5 +1259,195 @@ namespace Azure.Storage.Files.DataLake
             return sasUri.ToUri();
         }
         #endregion
+
+        #region Get Service Properties
+        /// <summary>
+        /// The <see cref="GetProperties"/> operation gets the properties
+        /// of a storage account’s Data Lake service, including properties for
+        /// Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-properties">
+        /// Get Blob Service Properties</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeServiceProperties}"/> describing
+        /// the service properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeServiceProperties> GetProperties(
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetProperties)}");
+            try
+            {
+                scope.Start();
+                Response<Azure.Storage.Blobs.Models.BlobServiceProperties> response = _blobServiceClient.GetProperties(cancellationToken);
+                return Response.FromValue(
+                    response.Value.ToDataLakeServiceProperties(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetPropertiesAsync"/> operation gets the properties
+        /// of a storage account’s Data Lake service, including properties for
+        /// Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-properties">
+        /// Get Blob Service Properties</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeServiceProperties}"/> describing
+        /// the service properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeServiceProperties>> GetPropertiesAsync(
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetProperties)}");
+            try
+            {
+                scope.Start();
+                Response<Azure.Storage.Blobs.Models.BlobServiceProperties> response
+                    = await _blobServiceClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(
+                    response.Value.ToDataLakeServiceProperties(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Get Service Properties
+
+        #region Set Service Properties
+        /// <summary>
+        /// The <see cref="SetProperties"/> operation sets properties for
+        /// a storage account’s Data Lake service endpoint, including properties
+        /// for Storage Analytics, CORS (Cross-Origin Resource Sharing) rules
+        /// and soft delete settings.  You can also use this operation to set
+        /// the default request version for all incoming requests to the Blob
+        /// service that do not have a version specified.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-service-properties">
+        /// Set Blob Service Properties</see>.
+        /// </summary>
+        /// <param name="properties">The Data Lake service properties.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing
+        /// the service properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response SetProperties(
+            DataLakeServiceProperties properties,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(SetProperties)}");
+            try
+            {
+                scope.Start();
+                return _blobServiceClient.SetProperties(
+                    properties.ToBlobServiceProperties(),
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetPropertiesAsync"/> operation sets properties for
+        /// a storage account’s Data Lake service endpoint, including properties
+        /// for Storage Analytics, CORS (Cross-Origin Resource Sharing) rules
+        /// and soft delete settings.  You can also use this operation to set
+        /// the default request version for all incoming requests to the Blob
+        /// service that do not have a version specified.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-service-properties">
+        /// Set Blob Service Properties</see>.
+        /// </summary>
+        /// <param name="properties">The Data Lake service properties.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing
+        /// the service properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> SetPropertiesAsync(
+            DataLakeServiceProperties properties,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(SetProperties)}");
+            try
+            {
+                scope.Start();
+                return await _blobServiceClient.SetPropertiesAsync(
+                    properties.ToBlobServiceProperties(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Set Service Properties
     }
 }

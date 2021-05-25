@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D75E940A-8200-4437-8563-8AE41D8B750B}") = "Microsoft.Azure.Management.ServiceFabricManagedClusters.Test", "tests\Microsoft.Azure.Management.ServiceFabricManagedClusters.Test.csproj", "{54B315C9-9271-4116-B927-16800995A138}"
 EndProject

@@ -31,7 +31,7 @@ namespace Azure.Core.TestFramework
 
         public void SetContent(byte[] content)
         {
-            ContentStream = new MemoryStream(content);
+            ContentStream = new MemoryStream(content, 0, content.Length, false, true);
         }
 
         public void SetContent(string content)

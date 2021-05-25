@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Core;
 using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host;
@@ -30,9 +28,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             AzureEventSourceLogForwarder logForwarder,
             IOptions<QueuesOptions> queueOptions,
             ILoggerFactory loggerFactory,
+            ILogger<QueueServiceClient> logger,
             IQueueProcessorFactory queueProcessorFactory,
             SharedQueueWatcher messageEnqueuedWatcher)
-            : base(configuration, componentFactory, logForwarder)
+            : base(configuration, componentFactory, logForwarder, logger)
         {
             _queuesOptions = queueOptions?.Value;
             _loggerFactory = loggerFactory;
@@ -40,6 +39,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             _messageEnqueuedWatcher = messageEnqueuedWatcher;
         }
 
+        /// <inheritdoc/>
+        protected override string ServiceUriSubDomain
+        {
+            get
+            {
+                return "queue";
+            }
+        }
+
+        /// <inheritdoc/>
         protected override QueueClientOptions CreateClientOptions(IConfiguration configuration)
         {
             var options = base.CreateClientOptions(configuration);
@@ -48,6 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             return options;
         }
 
+        /// <inheritdoc/>
         protected override QueueServiceClient CreateClient(IConfiguration configuration, TokenCredential tokenCredential, QueueClientOptions options)
         {
             var originalEncoding = options.MessageEncoding;

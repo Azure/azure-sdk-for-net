@@ -27,12 +27,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
-        internal DataFlowSource(string name, string description, DatasetReference dataset) : base(name, description)
+        /// <param name="linkedService"> Linked service reference. </param>
+        /// <param name="schemaLinkedService"> Schema linked service reference. </param>
+        internal DataFlowSource(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, LinkedServiceReference schemaLinkedService) : base(name, description)
         {
             Dataset = dataset;
+            LinkedService = linkedService;
+            SchemaLinkedService = schemaLinkedService;
         }
 
         /// <summary> Dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
+        /// <summary> Linked service reference. </summary>
+        public LinkedServiceReference LinkedService { get; set; }
+        /// <summary> Schema linked service reference. </summary>
+        public LinkedServiceReference SchemaLinkedService { get; set; }
     }
 }

@@ -959,6 +959,132 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
+            /// This operation migrates a blob container from container level WORM to
+            /// object level immutability enabled container. Prerequisites require a
+            /// container level immutability policy either in locked or unlocked state,
+            /// Account level versioning must be enabled and there should be no Legal hold
+            /// on the container.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='containerName'>
+            /// The name of the blob container within the specified storage account. Blob
+            /// container names must be between 3 and 63 characters in length and use
+            /// numbers, lower-case letters and dash (-) only. Every dash (-) character
+            /// must be immediately preceded and followed by a letter or number.
+            /// </param>
+            public static void ObjectLevelWorm(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName)
+            {
+                operations.ObjectLevelWormAsync(resourceGroupName, accountName, containerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation migrates a blob container from container level WORM to
+            /// object level immutability enabled container. Prerequisites require a
+            /// container level immutability policy either in locked or unlocked state,
+            /// Account level versioning must be enabled and there should be no Legal hold
+            /// on the container.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='containerName'>
+            /// The name of the blob container within the specified storage account. Blob
+            /// container names must be between 3 and 63 characters in length and use
+            /// numbers, lower-case letters and dash (-) only. Every dash (-) character
+            /// must be immediately preceded and followed by a letter or number.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ObjectLevelWormAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ObjectLevelWormWithHttpMessagesAsync(resourceGroupName, accountName, containerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// This operation migrates a blob container from container level WORM to
+            /// object level immutability enabled container. Prerequisites require a
+            /// container level immutability policy either in locked or unlocked state,
+            /// Account level versioning must be enabled and there should be no Legal hold
+            /// on the container.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='containerName'>
+            /// The name of the blob container within the specified storage account. Blob
+            /// container names must be between 3 and 63 characters in length and use
+            /// numbers, lower-case letters and dash (-) only. Every dash (-) character
+            /// must be immediately preceded and followed by a letter or number.
+            /// </param>
+            public static void BeginObjectLevelWorm(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName)
+            {
+                operations.BeginObjectLevelWormAsync(resourceGroupName, accountName, containerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation migrates a blob container from container level WORM to
+            /// object level immutability enabled container. Prerequisites require a
+            /// container level immutability policy either in locked or unlocked state,
+            /// Account level versioning must be enabled and there should be no Legal hold
+            /// on the container.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='containerName'>
+            /// The name of the blob container within the specified storage account. Blob
+            /// container names must be between 3 and 63 characters in length and use
+            /// numbers, lower-case letters and dash (-) only. Every dash (-) character
+            /// must be immediately preceded and followed by a letter or number.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginObjectLevelWormAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginObjectLevelWormWithHttpMessagesAsync(resourceGroupName, accountName, containerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Lists all containers and does not support a prefix like data plane. Also
             /// SRP today does not return continuation token.
             /// </summary>

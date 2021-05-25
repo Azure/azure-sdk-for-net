@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using Azure.Core.Serialization;
@@ -17,6 +18,12 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventData
     {
+        /// <summary>An empty default set for the <see cref="SystemProperties" /> member, intended to used when no actual property set is available.</summary>
+        private static readonly IReadOnlyDictionary<string, object> EmptySystemProperties = new ReadOnlyDictionary<string, object>(new Dictionary<string, object>(0));
+
+        /// <summary>The backing store for the <see cref="Properties" /> member, intended to be lazily allocated.</summary>
+        private IDictionary<string, object> _properties;
+
         /// <summary>
         ///   The data associated with the event, in <see cref="BinaryData" /> form, providing support
         ///   for a variety of data transformations and <see cref="ObjectSerializer" /> integration.
@@ -50,7 +57,10 @@ namespace Azure.Messaging.EventHubs
         ///   </code>
         /// </example>
         ///
-        public IDictionary<string, object> Properties { get; }
+        public IDictionary<string, object> Properties
+        {
+            get => _properties ??= new Dictionary<string, object>();
+        }
 
         /// <summary>
         ///   The set of free-form event properties which were provided by the Event Hubs service to pass metadata associated with the
@@ -161,6 +171,15 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Stream BodyAsStream => EventBody.ToStream();
+
+        /// <summary>
+        ///   Indicates whether this instance has a populated set of <see cref="Properties" />
+        ///   or not, to avoid triggering lazy allocation by checking the property itself.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if this instance has properties; otherwise, <c>false</c>.</value>
+        ///
+        internal bool HasProperties => (_properties != null);
 
         /// <summary>
         ///   The sequence number of the event that was last enqueued into the Event Hub partition from which this
@@ -355,12 +374,11 @@ namespace Azure.Messaging.EventHubs
                            short? pendingOwnerLevel = null)
         {
             EventBody = eventBody;
-            Properties = properties ?? new Dictionary<string, object>();
-            SystemProperties = systemProperties ?? new Dictionary<string, object>();
             SequenceNumber = sequenceNumber;
             Offset = offset;
             EnqueuedTime = enqueuedTime;
             PartitionKey = partitionKey;
+            SystemProperties = systemProperties ?? EmptySystemProperties;
             LastPartitionSequenceNumber = lastPartitionSequenceNumber;
             LastPartitionOffset = lastPartitionOffset;
             LastPartitionEnqueuedTime = lastPartitionEnqueuedTime;
@@ -369,6 +387,8 @@ namespace Azure.Messaging.EventHubs
             PendingPublishSequenceNumber = pendingPublishSequenceNumber;
             PendingProducerGroupId = pendingProducerGroupId;
             PendingProducerOwnerLevel = pendingOwnerLevel;
+
+            _properties = properties;
         }
 
         /// <summary>
@@ -383,6 +403,16 @@ namespace Azure.Messaging.EventHubs
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
+        /// <remarks>
+        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
+        ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
+        ///
+        ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
+        ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
+        ///   meaningful on events that have been read from the Event Hubs service.</para>
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected EventData(BinaryData eventBody,
                             IDictionary<string, object> properties = null,
                             IReadOnlyDictionary<string, object> systemProperties = null,
@@ -404,6 +434,15 @@ namespace Azure.Messaging.EventHubs
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
+        ///
+        /// <remarks>
+        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
+        ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
+        ///
+        ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
+        ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
+        ///   meaningful on events that have been read from the Event Hubs service.</para>
+        /// </remarks>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected EventData(ReadOnlyMemory<byte> eventBody,
@@ -476,7 +515,7 @@ namespace Azure.Messaging.EventHubs
             new EventData
             (
                 EventBody,
-                new Dictionary<string, object>(Properties),
+                (_properties == null) ? null : new Dictionary<string, object>(_properties),
                 SystemProperties,
                 SequenceNumber,
                 Offset,

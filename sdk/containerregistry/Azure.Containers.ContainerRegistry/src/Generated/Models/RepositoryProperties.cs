@@ -13,30 +13,70 @@ namespace Azure.Containers.ContainerRegistry
     public partial class RepositoryProperties
     {
         /// <summary> Initializes a new instance of RepositoryProperties. </summary>
-        internal RepositoryProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of RepositoryProperties. </summary>
-        /// <param name="registry"> Registry name. </param>
+        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
         /// <param name="lastUpdatedOn"> Image last update time. </param>
-        /// <param name="registryArtifactCount"> Number of the manifests. </param>
+        /// <param name="manifestCount"> Number of the manifests. </param>
         /// <param name="tagCount"> Number of the tags. </param>
-        /// <param name="modifiableProperties"> Changeable attributes. </param>
-        internal RepositoryProperties(string registry, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int registryArtifactCount, int tagCount, ContentProperties modifiableProperties)
+        /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/> or <paramref name="name"/> is null. </exception>
+        internal RepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount)
         {
-            Registry = registry;
+            if (registryLoginServer == null)
+            {
+                throw new ArgumentNullException(nameof(registryLoginServer));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            RegistryLoginServer = registryLoginServer;
             Name = name;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
-            RegistryArtifactCount = registryArtifactCount;
+            ManifestCount = manifestCount;
             TagCount = tagCount;
-            ModifiableProperties = modifiableProperties;
         }
 
-        /// <summary> Registry name. </summary>
-        public string Registry { get; }
+        /// <summary> Initializes a new instance of RepositoryProperties. </summary>
+        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="name"> Image name. </param>
+        /// <param name="createdOn"> Image created time. </param>
+        /// <param name="lastUpdatedOn"> Image last update time. </param>
+        /// <param name="manifestCount"> Number of the manifests. </param>
+        /// <param name="tagCount"> Number of the tags. </param>
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        /// <param name="teleportEnabled"> Enables Teleport functionality on new images in the repository improving Container startup performance. </param>
+        internal RepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, bool? teleportEnabled)
+        {
+            RegistryLoginServer = registryLoginServer;
+            Name = name;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            ManifestCount = manifestCount;
+            TagCount = tagCount;
+            CanDelete = canDelete;
+            CanWrite = canWrite;
+            CanList = canList;
+            CanRead = canRead;
+            TeleportEnabled = teleportEnabled;
+        }
+
+        /// <summary> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </summary>
+        public string RegistryLoginServer { get; }
+        /// <summary> Image name. </summary>
+        public string Name { get; }
+        /// <summary> Image created time. </summary>
+        public DateTimeOffset CreatedOn { get; }
+        /// <summary> Image last update time. </summary>
+        public DateTimeOffset LastUpdatedOn { get; }
+        /// <summary> Number of the manifests. </summary>
+        public int ManifestCount { get; }
+        /// <summary> Number of the tags. </summary>
+        public int TagCount { get; }
     }
 }

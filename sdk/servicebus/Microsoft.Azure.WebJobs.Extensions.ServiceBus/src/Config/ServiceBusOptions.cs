@@ -25,11 +25,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the Azure ServiceBus connection string.
-        /// </summary>
-        public string ConnectionString { get; set; }
-
-        /// <summary>
         /// Gets or sets the PrefetchCount that will be used when receiving messages. The default value is 0.
         /// </summary>
         public int PrefetchCount { get; set; }
@@ -39,16 +34,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// if so, the amount of time to wait between retry attempts.  These options also control the
         /// amount of time allowed for receiving messages and other interactions with the Service Bus service.
         /// </summary>
-        public ServiceBusRetryOptions RetryOptions
+        public ServiceBusRetryOptions ClientRetryOptions
         {
-            get => _retryOptions;
+            get => _clientRetryOptions;
             set
             {
-                Argument.AssertNotNull(value, nameof(RetryOptions));
-                _retryOptions = value;
+                Argument.AssertNotNull(value, nameof(ClientRetryOptions));
+                _clientRetryOptions = value;
             }
         }
-        private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
+        private ServiceBusRetryOptions _clientRetryOptions = new ServiceBusRetryOptions();
 
         /// <summary>
         ///   The type of protocol and transport that will be used for communicating with the Service Bus
@@ -65,7 +60,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         ///   A proxy cannot be used for communication over TCP; if web sockets are not in
         ///   use, specifying a proxy is an invalid option.
         /// </remarks>
-        ///
         public IWebProxy WebProxy { get; set; }
 
         /// <summary>
@@ -135,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
         /// a batch of messages. The default value is 1000.
         /// </summary>
-        public int MaxMessages { get; set; } = 1000;
+        public int MaxBatchSize { get; set; } = 1000;
 
         /// <summary>
         /// Gets or sets the maximum amount of time to wait for a message to be received for the
@@ -146,32 +140,46 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public TimeSpan? SessionIdleTimeout { get; set; }
 
         /// <summary>
+        /// Gets or sets the JSON serialization settings to use when binding to POCOs.
+        /// </summary>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public JsonSerializerSettings JsonSerializerSettings { get; set; } = new()
+        {
+            // The default value, DateParseHandling.DateTime, drops time zone information from DateTimeOffets.
+            // This value appears to work well with both DateTimes (without time zone information) and DateTimeOffsets.
+            DateParseHandling = DateParseHandling.DateTimeOffset,
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented
+        };
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+
+        /// <summary>
         /// Formats the options as JSON objects for display.
         /// </summary>
         /// <returns>Options formatted as JSON.</returns>
-        public string Format()
+        string IOptionsFormatter.Format()
         {
             // Do not include ConnectionString in loggable options.
             var retryOptions = new JObject
             {
-                { nameof(ServiceBusClientOptions.RetryOptions.Mode), RetryOptions.Mode.ToString() },
-                { nameof(ServiceBusClientOptions.RetryOptions.TryTimeout), RetryOptions.TryTimeout },
-                { nameof(ServiceBusClientOptions.RetryOptions.Delay), RetryOptions.Delay },
-                { nameof(ServiceBusClientOptions.RetryOptions.MaxDelay), RetryOptions.MaxDelay },
-                { nameof(ServiceBusClientOptions.RetryOptions.MaxRetries), RetryOptions.MaxRetries },
+                { nameof(ServiceBusClientOptions.RetryOptions.Mode), ClientRetryOptions.Mode.ToString() },
+                { nameof(ServiceBusClientOptions.RetryOptions.TryTimeout), ClientRetryOptions.TryTimeout },
+                { nameof(ServiceBusClientOptions.RetryOptions.Delay), ClientRetryOptions.Delay },
+                { nameof(ServiceBusClientOptions.RetryOptions.MaxDelay), ClientRetryOptions.MaxDelay },
+                { nameof(ServiceBusClientOptions.RetryOptions.MaxRetries), ClientRetryOptions.MaxRetries },
             };
 
             JObject options = new JObject
             {
-                { nameof(RetryOptions), retryOptions },
+                { nameof(ClientRetryOptions), retryOptions },
                 { nameof(TransportType),  TransportType.ToString()},
-                { nameof(WebProxy),  WebProxy?.ToString() ?? string.Empty },
+                { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },
                 { nameof(AutoCompleteMessages), AutoCompleteMessages },
                 { nameof(PrefetchCount), PrefetchCount },
                 { nameof(MaxAutoLockRenewalDuration), MaxAutoLockRenewalDuration },
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
-                { nameof(MaxMessages), MaxMessages },
+                { nameof(MaxBatchSize), MaxBatchSize },
                 { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty }
             };
 
@@ -204,10 +212,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 SessionIdleTimeout = SessionIdleTimeout
             };
 
+        internal ServiceBusReceiverOptions ToReceiverOptions() =>
+            new ServiceBusReceiverOptions
+            {
+                PrefetchCount = PrefetchCount
+            };
+
         internal ServiceBusClientOptions ToClientOptions() =>
             new ServiceBusClientOptions
             {
-                RetryOptions = RetryOptions,
+                RetryOptions = ClientRetryOptions,
                 WebProxy = WebProxy,
                 TransportType = TransportType
             };

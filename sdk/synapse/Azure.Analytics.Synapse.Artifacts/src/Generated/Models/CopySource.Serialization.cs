@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CopySourceConverter))]
     public partial class CopySource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -53,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AzureBlobFSSource": return AzureBlobFSSource.DeserializeAzureBlobFSSource(element);
                     case "AzureDataExplorerSource": return AzureDataExplorerSource.DeserializeAzureDataExplorerSource(element);
                     case "AzureDataLakeStoreSource": return AzureDataLakeStoreSource.DeserializeAzureDataLakeStoreSource(element);
+                    case "AzureDatabricksDeltaLakeSource": return AzureDatabricksDeltaLakeSource.DeserializeAzureDatabricksDeltaLakeSource(element);
                     case "AzureMariaDBSource": return AzureMariaDBSource.DeserializeAzureMariaDBSource(element);
                     case "AzureMySqlSource": return AzureMySqlSource.DeserializeAzureMySqlSource(element);
                     case "AzurePostgreSqlSource": return AzurePostgreSqlSource.DeserializeAzurePostgreSqlSource(element);
@@ -74,6 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "DynamicsCrmSource": return DynamicsCrmSource.DeserializeDynamicsCrmSource(element);
                     case "DynamicsSource": return DynamicsSource.DeserializeDynamicsSource(element);
                     case "EloquaSource": return EloquaSource.DeserializeEloquaSource(element);
+                    case "ExcelSource": return ExcelSource.DeserializeExcelSource(element);
                     case "FileSystemSource": return FileSystemSource.DeserializeFileSystemSource(element);
                     case "GoogleAdWordsSource": return GoogleAdWordsSource.DeserializeGoogleAdWordsSource(element);
                     case "GoogleBigQuerySource": return GoogleBigQuerySource.DeserializeGoogleBigQuerySource(element);
@@ -91,6 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "MariaDBSource": return MariaDBSource.DeserializeMariaDBSource(element);
                     case "MarketoSource": return MarketoSource.DeserializeMarketoSource(element);
                     case "MicrosoftAccessSource": return MicrosoftAccessSource.DeserializeMicrosoftAccessSource(element);
+                    case "MongoDbAtlasSource": return MongoDbAtlasSource.DeserializeMongoDbAtlasSource(element);
                     case "MongoDbSource": return MongoDbSource.DeserializeMongoDbSource(element);
                     case "MongoDbV2Source": return MongoDbV2Source.DeserializeMongoDbV2Source(element);
                     case "MySqlSource": return MySqlSource.DeserializeMySqlSource(element);
@@ -120,7 +126,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapOpenHubSource": return SapOpenHubSource.DeserializeSapOpenHubSource(element);
                     case "SapTableSource": return SapTableSource.DeserializeSapTableSource(element);
                     case "ServiceNowSource": return ServiceNowSource.DeserializeServiceNowSource(element);
+                    case "SharePointOnlineListSource": return SharePointOnlineListSource.DeserializeSharePointOnlineListSource(element);
                     case "ShopifySource": return ShopifySource.DeserializeShopifySource(element);
+                    case "SnowflakeSource": return SnowflakeSource.DeserializeSnowflakeSource(element);
                     case "SparkSource": return SparkSource.DeserializeSparkSource(element);
                     case "SqlDWSource": return SqlDWSource.DeserializeSqlDWSource(element);
                     case "SqlMISource": return SqlMISource.DeserializeSqlMISource(element);
@@ -133,6 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "VerticaSource": return VerticaSource.DeserializeVerticaSource(element);
                     case "WebSource": return WebSource.DeserializeWebSource(element);
                     case "XeroSource": return XeroSource.DeserializeXeroSource(element);
+                    case "XmlSource": return XmlSource.DeserializeXmlSource(element);
                     case "ZohoSource": return ZohoSource.DeserializeZohoSource(element);
                 }
             }
@@ -183,6 +192,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CopySource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties);
+        }
+
+        internal partial class CopySourceConverter : JsonConverter<CopySource>
+        {
+            public override void Write(Utf8JsonWriter writer, CopySource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CopySource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCopySource(document.RootElement);
+            }
         }
     }
 }

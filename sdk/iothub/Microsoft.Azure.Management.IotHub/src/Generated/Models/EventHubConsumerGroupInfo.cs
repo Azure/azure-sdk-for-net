@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// name.</param>
         /// <param name="type">the resource type.</param>
         /// <param name="etag">The etag.</param>
-        public EventHubConsumerGroupInfo(IDictionary<string, string> properties = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
+        public EventHubConsumerGroupInfo(IDictionary<string, object> properties = default(IDictionary<string, object>), string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
         {
             Properties = properties;
             Id = id;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// Gets or sets the tags.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public IDictionary<string, string> Properties { get; set; }
+        public IDictionary<string, object> Properties { get; set; }
 
         /// <summary>
         /// Gets the Event Hub-compatible consumer group identifier.

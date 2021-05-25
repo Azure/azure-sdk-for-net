@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.NetApp
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Microsoft NetApp Azure Resource Provider specification
+    /// Microsoft NetApp Files Azure Resource Provider specification
     /// </summary>
     public partial interface IAzureNetAppFilesManagementClient : System.IDisposable
     {
@@ -107,14 +107,14 @@ namespace Microsoft.Azure.Management.NetApp
         ISnapshotPoliciesOperations SnapshotPolicies { get; }
 
         /// <summary>
-        /// Gets the IAccountBackupsOperations.
-        /// </summary>
-        IAccountBackupsOperations AccountBackups { get; }
-
-        /// <summary>
         /// Gets the IBackupsOperations.
         /// </summary>
         IBackupsOperations Backups { get; }
+
+        /// <summary>
+        /// Gets the IAccountBackupsOperations.
+        /// </summary>
+        IAccountBackupsOperations AccountBackups { get; }
 
         /// <summary>
         /// Gets the IBackupPoliciesOperations.

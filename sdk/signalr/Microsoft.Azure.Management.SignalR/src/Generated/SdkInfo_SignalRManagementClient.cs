@@ -19,21 +19,22 @@ namespace Microsoft.Azure.Management.SignalR
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("SignalRService", "Operations", "2020-07-01-preview"),
-                new Tuple<string, string, string>("SignalRService", "SignalR", "2020-07-01-preview"),
-                new Tuple<string, string, string>("SignalRService", "SignalRPrivateEndpointConnections", "2020-07-01-preview"),
-                new Tuple<string, string, string>("SignalRService", "SignalRPrivateLinkResources", "2020-07-01-preview"),
-                new Tuple<string, string, string>("SignalRService", "Usages", "2020-07-01-preview"),
+                new Tuple<string, string, string>("SignalRService", "Operations", "2021-04-01-preview"),
+                new Tuple<string, string, string>("SignalRService", "SignalR", "2021-04-01-preview"),
+                new Tuple<string, string, string>("SignalRService", "SignalRPrivateEndpointConnections", "2021-04-01-preview"),
+                new Tuple<string, string, string>("SignalRService", "SignalRPrivateLinkResources", "2021-04-01-preview"),
+                new Tuple<string, string, string>("SignalRService", "SignalRSharedPrivateLinkResources", "2021-04-01-preview"),
+                new Tuple<string, string, string>("SignalRService", "Usages", "2021-04-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@1.9.1";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/signalr/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\workspace\\github\\juniwang\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/signalr/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\repo\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "da7d451541f551dd1fed355a77444bc8f14e7461";
+      public static readonly String GithubCommidId = "0c9b217390dd7eb2d3cd6b880d0ca2c781ff86fe";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

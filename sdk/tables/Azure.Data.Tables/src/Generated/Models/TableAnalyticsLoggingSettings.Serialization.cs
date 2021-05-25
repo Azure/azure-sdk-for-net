@@ -8,6 +8,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
@@ -38,7 +39,7 @@ namespace Azure.Data.Tables.Models
             bool delete = default;
             bool read = default;
             bool write = default;
-            RetentionPolicy retentionPolicy = default;
+            TableRetentionPolicy retentionPolicy = default;
             if (element.Element("Version") is XElement versionElement)
             {
                 version = (string)versionElement;
@@ -57,7 +58,7 @@ namespace Azure.Data.Tables.Models
             }
             if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
             {
-                retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(retentionPolicyElement);
+                retentionPolicy = TableRetentionPolicy.DeserializeTableRetentionPolicy(retentionPolicyElement);
             }
             return new TableAnalyticsLoggingSettings(version, delete, read, write, retentionPolicy);
         }

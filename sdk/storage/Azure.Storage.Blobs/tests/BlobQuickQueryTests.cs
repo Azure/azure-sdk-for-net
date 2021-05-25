@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -11,6 +12,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -24,6 +26,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_Min()
         {
             // Arrange
@@ -44,8 +47,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_Snapshot()
         {
             // Arrange
@@ -69,6 +72,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_Error()
         {
             // Arrange
@@ -86,6 +90,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [Ignore("Don't want to record 16 MB of data.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_MultipleDataRecords()
         {
             // Arrange
@@ -128,6 +133,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [Ignore("Don't want to record 250 MB of data.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_Large()
         {
             // Arrange
@@ -161,6 +167,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_Progress()
         {
             // Arrange
@@ -192,6 +199,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_QueryTextConfigurations()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -236,6 +244,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_NonFatalError()
         {
             // Arrange
@@ -276,6 +285,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_FatalError()
         {
             // Arrange
@@ -326,6 +336,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -361,6 +372,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_AccessConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -392,6 +404,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_IfTags()
         {
             // Arrange
@@ -429,6 +442,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_IfTags_Failed()
         {
             // Arrange
@@ -457,6 +471,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ArrowConfiguration()
         {
             // Arrange
@@ -494,8 +509,65 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("/////4AAAAAQAAAAAAAKAAwABgAFAAgACgAAAAABAwAMAAAACAAIAAAABAAIAAAABAAAAAEAAAAUAAAAEAAUAAgABgAHAAwAAAAQABAAAAAAAAEHJAAAABQAAAAEAAAAAAAAAAgADAAEAAgACAAAAAQAAAACAAAABAAAAE5hbWUAAAAAAAAAAP////9wAAAAEAAAAAAACgAOAAYABQAIAAoAAAAAAwMAEAAAAAAACgAMAAAABAAIAAoAAAAwAAAABAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAP////+IAAAAFAAAAAAAAAAMABYABgAFAAgADAAMAAAAAAMDABgAAAAAAgAAAAAAAAAACgAYAAwABAAIAAoAAAA8AAAAEAAAACAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAABAAAAIAAAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAA", Convert.ToBase64String(memoryStream.ToArray()));
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_08_04)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20758")]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
+        public async Task QueryAsync_ParquetConfiguration()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blockBlobClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using FileStream stream = File.OpenRead(
+                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}parquet.parquet");
+            await blockBlobClient.UploadAsync(stream);
+
+            // Act
+            string query = @"select * from blobstorage where id < 1;";
+            BlobQueryOptions options = new BlobQueryOptions
+            {
+                InputTextConfiguration = new BlobQueryParquetTextOptions()
+            };
+            Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(
+                query,
+                options: options);
+
+            // Assert
+            using StreamReader streamReader = new StreamReader(response.Value.Content);
+            string s = await streamReader.ReadToEndAsync();
+
+            // Assert
+            Assert.AreEqual("0,mdifjt55.ea3,mdifjt55.ea3\n", s);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_08_04)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20758")]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
+        public async Task QueryAsync_ParquetOutputError()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blockBlobClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            string query = @"select * from blobstorage where id < 1;";
+            BlobQueryOptions options = new BlobQueryOptions
+            {
+                OutputTextConfiguration = new BlobQueryParquetTextOptions()
+            };
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blockBlobClient.QueryAsync(
+                    query, options),
+                e => Assert.AreEqual($"{nameof(BlobQueryParquetTextOptions)} can only be used for input serialization.", e.Message));
+        }
+
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ArrowConfigurationInput()
         {
             // Arrange

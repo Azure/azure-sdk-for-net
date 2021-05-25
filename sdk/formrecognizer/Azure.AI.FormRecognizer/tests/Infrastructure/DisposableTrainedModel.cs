@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// <remarks>
     /// Please note that models can also be trained using a graphical user interface
     /// such as the Form Recognizer Labeling Tool found here:
-    /// <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool"/>.
+    /// <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1"/>.
     /// </remarks>
     public class DisposableTrainedModel : IAsyncDisposable
     {
@@ -48,13 +48,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="trainingClient">The client to use for training and for deleting the model upon disposal.</param>
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
-        /// <param name="pollingInterval">Polling interval value to use.</param>
         /// <param name="modelName">Optional model name.</param>
         /// <returns>A <see cref="DisposableTrainedModel"/> instance from which the trained model ID can be obtained.</returns>
-        public static async Task<DisposableTrainedModel> TrainModelAsync(FormTrainingClient trainingClient, Uri trainingFilesUri, bool useTrainingLabels, TimeSpan pollingInterval, string modelName = default)
+        public static async Task<DisposableTrainedModel> TrainModelAsync(FormTrainingClient trainingClient, Uri trainingFilesUri, bool useTrainingLabels, string modelName = default)
         {
             TrainingOperation operation = await trainingClient.StartTrainingAsync(trainingFilesUri, useTrainingLabels, modelName);
-            await operation.WaitForCompletionAsync(pollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
             Assert.AreEqual(CustomFormModelStatus.Ready, operation.Value.Status);

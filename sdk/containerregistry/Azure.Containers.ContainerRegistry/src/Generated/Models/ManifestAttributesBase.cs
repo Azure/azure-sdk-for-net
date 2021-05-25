@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,55 +15,84 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class ManifestAttributesBase
     {
         /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
-        internal ManifestAttributesBase()
+        /// <param name="digest"> Manifest. </param>
+        /// <param name="createdOn"> Created time. </param>
+        /// <param name="lastUpdatedOn"> Last update time. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        internal ManifestAttributesBase(string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+
+            Digest = digest;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            ManifestReferences = new ChangeTrackingList<ArtifactManifestReference>();
             Tags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
         /// <param name="digest"> Manifest. </param>
-        /// <param name="imageSize"> Image size. </param>
-        /// <param name="createdTime"> Created time. </param>
-        /// <param name="lastUpdateTime"> Last update time. </param>
+        /// <param name="size"> Image size. </param>
+        /// <param name="createdOn"> Created time. </param>
+        /// <param name="lastUpdatedOn"> Last update time. </param>
         /// <param name="architecture"> CPU architecture. </param>
-        /// <param name="os"> Operating system. </param>
-        /// <param name="mediaType"> Media type. </param>
-        /// <param name="configMediaType"> Config blob media type. </param>
+        /// <param name="operatingSystem"> Operating system. </param>
+        /// <param name="manifestReferences"> List of manifests referenced by this manifest list.  List will be empty if this manifest is not a manifest list. </param>
         /// <param name="tags"> List of tags. </param>
-        /// <param name="changeableAttributes"> Changeable attributes. </param>
-        internal ManifestAttributesBase(string digest, long? imageSize, string createdTime, string lastUpdateTime, string architecture, string os, string mediaType, string configMediaType, IReadOnlyList<string> tags, ContentProperties changeableAttributes)
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        /// <param name="quarantineState"> Quarantine state. </param>
+        /// <param name="quarantineDetails"> Quarantine details. </param>
+        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestReference> manifestReferences, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, string quarantineState, string quarantineDetails)
         {
             Digest = digest;
-            ImageSize = imageSize;
-            CreatedTime = createdTime;
-            LastUpdateTime = lastUpdateTime;
+            Size = size;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             Architecture = architecture;
-            Os = os;
-            MediaType = mediaType;
-            ConfigMediaType = configMediaType;
+            OperatingSystem = operatingSystem;
+            ManifestReferences = manifestReferences;
             Tags = tags;
-            ChangeableAttributes = changeableAttributes;
+            CanDelete = canDelete;
+            CanWrite = canWrite;
+            CanList = canList;
+            CanRead = canRead;
+            QuarantineState = quarantineState;
+            QuarantineDetails = quarantineDetails;
         }
 
         /// <summary> Manifest. </summary>
         public string Digest { get; }
         /// <summary> Image size. </summary>
-        public long? ImageSize { get; }
+        public long? Size { get; }
         /// <summary> Created time. </summary>
-        public string CreatedTime { get; }
+        public DateTimeOffset CreatedOn { get; }
         /// <summary> Last update time. </summary>
-        public string LastUpdateTime { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
         /// <summary> CPU architecture. </summary>
-        public string Architecture { get; }
+        public ArtifactArchitecture? Architecture { get; }
         /// <summary> Operating system. </summary>
-        public string Os { get; }
-        /// <summary> Media type. </summary>
-        public string MediaType { get; }
-        /// <summary> Config blob media type. </summary>
-        public string ConfigMediaType { get; }
+        public ArtifactOperatingSystem? OperatingSystem { get; }
+        /// <summary> List of manifests referenced by this manifest list.  List will be empty if this manifest is not a manifest list. </summary>
+        public IReadOnlyList<ArtifactManifestReference> ManifestReferences { get; }
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
-        /// <summary> Changeable attributes. </summary>
-        public ContentProperties ChangeableAttributes { get; }
+        /// <summary> Delete enabled. </summary>
+        public bool? CanDelete { get; }
+        /// <summary> Write enabled. </summary>
+        public bool? CanWrite { get; }
+        /// <summary> List enabled. </summary>
+        public bool? CanList { get; }
+        /// <summary> Read enabled. </summary>
+        public bool? CanRead { get; }
+        /// <summary> Quarantine state. </summary>
+        public string QuarantineState { get; }
+        /// <summary> Quarantine details. </summary>
+        public string QuarantineDetails { get; }
     }
 }

@@ -48,17 +48,20 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="authenticationType">Method used to authenticate
         /// against the service bus topic endpoint. Possible values include:
         /// 'keyBased', 'identityBased'</param>
+        /// <param name="identity">Managed identity properties of routing
+        /// service bus topic endpoint.</param>
         /// <param name="subscriptionId">The subscription identifier of the
         /// service bus topic endpoint.</param>
         /// <param name="resourceGroup">The name of the resource group of the
         /// service bus topic endpoint.</param>
-        public RoutingServiceBusTopicEndpointProperties(string name, string id = default(string), string connectionString = default(string), string endpointUri = default(string), string entityPath = default(string), string authenticationType = default(string), string subscriptionId = default(string), string resourceGroup = default(string))
+        public RoutingServiceBusTopicEndpointProperties(string name, string id = default(string), string connectionString = default(string), string endpointUri = default(string), string entityPath = default(string), string authenticationType = default(string), ManagedIdentity identity = default(ManagedIdentity), string subscriptionId = default(string), string resourceGroup = default(string))
         {
             Id = id;
             ConnectionString = connectionString;
             EndpointUri = endpointUri;
             EntityPath = entityPath;
             AuthenticationType = authenticationType;
+            Identity = identity;
             Name = name;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
@@ -103,6 +106,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "authenticationType")]
         public string AuthenticationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets managed identity properties of routing service bus
+        /// topic endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the name that identifies this endpoint. The name can
