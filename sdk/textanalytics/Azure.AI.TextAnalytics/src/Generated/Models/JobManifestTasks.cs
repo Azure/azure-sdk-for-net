@@ -23,6 +23,5 @@ namespace Azure.AI.TextAnalytics
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTask>();
             SentimentAnalysisTasks = new ChangeTrackingList<SentimentAnalysisTask>();
         }
-        public IList<SentimentAnalysisTask> SentimentAnalysisTasks { get; }
     }
 }

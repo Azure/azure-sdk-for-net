@@ -19,8 +19,5 @@ steps:
   - task: Cache@2
     inputs:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
-      restoreKeys: |
-        nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props
-        nuget | "$(Agent.OS)"
       path: $(NUGET_PACKAGES)
     displayName: Cache NuGet packages

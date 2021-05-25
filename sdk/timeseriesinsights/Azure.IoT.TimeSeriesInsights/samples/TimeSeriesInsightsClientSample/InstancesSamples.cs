@@ -86,7 +86,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 tsId,
             };
 
-            Response<InstancesOperationResult[]> getInstancesByIdResult = await instancesClient.GetAsync(instanceIdsToGet);
+            Response<InstancesOperationResult[]> getInstancesByIdResult = await instancesClient.GetByIdAsync(instanceIdsToGet);
 
             TimeSeriesInstance instanceResult = getInstancesByIdResult.Value[0].Instance;
             Console.WriteLine($"Retrieved Time Series Insights instance with Id '{instanceResult.TimeSeriesId}' and name '{instanceResult.Name}'.");
@@ -131,7 +131,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 tsId,
             };
 
-            Response<InstancesOperationResult[]> getByIdsResult = await instancesClient.GetAsync(timeSeriesIds);
+            Response<InstancesOperationResult[]> getByIdsResult = await instancesClient.GetByIdAsync(timeSeriesIds);
 
             // The response of calling the API contains a list of instance or error objects corresponding by position to the array in the request.
             // Instance object is set when operation is successful and error object is set when operation is unsuccessful.
@@ -163,7 +163,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 };
 
                 Response<TimeSeriesOperationError[]> deleteInstanceErrors = await instancesClient
-                    .DeleteAsync(instancesToDelete);
+                    .DeleteByIdAsync(instancesToDelete);
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
                 // array in the request. If the error object is set to null, this means the operation was a success.

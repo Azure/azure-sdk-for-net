@@ -138,7 +138,7 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                             @annelo-msft @maririos @suhas92
+/sdk/textanalytics/                             @annelo-msft @maririos
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/            @assafi
@@ -612,6 +612,12 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ServiceLabel: %vFXT %Service Attention
 #/<NotInRepo>/            @zhusijia26
+
+# ServiceLabel: %VideoAnalyzer %Service Attention
+#/<NotInRepo>/            @giakas
+
+# PRLabel: %VideoAnalyzer
+/sdk/videoanalyzer/       @giakas @heaths
 
 # ServiceLabel: %Web Apps %Service Attention
 #/<NotInRepo>/            @AzureAppServiceCLI @antcp
