@@ -597,25 +597,19 @@ namespace Azure.Storage.Test.Shared
             credentials ??= GetAccountSasCredentials();
             if (!includeEndpoint)
             {
-                return TestExtensions.CreateStorageConnectionString(
-                    credentials,
-                    TestConfigDefault.AccountName);
+                return new StorageConnectionString(credentials,
+                    (new Uri(TestConfigDefault.BlobServiceEndpoint), new Uri(TestConfigDefault.BlobServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.QueueServiceEndpoint), new Uri(TestConfigDefault.QueueServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.TableServiceEndpoint), new Uri(TestConfigDefault.TableServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.FileServiceEndpoint), new Uri(TestConfigDefault.FileServiceSecondaryEndpoint)));
             }
 
-            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
+            (Uri, Uri) blobUri = (new Uri(TestConfigDefault.BlobServiceEndpoint), new Uri(TestConfigDefault.BlobServiceSecondaryEndpoint));
 
             (Uri, Uri) tableUri = default;
             if (includeTable)
             {
-                tableUri = StorageConnectionString.ConstructTableEndpoint(
-                    Constants.Https,
-                    TestConfigDefault.AccountName,
-                    default,
-                    default);
+                tableUri = (new Uri(TestConfigDefault.TableServiceEndpoint), new Uri(TestConfigDefault.TableServiceSecondaryEndpoint));
             }
 
             return new StorageConnectionString(
