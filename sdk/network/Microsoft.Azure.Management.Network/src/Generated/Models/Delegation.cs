@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// subnet. This name can be used to access the resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public Delegation(string id = default(string), string serviceName = default(string), IList<string> actions = default(IList<string>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Resource type.</param>
+        public Delegation(string id = default(string), string serviceName = default(string), IList<string> actions = default(IList<string>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             ServiceName = serviceName;
@@ -54,6 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -96,6 +98,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }

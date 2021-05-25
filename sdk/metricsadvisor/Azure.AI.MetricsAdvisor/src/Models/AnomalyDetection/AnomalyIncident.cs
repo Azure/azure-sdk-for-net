@@ -17,8 +17,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress("Property")]
     public partial class AnomalyIncident
     {
-        internal AnomalyIncident(string metricId, string detectionConfigurationId, string id, DateTimeOffset startTime, DateTimeOffset endTime, SeriesIdentity rootNode, IncidentProperty property)
+        internal AnomalyIncident(Guid? dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startTime, DateTimeOffset endTime, SeriesIdentity rootNode, IncidentProperty property)
         {
+            DataFeedId = dataFeedId;
             MetricId = metricId;
             DetectionConfigurationId = detectionConfigurationId;
             Id = id;
@@ -27,6 +28,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionKey = new DimensionKey(rootNode.Dimension);
             Severity = property.MaxSeverity;
             Status = property.IncidentStatus;
+            ValueOfRootNode = property.ValueOfRootNode;
+            ExpectedValueOfRootNode = property.ExpectedValueOfRootNode;
         }
 
         /// <summary>
@@ -77,5 +80,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         [CodeGenMember("IncidentStatus")]
         public AnomalyIncidentStatus Status { get; }
+
+        /// <summary>
+        /// The value of the data point at the root node of this incident. The root node is defined as
+        /// the data point at the root of this incident's root-cause analysis tree.
+        /// </summary>
+        public double ValueOfRootNode { get; }
+
+        /// <summary>
+        /// The expected value of the data point at the root node of this incident, according to the
+        /// service's smart detector. The root node is defined as the data point at the root of this
+        /// incident's root-cause analysis tree. <c>null</c> if the quantity of historical points is not
+        /// enough to make a prediction, or if the anomaly was not detected by a <see cref="SmartDetectionCondition"/>.
+        /// </summary>
+        public double? ExpectedValueOfRootNode { get; }
+
+        internal Guid? DataFeedId { get; }
     }
 }

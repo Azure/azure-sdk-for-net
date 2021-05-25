@@ -34,14 +34,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> . </param>
+        /// <param name="connectionProperties"> Properties used to connect to Salesforce Marketing Cloud. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="clientId"> The client ID associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string). </param>
         /// <param name="clientSecret"> The client secret associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string). </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SalesforceMarketingCloudLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clientId, SecretBase clientSecret, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SalesforceMarketingCloudLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionProperties, object clientId, SecretBase clientSecret, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
+            ConnectionProperties = connectionProperties;
             ClientId = clientId;
             ClientSecret = clientSecret;
             UseEncryptedEndpoints = useEncryptedEndpoints;
@@ -51,6 +53,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "SalesforceMarketingCloud";
         }
 
+        /// <summary> Properties used to connect to Salesforce Marketing Cloud. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        public object ConnectionProperties { get; set; }
         /// <summary> The client ID associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string). </summary>
         public object ClientId { get; set; }
         /// <summary> The client secret associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string). </summary>

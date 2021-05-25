@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An array of available service aliases. </summary>
-    public partial class AvailableServiceAliasesResult
+    internal partial class AvailableServiceAliasesResult
     {
         /// <summary> Initializes a new instance of AvailableServiceAliasesResult. </summary>
         internal AvailableServiceAliasesResult()

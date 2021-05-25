@@ -19,29 +19,40 @@ namespace Microsoft.Azure.Management.CosmosDB
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DocumentDB", "CassandraResources", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "Collection", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "CollectionPartition", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "CollectionPartitionRegion", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "CollectionRegion", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "Database", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "DatabaseAccountRegion", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "DatabaseAccounts", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "GremlinResources", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "MongoDBResources", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "NotebookWorkspaces", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "Operations", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeId", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeIdRegion", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "Percentile", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "PercentileSourceTarget", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "PercentileTarget", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "PrivateEndpointConnections", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "PrivateLinkResources", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "SqlResources", "2021-01-15"),
-                new Tuple<string, string, string>("DocumentDB", "TableResources", "2021-01-15"),
+                new Tuple<string, string, string>("DocumentDB", "CassandraResources", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "Collection", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "CollectionPartition", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "CollectionPartitionRegion", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "CollectionRegion", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "Database", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "DatabaseAccountRegion", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "DatabaseAccounts", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "GremlinResources", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "MongoDBResources", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "NotebookWorkspaces", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "Operations", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeId", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeIdRegion", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "Percentile", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "PercentileSourceTarget", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "PercentileTarget", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "PrivateEndpointConnections", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "PrivateLinkResources", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "SqlResources", "2021-04-15"),
+                new Tuple<string, string, string>("DocumentDB", "TableResources", "2021-04-15"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.1.4";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cosmos-db/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "c1f66424b3b3636ec4cdb6c911dc75ca9abbe146";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

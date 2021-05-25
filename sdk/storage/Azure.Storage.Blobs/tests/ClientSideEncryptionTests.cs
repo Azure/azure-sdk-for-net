@@ -324,7 +324,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test] // multiple unalligned blocks
+        [RecordedTest] // multiple unalligned blocks
         [LiveOnly] // cannot seed content encryption key
         public async Task KeyResolverKicksIn()
         {
@@ -723,11 +723,11 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_WithClientSideEncryptionOptions_True()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -754,11 +754,11 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(blobEncrypted.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_WithClientSideEncryptionOptions_False()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
@@ -779,6 +779,15 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(blobEncrypted.CanGenerateSasUri);
+        }
+        [Test]
+        public void CanParseLargeContentRange()
+        {
+            long compareValue = (long)Int32.MaxValue + 1; //Increase max int32 by one
+            ContentRange contentRange = ContentRange.Parse($"bytes 0 {compareValue} {compareValue}");
+            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.Size);
+            Assert.AreEqual(0, contentRange.Start);
+            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.End);
         }
     }
 }

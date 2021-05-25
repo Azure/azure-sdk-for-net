@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MachineLearningServicesDatasetDriftDetectedEventDataConverter))]
     public partial class MachineLearningServicesDatasetDriftDetectedEventData
     {
         internal static MachineLearningServicesDatasetDriftDetectedEventData DeserializeMachineLearningServicesDatasetDriftDetectedEventData(JsonElement element)
@@ -82,6 +84,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MachineLearningServicesDatasetDriftDetectedEventData(dataDriftId.Value, dataDriftName.Value, runId.Value, baseDatasetId.Value, targetDatasetId.Value, Optional.ToNullable(driftCoefficient), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+        }
+
+        internal partial class MachineLearningServicesDatasetDriftDetectedEventDataConverter : JsonConverter<MachineLearningServicesDatasetDriftDetectedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MachineLearningServicesDatasetDriftDetectedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MachineLearningServicesDatasetDriftDetectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMachineLearningServicesDatasetDriftDetectedEventData(document.RootElement);
+            }
         }
     }
 }

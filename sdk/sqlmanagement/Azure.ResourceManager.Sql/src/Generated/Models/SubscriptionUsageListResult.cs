@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of subscription usage metrics in a location. </summary>
-    public partial class SubscriptionUsageListResult
+    internal partial class SubscriptionUsageListResult
     {
         /// <summary> Initializes a new instance of SubscriptionUsageListResult. </summary>
         internal SubscriptionUsageListResult()

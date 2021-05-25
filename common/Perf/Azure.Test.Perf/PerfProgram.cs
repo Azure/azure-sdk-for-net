@@ -68,25 +68,16 @@ namespace Azure.Test.Perf
                 Console.WriteLine("Application started.");
             }
 
-            Console.WriteLine("=== Versions ===");
-            Console.WriteLine($"Runtime: {Environment.Version}");
-            var azureAssemblies = testType.Assembly.GetReferencedAssemblies()
-                .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) || a.Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
-                .Where(a => !a.Name.Equals("Azure.Test.Perf", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(a => a.Name);
-            foreach (var a in azureAssemblies)
-            {
-                var informationalVersion = FileVersionInfo.GetVersionInfo(Assembly.Load(a).Location).ProductVersion;
-                Console.WriteLine($"{a.Name}: {a.Version} ({informationalVersion})");
-            }
-            Console.WriteLine();
-
             Console.WriteLine("=== Options ===");
             Console.WriteLine(JsonSerializer.Serialize(options, options.GetType(), new JsonSerializerOptions()
             {
                 WriteIndented = true
             }));
             Console.WriteLine();
+
+            ConfigureThreadPool(options);
+
+            PrintEnvironment();
 
             using var setupStatusCts = new CancellationTokenSource();
             var setupStatusThread = PerfStressUtilities.PrintStatus("=== Setup ===", () => ".", newLine: false, setupStatusCts.Token);
@@ -181,6 +172,93 @@ namespace Azure.Test.Perf
             {
                 cleanupStatusThread.Join();
             }
+
+            // I would prefer to print assembly versions at the start of testing, but they cannot be determined until
+            // code in each assembly has been executed, so this must wait until after testing is complete.
+            PrintAssemblyVersions(testType);
+        }
+
+        private static void ConfigureThreadPool(PerfOptions options)
+        {
+            if (options.MinWorkerThreads.HasValue || options.MinIOCompletionThreads.HasValue)
+            {
+                ThreadPool.GetMinThreads(out var minWorkerThreads, out var minIOCompletionThreads);
+                var successful = ThreadPool.SetMinThreads(options.MinWorkerThreads ?? minWorkerThreads,
+                    options.MinIOCompletionThreads ?? minIOCompletionThreads);
+
+                if (!successful)
+                {
+                    throw new InvalidOperationException("ThreadPool.SetMinThreads() was unsuccessful");
+                }
+            }
+
+            if (options.MaxWorkerThreads.HasValue || options.MaxIOCompletionThreads.HasValue)
+            {
+                ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxIOCompletionThreads);
+                var successful = ThreadPool.SetMaxThreads(options.MaxWorkerThreads ?? maxWorkerThreads,
+                    options.MaxIOCompletionThreads ?? maxIOCompletionThreads);
+
+                if (!successful)
+                {
+                    throw new InvalidOperationException("ThreadPool.SetMaxThreads() was unsuccessful");
+                }
+            }
+        }
+
+        private static void PrintEnvironment()
+        {
+            Console.WriteLine("=== Environment ===");
+
+            Console.WriteLine($"GCSettings.IsServerGC: {GCSettings.IsServerGC}");
+
+            Console.WriteLine($"Environment.ProcessorCount: {Environment.ProcessorCount}");
+            Console.WriteLine($"Environment.Is64BitProcess: {Environment.Is64BitProcess}");
+
+            ThreadPool.GetMinThreads(out var minWorkerThreads, out var minCompletionPortThreads);
+            ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxCompletionPortThreads);
+            Console.WriteLine($"ThreadPool.MinWorkerThreads: {minWorkerThreads}");
+            Console.WriteLine($"ThreadPool.MinCompletionPortThreads: {minCompletionPortThreads}");
+            Console.WriteLine($"ThreadPool.MaxWorkerThreads: {maxWorkerThreads}");
+            Console.WriteLine($"ThreadPool.MaxCompletionPortThreads: {maxCompletionPortThreads}");
+
+            Console.WriteLine();
+        }
+
+        private static void PrintAssemblyVersions(Type testType)
+        {
+            Console.WriteLine("=== Versions ===");
+
+            Console.WriteLine($"Runtime:         {Environment.Version}");
+
+            var referencedAssemblies = testType.Assembly.GetReferencedAssemblies();
+
+            var azureLoadedAssemblies = AppDomain.CurrentDomain.GetAssemblies()
+                // Include all Track1 and Track2 assemblies
+                .Where(a => a.GetName().Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) ||
+                            a.GetName().Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
+                // Exclude Azure.Core.TestFramework since it is only used to setup environment and should not impact results
+                .Where(a => !a.GetName().Name.Equals("Azure.Core.TestFramework", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(a => a.GetName().Name);
+
+            foreach (var a in azureLoadedAssemblies)
+            {
+                var name = a.GetName().Name;
+                var referencedVersion = referencedAssemblies.Where(r => r.Name == name).SingleOrDefault()?.Version;
+                var loadedVersion = a.GetName().Version;
+                var informationalVersion = FileVersionInfo.GetVersionInfo(a.Location).ProductVersion;
+                var debuggableAttribute = (DebuggableAttribute)(a.GetCustomAttribute(typeof(DebuggableAttribute)));
+
+                Console.WriteLine($"{name}:");
+                if (referencedVersion != null)
+                {
+                    Console.WriteLine($"  Referenced:    {referencedVersion}");
+                }
+                Console.WriteLine($"  Loaded:        {loadedVersion}");
+                Console.WriteLine($"  Informational: {informationalVersion}");
+                Console.WriteLine($"  JITOptimizer:  {(debuggableAttribute.IsJITOptimizerDisabled ? "Disabled" : "Enabled")}");
+            }
+
+            Console.WriteLine();
         }
 
         private static async Task RunTestsAsync(IPerfTest[] tests, PerfOptions options, string title, bool warmup = false)
@@ -363,8 +441,16 @@ namespace Azure.Test.Perf
                     _lastCompletionTimes[index] = sw.Elapsed;
                 }
             }
-            catch (OperationCanceledException)
+            catch (Exception e)
             {
+                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                {
+                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 
@@ -406,8 +492,11 @@ namespace Azure.Test.Perf
             }
             catch (Exception e)
             {
-                // Ignore if any part of the exception chain is type OperationCanceledException
-                if (!PerfStressUtilities.ContainsOperationCanceledException(e))
+                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                {
+                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                }
+                else
                 {
                     throw;
                 }
@@ -426,7 +515,7 @@ namespace Azure.Test.Perf
                 {
                     while (writtenOperations < (rate * sw.Elapsed.TotalSeconds))
                     {
-                        _pendingOperations.Writer.TryWrite(ValueTuple.Create(sw.Elapsed, sw));
+                        _pendingOperations.Writer.TryWrite((sw.Elapsed, sw));
                         writtenOperations++;
                     }
 

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class DdosProtectionPlanListResult
+    internal partial class DdosProtectionPlanListResult
     {
         internal static DdosProtectionPlanListResult DeserializeDdosProtectionPlanListResult(JsonElement element)
         {

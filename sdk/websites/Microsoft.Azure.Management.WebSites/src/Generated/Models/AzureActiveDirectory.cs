@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the Azure Active directory provider.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AzureActiveDirectory : ProxyOnlyResource
     {
@@ -33,6 +36,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="enabled">&lt;code&gt;false&lt;/code&gt; if the Azure
+        /// Active Directory provider should not be enabled despite the set
+        /// registration; otherwise, &lt;code&gt;true&lt;/code&gt;.</param>
+        /// <param name="registration">The configuration settings of the Azure
+        /// Active Directory app registration.</param>
+        /// <param name="login">The configuration settings of the Azure Active
+        /// Directory login flow.</param>
+        /// <param name="validation">The configuration settings of the Azure
+        /// Active Directory token validation flow.</param>
+        /// <param name="isAutoProvisioned">Gets a value indicating whether the
+        /// Azure AD configuration was auto-provisioned using 1st party
+        /// tooling.
+        /// This is an internal flag primarily intended to support the Azure
+        /// Management Portal. Users should not
+        /// read or write to this property.</param>
         public AzureActiveDirectory(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), AzureActiveDirectoryRegistration registration = default(AzureActiveDirectoryRegistration), AzureActiveDirectoryLogin login = default(AzureActiveDirectoryLogin), AzureActiveDirectoryValidation validation = default(AzureActiveDirectoryValidation), bool? isAutoProvisioned = default(bool?))
             : base(id, name, kind, type)
         {
@@ -50,26 +68,41 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; if the
+        /// Azure Active Directory provider should not be enabled despite the
+        /// set registration; otherwise,
+        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the Azure Active
+        /// Directory app registration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.registration")]
         public AzureActiveDirectoryRegistration Registration { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the Azure Active
+        /// Directory login flow.
         /// </summary>
         [JsonProperty(PropertyName = "properties.login")]
         public AzureActiveDirectoryLogin Login { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the Azure Active
+        /// Directory token validation flow.
         /// </summary>
         [JsonProperty(PropertyName = "properties.validation")]
         public AzureActiveDirectoryValidation Validation { get; set; }
 
         /// <summary>
+        /// Gets a value indicating whether the Azure AD configuration was
+        /// auto-provisioned using 1st party tooling.
+        /// This is an internal flag primarily intended to support the Azure
+        /// Management Portal. Users should not
+        /// read or write to this property.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isAutoProvisioned")]
         public bool? IsAutoProvisioned { get; set; }

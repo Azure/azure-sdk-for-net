@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the response to a List database replication link request. </summary>
-    public partial class ReplicationLinkListResult
+    internal partial class ReplicationLinkListResult
     {
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>
         internal ReplicationLinkListResult()

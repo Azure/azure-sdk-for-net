@@ -4,7 +4,7 @@ Mixed Reality services, like Azure Spatial Anchors, Azure Remote Rendering, and 
 token service (STS) for authentication. This package supports exchanging Mixed Reality account credentials for an access
 token from the STS that can be used to access Mixed Reality services.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mixedreality/Azure.MixedReality.Authentication) | NuGet
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mixedreality/Azure.MixedReality.Authentication/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.MixedReality.Authentication)
 
 ![Mixed Reality service authentication diagram](https://docs.microsoft.com/azure/spatial-anchors/concepts/media/spatial-anchors-authentication-overview.png)
 
@@ -124,7 +124,7 @@ TokenCredential deviceCodeCredential = new DeviceCodeCredential(deviceCodeCallba
 
 MixedRealityStsClient client = new MixedRealityStsClient(accountId, accountDomain, deviceCodeCredential);
 
-AccessToken token = await client.GetTokenAsync(accountId);
+AccessToken token = await client.GetTokenAsync();
 ```
 
 See [here](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow) for more
@@ -173,7 +173,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 AzureKeyCredential keyCredential = new AzureKeyCredential(accountKey);
 MixedRealityStsClient client = new MixedRealityStsClient(accountId, accountDomain, keyCredential);
 
-AccessToken token = await client.GetTokenAsync(accountId);
+AccessToken token = await client.GetTokenAsync();
 ```
 
 See the authentication examples [above](#authenticate-the-client) for more complex authentication scenarios.

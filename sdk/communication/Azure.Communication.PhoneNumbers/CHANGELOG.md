@@ -1,14 +1,37 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.1 (Unreleased)
+
+## 1.0.0 (2021-04-26)
+Updated `Azure.Communication.PhoneNumbers` version.
+
+## 1.0.0-beta.6 (2021-03-29)
 
 ### Added
-- Added PhoneNumberAdministrationClient (originally was part of the Azure.Communication.Administration package).
-- Added support to create PhoneNumberAdministrationClient with AzureKeyCredential.
-- Added support to create PhoneNumberAdministrationClient with TokenCredential
+- Added protected constructor to PurchasePhoneNumbersOperation and ReleasePhoneNumberOperation for mocking.
 
-### Fixed
-- Issue with paging results not pulling next pages
+### Breaking Changes
+- All models are moved from Azure.Communication.PhoneNumbers.Models namespace to Azure.Communication.PhoneNumbers.
+- AcquiredPhoneNumber class is renamed to PurchasedPhoneNumber.
+- PhoneNumbersClient methods renamed:
+  - GetPhoneNumber -> GetPurchasedPhoneNumber.
+  - GetPhoneNumberAsync -> GetPurchasedPhoneNumberAsync.
+  - GetPhoneNumbers -> GetPurchasedPhoneNumbers.
+  - GetPhoneNumbersAsync -> GetPurchasedPhoneNumbersAsync.
+- PhoneNumbersModelFactory static method AcquiredPhoneNumber is renamed to PurchasedPhoneNumber.
+- PurchasePhoneNumbersOperation and ReleasePhoneNumberOperation extend Operation instead of Operation<Response>.
+- Removed PhoneNumberOperationStatus and PhoneNumberOperationType.
+- Renamed ISOCurrencySymbol property to IsoCurrencySymbol in PhoneNumberCost.
+- Renamed threeLetterISOCountryName parameter to twoLetterIsoCountryName in PhoneNumbersClient.StartSearchAvailablePhoneNumbers and PhoneNumbersClient.StartSearchAvailablePhoneNumbersAsync.
+
+## 1.0.0-beta.5 (2021-03-09)
+
+### Added
+- Added PhoneNumbersClient (originally was part of the Azure.Communication.Administration package).
+- Added support for Azure Active Directory Authentication.
+
+### Breaking Changes
+- PhoneNumberAdministrationClient has been replaced with PhoneNumbersClient, which has the same functionality but different APIs. To learn more about how PhoneNumbersClient works, refer to the [README.md][read_me]
 
 <!-- LINKS -->
 [read_me]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.PhoneNumbers/README.md

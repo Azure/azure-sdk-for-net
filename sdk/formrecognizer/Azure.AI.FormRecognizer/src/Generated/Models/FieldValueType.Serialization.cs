@@ -22,6 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValueType.List => "array",
             FieldValueType.Dictionary => "object",
             FieldValueType.SelectionMark => "selectionMark",
+            FieldValueType.CountryRegion => "countryRegion",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.")
         };
 
@@ -36,6 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
             if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.List;
             if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Dictionary;
             if (string.Equals(value, "selectionMark", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.SelectionMark;
+            if (string.Equals(value, "countryRegion", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.CountryRegion;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.");
         }
     }

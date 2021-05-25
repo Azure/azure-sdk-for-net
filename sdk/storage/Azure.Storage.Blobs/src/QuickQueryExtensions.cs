@@ -57,9 +57,18 @@ namespace Azure.Storage.Blobs
                 serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal(
                     arrowConfiguration.Schema?.Select(ToArrowFieldInternal).ToList());
             }
+            else if (textConfiguration is BlobQueryParquetTextOptions parquetTextConfiguration)
+            {
+                if (!isInput)
+                {
+                    throw new ArgumentException($"{nameof(BlobQueryParquetTextOptions)} can only be used for input serialization.");
+                }
+
+                serialization.Format.Type = QueryFormatType.Parquet;
+            }
             else
             {
-                throw new ArgumentException($"Invalid options type.  Valid options are {nameof(BlobQueryCsvTextOptions)}, {nameof(BlobQueryJsonTextOptions)}, and {nameof(BlobQueryArrowOptions)}");
+                throw new ArgumentException($"Invalid options type.  Valid options are {nameof(BlobQueryCsvTextOptions)}, {nameof(BlobQueryJsonTextOptions)}, {nameof(BlobQueryArrowOptions)}, and {nameof(BlobQueryParquetTextOptions)}");
             }
 
             return serialization;

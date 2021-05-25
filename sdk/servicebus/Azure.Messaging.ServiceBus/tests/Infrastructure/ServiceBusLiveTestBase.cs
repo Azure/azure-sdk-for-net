@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -11,16 +12,18 @@ namespace Azure.Messaging.ServiceBus.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
     {
+        private const int DefaultTryTimeout = 15;
+
         public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
 
-        protected ServiceBusClient CreateNoRetryClient()
+        protected ServiceBusClient CreateNoRetryClient(int tryTimeout = DefaultTryTimeout)
         {
             var options =
                 new ServiceBusClientOptions
                 {
                     RetryOptions = new ServiceBusRetryOptions
                     {
-                        TryTimeout = TimeSpan.FromSeconds(10),
+                        TryTimeout = TimeSpan.FromSeconds(tryTimeout),
                         MaxRetries = 0
                     }
                 };
@@ -29,19 +32,44 @@ namespace Azure.Messaging.ServiceBus.Tests
                 options);
         }
 
-        protected ServiceBusClient CreateClient(int tryTimeout = 15)
+        protected ServiceBusClient CreateClient(int tryTimeout = DefaultTryTimeout)
         {
-            var retryOptions = new ServiceBusRetryOptions();
-            if (tryTimeout != default)
-            {
-                retryOptions.TryTimeout = TimeSpan.FromSeconds(tryTimeout);
-            }
-            return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
+            var options =
                 new ServiceBusClientOptions
                 {
-                    RetryOptions = retryOptions
-                });
+                    RetryOptions = new ServiceBusRetryOptions
+                    {
+                        TryTimeout = TimeSpan.FromSeconds(tryTimeout),
+                    }
+                };
+            return new ServiceBusClient(
+                TestEnvironment.ServiceBusConnectionString,
+                options);
+        }
+
+        protected static async Task SendMessagesAsync(
+            ServiceBusClient client,
+            string entityPath,
+            int numberOfMessages)
+        {
+            await using var sender = client.CreateSender(entityPath);
+
+            var batch = default(ServiceBusMessageBatch);
+
+            while (numberOfMessages > 0)
+            {
+                batch ??= await sender.CreateMessageBatchAsync();
+
+                while ((numberOfMessages > 0) && (batch.TryAddMessage(new ServiceBusMessage(Guid.NewGuid().ToString()))))
+                {
+                    --numberOfMessages;
+                }
+
+                await sender.SendMessagesAsync(batch);
+
+                batch.Dispose();
+                batch = default;
+            }
         }
     }
 }

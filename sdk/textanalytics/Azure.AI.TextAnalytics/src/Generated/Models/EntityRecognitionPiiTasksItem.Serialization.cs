@@ -7,15 +7,16 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class EntityRecognitionPiiTasksItem
     {
         internal static EntityRecognitionPiiTasksItem DeserializeEntityRecognitionPiiTasksItem(JsonElement element)
         {
-            PiiEntitiesResult results = default;
+            Optional<PiiEntitiesResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> name = default;
             TextAnalyticsOperationStatus status = default;
@@ -23,6 +24,11 @@ namespace Azure.AI.TextAnalytics
             {
                 if (property.NameEquals("results"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     results = PiiEntitiesResult.DeserializePiiEntitiesResult(property.Value);
                     continue;
                 }
@@ -42,7 +48,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new EntityRecognitionPiiTasksItem(lastUpdateDateTime, name.Value, status, results);
+            return new EntityRecognitionPiiTasksItem(lastUpdateDateTime, name.Value, status, results.Value);
         }
     }
 }

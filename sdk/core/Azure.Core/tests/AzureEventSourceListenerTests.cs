@@ -79,7 +79,7 @@ namespace Azure.Core.Tests
                             "payload = a message", message);
         }
 
-        private static (EventWrittenEventArgs, string) ExpectSingleEvent(Action logDelegate)
+        private static (EventWrittenEventArgs EventArgs, string Formatted) ExpectSingleEvent(Action logDelegate)
         {
             var invocations = new List<(EventWrittenEventArgs, string)>();
             using var _ = new AzureEventSourceListener(

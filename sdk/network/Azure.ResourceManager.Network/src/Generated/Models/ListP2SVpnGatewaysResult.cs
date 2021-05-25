@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set of results. </summary>
-    public partial class ListP2SVpnGatewaysResult
+    internal partial class ListP2SVpnGatewaysResult
     {
         /// <summary> Initializes a new instance of ListP2SVpnGatewaysResult. </summary>
         internal ListP2SVpnGatewaysResult()

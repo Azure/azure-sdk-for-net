@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Subscription list operation response. </summary>
-    public partial class SubscriptionListResult
+    internal partial class SubscriptionListResult
     {
         /// <summary> Initializes a new instance of SubscriptionListResult. </summary>
         /// <param name="nextLink"> The URL to get the next set of results. </param>

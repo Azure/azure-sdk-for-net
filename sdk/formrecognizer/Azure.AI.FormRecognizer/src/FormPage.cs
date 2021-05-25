@@ -85,11 +85,12 @@ namespace Azure.AI.FormRecognizer.Models
         public LengthUnit Unit { get; }
 
         /// <summary>
-        /// When 'IncludeFieldElements' is set to <c>true</c>, a list of recognized lines of text.
-        /// An empty list otherwise. For calls to recognize content, this list is always populated. The maximum number of
-        /// lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases
-        /// proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across
-        /// images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order.
+        /// When 'IncludeFieldElements' is set to <c>true</c>, a list of recognized lines of text. An empty list otherwise.
+        /// The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although
+        /// in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it
+        /// may change across images and OCR version updates. Thus, business logic should be built upon the actual line location
+        /// instead of order. For calls to recognize content, this list is always populated and the sorting algorithm for the
+        /// returned lines can be changed with the option <see cref="RecognizeContentOptions.ReadingOrder"/>.
         /// </summary>
         public IReadOnlyList<FormLine> Lines { get; }
 
@@ -101,6 +102,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// A list of recognized selection marks contained in this page.
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// </remarks>
         public IReadOnlyList<FormSelectionMark> SelectionMarks { get; }
 
         private static IReadOnlyList<FormLine> ConvertLines(IReadOnlyList<TextLine> textLines, int pageNumber)

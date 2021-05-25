@@ -19,11 +19,18 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a linked service. </summary>
     public partial class LinkedServiceCreateOrUpdateLinkedServiceOperation : Operation<LinkedServiceResource>, IOperationSource<LinkedServiceResource>
     {
-        private readonly ArmOperationHelpers<LinkedServiceResource> _operation;
+        private readonly OperationInternals<LinkedServiceResource> _operation;
+
+        /// <summary> Initializes a new instance of LinkedServiceCreateOrUpdateLinkedServiceOperation for mocking. </summary>
+        protected LinkedServiceCreateOrUpdateLinkedServiceOperation()
+        {
+        }
+
         internal LinkedServiceCreateOrUpdateLinkedServiceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<LinkedServiceResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LinkedServiceCreateOrUpdateLinkedServiceOperation");
+            _operation = new OperationInternals<LinkedServiceResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LinkedServiceCreateOrUpdateLinkedServiceOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

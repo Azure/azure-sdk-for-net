@@ -399,7 +399,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 default:
                     return false;
-            };
+            }
         }
 
         /// <summary>

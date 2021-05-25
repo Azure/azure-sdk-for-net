@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     [NonParallelizable]
     public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        protected readonly TimeSpan PollingInterval = KeyVaultTestEnvironment.DefaultPollingInterval;
         private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
 
         public CertificateClient Client { get; set; }
@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private KeyVaultTestEventListener _listener;
 
         public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
         }
@@ -200,35 +200,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
             }
-        }
-
-        protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
-        {
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
-
-            try
-            {
-                if (IsAsync)
-                {
-                    await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
-                }
-                else
-                {
-                    while (!operation.HasCompleted)
-                    {
-                        operation.UpdateStatus(cts.Token);
-
-                        await Task.Delay(pollingInterval, cts.Token);
-                    }
-                }
-            }
-            catch (TaskCanceledException)
-            {
-                Assert.Inconclusive("Timed out while waiting for operation {0}", operation.Id);
-            }
-
-            return operation.Value;
         }
 
         protected Task WaitForDeletedCertificate(string name)

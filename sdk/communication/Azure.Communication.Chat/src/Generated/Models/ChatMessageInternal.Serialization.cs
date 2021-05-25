@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -22,9 +24,10 @@ namespace Azure.Communication.Chat
             Optional<ChatMessageContentInternal> content = default;
             Optional<string> senderDisplayName = default;
             DateTimeOffset createdOn = default;
-            Optional<string> senderId = default;
+            Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
             Optional<DateTimeOffset> deletedOn = default;
             Optional<DateTimeOffset> editedOn = default;
+            Optional<IReadOnlyDictionary<string, string>> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -67,9 +70,14 @@ namespace Azure.Communication.Chat
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("senderId"))
+                if (property.NameEquals("senderCommunicationIdentifier"))
                 {
-                    senderId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deletedOn"))
@@ -92,8 +100,23 @@ namespace Azure.Communication.Chat
                     editedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("metadata"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
             }
-            return new ChatMessageInternal(id, type, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, senderId.Value, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn));
+            return new ChatMessageInternal(id, type, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, senderCommunicationIdentifier.Value, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn), Optional.ToDictionary(metadata));
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class CommunicationServiceResourceList
+    internal partial class CommunicationServiceResourceList
     {
         internal static CommunicationServiceResourceList DeserializeCommunicationServiceResourceList(JsonElement element)
         {

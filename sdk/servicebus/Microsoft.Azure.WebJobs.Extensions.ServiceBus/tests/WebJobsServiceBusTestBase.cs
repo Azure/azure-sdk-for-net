@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core.TestFramework;
@@ -41,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected const string FirstSubscriptionNameKey = "%" + _firstSubscriptionNameKey + "%";
 
         private const string _secondSubscriptionNameKey = "webjobstestsubscription2";
-        protected const string SecondSubscriptionNameKey = "%" + _secondSubscriptionNameKey  + "%";
+        protected const string SecondSubscriptionNameKey = "%" + _secondSubscriptionNameKey + "%";
 
         private const string _secondaryNamespaceQueueKey = "webjobtestsecondarynamespacequeue";
         protected const string SecondaryNamespaceQueueNameKey = "%" + _secondaryNamespaceQueueKey + "%";
@@ -62,6 +63,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected static TopicScope _topicScope;
 
         private readonly bool _isSession;
+        protected static EventWaitHandle _topicSubscriptionCalled1;
+        protected static EventWaitHandle _topicSubscriptionCalled2;
+        protected static EventWaitHandle _waitHandle1;
+        protected static EventWaitHandle _waitHandle2;
+        protected static EventWaitHandle _drainValidationPreDelay;
+        protected static EventWaitHandle _drainValidationPostDelay;
 
         protected WebJobsServiceBusTestBase(bool isSession)
         {
@@ -87,6 +94,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 enablePartitioning: false,
                 enableSession: _isSession,
                 overrideNamespace: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace);
+            _topicSubscriptionCalled1 = new ManualResetEvent(initialState: false);
+            _topicSubscriptionCalled2 = new ManualResetEvent(initialState: false);
+            _waitHandle1 = new ManualResetEvent(initialState: false);
+            _waitHandle2 = new ManualResetEvent(initialState: false);
+            _drainValidationPreDelay = new ManualResetEvent(initialState: false);
+            _drainValidationPostDelay = new ManualResetEvent(initialState: false);
         }
 
         /// <summary>
@@ -104,27 +117,41 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await _topicScope.DisposeAsync();
         }
 
-        protected (JobHost, IHost) BuildHost<TJobClass>(Action<IHostBuilder> configurationDelegate = null, bool startHost = true)
+        protected (JobHost JobHost, IHost Host) BuildHost<TJobClass>(
+            Action<IHostBuilder> configurationDelegate = null,
+            bool startHost = true,
+            bool useTokenCredential = false)
         {
+            var settings = new Dictionary<string, string>
+            {
+                {_firstQueueNameKey, _firstQueueScope.QueueName},
+                {_secondQueueNameKey, _secondQueueScope.QueueName},
+                {_thirdQueueNameKey, _thirdQueueScope.QueueName},
+                {_topicNameKey, _topicScope.TopicName},
+                {_firstSubscriptionNameKey, _topicScope.SubscriptionNames[0]},
+                {_secondSubscriptionNameKey, _topicScope.SubscriptionNames[1]},
+                {_secondaryNamespaceQueueKey, _secondaryNamespaceQueueScope.QueueName},
+                {SecondaryConnectionStringKey, ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespaceConnectionString}
+            };
+            if (useTokenCredential)
+            {
+                settings.Add("AzureWebJobsServiceBus:fullyQualifiedNamespace", ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace);
+                settings.Add("AzureWebJobsServiceBus:clientId", ServiceBusTestEnvironment.Instance.ClientId);
+                settings.Add("AzureWebJobsServiceBus:clientSecret", ServiceBusTestEnvironment.Instance.ClientSecret);
+                settings.Add("AzureWebJobsServiceBus:tenantId", ServiceBusTestEnvironment.Instance.TenantId);
+            }
+            else
+            {
+                settings.Add("AzureWebJobsServiceBus", ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            }
             var hostBuilder = new HostBuilder()
                .ConfigureAppConfiguration(builder =>
                {
-                   builder.AddInMemoryCollection(new Dictionary<string, string>
-                   {
-                       {"AzureWebJobsServiceBus", ServiceBusTestEnvironment.Instance.ServiceBusConnectionString},
-                       {_firstQueueNameKey, _firstQueueScope.QueueName},
-                       {_secondQueueNameKey, _secondQueueScope.QueueName},
-                       {_thirdQueueNameKey, _thirdQueueScope.QueueName},
-                       {_topicNameKey, _topicScope.TopicName},
-                       {_firstSubscriptionNameKey, _topicScope.SubscriptionNames[0]},
-                       {_secondSubscriptionNameKey, _topicScope.SubscriptionNames[1]},
-                       {_secondaryNamespaceQueueKey, _secondaryNamespaceQueueScope.QueueName},
-                       {SecondaryConnectionStringKey, ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespaceConnectionString}
-                   });
+                   builder.AddInMemoryCollection(settings);
                })
                .ConfigureDefaultTestHost<TJobClass>(b =>
                {
-                   b.AddServiceBus(options => options.RetryOptions.TryTimeout = TimeSpan.FromSeconds(10));
+                   b.AddServiceBus(options => options.ClientRetryOptions.TryTimeout = TimeSpan.FromSeconds(10));
                })
                .ConfigureServices(s =>
                {

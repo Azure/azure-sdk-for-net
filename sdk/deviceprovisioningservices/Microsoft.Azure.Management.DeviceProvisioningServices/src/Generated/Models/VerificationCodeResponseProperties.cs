@@ -34,15 +34,18 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// <param name="thumbprint">Certificate thumbprint.</param>
         /// <param name="isVerified">Indicate if the certificate is verified by
         /// owner of private key.</param>
+        /// <param name="certificate">base-64 representation of X509
+        /// certificate .cer file or just .pem file content.</param>
         /// <param name="created">Certificate created time.</param>
         /// <param name="updated">Certificate updated time.</param>
-        public VerificationCodeResponseProperties(string verificationCode = default(string), string subject = default(string), string expiry = default(string), string thumbprint = default(string), bool? isVerified = default(bool?), string created = default(string), string updated = default(string))
+        public VerificationCodeResponseProperties(string verificationCode = default(string), string subject = default(string), string expiry = default(string), string thumbprint = default(string), bool? isVerified = default(bool?), byte[] certificate = default(byte[]), string created = default(string), string updated = default(string))
         {
             VerificationCode = verificationCode;
             Subject = subject;
             Expiry = expiry;
             Thumbprint = thumbprint;
             IsVerified = isVerified;
+            Certificate = certificate;
             Created = created;
             Updated = updated;
             CustomInit();
@@ -83,6 +86,13 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "isVerified")]
         public bool? IsVerified { get; set; }
+
+        /// <summary>
+        /// Gets or sets base-64 representation of X509 certificate .cer file
+        /// or just .pem file content.
+        /// </summary>
+        [JsonProperty(PropertyName = "certificate")]
+        public byte[] Certificate { get; set; }
 
         /// <summary>
         /// Gets or sets certificate created time.

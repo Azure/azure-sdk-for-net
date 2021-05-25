@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of active debug sessions. </summary>
-    public partial class QueryDataFlowDebugSessionsResponse
+    internal partial class QueryDataFlowDebugSessionsResponse
     {
         /// <summary> Initializes a new instance of QueryDataFlowDebugSessionsResponse. </summary>
         internal QueryDataFlowDebugSessionsResponse()

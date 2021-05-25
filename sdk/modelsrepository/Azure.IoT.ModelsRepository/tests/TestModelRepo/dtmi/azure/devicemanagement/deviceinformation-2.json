@@ -1,0 +1,16 @@
+{
+  "@context": "dtmi:dtdl:context;2",
+  "@id": "dtmi:azure:DeviceManagement:DeviceInformation;2",
+  "@type": "Interface",
+  "extends": "dtmi:azure:DeviceManagement:DeviceInformation;1",
+  "displayName": "Device Information",
+  "contents": [
+    {
+      "@type": "Property",
+      "name": "osKernelVersion",
+      "displayName": "OS Kernel Version",
+      "schema": "string",
+      "description": "OS Kernel Version. Ex. Linux 4.15.0-54-generic x86_64."
+    }
+  ]
+}

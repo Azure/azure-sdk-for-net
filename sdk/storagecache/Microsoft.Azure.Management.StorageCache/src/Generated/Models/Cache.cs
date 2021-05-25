@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <summary>
         /// Initializes a new instance of the Cache class.
         /// </summary>
-        /// <param name="tags">ARM tags as name/value pairs.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="id">Resource ID of the Cache.</param>
         /// <param name="location">Region name string.</param>
         /// <param name="name">Name of Cache.</param>
@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// Microsoft.StorageCache/Cache</param>
         /// <param name="identity">The identity of the cache, if
         /// configured.</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
         /// <param name="cacheSizeGB">The size of this Cache, in GB.</param>
         /// <param name="health">Health of the Cache.</param>
         /// <param name="mountAddresses">Array of IP addresses that can be used
@@ -55,8 +57,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// the cache.</param>
         /// <param name="securitySettings">Specifies security settings of the
         /// cache.</param>
+        /// <param name="directoryServicesSettings">Specifies Directory
+        /// Services settings of the cache.</param>
         /// <param name="sku">SKU for the Cache.</param>
-        public Cache(object tags = default(object), string id = default(string), string location = default(string), string name = default(string), string type = default(string), CacheIdentity identity = default(CacheIdentity), int? cacheSizeGB = default(int?), CacheHealth health = default(CacheHealth), IList<string> mountAddresses = default(IList<string>), string provisioningState = default(string), string subnet = default(string), CacheUpgradeStatus upgradeStatus = default(CacheUpgradeStatus), CacheNetworkSettings networkSettings = default(CacheNetworkSettings), CacheEncryptionSettings encryptionSettings = default(CacheEncryptionSettings), CacheSecuritySettings securitySettings = default(CacheSecuritySettings), CacheSku sku = default(CacheSku))
+        public Cache(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string location = default(string), string name = default(string), string type = default(string), CacheIdentity identity = default(CacheIdentity), SystemData systemData = default(SystemData), int? cacheSizeGB = default(int?), CacheHealth health = default(CacheHealth), IList<string> mountAddresses = default(IList<string>), string provisioningState = default(string), string subnet = default(string), CacheUpgradeStatus upgradeStatus = default(CacheUpgradeStatus), CacheNetworkSettings networkSettings = default(CacheNetworkSettings), CacheEncryptionSettings encryptionSettings = default(CacheEncryptionSettings), CacheSecuritySettings securitySettings = default(CacheSecuritySettings), CacheDirectorySettings directoryServicesSettings = default(CacheDirectorySettings), CacheSku sku = default(CacheSku))
         {
             Tags = tags;
             Id = id;
@@ -64,6 +68,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
             Name = name;
             Type = type;
             Identity = identity;
+            SystemData = systemData;
             CacheSizeGB = cacheSizeGB;
             Health = health;
             MountAddresses = mountAddresses;
@@ -73,6 +78,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
             NetworkSettings = networkSettings;
             EncryptionSettings = encryptionSettings;
             SecuritySettings = securitySettings;
+            DirectoryServicesSettings = directoryServicesSettings;
             Sku = sku;
             CustomInit();
         }
@@ -83,10 +89,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets ARM tags as name/value pairs.
+        /// Gets or sets resource tags.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public object Tags { get; set; }
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets resource ID of the Cache.
@@ -117,6 +123,12 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public CacheIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets the size of this Cache, in GB.
@@ -177,6 +189,12 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public CacheSecuritySettings SecuritySettings { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies Directory Services settings of the cache.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.directoryServicesSettings")]
+        public CacheDirectorySettings DirectoryServicesSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets SKU for the Cache.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
@@ -197,6 +215,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
             if (EncryptionSettings != null)
             {
                 EncryptionSettings.Validate();
+            }
+            if (DirectoryServicesSettings != null)
+            {
+                DirectoryServicesSettings.Validate();
             }
         }
     }

@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Xunit;
+using LongTermRetentionPolicy = Microsoft.Azure.Management.Sql.Models.LongTermRetentionPolicy;
 
 namespace Sql.Tests
 {
@@ -178,7 +179,7 @@ namespace Sql.Tests
 
                 // Get the policy and verify it is the default policy
                 //
-                BackupLongTermRetentionPolicy policy = sqlClient.BackupLongTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                LongTermRetentionPolicy policy = sqlClient.LongTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
                 Assert.Equal(defaultPolicy, policy.WeeklyRetention);
                 Assert.Equal(defaultPolicy, policy.MonthlyRetention);
                 Assert.Equal(defaultPolicy, policy.YearlyRetention);
@@ -186,12 +187,12 @@ namespace Sql.Tests
 
                 // Set the retention policy to two weeks for the weekly retention policy
                 //
-                BackupLongTermRetentionPolicy parameters = new BackupLongTermRetentionPolicy(weeklyRetention: "P2W");
-                sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, database.Name, parameters);
+                LongTermRetentionPolicy parameters = new LongTermRetentionPolicy(weeklyRetention: "P2W");
+                sqlClient.LongTermRetentionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, database.Name, parameters);
 
                 // Get the policy and verify the weekly policy is two weeks but all the rest stayed the same
                 //
-                policy = sqlClient.BackupLongTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                policy = sqlClient.LongTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
                 Assert.Equal(parameters.WeeklyRetention, policy.WeeklyRetention);
                 Assert.Equal(defaultPolicy, policy.MonthlyRetention);
                 Assert.Equal(defaultPolicy, policy.YearlyRetention);
@@ -333,7 +334,7 @@ namespace Sql.Tests
                     {
                         Location = locationName,
                         CreateMode = CreateMode.RestoreLongTermRetentionBackup,
-                        LongTermRetentionBackupResourceId = backup.Id
+                        LongTermRetentionBackupResourceId = backup.Id   
                     });
 
                 // Delete the backup.

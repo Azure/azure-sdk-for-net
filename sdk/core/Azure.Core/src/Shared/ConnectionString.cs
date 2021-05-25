@@ -40,6 +40,12 @@ namespace Azure.Core
         public bool TryGetSegmentValue(string keyword, out string? value) =>
             _pairs.TryGetValue(keyword, out value);
 
+        public string? GetSegmentValueOrDefault(string keyword, string defaultValue) =>
+            _pairs.TryGetValue(keyword, out var value) switch {
+                false => defaultValue,
+                true => value
+            };
+
         public bool ContainsSegmentKey(string keyword) =>
             _pairs.ContainsKey(keyword);
 

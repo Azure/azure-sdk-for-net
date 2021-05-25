@@ -231,5 +231,50 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; }
 
+        /// <summary>
+        /// Gets the IGallerySharingProfileOperations.
+        /// </summary>
+        IGallerySharingProfileOperations GallerySharingProfile { get; }
+
+        /// <summary>
+        /// Gets the ISharedGalleriesOperations.
+        /// </summary>
+        ISharedGalleriesOperations SharedGalleries { get; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImagesOperations.
+        /// </summary>
+        ISharedGalleryImagesOperations SharedGalleryImages { get; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImageVersionsOperations.
+        /// </summary>
+        ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; }
+
+        /// <summary>
+        /// Gets the ICloudServiceRoleInstancesOperations.
+        /// </summary>
+        ICloudServiceRoleInstancesOperations CloudServiceRoleInstances { get; }
+
+        /// <summary>
+        /// Gets the ICloudServiceRolesOperations.
+        /// </summary>
+        ICloudServiceRolesOperations CloudServiceRoles { get; }
+
+        /// <summary>
+        /// Gets the ICloudServicesOperations.
+        /// </summary>
+        ICloudServicesOperations CloudServices { get; }
+
+        /// <summary>
+        /// Gets the ICloudServicesUpdateDomainOperations.
+        /// </summary>
+        ICloudServicesUpdateDomainOperations CloudServicesUpdateDomain { get; }
+
+        /// <summary>
+        /// Gets the ICloudServiceOperatingSystemsOperations.
+        /// </summary>
+        ICloudServiceOperatingSystemsOperations CloudServiceOperatingSystems { get; }
+
     }
 }

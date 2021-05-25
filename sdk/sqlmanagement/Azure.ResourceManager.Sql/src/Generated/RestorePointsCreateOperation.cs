@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class RestorePointsCreateOperation : Operation<RestorePoint>, IOperationSource<RestorePoint>
     {
         private readonly ArmOperationHelpers<RestorePoint> _operation;
+
+        /// <summary> Initializes a new instance of RestorePointsCreateOperation for mocking. </summary>
+        protected RestorePointsCreateOperation()
+        {
+        }
+
         internal RestorePointsCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<RestorePoint>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "RestorePointsCreateOperation");

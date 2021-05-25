@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IpAllocationListResult
+    internal partial class IpAllocationListResult
     {
         internal static IpAllocationListResult DeserializeIpAllocationListResult(JsonElement element)
         {

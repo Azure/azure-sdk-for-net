@@ -16,7 +16,7 @@ namespace Cdn.Tests.ScenarioTests
     {
         private const long usageLimit = 25L;
 
-        [Fact(Skip = "Not Ready")]
+        [Fact]
         public void AFDProfileDeleteTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

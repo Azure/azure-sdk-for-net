@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BastionActiveSessionListResult
+    internal partial class BastionActiveSessionListResult
     {
         internal static BastionActiveSessionListResult DeserializeBastionActiveSessionListResult(JsonElement element)
         {

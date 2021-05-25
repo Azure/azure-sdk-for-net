@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DataShare
         /// Adds a new synchronization setting to an existing share.
         /// </summary>
         /// <remarks>
-        /// Create or update a synchronizationSetting
+        /// Create a synchronizationSetting
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The resource group name.

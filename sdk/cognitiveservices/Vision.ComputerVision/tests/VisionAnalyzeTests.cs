@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
@@ -34,6 +35,7 @@ namespace ComputerVisionSDK.Tests
                         })
                         .Result;
 
+                    Assert.Matches("^\\d{4}-\\d{2}-\\d{2}(-preview)?$", result.ModelVersion);
                     Assert.Equal("grass", result.Tags[0].Name);
                     Assert.True(result.Tags[0].Confidence > 0.9);
                     Assert.Equal("Jpeg", result.Metadata.Format);
@@ -73,6 +75,7 @@ namespace ComputerVisionSDK.Tests
                         })
                         .Result;
 
+                    Assert.Matches("^\\d{4}-\\d{2}-\\d{2}(-preview)?$", result.ModelVersion);
                     Assert.Equal("grass", result.Tags[0].Name);
                     Assert.True(result.Tags[0].Confidence > 0.9);
                     Assert.Equal("Jpeg", result.Metadata.Format);
@@ -90,7 +93,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AnalyzeBrandsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -98,7 +101,7 @@ namespace ComputerVisionSDK.Tests
                 HttpMockServer.Initialize(this.GetType(), "AnalyzeBrandsTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
-                using (FileStream stream = new FileStream(GetTestImagePath("MicrosoftRealMadrid.jpg"), FileMode.Open))
+                using (FileStream stream = new FileStream(GetTestImagePath("microsoft.jpg"), FileMode.Open))
                 {
                     ImageAnalysis result = client.AnalyzeImageInStreamAsync(
                         stream,
@@ -108,14 +111,41 @@ namespace ComputerVisionSDK.Tests
                         })
                         .Result;
 
+                    Assert.Matches("^\\d{4}-\\d{2}-\\d{2}(-preview)?$", result.ModelVersion);
                     Assert.Equal("Microsoft", result.Brands[0].Name);
-                    Assert.True(result.Brands[0].Confidence > 0.5);
+                    Assert.True(result.Brands[0].Confidence > 0.7);
                     Assert.True(result.Brands[0].Rectangle.X >= 0);
                     Assert.True(result.Brands[0].Rectangle.W >= 0);
                     Assert.True(result.Brands[0].Rectangle.X + result.Brands[0].Rectangle.W <= result.Metadata.Width);
                     Assert.True(result.Brands[0].Rectangle.Y >= 0);
                     Assert.True(result.Brands[0].Rectangle.H >= 0);
                     Assert.True(result.Brands[0].Rectangle.Y + result.Brands[0].Rectangle.H <= result.Metadata.Height);
+                }
+            }
+        }
+
+        [Fact]
+        public void AnalyzeImageModelVersionTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeImageModelVersionTest");
+
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (FileStream stream = new FileStream(GetTestImagePath("house.jpg"), FileMode.Open))
+                {
+                    const string targetModelVersion = "2021-04-01";
+
+                    ImageAnalysis result = client.AnalyzeImageInStreamAsync(
+                        stream,
+                        new List<VisualFeatureTypes?>()
+                        {
+                            VisualFeatureTypes.Categories
+                        },
+                        modelVersion: targetModelVersion)
+                        .Result;
+
+                    Assert.Equal(targetModelVersion, result.ModelVersion);
                 }
             }
         }
@@ -130,6 +160,33 @@ namespace ComputerVisionSDK.Tests
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     Assert.ThrowsAsync<ValidationException>(() => client.AnalyzeImageAsync(null));
+                }
+            }
+        }
+
+        [Fact]
+        public void AnalyzeImageInvalidUrlTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeImageInvalidUrlTest");
+
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                {
+                    try
+                    {
+                        ImageAnalysis result = client.AnalyzeImageAsync(
+                            "https://invalidurl",
+                            new List<VisualFeatureTypes?>()
+                            {
+                            VisualFeatureTypes.Categories
+                            })
+                            .Result;
+                    }
+                    catch (Exception ex) when (ex.InnerException is ComputerVisionErrorResponseException cverex)
+                    {
+                        Assert.Equal("InvalidImageUrl", cverex.Body.Error.Innererror.Code);
+                    }
                 }
             }
         }

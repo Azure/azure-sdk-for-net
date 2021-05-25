@@ -69,7 +69,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 MetricId = FakeGuid,
                 Name = "configName",
-                WholeSeriesDetectionConditions = new ()
+                WholeSeriesDetectionConditions = new()
             };
 
             using var cancellationSource = new CancellationTokenSource();
@@ -80,6 +80,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateDetectionConfigurationValidatesArguments()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -98,6 +99,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateDetectionConfigurationRespectsTheCancellationToken()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
