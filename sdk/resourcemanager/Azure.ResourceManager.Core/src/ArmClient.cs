@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="id"> The id of the resourcegroup </param>
         /// <returns> Resource operations of the resource. </returns>
-        public ResourceGroupOperations GetResourceGroupOperations(ResourceGroup
+        public ResourceGroupOperations GetResourceGroupOperations(ResourceGroupResourceIdentifier
             id)
         {
             return new ResourceGroupOperations(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id.SubscriptionId), id.ResourceGroupName);

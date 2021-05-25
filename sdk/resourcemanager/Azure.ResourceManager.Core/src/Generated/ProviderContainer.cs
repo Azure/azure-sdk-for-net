@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"> The client context to use. </param>
         /// <param name="id"> The id for the subscription that owns this container. </param>
-        internal ProviderContainer(ClientContext clientContext, SubscriptionResourceIdentifier id)
+        internal ProviderContainer(ClientContext clientContext, TenantResourceIdentifier id)
             : base(clientContext, id)
         {
         }
@@ -97,16 +97,22 @@ namespace Azure.ResourceManager.Core
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ProviderData> List(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<Provider> List(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<ProviderData> FirstPageFunc(int? pageSizeHint)
+            Page<Provider> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("ProvidersOperations.List");
                 scope.Start();
+                string subscriptionId = "";
+
                 try
                 {
-                    var response = RestClient.List(top, expand, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    Response<ProviderListResult> response;
+                    if (Id.TryGetSubscriptionId(out subscriptionId))
+                        response = RestClient.List(top, expand, cancellationToken);
+                    else
+                        response = RestClient.ListAtTenantScope(top, expand, cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(data => new Provider(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -114,14 +120,20 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            Page<ProviderData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Provider> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("ProvidersOperations.List");
                 scope.Start();
+                string subscriptionId = "";
+
                 try
                 {
-                    var response = RestClient.ListNextPage(nextLink, top, expand, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    Response<ProviderListResult> response;
+                    if (Id.TryGetSubscriptionId(out subscriptionId))
+                        response = RestClient.ListNextPage(nextLink, top, expand, cancellationToken);
+                    else
+                        response = RestClient.ListAtTenantScopeNextPage(nextLink, top, expand, cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(data => new Provider(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -136,16 +148,22 @@ namespace Azure.ResourceManager.Core
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ProviderData> ListAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Provider> ListAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Provider>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("ProvidersOperations.List");
                 scope.Start();
+                string subscriptionId = "";
+
                 try
                 {
-                    var response = await RestClient.ListAsync(top, expand, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    Response<ProviderListResult> response;
+                    if (Id.TryGetSubscriptionId(out subscriptionId))
+                        response = await RestClient.ListAsync(top, expand, cancellationToken).ConfigureAwait(false);
+                    else
+                        response = await RestClient.ListAtTenantScopeAsync(top, expand, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(data => new Provider(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -153,14 +171,20 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            async Task<Page<ProviderData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Provider>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("ProvidersOperations.List");
                 scope.Start();
+                string subscriptionId = "";
+
                 try
                 {
-                    var response = await RestClient.ListNextPageAsync(nextLink, top, expand, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    Response<ProviderListResult> response;
+                    if (Id.TryGetSubscriptionId(out subscriptionId))
+                        response = await RestClient.ListNextPageAsync(nextLink, top, expand, cancellationToken).ConfigureAwait(false);
+                    else
+                        response = await RestClient.ListAtTenantScopeNextPageAsync(nextLink, top, expand, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(data => new Provider(Parent, data)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

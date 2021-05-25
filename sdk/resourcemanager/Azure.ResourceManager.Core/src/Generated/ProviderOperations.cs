@@ -137,15 +137,24 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<Provider>> GetAsync(CancellationToken cancellationToken = default)
+        public override Response<Provider> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.Get");
+            using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
+            string subscriptionId = "";
 
             try
             {
-                var result = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
+                if (Id.TryGetSubscriptionId(out subscriptionId))
+                {
+                    var originalResponse = RestClient.Get(Id.Name, null, cancellationToken); //set expand to null?
+                    return Response.FromValue(new Provider(this, originalResponse), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var result = RestClient.GetAtTenantScope(Id.Name, null, cancellationToken);
+                    return Response.FromValue(new Provider(this, result), result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -155,138 +164,30 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override Response<Provider> Get(CancellationToken cancellationToken = default)
+        public override async Task<Response<Provider>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
+            using var scope = Diagnostics.CreateScope("ProvidersOperations.Get");
             scope.Start();
+            string subscriptionId = "";
+
             try
             {
-                var originalResponse = RestClient.Get(Id.Name, null, cancellationToken); //set expand to null?
-                return Response.FromValue(new Provider(this, originalResponse), originalResponse.GetRawResponse());
+                if (Id.TryGetSubscriptionId(out subscriptionId))
+                {
+                    var result = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new Provider(this, result), result.GetRawResponse());
+                }
+                else
+                {
+                    var result = await RestClient.GetAtTenantScopeAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new Provider(this, result), result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets the specified resource provider at the tenant level. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Provider>> GetAtTenantScopeAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.GetAtTenantScope");
-            scope.Start();
-            try
-            {
-                var result = await RestClient.GetAtTenantScopeAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the specified resource provider at the tenant level. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Provider> GetAtTenantScope(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.GetAtTenantScope");
-            scope.Start();
-            try
-            {
-                var result = RestClient.GetAtTenantScope(resourceProviderNamespace, expand, cancellationToken);
-                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-        
-        /// <summary> Gets all resource providers for the tenant. </summary>
-        /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
-        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ProviderData> ListAtTenantScopeAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ProviderData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("ProvidersOperations.ListAtTenantScope");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListAtTenantScopeAsync(top, expand, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProviderData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("ProvidersOperations.ListAtTenantScope");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListAtTenantScopeNextPageAsync(nextLink, top, expand, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets all resource providers for the tenant. </summary>
-        /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
-        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ProviderData> ListAtTenantScope(int? top = null, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Page<ProviderData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("ProvidersOperations.ListAtTenantScope");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListAtTenantScope(top, expand, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProviderData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("ProvidersOperations.ListAtTenantScope");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListAtTenantScopeNextPage(nextLink, top, expand, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }
