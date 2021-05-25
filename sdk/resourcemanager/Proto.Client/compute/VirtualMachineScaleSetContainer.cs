@@ -96,20 +96,6 @@ namespace Proto.Compute
 
         /// <summary>
         /// Filters the list of virtual machines for this resource group represented as generic resources.
-        /// Makes an additional network call to retrieve the full data model for each virtual machine.
-        /// </summary>
-        /// <param name="nameFilter"> The substring to filter by. </param>
-        /// <param name="top"> The number of items to truncate by. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSet"/> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualMachineScaleSet> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, VirtualMachineScaleSet>(results, s => (new VirtualMachineScaleSetOperations(s)).Get().Value);
-        }
-
-        /// <summary>
-        /// Filters the list of virtual machines for this resource group represented as generic resources.
         /// </summary>
         /// <param name="nameFilter"> The substring to filter by. </param>
         /// <param name="top"> The number of items to truncate by. </param>
@@ -147,20 +133,6 @@ namespace Proto.Compute
             return new PhWrappingAsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet, VirtualMachineScaleSet>(
                 result,
                 s => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(s)));
-        }
-
-        /// <summary>
-        /// Filters the list of virtual machines for this resource group represented as generic resources.
-        /// Makes an additional network call to retrieve the full data model for each virtual machine.
-        /// </summary>
-        /// <param name="nameFilter"> The substring to filter by. </param>
-        /// <param name="top"> The number of items to truncate by. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineScaleSet"/> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualMachineScaleSet> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, VirtualMachineScaleSet>(results, s => (new VirtualMachineScaleSetOperations(s)).Get().Value);
         }
 
         /// <summary>

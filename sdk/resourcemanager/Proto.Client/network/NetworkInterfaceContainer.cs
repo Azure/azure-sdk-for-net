@@ -193,36 +193,6 @@ namespace Proto.Network
             return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
-        /// <summary>
-        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>.
-        /// Makes an additional network call to retrieve the full data model for each <see cref="NetworkInterface"/>.
-        /// </summary>
-        /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
-        /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
-        /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public Pageable<NetworkInterface> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, NetworkInterface>(results, s => new NetworkInterfaceOperations(s).Get().Value);
-        }
-
-        /// <summary>
-        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>.
-        /// Makes an additional network call to retrieve the full data model for each <see cref="NetworkInterface"/>.
-        /// </summary>
-        /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
-        /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
-        /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<NetworkInterface> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, NetworkInterface>(results, s => new NetworkInterfaceOperations(s).Get().Value);
-        }
-
         private Func<Azure.ResourceManager.Network.Models.NetworkInterface, NetworkInterface> convertor()
         {
             return s => new NetworkInterface(Parent, new NetworkInterfaceData(s));
