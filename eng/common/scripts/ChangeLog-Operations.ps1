@@ -195,7 +195,19 @@ function New-ChangeLogEntry {
     return $null
   }
 
-  if (!$Content) { $Content = @() }
+  if (!$Content) { 
+    $Content = @()
+    $Content += ""
+    $Content += "### Features Added"
+    $Content += ""
+    $Content += "### Breaking Changes"
+    $Content += ""
+    $Content += "### Key Bugs Fixed"
+    $Content += ""
+    $Content += "### Fixed"
+    $Content += ""
+    $Content += ""
+  }
 
   $newChangeLogEntry = [pscustomobject]@{ 
     ReleaseVersion = $Version
