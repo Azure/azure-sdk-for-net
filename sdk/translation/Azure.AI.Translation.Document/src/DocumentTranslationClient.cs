@@ -75,13 +75,13 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
         public virtual DocumentTranslationOperation StartTranslation(IEnumerable<DocumentTranslationInput> inputs, CancellationToken cancellationToken = default)
         {
-            var request = new BatchSubmissionRequest(inputs);
+            var request = new StartTranslationDetails(inputs);
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<DocumentTranslationSubmitBatchRequestHeaders> job = _serviceRestClient.SubmitBatchRequest(request, cancellationToken);
+                ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> job = _serviceRestClient.StartTranslation(request, cancellationToken);
                 return new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
             }
             catch (Exception e)
@@ -103,13 +103,13 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
         public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(IEnumerable<DocumentTranslationInput> inputs, CancellationToken cancellationToken = default)
         {
-            var request = new BatchSubmissionRequest(inputs);
+            var request = new StartTranslationDetails(inputs);
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<DocumentTranslationSubmitBatchRequestHeaders> job = await _serviceRestClient.SubmitBatchRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> job = await _serviceRestClient.StartTranslationAsync(request, cancellationToken).ConfigureAwait(false);
                 return new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
             }
             catch (Exception e)
@@ -132,13 +132,13 @@ namespace Azure.AI.Translation.Document
         public virtual DocumentTranslationOperation StartTranslation(DocumentTranslationInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(input, nameof(input));
-            var request = new BatchSubmissionRequest(new List<DocumentTranslationInput> { input });
+            var request = new StartTranslationDetails(new List<DocumentTranslationInput> { input });
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<DocumentTranslationSubmitBatchRequestHeaders> job = _serviceRestClient.SubmitBatchRequest(request, cancellationToken);
+                ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> job = _serviceRestClient.StartTranslation(request, cancellationToken);
                 return new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
             }
             catch (Exception e)
@@ -161,13 +161,13 @@ namespace Azure.AI.Translation.Document
         public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(DocumentTranslationInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(input, nameof(input));
-            var request = new BatchSubmissionRequest(new List<DocumentTranslationInput> { input });
+            var request = new StartTranslationDetails(new List<DocumentTranslationInput> { input });
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<DocumentTranslationSubmitBatchRequestHeaders> job = await _serviceRestClient.SubmitBatchRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> job = await _serviceRestClient.StartTranslationAsync(request, cancellationToken).ConfigureAwait(false);
                 return new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
             }
             catch (Exception e)
@@ -190,7 +190,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    ResponseWithHeaders<BatchStatusResponse, DocumentTranslationGetOperationsHeaders> response = _serviceRestClient.GetOperations(cancellationToken: cancellationToken);
+                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = _serviceRestClient.GetTranslationsStatus(cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -207,7 +207,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    Response<BatchStatusResponse> response = _serviceRestClient.GetOperationsNextPage(nextLink, cancellationToken: cancellationToken);
+                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = _serviceRestClient.GetTranslationsStatusNextPage(nextLink, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -233,7 +233,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    ResponseWithHeaders<BatchStatusResponse, DocumentTranslationGetOperationsHeaders> response = await _serviceRestClient.GetOperationsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = await _serviceRestClient.GetTranslationsStatusAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -250,7 +250,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    Response<BatchStatusResponse> response = await _serviceRestClient.GetOperationsNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = await _serviceRestClient.GetTranslationsStatusNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -276,7 +276,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                var response = _serviceRestClient.GetGlossaryFormats(cancellationToken);
+                ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedGlossaryFormatsHeaders> response = _serviceRestClient.GetSupportedGlossaryFormats(cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                var response = await _serviceRestClient.GetGlossaryFormatsAsync(cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedGlossaryFormatsHeaders> response = await _serviceRestClient.GetSupportedGlossaryFormatsAsync(cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                var response = _serviceRestClient.GetDocumentFormats(cancellationToken);
+                ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedDocumentFormatsHeaders> response = _serviceRestClient.GetSupportedDocumentFormats(cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -339,7 +339,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                var response = await _serviceRestClient.GetDocumentFormatsAsync(cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedDocumentFormatsHeaders> response = await _serviceRestClient.GetSupportedDocumentFormatsAsync(cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)

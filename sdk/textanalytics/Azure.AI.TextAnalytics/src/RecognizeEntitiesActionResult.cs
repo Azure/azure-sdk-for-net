@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// RecognizeEntitiesActionResult
     /// </summary>
-    public class RecognizeEntitiesActionResult : TextAnalyticsActionDetails
+    public class RecognizeEntitiesActionResult : TextAnalyticsActionResult
     {
         internal RecognizeEntitiesActionResult(RecognizeEntitiesResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error) : base(completedOn, error)
         {

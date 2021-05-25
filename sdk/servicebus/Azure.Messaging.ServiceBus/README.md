@@ -263,7 +263,7 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 
 ### Dead letter a message
 
-Dead lettering a message is similar to deferring with one main difference being that messages will be automatically dead lettered by the service after they have been received a certain number of times. Applications can choose to manually dead letter messages based on their requirements. When a message is dead lettered it is actually moved to a subqueue of the original queue.
+Dead lettering a message is similar to deferring with one main difference being that messages will be automatically dead lettered by the service after they have been received a certain number of times. Applications can choose to manually dead letter messages based on their requirements. When a message is dead lettered it is actually moved to a subqueue of the original queue. Note that the `ServiceBusReceiver` is used to receive messages from the dead letter subqueue regardless of whether or not the main queue is session-enabled.
 
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();

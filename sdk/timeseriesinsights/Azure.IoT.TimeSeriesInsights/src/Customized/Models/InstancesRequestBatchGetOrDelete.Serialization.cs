@@ -28,7 +28,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 foreach (TimeSeriesId item in TimeSeriesIds)
                 {
                     writer.WriteStartArray();
-                    foreach (var item0 in item.ToArray())
+                    foreach (var item0 in item.ToStringArray())
                     {
                         writer.WriteObjectValue(item0);
                     }

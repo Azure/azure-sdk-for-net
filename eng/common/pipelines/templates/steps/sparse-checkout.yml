@@ -32,6 +32,7 @@ steps:
       displayName: Init sparse checkout ${{ repo.Name }}
       workingDirectory: ${{ coalesce(repo.WorkingDirectory, format('{0}/{1}', '$(System.DefaultWorkingDirectory)', repo.Name)) }}
 
-    - pwsh: git checkout ${{ repo.Commitish }}
-      displayName: Sparse checkout at ${{ repo.Commitish }}
+    - pwsh: |
+        git checkout ${{ repo.Commitish }}  # this will use the default branch if repo.Commitish is empty
+      displayName: Sparse checkout at ${{ coalesce(repo.Commitish, 'default branch') }}
       workingDirectory: ${{ coalesce(repo.WorkingDirectory, format('{0}/{1}', '$(System.DefaultWorkingDirectory)', repo.Name)) }}
