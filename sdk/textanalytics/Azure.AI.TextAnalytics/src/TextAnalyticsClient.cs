@@ -910,7 +910,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
+                    options.DomainFilter.GetString(),
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -977,7 +977,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
+                    options.DomainFilter.GetString(),
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken: cancellationToken);
@@ -1145,7 +1145,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
+                    options.DomainFilter.GetString(),
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken).ConfigureAwait(false);
@@ -1174,7 +1174,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
+                    options.DomainFilter.GetString(),
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken);

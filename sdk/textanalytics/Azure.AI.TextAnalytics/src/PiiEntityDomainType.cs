@@ -9,6 +9,10 @@ namespace Azure.AI.TextAnalytics
     public enum PiiEntityDomainType
     {
         /// <summary>
+        /// Don't apply any domain filter. This is the default value.
+        /// </summary>
+        None,
+        /// <summary>
         /// Protected Health Information entities.
         /// For more information see <see href="https://aka.ms/tanerpii"/>.
         /// </summary>
@@ -22,6 +26,7 @@ namespace Azure.AI.TextAnalytics
         {
             return type switch
             {
+                PiiEntityDomainType.None => null,
                 PiiEntityDomainType.ProtectedHealthInformation => "phi",
                 _ => null,
             };
