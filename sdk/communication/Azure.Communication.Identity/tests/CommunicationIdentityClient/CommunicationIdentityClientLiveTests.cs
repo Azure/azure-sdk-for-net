@@ -95,7 +95,7 @@ namespace Azure.Communication.Identity.Tests
             }
             Assert.Fail("RevokeTokensAsync should have thrown an exception.");
         }
-        
+
         [Test]
         public async Task DeleteUserWithNullUserShouldThrow()
         {
