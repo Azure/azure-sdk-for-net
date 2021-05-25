@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -195,6 +197,84 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
             Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
+        }
+
+        [Test]
+        public async Task ReleaseUnathorizedNumber()
+        {
+             const string PhoneNumber = "+14255550123";
+            var client = CreateClient();
+            try
+            {
+                var releaseOperation = await client.StartReleasePhoneNumberAsync(PhoneNumber);
+            }catch (Exception e)
+            {
+                Assert.NotNull(e);
+            }
+        }
+
+        [Test]
+        public async Task UpdateCapabilitiesUnathorizedNumber()
+        {
+            const string PhoneNumber = "+14255550123";
+            var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.None, sms: PhoneNumberCapabilityType.Outbound);
+            var client = CreateClient();
+            try
+            {
+                var UpdateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(PhoneNumber);
+            }
+            catch (Exception e)
+            {
+                Assert.NotNull(e);
+            }
+        }
+
+        [Test]
+        public async Task GetPurchasedUnathorizedNumber()
+        {
+            var client = CreateClient();
+            const string PhoneNumber = "+14255550123";
+            try
+            {
+                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(PhoneNumber);
+            }
+            catch (Exception e)
+            {
+                Assert.NotNull(e);
+            }
+        }
+
+        [Test]
+        public async Task StartPurchasedUnathorizedNumber()
+        {
+            var client = CreateClient();
+            const string PhoneNumber = "+14255550123";
+
+            try
+            {
+                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(PhoneNumber);
+            }
+            catch (Exception e)
+            {
+                Assert.NotNull(e);
+            }
+        }
+
+        [Test]
+        public async Task GetPurchasedPhoneNumbersNextPage()
+        {
+            if (SkipPhoneNumberLiveTests)
+                Assert.Ignore("Skip phone number live tests flag is on.");
+
+            var client = CreateClient();
+            var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
+
+            await foreach (PurchasedPhoneNumber purchasedPhone in purchasedPhoneNumbers)
+            {
+                Console.WriteLine("phone " + purchasedPhone.PhoneNumber);
+            }
+
+            Assert.NotNull(purchasedPhoneNumbers);
         }
 
         [Test]
