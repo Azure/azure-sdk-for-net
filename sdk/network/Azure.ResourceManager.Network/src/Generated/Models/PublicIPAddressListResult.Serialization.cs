@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PublicIPAddressListResult
+    internal partial class PublicIPAddressListResult
     {
         internal static PublicIPAddressListResult DeserializePublicIPAddressListResult(JsonElement element)
         {

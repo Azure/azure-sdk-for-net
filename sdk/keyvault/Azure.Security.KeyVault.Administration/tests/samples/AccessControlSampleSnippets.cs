@@ -38,7 +38,9 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Create a new access control client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-            /*@@*/ client = Client;
+#if !SNIPPET
+            client = Client;
+#endif
 
             // Retrieve all the role definitions.
             List<KeyVaultRoleDefinition> roleDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global).ToList();
@@ -81,14 +83,17 @@ namespace Azure.Security.KeyVault.Administration.Samples
             string servicePrincipalObjectId = _objectId;
 
             #region Snippet:ReadmeCreateRoleAssignment
+#if SNIPPET
             // Replace <roleDefinitionId> with a role definition Id from the definitions returned from the List the role definitions section above
-            //@@string definitionIdToAssign = "<roleDefinitionId>";
+            string definitionIdToAssign = "<roleDefinitionId>";
 
             // Replace <objectId> with the service principal object id from the Create/Get credentials section above
-            //@@string servicePrincipalObjectId = "<objectId>";
+            string servicePrincipalObjectId = "<objectId>";
 
-            //@@RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
-            /*@@*/ KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId);
+            RoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, properties);
+#else
+            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId);
+#endif
 
             Console.WriteLine(createdAssignment.Name);
             Console.WriteLine(createdAssignment.Properties.PrincipalId);

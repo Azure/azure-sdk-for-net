@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class EventDataCollection
+    internal partial class EventDataCollection
     {
         internal static EventDataCollection DeserializeEventDataCollection(JsonElement element)
         {

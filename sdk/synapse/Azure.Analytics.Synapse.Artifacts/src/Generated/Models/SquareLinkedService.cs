@@ -46,6 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> . </param>
+        /// <param name="connectionProperties"> Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="host"> The URL of the Square instance. (i.e. mystore.mysquare.com). </param>
         /// <param name="clientId"> The client ID associated with your Square application. </param>
         /// <param name="clientSecret"> The client secret associated with your Square application. </param>
@@ -54,8 +55,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SquareLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object clientId, SecretBase clientSecret, object redirectUri, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SquareLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionProperties, object host, object clientId, SecretBase clientSecret, object redirectUri, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
+            ConnectionProperties = connectionProperties;
             Host = host;
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -67,6 +69,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Square";
         }
 
+        /// <summary> Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        public object ConnectionProperties { get; set; }
         /// <summary> The URL of the Square instance. (i.e. mystore.mysquare.com). </summary>
         public object Host { get; set; }
         /// <summary> The client ID associated with your Square application. </summary>

@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class FirewallPolicyRuleGroupsDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of FirewallPolicyRuleGroupsDeleteOperation for mocking. </summary>
+        protected FirewallPolicyRuleGroupsDeleteOperation()
+        {
+        }
+
         internal FirewallPolicyRuleGroupsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "FirewallPolicyRuleGroupsDeleteOperation");

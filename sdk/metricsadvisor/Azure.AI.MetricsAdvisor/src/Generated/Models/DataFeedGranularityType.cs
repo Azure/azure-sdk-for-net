@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The Granularity. </summary>
+    /// <summary> granularity of the time series. </summary>
     public readonly partial struct DataFeedGranularityType : IEquatable<DataFeedGranularityType>
     {
         private readonly string _value;

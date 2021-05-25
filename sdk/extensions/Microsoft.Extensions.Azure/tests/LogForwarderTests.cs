@@ -29,7 +29,7 @@ namespace Microsoft.Extensions.Azure.Tests
 
             var logs = loggerFactory.Loggers["Test.source"].Logs;
             Assert.AreEqual(1, logs.Count);
-            Assert.AreEqual(logLevel, logs[0].level);
+            Assert.AreEqual(logLevel, logs[0].Level);
         }
 
         [Test]
@@ -51,8 +51,8 @@ namespace Microsoft.Extensions.Azure.Tests
         {
             public string CategoryName { get; }
 
-            public List<(LogLevel level, EventId eventId, string message)> Logs { get; } =
-                new List<(LogLevel level, EventId eventId, string message)>();
+            public List<(LogLevel Level, EventId EventId, string Message)> Logs { get; } =
+                new List<(LogLevel Level, EventId EventId, string Message)>();
 
             public MockLogger(string categoryName)
             {

@@ -203,7 +203,7 @@ namespace Azure.Storage.Queues
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
@@ -223,14 +223,15 @@ namespace Azure.Storage.Queues
         /// </summary>
         /// <param name="queueUri">
         /// A <see cref="Uri"/> referencing the queue that includes the
-        /// name of the account, and the name of the queue.
-        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}".
+        /// name of the account, the name of the queue, and a SAS token.
+        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net/{queue_name}?{sas_token}".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <seealso href="https://docs.microsoft.com/azure/storage/common/storage-sas-overview">Storage SAS Token Overview</seealso>
         public QueueClient(Uri queueUri, QueueClientOptions options = default)
             : this(queueUri, (HttpPipelinePolicy)null, options, null)
         {
@@ -340,7 +341,7 @@ namespace Azure.Storage.Queues
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
@@ -382,7 +383,7 @@ namespace Azure.Storage.Queues
             AssertEncodingForEncryption();
         }
 
-        private (QueueRestClient, MessagesRestClient, MessageIdRestClient) BuildRestClients()
+        private (QueueRestClient QueueClient, MessagesRestClient MessagesClient, MessageIdRestClient MessageIdClient) BuildRestClients()
         {
             QueueUriBuilder uriBuilder = new QueueUriBuilder(_uri);
             string queueName = uriBuilder.QueueName;
@@ -3129,6 +3130,13 @@ namespace Azure.Storage.Queues
             QueueSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
+            builder = QueueSasBuilder.DeepCopy(builder);
+
+            // Assigned builder's QueueName if it is null
+            builder.QueueName ??= Name;
+
             if (!builder.QueueName.Equals(Name, StringComparison.InvariantCulture))
             {
                 // TODO: throw proper exception for non-matching builder name
@@ -3140,8 +3148,10 @@ namespace Azure.Storage.Queues
                     nameof(QueueSasBuilder),
                     nameof(Name));
             }
-            QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString();
+            QueueUriBuilder sasUri = new QueueUriBuilder(Uri)
+            {
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
+            };
             return sasUri.ToUri();
         }
         #endregion

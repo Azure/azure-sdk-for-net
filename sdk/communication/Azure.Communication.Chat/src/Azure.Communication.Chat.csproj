@@ -7,17 +7,19 @@
       Microsoft Azure Communication Chat quickstart - https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp
     </Description>
     <AssemblyTitle>Azure Communication Chat Service</AssemblyTitle>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Chat Service;Microsoft;Azure;Azure Communication Service;Azure Communication Chat Service;Chat;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <EnableApiCompat>false</EnableApiCompat>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializer.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="..\..\Shared\src\CommunicationBearerTokenCredential.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -29,9 +31,7 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
+    <PackageReference Include="Azure.Communication.Common" />
   </ItemGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
 </Project>

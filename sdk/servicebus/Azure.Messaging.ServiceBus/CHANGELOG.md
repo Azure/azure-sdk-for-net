@@ -1,7 +1,56 @@
 # Release History
 
-## 7.2.0-beta.1 (Unreleased)
+## 7.2.0-beta.4 (Unreleased)
 
+
+## 7.2.0-beta.3 (2021-05-12)
+
+### Added
+* Added `SubQueue` option to `ServiceBusProcessorOptions` to allow for processing the deadletter queue
+* Added Verbose event source events for the following scenarios that previously had Error events which resulted in unnecessary noise in application logs: 
+  * Accepting a session times out because there are no sessions available.
+  * TaskCanceledException occurs while stopping the processor.
+
+## 7.1.2 (2021-04-09)
+
+### Key Bug Fixes
+- Updated dependency on Microsoft.Azure.Amqp to benefit from a performance enhancement involving message settlement.
+- Updated dependency on System.Text.Encodings.Web
+
+
+## 7.2.0-beta.2 (2021-04-07)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Mikael Kolkinn _([GitHub](https://github.com/mikaelkolkinn))_
+
+### Added
+- Updated dependency on Azure.Core.Amqp to support Value/Sequence AMQP message bodies.
+- Updated dependency on Microsoft.Azure.Amqp to benefit from a performance enhancement involving message settlement.
+- Added `OnProcessMessageAsync` and `OnProcessErrorAsync` methods to help with mocking scenarios involving the processor.
+- Added the ability to construct a `ServiceBusClient` and `ServiceBusAdministrationClient` using the `AzureNamedKeyCredential` and `AzureSasCredential` types to allow for updating credentials for long-lived clients.
+- Added the ability to cancel receive operations which allows `StopProcessingAsync` calls on the processor to complete more quickly. (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+
+### Fixed
+- Multiple enhancements were made to the transport paths for publishing and reading events to reduce memory allocations and increase performance. (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+- Fixed an issue where constructing a new `CreateRuleOption` from a `RuleProperties` would fail if the `CorrelationId` was null. (A community contribution, courtesy of _[mikaelkolkinn](https://github.com/mikaelkolkinn))_
+
+## 7.1.1 (2021-03-10)
+
+### Key Bug Fixes
+- Fixed issue where batch size calculation was not taking diagnostic tracing information into account.
+
+## 7.2.0-beta.1 (2021-03-08)
+### Added
+- Added `EnableCrossEntityTransactions` property to `ServiceBusClientOptions` to support transactions spanning multiple entities.
+- Added `SessionIdleTimeout` property to `ServiceBusSessionProcessorOptions` to allow configuration of when to switch to the next session when using the session processor. 
+
+### Key Bug Fixes
+- Fixed issue where batch size calculation was not taking diagnostic tracing information into account.
+- Retry on authorization failures to reduce likelihood of transient failures bubbling up to user application.
+- Reduce maximum refresh interval to prevent Timer exceptions involving long-lived SAS tokens.
 
 ## 7.1.0 (2021-02-09)
 

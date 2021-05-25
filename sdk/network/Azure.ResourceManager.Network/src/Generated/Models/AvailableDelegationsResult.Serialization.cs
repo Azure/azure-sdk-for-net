@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AvailableDelegationsResult
+    internal partial class AvailableDelegationsResult
     {
         internal static AvailableDelegationsResult DeserializeAvailableDelegationsResult(JsonElement element)
         {

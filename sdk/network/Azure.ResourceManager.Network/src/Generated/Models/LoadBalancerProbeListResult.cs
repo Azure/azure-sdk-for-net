@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListProbe API service call. </summary>
-    public partial class LoadBalancerProbeListResult
+    internal partial class LoadBalancerProbeListResult
     {
         /// <summary> Initializes a new instance of LoadBalancerProbeListResult. </summary>
         internal LoadBalancerProbeListResult()

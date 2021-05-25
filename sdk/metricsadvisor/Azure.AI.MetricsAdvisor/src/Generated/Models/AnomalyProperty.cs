@@ -12,9 +12,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         /// <summary> Initializes a new instance of AnomalyProperty. </summary>
         /// <param name="anomalySeverity"> anomaly severity. </param>
-        internal AnomalyProperty(AnomalySeverity anomalySeverity)
+        /// <param name="value"> value of the anomaly. </param>
+        internal AnomalyProperty(AnomalySeverity anomalySeverity, double value)
         {
             AnomalySeverity = anomalySeverity;
+            Value = value;
         }
 
         /// <summary> Initializes a new instance of AnomalyProperty. </summary>
@@ -26,10 +28,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// 
         /// only return for alerting anomaly result.
         /// </param>
-        internal AnomalyProperty(AnomalySeverity anomalySeverity, AnomalyStatus? anomalyStatus)
+        /// <param name="value"> value of the anomaly. </param>
+        /// <param name="expectedValue"> expected value of the anomaly given by smart detector. </param>
+        internal AnomalyProperty(AnomalySeverity anomalySeverity, AnomalyStatus? anomalyStatus, double value, double? expectedValue)
         {
             AnomalySeverity = anomalySeverity;
             AnomalyStatus = anomalyStatus;
+            Value = value;
+            ExpectedValue = expectedValue;
         }
 
         /// <summary> anomaly severity. </summary>
@@ -42,5 +48,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// only return for alerting anomaly result.
         /// </summary>
         public AnomalyStatus? AnomalyStatus { get; }
+        /// <summary> value of the anomaly. </summary>
+        public double Value { get; }
+        /// <summary> expected value of the anomaly given by smart detector. </summary>
+        public double? ExpectedValue { get; }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Test]
         public async Task CreateQueue()
         {
+#if !SNIPPET
             string queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string connectionString = TestEnvironment.ServiceBusConnectionString;
-
+#endif
             try
             {
                 #region Snippet:CreateQueue
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
+#if SNIPPET
+                string connectionString = "<connection_string>";
+                string queueName = "<queue_name>";
+#endif
                 var client = new ServiceBusAdministrationClient(connectionString);
                 var options = new CreateQueueOptions(queueName)
                 {
@@ -83,17 +86,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Test]
         public async Task CreateTopicAndSubscription()
         {
+#if !SNIPPET
             string topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string connectionString = TestEnvironment.ServiceBusConnectionString;
             var client = new ServiceBusAdministrationClient(connectionString);
-
+#endif
             try
             {
                 #region Snippet:CreateTopicAndSubscription
-                //@@ string connectionString = "<connection_string>";
-                //@@ string topicName = "<topic_name>";
-                //@@ var client = new ServiceBusManagementClient(connectionString);
+#if SNIPPET
+                string connectionString = "<connection_string>";
+                string topicName = "<topic_name>";
+                var client = new ServiceBusManagementClient(connectionString);
+#endif
                 var topicOptions = new CreateTopicOptions(topicName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),
@@ -112,7 +118,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 TopicProperties createdTopic = await client.CreateTopicAsync(topicOptions);
 
-                //@@ string subscriptionName = "<subscription_name>";
+#if SNIPPET
+                string subscriptionName = "<subscription_name>";
+#endif
                 var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),

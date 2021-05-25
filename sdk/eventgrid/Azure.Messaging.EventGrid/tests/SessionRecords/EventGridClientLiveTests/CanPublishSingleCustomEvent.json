@@ -1,0 +1,37 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://joloveventgridcustomevent-topic.westus2-1.eventgrid.azure.net/api/events?api-version=2018-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "aeg-sas-key": "Sanitized",
+        "Content-Length": "199",
+        "Content-Type": "application/json",
+        "traceparent": "00-d1f18a37f0f38848bd609723f84db8f3-fb702fb495bc2f49-00",
+        "User-Agent": [
+          "azsdk-net-Messaging.EventGrid/4.0.0-alpha.20210305.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "9ca1d21f3a0b2dc9e15ce515410038d8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022DataVersion\u0022:\u00221.0\u0022,\u0022EventTime\u0022:\u00222021-03-05T16:22:24.4392342-08:00\u0022,\u0022EventType\u0022:\u0022Microsoft.MockPublisher.TestEvent\u0022,\u0022Id\u0022:\u00220d167309-c7a5-65bb-36ce-37dedf57cd8d\u0022,\u0022Subject\u0022:\u0022Subject\u0022,\u0022Topic\u0022:\u0022Topic\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2018-01-01",
+        "Content-Length": "0",
+        "Date": "Sat, 06 Mar 2021 00:22:23 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-request-id": "88127334-53d9-49d2-ba5a-da5fd1e688da"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-03-05T16:22:24.4392342-08:00",
+    "EVENT_GRID_CUSTOM_EVENT_TOPIC_ENDPOINT": "https://joloveventgridcustomevent-topic.westus2-1.eventgrid.azure.net/api/events",
+    "EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY": "Kg==",
+    "RandomSeed": "124985899"
+  }
+}

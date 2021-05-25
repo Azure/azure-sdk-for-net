@@ -5,43 +5,38 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class HealthcareRelationInternal
     {
         internal static HealthcareRelationInternal DeserializeHealthcareRelationInternal(JsonElement element)
         {
-            string relationType = default;
-            bool bidirectional = default;
-            string source = default;
-            string target = default;
+            HealthcareEntityRelationType relationType = default;
+            IReadOnlyList<HealthcareRelationEntity> entities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relationType"))
                 {
-                    relationType = property.Value.GetString();
+                    relationType = new HealthcareEntityRelationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("bidirectional"))
+                if (property.NameEquals("entities"))
                 {
-                    bidirectional = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("source"))
-                {
-                    source = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("target"))
-                {
-                    target = property.Value.GetString();
+                    List<HealthcareRelationEntity> array = new List<HealthcareRelationEntity>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(HealthcareRelationEntity.DeserializeHealthcareRelationEntity(item));
+                    }
+                    entities = array;
                     continue;
                 }
             }
-            return new HealthcareRelationInternal(relationType, bidirectional, source, target);
+            return new HealthcareRelationInternal(relationType, entities);
         }
     }
 }

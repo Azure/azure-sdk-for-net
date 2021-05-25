@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -237,7 +237,7 @@ namespace Azure.Messaging.ServiceBus
             batchOptions.MaxSizeInBytes ??= long.MaxValue;
 
             var transportBatch = new ListTransportBatch(batchOptions.MaxSizeInBytes.Value, batchSizeBytes, batchMessageStore, tryAddCallback);
-            return new ServiceBusMessageBatch(transportBatch);
+            return new ServiceBusMessageBatch(transportBatch, new EntityScopeFactory("mock", "mock"));
         }
 
         /// <summary>

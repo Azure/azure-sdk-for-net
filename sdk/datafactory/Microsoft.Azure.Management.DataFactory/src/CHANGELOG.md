@@ -1,5 +1,42 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.19.0
+###  Feature Additions
+- Support sheetIndex in excel and set sheetName from required to optional
+- Set filePattern to object type to allow expressions
+- Support user-assigned managed identity in SSIS-IR
+
+## Version 4.18.0
+###  Feature Additions
+- Added MongoDB/MongoDBAtlas sink
+- Added Sql always encrypted settings 
+
+## Version 4.17.1
+###  Feature Additions
+- Fixed potential MI type missing issue by using system assigned MI as default
+
+## Version 4.17.0
+###  Feature Additions
+- Fixed FactoryIdentity property Type can not be null issue
+
+## Version 4.16.0
+###  Feature Additions
+- Added Amazon S3 Compatible and Oracle Cloud Storage connectors
+- Updated AzureDataExplorer LinkedService servicePrincipalId, servicePrincipalKey, tenant properties from required to optional
+- Added accountKind property to AzureBlobStorage LinkedService
+- Added AAD auth to CosmosDb LinkedService
+- Added authHeaders to HTTP/REST/OData LinkedService
+- Added MultiFactor auth to SFTP LinkedService
+- Added UAMI to Identity
+- Added privateEndpointConnection apis to DataFactory
+
+## Version 4.15.0
+###  Feature Additions
+- Added WebActivity support for Service Principal
+- Added PipelineEndpoint with version and DataPathAssignments fields in AzureMLExecutePipeline
+- Added pipeline policy and Elapsed Time Metric
+- Fixed WebActivity dynamic authentication
+
 ## Version 4.14.0
 ###  Feature Additions
 - Added encryption property for Customer Managed Key

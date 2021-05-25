@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list data masking rules request. </summary>
-    public partial class DataMaskingRuleListResult
+    internal partial class DataMaskingRuleListResult
     {
         /// <summary> Initializes a new instance of DataMaskingRuleListResult. </summary>
         internal DataMaskingRuleListResult()

@@ -1,0 +1,86 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/keyPhrases?showStats=true",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "191",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-412986168a9dff4ea64646d7a0c872cb-52c2e156de62d647-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "4dfa2958a1568d79bc14e1b570d63d15",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+            "language": "en"
+          },
+          {
+            "id": "1",
+            "text": "My cat and my dog might need to see a veterinarian.",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "098998ab-7578-449b-b529-edeb75309508",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
+        "Date": "Tue, 11 May 2021 16:08:29 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "11"
+      },
+      "ResponseBody": {
+        "statistics": {
+          "documentsCount": 2,
+          "validDocumentsCount": 2,
+          "erroneousDocumentsCount": 0,
+          "transactionsCount": 2
+        },
+        "documents": [
+          {
+            "id": "0",
+            "keyPhrases": [
+              "Bill Gates",
+              "Paul Allen",
+              "Microsoft"
+            ],
+            "statistics": {
+              "charactersCount": 51,
+              "transactionsCount": 1
+            },
+            "warnings": []
+          },
+          {
+            "id": "1",
+            "keyPhrases": [
+              "dog",
+              "cat",
+              "veterinarian"
+            ],
+            "statistics": {
+              "charactersCount": 51,
+              "transactionsCount": 1
+            },
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2020-07-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1074286074",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
+  }
+}

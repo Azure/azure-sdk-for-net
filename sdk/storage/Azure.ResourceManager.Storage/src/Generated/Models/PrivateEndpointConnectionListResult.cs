@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
-    public partial class PrivateEndpointConnectionListResult
+    internal partial class PrivateEndpointConnectionListResult
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResult. </summary>
         internal PrivateEndpointConnectionListResult()

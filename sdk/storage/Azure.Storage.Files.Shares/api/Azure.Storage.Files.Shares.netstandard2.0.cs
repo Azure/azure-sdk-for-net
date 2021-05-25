@@ -95,7 +95,7 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2020_06_12) { }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2020_08_04) { }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -105,6 +105,7 @@ namespace Azure.Storage.Files.Shares
             V2020_02_10 = 4,
             V2020_04_08 = 5,
             V2020_06_12 = 6,
+            V2020_08_04 = 7,
         }
     }
     public partial class ShareDirectoryClient
@@ -940,6 +941,7 @@ namespace Azure.Storage.Files.Shares.Specialized
     {
         public static readonly System.TimeSpan InfiniteLeaseDuration;
         protected ShareLeaseClient() { }
+        public ShareLeaseClient(Azure.Storage.Files.Shares.ShareClient client, string leaseId = null) { }
         public ShareLeaseClient(Azure.Storage.Files.Shares.ShareFileClient client, string leaseId = null) { }
         protected virtual Azure.Storage.Files.Shares.ShareFileClient FileClient { get { throw null; } }
         public virtual string LeaseId { get { throw null; } }
@@ -1008,6 +1010,7 @@ namespace Azure.Storage.Sas
         public string Resource { get { throw null; } set { } }
         public string ShareName { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Version { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

@@ -1,6 +1,52 @@
 # Release History
 
-## 1.4.0-beta.4 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
+
+### Fixes and improvements
+
+- Added `LoginHint` property to `InteractiveBrowserCredentialOptions` which allows a user name to be pre-selected for interactive logins. Setting this option skips the account selection prompt and immediately attempts to login with the specified account.
+
+## 1.4.0 (2021-05-12)
+
+### New Features
+
+- By default, the MSAL Public Client Client Capabilities are populated with "CP1" to enable support for [Continuous Access Evaluation (CAE)](https://docs.microsoft.com/azure/active-directory/develop/app-resilience-continuous-access-evaluation).
+This indicates to AAD that your application is CAE ready and can handle the CAE claim challenge. This capability can be disabled, if necessary, by either setting an `AppContext` switch named "Azure.Identity.DisableCP1" to `true` or by setting the environment variable;
+"AZURE_IDENTITY_DISABLE_CP1" to "true". Note: AppContext switches can also be configured via configuration like below:
+  
+```xml  
+<ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Identity.DisableCP1" Value="true" />
+</ItemGroup> 
+  ```
+### Fixes and improvements
+
+- The Microsoft Authentication Library (MSAL) dependency versions have been updated to the latest
+    - Microsoft.Identity.Client version 4.30.1, Microsoft.Identity.Client.Extensions.Msal version 2.18.4.
+
+## 1.4.0-beta.5 (2021-04-06)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- Marco Mansi _([GitHub](https://github.com/olandese))_
+
+### New Features
+
+- Added `AzurePowerShellCredential` to `DefaultAzureCredential` (A community contribution, courtesy of _[olandese](https://github.com/olandese))_
+
+### Fixes and improvements
+
+- When logging is enabled, the log output from Microsoft Authentication Library (MSAL) is also logged.
+- Fixed an issue where an account credential fails to load from the cache when EnableGuestTenantAuthentication is true and the account found in the cache has multiple matching tenantIds ([#18276](https://github.com/Azure/azure-sdk-for-net/issues/18276)).
+- Fixed deadlock issue in `InteractiveBrowserCredential` when running in a UI application ([#18418](https://github.com/Azure/azure-sdk-for-net/issues/18418)).
+
+### Breaking Changes
+
+- `TokenCache` class is moved removed from the public API surface and has been replaced by `TokenCachePersistenceOptions` for configuration of disk based persistence of the token cache.
+
+## 1.4.0-beta.4 (2021-03-09)
 
 ### Fixes and Improvements
 
@@ -26,14 +72,6 @@
 
 - Fixed issue in `HttpExtensions` causing the omission of content headers on requests ([#17448](https://github.com/Azure/azure-sdk-for-net/issues/17448))
 - Made `EnvironmentCredential` to account for both null and empty string when checking for the presense of the environment variables ([#18031](https://github.com/Azure/azure-sdk-for-net/issues/18031))
-
-## 1.4.0-beta.1 (2020-10-15)
-
-### New Features
-
-- Redesigned Application Authentication APIs
-  - Adds `TokenCache` and `PersistentTokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
-  - Adds `TokenCache` property to options for credentials supporting token cache configuration.
 
 ## 1.3.0 (2020-11-12)
 
@@ -64,6 +102,14 @@
   - Removed properties `AuthenticationRecord` and `DisableAutomaticAuthentication` from `DeviceCodeCredentialOptions` and `InteractiveBrowserCredentialOptions`
   - Removed properties `AllowUnencryptedCache`and `AuthenticationRecord` from `SharedTokenCacheCredentialOptions`
   - Removed methods `Authenticate` and `AuthenticateAsync` from `DeviceCodeCredential`, `InteractiveBrowserCredential` and `UsernamePasswordCredential`
+
+## 1.4.0-beta.1 (2020-10-15)
+
+### New Features
+
+- Redesigned Application Authentication APIs
+  - Adds `TokenCache` and `TokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
+  - Adds `TokenCache` property to options for credentials supporting token cache configuration.
 
 ## 1.3.0-beta.2 (2020-10-07)
 

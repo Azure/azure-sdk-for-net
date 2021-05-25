@@ -27,9 +27,7 @@ namespace EventGrid.Tests.ScenarioTests
                     if (!m_initialized)
                     {
                         resourceManagementClient = EventGridManagementHelper.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                        resourceManagementClient.BaseUri = new System.Uri("https://eastus2euap.management.azure.com");
                         eventGridManagementClient = EventGridManagementHelper.GetEventGridManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                        eventGridManagementClient.BaseUri = new System.Uri("https://eastus2euap.management.azure.com");
                     }
                 }
             }

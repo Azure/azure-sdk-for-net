@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.IO;
-using System.Text;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs.Models
@@ -16,11 +16,13 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The blob's type.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public BlobType BlobType { get; internal set; }
 
         /// <summary>
         /// The number of bytes present in the response body.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public long ContentLength { get; internal set; }
 
         /// <summary>
@@ -31,11 +33,13 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The media type of the body of the response. For Download Blob this is 'application/octet-stream'
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string ContentType { get; internal set; }
 
         /// <summary>
         /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CA1819 // Properties should not return arrays
         public byte[] ContentHash { get; internal set; }
 #pragma warning restore CA1819 // Properties should not return arrays

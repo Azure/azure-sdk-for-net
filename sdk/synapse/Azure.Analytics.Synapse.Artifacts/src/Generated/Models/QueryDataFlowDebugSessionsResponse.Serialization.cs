@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class QueryDataFlowDebugSessionsResponse
+    [JsonConverter(typeof(QueryDataFlowDebugSessionsResponseConverter))]
+    internal partial class QueryDataFlowDebugSessionsResponse
     {
         internal static QueryDataFlowDebugSessionsResponse DeserializeQueryDataFlowDebugSessionsResponse(JsonElement element)
         {
@@ -41,6 +44,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new QueryDataFlowDebugSessionsResponse(Optional.ToList(value), nextLink.Value);
+        }
+
+        internal partial class QueryDataFlowDebugSessionsResponseConverter : JsonConverter<QueryDataFlowDebugSessionsResponse>
+        {
+            public override void Write(Utf8JsonWriter writer, QueryDataFlowDebugSessionsResponse model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override QueryDataFlowDebugSessionsResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
+            }
         }
     }
 }

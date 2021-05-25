@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.Chat
 {
     /// <summary> Result of the add chat participants operation. </summary>
@@ -13,16 +16,17 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of AddChatParticipantsResult. </summary>
         internal AddChatParticipantsResult()
         {
+            InvalidParticipants = new ChangeTrackingList<ChatError>();
         }
 
         /// <summary> Initializes a new instance of AddChatParticipantsResult. </summary>
-        /// <param name="errors"> Errors encountered during the addition of the chat participant to the chat thread. </param>
-        internal AddChatParticipantsResult(AddChatParticipantsErrors errors)
+        /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
+        internal AddChatParticipantsResult(IReadOnlyList<ChatError> invalidParticipants)
         {
-            Errors = errors;
+            InvalidParticipants = invalidParticipants;
         }
 
-        /// <summary> Errors encountered during the addition of the chat participant to the chat thread. </summary>
-        public AddChatParticipantsErrors Errors { get; }
+        /// <summary> The participants that failed to be added to the chat thread. </summary>
+        public IReadOnlyList<ChatError> InvalidParticipants { get; }
     }
 }

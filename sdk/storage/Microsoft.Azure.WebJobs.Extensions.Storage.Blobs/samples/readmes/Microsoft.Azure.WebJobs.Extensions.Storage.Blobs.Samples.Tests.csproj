@@ -5,6 +5,9 @@
 
   <ItemGroup>
     <Compile Include="$(AzureStorageWebjobsExtensionSharedTestSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <None Include="$(AzureStorageSharedTestSources)\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

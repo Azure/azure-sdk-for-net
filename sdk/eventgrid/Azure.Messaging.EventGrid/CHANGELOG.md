@@ -1,7 +1,35 @@
 # Release History
 
-## 4.0.0-beta.6 (Unreleased)
+## 4.3.0-beta.1 (Unreleased)
 
+
+## 4.2.0 (2021-05-10)
+
+### New Features
+* Added the following new system events: 
+  - PolicyInsightsPolicyStateChangedEventData
+  - PolicyInsightsPolicyStateCreatedEventData
+  - PolicyInsightsPolicyStateDeletedEventData
+  - StorageAsyncOperationInitiatedEventData
+  - StorageBlobTierChangedEventData
+
+## 4.1.0 (2021-03-23)
+
+### New Features
+- Added new Azure Communication Services system events.
+
+### Fixed
+- Fixed system mapping for `AcsChatParticipantAddedToThread` and `AcsChatParticipantRemovedFromThread`.
+
+## 4.0.0 (2021-03-09)
+
+### New Features
+- Added single send overloads to allow sending a single event for each event type.
+
+### Breaking Changes
+- Moved `CloudEvent` into `Azure.Core` package.
+- Changed custom events to be represented as `BinaryData` rather than `object`.
+- Removed `Serializer` option from `EventGridPublisherOptions` as serialization can be customized through `BinaryData`.
 
 ## 4.0.0-beta.5 (2021-02-09)
 

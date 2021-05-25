@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SubscriptionUsageListResult
+    internal partial class SubscriptionUsageListResult
     {
         internal static SubscriptionUsageListResult DeserializeSubscriptionUsageListResult(JsonElement element)
         {

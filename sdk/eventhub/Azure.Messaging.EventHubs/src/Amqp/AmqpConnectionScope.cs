@@ -77,6 +77,18 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(2);
 
         /// <summary>
+        ///   The maximum amount of time to allow before authorization is refreshed; any calculations
+        ///   that call for refreshing less frequently will be substituted with this value.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This value must be less than 49 days, 17 hours, 2 minutes, 47 seconds, 294 milliseconds
+        ///   in order to not overflow the Timer used to track authorization refresh.
+        /// </remarks>
+        ///
+        private static TimeSpan MaximumAuthorizationRefresh { get; } = TimeSpan.FromDays(49);
+
+        /// <summary>
         ///   The amount time to allow to refresh authorization of an AMQP link.
         /// </summary>
         ///
@@ -193,7 +205,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             EventHubName = eventHubName;
             Transport = transport;
             Proxy = proxy;
-            TokenProvider = new CbsTokenProvider(new EventHubTokenCredential(credential, serviceEndpoint.ToString()), OperationCancellationSource.Token);
+            TokenProvider = new CbsTokenProvider(new EventHubTokenCredential(credential), OperationCancellationSource.Token);
             Id = identifier ?? $"{ eventHubName }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
 
             Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, ConnectionEndpoint, Transport, Proxy, Id, timeout);
@@ -225,6 +237,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(TimeSpan timeout,
                                                                                    CancellationToken cancellationToken)
         {
+            Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = ValueStopwatch.StartNew();
@@ -266,6 +279,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                            bool trackLastEnqueuedEventProperties,
                                                                            CancellationToken cancellationToken)
         {
+            Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
@@ -315,6 +329,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                          TimeSpan timeout,
                                                                          CancellationToken cancellationToken)
         {
+            Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = ValueStopwatch.StartNew();
@@ -758,7 +773,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             currentTimeUtc ??= DateTime.UtcNow;
 
             var refreshDueInterval = (expirationTimeUtc.Subtract(AuthorizationRefreshBuffer)).Subtract(currentTimeUtc.Value);
-            return (refreshDueInterval < MinimumAuthorizationRefresh) ? MinimumAuthorizationRefresh : refreshDueInterval;
+
+            return refreshDueInterval switch
+            {
+                _ when (refreshDueInterval < MinimumAuthorizationRefresh) => MinimumAuthorizationRefresh,
+                _ when (refreshDueInterval > MaximumAuthorizationRefresh) => MaximumAuthorizationRefresh,
+                _ => refreshDueInterval
+            };
         }
 
         /// <summary>
@@ -854,7 +875,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 await target.OpenAsync(timeout).ConfigureAwait(false);
             }
-            catch
+            catch (Exception ex)
             {
                 switch (target)
                 {
@@ -870,7 +891,20 @@ namespace Azure.Messaging.EventHubs.Amqp
                 }
 
                 target.SafeClose();
-                throw;
+
+                // The AMQP library may throw an InvalidOperationException or one of its derived types, such as
+                // ObjectDisposedException if the underlying network state changes.  While normally terminal, in this
+                // context, these exception types are safe to retry.  Translate them so that the retry policy
+                // can correctly interpret.
+
+                switch (ex)
+                {
+                    case InvalidOperationException:
+                        throw new EventHubsException(true, EventHubName, Resources.CouldNotCreateLink, EventHubsException.FailureReason.ServiceCommunicationProblem, ex);
+
+                    default:
+                        throw;
+                }
             }
         }
 

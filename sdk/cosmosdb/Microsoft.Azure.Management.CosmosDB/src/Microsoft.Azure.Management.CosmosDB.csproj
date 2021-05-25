@@ -6,17 +6,20 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.CosmosDB</PackageId>
     <Description>Provides developers with libraries for the CosmosDB under Azure Resource manager to manage CosmosDB Account, Databases and child resources and their available management capabilities. Create, Delete, Update CosmosDB Account, Databases and child resources. Note: This client library is for CosmosDB under Azure Resource Manager.</Description>
-    <Version>2.0.0</Version>
+    <Version>3.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.CosmosDB</AssemblyName>
     <PackageTags>management;cosmosdb;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Updating with the apiVersion 2020-01-15 azure-rest-api-specs.
-        This patch includes the following new features:
-          -Network Acl Bypass
-          -Managed Service Identity
-          -Mongo Server Version 4.0
-          -Runtime Resources are updated to use Gateway version 2020-07-15 for support Subpartitioned SQL Containers
+        Introduced the following APIs for SQL Data Plane RBAC
+          - Create / Update a SQL Role Definition
+          - Delete a SQL Role Definition
+          - Read a SQL Role Definition
+          - List all SQL Role Definitions
+          - Create / Update a SQL Role Assignment
+          - Delete a SQL Role Assignment
+          - Read a SQL Role Assignment
+          - List all SQL Role Assignments
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

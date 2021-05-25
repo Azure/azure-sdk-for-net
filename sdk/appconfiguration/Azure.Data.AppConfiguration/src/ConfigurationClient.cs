@@ -996,7 +996,7 @@ namespace Azure.Data.AppConfiguration
         /// Adds an external synchronization token to ensure service requests receive up-to-date values.
         /// </summary>
         /// <param name="token">The synchronization token value.</param>
-        public virtual void AddSyncToken(string token)
+        public virtual void UpdateSyncToken(string token)
         {
             Argument.AssertNotNull(token, nameof(token));
             _syncTokenPolicy.AddToken(token);

@@ -86,8 +86,8 @@
       <FileServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-    
-    <!-- A storge account with hierarchical namespace enabled and OAuth access -->
+
+    <!-- A storge account with hierarchical namespace enabled, OAuth access, and blob soft delete enabled -->
     <!-- Replace [NAMESPACE-ACCOUNT] and [NAMESPACE-ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>NamespaceTenant</TenantName>

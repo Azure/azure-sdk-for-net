@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class IpAllocationsCreateOrUpdateOperation : Operation<IpAllocation>, IOperationSource<IpAllocation>
     {
         private readonly ArmOperationHelpers<IpAllocation> _operation;
+
+        /// <summary> Initializes a new instance of IpAllocationsCreateOrUpdateOperation for mocking. </summary>
+        protected IpAllocationsCreateOrUpdateOperation()
+        {
+        }
+
         internal IpAllocationsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<IpAllocation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "IpAllocationsCreateOrUpdateOperation");

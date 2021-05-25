@@ -58,5 +58,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "identity")]
         public FactoryIdentity Identity { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Identity != null)
+            {
+                Identity.Validate();
+            }
+        }
     }
 }

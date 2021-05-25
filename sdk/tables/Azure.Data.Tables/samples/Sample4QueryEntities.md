@@ -44,6 +44,25 @@ foreach (TableEntity qEntity in queryResultsFilter)
 Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 ```
 
+Hand formatting OData query filters can be tricky, so there is a helper class called `QueryFilter` to help make it easier.
+For example, OData filters require that strings be single quoted, and DateTime values be single quoted and prefixed with `datetime`.
+The `QueryFilter` class handles all the type escaping for you.
+
+```C# Snippet:TablesSample4QueryEntitiesFilterWithQueryFilter
+// The CreateQueryFilter method is also available to assist with properly formatting and escaping OData queries.
+Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
+// Iterate the <see cref="Pageable"> to access all queried entities.
+
+foreach (TableEntity qEntity in queryResultsFilter)
+{
+    Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
+}
+
+Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
+
+// It handles esca
+```
+
 ### LINQ expression
 
 Here is a query returning a collection of the strongly-typed `OfficeSupplyEntity` objects that cost at least $6.00.

@@ -55,7 +55,9 @@ namespace Azure.Storage.Cryptography.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClientSideEncryptionAlgorithm other && Equals(other);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Indicates whether this instance and a specified <see cref="ClientSideEncryptionAlgorithm"/> are equal
+        /// </summary>
         public bool Equals(ClientSideEncryptionAlgorithm other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
         /// <inheritdoc/>

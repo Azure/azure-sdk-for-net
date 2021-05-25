@@ -19,16 +19,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             _queueServiceClient = queueServiceClient;
         }
 
-        protected override QueueServiceClient CreateClientFromConnectionString(string connectionString, QueueClientOptions options)
-        {
-            return _queueServiceClient;
-        }
-
-        protected override QueueServiceClient CreateClientFromTokenCredential(Uri endpointUri, TokenCredential tokenCredential, QueueClientOptions options)
-        {
-            return _queueServiceClient;
-        }
-
         public override QueueServiceClient Get(string name)
         {
             return _queueServiceClient;

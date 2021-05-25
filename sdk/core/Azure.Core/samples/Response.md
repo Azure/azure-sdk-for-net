@@ -6,7 +6,7 @@ Most client methods return one of the following types:
  - `Response` -  an HTTP response
  - `Response<T>` -  a value and HTTP response
  - `Pageable<T>` -  a collection of values retrieved in pages
- - `AsyncPageable<T>` - a collection of values asyncrounosly retrieved in pages
+ - `AsyncPageable<T>` - a collection of values asynchronously retrieved in pages
  - `*Operation<T>` - a long-running operation see [long running operation samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/LongRunningOperations.md)
 
 ## Accessing HTTP response propreties
@@ -129,7 +129,7 @@ await foreach (Page<SecretProperties> page in allSecretProperties.AsPages())
 
 ## Iterating over pageable
 
-`Pageable<T>` is a syncronous version of `AsyncPageable<T>`, it can be used with a normal `foreach` loop.
+`Pageable<T>` is a synchronous version of `AsyncPageable<T>`, it can be used with a normal `foreach` loop.
 
 ```C# Snippet:Pageable
 // call a service method, which returns Pageable<T>

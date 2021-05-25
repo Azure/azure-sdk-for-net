@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBDatabaseListResult
+    internal partial class MongoDBDatabaseListResult
     {
         internal static MongoDBDatabaseListResult DeserializeMongoDBDatabaseListResult(JsonElement element)
         {

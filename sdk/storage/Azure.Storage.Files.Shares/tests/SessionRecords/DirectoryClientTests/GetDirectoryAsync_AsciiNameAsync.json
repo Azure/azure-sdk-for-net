@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "338f0641-e619-f690-e01c-8b5a7d180dda",
         "x-ms-date": "Tue, 26 Jan 2021 19:27:33 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "338f0641-e619-f690-e01c-8b5a7d180dda",
         "x-ms-request-id": "e50398ff-f01a-0089-4719-f46017000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -74,7 +74,7 @@
         "x-ms-file-permission-key": "17860367565182308406*11459378189709739967",
         "x-ms-request-id": "e5039902-f01a-0089-4819-f46017000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -91,7 +91,7 @@
         "x-ms-client-request-id": "2346af96-f51a-9da6-4a66-fd779acb0f95",
         "x-ms-date": "Tue, 26 Jan 2021 19:27:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -106,7 +106,7 @@
         "Vary": "Origin",
         "x-ms-client-request-id": "2346af96-f51a-9da6-4a66-fd779acb0f95",
         "x-ms-request-id": "e5039904-f01a-0089-4919-f46017000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanmcccanary3.file.core.windows.net/\u0022 ShareName=\u0022test-share-49ea854b-7cdb-9b20-0550-0fd6a5e59a7d\u0022 DirectoryPath=\u0022\u0022\u003E\u003CEntries\u003E\u003CDirectory\u003E\u003CName\u003Etest-directory-6314197c-121a-af64-6681-700a62dfbb4b\u003C/Name\u003E\u003CProperties /\u003E\u003C/Directory\u003E\u003C/Entries\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -125,7 +125,7 @@
         "x-ms-date": "Tue, 26 Jan 2021 19:27:34 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -138,7 +138,7 @@
         ],
         "x-ms-client-request-id": "c6022a3f-703f-6be6-9977-131c700c7aea",
         "x-ms-request-id": "e5039905-f01a-0089-4a19-f46017000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     }

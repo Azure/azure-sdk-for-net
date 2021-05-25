@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/sms?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "146",
+        "Content-Type": "application/json",
+        "Date": "Tue, 09 Mar 2021 21:32:34 GMT",
+        "traceparent": "00-e4fb17993831224fbe38aad175f35092-48ed1ea6b5481247-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20210309.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "d31443484701d4e869dfe7b2fd4c552b",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "from": "Sanitized",
+        "smsRecipients": [
+          {
+            "to": "Sanitized",
+            "repeatabilityRequestId": "Sanitized",
+            "repeatabilityFirstSent": "Sanitized"
+          }
+        ],
+        "message": "Hi"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 09 Mar 2021 21:32:34 GMT",
+        "MS-CV": "\u002BZdiZ9FsNkOvTkME6Ttiig.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0culHYAAAAACx5DTkffLjRI8ffI4GXWalRVdSMzBFREdFMDYyMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "370ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "to": "Sanitized",
+            "httpStatusCode": 400,
+            "errorMessage": "Invalid To phone number format.",
+            "successful": false
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "AZURE_PHONE_NUMBER": "\u002B14255550123",
+    "RandomSeed": "1419695495"
+  }
+}

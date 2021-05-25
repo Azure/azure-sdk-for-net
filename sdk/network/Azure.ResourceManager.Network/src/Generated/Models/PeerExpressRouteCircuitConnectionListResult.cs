@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListPeeredConnections API service call retrieves all global reach peer circuit connections that belongs to a Private Peering for an ExpressRouteCircuit. </summary>
-    public partial class PeerExpressRouteCircuitConnectionListResult
+    internal partial class PeerExpressRouteCircuitConnectionListResult
     {
         /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionListResult. </summary>
         internal PeerExpressRouteCircuitConnectionListResult()

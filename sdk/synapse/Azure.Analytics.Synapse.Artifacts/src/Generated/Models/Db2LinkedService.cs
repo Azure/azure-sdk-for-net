@@ -14,8 +14,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class Db2LinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of Db2LinkedService. </summary>
-        /// <param name="server"> Server name for connection. Type: string (or Expression with resultType string). </param>
-        /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
+        /// <param name="server"> Server name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
+        /// <param name="database"> Database name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
         public Db2LinkedService(object server, object database)
         {
@@ -40,16 +40,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> . </param>
-        /// <param name="server"> Server name for connection. Type: string (or Expression with resultType string). </param>
-        /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> AuthenticationType to be used for connection. </param>
-        /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="connectionString"> The connection string. It is mutually exclusive with server, database, authenticationType, userName, packageCollection and certificateCommonName property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="server"> Server name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
+        /// <param name="database"> Database name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
+        /// <param name="authenticationType"> AuthenticationType to be used for connection. It is mutually exclusive with connectionString property. </param>
+        /// <param name="username"> Username for authentication. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for authentication. </param>
-        /// <param name="packageCollection"> Under where packages are created when querying database. Type: string (or Expression with resultType string). </param>
-        /// <param name="certificateCommonName"> Certificate Common Name when TLS is enabled. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal Db2LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object database, Db2AuthenticationType? authenticationType, object username, SecretBase password, object packageCollection, object certificateCommonName, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="packageCollection"> Under where packages are created when querying database. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
+        /// <param name="certificateCommonName"> Certificate Common Name when TLS is enabled. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
+        internal Db2LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object server, object database, Db2AuthenticationType? authenticationType, object username, SecretBase password, object packageCollection, object certificateCommonName, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
+            ConnectionString = connectionString;
             Server = server;
             Database = database;
             AuthenticationType = authenticationType;
@@ -61,21 +63,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Db2";
         }
 
-        /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The connection string. It is mutually exclusive with server, database, authenticationType, userName, packageCollection and certificateCommonName property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        public object ConnectionString { get; set; }
+        /// <summary> Server name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
         public object Server { get; set; }
-        /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Database name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
         public object Database { get; set; }
-        /// <summary> AuthenticationType to be used for connection. </summary>
+        /// <summary> AuthenticationType to be used for connection. It is mutually exclusive with connectionString property. </summary>
         public Db2AuthenticationType? AuthenticationType { get; set; }
-        /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Username for authentication. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
         public object Username { get; set; }
         /// <summary> Password for authentication. </summary>
         public SecretBase Password { get; set; }
-        /// <summary> Under where packages are created when querying database. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Under where packages are created when querying database. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
         public object PackageCollection { get; set; }
-        /// <summary> Certificate Common Name when TLS is enabled. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Certificate Common Name when TLS is enabled. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
         public object CertificateCommonName { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
     }
 }

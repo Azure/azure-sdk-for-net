@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Sql
     public partial class FailoverGroupsDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of FailoverGroupsDeleteOperation for mocking. </summary>
+        protected FailoverGroupsDeleteOperation()
+        {
+        }
+
         internal FailoverGroupsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "FailoverGroupsDeleteOperation");

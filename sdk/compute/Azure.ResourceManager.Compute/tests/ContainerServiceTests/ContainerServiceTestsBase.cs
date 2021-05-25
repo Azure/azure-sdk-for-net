@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
         }
 
-        protected async Task<(ContainerService, ContainerService)> CreateContainerService_NoAsyncTracking(
+        protected async Task<(ContainerService GetResponse, ContainerService InputContainerService)> CreateContainerService_NoAsyncTracking(
             string rgName,
             string csName,
             string masterDnsPrefix,
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     agentPoolDnsPrefix,
                     //out inputContainerService,
                     containerServiceCustomizer);
-                var createOrUpdateResponse = getTwoServiceOpera.Item1;
-                var inputContainerService = getTwoServiceOpera.Item2;
+                var createOrUpdateResponse = getTwoServiceOpera.CreateOrUpdateResponse;
+                var inputContainerService = getTwoServiceOpera.InputContainerService;
                 var getResponse = await ContainerServicesOperations.GetAsync(rgName, csName);
                 ValidateContainerService(createOrUpdateResponse, getResponse);
                 return (getResponse, inputContainerService);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var createOrUpdateResponse = await WaitForCompletionAsync(await ContainerServicesOperations.StartCreateOrUpdateAsync(rgName, vmssName, inputContainerService));
         }
 
-        private async Task<(ContainerService, ContainerService)> CreateContainerServiceAndGetOperationResponse(
+        private async Task<(ContainerService CreateOrUpdateResponse, ContainerService InputContainerService)> CreateContainerServiceAndGetOperationResponse(
             string rgName,
             string csName,
             string masterDnsPrefix,

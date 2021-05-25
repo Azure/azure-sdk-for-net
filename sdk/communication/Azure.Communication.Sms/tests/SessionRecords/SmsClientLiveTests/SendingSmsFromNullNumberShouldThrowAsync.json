@@ -1,0 +1,8 @@
+{
+  "Entries": [],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "AZURE_PHONE_NUMBER": "\u002B14255550123",
+    "RandomSeed": "435207885"
+  }
+}

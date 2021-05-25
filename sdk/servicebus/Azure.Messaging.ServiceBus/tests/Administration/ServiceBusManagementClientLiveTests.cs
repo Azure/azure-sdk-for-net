@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
+using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -45,7 +46,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         private ServiceBusAdministrationClient CreateSharedKeyTokenClient()
         {
             var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
-            var credential = new ServiceBusSharedAccessKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
+            var credential = new AzureNamedKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
+
+            return InstrumentClient(
+                new ServiceBusAdministrationClient(
+                    TestEnvironment.FullyQualifiedNamespace,
+                    credential,
+                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+        }
+
+        private ServiceBusAdministrationClient CreateSasTokenClient()
+        {
+            var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
+            var resource = ServiceBusAdministrationClient.BuildAudienceResource(TestEnvironment.FullyQualifiedNamespace);
+            var signature = new SharedAccessSignature(resource, properties.SharedAccessKeyName, properties.SharedAccessKey);
+            var credential = new AzureSasCredential(signature.Value);
 
             return InstrumentClient(
                 new ServiceBusAdministrationClient(
@@ -445,7 +460,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(queueName);
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
-            await receiver.DeadLetterMessageAsync(msg.LockToken);
+            await receiver.DeadLetterMessageAsync(msg);
 
             List<QueueRuntimeProperties> runtimeInfoList = new List<QueueRuntimeProperties>();
             await foreach (QueueRuntimeProperties queueRuntimeInfo in mgmtClient.GetQueuesRuntimePropertiesAsync())
@@ -513,7 +528,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(topicName, subscriptionName);
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
-            await receiver.DeadLetterMessageAsync(msg.LockToken);
+            await receiver.DeadLetterMessageAsync(msg);
 
             List<SubscriptionRuntimeProperties> runtimeInfoList = new List<SubscriptionRuntimeProperties>();
             await foreach (SubscriptionRuntimeProperties subscriptionRuntimeInfo in client.GetSubscriptionsRuntimePropertiesAsync(topicName))
@@ -760,13 +775,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
             Assert.NotNull(msg);
             Assert.AreEqual("mid", msg.MessageId);
-            await receiver.DeadLetterMessageAsync(msg.LockToken);
+            await receiver.DeadLetterMessageAsync(msg);
 
             receiver = sbClient.CreateReceiver(dlqDestinationName);
             msg = await receiver.ReceiveMessageAsync();
             Assert.NotNull(msg);
             Assert.AreEqual("mid", msg.MessageId);
-            await receiver.CompleteMessageAsync(msg.LockToken);
+            await receiver.CompleteMessageAsync(msg);
 
             await mgmtClient.DeleteQueueAsync(queueName);
             await mgmtClient.DeleteQueueAsync(destinationName);
@@ -869,6 +884,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
         [Test]
         public async Task AuthenticateWithSharedKeyCredential()
+        {
+            var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
+            var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
+            var client = CreateSharedKeyTokenClient();
+
+            var queueOptions = new CreateQueueOptions(queueName);
+            QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);
+
+            Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue));
+
+            var topicOptions = new CreateTopicOptions(topicName);
+            TopicProperties createdTopic = await client.CreateTopicAsync(topicOptions);
+
+            Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic));
+
+            await client.DeleteQueueAsync(queueName);
+            await client.DeleteTopicAsync(topicName);
+        }
+
+        [Test]
+        public async Task AuthenticateWithSasCredential()
         {
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);

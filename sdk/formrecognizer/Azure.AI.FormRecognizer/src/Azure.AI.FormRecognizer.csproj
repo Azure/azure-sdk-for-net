@@ -2,13 +2,14 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Cognitive Services Form Recognizer client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.FormRecognizer client library</AssemblyTitle>
-    <Version>3.1.0-beta.3</Version>
+    <Version>3.1.0</Version>
     <ApiCompatVersion>3.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Form Recognizer</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -24,9 +25,8 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
 </Project>

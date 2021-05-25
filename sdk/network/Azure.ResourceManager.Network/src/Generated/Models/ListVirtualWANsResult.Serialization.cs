@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListVirtualWANsResult
+    internal partial class ListVirtualWANsResult
     {
         internal static ListVirtualWANsResult DeserializeListVirtualWANsResult(JsonElement element)
         {

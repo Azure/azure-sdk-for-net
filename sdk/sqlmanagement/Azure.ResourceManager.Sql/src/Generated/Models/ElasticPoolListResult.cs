@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The result of an elastic pool list request. </summary>
-    public partial class ElasticPoolListResult
+    internal partial class ElasticPoolListResult
     {
         /// <summary> Initializes a new instance of ElasticPoolListResult. </summary>
         internal ElasticPoolListResult()

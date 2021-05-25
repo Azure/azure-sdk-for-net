@@ -1,7 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,17 +9,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
     internal class StringToServiceBusEntityConverter : IAsyncConverter<string, ServiceBusEntity>
     {
-        private readonly ServiceBusAccount _account;
+        private readonly ServiceBusAttribute _attribute;
         private readonly IBindableServiceBusPath _defaultPath;
-        private readonly EntityType _entityType;
+        private readonly ServiceBusEntityType _serviceBusEntityType;
         private readonly MessagingProvider _messagingProvider;
+        private readonly ServiceBusClientFactory _clientFactory;
 
-        public StringToServiceBusEntityConverter(ServiceBusAccount account, IBindableServiceBusPath defaultPath, EntityType entityType, MessagingProvider messagingProvider)
+        public StringToServiceBusEntityConverter(ServiceBusAttribute attribute, IBindableServiceBusPath defaultPath, MessagingProvider messagingProvider, ServiceBusClientFactory clientFactory)
         {
-            _account = account;
+            _attribute = attribute;
             _defaultPath = defaultPath;
-            _entityType = entityType;
+            _serviceBusEntityType = _attribute.ServiceBusEntityType;
             _messagingProvider = messagingProvider;
+            _clientFactory = clientFactory;
         }
 
         public Task<ServiceBusEntity> ConvertAsync(string input, CancellationToken cancellationToken)
@@ -27,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             string queueOrTopicName;
 
             // For convenience, treat an an empty string as a request for the default value.
-            if (String.IsNullOrEmpty(input) && _defaultPath.IsBound)
+            if (string.IsNullOrEmpty(input) && _defaultPath.IsBound)
             {
                 queueOrTopicName = _defaultPath.Bind(null);
             }
@@ -37,12 +39,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             }
 
             cancellationToken.ThrowIfCancellationRequested();
-            var messageSender = _messagingProvider.CreateMessageSender(queueOrTopicName, _account.ConnectionString);
+            var messageSender = _messagingProvider.CreateMessageSender(_clientFactory.CreateClientFromSetting(_attribute.Connection), queueOrTopicName);
 
             var entity = new ServiceBusEntity
             {
                 MessageSender = messageSender,
-                EntityType = _entityType
+                ServiceBusEntityType = _serviceBusEntityType
             };
 
             return Task.FromResult(entity);

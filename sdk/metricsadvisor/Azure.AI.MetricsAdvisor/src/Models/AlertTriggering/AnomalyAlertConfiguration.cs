@@ -22,6 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             IdsOfHooksToAlert = new ChangeTrackingList<string>();
             MetricAlertConfigurations = new ChangeTrackingList<MetricAnomalyAlertConfiguration>();
+            SplitAlertByDimensions = new ChangeTrackingList<string>();
         }
 
         /// <summary>
@@ -60,6 +61,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public string Description { get; set; }
 
+        // TODO: expose it as part of 1.0.0-beta.4
+        internal IList<string> SplitAlertByDimensions { get; }
+
         /// <summary>
         /// Create a patch model from the current <see cref="AnomalyAlertConfiguration"/>
         /// </summary>
@@ -68,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return new AnomalyAlertingConfigurationPatch()
             {
-                CrossMetricsOperator = CrossMetricsOperator.HasValue ? new AnomalyAlertingConfigurationPatchCrossMetricsOperator(CrossMetricsOperator.Value.ToString()) : default(AnomalyAlertingConfigurationPatchCrossMetricsOperator?),
+                CrossMetricsOperator = CrossMetricsOperator,
                 Description = Description,
                 Name = Name,
                 HookIds = IdsOfHooksToAlert.Select(h => new Guid(h)).ToList(),

@@ -99,5 +99,10 @@ namespace Azure.Identity
         {
             return !string.IsNullOrEmpty(str) ? str : null;
         }
+
+        /// <summary>
+        /// Specifies whether the <see cref="AzurePowerShellCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeAzurePowerShellCredential { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class KeyPhrasesTaskParameters : IUtf8JsonSerializable
     {
@@ -19,6 +19,11 @@ namespace Azure.AI.TextAnalytics
             {
                 writer.WritePropertyName("model-version");
                 writer.WriteStringValue(ModelVersion);
+            }
+            if (Optional.IsDefined(LoggingOptOut))
+            {
+                writer.WritePropertyName("loggingOptOut");
+                writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();
         }

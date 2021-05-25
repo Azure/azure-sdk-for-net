@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BastionHostListResult
+    internal partial class BastionHostListResult
     {
         internal static BastionHostListResult DeserializeBastionHostListResult(JsonElement element)
         {

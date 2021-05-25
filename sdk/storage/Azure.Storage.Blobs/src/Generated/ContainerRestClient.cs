@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs
         /// <param name="containerName"> The container name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, or <paramref name="version"/> is null. </exception>
-        public ContainerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string version = "2020-06-12")
+        public ContainerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string version = "2020-08-04")
         {
             if (url == null)
             {
@@ -680,7 +680,6 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Length", contentLength);
             request.Headers.Add("Content-Type", multipartContentType);
-            request.Headers.Add("Content-Type", "application/xml");
             request.Content = RequestContent.Create(body);
             return message;
         }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -18,7 +19,6 @@ namespace Azure.Data.AppConfiguration.Tests
 
         public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher = new ConfigurationRecordMatcher();
         }
 
         private string GenerateKeyId(string prefix = null)
@@ -1482,6 +1482,58 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting1));
                 AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting2));
+            }
+        }
+
+        [RecordedTest]
+        public async Task CanModifyTheFilterParameterValues()
+        {
+            ConfigurationClient service = GetClient();
+
+            var testSetting1 = new FeatureFlagConfigurationSetting(GenerateKeyId(), true)
+            {
+                FeatureId = "my_feature",
+                ClientFilters =
+                {
+                    new FeatureFlagFilter("Microsoft.Targeting", new Dictionary<string, object>()
+                    {
+                        {"Audience", new Dictionary<string, object>()
+                            {
+                                {
+                                    "Groups", new List<object>()
+                                    {
+                                        new Dictionary<string, object>()
+                                        {
+                                            {"Name", "Group1"},
+                                            {"RolloutPercentage", 100},
+                                        }
+                                    }
+                                }
+                            }}
+                    })
+                }
+            };
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting1);
+
+                var selectedSetting = (FeatureFlagConfigurationSetting)await service.GetConfigurationSettingAsync(testSetting1.Key);
+                var audience = (IDictionary) selectedSetting.ClientFilters[0].Parameters["Audience"];
+                var groups = (IList) audience["Groups"];
+
+                groups.Add(new Dictionary<string, object>()
+                {
+                    {"Name", "Group2"},
+                    {"RolloutPercentage", 50},
+                });
+
+                var resultingSetting = await service.SetConfigurationSettingAsync(selectedSetting);
+                Assert.AreEqual("{\"id\":\"my_feature\",\"enabled\":true,\"conditions\":{\"client_filters\":[{\"name\":\"Microsoft.Targeting\",\"parameters\":{\"Audience\":{\"Groups\":[{\"Name\":\"Group1\",\"RolloutPercentage\":100},{\"Name\":\"Group2\",\"RolloutPercentage\":50}]}}}]}}", resultingSetting.Value.Value);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting1));
             }
         }
 

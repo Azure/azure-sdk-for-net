@@ -7,7 +7,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/3cbc984fcf0fab278b9c28175319f65db1b9162a/specification/cognitiveservices/data-plane/MetricsAdvisor/preview/v1.0/MetricsAdvisor.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/2a25feb3b173dfe858977b2fafeeeb9ae83b2f3a/specification/cognitiveservices/data-plane/MetricsAdvisor/preview/v1.0/MetricsAdvisor.json
 ```
 
 ### Make generated models internal by default
@@ -44,15 +44,8 @@ directive:
   from: swagger-document
   where: $.definitions.CommentFeedback
   transform: >
-    $.allOf[1].properties.startTime["x-nullable"] = true
-```
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.CommentFeedback
-  transform: >
-    $.allOf[1].properties.endTime["x-nullable"] = true
+    $.properties.startTime["x-nullable"] = true;
+    $.properties.endTime["x-nullable"] = true;
 ```
 
 ``` yaml
@@ -60,15 +53,8 @@ directive:
   from: swagger-document
   where: $.definitions.AnomalyFeedback
   transform: >
-    $.allOf[1].properties.anomalyDetectionConfigurationId["x-nullable"] = true
-```
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.AnomalyFeedback
-  transform: >
-    $.allOf[1].properties.anomalyDetectionConfigurationSnapshot["x-nullable"] = true
+    $.properties.anomalyDetectionConfigurationId["x-nullable"] = true;
+    $.properties.anomalyDetectionConfigurationSnapshot["x-nullable"] = true;
 ```
 
 ``` yaml
@@ -190,6 +176,22 @@ directive:
     $.properties.query["x-nullable"] = true;
 ```
 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AnomalyProperty
+  transform: >
+    $.properties.expectedValue["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IncidentProperty
+  transform: >
+    $.properties.expectedValueOfRootNode["x-nullable"] = true;
+```
+
 ### Add required properties
 
 ``` yaml
@@ -237,7 +239,15 @@ directive:
   from: swagger-document
   where: $.definitions.IncidentProperty
   transform: >
-    $["required"] = ["maxSeverity", "incidentStatus"]
+    $["required"] = ["maxSeverity", "incidentStatus", "valueOfRootNode"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AnomalyProperty
+  transform: >
+    $["required"] = ["anomalySeverity", "value"]
 ```
 
 ### Add x-ms-paths section if not exists

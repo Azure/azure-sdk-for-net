@@ -11,12 +11,23 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AzureDataLakeStorageGen2Parameter
     {
         /// <summary> Initializes a new instance of AzureDataLakeStorageGen2Parameter. </summary>
-        /// <param name="accountName"> Account name. </param>
-        /// <param name="accountKey"> Account key. </param>
-        /// <param name="fileSystemName"> File system name (Container). </param>
-        /// <param name="directoryTemplate"> Directory template. </param>
-        /// <param name="fileTemplate"> File template. </param>
-        public AzureDataLakeStorageGen2Parameter(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate)
+        /// <param name="fileSystemName"> The file system (container) name in this Azure Data Lake. </param>
+        /// <param name="directoryTemplate"> The directory template under this file system. </param>
+        /// <param name="fileTemplate"> The file template. </param>
+        public AzureDataLakeStorageGen2Parameter(string fileSystemName, string directoryTemplate, string fileTemplate)
+        {
+            FileSystemName = fileSystemName;
+            DirectoryTemplate = directoryTemplate;
+            FileTemplate = fileTemplate;
+        }
+
+        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2Parameter. </summary>
+        /// <param name="accountName"> The account name of this Azure Data Lake. </param>
+        /// <param name="accountKey"> The account key that can access this Azure Data Lake. </param>
+        /// <param name="fileSystemName"> The file system (container) name in this Azure Data Lake. </param>
+        /// <param name="directoryTemplate"> The directory template under this file system. </param>
+        /// <param name="fileTemplate"> The file template. </param>
+        internal AzureDataLakeStorageGen2Parameter(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate)
         {
             AccountName = accountName;
             AccountKey = accountKey;
@@ -25,15 +36,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             FileTemplate = fileTemplate;
         }
 
-        /// <summary> Account name. </summary>
+        /// <summary> The account name of this Azure Data Lake. </summary>
         public string AccountName { get; set; }
-        /// <summary> Account key. </summary>
+        /// <summary> The account key that can access this Azure Data Lake. </summary>
         public string AccountKey { get; set; }
-        /// <summary> File system name (Container). </summary>
+        /// <summary> The file system (container) name in this Azure Data Lake. </summary>
         public string FileSystemName { get; set; }
-        /// <summary> Directory template. </summary>
+        /// <summary> The directory template under this file system. </summary>
         public string DirectoryTemplate { get; set; }
-        /// <summary> File template. </summary>
+        /// <summary> The file template. </summary>
         public string FileTemplate { get; set; }
     }
 }

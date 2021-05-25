@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// .
+    /// Health care entity class.
     /// </summary>
     public class HealthcareEntity
     {
@@ -19,7 +20,8 @@ namespace Azure.AI.TextAnalytics
             Offset = entity.Offset;
             Length = entity.Length;
             DataSources = entity.Links;
-            RelatedEntities = new Dictionary<HealthcareEntity, HealthcareEntityRelationType>();
+            Assertion = entity.Assertion;
+            NormalizedText = entity.Name;
         }
         /// <summary>
         /// Gets the entity text as it appears in the input document.
@@ -65,8 +67,13 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<EntityDataSource> DataSources { get; }
 
         /// <summary>
-        /// Gets the entities and the relationship between the entities.
+        /// Gets the healthcare assertions for the entity.
         /// </summary>
-        public IDictionary<HealthcareEntity, HealthcareEntityRelationType> RelatedEntities { get; internal set; }
+        public HealthcareEntityAssertion Assertion { get; }
+
+        /// <summary>
+        /// Gets the normalized text for the entity.
+        /// </summary>
+        public string NormalizedText { get; }
     }
 }
