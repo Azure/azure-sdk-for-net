@@ -118,7 +118,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
         #region Snippet:Azure_VideoAnalyzerSamples_BuildPipelineTopology
             var pipelineTopologyProps = new PipelineTopologyProperties
             {
-                Description = "Continuous video recording to an Video Analyzer video",
+                Description = "Continuous video recording to a Video Analyzer video",
             };
             SetParameters(pipelineTopologyProps);
             SetSources(pipelineTopologyProps);
