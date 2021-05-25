@@ -10,9 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
     public class RecognizePiiEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizePiiEntitiesTests(bool isAsync) : base(isAsync) { }
+        public RecognizePiiEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private const string EnglishDocument1 = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft";
         private const string EnglishDocument2 = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check";

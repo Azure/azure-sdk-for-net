@@ -2,6 +2,7 @@
 
 ## 5.1.0-beta.8 (Unreleased)
 ### New features
+- Added support for service version `3.0`. This can be specified in the `TextAnalyticsClientOptions` object under the `ServiceVersion` enum. By default the SDK targets latest supported service version.
 - Added value `None` to enum `PiiEntityDomainType` to allow user to specify no domain.
 
 ### Breaking changes
