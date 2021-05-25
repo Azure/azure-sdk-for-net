@@ -170,7 +170,7 @@ namespace Monitor.Tests.Scenarios
                 try
                 {
                     insightsClient.DataCollectionRules.Create(ResourceGroupName, dcrName, dcrWithBadStream);
-                    Assert.True(false, "ErrorResponseException expected");
+                    Assert.True(false, "ErrorResponseException expected.");
                 }
                 catch (ErrorResponseException monitorError) 
                 {
