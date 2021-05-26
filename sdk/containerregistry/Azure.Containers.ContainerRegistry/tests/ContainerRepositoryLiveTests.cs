@@ -108,18 +108,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(TestEnvironment.Registry, _repositoryName, tags);
+                    await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tags);
                 }
 
                 // Act
                 await repository.DeleteAsync();
-
-                // This will be removed, pending investigation into potential race condition.
-                // https://github.com/azure/azure-sdk-for-net/issues/19699
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(5000);
-                }
 
                 // Assert
                 Assert.ThrowsAsync<RequestFailedException>(async () => { await repository.GetPropertiesAsync(); });
@@ -129,7 +122,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Clean up - put the repository with tags back.
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(TestEnvironment.Registry, _repositoryName, tags);
+                    await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tags);
                 }
             }
         }
@@ -255,7 +248,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(TestEnvironment.Registry, repositoryName, tag);
+                    await ImportImageAsync(TestEnvironment.Registry, repositoryName, tag);
                 }
 
                 // Act

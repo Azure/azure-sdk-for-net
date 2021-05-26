@@ -15,6 +15,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The authentication client credentials of the custom Open ID Connect
+    /// provider.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class OpenIdConnectClientCredential : ProxyOnlyResource
     {
@@ -35,8 +39,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="method">Possible values include:
-        /// 'ClientSecretPost'</param>
+        /// <param name="method">The method that should be used to authenticate
+        /// the user. Possible values include: 'ClientSecretPost'</param>
+        /// <param name="clientSecretSettingName">The app setting that contains
+        /// the client secret for the custom Open ID Connect provider.</param>
         public OpenIdConnectClientCredential(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), ClientCredentialMethod? method = default(ClientCredentialMethod?), string clientSecretSettingName = default(string))
             : base(id, name, kind, type)
         {
@@ -51,12 +57,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'ClientSecretPost'
+        /// Gets or sets the method that should be used to authenticate the
+        /// user. Possible values include: 'ClientSecretPost'
         /// </summary>
         [JsonProperty(PropertyName = "properties.method")]
         public ClientCredentialMethod? Method { get; set; }
 
         /// <summary>
+        /// Gets or sets the app setting that contains the client secret for
+        /// the custom Open ID Connect provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }

@@ -2757,7 +2757,7 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition,
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
         /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2772,17 +2772,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return await StartAnalyzeBatchActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
+            return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition,
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
         /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2797,17 +2797,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual AnalyzeBatchActionsOperation StartAnalyzeBatchActions(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return StartAnalyzeBatchActions(documentInputs, actions, options, cancellationToken);
+            return StartAnalyzeActions(documentInputs, actions, options, cancellationToken);
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition,
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
         /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2821,17 +2821,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual AnalyzeBatchActionsOperation StartAnalyzeBatchActions(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            return StartAnalyzeBatchActions(documentInputs, actions, options, cancellationToken);
+            return StartAnalyzeActions(documentInputs, actions, options, cancellationToken);
         }
 
         /// <summary>
-        /// StartAnalyzeBatchActionsAsync enables the application to have multiple actions including entity recognition,
+        /// StartAnalyzeActionsAsync enables the application to execute multiple actions in a set of documents. It includes entity recognition,
         /// PII entity recognition, linked entity recognition, key phrases extraction, and sentiment analysis.
         /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
@@ -2845,45 +2845,45 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNull(actions, nameof(actions));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            return await StartAnalyzeBatchActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
+            return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
-        private AnalyzeBatchActionsOperation StartAnalyzeBatchActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             JobManifestTasks tasks = new JobManifestTasks();
 
-            options ??= new AnalyzeBatchActionsOptions();
+            options ??= new AnalyzeActionsOptions();
 
-            if (actions.RecognizePiiEntitiesOptions != null)
+            if (actions.RecognizePiiEntitiesActions != null)
             {
-                tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromPiiEntityOptionsToTasks(actions.RecognizePiiEntitiesOptions);
+                tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromRecognizePiiEntitiesActionsToTasks(actions.RecognizePiiEntitiesActions);
             }
-            if (actions.RecognizeEntitiesOptions != null)
+            if (actions.RecognizeEntitiesActions != null)
             {
-                tasks.EntityRecognitionTasks = Transforms.ConvertFromEntityOptionsToTasks(actions.RecognizeEntitiesOptions);
+                tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions);
             }
-            if (actions.ExtractKeyPhrasesOptions != null)
+            if (actions.ExtractKeyPhrasesActions != null)
             {
-                tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromKeyPhrasesOptionsToTasks(actions.ExtractKeyPhrasesOptions);
+                tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions);
             }
-            if (actions.RecognizeLinkedEntitiesOptions != null)
+            if (actions.RecognizeLinkedEntitiesActions != null)
             {
-                tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
+                tasks.EntityLinkingTasks = Transforms.ConvertFromRecognizeLinkedEntitiesActionsToTasks(actions.RecognizeLinkedEntitiesActions);
             }
-            if (actions.AnalyzeSentimentOptions != null)
+            if (actions.AnalyzeSentimentActions != null)
             {
-                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentOptionsToTasks(actions.AnalyzeSentimentOptions);
+                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions);
             }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks) { DisplayName = actions.DisplayName };
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeBatchActions)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
             scope.Start();
 
             try
@@ -2893,7 +2893,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeBatchActionsOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                return new AnalyzeActionsOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2902,36 +2902,36 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private async Task<AnalyzeBatchActionsOperation> StartAnalyzeBatchActionsAsync(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeBatchActionsOptions options = default, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             JobManifestTasks tasks = new JobManifestTasks();
 
-            options ??= new AnalyzeBatchActionsOptions();
+            options ??= new AnalyzeActionsOptions();
 
-            if (actions.RecognizePiiEntitiesOptions != null)
+            if (actions.RecognizePiiEntitiesActions != null)
             {
-                tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromPiiEntityOptionsToTasks(actions.RecognizePiiEntitiesOptions);
+                tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromRecognizePiiEntitiesActionsToTasks(actions.RecognizePiiEntitiesActions);
             }
-            if (actions.RecognizeEntitiesOptions != null)
+            if (actions.RecognizeEntitiesActions != null)
             {
-                tasks.EntityRecognitionTasks = Transforms.ConvertFromEntityOptionsToTasks(actions.RecognizeEntitiesOptions);
+                tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions);
             }
-            if (actions.ExtractKeyPhrasesOptions != null)
+            if (actions.ExtractKeyPhrasesActions != null)
             {
-                tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromKeyPhrasesOptionsToTasks(actions.ExtractKeyPhrasesOptions);
+                tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions);
             }
-            if (actions.RecognizeLinkedEntitiesOptions != null)
+            if (actions.RecognizeLinkedEntitiesActions != null)
             {
-                tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
+                tasks.EntityLinkingTasks = Transforms.ConvertFromRecognizeLinkedEntitiesActionsToTasks(actions.RecognizeLinkedEntitiesActions);
             }
-            if (actions.AnalyzeSentimentOptions != null)
+            if (actions.AnalyzeSentimentActions != null)
             {
-                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentOptionsToTasks(actions.AnalyzeSentimentOptions);
+                tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions);
             }
 
             AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks) { DisplayName = actions.DisplayName };
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeBatchActions)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
             scope.Start();
 
             try
@@ -2941,7 +2941,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeBatchActionsOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+                return new AnalyzeActionsOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
             catch (Exception e)
             {

@@ -34,10 +34,11 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// DatadogMonitorResourceUpdateParameters class.
         /// </summary>
         /// <param name="tags">The new tags of the monitor resource.</param>
-        public DatadogMonitorResourceUpdateParameters(MonitorUpdateProperties properties = default(MonitorUpdateProperties), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DatadogMonitorResourceUpdateParameters(MonitorUpdateProperties properties = default(MonitorUpdateProperties), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku))
         {
             Properties = properties;
             Tags = tags;
+            Sku = sku;
             CustomInit();
         }
 
@@ -57,5 +58,23 @@ namespace Microsoft.Azure.Management.Datadog.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public ResourceSku Sku { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+        }
     }
 }

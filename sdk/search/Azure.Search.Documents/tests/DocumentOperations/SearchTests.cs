@@ -179,11 +179,7 @@ namespace Azure.Search.Documents.Tests
                     Serializer = new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                            Converters =
-                            {
-                                new GeoJsonConverter()
-                            }
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                         })
                 });
             SearchResults<UncasedHotel> response = await client.SearchAsync<UncasedHotel>("*");
