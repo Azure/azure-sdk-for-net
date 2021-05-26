@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Identity;
 using CommandLine;
@@ -36,11 +40,24 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 options.ClientSecret,
                 options.TsiEnvironmentFqdn);
 
+            // Figure out what keys make up the Time Series Id
+            TimeSeriesInsightsModelSettings modelSettingsClient = tsiClient.GetModelSettingsClient();
+            TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
+            int count = modelSettings.TimeSeriesIdProperties.Count;
+
+            TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
+
             // Instantiate an IoT Hub device client client in order to send telemetry to the hub
-            DeviceClient deviceClient = await GetDeviceClientAsync(options.IoTHubConnectionString).ConfigureAwait(false);
+            for (int i = 0; i < count; i++)
+            {
+                string deviceId = tsId.ToStringArray()[i];
+                DeviceClient deviceClient = await GetDeviceClientAsync(options.IoTHubConnectionString, deviceId).ConfigureAwait(false);
+
+                // In order to query for data, let's first send events to the IoT Hub
+                await SendEventsToIotHubAsync(deviceClient, tsId, modelSettings.TimeSeriesIdProperties.ToArray());
+            }
 
             // Run the samples
-
             var tsiInstancesSamples = new InstancesSamples();
             await tsiInstancesSamples.RunSamplesAsync(tsiClient);
 
@@ -54,7 +71,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             await tsiModelSettingsSamples.RunSamplesAsync(tsiClient);
 
             var querySamples = new QuerySamples();
-            await querySamples.RunSamplesAsync(tsiClient, deviceClient);
+            await querySamples.RunSamplesAsync(tsiClient, tsId);
         }
 
         /// <summary>
@@ -84,11 +101,46 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             return client;
         }
 
-        private static async Task<DeviceClient> GetDeviceClientAsync(string iotHubConnectionString)
+        private static async Task SendEventsToIotHubAsync(
+        DeviceClient deviceClient,
+        TimeSeriesId tsId,
+        TimeSeriesIdProperty[] timeSeriesIdProperties)
+        {
+            IDictionary<string, object> messageBase = BuildMessageBase(timeSeriesIdProperties, tsId);
+            double minTemperature = 20;
+            double minHumidity = 60;
+            var rand = new Random();
+
+            Console.WriteLine("\n\nSending temperature and humidity events to the IoT Hub.\n");
+
+            // Build the message base that is used as the base for every event going out
+            for (int i = 0; i < 10; i++)
+            {
+                double currentTemperature = minTemperature + rand.NextDouble() * 15;
+                double currentHumidity = minHumidity + rand.NextDouble() * 20;
+                messageBase["Temperature"] = currentTemperature;
+                messageBase["Humidity"] = currentHumidity;
+                string messageBody = JsonSerializer.Serialize(messageBase);
+                var message = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageBody))
+                {
+                    ContentType = "application/json",
+                    ContentEncoding = "utf-8",
+                };
+
+                await deviceClient.SendEventAsync(message);
+
+                Console.WriteLine($"{DateTime.UtcNow} - Temperature: {currentTemperature}. " +
+                    $"Humidity: {currentHumidity}.");
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
+            }
+        }
+
+        private static async Task<DeviceClient> GetDeviceClientAsync(string iotHubConnectionString, string deviceId)
         {
             // Create a device
             using var registryManager = RegistryManager.CreateFromConnectionString(iotHubConnectionString);
-            string deviceId = Guid.NewGuid().ToString();
+            //string deviceId = Guid.NewGuid().ToString();
             var requestDevice = new Device(deviceId);
 
             // Add the device to the device manager
@@ -103,6 +155,20 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             await deviceClient.OpenAsync().ConfigureAwait(false);
 
             return deviceClient;
+        }
+
+        private static IDictionary<string, object> BuildMessageBase(TimeSeriesIdProperty[] timeSeriesIdProperties, TimeSeriesId tsiId)
+        {
+            var messageBase = new Dictionary<string, object>();
+            string[] tsiIdArray = tsiId.ToStringArray();
+            for (int i = 0; i < timeSeriesIdProperties.Count(); i++)
+            {
+                TimeSeriesIdProperty idProperty = timeSeriesIdProperties[i];
+                string tsiIdValue = tsiIdArray[i];
+                messageBase[idProperty.Name] = tsiIdValue;
+            }
+
+            return messageBase;
         }
     }
 }
