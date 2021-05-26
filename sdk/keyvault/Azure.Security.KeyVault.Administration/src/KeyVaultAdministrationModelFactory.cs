@@ -11,6 +11,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// A factory class which constructs model classes for mocking purposes.
     /// </summary>
+    [CodeGenType("AzureSecurityKeyVaultAdministrationModelFactory")]
     public static partial class KeyVaultAdministrationModelFactory
     {
         /// <summary>

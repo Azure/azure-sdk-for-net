@@ -9,15 +9,12 @@ using System.Linq;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 
-// Remove this line after GA and uncomment [CodeGenType("FormRecognizerModelFactory")]
-[assembly: CodeGenSuppressType("FormRecognizerModelFactory")]
-
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// A factory that builds Azure.AI.FormRecognizer model types used for mocking.
     /// </summary>
-    //[CodeGenType("FormRecognizerModelFactory")]
+    [CodeGenType("FormRecognizerModelFactory")]
     public static partial class FormRecognizerModelFactory
     {
         /// <summary>
