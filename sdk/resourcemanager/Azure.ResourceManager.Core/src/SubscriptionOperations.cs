@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,9 +54,10 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public virtual T ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, T> func)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
-            return func(BaseUri, Credential, ClientOptions);
+            return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
         /// <summary>
@@ -64,9 +66,10 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, ArmClientOptions, AsyncPageable<T>> func)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, AsyncPageable<T>> func)
         {
-            return func(BaseUri, Credential, ClientOptions);
+            return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
         /// <summary>

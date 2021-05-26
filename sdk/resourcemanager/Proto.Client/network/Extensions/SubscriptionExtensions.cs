@@ -33,7 +33,7 @@ namespace Proto.Network
         public static Pageable<VirtualNetwork> ListVnets(this SubscriptionOperations subscription)
         {
             return subscription.ListResources(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var vmOperations = networkClient.VirtualNetworks;
@@ -53,7 +53,7 @@ namespace Proto.Network
         public static AsyncPageable<VirtualNetwork> ListVnetsAsync(this SubscriptionOperations subscription)
         {
             return subscription.ListResourcesAsync(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var vmOperations = networkClient.VirtualNetworks;
@@ -77,7 +77,7 @@ namespace Proto.Network
         public static Pageable<PublicIpAddress> ListPublicIps(this SubscriptionOperations subscription)
         {
             return subscription.ListResources(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var publicIPAddressesOperations = networkClient.PublicIPAddresses;
@@ -97,7 +97,7 @@ namespace Proto.Network
         public static AsyncPageable<PublicIpAddress> ListPublicIpsAsync(this SubscriptionOperations subscription)
         {
             return subscription.ListResourcesAsync(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var publicIPAddressesOperations = networkClient.PublicIPAddresses;
@@ -121,7 +121,7 @@ namespace Proto.Network
         public static Pageable<NetworkInterface> ListNics(this SubscriptionOperations subscription)
         {
             return subscription.ListResources(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var networkInterfacesOperations = networkClient.NetworkInterfaces;
@@ -141,7 +141,7 @@ namespace Proto.Network
         public static AsyncPageable<NetworkInterface> ListNicsAsync(this SubscriptionOperations subscription)
         {
             return subscription.ListResourcesAsync(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var networkInterfacesOperations = networkClient.NetworkInterfaces;
@@ -165,7 +165,7 @@ namespace Proto.Network
         public static Pageable<NetworkSecurityGroup> ListNsgs(this SubscriptionOperations subscription)
         {
             return subscription.ListResources(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var networkSecurityGroupsOperations = networkClient.NetworkSecurityGroups;
@@ -185,7 +185,7 @@ namespace Proto.Network
         public static AsyncPageable<NetworkSecurityGroup> ListNsgsAsync(this SubscriptionOperations subscription)
         {
             return subscription.ListResourcesAsync(
-               (baseUri, credential, options) =>
+               (baseUri, credential, options, pipeline) =>
                {
                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                    var networkSecurityGroupsOperations = networkClient.NetworkSecurityGroups;
