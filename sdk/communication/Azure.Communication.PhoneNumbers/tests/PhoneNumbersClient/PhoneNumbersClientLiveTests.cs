@@ -200,12 +200,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task ReleaseUnathorizedNumber()
+        public async Task ReleaseUnauthorizedNumber()
         {
             var client = CreateClient();
             try
             {
-                var releaseOperation = await client.StartReleasePhoneNumberAsync(GetUnathorizedNumber());
+                var releaseOperation = await client.StartReleasePhoneNumberAsync(GetUnauthorizedNumber());
             }
             catch (Exception e)
             {
@@ -214,13 +214,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task UpdateCapabilitiesUnathorizedNumber()
+        public async Task UpdateCapabilitiesUnauthorizedNumber()
         {
             var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.None, sms: PhoneNumberCapabilityType.Outbound);
             var client = CreateClient();
             try
             {
-                var UpdateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(GetUnathorizedNumber());
+                var UpdateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(GetUnauthorizedNumber());
             }
             catch (Exception e)
             {
@@ -229,12 +229,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task GetPurchasedUnathorizedNumber()
+        public async Task GetPurchasedUnauthorizedNumber()
         {
             var client = CreateClient();
             try
             {
-                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(GetUnathorizedNumber());
+                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(GetUnauthorizedNumber());
             }
             catch (Exception e)
             {
@@ -243,12 +243,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
-        public async Task StartPurchasedUnathorizedNumber()
+        public async Task StartPurchasedUnauthorizedNumber()
         {
             var client = CreateClient();
             try
             {
-                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(GetUnathorizedNumber());
+                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(GetUnauthorizedNumber());
             }
             catch (Exception e)
             {

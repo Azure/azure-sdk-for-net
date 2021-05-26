@@ -87,7 +87,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 : TestEnvironment.CommunicationTestPhoneNumber;
         }
 
-        protected string GetUnathorizedNumber()
+        protected string GetUnauthorizedNumber()
         {
             const string PhoneNumber = "+14255550123";
             return PhoneNumber;
