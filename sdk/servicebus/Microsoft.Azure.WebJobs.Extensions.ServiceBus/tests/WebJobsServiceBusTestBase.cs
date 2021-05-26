@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using static Azure.Messaging.ServiceBus.Tests.ServiceBusScope;
 
@@ -214,6 +216,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 messageObj.SessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
+        }
+
+        internal static void AssertNoLoggedErrors(IHost host)
+        {
+            var logs = host.GetTestLoggerProvider().GetAllLogMessages();
+            var errors = logs.Where(p => p.Level == LogLevel.Error);
+            Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.FormattedMessage)));
         }
     }
 }

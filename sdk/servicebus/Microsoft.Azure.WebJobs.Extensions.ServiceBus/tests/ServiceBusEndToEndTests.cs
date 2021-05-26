@@ -196,13 +196,28 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task TestSingle_JObject()
         {
-            var (jobHost, _) = BuildHost<ServiceBusMultipleMessagesTestJob_BindToJObject>();
+            var (jobHost, host) = BuildHost<ServiceBusMultipleMessagesTestJob_BindToJObject>();
             using (jobHost)
             {
                 await WriteQueueMessage(JsonConvert.SerializeObject(new {Date = DateTimeOffset.Now}));
                 bool result = _eventWait.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await jobHost.StopAsync();
+                AssertNoLoggedErrors(host);
+            }
+        }
+
+        [Test]
+        public async Task TestBatch_NoMessages()
+        {
+            var (jobHost, host) = BuildHost<ServiceBusMultipleMessagesTestJob_NoMessagesExpected>();
+            using (jobHost)
+            {
+                // wait for 20 seconds to let the listener run for a while
+                _eventWait.WaitOne(20 * 1000);
+
+                await jobHost.StopAsync();
+                AssertNoLoggedErrors(host);
             }
         }
 
@@ -233,13 +248,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task TestSingle_OutputPoco()
         {
-            var (jobHost, _) = BuildHost<ServiceBusOutputPocoTest>();
+            var (jobHost, host) = BuildHost<ServiceBusOutputPocoTest>();
             using (jobHost)
             {
                 await jobHost.CallAsync(nameof(ServiceBusOutputPocoTest.OutputPoco));
                 bool result = _eventWait.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await jobHost.StopAsync();
+                AssertNoLoggedErrors(host);
             }
         }
 
@@ -263,6 +279,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("PocoValues(foo,bar)", logs);
                 await jobHost.StopAsync();
+                AssertNoLoggedErrors(host);
             }
         }
 
@@ -281,6 +298,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("Input(foobar)", logs);
                 await jobHost.StopAsync();
+                AssertNoLoggedErrors(host);
             }
         }
 
@@ -343,13 +361,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
                 await jobHost.StopAsync();
+                AssertNoLoggedErrors(host);
             }
         }
 
         private static Action<IHostBuilder> BuildDrainHost<T>()
         {
             return builder =>
-                builder.ConfigureDefaultTestHost<T>(b =>
+                builder.ConfigureWebJobs(b =>
                     b.AddServiceBus(sbOptions =>
                     {
                         // We want to ensure messages can be completed in the function code before signaling success to the test
@@ -378,6 +397,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await jobHost.StopAsync();
+
+                AssertNoLoggedErrors(host);
             }
         }
 
@@ -405,6 +426,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
                 await jobHost.StopAsync();
+                AssertNoLoggedErrors(host);
             }
         }
 
@@ -771,6 +793,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 Assert.AreEqual(JTokenType.String, input["Date"].Type);
                 _eventWait.Set();
+            }
+        }
+
+        public class ServiceBusMultipleMessagesTestJob_NoMessagesExpected
+        {
+            public static void BindToJObject([ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] messages)
+            {
+                Assert.Fail("Should not be executed!");
             }
         }
 
