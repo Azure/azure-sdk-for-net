@@ -1322,17 +1322,5 @@ namespace Azure.Storage.Blobs
         }
         #endregion
 
-        #region CreateConditionsWithEtag
-        internal static BlobRequestConditions CreateConditionsWithEtag(this BlobRequestConditions conditions, ETag etag) =>
-            new BlobRequestConditions
-            {
-                LeaseId = conditions?.LeaseId,
-                IfMatch = etag,
-                IfNoneMatch = conditions?.IfNoneMatch,
-                IfModifiedSince = conditions?.IfModifiedSince,
-                IfUnmodifiedSince = conditions?.IfUnmodifiedSince,
-                TagConditions = conditions?.TagConditions,
-            };
-        #endregion
     }
 }

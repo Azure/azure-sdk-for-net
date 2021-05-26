@@ -1038,7 +1038,7 @@ namespace Azure.Storage.Blobs.Specialized
                         return response.GetRawResponse().AsNoBodyResponse<BlobDownloadStreamingResult>();
                     }
 
-                    BlobRequestConditions conditionsWithEtag = conditions.CreateConditionsWithEtag(response.Value.Details.ETag);
+                    BlobRequestConditions conditionsWithEtag = (conditions ?? new BlobRequestConditions()).WithIfMatch(response.Value.Details.ETag);
 
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
