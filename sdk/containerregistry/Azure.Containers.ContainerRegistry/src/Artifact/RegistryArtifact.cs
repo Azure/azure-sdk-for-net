@@ -33,11 +33,6 @@ namespace Azure.Containers.ContainerRegistry
         public virtual string RepositoryName => _repositoryName;
 
         /// <summary>
-        /// Gets the tag or digest reference used to create this RegistryArtifact instance.
-        /// </summary>
-        public virtual string TagOrDigest => _tagOrDigest;
-
-        /// <summary>
         /// Gets the fully qualified name of this artifact.
         /// </summary>
         public virtual string FullyQualifiedName => _fullyQualifiedName;
