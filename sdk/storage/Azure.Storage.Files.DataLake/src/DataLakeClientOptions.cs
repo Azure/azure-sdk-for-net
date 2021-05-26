@@ -114,7 +114,7 @@ namespace Azure.Storage.Files.DataLake
         public Uri GeoRedundantSecondaryUri { get; set; }
 
         /// <inheritdoc />
-        public bool DisableTenantDiscovery { get; set; }
+        public bool DisableTenantDiscovery { get; set; } = true;
 
         /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>

@@ -264,6 +264,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <inheritdoc />
-        public bool DisableTenantDiscovery { get; set; }
+        public bool DisableTenantDiscovery { get; set; } = true;
     }
 }
