@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,40 +16,44 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> The Features service client. </summary>
-    public partial class FeaturesOperations
+    public partial class FeatureOperations : ResourceOperationsBase<SubscriptionResourceIdentifier, Feature>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal FeaturesRestOperations RestClient { get; }
+        /// <summary>
+        /// The resource type for Feature.
+        /// </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Features/providers/features";
 
         /// <summary> Initializes a new instance of FeaturesOperations for mocking. </summary>
-        protected FeaturesOperations()
+        protected FeatureOperations()
         {
         }
 
-        /// <summary> Initializes a new instance of FeaturesOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        internal FeaturesOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FeatureOperations"/> class.
+        /// </summary>
+        /// <param name="clientContext"></param>
+        /// <param name="subscriptionGuid"> The Guid of the subscription. </param>
+        internal FeatureOperations(ClientContext clientContext, string subscriptionGuid)
+            : base(clientContext, new SubscriptionResourceIdentifier(subscriptionGuid))
         {
-            RestClient = new FeaturesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
-        /// <summary> Gets the preview feature with the specified name. </summary>
-        /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
-        /// <param name="featureName"> The name of the feature to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FeatureResult>> GetAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Gets the valid resource type for this operation class
+        /// </summary>
+        protected override ResourceType ValidResourceType => ResourceType;
+
+        private FeaturesRestOperations RestClient => new FeaturesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+
+        /// <inheritdoc/>
+        public override Response<Feature> Get(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.Get");
+            using var scope = Diagnostics.CreateScope("FeatureOperations.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                var response = RestClient.Get(resourceProviderNamespace, featureName, cancellationToken);
+                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -57,36 +62,15 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <summary> Gets the preview feature with the specified name. </summary>
-        /// <param name="resourceProviderNamespace"> The resource provider namespace for the feature. </param>
-        /// <param name="featureName"> The name of the feature to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FeatureResult> Get(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        /// <inheritdoc/>
+        public override async Task<Response<Feature>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.Get");
+            using var scope = Diagnostics.CreateScope("FeatureOperations.Get");
             scope.Start();
             try
             {
-                return RestClient.Get(resourceProviderNamespace, featureName, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Registers the preview feature for the subscription. </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="featureName"> The name of the feature to register. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FeatureResult>> RegisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.Register");
-            scope.Start();
-            try
-            {
-                return await RestClient.RegisterAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -99,13 +83,35 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FeatureResult> Register(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Feature>> RegisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.Register");
+
+            using var scope = Diagnostics.CreateScope("FeatureOperations.Register");
             scope.Start();
             try
             {
-                return RestClient.Register(resourceProviderNamespace, featureName, cancellationToken);
+                var response = await RestClient.RegisterAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Registers the preview feature for the subscription. </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="featureName"> The name of the feature to register. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Feature> Register(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("FeatureOperations.Register");
+            scope.Start();
+            try
+            {
+                var response = RestClient.Register(resourceProviderNamespace, featureName, cancellationToken);
+                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,13 +124,14 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FeatureResult>> UnregisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Feature>> UnregisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.Unregister");
+            using var scope = Diagnostics.CreateScope("FeatureOperations.Unregister");
             scope.Start();
             try
             {
-                return await RestClient.UnregisterAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.UnregisterAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,13 +144,14 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FeatureResult> Unregister(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public virtual Response<Feature> Unregister(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.Unregister");
+            using var scope = Diagnostics.CreateScope("FeatureOperations.Unregister");
             scope.Start();
             try
             {
-                return RestClient.Unregister(resourceProviderNamespace, featureName, cancellationToken);
+                var response = RestClient.Unregister(resourceProviderNamespace, featureName, cancellationToken);
+                return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,16 +162,16 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<FeatureResult> ListAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Feature> ListAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FeatureResult>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.ListAll");
+                using var scope = Diagnostics.CreateScope("FeatureOperations.ListAll");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListAllAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Feature(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -171,14 +179,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            async Task<Page<FeatureResult>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.ListAll");
+                using var scope = Diagnostics.CreateScope("FeatureOperations.ListAll");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListAllNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Feature(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -191,16 +199,16 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<FeatureResult> ListAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<Feature> ListAll(CancellationToken cancellationToken = default)
         {
-            Page<FeatureResult> FirstPageFunc(int? pageSizeHint)
+            Page<Feature> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.ListAll");
+                using var scope = Diagnostics.CreateScope("FeaturesOperations.ListAll");
                 scope.Start();
                 try
                 {
                     var response = RestClient.ListAll(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Feature(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,14 +216,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            Page<FeatureResult> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.ListAll");
+                using var scope = Diagnostics.CreateScope("FeaturesOperations.ListAll");
                 scope.Start();
                 try
                 {
                     var response = RestClient.ListAllNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Feature(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,21 +238,21 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual AsyncPageable<FeatureResult> ListAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Feature> ListAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
                 throw new ArgumentNullException(nameof(resourceProviderNamespace));
             }
 
-            async Task<Page<FeatureResult>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.List");
+                using var scope = Diagnostics.CreateScope("FeaturesOperations.List");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Feature(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -252,14 +260,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            async Task<Page<FeatureResult>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.List");
+                using var scope = Diagnostics.CreateScope("FeaturesOperations.List");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListNextPageAsync(nextLink, resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Feature(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,21 +282,21 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider for getting features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Pageable<FeatureResult> List(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public virtual Pageable<Feature> List(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
                 throw new ArgumentNullException(nameof(resourceProviderNamespace));
             }
 
-            Page<FeatureResult> FirstPageFunc(int? pageSizeHint)
+            Page<Feature> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.List");
+                using var scope = Diagnostics.CreateScope("FeaturesOperations.List");
                 scope.Start();
                 try
                 {
                     var response = RestClient.List(resourceProviderNamespace, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Feature(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -296,14 +304,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            Page<FeatureResult> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeaturesOperations.List");
+                using var scope = Diagnostics.CreateScope("FeaturesOperations.List");
                 scope.Start();
                 try
                 {
                     var response = RestClient.ListNextPage(nextLink, resourceProviderNamespace, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Feature(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
