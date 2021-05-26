@@ -25,10 +25,10 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version|Supported API version of service
 |-|-
-|1.0.0 | 3.0
-|1.0.1 | 3.0
-|5.0.0 (latest GA) | 3.0
+
 |5.1.0-beta.7 (latest Beta) | 3.0, 3.1-preview.5
+|5.0.0 (latest GA) | 3.0
+|1.0.0, 1.0.1 | 3.0
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
