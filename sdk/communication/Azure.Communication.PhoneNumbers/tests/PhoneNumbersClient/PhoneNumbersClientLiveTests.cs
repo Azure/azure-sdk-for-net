@@ -205,11 +205,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             try
             {
-                var releaseOperation = await client.StartReleasePhoneNumberAsync(GetUnauthorizedNumber());
+                var releaseOperation = await client.StartReleasePhoneNumberAsync(UnauthorizedNumber);
             }
-            catch (Exception e)
+            catch (RequestFailedException ex)
             {
-                Assert.NotNull(e);
+                Assert.AreEqual(400, ex.Status);
+                Assert.NotNull(ex.Message);
             }
         }
 
@@ -220,11 +221,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             try
             {
-                var UpdateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(GetUnauthorizedNumber());
+                var UpdateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(UnauthorizedNumber);
             }
-            catch (Exception e)
+            catch (RequestFailedException ex)
             {
-                Assert.NotNull(e);
+                Assert.AreEqual(400, ex.Status);
+                Assert.NotNull(ex.Message);
             }
         }
 
@@ -234,11 +236,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             try
             {
-                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(GetUnauthorizedNumber());
+                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(UnauthorizedNumber);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Assert.NotNull(e);
+                Assert.True(ex.Message.Contains("Unable to find"));
+                Assert.NotNull(ex.Message);
             }
         }
 
@@ -248,11 +251,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             try
             {
-                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(GetUnauthorizedNumber());
+                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(UnauthorizedNumber);
             }
-            catch (Exception e)
+            catch (RequestFailedException ex)
             {
-                Assert.NotNull(e);
+                Assert.AreEqual(404, ex.Status);
+                Assert.NotNull(ex.Message);
             }
         }
 

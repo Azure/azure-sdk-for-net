@@ -12,6 +12,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 {
     public class PhoneNumbersClientLiveTestBase : RecordedTestBase<PhoneNumbersClientTestEnvironment>
     {
+        protected const string UnauthorizedNumber = "+14255550123";
         public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new PhoneNumbersClientRecordedTestSanitizer();
 
@@ -85,12 +86,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             return TestEnvironment.Mode == RecordedTestMode.Playback
                 ? RecordedTestSanitizer.SanitizeValue
                 : TestEnvironment.CommunicationTestPhoneNumber;
-        }
-
-        protected string GetUnauthorizedNumber()
-        {
-            const string PhoneNumber = "+14255550123";
-            return PhoneNumber;
         }
 
         protected void SleepIfNotInPlaybackMode()
