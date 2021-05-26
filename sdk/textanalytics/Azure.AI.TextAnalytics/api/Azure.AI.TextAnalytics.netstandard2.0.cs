@@ -557,7 +557,7 @@ namespace Azure.AI.TextAnalytics
         public string RedactedText { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
-    public enum PiiEntityDomainType
+    public enum PiiEntityDomain
     {
         None = 0,
         ProtectedHealthInformation = 1,
@@ -623,7 +623,7 @@ namespace Azure.AI.TextAnalytics
     {
         public RecognizePiiEntitiesOptions() { }
         public System.Collections.Generic.IList<Azure.AI.TextAnalytics.PiiEntityCategory> CategoriesFilter { get { throw null; } }
-        public Azure.AI.TextAnalytics.PiiEntityDomainType DomainFilter { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.PiiEntityDomain DomainFilter { get { throw null; } set { } }
     }
     public partial class RecognizePiiEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {

@@ -17,6 +17,7 @@
   - `AnalyzeSentimentOptions` changed to new type `AnalyzeSentimentActions`.
 - Renamed type `TextAnalyticsActionDetails` to `TextAnalyticsActionResult`.
 - Changed type `RecognizePiiEntitiesOptions.DomainFilter` from `PiiEntityDomainType?` to `PiiEntityDomainType`.
+- Renamed type `PiiEntityDomainType` to `PiiEntityDomain`.
 
 ## 5.1.0-beta.7 (2021-05-18)
 ### New features
