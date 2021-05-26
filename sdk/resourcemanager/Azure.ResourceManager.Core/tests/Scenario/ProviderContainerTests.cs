@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void Get()
         {
-            var providerContainer = Client.DefaultSubscription.GetProviders();
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
             Assert.IsNotNull(providerContainer.Id);
             providerContainer.List();
         }
@@ -32,6 +32,13 @@ namespace Azure.ResourceManager.Core.Tests
             {
                 Console.WriteLine(p.Id);
             }
+        }
+
+        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights")]
+        public void testGet(string resourceId)
+        {
+            var providerContainer = Client.DefaultSubscription.GetProviders();
+            providerContainer.Get(resourceId);
         }
     }
 }
