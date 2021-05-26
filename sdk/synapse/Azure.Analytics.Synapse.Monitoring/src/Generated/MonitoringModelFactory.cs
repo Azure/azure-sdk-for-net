@@ -11,7 +11,7 @@ using Azure.Analytics.Synapse.Monitoring.Models;
 
 namespace Azure.Analytics.Synapse.Monitoring
 {
-    /// <summary> Model factory for Monitoring read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class MonitoringModelFactory
     {
         /// <summary> Initializes new instance of SparkJobListViewResponse class. </summary>

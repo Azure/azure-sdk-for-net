@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> Model factory for BatchDocumentTranslation read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class BatchDocumentTranslationModelFactory
     {
         /// <summary> Initializes new instance of DocumentStatusResult class. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.NetworkTraversal
 {
-    /// <summary> Model factory for AzureCommunicationServices read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class AzureCommunicationServicesModelFactory
     {
         /// <summary> Initializes new instance of CommunicationRelayConfiguration class. </summary>

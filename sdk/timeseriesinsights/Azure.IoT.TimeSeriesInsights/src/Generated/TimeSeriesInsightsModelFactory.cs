@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Model factory for TimeSeriesInsights read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class TimeSeriesInsightsModelFactory
     {
         /// <summary> Initializes new instance of TimeSeriesOperationError class. </summary>

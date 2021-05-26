@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> Model factory for TextAnalytics read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class TextAnalyticsModelFactory
     {
 

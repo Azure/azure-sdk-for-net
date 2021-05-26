@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> Model factory for MixedRealityRemoteRendering read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class MixedRealityRemoteRenderingModelFactory
     {
         /// <summary> Initializes new instance of AssetConversion class. </summary>

@@ -10,7 +10,7 @@ using Azure.Template.Models;
 
 namespace Azure.Template
 {
-    /// <summary> Model factory for Template read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class TemplateModelFactory
     {
         /// <summary> Initializes new instance of SecretBundle class. </summary>

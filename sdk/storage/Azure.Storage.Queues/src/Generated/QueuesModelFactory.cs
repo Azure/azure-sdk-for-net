@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> Model factory for AzureQueueStorage read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class QueuesModelFactory
     {
     }

@@ -9,7 +9,7 @@ using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 {
-    /// <summary> Model factory for ManagedPrivateEndpoints read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class ManagedPrivateEndpointsModelFactory
     {
         /// <summary> Initializes new instance of ManagedPrivateEndpoint class. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Model factory for PhoneNumbers read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class PhoneNumbersModelFactory
     {
         /// <summary> Initializes new instance of PhoneNumberSearchResult class. </summary>

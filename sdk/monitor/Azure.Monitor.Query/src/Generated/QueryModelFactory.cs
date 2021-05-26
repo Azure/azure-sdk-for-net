@@ -12,7 +12,7 @@ using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query
 {
-    /// <summary> Model factory for Query read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class QueryModelFactory
     {
         /// <summary> Initializes new instance of LogsQueryResultTable class. </summary>

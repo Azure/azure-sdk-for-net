@@ -12,7 +12,7 @@ using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
-    /// <summary> Model factory for SearchService read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class SearchServiceModelFactory
     {
         /// <summary> Initializes new instance of FacetResult class. </summary>

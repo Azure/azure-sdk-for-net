@@ -11,7 +11,7 @@ using Azure.Analytics.Synapse.AccessControl.Models;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
-    /// <summary> Model factory for AccessControl read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class AccessControlModelFactory
     {
         /// <summary> Initializes new instance of CheckPrincipalAccessResponse class. </summary>

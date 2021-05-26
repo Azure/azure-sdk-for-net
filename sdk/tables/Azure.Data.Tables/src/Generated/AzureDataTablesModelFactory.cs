@@ -10,7 +10,7 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
-    /// <summary> Model factory for AzureDataTables read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class AzureDataTablesModelFactory
     {
         /// <summary> Initializes new instance of TableItem class. </summary>

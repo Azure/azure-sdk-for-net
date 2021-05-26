@@ -11,7 +11,7 @@ using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace Azure.Analytics.Synapse.Artifacts
 {
-    /// <summary> Model factory for Artifacts read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class ArtifactsModelFactory
     {
         /// <summary> Initializes new instance of Resource class. </summary>

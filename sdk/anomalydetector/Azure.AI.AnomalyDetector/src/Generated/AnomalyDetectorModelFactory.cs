@@ -11,7 +11,7 @@ using Azure.AI.AnomalyDetector.Models;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Model factory for AnomalyDetector read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class AnomalyDetectorModelFactory
     {
         /// <summary> Initializes new instance of EntireDetectResponse class. </summary>

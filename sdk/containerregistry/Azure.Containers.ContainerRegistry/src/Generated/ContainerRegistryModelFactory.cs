@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Model factory for ContainerRegistry read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class ContainerRegistryModelFactory
     {
         /// <summary> Initializes new instance of RepositoryProperties class. </summary>

@@ -11,7 +11,7 @@ using Azure.Quantum.Jobs.Models;
 
 namespace Azure.Quantum.Jobs
 {
-    /// <summary> Model factory for Quantum read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class QuantumModelFactory
     {
         /// <summary> Initializes new instance of JobDetails class. </summary>

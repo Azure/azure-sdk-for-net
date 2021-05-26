@@ -11,7 +11,7 @@ using Azure.IoT.DeviceUpdate.Models;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    /// <summary> Model factory for DeviceUpdate read-only models. </summary>
+    /// <summary> Model factory for read-only models. </summary>
     public static partial class DeviceUpdateModelFactory
     {
         /// <summary> Initializes new instance of Update class. </summary>
