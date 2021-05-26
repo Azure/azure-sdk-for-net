@@ -2099,19 +2099,22 @@ namespace Azure.Storage.Blobs.Specialized
                     // This also makes sure that we fail fast if file doesn't exist.
                     var blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
 
-                    var expectedETag = blobProperties.Value.ETag;
-                    var readConditions = allowModifications ? new BlobRequestConditions() : new BlobRequestConditions { IfMatch = expectedETag };
+                    var etag = blobProperties.Value.ETag;
+                    var readConditions = conditions;
+                    if (!allowModifications)
+                    {
+                        readConditions = readConditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
+                    }
 
-                    return new LazyLoadingReadOnlyStream<BlobRequestConditions, BlobProperties>(
+                    return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
-                        BlobRequestConditions conditions,
                         bool rangeGetContentHash,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
-                                conditions,
+                                readConditions,
                                 rangeGetContentHash,
                                 operationName,
                                 async,
@@ -2124,11 +2127,9 @@ namespace Azure.Storage.Blobs.Specialized
                         async (bool async, CancellationToken cancellationToken)
                             => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
                         allowModifications,
-                        expectedETag,
                         blobProperties.Value.ContentLength,
                         position,
-                        bufferSize,
-                        readConditions);
+                        bufferSize);
                 }
                 catch (Exception ex)
                 {

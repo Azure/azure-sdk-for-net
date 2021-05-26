@@ -2248,11 +2248,10 @@ namespace Azure.Storage.Files.Shares
                 // This also makes sure that we fail fast if file doesn't exist.
                 ShareFileProperties properties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
 
-                var expectedETag = properties.ETag;
+                var etag = properties.ETag;
 
-                return new LazyLoadingReadOnlyStream<ShareFileRequestConditions, ShareFileProperties>(
+                return new LazyLoadingReadOnlyStream<ShareFileProperties>(
                     async (HttpRange range,
-                    ShareFileRequestConditions conditions,
                     bool rangeGetContentHash,
                     bool async,
                     CancellationToken cancellationToken) =>
@@ -2264,6 +2263,15 @@ namespace Azure.Storage.Files.Shares
                             async,
                             cancellationToken).ConfigureAwait(false);
 
+                        if (!allowModifications)
+                        {
+                            // TODO (kasobol-msft) find better exception.
+                            if (etag != response.GetRawResponse().Headers.ETag)
+                            {
+                                throw new Exception("Etag doesn't match");
+                            }
+                        }
+
                         return Response.FromValue(
                             (IDownloadedContent)response.Value,
                             response.GetRawResponse());
@@ -2271,11 +2279,9 @@ namespace Azure.Storage.Files.Shares
                     async (bool async, CancellationToken cancellationToken)
                         => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
                     allowModifications,
-                    expectedETag,
                     properties.ContentLength,
                     position,
-                    bufferSize,
-                    conditions);
+                    bufferSize);
             }
             catch (Exception ex)
             {

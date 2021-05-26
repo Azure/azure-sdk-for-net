@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -17,16 +16,13 @@ namespace Azure.Storage
     /// <summary>
     /// Used for Open Read APIs.
     /// </summary>
-    internal class LazyLoadingReadOnlyStream<TRequestConditions, TProperties> : Stream
+    internal class LazyLoadingReadOnlyStream<TProperties> : Stream
     {
         /// <summary>
         /// Delegate for a resource's direct REST download method.
         /// </summary>
         /// <param name="range">
         /// Content range to download.
-        /// </param>
-        /// <param name="serviceRequestConditions">
-        /// Request conditions specific to the service.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// Whether to request a transactional MD5 for the ranged download.
@@ -42,7 +38,6 @@ namespace Azure.Storage
         /// </returns>
         public delegate Task<Response<IDownloadedContent>> DownloadInternalAsync(
             HttpRange range,
-            TRequestConditions serviceRequestConditions,
             bool rangeGetContentHash,
             bool async,
             CancellationToken cancellationToken);
@@ -96,17 +91,10 @@ namespace Azure.Storage
         /// </summary>
         private readonly bool _allowBlobModifications;
 
-        private readonly ETag? _expectedETag;
-
         /// <summary>
         /// Indicated the user has called Seek() since the last Read() call, and the new position is outside _buffer.
         /// </summary>
         private bool _bufferInvalidated;
-
-        /// <summary>
-        /// Request conditions to send on the download requests.
-        /// </summary>
-        private TRequestConditions _requestConditions;
 
         /// <summary>
         /// Download() function.
@@ -122,11 +110,9 @@ namespace Azure.Storage
             DownloadInternalAsync downloadInternalFunc,
             GetPropertiesAsync getPropertiesFunc,
             bool allowModifications,
-            ETag? expectedETag,
             long initialLenght,
             long position = 0,
-            int? bufferSize = default,
-            TRequestConditions requestConditions = default)
+            int? bufferSize = default)
         {
             _downloadInternalFunc = downloadInternalFunc;
             _getPropertiesInternalFunc = getPropertiesFunc;
@@ -134,16 +120,10 @@ namespace Azure.Storage
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
             _buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
             _allowBlobModifications = allowModifications;
-            _expectedETag = expectedETag;
             _bufferPosition = 0;
             _bufferLength = 0;
-            _requestConditions = requestConditions;
             _length = initialLenght;
             _bufferInvalidated = false;
-            if (!_allowBlobModifications && !expectedETag.HasValue)
-            {
-                throw new ArgumentException("Expected ETag is required if modifications are allowed", nameof(expectedETag));
-            }
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -215,9 +195,7 @@ namespace Azure.Storage
 
             HttpRange range = new HttpRange(_position, _bufferSize);
 
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-            response = await _downloadInternalFunc(range, _requestConditions, default, async, cancellationToken).ConfigureAwait(false);
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            response = await _downloadInternalFunc(range, default, async, cancellationToken).ConfigureAwait(false);
 
             using Stream networkStream = response.Value.Content;
 
@@ -259,16 +237,6 @@ namespace Azure.Storage
             _bufferPosition = 0;
             _bufferLength = totalCopiedBytes;
             _length = GetBlobLengthFromResponse(response.GetRawResponse());
-
-            // Set _requestConditions If-Match if we are not allowing the blob to be modified.
-            if (!_allowBlobModifications)
-            {
-                // TODO (kasobol-msft) find better exception.
-                if (_expectedETag.Value != response.GetRawResponse().Headers.ETag)
-                {
-                    throw new Exception("Etag doesn't match");
-                }
-            }
 
             return totalCopiedBytes;
         }
