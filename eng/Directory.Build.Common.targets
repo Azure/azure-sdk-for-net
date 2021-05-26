@@ -72,7 +72,7 @@
   </ItemGroup>
 
   <!-- Add Enable README.md display -->
-  <PropertyGroup Condition="'$(EnableExperimentalNuGetReadmeMd)' != 'true'">
+  <PropertyGroup Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true'">
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
