@@ -379,6 +379,138 @@
                 }
             }
         },
+        "/calling/conversations/{conversationId}/PlayAudio": {
+            "post": {
+                "tags": [
+                    "Call"
+                ],
+                "summary": "Play audio in a call.",
+                "description": "Play audio in a call.",
+                "operationId": "Conversation_PlayAudio",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "conversationId",
+                        "in": "path",
+                        "description": "The conversation id which can be guid or encoded cs url",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request",
+                        "in": "body",
+                        "description": "Play audio request.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PlayAudioRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Returns the play audio response.",
+                        "schema": {
+                            "$ref": "#/definitions/PlayAudioResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "500": {
+                        "description": "Internal server error.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    }
+                }
+            }
+        },
+        "/calling/conversations/{conversationId}/CancelMediaOperation": {
+            "post": {
+                "tags": [
+                    "Call"
+                ],
+                "summary": "Cancel Media Processing.",
+                "description": "Cancel Media Processing.",
+                "operationId": "Conversation_CancelMediaOperation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "conversationId",
+                        "in": "path",
+                        "description": "The conversation id which can be guid or encoded cs url",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request",
+                        "in": "body",
+                        "description": "The cancel media processing request.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CancelMediaOperationRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the cancel media processing response.",
+                        "schema": {
+                            "$ref": "#/definitions/CancelMediaProcessingResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "500": {
+                        "description": "Internal server error.",
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationError"
+                        },
+                        "x-ms-error-response": true
+                    }
+                }
+            }
+        },
         "/calling/conversations/{conversationId}/participants": {
             "post": {
                 "tags": [
@@ -1033,6 +1165,10 @@
                 "audioFileId": {
                     "description": "An id for the media in the AudioFileUri, using which we cache the media resource.",
                     "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback URI.",
+                    "type": "string"
                 }
             }
         },
@@ -1166,6 +1302,23 @@
             "properties": {
                 "callLegId": {
                     "description": "Call leg id of the call.",
+                    "type": "string"
+                }
+            }
+        },
+        "CancelMediaOperationRequest": {
+            "description": "The request payload for out call cancel media operation",
+            "required": [
+                "operationId"
+            ],
+            "type": "object",
+            "properties": {
+                "operationContext": {
+                    "description": "The context for this operation.",
+                    "type": "string"
+                },
+                "operationId": {
+                    "description": "The operation Id of out-call.",
                     "type": "string"
                 }
             }

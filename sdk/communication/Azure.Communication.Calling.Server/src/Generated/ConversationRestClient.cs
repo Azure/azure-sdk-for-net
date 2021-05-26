@@ -129,6 +129,174 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
+        internal HttpMessage CreatePlayAudioRequest(string conversationId, PlayAudioRequest request)
+        {
+            var message = _pipeline.CreateMessage();
+            var request0 = message.Request;
+            request0.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/conversations/", false);
+            uri.AppendPath(conversationId, true);
+            uri.AppendPath("/PlayAudio", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(request);
+            request0.Content = content;
+            return message;
+        }
+
+        /// <summary> Play audio in a call. </summary>
+        /// <param name="conversationId"> The conversation id which can be guid or encoded cs url. </param>
+        /// <param name="request"> Play audio request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="request"/> is null. </exception>
+        public async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, PlayAudioRequest request, CancellationToken cancellationToken = default)
+        {
+            if (conversationId == null)
+            {
+                throw new ArgumentNullException(nameof(conversationId));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var message = CreatePlayAudioRequest(conversationId, request);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        PlayAudioResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = PlayAudioResponse.DeserializePlayAudioResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Play audio in a call. </summary>
+        /// <param name="conversationId"> The conversation id which can be guid or encoded cs url. </param>
+        /// <param name="request"> Play audio request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="request"/> is null. </exception>
+        public Response<PlayAudioResponse> PlayAudio(string conversationId, PlayAudioRequest request, CancellationToken cancellationToken = default)
+        {
+            if (conversationId == null)
+            {
+                throw new ArgumentNullException(nameof(conversationId));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var message = CreatePlayAudioRequest(conversationId, request);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        PlayAudioResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = PlayAudioResponse.DeserializePlayAudioResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCancelMediaOperationRequest(string conversationId, CancelMediaOperationRequest request)
+        {
+            var message = _pipeline.CreateMessage();
+            var request0 = message.Request;
+            request0.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/conversations/", false);
+            uri.AppendPath(conversationId, true);
+            uri.AppendPath("/CancelMediaOperation", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(request);
+            request0.Content = content;
+            return message;
+        }
+
+        /// <summary> Cancel Media Processing. </summary>
+        /// <param name="conversationId"> The conversation id which can be guid or encoded cs url. </param>
+        /// <param name="request"> The cancel media processing request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="request"/> is null. </exception>
+        public async Task<Response<CancelMediaProcessingResponse>> CancelMediaOperationAsync(string conversationId, CancelMediaOperationRequest request, CancellationToken cancellationToken = default)
+        {
+            if (conversationId == null)
+            {
+                throw new ArgumentNullException(nameof(conversationId));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var message = CreateCancelMediaOperationRequest(conversationId, request);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CancelMediaProcessingResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CancelMediaProcessingResponse.DeserializeCancelMediaProcessingResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Cancel Media Processing. </summary>
+        /// <param name="conversationId"> The conversation id which can be guid or encoded cs url. </param>
+        /// <param name="request"> The cancel media processing request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="request"/> is null. </exception>
+        public Response<CancelMediaProcessingResponse> CancelMediaOperation(string conversationId, CancelMediaOperationRequest request, CancellationToken cancellationToken = default)
+        {
+            if (conversationId == null)
+            {
+                throw new ArgumentNullException(nameof(conversationId));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var message = CreateCancelMediaOperationRequest(conversationId, request);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CancelMediaProcessingResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CancelMediaProcessingResponse.DeserializeCancelMediaProcessingResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateInviteParticipantsRequest(string conversationId, InviteParticipantsRequestInternal inviteParticipantsRequest)
         {
             var message = _pipeline.CreateMessage();
