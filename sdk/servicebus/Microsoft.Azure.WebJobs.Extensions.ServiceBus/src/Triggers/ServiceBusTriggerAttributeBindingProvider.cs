@@ -59,25 +59,25 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 
             attribute.Connection = _nameResolver.ResolveWholeString(attribute.Connection);
             string entityPath;
-            EntityType entityType;
+            ServiceBusEntityType serviceBusEntityType;
             if (attribute.QueueName != null)
             {
                 var queueName = _nameResolver.ResolveWholeString(attribute.QueueName);
                 entityPath = queueName;
-                entityType = EntityType.Queue;
+                serviceBusEntityType = ServiceBusEntityType.Queue;
             }
             else
             {
                 var topicName = _nameResolver.ResolveWholeString(attribute.TopicName);
                 var subscriptionName = _nameResolver.ResolveWholeString(attribute.SubscriptionName);
                 entityPath = EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName);
-                entityType = EntityType.Topic;
+                serviceBusEntityType = ServiceBusEntityType.Topic;
             }
 
             Func<ListenerFactoryContext, bool, Task<IListener>> createListener =
             (factoryContext, singleDispatch) =>
             {
-                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, entityType, entityPath, attribute.IsSessionsEnabled, factoryContext.Executor, _options, attribute.Connection, _messagingProvider, _loggerFactory, singleDispatch, _clientFactory);
+                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, serviceBusEntityType, entityPath, attribute.IsSessionsEnabled, factoryContext.Executor, _options, attribute.Connection, _messagingProvider, _loggerFactory, singleDispatch, _clientFactory);
                 return Task.FromResult(listener);
             };
 

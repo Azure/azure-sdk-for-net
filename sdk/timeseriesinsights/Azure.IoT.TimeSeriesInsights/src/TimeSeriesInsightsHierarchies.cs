@@ -43,7 +43,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllHierarchies">
         /// // Get all Time Series hierarchies in the environment
-        /// AsyncPageable&lt;TimeSeriesHierarchy&gt; getAllHierarchies = client.Hierarchies.GetAsync();
+        /// AsyncPageable&lt;TimeSeriesHierarchy&gt; getAllHierarchies = hierarchiesClient.GetAsync();
         /// await foreach (TimeSeriesHierarchy hierarchy in getAllHierarchies)
         /// {
         ///     Console.WriteLine($&quot;Retrieved Time Series Insights hierarchy with Id: &apos;{hierarchy.Id}&apos; and Name: &apos;{hierarchy.Name}&apos;.&quot;);
@@ -291,10 +291,8 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     &quot;sampleHierarchyId&quot;
         /// };
         ///
-        /// Response&lt;TimeSeriesHierarchyOperationResult[]&gt; getHierarchiesByIdsResult = await client
-        ///             .Hierarchies
-        ///             .GetByIdAsync(tsiHierarchyIds)
-        ///             .ConfigureAwait(false);
+        /// Response&lt;TimeSeriesHierarchyOperationResult[]&gt; getHierarchiesByIdsResult = await hierarchiesClient
+        ///             .GetByIdAsync(tsiHierarchyIds);
         ///
         /// // The response of calling the API contains a list of hieararchy or error objects corresponding by position to the input parameter array in the request.
         /// // If the error object is set to null, this means the operation was a success.
@@ -416,13 +414,15 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateHierarchies">
-        /// var tsiHierarchyName = &quot;sampleHierarchy&quot;;
-        /// var tsiInstanceField1 = &quot;hierarchyLevel1&quot;;
-        /// var hierarchySource = new TimeSeriesHierarchySource();
-        /// hierarchySource.InstanceFieldNames.Add(tsiInstanceField1);
+        /// TimeSeriesInsightsHierarchies hierarchiesClient = client.GetHierarchiesClient();
         ///
-        /// var tsiHierarchy = new TimeSeriesHierarchy(tsiHierarchyName, hierarchySource);
-        /// tsiHierarchy.Id = &quot;sampleHierarchyId&quot;;
+        /// var hierarchySource = new TimeSeriesHierarchySource();
+        /// hierarchySource.InstanceFieldNames.Add(&quot;hierarchyLevel1&quot;);
+        ///
+        /// var tsiHierarchy = new TimeSeriesHierarchy(&quot;sampleHierarchy&quot;, hierarchySource)
+        /// {
+        ///     Id = &quot;sampleHierarchyId&quot;
+        /// };
         ///
         /// var timeSeriesHierarchies = new List&lt;TimeSeriesHierarchy&gt;
         /// {
@@ -430,10 +430,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// };
         ///
         /// // Create Time Series hierarchies
-        /// Response&lt;TimeSeriesHierarchyOperationResult[]&gt; createHierarchiesResult = await client
-        ///     .Hierarchies
-        ///     .CreateOrReplaceAsync(timeSeriesHierarchies)
-        ///     .ConfigureAwait(false);
+        /// Response&lt;TimeSeriesHierarchyOperationResult[]&gt; createHierarchiesResult = await hierarchiesClient
+        ///     .CreateOrReplaceAsync(timeSeriesHierarchies);
         ///
         /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
         /// // If the error object is set to null, this means the operation was a success.
@@ -660,10 +658,8 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     &quot;sampleHiearchyId&quot;
         /// };
         ///
-        /// Response&lt;TimeSeriesOperationError[]&gt; deleteHierarchiesResponse = await client
-        ///         .Hierarchies
-        ///         .DeleteByIdAsync(tsiHierarchyIdsToDelete)
-        ///         .ConfigureAwait(false);
+        /// Response&lt;TimeSeriesOperationError[]&gt; deleteHierarchiesResponse = await hierarchiesClient
+        ///         .DeleteByIdAsync(tsiHierarchyIdsToDelete);
         ///
         /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter
         /// // array in the request. If the error object is set to null, this means the operation was a success.

@@ -33,8 +33,8 @@ namespace Azure.AI.TextAnalytics.Models
                 throw new ArgumentNullException(nameof(tasks));
             }
 
-            Errors = new ChangeTrackingList<TextAnalyticsErrorInternal>();
             Tasks = tasks;
+            Errors = new ChangeTrackingList<TextAnalyticsErrorInternal>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeJobState. </summary>
@@ -44,22 +44,22 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
         /// <param name="displayName"> . </param>
+        /// <param name="tasks"> . </param>
         /// <param name="errors"> . </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        /// <param name="tasks"> . </param>
         /// <param name="nextLink"> . </param>
-        internal AnalyzeJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, string displayName, IReadOnlyList<TextAnalyticsErrorInternal> errors, TextDocumentBatchStatistics statistics, AnalyzeTasks tasks, string nextLink) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, displayName)
+        internal AnalyzeJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, string displayName, AnalyzeTasks tasks, IReadOnlyList<TextAnalyticsErrorInternal> errors, TextDocumentBatchStatistics statistics, string nextLink) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status, displayName)
         {
+            Tasks = tasks;
             Errors = errors;
             Statistics = statistics;
-            Tasks = tasks;
             NextLink = nextLink;
         }
 
+        public AnalyzeTasks Tasks { get; }
         public IReadOnlyList<TextAnalyticsErrorInternal> Errors { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public TextDocumentBatchStatistics Statistics { get; }
-        public AnalyzeTasks Tasks { get; }
         public string NextLink { get; }
     }
 }

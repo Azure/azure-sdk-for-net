@@ -35,7 +35,7 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 - [Strongly-typing a recognized form](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md)
 - [Create a composed model](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample8_ModelCompose.md)
 - [Differentiate output models trained with and without labels](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample10_DifferentiateOutputModelsTrainedWithAndWithoutLabels.cs)
+- [Differentiate output labeled tables](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_DifferentiateOutputLabeledTables.cs)
 - [Copy a custom model between Form Recognizer resources](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample7_CopyCustomModel.md)
-- [Create composed model from a collection of models trained with labels](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample8_ModelCompose.md)
 - [Field Bounding Box](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample9_FieldBoundingBox.cs)
 - [Mock a client for testing using the Moq library](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_MockClient.md)

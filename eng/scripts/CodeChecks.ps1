@@ -9,7 +9,10 @@ param (
     [string] $ProjectDirectory,
 
     [Parameter()]
-    [string] $SDKType = "all"
+    [string] $SDKType = "all",
+
+    [Parameter()]
+    [switch] $SpellCheckPublicApiSurface
 )
 
 $ErrorActionPreference = 'Stop'
@@ -87,7 +90,7 @@ try {
 
     Write-Host "Re-generating listings"
     Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType
+        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
     }
 
     if (-not $ProjectDirectory)

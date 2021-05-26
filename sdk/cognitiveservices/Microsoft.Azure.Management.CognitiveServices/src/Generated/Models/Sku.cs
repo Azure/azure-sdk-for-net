@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     using System.Linq;
 
     /// <summary>
-    /// The SKU of the cognitive services account.
+    /// The resource model definition representing SKU
     /// </summary>
     public partial class Sku
     {
@@ -30,15 +30,27 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">Gets or sets the sku name. Required for account
-        /// creation, optional for update.</param>
-        /// <param name="tier">Gets the sku tier. This is based on the SKU
-        /// name. Possible values include: 'Free', 'Standard',
-        /// 'Premium'</param>
-        public Sku(string name, SkuTier? tier = default(SkuTier?))
+        /// <param name="name">The name of the SKU. Ex - P3. It is typically a
+        /// letter+number code</param>
+        /// <param name="tier">This field is required to be implemented by the
+        /// Resource Provider if the service has more than one tier, but is not
+        /// required on a PUT. Possible values include: 'Free', 'Basic',
+        /// 'Standard', 'Premium', 'Enterprise'</param>
+        /// <param name="size">The SKU size. When the name field is the
+        /// combination of tier and some other value, this would be the
+        /// standalone code. </param>
+        /// <param name="family">If the service has different generations of
+        /// hardware, for the same SKU, then that can be captured here.</param>
+        /// <param name="capacity">If the SKU supports scale out/in then the
+        /// capacity integer should be included. If scale out/in is not
+        /// possible for the resource this may be omitted.</param>
+        public Sku(string name, string tier = default(string), string size = default(string), string family = default(string), int? capacity = default(int?))
         {
             Name = name;
             Tier = tier;
+            Size = size;
+            Family = family;
+            Capacity = capacity;
             CustomInit();
         }
 
@@ -48,18 +60,42 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sku name. Required for account creation, optional
-        /// for update.
+        /// Gets or sets the name of the SKU. Ex - P3. It is typically a
+        /// letter+number code
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the sku tier. This is based on the SKU name. Possible values
-        /// include: 'Free', 'Standard', 'Premium'
+        /// Gets or sets this field is required to be implemented by the
+        /// Resource Provider if the service has more than one tier, but is not
+        /// required on a PUT. Possible values include: 'Free', 'Basic',
+        /// 'Standard', 'Premium', 'Enterprise'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public SkuTier? Tier { get; private set; }
+        public string Tier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SKU size. When the name field is the combination
+        /// of tier and some other value, this would be the standalone code.
+        /// </summary>
+        [JsonProperty(PropertyName = "size")]
+        public string Size { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the service has different generations of hardware,
+        /// for the same SKU, then that can be captured here.
+        /// </summary>
+        [JsonProperty(PropertyName = "family")]
+        public string Family { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the SKU supports scale out/in then the capacity
+        /// integer should be included. If scale out/in is not possible for the
+        /// resource this may be omitted.
+        /// </summary>
+        [JsonProperty(PropertyName = "capacity")]
+        public int? Capacity { get; set; }
 
         /// <summary>
         /// Validate the object.

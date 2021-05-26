@@ -157,7 +157,7 @@ namespace Azure.Communication.Sms
                     new SmsRecipient(AssertNotNullOrEmpty(x, nameof(to)))
                     {
                         RepeatabilityRequestId = Guid.NewGuid().ToString(),
-                        RepeatabilityFirstSent = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                        RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
                     });
 
                 Response<SmsSendResponse> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
@@ -193,7 +193,7 @@ namespace Azure.Communication.Sms
                     new SmsRecipient(AssertNotNullOrEmpty(x, nameof(to)))
                     {
                         RepeatabilityRequestId = Guid.NewGuid().ToString(),
-                        RepeatabilityFirstSent = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                        RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
                     });
 
                 Response<SmsSendResponse> response = RestClient.Send(from, recipients, message, options, cancellationToken);

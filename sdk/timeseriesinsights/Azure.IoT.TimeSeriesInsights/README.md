@@ -92,11 +92,10 @@ Example below shows use of TimeSeriesInsightsSampleGetTypeById operation, iterat
 // Code snippet below shows getting a default Type using Id
 // The default type Id can be obtained programmatically by using the ModelSettings client.
 
-TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
-Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
-    .Types
-    .GetByIdAsync(new string[] { modelSettings.DefaultTypeId })
-    .ConfigureAwait(false);
+TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
+Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await typesClient
+    .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });
 
 // The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
 // If the error object is set to null, this means the operation was a success.

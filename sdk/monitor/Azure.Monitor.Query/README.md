@@ -63,9 +63,11 @@ We guarantee that all client instance methods are thread-safe and independent of
 You can query logs using the `LogsClient.QueryAsync`. The result would be returned as a table with a collection of rows:
 
 ```C# Snippet:QueryLogsAsTable
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
-Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
+
+LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
 LogsQueryResultTable table = response.Value.PrimaryTable;
 
@@ -88,12 +90,13 @@ public class MyLogEntryModel
 ```
 
 ```C# Snippet:QueryLogsAsModels
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
 Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(workspaceId,
-    "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count");
+    "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
+    TimeSpan.FromDays(1));
 
 foreach (var logEntryModel in response.Value)
 {
@@ -106,12 +109,15 @@ foreach (var logEntryModel in response.Value)
 If your query return a single column (or a single value) of a primitive type you can use `LogsClient.QueryAsync<T>` overload to deserialize it:
 
 ```C# Snippet:QueryLogsAsPrimitive
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
+
+LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
 Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(workspaceId,
-    "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup");
+    "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
+    TimeSpan.FromDays(1));
 
 foreach (var resourceGroup in response.Value)
 {
@@ -124,16 +130,18 @@ foreach (var resourceGroup in response.Value)
 You can execute multiple queries in on request using the `LogsClient.CreateBatchQuery`:
 
 ```C# Snippet:BatchQuery
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
+
+LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
 // And total event count
-LogsBatchQuery batch = client.CreateBatchQuery();
-string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count");
-string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count");
+LogsBatchQuery batch = new LogsBatchQuery();
+string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count", TimeSpan.FromDays(1));
+string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count", TimeSpan.FromDays(1));
 
-Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
+Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
 
 var count = response.Value.GetResult<int>(countQueryId).Single();
 var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);
@@ -150,9 +158,11 @@ foreach (var logEntryModel in topEntries)
 You can also dynamically inspect the list of columns. The following example prints the result of the query as a table:
 
 ```C# Snippet:QueryLogsPrintTable
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
-Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
+
+LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
 LogsQueryResultTable table = response.Value.PrimaryTable;
 
@@ -180,9 +190,11 @@ foreach (var row in table.Rows)
 Some queries take longer to execute than the default service timeout allows. You can use the `LogsQueryOptions` parameter to specify the service timeout.
 
 ```C# Snippet:QueryLogsPrintTable
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
-Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
+
+LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
 LogsQueryResultTable table = response.Value.PrimaryTable;
 
@@ -205,6 +217,37 @@ foreach (var row in table.Rows)
 }
 ```
 
+### Querying metrics
+
+You can query metrics using the `MetricsClient.QueryAsync`. For every requested metric a set of aggregated values would be returned inside the `TimeSeries` collection.
+
+```C# Snippet:QueryMetrics
+Uri endpoint = new Uri("https://management.azure.com");
+string resourceId =
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.OperationalInsights/workspaces/<workspace_name>";
+
+var metricsClient = new MetricsClient(endpoint, new DefaultAzureCredential());
+
+Response<MetricQueryResult> results = await metricsClient.QueryAsync(
+    resourceId,
+    new[] {"Microsoft.OperationalInsights/workspaces"}
+);
+
+foreach (var metric in results.Value.Metrics)
+{
+    Console.WriteLine(metric.Name);
+    foreach (var element in metric.TimeSeries)
+    {
+        Console.WriteLine("Dimensions: " + string.Join(",", element.Metadata));
+
+        foreach (var metricValue in element.Data)
+        {
+            Console.WriteLine(metricValue);
+        }
+    }
+}
+```
+
 ## Troubleshooting
 
 ### General
@@ -214,11 +257,14 @@ When you interact with the Azure Monitor Query client library using the .NET SDK
 For example, if you submit an invalid query a `400` error is returned, indicating "Bad Request".
 
 ```C# Snippet:BadRequest
+Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
-LogsClient client = new LogsClient(new DefaultAzureCredential());
+
+LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+
 try
 {
-    await client.QueryAsync(workspaceId, "My Not So Valid Query");
+    await client.QueryAsync(workspaceId, "My Not So Valid Query", TimeSpan.FromDays(1));
 }
 catch (Exception e)
 {

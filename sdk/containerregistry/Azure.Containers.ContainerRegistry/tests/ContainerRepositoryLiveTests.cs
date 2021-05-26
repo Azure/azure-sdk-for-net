@@ -18,20 +18,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
         }
 
-        #region Setup methods
-
-        private ContainerRegistryClient CreateClient()
-        {
-            return InstrumentClient(new ContainerRegistryClient(
-                new Uri(TestEnvironment.Endpoint),
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new ContainerRegistryClientOptions())
-            ));
-        }
-
-        #endregion
-
-        #region Repository Tests
         [RecordedTest]
         public async Task CanGetRepositoryProperties()
         {
@@ -54,11 +40,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repository = client.GetRepository(_repositoryName);
 
             RepositoryProperties repositoryProperties = await repository.GetPropertiesAsync();
-            ContentProperties originalContentProperties = repositoryProperties.WriteableProperties;
+            RepositoryProperties originalProperties = repositoryProperties;
 
             // Act
             RepositoryProperties properties = await repository.SetPropertiesAsync(
-                new ContentProperties()
+                new RepositoryProperties()
                 {
                     CanList = false,
                     CanRead = false,
@@ -67,20 +53,39 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
 
             // Assert
-            Assert.IsFalse(properties.WriteableProperties.CanList);
-            Assert.IsFalse(properties.WriteableProperties.CanRead);
-            Assert.IsFalse(properties.WriteableProperties.CanWrite);
-            Assert.IsFalse(properties.WriteableProperties.CanDelete);
+            Assert.IsFalse(properties.CanList);
+            Assert.IsFalse(properties.CanRead);
+            Assert.IsFalse(properties.CanWrite);
+            Assert.IsFalse(properties.CanDelete);
 
             RepositoryProperties updatedProperties = await repository.GetPropertiesAsync();
 
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanList);
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanRead);
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanWrite);
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanDelete);
+            Assert.IsFalse(updatedProperties.CanList);
+            Assert.IsFalse(updatedProperties.CanRead);
+            Assert.IsFalse(updatedProperties.CanWrite);
+            Assert.IsFalse(updatedProperties.CanDelete);
 
             // Cleanup
-            await repository.SetPropertiesAsync(originalContentProperties);
+            await repository.SetPropertiesAsync(originalProperties);
+        }
+
+        [RecordedTest, NonParallelizable]
+        public void CanSetRepositoryProperties_Anonymous()
+        {
+            // Arrange
+            var client = CreateClient(anonymousAccess: true);
+            var repository = client.GetRepository(_repositoryName);
+
+            // Act
+            Assert.ThrowsAsync<RequestFailedException>(() =>
+                repository.SetPropertiesAsync(
+                    new RepositoryProperties()
+                    {
+                        CanList = false,
+                        CanRead = false,
+                        CanWrite = false,
+                        CanDelete = false,
+                    }));
         }
 
         [RecordedTest, NonParallelizable]
@@ -103,18 +108,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(_repositoryName, tags);
+                    await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tags);
                 }
 
                 // Act
                 await repository.DeleteAsync();
-
-                // This will be removed, pending investigation into potential race condition.
-                // https://github.com/azure/azure-sdk-for-net/issues/19699
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(5000);
-                }
 
                 // Assert
                 Assert.ThrowsAsync<RequestFailedException>(async () => { await repository.GetPropertiesAsync(); });
@@ -124,16 +122,18 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Clean up - put the repository with tags back.
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(_repositoryName, tags);
+                    await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tags);
                 }
             }
         }
 
         [RecordedTest]
-        public async Task CanGetManifests()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetManifests(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             var repository = client.GetRepository(_repositoryName);
 
             // Act
@@ -155,10 +155,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetManifestsWithCustomPageSize()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetManifestsWithCustomPageSize(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             var repository = client.GetRepository(_repositoryName);
             int pageSize = 2;
             int minExpectedPages = 2;
@@ -179,10 +181,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetArtifactsStartingMidCollection()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetArtifactsStartingMidCollection(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             var repository = client.GetRepository(_repositoryName);
             int pageSize = 1;
             int minExpectedPages = 2;
@@ -244,7 +248,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(repositoryName, tag);
+                    await ImportImageAsync(TestEnvironment.Registry, repositoryName, tag);
                 }
 
                 // Act
@@ -255,7 +259,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 await foreach (ArtifactManifestProperties manifest in manifests)
                 {
                     // Make sure we're looking at a manifest list, which has the tag
-                    if (manifest.References != null && manifest.References.Count > 0)
+                    if (manifest.ManifestReferences != null && manifest.ManifestReferences.Count > 0)
                     {
                         digest = manifest.Digest;
                         Assert.That(manifest.RepositoryName.Contains(repositoryName));
@@ -270,8 +274,5 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 await artifact.DeleteAsync();
             }
         }
-
-        #endregion
-
     }
 }

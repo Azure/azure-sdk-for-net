@@ -774,18 +774,16 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
-        /// <param name="eventPosition">The description of the <see cref="EventPosition" /> used as the starting point for processing.</param>
         ///
-        [Event(39, Level = EventLevel.Verbose, Message = "Completed starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Starting at position: {4}.")]
+        [Event(39, Level = EventLevel.Verbose, Message = "Completed starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
         public virtual void EventProcessorPartitionProcessingStartComplete(string partitionId,
                                                                            string identifier,
                                                                            string eventHubName,
-                                                                           string consumerGroup,
-                                                                           string eventPosition)
+                                                                           string consumerGroup)
         {
             if (IsEnabled())
             {
-                WriteEvent(39, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, eventPosition ?? string.Empty);
+                WriteEvent(39, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
             }
         }
 
@@ -1070,6 +1068,28 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(53, eventHubName ?? string.Empty, partitionId ?? string.Empty, producerGroupId, ownerLevel, lastPublishedSequence);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has closed the transport consumer in response
+        ///   to a stop request and a receive operation was aborted.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is stopping.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        ///
+        [Event(54, Level = EventLevel.Verbose, Message = "Event Processor successfully closed the transport consumer when stopping processing for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        public virtual void EventProcessorPartitionProcessingStopConsumerClose(string partitionId,
+                                                                               string identifier,
+                                                                               string eventHubName,
+                                                                               string consumerGroup)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(54, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
             }
         }
 

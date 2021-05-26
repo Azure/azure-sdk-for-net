@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -34,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -47,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", docSentiment.Sentences.FirstOrDefault().Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -60,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", docSentiment.Sentences.FirstOrDefault().Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -72,7 +73,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentWithOpinionMining()
         {
             TextAnalyticsClient client = GetClient();
@@ -84,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Mixed", docSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentWithOpinionMiningEmpty()
         {
             TextAnalyticsClient client = GetClient();
@@ -96,7 +97,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentWithOpinionMiningNegated()
         {
             TextAnalyticsClient client = GetClient();
@@ -113,7 +114,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(opinion.Assessments.FirstOrDefault().IsNegated);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentWithCancellationTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -125,7 +126,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentWithLanguageAndCancellationTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -137,7 +138,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -154,7 +155,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchConvenienceWithOpinionMiningTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -175,7 +176,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchConvenienceWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -192,7 +193,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchConvenienceWithCancellationTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -209,7 +210,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchConvenienceWithLanguageAndCancellationTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -226,7 +227,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchConvenienceWithLanguageAndStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -248,7 +249,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -270,7 +271,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchConvenienceWithStatisticsAndCancellationTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -292,7 +293,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchConvenienceFullTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -314,7 +315,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -331,7 +332,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchWithOpinionMiningTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -358,7 +359,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -380,7 +381,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -402,7 +403,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public void AnalyzeSentimentBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -412,7 +413,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeSentimentBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
 
@@ -39,6 +40,7 @@ namespace Azure.Monitor.Query.Tests
 
         private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
         public string TableAName => TableANameSent + "_CL";
+        public DateTimeRange DataTimeRange => new DateTimeRange(RetentionWindowStart, TimeSpan.FromDays(7));
 
         private readonly MonitorQueryClientTestEnvironment _testEnvironment;
         private static bool _initialized;
@@ -110,10 +112,10 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task<int> QueryCount()
         {
-            var logsClient = new LogsClient(_testEnvironment.Credential);
+            var logsClient = new LogsClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
             try
             {
-                var countResponse = await logsClient.QueryAsync<int>(_testEnvironment.WorkspaceId, $"{TableAName} | count");
+                var countResponse = await logsClient.QueryAsync<int>(_testEnvironment.WorkspaceId, $"{TableAName} | count", DataTimeRange);
                 var count = countResponse.Value.Single();
                 return count;
             }

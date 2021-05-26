@@ -16,11 +16,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     /// </summary>
     public static class ProvisioningState
     {
+        public const string Accepted = "Accepted";
         public const string Creating = "Creating";
-        public const string ResolvingDNS = "ResolvingDNS";
-        public const string Moving = "Moving";
         public const string Deleting = "Deleting";
-        public const string Succeeded = "Succeeded";
+        public const string Moving = "Moving";
         public const string Failed = "Failed";
+        public const string Succeeded = "Succeeded";
+        public const string ResolvingDNS = "ResolvingDNS";
     }
 }

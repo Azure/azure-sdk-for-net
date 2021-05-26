@@ -8,11 +8,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-artifacts-2019-06-01-preview
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/f953424dd168e71373bc52edb9713d2d86a14ada/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/fc5e2fbcfc3f585d38bdb1c513ce1ad2c570cf3d/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 public-clients: true
-credential-types: TokenCredential
-credential-scopes: https://dev.azuresynapse.net/.default
+security: AADToken
+security-scopes: https://dev.azuresynapse.net/.default
 modelerfour:
   lenient-model-deduplication: true
 ```

@@ -53,7 +53,7 @@ namespace Azure.Core
         /// </summary>
         public dynamic DynamicBody { get => Body; }
 
-        // TODO(matell): In Krzysztof's prototype we also took DiagnosticScope as a parameter, do we still need that?
+        // TODO(matell): In the prototype we also took DiagnosticScope as a parameter, do we still need that?
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps <see cref="JsonData"/> content.
         /// </summary>

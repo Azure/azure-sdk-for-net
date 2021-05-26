@@ -135,6 +135,9 @@ namespace Azure.Messaging.EventGrid
         public const string MediaLiveEventIncomingVideoStreamsOutOfSync = "Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync";
         public const string MediaLiveEventIngestHeartbeat = "Microsoft.Media.LiveEventIngestHeartbeat";
         public const string MediaLiveEventTrackDiscontinuityDetected = "Microsoft.Media.LiveEventTrackDiscontinuityDetected";
+        public const string PolicyInsightsPolicyStateChanged = "Microsoft.PolicyInsights.PolicyStateChanged";
+        public const string PolicyInsightsPolicyStateCreated = "Microsoft.PolicyInsights.PolicyStateCreated";
+        public const string PolicyInsightsPolicyStateDeleted = "Microsoft.PolicyInsights.PolicyStateDeleted";
         public const string RedisExportRdbCompleted = "Microsoft.Cache.ExportRDBCompleted";
         public const string RedisImportRdbCompleted = "Microsoft.Cache.ImportRDBCompleted";
         public const string RedisPatchingCompleted = "Microsoft.Cache.PatchingCompleted";
@@ -154,9 +157,11 @@ namespace Azure.Messaging.EventGrid
         public const string ServiceBusDeadletterMessagesAvailableWithNoListener = "Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListener";
         public const string SignalRServiceClientConnectionConnected = "Microsoft.SignalRService.ClientConnectionConnected";
         public const string SignalRServiceClientConnectionDisconnected = "Microsoft.SignalRService.ClientConnectionDisconnected";
+        public const string StorageAsyncOperationInitiated = "Microsoft.Storage.AsyncOperationInitiated";
         public const string StorageBlobCreated = "Microsoft.Storage.BlobCreated";
         public const string StorageBlobDeleted = "Microsoft.Storage.BlobDeleted";
         public const string StorageBlobRenamed = "Microsoft.Storage.BlobRenamed";
+        public const string StorageBlobTierChanged = "Microsoft.Storage.BlobTierChanged";
         public const string StorageDirectoryCreated = "Microsoft.Storage.DirectoryCreated";
         public const string StorageDirectoryDeleted = "Microsoft.Storage.DirectoryDeleted";
         public const string StorageDirectoryRenamed = "Microsoft.Storage.DirectoryRenamed";
@@ -1105,6 +1110,39 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal PhoneNumberIdentifierModel() { }
         public string Value { get { throw null; } }
     }
+    public partial class PolicyInsightsPolicyStateChangedEventData
+    {
+        internal PolicyInsightsPolicyStateChangedEventData() { }
+        public string ComplianceReasonCode { get { throw null; } }
+        public string ComplianceState { get { throw null; } }
+        public string PolicyAssignmentId { get { throw null; } }
+        public string PolicyDefinitionId { get { throw null; } }
+        public string PolicyDefinitionReferenceId { get { throw null; } }
+        public string SubscriptionId { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
+    }
+    public partial class PolicyInsightsPolicyStateCreatedEventData
+    {
+        internal PolicyInsightsPolicyStateCreatedEventData() { }
+        public string ComplianceReasonCode { get { throw null; } }
+        public string ComplianceState { get { throw null; } }
+        public string PolicyAssignmentId { get { throw null; } }
+        public string PolicyDefinitionId { get { throw null; } }
+        public string PolicyDefinitionReferenceId { get { throw null; } }
+        public string SubscriptionId { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
+    }
+    public partial class PolicyInsightsPolicyStateDeletedEventData
+    {
+        internal PolicyInsightsPolicyStateDeletedEventData() { }
+        public string ComplianceReasonCode { get { throw null; } }
+        public string ComplianceState { get { throw null; } }
+        public string PolicyAssignmentId { get { throw null; } }
+        public string PolicyDefinitionId { get { throw null; } }
+        public string PolicyDefinitionReferenceId { get { throw null; } }
+        public string SubscriptionId { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
+    }
     public partial class RedisExportRdbCompletedEventData
     {
         internal RedisExportRdbCompletedEventData() { }
@@ -1344,6 +1382,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.StampKind left, Azure.Messaging.EventGrid.SystemEvents.StampKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class StorageAsyncOperationInitiatedEventData
+    {
+        internal StorageAsyncOperationInitiatedEventData() { }
+        public string Api { get { throw null; } }
+        public string BlobType { get { throw null; } }
+        public string ClientRequestId { get { throw null; } }
+        public long? ContentLength { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public string Identity { get { throw null; } }
+        public string RequestId { get { throw null; } }
+        public string Sequencer { get { throw null; } }
+        public object StorageDiagnostics { get { throw null; } }
+        public string Url { get { throw null; } }
+    }
     public partial class StorageBlobCreatedEventData
     {
         internal StorageBlobCreatedEventData() { }
@@ -1384,6 +1436,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Sequencer { get { throw null; } }
         public string SourceUrl { get { throw null; } }
         public object StorageDiagnostics { get { throw null; } }
+    }
+    public partial class StorageBlobTierChangedEventData
+    {
+        internal StorageBlobTierChangedEventData() { }
+        public string Api { get { throw null; } }
+        public string BlobType { get { throw null; } }
+        public string ClientRequestId { get { throw null; } }
+        public long? ContentLength { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public string Identity { get { throw null; } }
+        public string RequestId { get { throw null; } }
+        public string Sequencer { get { throw null; } }
+        public object StorageDiagnostics { get { throw null; } }
+        public string Url { get { throw null; } }
     }
     public partial class StorageDirectoryCreatedEventData
     {

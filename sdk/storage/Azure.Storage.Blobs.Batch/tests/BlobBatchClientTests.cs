@@ -555,7 +555,11 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blobBatchClient.SubmitBatchAsync(batch),
-                e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
+                e => Assert.AreEqual(
+                    _serviceVersion >= BlobClientOptions.ServiceVersion.V2019_12_12 ?
+                        BlobErrorCode.NoAuthenticationInformation.ToString() :
+                        BlobErrorCode.AuthenticationFailed.ToString(),
+                    e.ErrorCode));
         }
         #endregion Delete
 
@@ -967,7 +971,11 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blobBatchClient.SubmitBatchAsync(batch),
-                e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
+                e => Assert.AreEqual(
+                    _serviceVersion >= BlobClientOptions.ServiceVersion.V2019_12_12 ?
+                        BlobErrorCode.NoAuthenticationInformation.ToString() :
+                        BlobErrorCode.AuthenticationFailed.ToString(),
+                    e.ErrorCode));
         }
         #endregion SetBlobAccessTier
 

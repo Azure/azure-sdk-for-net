@@ -273,23 +273,19 @@ namespace Azure.Security.Attestation
 
         /// <summary>
         /// Attest a TPM based enclave.
-        /// See https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol for more information.
+        /// See <seealso href="https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol"/> for more information.
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="request">TPM Attestation request.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
-        /// <returns>A <see cref="TpmAttestationResponse"/>.</returns>
-        public virtual Response<BinaryData> AttestTpm(BinaryData request, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="TpmAttestationResponse"/> containing the TPM attestation response.</returns>
+        public virtual Response<TpmAttestationResponse> AttestTpm(TpmAttestationRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestTpm)}");
             scope.Start();
             try
             {
-                var response = _restClient.AttestTpm(new TpmAttestationRequest { Data = request.ToArray() }, cancellationToken);
-
-                BinaryData responseData = new BinaryData(response.Value);
-
-                return Response.FromValue(responseData, response.GetRawResponse());
+                return _restClient.AttestTpm(request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -300,23 +296,19 @@ namespace Azure.Security.Attestation
 
         /// <summary>
         /// Attest a TPM based enclave.
-        /// See https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol for more information.
+        /// See <seealso href="https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol"/> for more information.
         /// </summary>
-        /// <param name="request">Incoming request to send to the TPM attestation service.</param>
+        /// <param name="request">TPM Attestation request.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
-        /// <returns>A <see cref="BinaryData"/> structure containing the value of <see cref="TpmAttestationResponse.Data"/>.</returns>
-        public virtual async Task<Response<BinaryData>> AttestTpmAsync(BinaryData request, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="TpmAttestationResponse"/> containing the TPM attestation response.</returns>
+        public virtual async Task<Response<TpmAttestationResponse>> AttestTpmAsync(TpmAttestationRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestTpm)}");
             scope.Start();
             try
             {
-                var response = await _restClient.AttestTpmAsync(new TpmAttestationRequest { Data = request.ToArray() }, cancellationToken).ConfigureAwait(false);
-
-                BinaryData responseData = new BinaryData(response.Value.Data);
-
-                return  Response.FromValue(responseData, response.GetRawResponse());
+                return await _restClient.AttestTpmAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

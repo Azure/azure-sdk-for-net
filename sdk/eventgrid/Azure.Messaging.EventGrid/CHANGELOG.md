@@ -1,7 +1,17 @@
 # Release History
 
-## 4.2.0-beta.1 (Unreleased)
+## 4.3.0-beta.1 (Unreleased)
 
+
+## 4.2.0 (2021-05-10)
+
+### New Features
+* Added the following new system events: 
+  - PolicyInsightsPolicyStateChangedEventData
+  - PolicyInsightsPolicyStateCreatedEventData
+  - PolicyInsightsPolicyStateDeletedEventData
+  - StorageAsyncOperationInitiatedEventData
+  - StorageBlobTierChangedEventData
 
 ## 4.1.0 (2021-03-23)
 
