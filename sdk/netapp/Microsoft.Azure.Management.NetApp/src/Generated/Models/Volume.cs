@@ -75,7 +75,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// be achieved by this volume</param>
         /// <param name="encryptionKeySource">Encryption Key Source. Possible
         /// values are: 'Microsoft.NetApp'</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string))
+        /// <param name="ldapEnabled">Specifies whether LDAP is enabled or not
+        /// for a given NFS volume.</param>
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?))
         {
             Location = location;
             Id = id;
@@ -104,6 +106,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             SmbContinuouslyAvailable = smbContinuouslyAvailable;
             ThroughputMibps = throughputMibps;
             EncryptionKeySource = encryptionKeySource;
+            LdapEnabled = ldapEnabled;
             CustomInit();
         }
 
@@ -194,7 +197,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets protocolTypes
         /// </summary>
         /// <remarks>
-        /// Set of protocol types, default NFSv3, CIFS fro SMB protocol
+        /// Set of protocol types, default NFSv3, CIFS for SMB protocol
         /// </remarks>
         [JsonProperty(PropertyName = "properties.protocolTypes")]
         public IList<string> ProtocolTypes { get; set; }
@@ -323,6 +326,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string EncryptionKeySource { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies whether LDAP is enabled or not for a given
+        /// NFS volume.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ldapEnabled")]
+        public bool? LdapEnabled { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -433,10 +443,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 if (ThroughputMibps < 0)
                 {
                     throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 0);
-                }
-                if (ThroughputMibps % 0.001 != 0)
-                {
-                    throw new ValidationException(ValidationRules.MultipleOf, "ThroughputMibps", 0.001);
                 }
             }
         }

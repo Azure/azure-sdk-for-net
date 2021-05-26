@@ -23,7 +23,7 @@ To get a collection of tables, call `GetTables` and optionally pass in an OData 
 ```C# Snippet:TablesSample3QueryTables
 // Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
 
-Pageable<TableItem> queryTableResults = serviceClient.GetTables(filter: $"TableName eq '{tableName}'");
+Pageable<TableItem> queryTableResults = serviceClient.Query(filter: $"TableName eq '{tableName}'");
 
 Console.WriteLine("The following are the names of the tables in the query results:");
 
@@ -31,7 +31,7 @@ Console.WriteLine("The following are the names of the tables in the query result
 
 foreach (TableItem table in queryTableResults)
 {
-    Console.WriteLine(table.TableName);
+    Console.WriteLine(table.Name);
 }
 ```
 

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasks. </summary>
     internal partial class AnalyzeTasks
@@ -28,6 +28,7 @@ namespace Azure.AI.TextAnalytics
             EntityRecognitionPiiTasks = new ChangeTrackingList<EntityRecognitionPiiTasksItem>();
             KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhraseExtractionTasksItem>();
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTasksItem>();
+            SentimentAnalysisTasks = new ChangeTrackingList<SentimentAnalysisTasksItem>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
@@ -40,7 +41,8 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entityRecognitionPiiTasks"> . </param>
         /// <param name="keyPhraseExtractionTasks"> . </param>
         /// <param name="entityLinkingTasks"> . </param>
-        internal AnalyzeTasks(TasksStateTasksDetailsInternal details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks)
+        /// <param name="sentimentAnalysisTasks"> . </param>
+        internal AnalyzeTasks(TasksStateTasksDetails details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<SentimentAnalysisTasksItem> sentimentAnalysisTasks)
         {
             Details = details;
             Completed = completed;
@@ -51,7 +53,18 @@ namespace Azure.AI.TextAnalytics
             EntityRecognitionPiiTasks = entityRecognitionPiiTasks;
             KeyPhraseExtractionTasks = keyPhraseExtractionTasks;
             EntityLinkingTasks = entityLinkingTasks;
+            SentimentAnalysisTasks = sentimentAnalysisTasks;
         }
+
+        public TasksStateTasksDetails Details { get; }
+        public int Completed { get; }
+        public int Failed { get; }
+        public int InProgress { get; }
+        public int Total { get; }
+        public IReadOnlyList<EntityRecognitionTasksItem> EntityRecognitionTasks { get; }
+        public IReadOnlyList<EntityRecognitionPiiTasksItem> EntityRecognitionPiiTasks { get; }
+        public IReadOnlyList<KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; }
         public IReadOnlyList<EntityLinkingTasksItem> EntityLinkingTasks { get; }
+        public IReadOnlyList<SentimentAnalysisTasksItem> SentimentAnalysisTasks { get; }
     }
 }

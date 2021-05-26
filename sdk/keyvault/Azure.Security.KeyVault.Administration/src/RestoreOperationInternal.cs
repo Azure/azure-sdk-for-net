@@ -30,7 +30,7 @@ namespace Azure.Security.KeyVault.Administration
         /// to re-populate the details of this operation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
+        /// <param name="id">The <see cref="Id" /> from a previous <see cref="KeyVaultBackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
         public RestoreOperationInternal(KeyVaultBackupClient client, string id)
         {
@@ -151,13 +151,13 @@ namespace Azure.Security.KeyVault.Administration
                 TResult result = null;
                 Type resultType = typeof(TResult);
 
-                if (resultType == typeof(RestoreResult))
+                if (resultType == typeof(KeyVaultRestoreResult))
                 {
-                    result = new RestoreResult(StartTime.Value, EndTime.Value) as TResult;
+                    result = new KeyVaultRestoreResult(StartTime.Value, EndTime.Value) as TResult;
                 }
-                else if (resultType == typeof(SelectiveKeyRestoreResult))
+                else if (resultType == typeof(KeyVaultSelectiveKeyRestoreResult))
                 {
-                    result = new SelectiveKeyRestoreResult(StartTime.Value, EndTime.Value) as TResult;
+                    result = new KeyVaultSelectiveKeyRestoreResult(StartTime.Value, EndTime.Value) as TResult;
                 }
                 return result;
             }

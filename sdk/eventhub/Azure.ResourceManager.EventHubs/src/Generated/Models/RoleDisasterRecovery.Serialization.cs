@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal static class RoleDisasterRecoveryExtensions
+    internal static partial class RoleDisasterRecoveryExtensions
     {
         public static string ToSerialString(this RoleDisasterRecovery value) => value switch
         {

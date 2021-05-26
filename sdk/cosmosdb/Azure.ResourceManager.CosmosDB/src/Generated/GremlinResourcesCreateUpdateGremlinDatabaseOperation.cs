@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class GremlinResourcesCreateUpdateGremlinDatabaseOperation : Operation<GremlinDatabaseGetResults>, IOperationSource<GremlinDatabaseGetResults>
     {
         private readonly ArmOperationHelpers<GremlinDatabaseGetResults> _operation;
+
+        /// <summary> Initializes a new instance of GremlinResourcesCreateUpdateGremlinDatabaseOperation for mocking. </summary>
+        protected GremlinResourcesCreateUpdateGremlinDatabaseOperation()
+        {
+        }
+
         internal GremlinResourcesCreateUpdateGremlinDatabaseOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<GremlinDatabaseGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GremlinResourcesCreateUpdateGremlinDatabaseOperation");

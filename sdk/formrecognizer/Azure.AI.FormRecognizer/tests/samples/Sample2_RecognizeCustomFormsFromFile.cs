@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // Firstly, create a trained model we can use to recognize the custom form. Please note that
             // models can also be trained using a graphical user interface such as the Form Recognizer
             // Labeling Tool found here:
-            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
 
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             CustomFormModel model = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My Model").WaitForCompletionAsync();
@@ -33,16 +33,19 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:FormRecognizerRecognizeCustomFormsFromFile
+#if SNIPPET
+            string modelId = "<modelId>";
+            string filePath = "<filePath>";
+#else
             string filePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
             string modelId = model.ModelId;
-
-            #region Snippet:FormRecognizerRecognizeCustomFormsFromFile
-            //@@ string modelId = "<modelId>";
-            //@@ string filePath = "<filePath>";
+#endif
 
             using var stream = new FileStream(filePath, FileMode.Open);
+            var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
 
-            RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+            RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsAsync(modelId, stream, options);
             Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
             RecognizedFormCollection forms = operationResponse.Value;
 
@@ -62,8 +65,34 @@ namespace Azure.AI.FormRecognizer.Samples
                     Console.WriteLine($"  Value: '{field.ValueData.Text}'");
                     Console.WriteLine($"  Confidence: '{field.Confidence}'");
                 }
-            }
 
+                // Iterate over tables, lines, and selection marks on each page
+                foreach (var page in form.Pages)
+                {
+                    for (int i = 0; i < page.Tables.Count; i++)
+                    {
+                        Console.WriteLine($"Table {i+1} on page {page.Tables[i].PageNumber}");
+                        foreach (var cell in page.Tables[i].Cells)
+                        {
+                            Console.WriteLine($"  Cell[{cell.RowIndex}][{cell.ColumnIndex}] has text '{cell.Text}' with confidence {cell.Confidence}");
+                        }
+                    }
+                    Console.WriteLine($"Lines found on page {page.PageNumber}");
+                    foreach (var line in page.Lines)
+                    {
+                        Console.WriteLine($"  Line {line.Text}");
+                    }
+
+                    if (page.SelectionMarks.Count != 0)
+                    {
+                        Console.WriteLine($"Selection marks found on page {page.PageNumber}");
+                        foreach (var selectionMark in page.SelectionMarks)
+                        {
+                            Console.WriteLine($"  Selection mark is '{selectionMark.State}' with confidence {selectionMark.Confidence}");
+                        }
+                    }
+                }
+            }
             #endregion
 
             // Delete the model on completion to clean environment.

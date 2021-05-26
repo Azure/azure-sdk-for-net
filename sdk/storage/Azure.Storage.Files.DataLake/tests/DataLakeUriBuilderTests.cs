@@ -17,6 +17,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         private readonly Uri _invalidServiceUri = new Uri("https://account.file.core.windows.net");
         private readonly Uri _blobUri = new Uri("https://account.blob.core.windows.net");
         private readonly Uri _dfsUri = new Uri("https://account.dfs.core.windows.net");
+        private readonly Uri _blobPeriodUri = new Uri("https://account.z.blob.core.windows.net");
+        private readonly Uri _dfsPeriodUri = new Uri("https://account.z.dfs.core.windows.net");
         private readonly Uri _rootDirectoryUri = new Uri("https://account.dfs.core.windows.net/filesystem/");
 
         public DataLakeUriBuilderTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
@@ -207,6 +209,32 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public void DataLakeUriBuilder_ToBlobPeriodUri_BlobPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_blobPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_blobPeriodUri, result);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToBlobPeriodUri_DfsPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_blobPeriodUri, result);
+        }
+
+        [RecordedTest]
         public void DataLakeUriBuilder_ToDfsUri_CustomUri()
         {
             // Arrange
@@ -282,6 +310,32 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(_dfsUri, result);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToDfsPeriodUri_DfsPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_dfsPeriodUri, result);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToDfsPeriodUri_BlobPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_blobPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_dfsPeriodUri, result);
         }
 
         [RecordedTest]

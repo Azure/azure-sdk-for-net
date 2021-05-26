@@ -434,7 +434,7 @@ namespace Storage.Tests
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.Name, accountName2));
                 StorageManagementTestUtilities.VerifyAccountProperties(account2, true);
 
-                while(accounts.NextPageLink != null)
+                while (accounts.NextPageLink != null)
                 {
                     accounts = storageMgmtClient.StorageAccounts.ListNext(accounts.NextPageLink);
                 }
@@ -1332,7 +1332,7 @@ namespace Storage.Tests
 
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
                 parameters.Location = "centraluseuap";
-                parameters.Identity = new Identity() { Type = IdentityType.SystemAssigned};
+                parameters.Identity = new Identity() { Type = IdentityType.SystemAssigned };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
@@ -1498,7 +1498,7 @@ namespace Storage.Tests
 
                 // Create storage account with Vnet
                 string accountName = TestUtilities.GenerateName("sto");
-                
+
                 var parameters = new StorageAccountCreateParameters
                 {
                     Location = StorageManagementTestUtilities.DefaultLocation,
@@ -2407,6 +2407,7 @@ namespace Storage.Tests
                 {
                     Sku = new Sku { Name = SkuName.StandardLRS },
                     Kind = Kind.StorageV2,
+                    IsHnsEnabled = true,
                     Location = StorageManagementTestUtilities.DefaultLocation
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
@@ -2417,49 +2418,81 @@ namespace Storage.Tests
                 string containerName = "container1";
                 storageMgmtClient.BlobContainers.Create(rgname, accountName, containerName, new BlobContainer());
 
+                // prepare blob/container SchemaFields for most and least fields
+                string[] BlobSchemaField = new string[] {"Name", "Creation-Time", "Last-Modified", "Content-Length", "Content-MD5", "BlobType", "AccessTier", "AccessTierChangeTime",
+                    "Expiry-Time", "hdi_isfolder", "Owner", "Group", "Permissions", "Acl", "Snapshot", "VersionId", "IsCurrentVersion", "Metadata", "LastAccessTime"};
+                string[] ContainerSchemaField = new string[] { "Name", "Last-Modified", "Metadata", "LeaseStatus", "LeaseState", "LeaseDuration", "PublicAccess", "HasImmutabilityPolicy", "HasLegalHold" };
+
+                List<string> blobSchemaFields1 = new List<string>(BlobSchemaField);
+                List<string> blobSchemaFields2 = new List<string>();
+                blobSchemaFields2.Add("Name");
+                List<string> containerSchemaFields1 = new List<string>(ContainerSchemaField);
+                List<string> containerSchemaFields2 = new List<string>();
+                containerSchemaFields2.Add("Name");
+
                 //Prepare policy objects
                 List<BlobInventoryPolicyRule> ruleList = new List<BlobInventoryPolicyRule>();
-                BlobInventoryPolicyRule rule1 = new BlobInventoryPolicyRule(true, "rule1",
+                BlobInventoryPolicyRule rule1 = new BlobInventoryPolicyRule(true, "rule1", containerName,
                     new BlobInventoryPolicyDefinition(
-                        new BlobInventoryPolicyFilter(
-                            blobTypes: new List<string>(new string[] { "blockBlob", "appendBlob", "pageBlob" }),
+                        filters: new BlobInventoryPolicyFilter(
+                            blobTypes: new List<string>(new string[] { "blockBlob"}),
                             prefixMatch: new List<string>(new string[] { "prefix1", "prefix2" }),
-                            includeBlobVersions: false,
-                            includeSnapshots: true)));
+                            includeBlobVersions: true,
+                            includeSnapshots: true),
+                        format: Format.Csv,
+                        schedule: Schedule.Weekly,
+                        objectType: ObjectType.Blob,
+                        schemaFields: blobSchemaFields1));
 
-                BlobInventoryPolicyRule rule2 = new BlobInventoryPolicyRule(true, "rule2",
+                BlobInventoryPolicyRule rule2 = new BlobInventoryPolicyRule(true, "rule2", containerName,
                     new BlobInventoryPolicyDefinition(
-                        new BlobInventoryPolicyFilter(
-                            blobTypes: new List<string>(new string[] { "blockBlob" }),
-                            //includeBlobVersions: true,
-                            includeSnapshots: false)));
+                        filters: new BlobInventoryPolicyFilter(
+                            prefixMatch: new List<string>(new string[] { "con1", "con2" })),
+                        format: Format.Csv,
+                        schedule: Schedule.Daily,
+                        objectType: ObjectType.Container,
+                        schemaFields: containerSchemaFields1));
+
+                BlobInventoryPolicyRule rule3 = new BlobInventoryPolicyRule(true, "rule3", containerName,
+                    new BlobInventoryPolicyDefinition(
+                        filters: new BlobInventoryPolicyFilter(
+                            blobTypes: new List<string>(new string[] { "blockBlob"})),
+                        format: Format.Parquet,
+                        schedule: Schedule.Daily,
+                        objectType: ObjectType.Blob,
+                        schemaFields: blobSchemaFields2));
+
+                BlobInventoryPolicyRule rule4 = new BlobInventoryPolicyRule(true, "rule4", containerName,
+                    new BlobInventoryPolicyDefinition(
+                        format: Format.Parquet,
+                        schedule: Schedule.Weekly,
+                        objectType: ObjectType.Container,
+                        schemaFields: containerSchemaFields2));
 
                 ruleList.Add(rule1);
-                BlobInventoryPolicySchema policy = new BlobInventoryPolicySchema(true, containerName, ruleList);
+                ruleList.Add(rule2);
+                BlobInventoryPolicySchema policy = new BlobInventoryPolicySchema(true, ruleList);
 
                 //Create/Get policy
                 BlobInventoryPolicy outputPolicy = storageMgmtClient.BlobInventoryPolicies.CreateOrUpdate(rgname, accountName, policy);
-                Assert.Equal(containerName, outputPolicy.Policy.Destination);
                 Assert.True(outputPolicy.Policy.Enabled);
                 CompareBlobInventoryPolicySchema(policy, outputPolicy.Policy);
 
                 outputPolicy = storageMgmtClient.BlobInventoryPolicies.Get(rgname, accountName);
-                Assert.Equal(containerName, outputPolicy.Policy.Destination);
                 Assert.True(outputPolicy.Policy.Enabled);
                 CompareBlobInventoryPolicySchema(policy, outputPolicy.Policy);
 
                 //Update/List policy
-                ruleList.Add(rule2);
-                BlobInventoryPolicySchema policy2 = new BlobInventoryPolicySchema(true, containerName, ruleList);
+                ruleList.Add(rule3);
+                ruleList.Add(rule4);
+                BlobInventoryPolicySchema policy2 = new BlobInventoryPolicySchema(true, ruleList);
 
                 outputPolicy = storageMgmtClient.BlobInventoryPolicies.CreateOrUpdate(rgname, accountName, policy2);
-                Assert.Equal(containerName, outputPolicy.Policy.Destination);
                 Assert.True(outputPolicy.Policy.Enabled);
-                Assert.Equal(2, outputPolicy.Policy.Rules.Count);
+                Assert.Equal(4, outputPolicy.Policy.Rules.Count);
                 CompareBlobInventoryPolicySchema(policy2, outputPolicy.Policy);
 
                 var outputPolicies = storageMgmtClient.BlobInventoryPolicies.List(rgname, accountName);
-                Assert.Equal(containerName, outputPolicy.Policy.Destination);
                 Assert.True(outputPolicy.Policy.Enabled);
                 CompareBlobInventoryPolicySchema(policy2, outputPolicy.Policy);
 
@@ -2481,23 +2514,39 @@ namespace Storage.Tests
         internal static void CompareBlobInventoryPolicySchema(BlobInventoryPolicySchema inputPolicy, BlobInventoryPolicySchema outputPolicy)
         {
 
-            Assert.Equal(inputPolicy.Destination, outputPolicy.Destination);
             Assert.Equal(inputPolicy.Enabled, outputPolicy.Enabled);
             Assert.Equal(inputPolicy.Rules.Count, outputPolicy.Rules.Count);
 
             foreach (BlobInventoryPolicyRule inputRule in inputPolicy.Rules)
             {
                 bool ruleFound = false;
-                foreach(BlobInventoryPolicyRule outputRule in outputPolicy.Rules)
+                foreach (BlobInventoryPolicyRule outputRule in outputPolicy.Rules)
                 {
                     if (inputRule.Name == outputRule.Name)
                     {
                         ruleFound = true;
                         Assert.Equal(inputRule.Enabled, outputRule.Enabled);
-                        Assert.Equal(inputRule.Definition.Filters.BlobTypes, inputRule.Definition.Filters.BlobTypes);
-                        Assert.Equal(inputRule.Definition.Filters.IncludeBlobVersions, inputRule.Definition.Filters.IncludeBlobVersions);
-                        Assert.Equal(inputRule.Definition.Filters.IncludeSnapshots, inputRule.Definition.Filters.IncludeSnapshots);
-                        Assert.Equal(inputRule.Definition.Filters.PrefixMatch, inputRule.Definition.Filters.PrefixMatch);
+                        Assert.Equal(inputRule.Destination, outputRule.Destination);
+                        if (inputRule.Definition.Filters != null)
+                        {
+                            Assert.Equal(inputRule.Definition.Filters.BlobTypes, outputRule.Definition.Filters.BlobTypes);
+                            Assert.Equal(inputRule.Definition.Filters.IncludeBlobVersions, outputRule.Definition.Filters.IncludeBlobVersions);
+                            Assert.Equal(inputRule.Definition.Filters.IncludeSnapshots, outputRule.Definition.Filters.IncludeSnapshots);
+                            Assert.Equal(inputRule.Definition.Filters.PrefixMatch, 
+                                outputRule.Definition.Filters.PrefixMatch.Count == 0 ? null : outputRule.Definition.Filters.PrefixMatch);
+                        }
+                        else
+                        {
+                            Assert.Null(outputRule.Definition.Filters);
+                        }
+                        Assert.Equal(inputRule.Definition.Format, outputRule.Definition.Format);
+                        Assert.Equal(inputRule.Definition.ObjectType, outputRule.Definition.ObjectType);
+                        Assert.Equal(inputRule.Definition.Schedule, outputRule.Definition.Schedule);
+                        Assert.Equal(inputRule.Definition.SchemaFields.Count, outputRule.Definition.SchemaFields.Count);
+                        foreach (string field in inputRule.Definition.SchemaFields)
+                        {
+                            Assert.True(outputRule.Definition.SchemaFields.Contains(field));
+                        }
                     }
                 }
                 Assert.True(ruleFound);
@@ -2579,6 +2628,58 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
                 Assert.False(account.AllowSharedKeyAccess);
+            }
+        }
+
+
+        [Fact]
+        public void StorageAccountSASKeyPolicy()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardGRS },
+                    Kind = Kind.Storage,
+                    Location = "centraluseuap",
+                    KeyPolicy = new KeyPolicy(2),
+                    SasPolicy = new SasPolicy("2.02:03:59")
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.Equal(2, account.KeyPolicy.KeyExpirationPeriodInDays);
+                Assert.Equal("2.02:03:59", account.SasPolicy.SasExpirationPeriod);
+
+                // Update storage account type
+                var updateParameters = new StorageAccountUpdateParameters
+                {
+                    Kind = Kind.StorageV2,
+                    EnableHttpsTrafficOnly = true,
+                    SasPolicy = new SasPolicy("0.02:03:59"),
+                    KeyPolicy = new KeyPolicy(9)
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                Assert.Equal(9, account.KeyPolicy.KeyExpirationPeriodInDays);
+                Assert.Equal("0.02:03:59", account.SasPolicy.SasExpirationPeriod);
+                Assert.NotNull(account.KeyCreationTime.Key1);
+                Assert.NotNull(account.KeyCreationTime.Key2);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Equal(9, account.KeyPolicy.KeyExpirationPeriodInDays);
+                Assert.Equal("0.02:03:59", account.SasPolicy.SasExpirationPeriod);
+                Assert.NotNull(account.KeyCreationTime.Key1);
+                Assert.NotNull(account.KeyCreationTime.Key2);
             }
         }
     }

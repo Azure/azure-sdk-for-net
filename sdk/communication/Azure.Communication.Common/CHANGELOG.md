@@ -1,7 +1,10 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.1 (2021-05-25)
+- Dependency versions updated.
 
+## 1.0.0 (2021-03-29)
+Updated `Azure.Communication.Common` version.
 
 ## 1.0.0-beta.5 (2021-03-09)
 Updated `Azure.Communication.Common` version.

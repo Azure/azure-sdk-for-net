@@ -48,9 +48,6 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// <param name="servicePackageActivationMode">The activation Mode of
         /// the service package. Possible values include: 'SharedProcess',
         /// 'ExclusiveProcess'</param>
-        /// <param name="serviceDnsName">The DNS name of the service. It
-        /// requires the DNS system service to be enabled in Service Fabric
-        /// cluster.</param>
         /// <param name="minInstanceCount">MinInstanceCount is the minimum
         /// number of instances that must be up to meet the EnsureAvailability
         /// safety check during operations like upgrade or deactivate node. The
@@ -69,29 +66,12 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// MinInstancePercentage computation, -1 is first converted into the
         /// number of nodes on which the instances are allowed to be placed
         /// according to the placement constraints on the service.</param>
-        /// <param name="instanceCloseDelayDuration">Duration represented in
-        /// ISO 8601 format "hh:mm:ss", to wait before a stateless instance is
-        /// closed, to allow the active requests to drain gracefully. This
-        /// would be effective when the instance is closing during the
-        /// application/cluster upgrade and disabling node. The endpoint
-        /// exposed on this instance is removed prior to starting the delay,
-        /// which prevents new connections to this instance. In addition,
-        /// clients that have subscribed to service endpoint change
-        /// events(https://docs.microsoft.com/dotnet/api/system.fabric.fabricclient.servicemanagementclient.registerservicenotificationfilterasync),
-        /// can do the following upon receiving the endpoint removal
-        /// notification: - Stop sending new requests to this instance. - Close
-        /// existing connections after in-flight requests have completed. -
-        /// Connect to a different instance of the service partition for future
-        /// requests. Note, the default value of InstanceCloseDelayDuration is
-        /// 0, which indicates that there won't be any delay or removal of the
-        /// endpoint prior to closing the instance.</param>
-        public StatelessServiceProperties(string serviceTypeName, Partition partitionDescription, int instanceCount, string placementConstraints = default(string), IList<ServiceCorrelation> correlationScheme = default(IList<ServiceCorrelation>), IList<ServiceLoadMetric> serviceLoadMetrics = default(IList<ServiceLoadMetric>), IList<ServicePlacementPolicy> servicePlacementPolicies = default(IList<ServicePlacementPolicy>), string defaultMoveCost = default(string), IList<ScalingPolicy> scalingPolicies = default(IList<ScalingPolicy>), string provisioningState = default(string), string servicePackageActivationMode = default(string), string serviceDnsName = default(string), int? minInstanceCount = default(int?), int? minInstancePercentage = default(int?), string instanceCloseDelayDuration = default(string))
-            : base(serviceTypeName, partitionDescription, placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, provisioningState, servicePackageActivationMode, serviceDnsName)
+        public StatelessServiceProperties(string serviceTypeName, Partition partitionDescription, int instanceCount, string placementConstraints = default(string), IList<ServiceCorrelation> correlationScheme = default(IList<ServiceCorrelation>), IList<ServiceLoadMetric> serviceLoadMetrics = default(IList<ServiceLoadMetric>), IList<ServicePlacementPolicy> servicePlacementPolicies = default(IList<ServicePlacementPolicy>), string defaultMoveCost = default(string), IList<ScalingPolicy> scalingPolicies = default(IList<ScalingPolicy>), string provisioningState = default(string), string servicePackageActivationMode = default(string), int? minInstanceCount = default(int?), int? minInstancePercentage = default(int?))
+            : base(serviceTypeName, partitionDescription, placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, provisioningState, servicePackageActivationMode)
         {
             InstanceCount = instanceCount;
             MinInstanceCount = minInstanceCount;
             MinInstancePercentage = minInstancePercentage;
-            InstanceCloseDelayDuration = instanceCloseDelayDuration;
             CustomInit();
         }
 
@@ -132,27 +112,6 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// </summary>
         [JsonProperty(PropertyName = "minInstancePercentage")]
         public int? MinInstancePercentage { get; set; }
-
-        /// <summary>
-        /// Gets or sets duration represented in ISO 8601 format "hh:mm:ss", to
-        /// wait before a stateless instance is closed, to allow the active
-        /// requests to drain gracefully. This would be effective when the
-        /// instance is closing during the application/cluster upgrade and
-        /// disabling node. The endpoint exposed on this instance is removed
-        /// prior to starting the delay, which prevents new connections to this
-        /// instance. In addition, clients that have subscribed to service
-        /// endpoint change
-        /// events(https://docs.microsoft.com/dotnet/api/system.fabric.fabricclient.servicemanagementclient.registerservicenotificationfilterasync),
-        /// can do the following upon receiving the endpoint removal
-        /// notification: - Stop sending new requests to this instance. - Close
-        /// existing connections after in-flight requests have completed. -
-        /// Connect to a different instance of the service partition for future
-        /// requests. Note, the default value of InstanceCloseDelayDuration is
-        /// 0, which indicates that there won't be any delay or removal of the
-        /// endpoint prior to closing the instance.
-        /// </summary>
-        [JsonProperty(PropertyName = "instanceCloseDelayDuration")]
-        public string InstanceCloseDelayDuration { get; set; }
 
         /// <summary>
         /// Validate the object.

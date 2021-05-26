@@ -149,6 +149,16 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("actionLinkTemplate");
                 writer.WriteStringValue(ActionLinkTemplate);
             }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType");
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
+            if (Optional.IsDefined(CredentialId))
+            {
+                writer.WritePropertyName("credentialId");
+                writer.WriteStringValue(CredentialId);
+            }
             writer.WriteEndObject();
         }
 
@@ -163,9 +173,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                     case "AzureCosmosDB": return AzureCosmosDBDataFeed.DeserializeAzureCosmosDBDataFeed(element);
                     case "AzureDataExplorer": return AzureDataExplorerDataFeed.DeserializeAzureDataExplorerDataFeed(element);
                     case "AzureDataLakeStorageGen2": return AzureDataLakeStorageGen2DataFeed.DeserializeAzureDataLakeStorageGen2DataFeed(element);
+                    case "AzureEventHubs": return AzureEventHubsDataFeed.DeserializeAzureEventHubsDataFeed(element);
+                    case "AzureLogAnalytics": return AzureLogAnalyticsDataFeed.DeserializeAzureLogAnalyticsDataFeed(element);
                     case "AzureTable": return AzureTableDataFeed.DeserializeAzureTableDataFeed(element);
-                    case "Elasticsearch": return ElasticsearchDataFeed.DeserializeElasticsearchDataFeed(element);
-                    case "HttpRequest": return HttpRequestDataFeed.DeserializeHttpRequestDataFeed(element);
                     case "InfluxDB": return InfluxDBDataFeed.DeserializeInfluxDBDataFeed(element);
                     case "MongoDB": return MongoDBDataFeed.DeserializeMongoDBDataFeed(element);
                     case "MySql": return MySqlDataFeed.DeserializeMySqlDataFeed(element);
@@ -201,6 +211,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<DataFeedStatus> status = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> actionLinkTemplate = default;
+            Optional<AuthenticationTypeEnum> authenticationType = default;
+            Optional<string> credentialId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSourceType"))
@@ -453,8 +465,23 @@ namespace Azure.AI.MetricsAdvisor.Models
                     actionLinkTemplate = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("authenticationType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    authenticationType = new AuthenticationTypeEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("credentialId"))
+                {
+                    credentialId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DataFeedDetail(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value);
+            return new DataFeedDetail(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, Optional.ToNullable(authenticationType), credentialId.Value);
         }
     }
 }

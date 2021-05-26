@@ -3,9 +3,8 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
-    [CodeGenModel("PhoneNumberOperation")]
     internal partial class PhoneNumberOperation
     {
     }

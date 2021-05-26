@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,12 +15,14 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static TagAttributesBase DeserializeTagAttributesBase(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> digest = default;
-            Optional<string> createdTime = default;
-            Optional<string> lastUpdateTime = default;
-            Optional<bool> signed = default;
-            Optional<ChangeableAttributes> changeableAttributes = default;
+            string name = default;
+            string digest = default;
+            DateTimeOffset createdTime = default;
+            DateTimeOffset lastUpdateTime = default;
+            Optional<bool> deleteEnabled = default;
+            Optional<bool> writeEnabled = default;
+            Optional<bool> listEnabled = default;
+            Optional<bool> readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -34,22 +37,12 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    createdTime = property.Value.GetString();
+                    createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastUpdateTime"))
                 {
-                    lastUpdateTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("signed"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    signed = property.Value.GetBoolean();
+                    lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("changeableAttributes"))
@@ -59,11 +52,53 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    changeableAttributes = ChangeableAttributes.DeserializeChangeableAttributes(property.Value);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("deleteEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            deleteEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("writeEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            writeEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("listEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            listEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("readEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            readEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new TagAttributesBase(name.Value, digest.Value, createdTime.Value, lastUpdateTime.Value, Optional.ToNullable(signed), changeableAttributes.Value);
+            return new TagAttributesBase(name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }

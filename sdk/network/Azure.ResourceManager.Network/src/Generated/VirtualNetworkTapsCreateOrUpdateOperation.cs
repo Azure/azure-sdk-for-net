@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkTapsCreateOrUpdateOperation : Operation<VirtualNetworkTap>, IOperationSource<VirtualNetworkTap>
     {
         private readonly ArmOperationHelpers<VirtualNetworkTap> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkTapsCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualNetworkTapsCreateOrUpdateOperation()
+        {
+        }
+
         internal VirtualNetworkTapsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualNetworkTap>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkTapsCreateOrUpdateOperation");

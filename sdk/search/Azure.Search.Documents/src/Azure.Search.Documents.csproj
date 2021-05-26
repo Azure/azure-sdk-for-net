@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Search.Documents client library</AssemblyTitle>
-    <Version>11.3.0-beta.1</Version>
+    <Version>11.3.0-beta.3</Version>
     <ApiCompatVersion>11.2.0</ApiCompatVersion>
     <Description>
       This is the Azure Cognitive Search client library for developing .NET
@@ -35,9 +35,8 @@
     <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
 
-  <!-- Project and Package references -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
   <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>

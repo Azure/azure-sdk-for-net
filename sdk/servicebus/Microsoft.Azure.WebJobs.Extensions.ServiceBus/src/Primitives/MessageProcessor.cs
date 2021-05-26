@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <summary>
         /// Initializes a new instance of <see cref="MessageProcessor"/>.
         /// </summary>
-        /// <param name="processor">The <see cref="ServiceBusProcessor"/> to use.</param>
+        /// <param name="processor">The <see cref="ServiceBusProcessor"/> to use for processing messages from Service Bus.</param>
         public MessageProcessor(ServiceBusProcessor processor)
         {
             Processor = processor ?? throw new ArgumentNullException(nameof(processor));
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <summary>
         /// Gets or sets the <see cref="ServiceBusProcessor"/> that will be used by the <see cref="Processor"/>.
         /// </summary>
-        internal ServiceBusProcessor Processor { get; set; }
+        protected internal ServiceBusProcessor Processor { get; }
 
         /// <summary>
         /// This method is called when there is a new message to process, before the job function is invoked.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to process.</param>
         /// <param name="cancellationToken">A cancellation token that will be cancelled when the processor is shutting down.</param>
         /// <returns>A <see cref="Task"/> that returns true if the message processing should continue, false otherwise.</returns>
-        public virtual Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
+        protected internal virtual Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
         {
             return Task.FromResult<bool>(true);
         }
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="cancellationToken">A cancellation token that will be cancelled when the processor is shutting down.</param>
         /// <returns>A <see cref="Task"/> that will complete the message processing.</returns>
-        public virtual Task CompleteProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, FunctionResult result, CancellationToken cancellationToken)
+        protected internal virtual Task CompleteProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
             if (message is null)
             {

@@ -45,10 +45,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="policy"> Activity policy. </param>
         /// <param name="dataset"> GetMetadata activity dataset reference. </param>
         /// <param name="fieldList"> Fields of metadata to get from dataset. </param>
-        internal GetMetadataActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DatasetReference dataset, IList<object> fieldList) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="storeSettings"> GetMetadata activity store settings. </param>
+        /// <param name="formatSettings"> GetMetadata activity format settings. </param>
+        internal GetMetadataActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DatasetReference dataset, IList<object> fieldList, StoreReadSettings storeSettings, FormatReadSettings formatSettings) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Dataset = dataset;
             FieldList = fieldList;
+            StoreSettings = storeSettings;
+            FormatSettings = formatSettings;
             Type = type ?? "GetMetadata";
         }
 
@@ -56,5 +60,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetReference Dataset { get; set; }
         /// <summary> Fields of metadata to get from dataset. </summary>
         public IList<object> FieldList { get; }
+        /// <summary> GetMetadata activity store settings. </summary>
+        public StoreReadSettings StoreSettings { get; set; }
+        /// <summary> GetMetadata activity format settings. </summary>
+        public FormatReadSettings FormatSettings { get; set; }
     }
 }

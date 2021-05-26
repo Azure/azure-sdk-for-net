@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CassandraResourcesUpdateCassandraKeyspaceThroughputOperation : Operation<ThroughputSettingsGetResults>, IOperationSource<ThroughputSettingsGetResults>
     {
         private readonly ArmOperationHelpers<ThroughputSettingsGetResults> _operation;
+
+        /// <summary> Initializes a new instance of CassandraResourcesUpdateCassandraKeyspaceThroughputOperation for mocking. </summary>
+        protected CassandraResourcesUpdateCassandraKeyspaceThroughputOperation()
+        {
+        }
+
         internal CassandraResourcesUpdateCassandraKeyspaceThroughputOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ThroughputSettingsGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CassandraResourcesUpdateCassandraKeyspaceThroughputOperation");

@@ -7,11 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Data.Tables.Tests
 {
-    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
     /// <summary>
     /// The suite of tests for the <see cref="TableServiceClient"/> class.
     /// </summary>
@@ -19,6 +17,7 @@ namespace Azure.Data.Tables.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
         public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
@@ -51,19 +50,16 @@ namespace Azure.Data.Tables.Tests
         protected string ServiceUri;
         protected string AccountName;
         protected string AccountKey;
-        protected string ConnectionString;
-        private readonly Dictionary<string, string> _cosmosIgnoreTests = new Dictionary<string, string>
+
+        private readonly Dictionary<string, string> _cosmosIgnoreTests = new()
         {
-            {"CustomEntityMergeRespectsEtag", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
-            {"EntityMergeRespectsEtag", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
-            {"EntityMergeDoesPartialPropertyUpdates", "https://github.com/Azure/azure-sdk-for-net/issues/13555"},
             {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},
             {"GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints."},
             {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."},
             {"ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges", "Shared access signature with PartitionKey or RowKey are not supported"},
             {"ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported"},
+            {"ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported"},
             {"ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported"},
-            {"BatchInsertAndMergeAndDelete", "https://github.com/Azure/azure-sdk-for-net/issues/13555"}
         };
 
         /// <summary>
@@ -103,7 +99,7 @@ namespace Azure.Data.Tables.Tests
             service = InstrumentClient(new TableServiceClient(
                 new Uri(ServiceUri),
                 new TableSharedKeyCredential(AccountName, AccountKey),
-                InstrumentClientOptions(new TableClientOptions())));
+                InstrumentClientOptions(new TablesClientOptions())));
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 
@@ -131,7 +127,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
+        internal static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
@@ -159,7 +155,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
+        internal static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
@@ -187,7 +183,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
+        internal static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
@@ -215,7 +211,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
+        internal static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
@@ -223,7 +219,7 @@ namespace Azure.Data.Tables.Tests
                 return new ComplexEntity(partitionKeyValue, string.Format("{0:0000}", n))
                 {
                     String = string.Format("{0:0000}", n),
-                    Binary = new byte[] { 0x01, 0x02, (byte)n },
+                    Binary = new BinaryData(new byte[] { 0x01, 0x02, (byte)n }),
                     BinaryPrimitive = new byte[] { 0x01, 0x02, (byte)n },
                     Bool = n % 2 == 0,
                     BoolPrimitive = n % 2 == 0,
@@ -410,9 +406,9 @@ namespace Azure.Data.Tables.Tests
 
             public bool BoolPrimitive { get; set; } = false;
 
-            public Byte[] Binary { get; set; } = new Byte[] { 1, 2, 3, 4 };
+            public BinaryData Binary { get; set; } = new BinaryData(new byte[] { 1, 2, 3, 4 });
 
-            public Byte[] BinaryNull { get; set; } = null;
+            public BinaryData BinaryNull { get; set; } = null;
 
             public byte[] BinaryPrimitive { get; set; } = new byte[] { 1, 2, 3, 4 };
 
@@ -510,9 +506,9 @@ namespace Azure.Data.Tables.Tests
                 Assert.AreEqual(a.BinaryPrimitive.GetValue(0), b.BinaryPrimitive.GetValue(0));
                 Assert.AreEqual(a.BinaryPrimitive.GetValue(1), b.BinaryPrimitive.GetValue(1));
                 Assert.AreEqual(a.BinaryPrimitive.GetValue(2), b.BinaryPrimitive.GetValue(2));
-                Assert.AreEqual(a.Binary.GetValue(0), b.Binary.GetValue(0));
-                Assert.AreEqual(a.Binary.GetValue(1), b.Binary.GetValue(1));
-                Assert.AreEqual(a.Binary.GetValue(2), b.Binary.GetValue(2));
+                Assert.AreEqual(a.Binary.ToArray().GetValue(0), b.Binary.ToArray().GetValue(0));
+                Assert.AreEqual(a.Binary.ToArray().GetValue(1), b.Binary.ToArray().GetValue(1));
+                Assert.AreEqual(a.Binary.ToArray().GetValue(2), b.Binary.ToArray().GetValue(2));
                 Assert.AreEqual(a.BoolPrimitive, b.BoolPrimitive);
                 Assert.AreEqual(a.BoolPrimitiveN, b.BoolPrimitiveN);
                 Assert.AreEqual(a.BoolPrimitiveNull, b.BoolPrimitiveNull);
@@ -535,9 +531,16 @@ namespace Azure.Data.Tables.Tests
             public DateTimeOffset? Timestamp { get; set; }
             public ETag ETag { get; set; }
             public Foo MyFoo { get; set; }
+            public NullableFoo? MyNullableFoo { get; set; }
         }
 
         public enum Foo
+        {
+            One,
+            Two
+        }
+
+        public enum NullableFoo
         {
             One,
             Two

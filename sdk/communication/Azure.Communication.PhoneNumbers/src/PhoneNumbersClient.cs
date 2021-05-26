@@ -4,7 +4,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.PhoneNumbers.Models;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -81,7 +80,7 @@ namespace Azure.Communication.PhoneNumbers
         { }
 
         private PhoneNumbersClient(string endpoint, HttpPipeline httpPipeline, PhoneNumbersClientOptions options)
-            : this(new ClientDiagnostics(options), httpPipeline, endpoint, options.Version)
+            : this(new CommunicationClientDiagnostics(options), httpPipeline, endpoint, options.Version)
         { }
 
         /// <summary> Initializes a new instance of PhoneNumbersClient. </summary>
@@ -111,14 +110,15 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(phoneNumber, "phoneNumber");
+            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReleasePhoneNumber)}");
             scope.Start();
             try
             {
                 var originalResponse = await RestClient.ReleasePhoneNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
-                return new ReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
+                return new ReleasePhoneNumberOperation(
+                    new InternalReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse));
             }
             catch (Exception e)
             {
@@ -133,14 +133,15 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(phoneNumber, "phoneNumber");
+            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReleasePhoneNumber)}");
             scope.Start();
             try
             {
                 var originalResponse = RestClient.ReleasePhoneNumber(phoneNumber, cancellationToken);
-                return new ReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
+                return new ReleasePhoneNumberOperation(
+                    new InternalReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse));
             }
             catch (Exception e)
             {
@@ -157,7 +158,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(phoneNumber, "phoneNumber");
+            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
             scope.Start();
@@ -181,7 +182,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(phoneNumber, "phoneNumber");
+            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
             scope.Start();
@@ -243,7 +244,8 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 var originalResponse = await RestClient.PurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
-                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                return new PurchasePhoneNumbersOperation(
+                    new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse));
             }
             catch (Exception e)
             {
@@ -262,7 +264,8 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 var originalResponse = RestClient.PurchasePhoneNumbers(searchId, cancellationToken);
-                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                return new PurchasePhoneNumbersOperation(
+                    new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse));
             }
             catch (Exception e)
             {
@@ -272,26 +275,26 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
-        /// <param name="threeLetterISOCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="phoneNumberType"> The type of phone numbers to search for. </param>
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="options"> The phone number search options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threeLetterISOCountryName"/> is null. </exception>
-        public virtual async Task<SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string threeLetterISOCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
+        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
+        public virtual async Task<SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threeLetterISOCountryName, "threeLetterISOCountryName");
-            Argument.AssertNotNull(capabilities, "capabilities");
+            Argument.AssertNotNull(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
+            Argument.AssertNotNull(capabilities, nameof(capabilities));
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartSearchAvailablePhoneNumbers)}");
             scope.Start();
             try
             {
                 var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
-                var originalResponse = await RestClient.SearchAvailablePhoneNumbersAsync(threeLetterISOCountryName, searchRequest, cancellationToken).ConfigureAwait(false);
-                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(threeLetterISOCountryName, searchRequest).Request, originalResponse);
+                var originalResponse = await RestClient.SearchAvailablePhoneNumbersAsync(twoLetterIsoCountryName, searchRequest, cancellationToken).ConfigureAwait(false);
+                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(twoLetterIsoCountryName, searchRequest).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -301,26 +304,26 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
-        /// <param name="threeLetterISOCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="phoneNumberType"> The type of phone numbers to search for. </param>
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="options"> The phone number search options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threeLetterISOCountryName"/> is null. </exception>
-        public virtual SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string threeLetterISOCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
+        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
+        public virtual SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threeLetterISOCountryName, "threeLetterISOCountryName");
-            Argument.AssertNotNull(capabilities, "capabilities");
+            Argument.AssertNotNull(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
+            Argument.AssertNotNull(capabilities, nameof(capabilities));
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartSearchAvailablePhoneNumbers)}");
             scope.Start();
             try
             {
                 var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
-                var originalResponse = RestClient.SearchAvailablePhoneNumbers(threeLetterISOCountryName, searchRequest, cancellationToken);
-                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(threeLetterISOCountryName, searchRequest).Request, originalResponse);
+                var originalResponse = RestClient.SearchAvailablePhoneNumbers(twoLetterIsoCountryName, searchRequest, cancellationToken);
+                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(twoLetterIsoCountryName, searchRequest).Request, originalResponse);
             }
             catch (Exception e)
             {

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Capability value for calling. </summary>
     public readonly partial struct PhoneNumberCapabilityType : IEquatable<PhoneNumberCapabilityType>

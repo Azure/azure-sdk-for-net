@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-bf02e576-641e-4c8d-67e8-f2d02434fdab?sv=2020-06-12\u0026st=2021-02-17T21%3A21%3A08Z\u0026se=2021-02-17T23%3A21%3A08Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026restype=container",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-bf02e576-641e-4c8d-67e8-f2d02434fdab?sv=2020-08-04\u0026st=2021-02-17T21%3A21%3A08Z\u0026se=2021-02-17T23%3A21%3A08Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -12,7 +12,7 @@
         ],
         "x-ms-client-request-id": "ea27fcd9-a94b-2470-4eeb-318b672f593d",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -27,7 +27,7 @@
         "x-ms-client-request-id": "ea27fcd9-a94b-2470-4eeb-318b672f593d",
         "x-ms-error-code": "AuthorizationFailure",
         "x-ms-request-id": "56700e18-b01e-0020-697b-0504f8000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationFailure\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation.\n",

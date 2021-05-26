@@ -1,9 +1,5 @@
 # Azure Communication Chat client library for .NET
 
-> Server - Chat Api Version:  2021-01-27-preview4
-
-> Client - Chat SDK Version:  1.0.0-beta.5
-
 This package contains a C# SDK for Azure Communication Services for chat.
 
 [Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
@@ -15,7 +11,7 @@ This package contains a C# SDK for Azure Communication Services for chat.
 Install the Azure Communication Chat client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Chat --version 1.0.0-beta.5
+dotnet add package Azure.Communication.Chat --version 1.0.1
 ``` 
 
 ### Prerequisites

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class SqlResourcesMigrateSqlDatabaseToAutoscaleOperation : Operation<ThroughputSettingsGetResults>, IOperationSource<ThroughputSettingsGetResults>
     {
         private readonly ArmOperationHelpers<ThroughputSettingsGetResults> _operation;
+
+        /// <summary> Initializes a new instance of SqlResourcesMigrateSqlDatabaseToAutoscaleOperation for mocking. </summary>
+        protected SqlResourcesMigrateSqlDatabaseToAutoscaleOperation()
+        {
+        }
+
         internal SqlResourcesMigrateSqlDatabaseToAutoscaleOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ThroughputSettingsGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlResourcesMigrateSqlDatabaseToAutoscaleOperation");

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Resources
     public partial class ResourcesCreateOrUpdateOperation : Operation<GenericResource>, IOperationSource<GenericResource>
     {
         private readonly ArmOperationHelpers<GenericResource> _operation;
+
+        /// <summary> Initializes a new instance of ResourcesCreateOrUpdateOperation for mocking. </summary>
+        protected ResourcesCreateOrUpdateOperation()
+        {
+        }
+
         internal ResourcesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesCreateOrUpdateOperation");

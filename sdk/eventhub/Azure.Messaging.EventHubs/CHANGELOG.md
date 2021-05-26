@@ -1,7 +1,70 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
+## 5.5.0-beta.1 (Unreleased)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### New Features
+
+-  When stopping, the `EventProcessor<TPartition>` will now attempt to force-close the connection to the Event Hubs service to abort in-process read operations blocked on their timeout.  This should significantly help reduce the amount of time the processor takes to stop in many scenarios. _(Based on a community prototype contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 5.4.1 (2021-05-11)
+
+### Changes
+
+#### New Features
+
+- `EventProcessor<TPartition>` will now perform validation of core configuration and permissions at startup, in order to attempt to detect unrecoverable problems more deterministically.  Validation is non-blocking and will not delay claiming of partitions.  One important note is that validation should be considered point-in-time and best effort; it is not meant to replace monitoring of error handler activity.
+
+- Partition initialization for `EventProcessor<TPartition>` has been moved to a background operation.  This will allow partitions to be more efficiently managed and speed up ownership claims, especially when using the `LoadBalancingStrategy.Greedy` configuration or when the processor is recovering from some error conditions.
+
+#### Key Bug Fixes
+
+- Dependencies have been updated to resolve security warnings for CVE-2021-26701. _(The Event Hubs client library does not make use of the vulnerable components, directly or indirectly)_
+
+- Event Hubs client types will now consider some additional exception types as transient when they occur in the context of opening an AMQP connection or link; this allows the client to attempt recovery by discarding the faulted connection and attempting to create a new one.
+
+- Event Hubs client types will now react more deterministically when a shared connection was closed while still in use.  Previously, the exception surfaced varied based on internal state.  Now, an `EventHubsException` with `FailureReason.ClientClosed` and an appropriate message will be thrown.
+
+- `EventProcessor<TPartition>` will no longer inappropriately determine that it should attempt to steal partitions from itself or when the load is balanced but there is an uneven ownership distribution.  Previously, stealing was attempted but no candidates were found, leading to log spam but no interruption in processing.
+
+## 5.4.0 (2021-04-05)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### New Features
+
+- The Event Hubs clients now support shared key and shared access signature authentication using the `AzureNamedKeyCredential` and `AzureSasCredential` types in addition to the connection string.  Use of the credential allows the shared key or SAS to be updated without the need to create a new Event Hubs client.
+
+- The `Properties` collection used by `EventData` is now lazily allocated, avoiding memory bloat when not used.
+
+- The `SystemProperties` collection used by `EventData` will not use a shared empty set for events that have not been read from the Event Hubs service, reducing memory allocation.
+
+- Multiple enhancements were made to the transport paths for publishing and reading events to reduce memory allocations and increase performance.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+#### Key Bug Fixes
+
+- The AMQP library used for transport has been updated, fixing several issues including a potential unobserved   `ObjectDisposedException` that could cause the host process to crash.  _(see: [release notes](https://github.com/Azure/azure-amqp/releases/tag/v2.4.13))_
+
+## 5.4.0-beta.1 (2021-03-17)
+
+### Changes
+
+#### New Features
+
+- Returned the idempotent publishing feature to the public API surface.
 
 ## 5.3.1 (2021-03-09)
 

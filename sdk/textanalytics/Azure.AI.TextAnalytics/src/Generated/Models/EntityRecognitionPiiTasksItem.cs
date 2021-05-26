@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksEntityRecognitionPiiTasksItem. </summary>
     internal partial class EntityRecognitionPiiTasksItem : TaskState
@@ -23,10 +24,12 @@ namespace Azure.AI.TextAnalytics
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
-        /// <param name="resultsInternal"> . </param>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, name, status)
+        /// <param name="results"> . </param>
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, name, status)
         {
-            ResultsInternal = resultsInternal;
+            Results = results;
         }
+
+        public PiiEntitiesResult Results { get; }
     }
 }

@@ -83,9 +83,125 @@ Describe "Platform Matrix nonSparse" -Tag "nonsparse" {
         $matrix = GenerateMatrix $config "sparse" -nonSparseParameters "testField3","testField4"
         $matrix.Length | Should -Be 8
     }
+
+    It "Should apply nonSparseParameters to an imported matrix" {
+        $matrixJson = @'
+{
+    "matrix": {
+        "$IMPORT": "./test-import-matrix.json",
+        "TestField1": "test1"
+    },
+    "exclude": [ { "Baz": "importedBaz" } ]
+}
+'@
+
+        $expectedMatrix = @'
+[
+  {
+    "parameters": { "TestField1": "test1", "Foo": "foo1", "Bar": "bar1" },
+    "name": "test1_foo1_bar1"
+  },
+  {
+    "parameters": { "TestField1": "test1", "Foo": "foo1", "Bar": "bar2" },
+    "name": "test1_foo1_bar2"
+  },
+  {
+    "parameters": { "TestField1": "test1", "Foo": "foo2", "Bar": "bar1" },
+    "name": "test1_foo2_bar1"
+  },
+  {
+    "parameters": { "TestField1": "test1", "Foo": "foo2", "Bar": "bar2" },
+    "name": "test1_foo2_bar2"
+  }
+]
+'@
+
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $matrix = GenerateMatrix $importConfig "sparse" -nonSparseParameters "Foo"
+        $expected = $expectedMatrix | ConvertFrom-Json -AsHashtable
+
+        $matrix.Length | Should -Be 4
+        CompareMatrices $matrix $expected
+    }
 }
 
 Describe "Platform Matrix Import" -Tag "import" {
+    It "Should generate a sparse matrix where the entire base matrix is imported" {
+        $matrixJson = @'
+{
+    "matrix": {
+        "$IMPORT": "./test-import-matrix.json"
+    },
+    "include": [
+        {
+            "fooinclude": "fooinclude"
+        }
+    ]
+}
+'@
+
+        $expectedMatrix = @'
+[
+  {
+    "parameters": { "Foo": "foo1", "Bar": "bar1" },
+    "name": "foo1_bar1"
+  },
+  {
+    "parameters": { "Foo": "foo2", "Bar": "bar2" },
+    "name": "foo2_bar2"
+  },
+  {
+    "parameters": { "Baz": "importedBaz" },
+    "name": "importedBazName"
+  },
+  {
+    "parameters": { "fooinclude": "fooinclude" },
+    "name": "fooinclude"
+  },
+]
+'@
+
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $matrix = GenerateMatrix $importConfig "sparse"
+        $expected = $expectedMatrix | ConvertFrom-Json -AsHashtable
+
+        $matrix.Length | Should -Be 4
+        CompareMatrices $matrix $expected
+    }
+
+    It "Should import a matrix and combine with length=1 vectors" {
+        $matrixJson = @'
+{
+    "matrix": {
+        "$IMPORT": "./test-import-matrix.json",
+        "TestField1": "test1",
+        "TestField2": "test2"
+    },
+    "exclude": [ { "Baz": "importedBaz" } ]
+}
+'@
+
+        $expectedMatrix = @'
+[
+  {
+    "parameters": { "TestField1": "test1", "TestField2": "test2", "Foo": "foo1", "Bar": "bar1" },
+    "name": "test1_test2_foo1_bar1"
+  },
+  {
+    "parameters": { "TestField1": "test1", "TestField2": "test2", "Foo": "foo2", "Bar": "bar2" },
+    "name": "test1_test2_foo2_bar2"
+  }
+]
+'@
+
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $matrix = GenerateMatrix $importConfig "sparse"
+        $expected = $expectedMatrix | ConvertFrom-Json -AsHashtable
+
+        $matrix.Length | Should -Be 2
+        CompareMatrices $matrix $expected
+    }
+
     It "Should generate a matrix with nonSparseParameters and an imported sparse matrix" {
         $matrixJson = @'
 {
@@ -403,5 +519,27 @@ Describe "Platform Matrix Replace" -Tag "replace" {
 
         $matrix[1].name | Should -Be "foo2_barReplacedBar2"
         $matrix[1].parameters.Bar | Should -Be "barReplacedBar2"
+    }
+
+    It "Should only fully match a string for replace" {
+        $matrixJson = @'
+{
+    "matrix": {
+        "Foo": [ "foo1", "foo2" ],
+        "Bar": "bar1"
+    }
+}
+'@
+
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+
+        $replace = @("Foo=foo/shouldNotReplaceFoo", "B=bar1/shouldNotReplaceBar")
+        $matrix = GenerateMatrix -config $importConfig -selectFromMatrixType "sparse" -replace $replace
+
+        $matrix.Length | Should -Be 2
+        $matrix[0].parameters.Foo | Should -Be "foo1"
+        $matrix[0].parameters.Bar | Should -Be "bar1"
+        $matrix[1].parameters.Foo | Should -Be "foo2"
+        $matrix[1].parameters.Bar | Should -Be "bar1"
     }
 }

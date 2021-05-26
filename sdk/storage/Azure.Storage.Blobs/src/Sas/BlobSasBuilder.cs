@@ -532,7 +532,8 @@ namespace Azure.Storage.Sas
                     Resource = Constants.Sas.Resource.BlobVersion;
                 }
             }
-            Version = SasQueryParameters.DefaultSasVersion;
+
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
         }
 
         /// <summary>
@@ -558,5 +559,29 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the BlobSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        internal static BlobSasBuilder DeepCopy(BlobSasBuilder originalBlobSasBuilder)
+            => new()
+            {
+                Version = originalBlobSasBuilder.Version,
+                Protocol = originalBlobSasBuilder.Protocol,
+                StartsOn = originalBlobSasBuilder.StartsOn,
+                ExpiresOn = originalBlobSasBuilder.ExpiresOn,
+                Permissions = originalBlobSasBuilder.Permissions,
+                IPRange = originalBlobSasBuilder.IPRange,
+                Identifier = originalBlobSasBuilder.Identifier,
+                BlobContainerName = originalBlobSasBuilder.BlobContainerName,
+                BlobName = originalBlobSasBuilder.BlobName,
+                Snapshot = originalBlobSasBuilder.Snapshot,
+                BlobVersionId = originalBlobSasBuilder.BlobVersionId,
+                Resource = originalBlobSasBuilder.Resource,
+                CacheControl = originalBlobSasBuilder.CacheControl,
+                ContentDisposition = originalBlobSasBuilder.ContentDisposition,
+                ContentEncoding = originalBlobSasBuilder.ContentEncoding,
+                ContentLanguage = originalBlobSasBuilder.ContentLanguage,
+                ContentType = originalBlobSasBuilder.ContentType,
+                PreauthorizedAgentObjectId = originalBlobSasBuilder.PreauthorizedAgentObjectId,
+                CorrelationId = originalBlobSasBuilder.CorrelationId
+            };
     }
 }

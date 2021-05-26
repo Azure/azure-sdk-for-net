@@ -18,8 +18,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress("Dimension")]
     public partial class DataPointAnomaly
     {
-        internal DataPointAnomaly(string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
+        internal DataPointAnomaly(Guid? dataFeedId, string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
         {
+            DataFeedId = dataFeedId;
             MetricId = metricId;
             AnomalyDetectionConfigurationId = anomalyDetectionConfigurationId;
             Timestamp = timestamp;
@@ -28,6 +29,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             SeriesKey = new DimensionKey(dimension);
             Severity = property.AnomalySeverity;
             Status = property.AnomalyStatus;
+            Value = property.Value;
+            ExpectedValue = property.ExpectedValue;
         }
 
         /// <summary>
@@ -84,5 +87,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// or <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// </summary>
         public DateTimeOffset? ModifiedTime { get; }
+
+        /// <summary>
+        /// The value of the data point that generated this anomaly.
+        /// </summary>
+        public double Value { get; }
+
+        /// <summary>
+        /// The expected value of the data point that generated this anomaly, according to the service's
+        /// smart detector. <c>null</c> if the quantity of historical points is not enough to make a prediction,
+        /// or if this anomaly was not detected by a <see cref="SmartDetectionCondition"/>.
+        /// </summary>
+        public double? ExpectedValue { get; }
+
+        internal Guid? DataFeedId { get; }
     }
 }
