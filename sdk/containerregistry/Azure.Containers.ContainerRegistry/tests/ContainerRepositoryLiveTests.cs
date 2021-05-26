@@ -43,7 +43,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             RepositoryProperties originalProperties = repositoryProperties;
 
             // Act
-            RepositoryProperties properties = await repository.SetPropertiesAsync(
+            RepositoryProperties properties = await repository.UpdatePropertiesAsync(
                 new RepositoryProperties()
                 {
                     CanList = false,
@@ -66,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsFalse(updatedProperties.CanDelete);
 
             // Cleanup
-            await repository.SetPropertiesAsync(originalProperties);
+            await repository.UpdatePropertiesAsync(originalProperties);
         }
 
         [RecordedTest, NonParallelizable]
@@ -78,7 +78,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             Assert.ThrowsAsync<RequestFailedException>(() =>
-                repository.SetPropertiesAsync(
+                repository.UpdatePropertiesAsync(
                     new RepositoryProperties()
                     {
                         CanList = false,

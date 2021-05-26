@@ -123,11 +123,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<ArtifactManifestProperties>> SetManifestPropertiesAsync(ArtifactManifestProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArtifactManifestProperties>> UpdateManifestPropertiesAsync(ArtifactManifestProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(SetManifestProperties)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(UpdateManifestProperties)}");
             scope.Start();
             try
             {
@@ -146,11 +146,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<ArtifactManifestProperties> SetManifestProperties(ArtifactManifestProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<ArtifactManifestProperties> UpdateManifestProperties(ArtifactManifestProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(SetManifestProperties)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(UpdateManifestProperties)}");
             scope.Start();
             try
             {
@@ -362,12 +362,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<ArtifactTagProperties>> SetTagPropertiesAsync(string tag, ArtifactTagProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArtifactTagProperties>> UpdateTagPropertiesAsync(string tag, ArtifactTagProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(SetTagProperties)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(UpdateTagProperties)}");
             scope.Start();
             try
             {
@@ -399,12 +399,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<ArtifactTagProperties> SetTagProperties(string tag, ArtifactTagProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<ArtifactTagProperties> UpdateTagProperties(string tag, ArtifactTagProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(SetTagProperties)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(UpdateTagProperties)}");
             scope.Start();
             try
             {
