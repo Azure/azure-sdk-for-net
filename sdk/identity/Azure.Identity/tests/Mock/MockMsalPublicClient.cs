@@ -21,11 +21,11 @@ namespace Azure.Identity.Tests.Mock
 
         public Func<string[], string, AuthenticationResult> UserPassAuthFactory { get; set; }
 
-        public Func<string[], string, Prompt, string, bool, CancellationToken, AuthenticationResult> InteractiveAuthFactory { get; set; }
+        public Func<string[], string, Prompt, string, string, bool, CancellationToken, AuthenticationResult> InteractiveAuthFactory { get; set; }
 
         public Func<string[], string, AuthenticationResult> SilentAuthFactory { get; set; }
 
-        public Func<string[], IAccount, bool, CancellationToken, AuthenticationResult> ExtendedSilentAuthFactory { get; set; }
+        public Func<string[], IAccount, string, bool, CancellationToken, AuthenticationResult> ExtendedSilentAuthFactory { get; set; }
 
         public Func<DeviceCodeInfo, CancellationToken, AuthenticationResult> DeviceCodeAuthFactory { get; set; }
 
@@ -67,6 +67,7 @@ namespace Azure.Identity.Tests.Mock
             string claims,
             Prompt prompt,
             string loginHint,
+            string tenantId,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -75,7 +76,7 @@ namespace Azure.Identity.Tests.Mock
 
             if (interactiveAuthFactory != null)
             {
-                return new ValueTask<AuthenticationResult>(interactiveAuthFactory(scopes, claims, prompt, loginHint, async, cancellationToken));
+                return new ValueTask<AuthenticationResult>(interactiveAuthFactory(scopes, claims, prompt, loginHint, tenantId, async, cancellationToken));
             }
             if (authFactory != null)
             {
@@ -89,12 +90,13 @@ namespace Azure.Identity.Tests.Mock
             string[] scopes,
             string claims,
             IAccount account,
+            string tenantId,
             bool async,
             CancellationToken cancellationToken)
         {
             if (ExtendedSilentAuthFactory != null)
             {
-                return new ValueTask<AuthenticationResult>(ExtendedSilentAuthFactory(scopes, account, async, cancellationToken));
+                return new ValueTask<AuthenticationResult>(ExtendedSilentAuthFactory(scopes, account, tenantId, async, cancellationToken));
             }
 
             Func<string[], string, AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;

@@ -12,12 +12,23 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
     public class ClientCertificateCredentialTests : ClientTestBase
     {
+        private const string Scope = "https://vault.azure.net/.default";
+        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
+        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
+        private const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
+        private string expectedToken;
+        private DateTimeOffset expiresOn;
+        private MockMsalConfidentialClient mockMsalClient;
+        private string expectedTenantId;
+        private TokenCredentialOptions options;
+
         public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
         { }
 
@@ -143,29 +154,56 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void UsesTenantIdHint([Values("1234", null)] string tenantId, [Values(true, false)] bool usePemFile)
+        public async Task UsesTenantIdHint(
+            [Values(true, false)] bool usePemFile,
+            [Values(null, TenantIdHint)] string tenantId,
+            [Values(true, false)] bool preferHint)
         {
-            string expectedInnerExMessage = Guid.NewGuid().ToString();
-            var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expectedInnerExMessage));
-            var expectedTenantId = Guid.NewGuid().ToString();
-            var expectedClientId = Guid.NewGuid().ToString();
+            TestSetup();
+            options.PreferTenantIdChallengeHint = preferHint;
+            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath);
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
-                    ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, default, default, mockMsalClient)
-                    : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, default, default, mockMsalClient)
+                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options, default, mockMsalClient)
+                    : new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockMsalClient)
             );
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var token = await credential.GetTokenAsync(context);
 
-            Assert.IsNotNull(ex.InnerException);
+            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
 
-            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+        public void TestSetup()
+        {
+            options = new TokenCredentialOptions();
+            expectedTenantId = null;
+            expectedToken = Guid.NewGuid().ToString();
+            expiresOn = DateTimeOffset.Now.AddHours(1);
+            var result = new AuthenticationResult(
+                expectedToken,
+                false,
+                null,
+                expiresOn,
+                expiresOn,
+                TenantId,
+                new MockAccount("username"),
+                null,
+                new[] { Scope },
+                Guid.NewGuid(),
+                null,
+                "Bearer");
 
-            Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
+            Func<string[], string, AuthenticationResult> clientFactory = (_, _tenantId) =>
+            {
+                Assert.AreEqual(expectedTenantId, _tenantId);
+                return result;
+            };
+            mockMsalClient = new MockMsalConfidentialClient(clientFactory);
         }
     }
 }

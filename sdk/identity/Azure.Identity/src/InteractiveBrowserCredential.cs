@@ -217,8 +217,9 @@ namespace Azure.Identity
                 _ => Prompt.NoPrompt
             };
 
+            var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record?.TenantId, context, _options);
             AuthenticationResult result = await Client
-                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, async, cancellationToken)
+                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, async, cancellationToken)
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);

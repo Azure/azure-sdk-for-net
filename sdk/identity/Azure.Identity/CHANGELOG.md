@@ -5,6 +5,7 @@
 ### Fixes and improvements
 
 - Added `LoginHint` property to `InteractiveBrowserCredentialOptions` which allows a user name to be pre-selected for interactive logins. Setting this option skips the account selection prompt and immediately attempts to login with the specified account.
+- TenantId values returned from service challenge responses can now be used to request tokens from the correct tenantId.
 
 ## 1.4.0 (2021-05-12)
 
