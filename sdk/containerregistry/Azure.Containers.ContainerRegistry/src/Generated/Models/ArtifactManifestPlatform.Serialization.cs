@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class ArtifactManifestReference
+    public partial class ArtifactManifestPlatform
     {
-        internal static ArtifactManifestReference DeserializeArtifactManifestReference(JsonElement element)
+        internal static ArtifactManifestPlatform DeserializeArtifactManifestPlatform(JsonElement element)
         {
             string digest = default;
-            ArtifactArchitecture architecture = default;
-            ArtifactOperatingSystem os = default;
+            Optional<ArtifactArchitecture> architecture = default;
+            Optional<ArtifactOperatingSystem> os = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"))
@@ -26,16 +26,26 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("architecture"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     architecture = new ArtifactArchitecture(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("os"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     os = new ArtifactOperatingSystem(property.Value.GetString());
                     continue;
                 }
             }
-            return new ArtifactManifestReference(digest, architecture, os);
+            return new ArtifactManifestPlatform(digest, Optional.ToNullable(architecture), Optional.ToNullable(os));
         }
     }
 }

@@ -10,20 +10,27 @@ using System;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
-    public partial class ArtifactManifestReference
+    public partial class ArtifactManifestPlatform
     {
-        /// <summary> Initializes a new instance of ArtifactManifestReference. </summary>
+        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
         /// <param name="digest"> Manifest digest. </param>
-        /// <param name="architecture"> CPU architecture. </param>
-        /// <param name="operatingSystem"> Operating system. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
-        internal ArtifactManifestReference(string digest, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem)
+        internal ArtifactManifestPlatform(string digest)
         {
             if (digest == null)
             {
                 throw new ArgumentNullException(nameof(digest));
             }
 
+            Digest = digest;
+        }
+
+        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
+        /// <param name="digest"> Manifest digest. </param>
+        /// <param name="architecture"> CPU architecture. </param>
+        /// <param name="operatingSystem"> Operating system. </param>
+        internal ArtifactManifestPlatform(string digest, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem)
+        {
             Digest = digest;
             Architecture = architecture;
             OperatingSystem = operatingSystem;
@@ -32,8 +39,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Manifest digest. </summary>
         public string Digest { get; }
         /// <summary> CPU architecture. </summary>
-        public ArtifactArchitecture Architecture { get; }
+        public ArtifactArchitecture? Architecture { get; }
         /// <summary> Operating system. </summary>
-        public ArtifactOperatingSystem OperatingSystem { get; }
+        public ArtifactOperatingSystem? OperatingSystem { get; }
     }
 }

@@ -6,12 +6,12 @@ using System;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Repository properties. </summary>
-    public partial class RepositoryProperties
+    public partial class ContainerRepositoryProperties
     {
         /// <summary>
-        /// Gets an instance of <see cref="RepositoryProperties"/>.
+        /// Gets an instance of <see cref="ContainerRepositoryProperties"/>.
         /// </summary>
-        public RepositoryProperties()
+        public ContainerRepositoryProperties()
         {
         }
 

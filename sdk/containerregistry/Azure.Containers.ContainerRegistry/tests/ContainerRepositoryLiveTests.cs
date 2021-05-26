@@ -26,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repository = client.GetRepository(_repositoryName);
 
             // Act
-            RepositoryProperties properties = await repository.GetPropertiesAsync();
+            ContainerRepositoryProperties properties = await repository.GetPropertiesAsync();
 
             // Assert
             Assert.AreEqual(_repositoryName, properties.Name);
@@ -39,12 +39,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient();
             var repository = client.GetRepository(_repositoryName);
 
-            RepositoryProperties repositoryProperties = await repository.GetPropertiesAsync();
-            RepositoryProperties originalProperties = repositoryProperties;
+            ContainerRepositoryProperties repositoryProperties = await repository.GetPropertiesAsync();
+            ContainerRepositoryProperties originalProperties = repositoryProperties;
 
             // Act
-            RepositoryProperties properties = await repository.UpdatePropertiesAsync(
-                new RepositoryProperties()
+            ContainerRepositoryProperties properties = await repository.UpdatePropertiesAsync(
+                new ContainerRepositoryProperties()
                 {
                     CanList = false,
                     CanRead = false,
@@ -58,7 +58,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsFalse(properties.CanWrite);
             Assert.IsFalse(properties.CanDelete);
 
-            RepositoryProperties updatedProperties = await repository.GetPropertiesAsync();
+            ContainerRepositoryProperties updatedProperties = await repository.GetPropertiesAsync();
 
             Assert.IsFalse(updatedProperties.CanList);
             Assert.IsFalse(updatedProperties.CanRead);
@@ -77,15 +77,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repository = client.GetRepository(_repositoryName);
 
             // Act
-            Assert.ThrowsAsync<RequestFailedException>(() =>
+            Assert.ThrowsAsync<RequestFailedException>((AsyncTestDelegate)(() =>
                 repository.UpdatePropertiesAsync(
-                    new RepositoryProperties()
+                    new ContainerRepositoryProperties()
                     {
                         CanList = false,
                         CanRead = false,
                         CanWrite = false,
                         CanDelete = false,
-                    }));
+                    })));
         }
 
         [RecordedTest, NonParallelizable]
@@ -252,14 +252,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 // Act
-                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestPropertiesCollectionAsync(ManifestOrderBy.LastUpdatedOnDescending);
+                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestPropertiesCollectionAsync(ArtifactManifestOrderBy.LastUpdatedOnDescending);
 
                 // Assert
                 string digest = null;
                 await foreach (ArtifactManifestProperties manifest in manifests)
                 {
                     // Make sure we're looking at a manifest list, which has the tag
-                    if (manifest.ManifestReferences != null && manifest.ManifestReferences.Count > 0)
+                    if (manifest.RelatedArtifacts != null && manifest.RelatedArtifacts.Count > 0)
                     {
                         digest = manifest.Digest;
                         Assert.That(manifest.RepositoryName.Contains(repositoryName));

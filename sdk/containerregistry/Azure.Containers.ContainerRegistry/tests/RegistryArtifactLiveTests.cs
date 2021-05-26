@@ -24,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient();
             string tag = "v1";
             var artifact = client.GetArtifact(_repositoryName, tag);
-            int helloWorldManifestReferences = 9;
+            int helloWorldRelatedArtifacts = 9;
 
             // Act
             ArtifactManifestProperties properties = await artifact.GetManifestPropertiesAsync();
@@ -32,14 +32,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             Assert.Contains(tag, properties.Tags.ToList());
             Assert.AreEqual(_repositoryName, properties.RepositoryName);
-            Assert.GreaterOrEqual(helloWorldManifestReferences, properties.ManifestReferences.Count);
+            Assert.GreaterOrEqual(helloWorldRelatedArtifacts, properties.RelatedArtifacts.Count);
 
-            Assert.IsTrue(properties.ManifestReferences.Any(
+            Assert.IsTrue(properties.RelatedArtifacts.Any(
                 artifact =>
                     artifact.Architecture == "arm64" &&
                     artifact.OperatingSystem == "linux"));
 
-            Assert.IsTrue(properties.ManifestReferences.Any(
+            Assert.IsTrue(properties.RelatedArtifacts.Any(
                 artifact =>
                     artifact.Architecture == "amd64" &&
                     artifact.OperatingSystem == "windows"));
@@ -55,7 +55,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             ArtifactManifestProperties manifestListProperties = await artifact.GetManifestPropertiesAsync();
-            var arm64LinuxImage = manifestListProperties.ManifestReferences.First(
+            var arm64LinuxImage = manifestListProperties.RelatedArtifacts.First(
                 artifact =>
                     artifact.Architecture == "arm64" &&
                     artifact.OperatingSystem == "linux");
@@ -161,7 +161,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var artifact = client.GetArtifact(_repositoryName, tagName);
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagsAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagPropertiesCollectionAsync();
 
             bool gotV1Tag = false;
             await foreach (ArtifactTagProperties tag in tags)
@@ -189,7 +189,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagsAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagPropertiesCollectionAsync();
             var pages = tags.AsPages(pageSizeHint: pageSize);
 
             int pageCount = 0;
@@ -216,7 +216,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagsAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagPropertiesCollectionAsync();
             var pages = tags.AsPages($"</acr/v1/{_repositoryName}/_tags?last=v1&n={pageSize}>");
 
             int pageCount = 0;
@@ -271,7 +271,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagsAsync(TagOrderBy.LastUpdatedOnDescending);
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagPropertiesCollectionAsync(ArtifactTagOrderBy.LastUpdatedOnDescending);
 
             // Assert
             await foreach (ArtifactTagProperties tag in tags)
