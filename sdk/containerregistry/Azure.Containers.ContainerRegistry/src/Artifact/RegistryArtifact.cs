@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry
         private readonly Uri _registryEndpoint;
         private readonly string _repositoryName;
         private readonly string _tagOrDigest;
-        private readonly string _fullyQualifiedName;
+        private readonly string _fullyQualifiedReference;
 
         private string _digest;
 
@@ -35,7 +35,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Gets the fully qualified name of this artifact.
         /// </summary>
-        public virtual string FullyQualifiedName => _fullyQualifiedName;
+        public virtual string FullyQualifiedReference => _fullyQualifiedReference;
 
         /// <summary>
         /// </summary>
@@ -44,7 +44,7 @@ namespace Azure.Containers.ContainerRegistry
             _repositoryName = repositoryName;
             _tagOrDigest = tagOrDigest;
             _registryEndpoint = registryEndpoint;
-            _fullyQualifiedName = $"{registryEndpoint.Host}/{repositoryName}{(IsDigest(tagOrDigest) ? '@' : ':')}{tagOrDigest}";
+            _fullyQualifiedReference = $"{registryEndpoint.Host}/{repositoryName}{(IsDigest(tagOrDigest) ? '@' : ':')}{tagOrDigest}";
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
