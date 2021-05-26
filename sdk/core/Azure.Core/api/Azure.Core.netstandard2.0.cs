@@ -453,11 +453,23 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public TokenRequestContext(Azure.Core.TokenRequestContextOptions options) { throw null; }
         public TokenRequestContext(string[] scopes, string? parentRequestId) { throw null; }
         public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null) { throw null; }
         public string? Claims { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }
         public string[] Scopes { get { throw null; } }
+        public string? TenantIdHint { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct TokenRequestContextOptions
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public string? Claims { get { throw null; } set { } }
+        public string? ParentRequestId { get { throw null; } set { } }
+        public string[] Scopes { get { throw null; } set { } }
+        public string? TenantIdHint { get { throw null; } set { } }
     }
 }
 namespace Azure.Core.Cryptography
