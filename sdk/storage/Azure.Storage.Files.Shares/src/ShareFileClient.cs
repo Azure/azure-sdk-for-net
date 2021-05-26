@@ -6,10 +6,8 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -2003,6 +2001,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileOpenReadConcurrentModificationException"/>
+        /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -2031,6 +2033,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileOpenReadConcurrentModificationException"/>
+        /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
+        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -2068,6 +2074,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileOpenReadConcurrentModificationException"/>
+        /// if the file is concurrently modified.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -2107,6 +2117,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileOpenReadConcurrentModificationException"/>
+        /// if the file is concurrently modified.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
@@ -2145,6 +2159,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileOpenReadConcurrentModificationException"/>
+        /// if the file is concurrently modified.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -2184,6 +2202,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileOpenReadConcurrentModificationException"/>
+        /// if the file is concurrently modified.
+        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenReadAsync(
@@ -2228,6 +2250,10 @@ namespace Azure.Storage.Files.Shares
         /// Returns a stream that will download the file as the stream
         /// is read from.
         /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileOpenReadConcurrentModificationException"/>
+        /// if the file is concurrently modified and allowModifications is false.
+        /// </remarks>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         internal async Task<Stream> OpenReadInteral(
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -2263,13 +2289,11 @@ namespace Azure.Storage.Files.Shares
                             async,
                             cancellationToken).ConfigureAwait(false);
 
-                        if (!allowModifications)
+                        if (!allowModifications && etag != response.GetRawResponse().Headers.ETag)
                         {
-                            // TODO (kasobol-msft) find better exception.
-                            if (etag != response.GetRawResponse().Headers.ETag)
-                            {
-                                throw new Exception("Etag doesn't match");
-                            }
+                            throw new ShareFileOpenReadConcurrentModificationException(
+                                "File has been modified concurrently",
+                                Uri, etag, response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
                         }
 
                         return Response.FromValue(
