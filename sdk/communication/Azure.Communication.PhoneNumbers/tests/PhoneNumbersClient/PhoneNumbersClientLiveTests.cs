@@ -202,12 +202,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         public async Task ReleaseUnathorizedNumber()
         {
-             const string PhoneNumber = "+14255550123";
             var client = CreateClient();
             try
             {
-                var releaseOperation = await client.StartReleasePhoneNumberAsync(PhoneNumber);
-            }catch (Exception e)
+                var releaseOperation = await client.StartReleasePhoneNumberAsync(GetUnathorizedNumber());
+            }
+            catch (Exception e)
             {
                 Assert.NotNull(e);
             }
@@ -216,12 +216,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [Test]
         public async Task UpdateCapabilitiesUnathorizedNumber()
         {
-            const string PhoneNumber = "+14255550123";
             var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.None, sms: PhoneNumberCapabilityType.Outbound);
             var client = CreateClient();
             try
             {
-                var UpdateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(PhoneNumber);
+                var UpdateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(GetUnathorizedNumber());
             }
             catch (Exception e)
             {
@@ -233,10 +232,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public async Task GetPurchasedUnathorizedNumber()
         {
             var client = CreateClient();
-            const string PhoneNumber = "+14255550123";
             try
             {
-                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(PhoneNumber);
+                var purchaseOperation = await client.GetPurchasedPhoneNumberAsync(GetUnathorizedNumber());
             }
             catch (Exception e)
             {
@@ -248,11 +246,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public async Task StartPurchasedUnathorizedNumber()
         {
             var client = CreateClient();
-            const string PhoneNumber = "+14255550123";
-
             try
             {
-                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(PhoneNumber);
+                var releaseOperation = await client.StartPurchasePhoneNumbersAsync(GetUnathorizedNumber());
             }
             catch (Exception e)
             {
