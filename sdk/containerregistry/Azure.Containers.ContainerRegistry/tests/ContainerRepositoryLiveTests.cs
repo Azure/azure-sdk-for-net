@@ -137,7 +137,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repository = client.GetRepository(_repositoryName);
 
             // Act
-            AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync();
+            AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestPropertiesCollectionAsync();
 
             ArtifactManifestProperties latest = null;
             await foreach (ArtifactManifestProperties manifest in manifests)
@@ -166,7 +166,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<ArtifactManifestProperties> artifacts = repository.GetManifestsAsync();
+            AsyncPageable<ArtifactManifestProperties> artifacts = repository.GetManifestPropertiesCollectionAsync();
             var pages = artifacts.AsPages(pageSizeHint: pageSize);
 
             int pageCount = 0;
@@ -191,7 +191,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int pageSize = 1;
             int minExpectedPages = 2;
 
-            AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync();
+            AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestPropertiesCollectionAsync();
             string firstDigest = null;
             string secondDigest = null;
             int artifactCount = 0;
@@ -212,7 +212,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Act
-            manifests = repository.GetManifestsAsync();
+            manifests = repository.GetManifestPropertiesCollectionAsync();
             var pages = manifests.AsPages($"</acr/v1/{_repositoryName}/_manifests?last={firstDigest}&n={pageSize}>");
 
             int pageCount = 0;
@@ -252,7 +252,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 // Act
-                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync(ManifestOrderBy.LastUpdatedOnDescending);
+                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestPropertiesCollectionAsync(ManifestOrderBy.LastUpdatedOnDescending);
 
                 // Assert
                 string digest = null;

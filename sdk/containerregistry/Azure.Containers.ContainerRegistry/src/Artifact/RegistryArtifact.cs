@@ -222,11 +222,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderBy"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual AsyncPageable<ArtifactTagProperties> GetTagsAsync(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ArtifactTagProperties> GetTagPropertiesCollectionAsync(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
         {
             async Task<Page<ArtifactTagProperties>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTags)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
                 scope.Start();
                 try
                 {
@@ -244,7 +244,7 @@ namespace Azure.Containers.ContainerRegistry
 
             async Task<Page<ArtifactTagProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTags)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
                 scope.Start();
                 try
                 {
@@ -264,15 +264,15 @@ namespace Azure.Containers.ContainerRegistry
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Get the collection of tags for a repository. </summary>
+        /// <summary> Get the collection of tags for a repository, including their full metadata. </summary>
         /// <param name="orderBy"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Pageable<ArtifactTagProperties> GetTags(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual Pageable<ArtifactTagProperties> GetTagPropertiesCollection(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
         {
             Page<ArtifactTagProperties> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTags)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
                 scope.Start();
                 try
                 {
@@ -290,7 +290,7 @@ namespace Azure.Containers.ContainerRegistry
 
             Page<ArtifactTagProperties> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTags)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
                 scope.Start();
                 try
                 {
