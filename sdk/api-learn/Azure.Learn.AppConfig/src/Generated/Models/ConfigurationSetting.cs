@@ -7,20 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
-namespace Azure.Learn.AppConfig.Models
+namespace Azure.Learn.AppConfig
 {
     /// <summary> The KeyValue. </summary>
-    public partial class KeyValue
+    public partial class ConfigurationSetting
     {
-        /// <summary> Initializes a new instance of KeyValue. </summary>
-        public KeyValue()
+        /// <summary> Initializes a new instance of ConfigurationSetting. </summary>
+        public ConfigurationSetting()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KeyValue. </summary>
+        /// <summary> Initializes a new instance of ConfigurationSetting. </summary>
         /// <param name="key"> The unique name of the key-value. </param>
         /// <param name="label"> The label of the key-value. </param>
         /// <param name="contentType"> The content type of the key-value. </param>
@@ -28,8 +29,8 @@ namespace Azure.Learn.AppConfig.Models
         /// <param name="lastModified"> The time the key-value was last modified. </param>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <param name="locked"> Indicates whether or not this key-value is readonly. </param>
-        /// <param name="etag"> The entity-tag of the key-value. </param>
-        internal KeyValue(string key, string label, string contentType, string value, DateTimeOffset? lastModified, IDictionary<string, string> tags, bool? locked, string etag)
+        /// <param name="eTag"> The entity-tag of the key-value. </param>
+        internal ConfigurationSetting(string key, string label, string contentType, string value, DateTimeOffset? lastModified, IDictionary<string, string> tags, bool? locked, ETag eTag)
         {
             Key = key;
             Label = label;
@@ -38,7 +39,7 @@ namespace Azure.Learn.AppConfig.Models
             LastModified = lastModified;
             Tags = tags;
             Locked = locked;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> The unique name of the key-value. </summary>
@@ -50,12 +51,10 @@ namespace Azure.Learn.AppConfig.Models
         /// <summary> The value of the key-value. </summary>
         public string Value { get; set; }
         /// <summary> The time the key-value was last modified. </summary>
-        public DateTimeOffset? LastModified { get; set; }
+        public DateTimeOffset? LastModified { get; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Indicates whether or not this key-value is readonly. </summary>
-        public bool? Locked { get; set; }
-        /// <summary> The entity-tag of the key-value. </summary>
-        public string Etag { get; set; }
+        public bool? Locked { get; }
     }
 }

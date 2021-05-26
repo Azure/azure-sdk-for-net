@@ -1212,6 +1212,7 @@
                     "type": "string"
                 },
                 "last_modified": {
+                    "readOnly": true,
                     "description": "The time the key-value was last modified.",
                     "format": "date-time",
                     "type": "string"
@@ -1223,10 +1224,12 @@
                     }
                 },
                 "locked": {
+                    "readOnly": true,
                     "description": "Indicates whether or not this key-value is readonly.",
                     "type": "boolean"
                 },
                 "etag": {
+                    "readOnly": true,
                     "description": "The entity-tag of the key-value.",
                     "type": "string"
                 }

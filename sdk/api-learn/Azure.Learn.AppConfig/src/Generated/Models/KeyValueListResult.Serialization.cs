@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Learn.AppConfig;
 
 namespace Azure.Learn.AppConfig.Models
 {
@@ -15,16 +16,16 @@ namespace Azure.Learn.AppConfig.Models
     {
         internal static KeyValueListResult DeserializeKeyValueListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<KeyValue>> items = default;
+            Optional<IReadOnlyList<ConfigurationSetting>> items = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("items"))
                 {
-                    List<KeyValue> array = new List<KeyValue>();
+                    List<ConfigurationSetting> array = new List<ConfigurationSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyValue.DeserializeKeyValue(item));
+                        array.Add(ConfigurationSetting.DeserializeConfigurationSetting(item));
                     }
                     items = array;
                     continue;

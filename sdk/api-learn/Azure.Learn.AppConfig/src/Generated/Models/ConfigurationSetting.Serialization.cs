@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
-namespace Azure.Learn.AppConfig.Models
+namespace Azure.Learn.AppConfig
 {
-    public partial class KeyValue : IUtf8JsonSerializable
+    public partial class ConfigurationSetting : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,11 +38,6 @@ namespace Azure.Learn.AppConfig.Models
                 writer.WritePropertyName("value");
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(LastModified))
-            {
-                writer.WritePropertyName("last_modified");
-                writer.WriteStringValue(LastModified.Value, "O");
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -53,20 +49,10 @@ namespace Azure.Learn.AppConfig.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Locked))
-            {
-                writer.WritePropertyName("locked");
-                writer.WriteBooleanValue(Locked.Value);
-            }
-            if (Optional.IsDefined(Etag))
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
             writer.WriteEndObject();
         }
 
-        internal static KeyValue DeserializeKeyValue(JsonElement element)
+        internal static ConfigurationSetting DeserializeConfigurationSetting(JsonElement element)
         {
             Optional<string> key = default;
             Optional<string> label = default;
@@ -75,7 +61,7 @@ namespace Azure.Learn.AppConfig.Models
             Optional<DateTimeOffset> lastModified = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<bool> locked = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
@@ -120,11 +106,11 @@ namespace Azure.Learn.AppConfig.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
             }
-            return new KeyValue(key.Value, label.Value, contentType.Value, value.Value, Optional.ToNullable(lastModified), Optional.ToDictionary(tags), Optional.ToNullable(locked), etag.Value);
+            return new ConfigurationSetting(key.Value, label.Value, contentType.Value, value.Value, Optional.ToNullable(lastModified), Optional.ToDictionary(tags), Optional.ToNullable(locked), etag);
         }
     }
 }
