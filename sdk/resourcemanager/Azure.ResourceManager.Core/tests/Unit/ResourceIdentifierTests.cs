@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(ResourceGroupResourceId)]
         [TestCase(LocationResourceId)]
         [TestCase(SubscriptionResourceId)]
+        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights")]
         public void ImplicitConstructor(string resourceProviderID)
         {
             string x = resourceProviderID;
