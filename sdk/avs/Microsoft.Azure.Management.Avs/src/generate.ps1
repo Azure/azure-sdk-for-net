@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "vmware/resource-manager" -AutoRestVersion "v2"  -SpecsRepoBranch "AVS/2021-06"
+Start-AutoRestCodeGeneration -ResourceProvider "vmware/resource-manager" -AutoRestVersion "v2" -SpecsRepoBranch "master"

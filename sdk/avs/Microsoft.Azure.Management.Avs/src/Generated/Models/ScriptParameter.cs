@@ -40,12 +40,15 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="visibility">Should this parameter be visible to arm
         /// and passed in the parameters argument when executing. Possible
         /// values include: 'Visible', 'Hidden'</param>
-        public ScriptParameter(string type = default(string), string name = default(string), string description = default(string), string visibility = default(string))
+        /// <param name="optional">Is this parameter required or optional.
+        /// Possible values include: 'Optional', 'Required'</param>
+        public ScriptParameter(string type = default(string), string name = default(string), string description = default(string), string visibility = default(string), string optional = default(string))
         {
             Type = type;
             Name = name;
             Description = description;
             Visibility = visibility;
+            Optional = optional;
             CustomInit();
         }
 
@@ -82,6 +85,13 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "visibility")]
         public string Visibility { get; private set; }
+
+        /// <summary>
+        /// Gets is this parameter required or optional. Possible values
+        /// include: 'Optional', 'Required'
+        /// </summary>
+        [JsonProperty(PropertyName = "optional")]
+        public string Optional { get; private set; }
 
     }
 }
