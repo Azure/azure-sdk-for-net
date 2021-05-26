@@ -721,13 +721,6 @@
                         "type": "string"
                     },
                     {
-                        "name": "request.operationContext",
-                        "in": "query",
-                        "description": "The context of the operation.",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
                         "$ref": "#/parameters/ApiVersionParameter"
                     }
                 ],
@@ -789,15 +782,6 @@
                         "type": "string"
                     },
                     {
-                        "name": "request",
-                        "in": "body",
-                        "description": "Request body of stop call recording request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/StopCallRecordingRequest"
-                        }
-                    },
-                    {
                         "$ref": "#/parameters/ApiVersionParameter"
                     }
                 ],
@@ -851,15 +835,6 @@
                         "type": "string"
                     },
                     {
-                        "name": "request",
-                        "in": "body",
-                        "description": "Request body of pause call recording request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/PauseCallRecordingRequest"
-                        }
-                    },
-                    {
                         "$ref": "#/parameters/ApiVersionParameter"
                     }
                 ],
@@ -911,15 +886,6 @@
                         "description": "Recording id.",
                         "required": true,
                         "type": "string"
-                    },
-                    {
-                        "name": "request",
-                        "in": "body",
-                        "description": "Request body of resume call recording request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/ResumeCallRecordingRequest"
-                        }
                     },
                     {
                         "$ref": "#/parameters/ApiVersionParameter"
@@ -1021,19 +987,19 @@
             }
         },
         "PhoneNumberIdentifier": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/PhoneNumberIdentifierModel"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/PhoneNumberIdentifierModel"
         },
         "CommunicationIdentifier": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationIdentifierModel"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationIdentifierModel"
         },
         "CommunicationUserIdentifier": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationUserIdentifierModel"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationUserIdentifierModel"
         },
         "CommunicationCloudEnvironment": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationCloudEnvironmentModel"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationCloudEnvironmentModel"
         },
         "MicrosoftTeamsUserIdentifier": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/MicrosoftTeamsUserIdentifierModel"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/MicrosoftTeamsUserIdentifierModel"
         },
         "CreateCallResponse": {
             "description": "The response payload of the create call operation.",
@@ -1046,7 +1012,7 @@
             }
         },
         "CommunicationError": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationError"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationError"
         },
         "PlayAudioRequest": {
             "description": "The request payload for playing audio.",
@@ -1064,8 +1030,8 @@
                     "description": "The value to identify context of the operation.",
                     "type": "string"
                 },
-                "resourceId": {
-                    "description": "The media resource id of the play audio request. A ResourceId value\r\nindicates the media resource should be cached within the runtime service\r\nwhich handles playing audios.",
+                "audioFileId": {
+                    "description": "An id for the media in the AudioFileUri, using which we cache the media resource.",
                     "type": "string"
                 }
             }
@@ -1236,10 +1202,6 @@
             "description": "The request payload start call recording operation.",
             "type": "object",
             "properties": {
-                "operationContext": {
-                    "description": "The context for this operation.",
-                    "type": "string"
-                },
                 "recordingStateCallbackUri": {
                     "description": "The uri to send notifications to.",
                     "type": "string"
@@ -1252,16 +1214,6 @@
             "properties": {
                 "recordingId": {
                     "description": "The recording id of the started recording",
-                    "type": "string"
-                }
-            }
-        },
-        "GetCallRecordingStateRequest": {
-            "description": "The request payload of get call recording state operation.",
-            "type": "object",
-            "properties": {
-                "operationContext": {
-                    "description": "The context of the operation.",
                     "type": "string"
                 }
             }
@@ -1284,36 +1236,6 @@
             "properties": {
                 "recordingState": {
                     "$ref": "#/definitions/CallRecordingState"
-                }
-            }
-        },
-        "StopCallRecordingRequest": {
-            "description": "The request payload of stop call recording operation.",
-            "type": "object",
-            "properties": {
-                "operationContext": {
-                    "description": "The context of the operation.",
-                    "type": "string"
-                }
-            }
-        },
-        "PauseCallRecordingRequest": {
-            "description": "The request payload pause call recording operation.",
-            "type": "object",
-            "properties": {
-                "operationContext": {
-                    "description": "The context of the operation.",
-                    "type": "string"
-                }
-            }
-        },
-        "ResumeCallRecordingRequest": {
-            "description": "The request payload of resume call recording operation.",
-            "type": "object",
-            "properties": {
-                "operationContext": {
-                    "description": "The context of the operation.",
-                    "type": "string"
                 }
             }
         }

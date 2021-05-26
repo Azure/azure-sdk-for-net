@@ -187,7 +187,7 @@ namespace Azure.Communication.Calling.Server.Tests
                 AudioFileUri = TestEnvironment.AudioFileUrl,
                 OperationContext = Guid.NewGuid().ToString(),
                 Loop = true,
-                ResourceId = Guid.NewGuid().ToString()
+                AudioFileId = Guid.NewGuid().ToString()
             };
 
             Console.WriteLine("Performing PlayAudio operation");
@@ -217,7 +217,7 @@ namespace Azure.Communication.Calling.Server.Tests
                 AudioFileUri = TestEnvironment.AudioFileUrl,
                 OperationContext = Guid.NewGuid().ToString(),
                 Loop = true,
-                ResourceId = Guid.NewGuid().ToString()
+                AudioFileId = Guid.NewGuid().ToString()
             };
 
             Console.WriteLine("Performing cancel media processing operation to stop playing audio");
