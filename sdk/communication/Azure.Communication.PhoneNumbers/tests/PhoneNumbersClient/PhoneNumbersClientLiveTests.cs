@@ -238,7 +238,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (Exception ex)
             {
-                Assert.True(ex.Message.Contains("Unable to find"));
                 Assert.NotNull(ex.Message);
             }
         }
