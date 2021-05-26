@@ -12,10 +12,15 @@ param (
 
 . (Join-Path $PSScriptRoot common.ps1)
 
+function GetDocsMetadata() { 
+  (Get-CSVMetadata).Where( { $_.New -eq 'true' -and $_.Hide -ne 'true' })
+}
+
 if ($UpdateDocsMsPackagesFn -and (Test-Path "Function:$UpdateDocsMsPackagesFn")) {
 
-  try { 
-    &$UpdateDocsMsPackagesFn -DocsRepoLocation $DocRepoLocation
+  try {
+    $docsMetadata = GetDocsMetadata
+    &$UpdateDocsMsPackagesFn -DocsRepoLocation $DocRepoLocation -DocsMetadata $docsMetadata
   } catch { 
     LogError "Exception while updating docs.ms packages"
     LogError $_ 
