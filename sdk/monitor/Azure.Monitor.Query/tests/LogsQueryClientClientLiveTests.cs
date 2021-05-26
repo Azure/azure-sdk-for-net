@@ -30,6 +30,7 @@ namespace Azure.Monitor.Query.Tests
         private LogsClient CreateClient()
         {
             return InstrumentClient(new LogsClient(
+                TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new LogsClientOptions())
             ));
@@ -450,11 +451,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                Assert.Greater(response.Value.Statistics.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
+                using JsonDocument document = JsonDocument.Parse(response.Value.Statistics);
+                Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {
-                Assert.AreEqual(JsonValueKind.Undefined, response.Value.Statistics.ValueKind);
+                Assert.AreEqual(default, response.Value.Statistics);
             }
         }
 
@@ -475,11 +477,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                Assert.Greater(result.Statistics.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
+                using JsonDocument document = JsonDocument.Parse(result.Statistics);
+                Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {
-                Assert.AreEqual(JsonValueKind.Undefined, result.Statistics.ValueKind);
+                Assert.AreEqual(default, result.Statistics);
             }
         }
 

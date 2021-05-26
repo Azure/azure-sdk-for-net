@@ -4,11 +4,11 @@ Azure Event Hubs is a highly scalable publish-subscribe service that can ingest 
 
 ## Libraries for data access
 
-The current generation of the Azure Event Hubs client library uses versions 5.0.1 and above.  Microsoft recommends using version 5.2 or higher for new applications.  If you are unable to existing applications to version 5.x, then Microsoft recommends using version 4.1 or higher.
+The current generation of the Azure Event Hubs client library uses package names that follow the pattern `Azure.Messaging.EventHubs.*`.  Microsoft recommends using the `Azure.Messaging.EventHubs` family of packages for  for new applications.  If you are unable to existing applications, then Microsoft recommends using version 4.1 or higher of the legacy Event Hubs packages, `Microsoft.Azure.EventHubs.*`
 
-### Version 5.x
+### `Azure.Messaging.EventHubs`
 
-The version 5.x client libraries are part of the Azure SDK for .NET. The source code for the Azure Event Hubs client libraries is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub).
+These packages are the current generation of client libraries for Event Hubs and are part of the Azure SDK for .NET. The source code is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub).
 
 Use the following packages to publish and consume events from Event Hubs:
 
@@ -17,9 +17,9 @@ Use the following packages to publish and consume events from Event Hubs:
 | [Azure.Messaging.EventHubs](https://www.nuget.org/packages/Azure.Messaging.EventHubs)  |  [API Reference for Azure.Messaging.EventHubs](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs?view=azure-dotnet)  |  [Samples for Azure.Messaging.EventHubs](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples)  |
 | [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor)  |  [API Reference for Azure.Messaging.EventHubs.Processor](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs?view=azure-dotnet)  |  [Samples for Azure.Messaging.EventHubs.Processor](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples)  |
 
-### Version 4.x
+### `Microsoft.Azure.EventHubs`
 
-The source code for version 4.x of the Azure Event Hubs client libraries is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub).
+These packages are the legacy generation of client libraries for Event Hubs.  The source code is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub).
 
 Use the following legacy packages to publish and consume events from Event Hubs:
 

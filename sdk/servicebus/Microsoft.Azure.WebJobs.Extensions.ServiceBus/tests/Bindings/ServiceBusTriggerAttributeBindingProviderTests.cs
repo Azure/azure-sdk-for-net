@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             Mock<IConverterManager> convertManager = new Mock<IConverterManager>(MockBehavior.Default);
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
-            var factory = new ServiceBusClientFactory(configuration, new Mock<AzureComponentFactory>().Object, provider, new AzureEventSourceLogForwarder(new NullLoggerFactory()));
+            var factory = new ServiceBusClientFactory(configuration, new Mock<AzureComponentFactory>().Object, provider, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(options));
             _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, options, provider, NullLoggerFactory.Instance, convertManager.Object, factory);
         }
 

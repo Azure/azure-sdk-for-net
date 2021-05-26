@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -12,5 +13,9 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> The name of the metric. </summary>
         public string Name => LocalizedName.Value;
+
+        /// <summary> the time series returned when a data query is performed. </summary>
+        [CodeGenMember("Timeseries")]
+        public IReadOnlyList<TimeSeriesElement> TimeSeries { get; }
     }
 }

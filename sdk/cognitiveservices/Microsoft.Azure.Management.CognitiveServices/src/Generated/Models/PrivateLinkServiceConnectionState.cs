@@ -34,17 +34,16 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         /// <param name="status">Indicates whether the connection has been
         /// Approved/Rejected/Removed by the owner of the service. Possible
-        /// values include: 'Pending', 'Approved', 'Rejected',
-        /// 'Disconnected'</param>
+        /// values include: 'Pending', 'Approved', 'Rejected'</param>
         /// <param name="description">The reason for approval/rejection of the
         /// connection.</param>
-        /// <param name="actionRequired">A message indicating if changes on the
-        /// service provider require any updates on the consumer.</param>
-        public PrivateLinkServiceConnectionState(string status = default(string), string description = default(string), string actionRequired = default(string))
+        /// <param name="actionsRequired">A message indicating if changes on
+        /// the service provider require any updates on the consumer.</param>
+        public PrivateLinkServiceConnectionState(string status = default(string), string description = default(string), string actionsRequired = default(string))
         {
             Status = status;
             Description = description;
-            ActionRequired = actionRequired;
+            ActionsRequired = actionsRequired;
             CustomInit();
         }
 
@@ -56,7 +55,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <summary>
         /// Gets or sets indicates whether the connection has been
         /// Approved/Rejected/Removed by the owner of the service. Possible
-        /// values include: 'Pending', 'Approved', 'Rejected', 'Disconnected'
+        /// values include: 'Pending', 'Approved', 'Rejected'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
@@ -71,8 +70,8 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// Gets or sets a message indicating if changes on the service
         /// provider require any updates on the consumer.
         /// </summary>
-        [JsonProperty(PropertyName = "actionRequired")]
-        public string ActionRequired { get; set; }
+        [JsonProperty(PropertyName = "actionsRequired")]
+        public string ActionsRequired { get; set; }
 
     }
 }

@@ -13,9 +13,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of ServicePrincipalCredentialPatch. </summary>
         public ServicePrincipalCredentialPatch()
         {
-            DataSourceCredentialType = new DataFeedSourceType("ServicePrincipal");
+            DataSourceCredentialType = DataSourceCredentialType.ServicePrincipal;
         }
 
-        public ServicePrincipalParam Parameters { get; set; }
+        public ServicePrincipalParamPatch Parameters { get; set; }
     }
 }

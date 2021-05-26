@@ -1,0 +1,4 @@
+trigger: none
+
+jobs:
+  - template: /eng/common/pipelines/templates/jobs/docindex.yml

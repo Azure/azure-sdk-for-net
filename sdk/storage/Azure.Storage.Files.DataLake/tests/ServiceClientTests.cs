@@ -596,6 +596,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         [NonParallelizable]
         public async Task SetPropertiesAsync_StaticWebsite()
         {

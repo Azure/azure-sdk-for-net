@@ -45,10 +45,10 @@ namespace Azure.AI.Translation.Document
     }
     public partial class DocumentTranslationClientOptions : Azure.Core.ClientOptions
     {
-        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V1_0_preview_1) { }
+        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V1_0) { }
         public enum ServiceVersion
         {
-            V1_0_preview_1 = 1,
+            V1_0 = 1,
         }
     }
     public partial class DocumentTranslationError

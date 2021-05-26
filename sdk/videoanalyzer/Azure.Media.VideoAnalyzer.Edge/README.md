@@ -4,8 +4,8 @@ Azure Video Analyzer on IoT Edge provides a platform to build intelligent video 
 
 Use the client library for Video Analyzer on IoT Edge to:
 
-- Simplify interactions with the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks)
-- Programmatically construct pipeline topologies and live pipelines
+-   Simplify interactions with the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks)
+-   Programmatically construct pipeline topologies and live pipelines
 
 [Product documentation][doc_product] | [Direct methods][doc_direct_methods] | [Pipelines][doc_pipelines] | [Source code][source] | [Samples][samples]
 
@@ -15,7 +15,7 @@ This is a models-only SDK. All client operations are done using the [Microsoft A
 
 ### Authenticate the client
 
-The client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
+The client is coming from Azure IoT SDK. You will need to obtain an IoT device connection string in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
 
 ```C# Snippet:Azure_VideoAnalyzerSamples_ConnectionString
 String connectionString = "connectionString";
@@ -36,12 +36,12 @@ Install the Azure IoT Hub SDk for .NET with NuGet:
 
 ### Prerequisites
 
-- You need an active [Azure subscription][azure_sub] and an [IoT device connection string][iot_device_connection_string] to use this package.
-- You will need to use the version of the SDK that corresponds to the version of the Video Analyzer Edge module you are using.
+-   You need an active [Azure subscription][azure_sub] and an IoT device connection string to use this package.
+-   You will need to use the version of the SDK that corresponds to the version of the Video Analyzer Edge module you are using.
 
-    | SDK  | Video Analyzer Edge Module  |
-    |---|---|
-    | 1.0.0-beta.2  | 1.0  |
+    | SDK          | Video Analyzer Edge Module |
+    | ------------ | -------------------------- |
+    | 1.0.0-beta.x | 1.0                        |
 
 ### Creating a pipeline topology and making requests
 
@@ -66,7 +66,9 @@ To set the Json payload of the cloud method, use the pipeline request method's `
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
+
 <!-- CLIENT COMMON BAR -->
+
 [Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
 [Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
@@ -74,6 +76,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
 [Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
@@ -106,6 +109,7 @@ pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("hubSinkOutpu
 ```
 
 ### Define a Source
+
 ```C# Snippet:Azure_VideoAnalyzerSamples_SetSourcesSinks1
 pipelineTopologyProps.Sources.Add(new RtspSource("rtspSource", new UnsecuredEndpoint("${rtspUrl}")
 {
@@ -115,6 +119,7 @@ pipelineTopologyProps.Sources.Add(new RtspSource("rtspSource", new UnsecuredEndp
 ```
 
 ### Define a Sink
+
 ```C# Snippet:Azure_VideoAnalyzerSamples_SetSourcesSinks2
 var nodeInput = new List<NodeInput>
 {
@@ -124,6 +129,7 @@ pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${h
 ```
 
 ### Set the topology properties and create a topology
+
 ```C# Snippet:Azure_VideoAnalyzerSamples_BuildPipelineTopology
 var pipelineTopologyProps = new PipelineTopologyProperties
 {
@@ -174,14 +180,14 @@ To try different pipeline topologies with the SDK, please see the official [Samp
 
 ## Troubleshooting
 
-- When sending a method request using the IoT Hub's `CloudToDeviceMethod` remember to not type in the method request name directly. Instead use `MethodRequestName.MethodName`
-- Make sure to serialize the entire method request before passing it to `CloudToDeviceMethod`
+-   When sending a method request using the IoT Hub's `CloudToDeviceMethod` remember to not type in the method request name directly. Instead use `MethodRequestName.MethodName`
+-   Make sure to serialize the entire method request before passing it to `CloudToDeviceMethod`
 
 ## Next steps
 
-- [Samples][samples]
-- [Azure IoT Device SDK][iot-device-sdk]
-- [Azure IoTHub Service SDK][iot-hub-sdk]
+-   [Samples][samples]
+-   [Azure IoT Device SDK][iot-device-sdk]
+-   [Azure IoTHub Service SDK][iot-hub-sdk]
 
 ## Contributing
 
@@ -202,28 +208,22 @@ This project has adopted the
 see the Code of Conduct FAQ or contact opencode@microsoft.com with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fvideoanalyzer%2Fazure-media-videoanalyzer-edge%2FREADME.png)
-
-
 <!-- LINKS -->
+
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-
-[package]: TODO://link-to-published-package <!-- https://msazure.visualstudio.com/One/_workitems/edit/9946084 WorkItem to track all all TODO links-->
+[package]: https://aka.ms/ava/sdk/client/net
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mediaservices
 [samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
-
-[doc_direct_methods]: TODO://link-to-published-doc
-[doc_pipelines]: TODO://link-to-published-doc
-[doc_product]: TODO://link-to-published-doc
-
+[doc_direct_methods]: https://go.microsoft.com/fwlink/?linkid=2162396
+[doc_pipelines]: https://go.microsoft.com/fwlink/?linkid=2162396
+[doc_product]: https://go.microsoft.com/fwlink/?linkid=2162396
 [iot-device-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices.Client/
 [iot-hub-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices/
-[iot_device_connection_string]: TODO://link-to-published-doc
-
 [github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fvideoanalyzer%2Fazure-media-videoanalyzer-edge%2FREADME.png)

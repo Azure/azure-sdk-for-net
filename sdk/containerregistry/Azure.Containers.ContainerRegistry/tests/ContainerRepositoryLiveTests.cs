@@ -40,11 +40,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repository = client.GetRepository(_repositoryName);
 
             RepositoryProperties repositoryProperties = await repository.GetPropertiesAsync();
-            RepositoryWriteableProperties originalWriteableProperties = repositoryProperties.WriteableProperties;
+            RepositoryProperties originalProperties = repositoryProperties;
 
             // Act
             RepositoryProperties properties = await repository.SetPropertiesAsync(
-                new RepositoryWriteableProperties()
+                new RepositoryProperties()
                 {
                     CanList = false,
                     CanRead = false,
@@ -53,20 +53,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
 
             // Assert
-            Assert.IsFalse(properties.WriteableProperties.CanList);
-            Assert.IsFalse(properties.WriteableProperties.CanRead);
-            Assert.IsFalse(properties.WriteableProperties.CanWrite);
-            Assert.IsFalse(properties.WriteableProperties.CanDelete);
+            Assert.IsFalse(properties.CanList);
+            Assert.IsFalse(properties.CanRead);
+            Assert.IsFalse(properties.CanWrite);
+            Assert.IsFalse(properties.CanDelete);
 
             RepositoryProperties updatedProperties = await repository.GetPropertiesAsync();
 
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanList);
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanRead);
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanWrite);
-            Assert.IsFalse(updatedProperties.WriteableProperties.CanDelete);
+            Assert.IsFalse(updatedProperties.CanList);
+            Assert.IsFalse(updatedProperties.CanRead);
+            Assert.IsFalse(updatedProperties.CanWrite);
+            Assert.IsFalse(updatedProperties.CanDelete);
 
             // Cleanup
-            await repository.SetPropertiesAsync(originalWriteableProperties);
+            await repository.SetPropertiesAsync(originalProperties);
         }
 
         [RecordedTest, NonParallelizable]
@@ -79,7 +79,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
             Assert.ThrowsAsync<RequestFailedException>(() =>
                 repository.SetPropertiesAsync(
-                    new RepositoryWriteableProperties()
+                    new RepositoryProperties()
                     {
                         CanList = false,
                         CanRead = false,
@@ -108,18 +108,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(TestEnvironment.Registry, _repositoryName, tags);
+                    await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tags);
                 }
 
                 // Act
                 await repository.DeleteAsync();
-
-                // This will be removed, pending investigation into potential race condition.
-                // https://github.com/azure/azure-sdk-for-net/issues/19699
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(5000);
-                }
 
                 // Assert
                 Assert.ThrowsAsync<RequestFailedException>(async () => { await repository.GetPropertiesAsync(); });
@@ -129,7 +122,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Clean up - put the repository with tags back.
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(TestEnvironment.Registry, _repositoryName, tags);
+                    await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tags);
                 }
             }
         }
@@ -255,7 +248,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(TestEnvironment.Registry, repositoryName, tag);
+                    await ImportImageAsync(TestEnvironment.Registry, repositoryName, tag);
                 }
 
                 // Act
