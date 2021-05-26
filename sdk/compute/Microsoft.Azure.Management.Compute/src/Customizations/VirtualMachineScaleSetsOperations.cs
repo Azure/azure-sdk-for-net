@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.Compute
             // Set Credentials
             if (Client.Credentials != null)
             {
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest).ConfigureAwait(false);
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, null).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -489,7 +489,7 @@ namespace Microsoft.Azure.Management.Compute
             // Set Credentials
             if (Client.Credentials != null)
             {
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest).ConfigureAwait(false);
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, null).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
