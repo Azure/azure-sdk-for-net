@@ -9,6 +9,9 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
+using Microsoft.Identity.Client;
+using System.Security;
+using System.Threading;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -145,6 +148,29 @@ namespace Azure.Communication.Identity.Tests
                 return;
             }
             Assert.Fail("RevokeTokensAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task ExchangeAccessToken()
+        {
+            IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
+                                                    .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
+                                                    .WithRedirectUri(TestEnvironment.CommunicationM365RedirectUri)
+                                                    .Build();
+            string[] scopes = { TestEnvironment.CommunicationM365Scope };
+            SecureString communicationMsalPassword = new SecureString();
+            foreach (char c in TestEnvironment.CommunicationMsalPassword)
+            {
+                communicationMsalPassword.AppendChar(c);
+            }
+            AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
+                scopes,
+                TestEnvironment.CommunicationMsalUsername,
+                communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+            CommunicationIdentityClient client = CreateClientWithConnectionString();
+            Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync(result.AccessToken);
+            Assert.IsNotNull(tokenResponse.Value);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
         }
     }
 }

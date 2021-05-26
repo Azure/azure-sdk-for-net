@@ -13,7 +13,6 @@ namespace Azure.Communication.Tests
         public const string AzurePhoneNumber = "AZURE_PHONE_NUMBER";
         private const string SkipIntSmsTestEnvironmentVariableName = "SKIP_INT_SMS_TEST";
         private const string SkipIntPhoneNumbersTestEnvironmentVariableName = "SKIP_INT_PHONENUMBERS_TEST";
-
         public string LiveTestDynamicConnectionString => GetRecordedVariable(LiveTestDynamicConnectionStringEnvironmentVariableName);
 
         public Uri LiveTestDynamicEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("endpoint"));
