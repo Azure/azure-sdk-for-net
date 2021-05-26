@@ -8,9 +8,8 @@ steps:
   - task: UseDotNet@2
     displayName: 'Use .NET Core SDK'
     inputs:
-      version: 5.0.x
+      useGlobalJson: true
       performMultiLevelLookup: true
-      includePreviewVersions: true
   - task: UseDotNet@2
     condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
     displayName: 'Use .NET Core 2.1 runtime'
@@ -20,8 +19,5 @@ steps:
   - task: Cache@2
     inputs:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
-      restoreKeys: |
-        nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props
-        nuget | "$(Agent.OS)"
       path: $(NUGET_PACKAGES)
     displayName: Cache NuGet packages
