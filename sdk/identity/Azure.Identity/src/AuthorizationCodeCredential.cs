@@ -108,7 +108,7 @@ namespace Azure.Identity
                 if (_record is null)
                 {
                     AuthenticationResult result = await _client
-                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, tenantId, _authCode, async, cancellationToken)
+                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, async, cancellationToken)
                         .ConfigureAwait(false);
 
                     _record = new AuthenticationRecord(result, _clientId);

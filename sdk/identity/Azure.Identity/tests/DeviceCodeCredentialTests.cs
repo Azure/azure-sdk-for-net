@@ -24,6 +24,7 @@ namespace Azure.Identity.Tests
 
         private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
         private const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
+        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
         private const string Scope = "https://vault.azure.net/.default";
         private readonly HashSet<string> _requestedCodes = new HashSet<string>();
         private TokenCredentialOptions options = new TokenCredentialOptions();
@@ -103,17 +104,19 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AuthenticateWithDeviceCodeMockAsync([Values(null, TenantId)] string tenantId)
+        public async Task AuthenticateWithDeviceCodeMockAsync([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
         {
-            expectedTenantId = tenantId;
+            options = new TokenCredentialOptions { PreferTenantIdChallengeHint = preferHint };
+            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options) ;
             var cred = InstrumentClient(
-                new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), tenantId, ClientId, options, null, mockMsalClient));
+                new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), TenantId, ClientId, options, null, mockMsalClient));
 
-            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }));
+            AccessToken token = await cred.GetTokenAsync(context);
 
             Assert.AreEqual(token.Token, expectedToken);
 
-            token = await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }));
+            token = await cred.GetTokenAsync(context);
 
             Assert.AreEqual(token.Token, expectedToken);
         }

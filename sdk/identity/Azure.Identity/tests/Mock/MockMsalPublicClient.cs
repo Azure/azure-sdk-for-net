@@ -31,6 +31,13 @@ namespace Azure.Identity.Tests.Mock
 
         public Func<string[], IPublicClientApplication> PubClientAppFactory { get; set; }
 
+        public Func<string[], string,
+            string,
+            AzureCloudInstance,
+            string,
+            bool,
+            CancellationToken, AuthenticationResult> RefreshTokenFactory { get; set; }
+
         protected override ValueTask<List<IAccount>> GetAccountsCoreAsync(bool async, CancellationToken cancellationToken)
         {
             return new(Accounts);
@@ -151,6 +158,22 @@ namespace Azure.Identity.Tests.Mock
             return new ValueTask<IPublicClientApplication>(PubClientAppFactory(clientCapabilities));
         }
 
+        protected override ValueTask<AuthenticationResult> AcquireTokenByRefreshTokenCoreAsync(
+            string[] scopes,
+            string claims,
+            string refreshToken,
+            AzureCloudInstance azureCloudInstance,
+            string tenant,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            if (RefreshTokenFactory == null)
+            {
+                throw new NotImplementedException();
+            }
+            return new ValueTask<AuthenticationResult>(RefreshTokenFactory(scopes, claims, refreshToken, azureCloudInstance, tenant, async, cancellationToken));
+        }
+
         internal static DeviceCodeResult GetDeviceCodeResult(
             string userCode = "userCode",
             string deviceCode = "deviceCode",
@@ -162,7 +185,8 @@ namespace Azure.Identity.Tests.Mock
         {
             var ctor = typeof(DeviceCodeResult).GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic).FirstOrDefault();
             var message = $"To sign in, use a web browser to open the page {verificationUrl} and enter the code {deviceCode} to authenticate.";
-            return (DeviceCodeResult)ctor.Invoke(new object[] { userCode, deviceCode, verificationUrl, expiresOn, interval, message, clientId, scopes ?? new HashSet<string>() });
+            return (DeviceCodeResult)ctor.Invoke(
+                new object[] { userCode, deviceCode, verificationUrl, expiresOn, interval, message, clientId, scopes ?? new HashSet<string>() });
         }
     }
 }

@@ -46,8 +46,9 @@ namespace Azure.Identity
             _options = options;
         }
 
-        internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService)
+        internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
+            _options = options;
             tenantIdOptionProvided = tenantId != null;
             _tenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
@@ -149,8 +150,8 @@ namespace Azure.Identity
 
         private List<ProcessStartInfo> GetProcessStartInfos(VisualStudioTokenProvider[] visualStudioTokenProviders, string resource, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            List<ProcessStartInfo> processStartInfos = new List<ProcessStartInfo>();
-            StringBuilder arguments = new StringBuilder();
+            List<ProcessStartInfo> processStartInfos = new();
+            StringBuilder arguments = new();
 
             foreach (VisualStudioTokenProvider tokenProvider in visualStudioTokenProviders)
             {
@@ -168,7 +169,7 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _options);
                 if (tenantId != default)
                 {
-                    arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(_tenantId ?? requestContext.TenantIdHint);
+                    arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);
                 }
 
                 // Add the arguments set in the token provider file.

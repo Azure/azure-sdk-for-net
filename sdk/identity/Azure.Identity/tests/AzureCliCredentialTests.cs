@@ -14,19 +14,28 @@ namespace Azure.Identity.Tests
 {
     public class AzureCliCredentialTests : ClientTestBase
     {
+        private const string Scope = "https://vault.azure.net/.default";
+        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
+
         public AzureCliCredentialTests(bool isAsync) : base(isAsync) { }
 
         [Test]
-        public async Task AuthenticateWithCliCredential()
+        public async Task AuthenticateWithCliCredential([Values(null, TenantIdHint)] string tenantId)
         {
+            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
+            string expectedTenantId = TenantIdResolver.Resolve(null, context, null) ;
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 
             var testProcess = new TestProcess { Output = processOutput };
-            AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+            AccessToken actualToken = await credential.GetTokenAsync(context);
 
             Assert.AreEqual(expectedToken, actualToken.Token);
             Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+            if (expectedTenantId != null)
+            {
+                Assert.That(testProcess.StartInfo.Arguments, Does.Contain(expectedTenantId));
+            }
         }
 
         [Test]

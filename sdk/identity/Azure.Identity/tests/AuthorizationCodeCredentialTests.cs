@@ -16,8 +16,9 @@ namespace Azure.Identity.Tests
     {
         private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
         private const string TenantId = "a0287521-e002-0026-7112-207c0c000000";
+        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
         private const string Scope = "https://vault.azure.net/.default";
-        private TokenCredentialOptions options = new TokenCredentialOptions();
+        private TokenCredentialOptions options;
         private string authCode;
         private string expectedToken;
         private DateTimeOffset expiresOn;
@@ -63,20 +64,21 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AuthenticateWithAuthCodeMockAsync([Values(null, TenantId)] string tenantId, [Values(true, false)] bool preferHint)
+        public async Task AuthenticateWithAuthCodeMockAsync([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
         {
-            expectedTenantId = preferHint ? tenantId : TenantId;
+            options = new TokenCredentialOptions { PreferTenantIdChallengeHint = preferHint };
+            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options) ;
 
-            AuthorizationCodeCredential cred = InstrumentClient(
-                new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockMsalClient));
+            AuthorizationCodeCredential cred = InstrumentClient(new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockMsalClient));
 
-            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }));
+            AccessToken token = await cred.GetTokenAsync(context);
 
-            Assert.AreEqual(token.Token, expectedToken);
+            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
 
-            AccessToken token2 = await cred.GetTokenAsync(new TokenRequestContext(new[] { Scope }));
+            AccessToken token2 = await cred.GetTokenAsync(context);
 
-            Assert.AreEqual(token.Token, expectedToken);
+            Assert.AreEqual(token2.Token, expectedToken, "Should be the expected token value");
         }
     }
 }
