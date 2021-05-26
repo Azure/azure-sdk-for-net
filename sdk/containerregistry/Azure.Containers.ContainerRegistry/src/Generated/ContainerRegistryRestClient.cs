@@ -530,7 +530,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(string name, RepositoryWriteableProperties value)
+        internal HttpMessage CreateUpdatePropertiesRequest(string name, RepositoryWriteableProperties value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -556,14 +556,14 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<Response<ContainerRepositoryProperties>> SetPropertiesAsync(string name, RepositoryWriteableProperties value = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerRepositoryProperties>> UpdatePropertiesAsync(string name, RepositoryWriteableProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateSetPropertiesRequest(name, value);
+            using var message = CreateUpdatePropertiesRequest(name, value);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -584,14 +584,14 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Response<ContainerRepositoryProperties> SetProperties(string name, RepositoryWriteableProperties value = null, CancellationToken cancellationToken = default)
+        public Response<ContainerRepositoryProperties> UpdateProperties(string name, RepositoryWriteableProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateSetPropertiesRequest(name, value);
+            using var message = CreateUpdatePropertiesRequest(name, value);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
