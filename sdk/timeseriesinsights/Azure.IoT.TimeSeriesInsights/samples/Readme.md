@@ -62,7 +62,7 @@ A single Time Series ID value is composed of up to 3 string values that uniquely
 var instanceId =  new TimeSeriesId("Millennium", "Floor2", "2A01");
 ```
 
-> Please note that this sample is setup to work best when the Time Series Insights ID that is setup with your environment is not one of the default telemetry properties such as iothub-connection-device-id. For this sample to mimick a more realistic TSI environment, use `Building`, `Floor` and `Room` as properties for your Time Series Insights IDs.
+> **Please note that this sample is setup to work best when the Time Series Insights ID that is configured with your environment is not one of the default telemetry properties such as iothub-connection-device-id. For this sample to mimic a more realistic TSI environment, use `Building`, `Floor` and `Room` as properties for your Time Series Insights IDs.**
 
 ## Time Series Insights Model Settings
 
