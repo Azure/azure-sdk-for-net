@@ -194,7 +194,7 @@ namespace Azure.Learn.AppConfig
             }
         }
 
-        internal HttpMessage CreateGetKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<Get6ItemsItem> select)
+        internal HttpMessage CreateGetKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<SettingFields> select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetKeyValuesHeaders>> GetKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Get6ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetKeyValuesHeaders>> GetKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetKeyValuesRequest(key, label, after, acceptDatetime, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -265,7 +265,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetKeyValuesHeaders> GetKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Get6ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetKeyValuesHeaders> GetKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetKeyValuesRequest(key, label, after, acceptDatetime, select);
             _pipeline.Send(message, cancellationToken);
@@ -284,7 +284,7 @@ namespace Azure.Learn.AppConfig
             }
         }
 
-        internal HttpMessage CreateCheckKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<Head6ItemsItem> select)
+        internal HttpMessage CreateCheckKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<SettingFields> select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -328,7 +328,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AzureAppConfigurationCheckKeyValuesHeaders>> CheckKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Head6ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AzureAppConfigurationCheckKeyValuesHeaders>> CheckKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -349,7 +349,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AzureAppConfigurationCheckKeyValuesHeaders> CheckKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Head6ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AzureAppConfigurationCheckKeyValuesHeaders> CheckKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select);
             _pipeline.Send(message, cancellationToken);
@@ -363,7 +363,7 @@ namespace Azure.Learn.AppConfig
             }
         }
 
-        internal HttpMessage CreateGetKeyValueRequest(string key, string label, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<Get7ItemsItem> select)
+        internal HttpMessage CreateGetKeyValueRequest(string key, string label, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<SettingFields> select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -411,7 +411,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ConfigurationSetting, AzureAppConfigurationGetKeyValueHeaders>> GetKeyValueAsync(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<Get7ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ConfigurationSetting, AzureAppConfigurationGetKeyValueHeaders>> GetKeyValueAsync(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -444,7 +444,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public ResponseWithHeaders<ConfigurationSetting, AzureAppConfigurationGetKeyValueHeaders> GetKeyValue(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<Get7ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ConfigurationSetting, AzureAppConfigurationGetKeyValueHeaders> GetKeyValue(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -661,7 +661,7 @@ namespace Azure.Learn.AppConfig
             }
         }
 
-        internal HttpMessage CreateCheckKeyValueRequest(string key, string label, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<Head7ItemsItem> select)
+        internal HttpMessage CreateCheckKeyValueRequest(string key, string label, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<SettingFields> select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -708,7 +708,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AzureAppConfigurationCheckKeyValueHeaders>> CheckKeyValueAsync(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<Head7ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AzureAppConfigurationCheckKeyValueHeaders>> CheckKeyValueAsync(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -736,7 +736,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public ResponseWithHeaders<AzureAppConfigurationCheckKeyValueHeaders> CheckKeyValue(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<Head7ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AzureAppConfigurationCheckKeyValueHeaders> CheckKeyValue(string key, string label = null, string acceptDatetime = null, string ifMatch = null, string ifNoneMatch = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -1098,7 +1098,7 @@ namespace Azure.Learn.AppConfig
             }
         }
 
-        internal HttpMessage CreateGetRevisionsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<Enum4> select)
+        internal HttpMessage CreateGetRevisionsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<SettingFields> select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1143,7 +1143,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetRevisionsHeaders>> GetRevisionsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Enum4> select = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetRevisionsHeaders>> GetRevisionsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRevisionsRequest(key, label, after, acceptDatetime, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1169,7 +1169,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetRevisionsHeaders> GetRevisions(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Enum4> select = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetRevisionsHeaders> GetRevisions(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRevisionsRequest(key, label, after, acceptDatetime, select);
             _pipeline.Send(message, cancellationToken);
@@ -1188,7 +1188,7 @@ namespace Azure.Learn.AppConfig
             }
         }
 
-        internal HttpMessage CreateCheckRevisionsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<Enum5> select)
+        internal HttpMessage CreateCheckRevisionsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<SettingFields> select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1232,7 +1232,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AzureAppConfigurationCheckRevisionsHeaders>> CheckRevisionsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Enum5> select = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AzureAppConfigurationCheckRevisionsHeaders>> CheckRevisionsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCheckRevisionsRequest(key, label, after, acceptDatetime, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1253,7 +1253,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AzureAppConfigurationCheckRevisionsHeaders> CheckRevisions(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Enum5> select = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AzureAppConfigurationCheckRevisionsHeaders> CheckRevisions(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCheckRevisionsRequest(key, label, after, acceptDatetime, select);
             _pipeline.Send(message, cancellationToken);
@@ -1350,7 +1350,7 @@ namespace Azure.Learn.AppConfig
             }
         }
 
-        internal HttpMessage CreateGetKeyValuesNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<Get6ItemsItem> select)
+        internal HttpMessage CreateGetKeyValuesNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<SettingFields> select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1380,7 +1380,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetKeyValuesHeaders>> GetKeyValuesNextPageAsync(string nextLink, string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Get6ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetKeyValuesHeaders>> GetKeyValuesNextPageAsync(string nextLink, string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1413,7 +1413,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetKeyValuesHeaders> GetKeyValuesNextPage(string nextLink, string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Get6ItemsItem> select = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetKeyValuesHeaders> GetKeyValuesNextPage(string nextLink, string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1522,7 +1522,7 @@ namespace Azure.Learn.AppConfig
             }
         }
 
-        internal HttpMessage CreateGetRevisionsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<Enum4> select)
+        internal HttpMessage CreateGetRevisionsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<SettingFields> select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1552,7 +1552,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetRevisionsHeaders>> GetRevisionsNextPageAsync(string nextLink, string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Enum4> select = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetRevisionsHeaders>> GetRevisionsNextPageAsync(string nextLink, string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1585,7 +1585,7 @@ namespace Azure.Learn.AppConfig
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetRevisionsHeaders> GetRevisionsNextPage(string nextLink, string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<Enum4> select = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<KeyValueListResult, AzureAppConfigurationGetRevisionsHeaders> GetRevisionsNextPage(string nextLink, string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<SettingFields> select = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
