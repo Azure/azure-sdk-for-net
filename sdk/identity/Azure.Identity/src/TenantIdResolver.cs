@@ -16,10 +16,10 @@ namespace Azure.Identity
         /// <returns></returns>
         public static string Resolve(string explicitTenantId, TokenRequestContext context, TokenCredentialOptions options)
         {
-            return options?.PreferTenantIdChallengeHint switch
+            return options?.PreferClientConfiguredTenantId switch
             {
-                true => context.TenantIdHint ?? explicitTenantId,
-                _ => explicitTenantId ?? context.TenantIdHint
+                true => explicitTenantId ?? context.TenantIdHint,
+                _ => context.TenantIdHint ?? explicitTenantId
             };
         }
     }

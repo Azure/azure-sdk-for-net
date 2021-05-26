@@ -66,7 +66,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithAuthCodeMockAsync([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
         {
-            options = new TokenCredentialOptions { PreferTenantIdChallengeHint = preferHint };
+            options = new TokenCredentialOptions { PreferClientConfiguredTenantId = preferHint };
             var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options) ;
 

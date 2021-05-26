@@ -49,7 +49,7 @@ namespace Azure.Identity.Tests
             [Values(true, false)] bool preferHint)
         {
             TestSetup();
-            options.PreferTenantIdChallengeHint = preferHint;
+            options.PreferClientConfiguredTenantId = preferHint;
             var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options);
             ClientSecretCredential client = InstrumentClient(new ClientSecretCredential(expectedTenantId, ClientId, "secret", options, null, mockMsalClient));

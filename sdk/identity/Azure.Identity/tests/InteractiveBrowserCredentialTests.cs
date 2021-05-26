@@ -223,7 +223,7 @@ namespace Azure.Identity.Tests
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
         {
             TestSetup();
-            var options = new InteractiveBrowserCredentialOptions { PreferTenantIdChallengeHint = preferHint };
+            var options = new InteractiveBrowserCredentialOptions { PreferClientConfiguredTenantId = preferHint };
             var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options);
 

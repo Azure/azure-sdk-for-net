@@ -28,7 +28,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
             var testProcess = new TestProcess { Output = processOutput };
-            var options = new VisualStudioCredentialOptions { PreferTenantIdChallengeHint = preferHint };
+            var options = new VisualStudioCredentialOptions { PreferClientConfiguredTenantId = preferHint };
             var credential = InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), options));
             var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options);

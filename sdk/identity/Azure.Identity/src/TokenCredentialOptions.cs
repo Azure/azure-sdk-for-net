@@ -23,8 +23,8 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// If <c>true</c>, the tenant Id hint provided by a service authorization challenge will override a tenantId configured via the credential options.
+        /// If <c>true</c>, the tenant Id hint provided by a service authorization challenge will not override a tenantId configured via the credential options.
         /// </summary>
-        public bool PreferTenantIdChallengeHint { get; set; }
+        public bool PreferClientConfiguredTenantId { get; set; }
     }
 }

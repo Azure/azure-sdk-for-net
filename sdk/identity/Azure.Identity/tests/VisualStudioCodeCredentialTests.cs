@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -58,10 +59,12 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
         public async Task AuthenticateWithVsCodeCredential([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
         {
+            using var env = new TestEnvVar(new Dictionary<string, string> {{"TENANT_ID", TenantId}});
             var environment = new IdentityTestEnvironment();
-            var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, Transport = new MockTransport(), PreferTenantIdChallengeHint = preferHint };
+            var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, Transport = new MockTransport(), PreferClientConfiguredTenantId = preferHint };
             var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
             expectedTenantId = TenantIdResolver.Resolve(environment.TenantId, context, options);
 
