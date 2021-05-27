@@ -163,6 +163,15 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Gets the tenants.
+        /// </summary>
+        /// <returns> Tenant container. </returns>
+        public TenantContainer GetTenants()
+        {
+            return new TenantContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
+        }
+
+        /// <summary>
         /// Creates a container using the lambda expression passed in.
         /// </summary>
         /// <typeparam name="T"> The type of container to construct. </typeparam>

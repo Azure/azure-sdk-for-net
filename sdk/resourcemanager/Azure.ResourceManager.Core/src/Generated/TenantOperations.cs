@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -40,9 +41,10 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public virtual T ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, T> func)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
-            return func(BaseUri, Credential, ClientOptions);
+            return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
     }
 }
