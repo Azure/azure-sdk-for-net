@@ -119,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await _topicScope.DisposeAsync();
         }
 
-        protected (JobHost JobHost, IHost Host) BuildHost<TJobClass>(
+        protected IHost BuildHost<TJobClass>(
             Action<IHostBuilder> configurationDelegate = null,
             bool startHost = true,
             bool useTokenCredential = false)
@@ -167,8 +167,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 host.StartAsync().GetAwaiter().GetResult();
             }
 
-            JobHost jobHost = host.GetJobHost();
-            return (jobHost, host);
+            return host;
         }
 
         internal async Task WriteQueueMessage(string message, string sessionId = null, string connectionString = default, string queueName = default)
