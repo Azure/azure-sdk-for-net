@@ -86,7 +86,7 @@ namespace Azure.Identity
             _options = options;
 
             _username = username;
-            _password = password.ToSecureString() ;
+            _password = password.ToSecureString();
             _clientId = clientId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options as ITokenCacheOptions);
