@@ -3182,7 +3182,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await file.UploadAsync(stream2);
             byte[] outputBytes = new byte[size];
 
-            await TestHelper.AssertExpectedExceptionAsync<ShareFileOpenReadConcurrentModificationException>(
+            await TestHelper.AssertExpectedExceptionAsync<ShareFileModificationException>(
                 outputStream.ReadAsync(outputBytes, 0, size),
                 e => {
                     Assert.AreEqual(e.ResourceUri, file.Uri);

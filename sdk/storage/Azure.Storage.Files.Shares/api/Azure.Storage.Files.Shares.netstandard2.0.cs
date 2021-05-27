@@ -672,10 +672,10 @@ namespace Azure.Storage.Files.Shares.Models
         public string LeaseId { get { throw null; } }
         public int? LeaseTime { get { throw null; } }
     }
-    public partial class ShareFileOpenReadConcurrentModificationException : System.Exception, System.Runtime.Serialization.ISerializable
+    public partial class ShareFileModificationException : System.Exception, System.Runtime.Serialization.ISerializable
     {
-        protected ShareFileOpenReadConcurrentModificationException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext streamingContext) { }
-        public ShareFileOpenReadConcurrentModificationException(string message, System.Uri resurceUri, Azure.ETag expectedETag, Azure.ETag actualEtag, Azure.HttpRange range) { }
+        protected ShareFileModificationException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext streamingContext) { }
+        public ShareFileModificationException(string message, System.Uri resurceUri, Azure.ETag expectedETag, Azure.ETag actualEtag, Azure.HttpRange range) { }
         public Azure.ETag ActualETag { get { throw null; } }
         public Azure.ETag ExpectedETag { get { throw null; } }
         public Azure.HttpRange Range { get { throw null; } }
