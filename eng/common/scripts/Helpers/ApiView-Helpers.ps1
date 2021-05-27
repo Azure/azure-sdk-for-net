@@ -14,7 +14,10 @@ function MapLanguageName($language)
     elseif ($lang -eq "python"){
         $lang = "Python"
     }
-    return $null
+    else{
+      $lang = $null
+    }
+    return $lang
 }
 
 function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $apiKey)
