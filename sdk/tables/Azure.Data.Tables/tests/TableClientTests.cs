@@ -38,7 +38,10 @@ namespace Azure.Data.Tables.Tests
         {
             _transport = new MockTransport(request => new MockResponse(204));
             var service_Instrumented = InstrumentClient(
-                new TableServiceClient(new Uri($"https://example.com?{signature}"), new AzureSasCredential("sig"), new TablesClientOptions { Transport = _transport }));
+                new TableServiceClient(
+                    new Uri($"https://example.com?{signature}"),
+                    new AzureSasCredential("sig"),
+                    new TablesClientOptions { Transport = _transport }));
             client = service_Instrumented.GetTableClient(TableName);
         }
 
@@ -348,7 +351,24 @@ namespace Azure.Data.Tables.Tests
         public async Task ValidateUri()
         {
             await client.UpdateEntityAsync(new TableEntity("pkā", "rk"), ETag.All).ConfigureAwait(false);
-            Assert.AreEqual($"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata", _transport.Requests[0].Uri.ToString());
+            Assert.AreEqual(
+                $"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+                _transport.Requests[0].Uri.ToString());
+        }
+
+        [Test]
+        public void GenerateSasUri()
+        {
+            TableSasPermissions permissions = TableSasPermissions.Add;
+            var expires = DateTime.Now.AddDays(1);
+            var cred = new TableSharedKeyCredential(AccountName, Secret);
+            var client = new TableClient(_url, TableName, cred);
+
+            var expectedSas = new TableSasBuilder(TableName, permissions, expires).Sign(cred);
+
+            var actualSas = client.GenerateSasUri(permissions, expires);
+
+            Assert.AreEqual("?" + expectedSas, actualSas.Query);
         }
 
         public class EnumEntity : ITableEntity
