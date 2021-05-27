@@ -188,6 +188,26 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestBatch_AutoCompleteMessagesDisabledOnTrigger()
+        {
+            await TestMultiple<SBQueue2SBQueueAutoCompleteMessagesDisabled>();
+        }
+
+        [Test]
+        public async Task TestBatch_AutoCompleteEnabledOnTrigger()
+        {
+            var (jobHost, host) = BuildHost<TestBatch_AutoCompleteMessagesEnabledOnTrigger>(BuildHostWithAutoCompleteDisabled<TestBatch_AutoCompleteMessagesEnabledOnTrigger>());
+            using (jobHost)
+            {
+                await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+                await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}");
+                bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await jobHost.StopAsync();
+            }
+        }
+
+        [Test]
         public async Task TestBatch_JsonPoco()
         {
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
@@ -344,6 +364,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
                 await jobHost.StopAsync();
             }
+        }
+
+        private static Action<IHostBuilder> BuildHostWithAutoCompleteDisabled<T>()
+        {
+            return builder =>
+                builder.ConfigureWebJobs(b =>
+                    b.AddServiceBus(sbOptions =>
+                    {
+                        sbOptions.AutoCompleteMessages = false;
+                    }));
         }
 
         private static Action<IHostBuilder> BuildDrainHost<T>()
@@ -795,6 +825,34 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 logger.LogInformation($"Input({input})");
                 _eventWait.Set();
+            }
+        }
+
+        public class SBQueue2SBQueueAutoCompleteMessagesDisabled
+        {
+            public static async void SBQueue2SBQueue_AutoCompleteMessagesDisabled(
+                [ServiceBusTrigger(FirstQueueNameKey, AutoCompleteMessages = false)]
+                ServiceBusReceivedMessage[] array,
+                ServiceBusMessageActions messageActions)
+            {
+                string[] messages = array.Select(x => x.Body.ToString()).ToArray();
+                foreach (var msg in array)
+                {
+                    await messageActions.CompleteMessageAsync(msg);
+                }
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+            }
+        }
+
+        public class TestBatch_AutoCompleteMessagesEnabledOnTrigger
+        {
+            public static void QueueBatchAutoCompleteEnabledOnTrigger(
+               [ServiceBusTrigger(FirstQueueNameKey, AutoCompleteMessages = true)]
+               ServiceBusReceivedMessage[] array)
+            {
+                Assert.True(array.Length > 0);
+                string[] messages = array.Select(x => x.Body.ToString()).ToArray();
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
         }
 
