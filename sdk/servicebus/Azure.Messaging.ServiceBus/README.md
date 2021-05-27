@@ -56,7 +56,7 @@ ServiceBusClient client = new ServiceBusClient(connectionString);
 
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
 
-### Dependency Injection
+### ASP.NET Core
 
 To inject ServiceBusClient as a dependency in an ASP .NET Core app, you can register the client in the `Startup.ConfigureServices` method in `Startup.cs`: 
 ```C#
@@ -64,24 +64,10 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.AddAzureClients(builder =>
     {
-        builder.AddServiceBusClient("<connection_string>");
+        builder.AddServiceBusClient(Configuration["connection_string_key"]);
     });
   
     services.AddControllers();
-}
-```
-With the service configured, you can now inject the client as dependency. For example, if you have a `MyApiController` class that needs to use the `ServiceBusClient`:
-```C#
-public class MyApiController : ControllerBase
-{
-  private readonly ServiceBusClient _serviceBusClient;
-
-  public MyApiController(ServiceBusClient serviceBusClient)
-  {
-    _serviceBusClient = serviceBusClient;
-  }
-  
-  // code that uses ServiceBusClient
 }
 ```
 For more details, see [Dependency injection with the Azure .NET SDK](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
