@@ -153,6 +153,10 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         public async Task ExchangeAccessTokenWithValidToken()
         {
+            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
+                Assert.Ignore("Ignore exchange access token test if flag is enabled.");
+            }
+
             string token;
             if (Mode == RecordedTestMode.Playback)
             {
