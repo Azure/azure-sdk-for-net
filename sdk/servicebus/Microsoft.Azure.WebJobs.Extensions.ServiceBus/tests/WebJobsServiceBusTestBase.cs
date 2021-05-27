@@ -158,15 +158,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                .ConfigureServices(s =>
                {
                    s.Configure<HostOptions>(opts => opts.ShutdownTimeout = HostShutdownTimeout);
+                   s.AddHostedService<ServiceBusEndToEndTestService>();
                });
             configurationDelegate?.Invoke(hostBuilder);
             IHost host = hostBuilder.Build();
-            JobHost jobHost = host.GetJobHost();
             if (startHost)
             {
-                jobHost.StartAsync().GetAwaiter().GetResult();
+                host.StartAsync().GetAwaiter().GetResult();
             }
 
+            JobHost jobHost = host.GetJobHost();
             return (jobHost, host);
         }
 
@@ -217,12 +218,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
             await sender.SendMessageAsync(messageObj);
         }
+    }
 
-        internal static void AssertNoLoggedErrors(IHost host)
+#pragma warning disable SA1402 // File may only contain a single type
+    public class ServiceBusEndToEndTestService : IHostedService
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        private readonly IHost _host;
+
+        public ServiceBusEndToEndTestService(IHost host)
         {
-            var logs = host.GetTestLoggerProvider().GetAllLogMessages();
+            _host = host;
+        }
+
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
             var errors = logs.Where(p => p.Level == LogLevel.Error);
             Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.FormattedMessage)));
+            return Task.CompletedTask;
         }
     }
 }

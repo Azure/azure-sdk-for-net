@@ -137,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var loggerProvider = host.GetTestLoggerProvider();
 
-                await ServiceBusEndToEndInternal<ServiceBusTestJobs>(host: host);
+                await ServiceBusEndToEndInternal<ServiceBusTestJobs>(host);
 
                 // in addition to verifying that our custom processor was called, we're also
                 // verifying here that extensions can log
@@ -203,21 +203,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _eventWait.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await jobHost.StopAsync();
-                AssertNoLoggedErrors(host);
             }
         }
 
         [Test]
         public async Task TestBatch_NoMessages()
         {
-            var (jobHost, host) = BuildHost<ServiceBusMultipleMessagesTestJob_NoMessagesExpected>();
+            var (jobHost, host) = BuildHost<ServiceBusMultipleMessagesTestJob_NoMessagesExpected>(b =>
+            {
+                b.ConfigureWebJobs(
+                    c =>
+                    {
+                        // This test uses a TimerTrigger and StorageCoreServices are needed to get the AddTimers to work
+                        c.AddAzureStorageCoreServices();
+                        c.AddTimers();
+                    });
+            });
             using (jobHost)
             {
-                // wait for 20 seconds to let the listener run for a while
-                _eventWait.WaitOne(20 * 1000);
-
+                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                Assert.True(result);
                 await jobHost.StopAsync();
-                AssertNoLoggedErrors(host);
             }
         }
 
@@ -255,7 +261,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _eventWait.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await jobHost.StopAsync();
-                AssertNoLoggedErrors(host);
             }
         }
 
@@ -279,7 +284,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("PocoValues(foo,bar)", logs);
                 await jobHost.StopAsync();
-                AssertNoLoggedErrors(host);
             }
         }
 
@@ -298,7 +302,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("Input(foobar)", logs);
                 await jobHost.StopAsync();
-                AssertNoLoggedErrors(host);
             }
         }
 
@@ -361,7 +364,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
                 await jobHost.StopAsync();
-                AssertNoLoggedErrors(host);
             }
         }
 
@@ -397,8 +399,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await jobHost.StopAsync();
-
-                AssertNoLoggedErrors(host);
             }
         }
 
@@ -426,7 +426,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
                 await jobHost.StopAsync();
-                AssertNoLoggedErrors(host);
             }
         }
 
@@ -449,8 +448,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-1", _resultMessage1);
             Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-2", _resultMessage2);
-
-            AssertNoLoggedErrors(host);
 
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
 
@@ -799,9 +796,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class ServiceBusMultipleMessagesTestJob_NoMessagesExpected
         {
-            public static void BindToJObject([ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] messages)
+            public static void ShouldNotRun([ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] messages)
             {
                 Assert.Fail("Should not be executed!");
+            }
+
+            // use a timer trigger that will be invoked every 10 seconds to signal the end of the test
+            public static void Run([TimerTrigger("*/10 * * * * *")] TimerInfo timer)
+            {
+                _eventWait.Set();
             }
         }
 
