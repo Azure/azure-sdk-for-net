@@ -14,18 +14,18 @@ namespace Azure.Communication.Identity.Tests
         public const string CommunicationM365AadTenantEnvironmentVariableName  = "COMMUNICATION_M365_AAD_TENANT";
         public const string CommunicationM365RedirectUriEnvironmentVariableName  = "COMMUNICATION_M365_REDIRECT_URI";
         public const string CommunicationM365ScopeEnvironmentVariableName  = "COMMUNICATION_M365_SCOPE";
-        public string CommunicationMsalUsername => GetVariable(CommunicationMsalUsernameEnvironmentVariableName);
+        public string CommunicationMsalUsername => GetOptionalVariable(CommunicationMsalUsernameEnvironmentVariableName) ?? "Sanitized";
 
-        public string CommunicationMsalPassword => GetVariable(CommunicationMsalPasswordEnvironmentVariableName);
+        public string CommunicationMsalPassword => GetOptionalVariable(CommunicationMsalPasswordEnvironmentVariableName) ?? "Sanitized";
 
-        public string CommunicationM365AppId => GetVariable(CommunicationM365AppIdEnvironmentVariableName);
+        public string CommunicationM365AppId => GetOptionalVariable(CommunicationM365AppIdEnvironmentVariableName) ?? "Sanitized";
 
-        public string CommunicationM365AadAuthority => GetVariable(CommunicationM365AadAuthorityEnvironmentVariableName);
+        public string CommunicationM365AadAuthority => GetOptionalVariable(CommunicationM365AadAuthorityEnvironmentVariableName) ?? "Sanitized";
 
-        public string CommunicationM365AadTenant => GetVariable(CommunicationM365AadTenantEnvironmentVariableName);
+        public string CommunicationM365AadTenant => GetOptionalVariable(CommunicationM365AadTenantEnvironmentVariableName) ?? "Sanitized";
 
-        public string CommunicationM365RedirectUri => GetVariable(CommunicationM365RedirectUriEnvironmentVariableName);
+        public string CommunicationM365RedirectUri => GetOptionalVariable(CommunicationM365RedirectUriEnvironmentVariableName) ?? "Sanitized";
 
-        public string CommunicationM365Scope => GetVariable(CommunicationM365ScopeEnvironmentVariableName);
+        public string CommunicationM365Scope => GetOptionalVariable(CommunicationM365ScopeEnvironmentVariableName) ?? "Sanitized";
     }
 }
