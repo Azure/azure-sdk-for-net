@@ -194,7 +194,7 @@ namespace Azure.Data.Tables
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
-            options ??= new TablesClientOptions();
+            options ??= TablesClientOptions.DefaultOptions;
             var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
 
             TableSharedKeyPipelinePolicy policy = connString.Credentials switch
@@ -234,7 +234,7 @@ namespace Azure.Data.Tables
 
             _endpoint = endpoint;
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
-            options ??= new TablesClientOptions();
+            options ??= TablesClientOptions.DefaultOptions;
 
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             HttpPipelinePolicy authPolicy = sasCredential switch

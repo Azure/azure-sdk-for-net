@@ -190,7 +190,7 @@ namespace Azure.Data.Tables
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
             _accountName = connString._accountName;
 
-            options ??= new TablesClientOptions();
+            options ??= TablesClientOptions.DefaultOptions;
             var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
             var secondaryEndpoint = connString.TableStorageUri.SecondaryUri?.AbsoluteUri;
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
@@ -219,7 +219,7 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             _endpoint = endpoint;
-            options ??= new TablesClientOptions();
+            options ??= TablesClientOptions.DefaultOptions;
             _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             var endpointString = endpoint.AbsoluteUri;
