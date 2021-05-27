@@ -253,7 +253,7 @@ namespace Azure.Data.Tables.Tests
             entityResults = await client.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
-            Assert.AreEqual("foo",entityResults[0]["ETag"]);
+            Assert.AreEqual("foo", entityResults[0]["ETag"]);
             Assert.AreNotEqual(entityResults[0]["ETag"], entityResults[0].ETag);
             entityResults.Clear();
         }
