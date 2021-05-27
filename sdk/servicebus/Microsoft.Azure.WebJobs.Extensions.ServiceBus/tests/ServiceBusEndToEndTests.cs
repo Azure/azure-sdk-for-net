@@ -43,8 +43,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task ServiceBusEndToEnd()
         {
-            var (jobHost, host) = BuildHost<ServiceBusTestJobs>(startHost: false);
-            using (jobHost)
+            var host = BuildHost<ServiceBusTestJobs>(startHost: false);
+            using (host)
             {
                 await ServiceBusEndToEndInternal<ServiceBusTestJobs>(host);
             }
@@ -53,8 +53,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task ServiceBusEndToEndTokenCredential()
         {
-            var (jobHost, host) = BuildHost<ServiceBusTestJobs>(startHost: false, useTokenCredential: true);
-            using (jobHost)
+            var host = BuildHost<ServiceBusTestJobs>(startHost: false, useTokenCredential: true);
+            using (host)
             {
                 await ServiceBusEndToEndInternal<ServiceBusTestJobs>(host);
             }
@@ -63,10 +63,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task ServiceBusBinderTestAsyncCollector()
         {
-            var (jobHost, host) = BuildHost<BinderTestJobsAsyncCollector>();
-            using (jobHost)
+            var host = BuildHost<BinderTestJobsAsyncCollector>();
+            using (host)
             {
                 int numMessages = 10;
+                var jobHost = host.GetJobHost();
                 var args = new { message = "Test Message", numMessages = numMessages };
                 await jobHost.CallAsync(nameof(BinderTestJobsAsyncCollector.ServiceBusBinderTest), args);
                 await jobHost.CallAsync(nameof(BinderTestJobsAsyncCollector.ServiceBusBinderTest), args);
@@ -75,18 +76,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var count = await CleanUpEntity(_firstQueueScope.QueueName);
 
                 Assert.AreEqual(numMessages * 3, count);
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
         [Test]
         public async Task ServiceBusBinderTestSyncCollector()
         {
-            var (jobHost, host) = BuildHost<BinderTestJobsSyncCollector>();
-            using (jobHost)
+            var host = BuildHost<BinderTestJobsSyncCollector>();
+            using (host)
             {
                 int numMessages = 10;
                 var args = new { message = "Test Message", numMessages = numMessages };
+                var jobHost = host.GetJobHost();
                 await jobHost.CallAsync(nameof(BinderTestJobsSyncCollector.ServiceBusBinderTest), args);
                 await jobHost.CallAsync(nameof(BinderTestJobsSyncCollector.ServiceBusBinderTest), args);
                 await jobHost.CallAsync(nameof(BinderTestJobsSyncCollector.ServiceBusBinderTest), args);
@@ -94,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var count = await CleanUpEntity(_firstQueueScope.QueueName);
 
                 Assert.AreEqual(numMessages * 3, count);
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
@@ -126,37 +128,37 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task CustomMessageProcessorTest()
         {
-            var (jobHost, host) = BuildHost<ServiceBusTestJobs>(host =>
+            var host = BuildHost<ServiceBusTestJobs>(host =>
                 host.ConfigureServices(services =>
                 {
                     services.AddSingleton<MessagingProvider, CustomMessagingProvider>();
                 }),
                 startHost: false);
 
-            using (jobHost)
+            using (host)
             {
                 var loggerProvider = host.GetTestLoggerProvider();
 
-                await ServiceBusEndToEndInternal<ServiceBusTestJobs>(host: host);
+                await ServiceBusEndToEndInternal<ServiceBusTestJobs>(host);
 
                 // in addition to verifying that our custom processor was called, we're also
                 // verifying here that extensions can log
                 IEnumerable<LogMessage> messages = loggerProvider.GetAllLogMessages().Where(m => m.Category == CustomMessagingProvider.CustomMessagingCategory);
                 Assert.AreEqual(4, messages.Count(p => p.FormattedMessage.Contains("Custom processor Begin called!")));
                 Assert.AreEqual(4, messages.Count(p => p.FormattedMessage.Contains("Custom processor End called!")));
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
         [Test]
         public async Task MultipleAccountTest()
         {
-            var (jobHost, host) = BuildHost<ServiceBusTestJobs>(host =>
+            var host = BuildHost<ServiceBusTestJobs>(host =>
                 host.ConfigureServices(services =>
                 {
                     services.AddSingleton<MessagingProvider, CustomMessagingProvider>();
                 }));
-            using (jobHost)
+            using (host)
             {
                 await WriteQueueMessage(
                     "Test",
@@ -168,7 +170,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // ensure all logs have had a chance to flush
                 await Task.Delay(3000);
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
 
             Assert.AreEqual("Test-topic-1", _resultMessage1);
@@ -216,22 +218,43 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task TestSingle_JObject()
         {
-            var (jobHost, _) = BuildHost<ServiceBusMultipleMessagesTestJob_BindToJObject>();
-            using (jobHost)
+            var host = BuildHost<ServiceBusMultipleMessagesTestJob_BindToJObject>();
+            using (host)
             {
                 await WriteQueueMessage(JsonConvert.SerializeObject(new {Date = DateTimeOffset.Now}));
                 bool result = _eventWait.WaitOne(SBTimeoutMills);
                 Assert.True(result);
-                await jobHost.StopAsync();
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestBatch_NoMessages()
+        {
+            var host = BuildHost<ServiceBusMultipleMessagesTestJob_NoMessagesExpected>(b =>
+            {
+                b.ConfigureWebJobs(
+                    c =>
+                    {
+                        // This test uses a TimerTrigger and StorageCoreServices are needed to get the AddTimers to work
+                        c.AddAzureStorageCoreServices();
+                        c.AddTimers();
+                    });
+            });
+            using (host)
+            {
+                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
             }
         }
 
         [Test]
         public async Task TestSingle_JObject_CustomSettings()
         {
-            var (jobHost, _) = BuildHost<ServiceBusMultipleMessagesTestJob_BindToJObject_RespectsCustomJsonSettings>(
+            var host = BuildHost<ServiceBusMultipleMessagesTestJob_BindToJObject_RespectsCustomJsonSettings>(
                 configurationDelegate: host =>
-                    host.ConfigureDefaultTestHost<ServiceBusMultipleMessagesTestJob_BindToJObject_RespectsCustomJsonSettings>(b =>
+                    host.ConfigureWebJobs(b =>
                     {
                         b.AddServiceBus(options =>
                         {
@@ -241,25 +264,26 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                             };
                         });
                     }));
-            using (jobHost)
+            using (host)
             {
                 await WriteQueueMessage(JsonConvert.SerializeObject(new {Date = DateTimeOffset.Now}));
                 bool result = _eventWait.WaitOne(SBTimeoutMills);
                 Assert.True(result);
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
         [Test]
         public async Task TestSingle_OutputPoco()
         {
-            var (jobHost, _) = BuildHost<ServiceBusOutputPocoTest>();
-            using (jobHost)
+            var host = BuildHost<ServiceBusOutputPocoTest>();
+            using (host)
             {
+                var jobHost = host.GetJobHost();
                 await jobHost.CallAsync(nameof(ServiceBusOutputPocoTest.OutputPoco));
                 bool result = _eventWait.WaitOne(SBTimeoutMills);
                 Assert.True(result);
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
@@ -272,8 +296,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task BindToPoco()
         {
-            var (jobHost, host) = BuildHost<ServiceBusArgumentBindingJob>();
-            using (jobHost)
+            var host = BuildHost<ServiceBusArgumentBindingJob>();
+            using (host)
             {
                 await WriteQueueMessage("{ Name: 'foo', Value: 'bar' }");
 
@@ -282,17 +306,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("PocoValues(foo,bar)", logs);
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
         [Test]
         public async Task BindToString()
         {
-            var (jobHost, host) = BuildHost<ServiceBusArgumentBindingJob>();
-            using (jobHost)
+            var host = BuildHost<ServiceBusArgumentBindingJob>();
+            using (host)
             {
                 var method = typeof(ServiceBusArgumentBindingJob).GetMethod(nameof(ServiceBusArgumentBindingJob.BindToString), BindingFlags.Static | BindingFlags.Public);
+                var jobHost = host.GetJobHost();
                 await jobHost.CallAsync(method, new { input = "foobar" });
 
                 bool result = _eventWait.WaitOne(SBTimeoutMills);
@@ -300,7 +325,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("Input(foobar)", logs);
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
@@ -340,9 +365,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private async Task TestSingleDrainMode<T>(bool sendToQueue)
         {
-            var (jobHost, host) = BuildHost<T>(BuildDrainHost<T>());
+            var host = BuildHost<T>(BuildDrainHost<T>());
 
-            using (jobHost)
+            using (host)
             {
                 if (sendToQueue)
                 {
@@ -362,7 +387,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
@@ -379,7 +404,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private static Action<IHostBuilder> BuildDrainHost<T>()
         {
             return builder =>
-                builder.ConfigureDefaultTestHost<T>(b =>
+                builder.ConfigureWebJobs(b =>
                     b.AddServiceBus(sbOptions =>
                     {
                         // We want to ensure messages can be completed in the function code before signaling success to the test
@@ -391,8 +416,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private async Task TestMultiple<T>(bool isXml = false)
         {
-            var (jobHost, host) = BuildHost<T>();
-            using (jobHost)
+            var host = BuildHost<T>();
+            using (host)
             {
                 if (isXml)
                 {
@@ -407,14 +432,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
         private async Task TestMultipleDrainMode<T>(bool sendToQueue)
         {
-            var (jobHost, host) = BuildHost<T>(BuildDrainHost<T>());
-            using (jobHost)
+            var host = BuildHost<T>(BuildDrainHost<T>());
+            using (host)
             {
                 if (sendToQueue)
                 {
@@ -434,7 +459,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
@@ -459,7 +484,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.AreEqual("E2E-SBQueue2SBQueue-SBQueue2SBTopic-topic-2", _resultMessage2);
 
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
-            Assert.False(logMessages.Any(p => p.Level == LogLevel.Error));
 
             // Filter out Azure SDK and custom processor logs for easier validation.
             logMessages = logMessages.Where(
@@ -800,6 +824,21 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void BindToJObject([ServiceBusTrigger(FirstQueueNameKey)] JObject input)
             {
                 Assert.AreEqual(JTokenType.String, input["Date"].Type);
+                _eventWait.Set();
+            }
+        }
+
+        public class ServiceBusMultipleMessagesTestJob_NoMessagesExpected
+        {
+            public static void ShouldNotRun([ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] messages)
+            {
+                Assert.Fail("Should not be executed!");
+            }
+
+            // use a timer trigger that will be invoked every 20 seconds to signal the end of the test
+            // 20 seconds should give enough time for the receive call to complete as the TryTimeout being used is 10 seconds.
+            public static void Run([TimerTrigger("*/20 * * * * *")] TimerInfo timer)
+            {
                 _eventWait.Set();
             }
         }

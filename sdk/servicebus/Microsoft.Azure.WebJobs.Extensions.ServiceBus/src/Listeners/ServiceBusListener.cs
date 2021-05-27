@@ -281,10 +281,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         {
                             try
                             {
-                                receiver = await sessionClient.AcceptNextSessionAsync(_entityPath, new ServiceBusSessionReceiverOptions
-                                {
-                                    PrefetchCount = _serviceBusOptions.PrefetchCount
-                                }).ConfigureAwait(false);
+                                receiver = await sessionClient.AcceptNextSessionAsync(
+                                    _entityPath,
+                                    new ServiceBusSessionReceiverOptions
+                                    {
+                                        PrefetchCount = _serviceBusOptions.PrefetchCount
+                                    },
+                                    cancellationToken).ConfigureAwait(false);
                             }
                             catch (ServiceBusException ex)
                             when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
@@ -295,9 +298,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
 
                         IReadOnlyList<ServiceBusReceivedMessage> messages =
-                            await receiver.ReceiveMessagesAsync(_serviceBusOptions.MaxBatchSize).ConfigureAwait(false);
+                            await receiver.ReceiveMessagesAsync(
+                                _serviceBusOptions.MaxBatchSize,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
 
-                        if (messages != null)
+                        if (messages.Count > 0)
                         {
                             ServiceBusReceivedMessage[] messagesArray = messages.ToArray();
                             ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(messagesArray);
@@ -324,7 +330,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                     List<Task> completeTasks = new List<Task>();
                                     foreach (ServiceBusReceivedMessage message in messagesArray)
                                     {
-                                        completeTasks.Add(receiver.CompleteMessageAsync(message));
+                                        completeTasks.Add(receiver.CompleteMessageAsync(message, cancellationToken));
                                     }
                                     await Task.WhenAll(completeTasks).ConfigureAwait(false);
                                 }
@@ -333,7 +339,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                     List<Task> abandonTasks = new List<Task>();
                                     foreach (ServiceBusReceivedMessage message in messagesArray)
                                     {
-                                        abandonTasks.Add(receiver.AbandonMessageAsync(message));
+                                        abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: cancellationToken));
                                     }
                                     await Task.WhenAll(abandonTasks).ConfigureAwait(false);
                                 }
@@ -344,7 +350,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             // Close the session and release the session lock after draining all messages for the accepted session.
                             if (_isSessionsEnabled)
                             {
-                                await receiver.CloseAsync().ConfigureAwait(false);
+                                // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                             }
                         }
                     }
@@ -362,7 +369,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             // Attempt to close the session and release session lock to accept a new session on the next loop iteration
                             try
                             {
-                                await receiver.CloseAsync().ConfigureAwait(false);
+                                // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                             }
                             catch
                             {
