@@ -8,13 +8,16 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the a writable sub resource of ResourceIdentifier.
     /// </summary>
+    [ReferenceType]
     public class WritableSubResource : WritableSubResource<ResourceIdentifier>
     {
         /// <summary>
         /// Initializes an empty instance of <see cref="WritableSubResource"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        protected WritableSubResource() { }
+        protected WritableSubResource() 
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="WritableSubResource"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
@@ -28,20 +31,23 @@ namespace Azure.ResourceManager.Core
     [ReferenceType]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Types differ by type argument only")]
     public partial class WritableSubResource <TIdentifier> : IEquatable<WritableSubResource<TIdentifier>>, IEquatable<string>,
-        IComparable<WritableSubResource<TIdentifier>>, IComparable<string> where TIdentifier : ResourceIdentifier
+        IComparable<WritableSubResource<TIdentifier>>, IComparable<string> 
+        where TIdentifier : ResourceIdentifier
     {
         /// <summary>
         /// Initializes an empty instance of <see cref="WritableSubResource{TIdentifier}"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        protected WritableSubResource() { }
+        protected WritableSubResource() 
+        { 
+        }
 
         /// <summary> Initializes a new instance of <see cref="WritableSubResource{TIdentifier}"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
         public WritableSubResource(string id)
         {
-            Id = ResourceIdentifier.Create(id) as TIdentifier;
+            Id = (TIdentifier)id;
         }
 
         /// <summary>
@@ -70,18 +76,12 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public bool Equals(WritableSubResource<TIdentifier> other)
         {
-            if (Id is null)
-                return false;
-
             return Id.Equals(other?.Id);
         }
 
         /// <inheritdoc/>
         public bool Equals(string other)
         {
-            if (Id is null)
-                return false;
-
             return Id.Equals(other);
         }
     }
