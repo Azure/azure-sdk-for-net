@@ -160,5 +160,14 @@ namespace Azure.ResourceManager.Core
         {
             return new GenericResourceOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
+
+        /// <summary>
+        /// Gets the tenants.
+        /// </summary>
+        /// <returns> Tenant container. </returns>
+        public TenantContainer GetTenants()
+        {
+            return new TenantContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
+        }
     }
 }
