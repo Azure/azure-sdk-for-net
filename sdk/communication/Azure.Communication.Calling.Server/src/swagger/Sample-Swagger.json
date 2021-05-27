@@ -1101,7 +1101,7 @@
                     "type": "string"
                 },
                 "callbackUri": {
-                    "description": "The callback URI.",
+                    "description": "The callback Uri to recieve PlayAudio status notifications.",
                     "type": "string"
                 }
             }
