@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// The top level data export resource container.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DataExport : IResource
+    public partial class DataExport : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the DataExport class.
