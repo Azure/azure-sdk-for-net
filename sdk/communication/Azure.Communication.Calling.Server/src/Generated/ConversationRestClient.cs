@@ -459,7 +459,6 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Stop recording a call. </summary>
         /// <param name="conversationId"> Encoded conversation url. </param>
         /// <param name="recordingId"> Recording id. </param>
-        /// <param name="request"> Request body of stop call recording request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="recordingId"/> is null. </exception>
         public async Task<Response> StopRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
@@ -471,10 +470,6 @@ namespace Azure.Communication.Calling.Server
             if (recordingId == null)
             {
                 throw new ArgumentNullException(nameof(recordingId));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
             }
 
             using var message = CreateStopRecordingRequest(conversationId, recordingId);
@@ -491,7 +486,6 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Stop recording a call. </summary>
         /// <param name="conversationId"> Encoded conversation url. </param>
         /// <param name="recordingId"> Recording id. </param>
-        /// <param name="request"> Request body of stop call recording request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="recordingId"/> is null. </exception>
         public Response StopRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
@@ -503,10 +497,6 @@ namespace Azure.Communication.Calling.Server
             if (recordingId == null)
             {
                 throw new ArgumentNullException(nameof(recordingId));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
             }
 
             using var message = CreateStopRecordingRequest(conversationId, recordingId);
@@ -541,7 +531,6 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Pause recording a call. </summary>
         /// <param name="conversationId"> Encoded conversation url. </param>
         /// <param name="recordingId"> Recording id. </param>
-        /// <param name="request"> Request body of pause call recording request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="recordingId"/> is null. </exception>
         public async Task<Response> PauseRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
@@ -553,10 +542,6 @@ namespace Azure.Communication.Calling.Server
             if (recordingId == null)
             {
                 throw new ArgumentNullException(nameof(recordingId));
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
             }
 
             using var message = CreatePauseRecordingRequest(conversationId, recordingId);
@@ -573,7 +558,6 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Pause recording a call. </summary>
         /// <param name="conversationId"> Encoded conversation url. </param>
         /// <param name="recordingId"> Recording id. </param>
-        /// <param name="request"> Request body of pause call recording request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="recordingId"/> is null. </exception>
         public Response PauseRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)

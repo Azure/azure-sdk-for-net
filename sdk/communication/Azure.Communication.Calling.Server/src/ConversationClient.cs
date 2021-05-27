@@ -174,11 +174,9 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingStateCallbackUri, nameof(recordingStateCallbackUri));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 StartCallRecordingRequest request = new StartCallRecordingRequest()
                 {
-                    OperationContext = operationContext,
                     RecordingStateCallbackUri = recordingStateCallbackUri.AbsoluteUri
                 };
 
@@ -196,7 +194,6 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
         /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<StartCallRecordingResponse> StartRecording(string conversationId, Uri recordingStateCallbackUri, CancellationToken cancellationToken = default)
         {
@@ -206,11 +203,9 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingStateCallbackUri, nameof(recordingStateCallbackUri));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 StartCallRecordingRequest request = new StartCallRecordingRequest()
                 {
-                    OperationContext = operationContext,
                     RecordingStateCallbackUri = recordingStateCallbackUri.AbsoluteUri
                 };
 
@@ -228,7 +223,6 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
         /// <param name="recordingId">The recording id to stop.</param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response> StopRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
@@ -238,7 +232,6 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 return await RestClient.StopRecordingAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
             }
@@ -254,7 +247,6 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
         /// <param name="recordingId">The recording id to stop.</param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response StopRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
@@ -264,7 +256,6 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 return RestClient.StopRecording(conversationId, recordingId, cancellationToken);
             }
@@ -280,7 +271,6 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
         /// <param name="recordingId">The recording id to pause.</param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response> PauseRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
@@ -290,7 +280,6 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 return await RestClient.PauseRecordingAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
             }
@@ -306,7 +295,6 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
         /// <param name="recordingId">The recording id to pause.</param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response PauseRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
@@ -316,11 +304,9 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 PauseCallRecordingRequest request = new PauseCallRecordingRequest()
                 {
-                    OperationContext = operationContext
                 };
 
                 return RestClient.PauseRecording(conversationId, recordingId, cancellationToken);
@@ -337,7 +323,6 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
         /// <param name="recordingId">The recording id to pause.</param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response> ResumeRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
@@ -347,11 +332,9 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 ResumeCallRecordingRequest request = new ResumeCallRecordingRequest()
                 {
-                    OperationContext = operationContext
                 };
 
                 return await RestClient.ResumeRecordingAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
@@ -368,7 +351,6 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
         /// <param name="recordingId">The recording id to resume.</param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response ResumeRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
@@ -378,11 +360,9 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 ResumeCallRecordingRequest request = new ResumeCallRecordingRequest()
                 {
-                    OperationContext = operationContext
                 };
 
                 return RestClient.ResumeRecording(conversationId, recordingId, cancellationToken);
@@ -399,7 +379,6 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
         /// <param name="recordingId">The recording id to get the state of.</param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<GetCallRecordingStateResponse>> GetRecordingStateAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
@@ -409,7 +388,6 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 return await RestClient.RecordingStateAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
             }
@@ -425,7 +403,6 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
         /// <param name="recordingId">The recording id to get the state of.</param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<GetCallRecordingStateResponse> GetRecordingState(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
@@ -435,7 +412,6 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 return RestClient.RecordingState(conversationId, recordingId, cancellationToken);
             }
