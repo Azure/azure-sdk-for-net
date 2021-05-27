@@ -605,7 +605,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/tables/                                    @christothes
 
 # ServiceLabel: %Tables %Service Attention
-#/<NotInRepo>/            @klaaslanghout
+#/<NotInRepo>/            @sakash279, @sivethe, @ThomasWeiss, @PaulCheng
 
 # ServiceLabel: %TimeseriesInsights %Service Attention
 #/<NotInRepo>/            @Shipra1Mishra
