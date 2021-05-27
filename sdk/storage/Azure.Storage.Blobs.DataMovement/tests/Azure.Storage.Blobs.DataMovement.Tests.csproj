@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure.Storage.Common.DataMovement client library tests</AssemblyTitle>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Azure.Storage.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Blobs.DataMovement.csproj" />
+    <ProjectReference Include="..\..\Azure.Storage.Common.DataMovement\tests\Azure.Storage.Common.DataMovement.Tests.csproj" />
+  </ItemGroup>
+  <!-- Ensure an empty TestConfigurations.xml is always present so the build can copy it -->
+  <Target Name="TouchTestConfigurationsFile" BeforeTargets="PreBuildEvent">
+    <Touch Files="$(MSBuildThisFileDirectory)Shared\TestConfigurations.xml" AlwaysCreate="True" ContinueOnError="WarnAndContinue" />
+  </Target>
+</Project>
