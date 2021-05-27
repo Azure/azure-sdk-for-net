@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Tests
 
             try
             {
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 0; i++)
                 {
                     BlobServiceClient serviceClient = new BlobServiceClient(
                         new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
