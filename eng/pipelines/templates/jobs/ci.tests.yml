@@ -43,15 +43,12 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
           AgentImage: $(OSVmImage)
-
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
-
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
-
       - script: >-
           dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
@@ -62,7 +59,6 @@ jobs:
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
         displayName: "Build & Test ($(TestTargetFramework))"
-
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
@@ -71,5 +67,18 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
-
-      - template: ../steps/code-coverage.yml
+      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Generate Code Coverage Reports
+        inputs:
+          reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
+          targetdir: $(Build.ArtifactStagingDirectory)\coverage
+          reporttypes: Cobertura
+          filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
+          verbosity: Verbose
+      - task: PublishCodeCoverageResults@1
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Publish Code Coverage Reports
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
