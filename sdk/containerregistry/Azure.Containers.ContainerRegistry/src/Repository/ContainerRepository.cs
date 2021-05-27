@@ -113,7 +113,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.SetPropertiesAsync(Name, GetRepositoryWriteableProperties(value), cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdatePropertiesAsync(Name, GetRepositoryWriteableProperties(value), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -147,7 +147,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.SetProperties(Name, GetRepositoryWriteableProperties(value), cancellationToken);
+                return _restClient.UpdateProperties(Name, GetRepositoryWriteableProperties(value), cancellationToken);
             }
             catch (Exception e)
             {
