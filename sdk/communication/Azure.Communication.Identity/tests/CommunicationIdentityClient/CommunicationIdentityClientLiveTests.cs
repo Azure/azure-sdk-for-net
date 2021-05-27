@@ -151,7 +151,7 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeAccessToken()
+        public async Task ExchangeAccessTokenWithValidToken()
         {
             string token;
             if (Mode == RecordedTestMode.Playback)
@@ -179,6 +179,40 @@ namespace Azure.Communication.Identity.Tests
             Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync(token);
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
+        }
+
+        [Test]
+        public async Task ExchangeAccessTokenWithEmptyTokenShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync("");
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.True(ex.Message.Contains("401"));
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
+        }
+
+        [Test]
+        public async Task ExchangeAccessTokenWithNullTokenShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync(null);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("token", ex.ParamName);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
         }
     }
 }
