@@ -7,8 +7,8 @@
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The TagOrderBy. </summary>
-    public enum TagOrderBy
+    /// <summary> The ArtifactTagOrderBy. </summary>
+    public enum ArtifactTagOrderBy
     {
         /// <summary> Do not provide an orderby value in the request. </summary>
         None,

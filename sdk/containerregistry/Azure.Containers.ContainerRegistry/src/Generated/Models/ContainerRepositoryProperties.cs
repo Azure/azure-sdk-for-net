@@ -9,10 +9,10 @@ using System;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Repository attributes. </summary>
-    public partial class RepositoryProperties
+    /// <summary> Properties of this repository. </summary>
+    public partial class ContainerRepositoryProperties
     {
-        /// <summary> Initializes a new instance of RepositoryProperties. </summary>
+        /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
         /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
@@ -20,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="manifestCount"> Number of the manifests. </param>
         /// <param name="tagCount"> Number of the tags. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/> or <paramref name="name"/> is null. </exception>
-        internal RepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount)
+        internal ContainerRepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount)
         {
             if (registryLoginServer == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
             TagCount = tagCount;
         }
 
-        /// <summary> Initializes a new instance of RepositoryProperties. </summary>
+        /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
         /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
@@ -51,7 +51,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
         /// <param name="teleportEnabled"> Enables Teleport functionality on new images in the repository improving Container startup performance. </param>
-        internal RepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, bool? teleportEnabled)
+        internal ContainerRepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, bool? teleportEnabled)
         {
             RegistryLoginServer = registryLoginServer;
             Name = name;

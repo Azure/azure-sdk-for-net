@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ContainerRegistryModelFactory
     {
-        /// <summary> Initializes new instance of RepositoryProperties class. </summary>
+        /// <summary> Initializes new instance of ContainerRepositoryProperties class. </summary>
         /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
@@ -25,21 +25,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
         /// <param name="teleportEnabled"> Enables Teleport functionality on new images in the repository improving Container startup performance. </param>
-        /// <returns> A new <see cref="ContainerRegistry.RepositoryProperties"/> instance for mocking. </returns>
-        public static RepositoryProperties RepositoryProperties(string registryLoginServer = default, string name = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int manifestCount = default, int tagCount = default, bool? canDelete = default, bool? canWrite = default, bool? canList = default, bool? canRead = default, bool? teleportEnabled = default)
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRepositoryProperties"/> instance for mocking. </returns>
+        public static ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = default, string name = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int manifestCount = default, int tagCount = default, bool? canDelete = default, bool? canWrite = default, bool? canList = default, bool? canRead = default, bool? teleportEnabled = default)
         {
-            return new RepositoryProperties(registryLoginServer, name, createdOn, lastUpdatedOn, manifestCount, tagCount, canDelete, canWrite, canList, canRead, teleportEnabled);
-        }
-
-        /// <summary> Initializes new instance of DeleteRepositoryResult class. </summary>
-        /// <param name="deletedManifests"> SHA of the deleted image. </param>
-        /// <param name="deletedTags"> Tag of the deleted image. </param>
-        /// <returns> A new <see cref="ContainerRegistry.DeleteRepositoryResult"/> instance for mocking. </returns>
-        public static DeleteRepositoryResult DeleteRepositoryResult(IReadOnlyList<string> deletedManifests = default, IReadOnlyList<string> deletedTags = default)
-        {
-            deletedManifests ??= new List<string>();
-            deletedTags ??= new List<string>();
-            return new DeleteRepositoryResult(deletedManifests, deletedTags);
+            return new ContainerRepositoryProperties(registryLoginServer, name, createdOn, lastUpdatedOn, manifestCount, tagCount, canDelete, canWrite, canList, canRead, teleportEnabled);
         }
 
         /// <summary> Initializes new instance of ArtifactTagProperties class. </summary>
@@ -59,14 +48,14 @@ namespace Azure.Containers.ContainerRegistry
             return new ArtifactTagProperties(registryLoginServer, repositoryName, name, digest, createdOn, lastUpdatedOn, canDelete, canWrite, canList, canRead);
         }
 
-        /// <summary> Initializes new instance of ArtifactManifestReference class. </summary>
+        /// <summary> Initializes new instance of ArtifactManifestPlatform class. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
-        /// <returns> A new <see cref="ContainerRegistry.ArtifactManifestReference"/> instance for mocking. </returns>
-        public static ArtifactManifestReference ArtifactManifestReference(string digest = default, ArtifactArchitecture architecture = default, ArtifactOperatingSystem operatingSystem = default)
+        /// <returns> A new <see cref="ContainerRegistry.ArtifactManifestPlatform"/> instance for mocking. </returns>
+        public static ArtifactManifestPlatform ArtifactManifestPlatform(string digest = default, ArtifactArchitecture? architecture = default, ArtifactOperatingSystem? operatingSystem = default)
         {
-            return new ArtifactManifestReference(digest, architecture, operatingSystem);
+            return new ArtifactManifestPlatform(digest, architecture, operatingSystem);
         }
 
         /// <summary> Initializes new instance of ArtifactManifestProperties class. </summary>
@@ -78,7 +67,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="lastUpdatedOn"> Last update time. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
-        /// <param name="manifestReferences"> List of manifests referenced by this manifest list.  List will be empty if this manifest is not a manifest list. </param>
+        /// <param name="relatedArtifacts"> List of artifacts that are referenced by this manifest list, with information about the platform each supports.  This list will be empty if this is a leaf manifest and not a manifest list. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="canDelete"> Delete enabled. </param>
         /// <param name="canWrite"> Write enabled. </param>
@@ -87,11 +76,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="quarantineState"> Quarantine state. </param>
         /// <param name="quarantineDetails"> Quarantine details. </param>
         /// <returns> A new <see cref="ContainerRegistry.ArtifactManifestProperties"/> instance for mocking. </returns>
-        public static ArtifactManifestProperties ArtifactManifestProperties(string registryLoginServer = default, string repositoryName = default, string digest = default, long? size = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, ArtifactArchitecture? architecture = default, ArtifactOperatingSystem? operatingSystem = default, IReadOnlyList<ArtifactManifestReference> manifestReferences = default, IReadOnlyList<string> tags = default, bool? canDelete = default, bool? canWrite = default, bool? canList = default, bool? canRead = default, string quarantineState = default, string quarantineDetails = default)
+        public static ArtifactManifestProperties ArtifactManifestProperties(string registryLoginServer = default, string repositoryName = default, string digest = default, long? size = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, ArtifactArchitecture? architecture = default, ArtifactOperatingSystem? operatingSystem = default, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts = default, IReadOnlyList<string> tags = default, bool? canDelete = default, bool? canWrite = default, bool? canList = default, bool? canRead = default, string quarantineState = default, string quarantineDetails = default)
         {
-            manifestReferences ??= new List<ArtifactManifestReference>();
+            relatedArtifacts ??= new List<ArtifactManifestPlatform>();
             tags ??= new List<string>();
-            return new ArtifactManifestProperties(registryLoginServer, repositoryName, digest, size, createdOn, lastUpdatedOn, architecture, operatingSystem, manifestReferences, tags, canDelete, canWrite, canList, canRead, quarantineState, quarantineDetails);
+            return new ArtifactManifestProperties(registryLoginServer, repositoryName, digest, size, createdOn, lastUpdatedOn, architecture, operatingSystem, relatedArtifacts, tags, canDelete, canWrite, canList, canRead, quarantineState, quarantineDetails);
         }
     }
 }
