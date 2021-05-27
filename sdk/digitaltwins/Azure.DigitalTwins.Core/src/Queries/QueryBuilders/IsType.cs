@@ -12,10 +12,29 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public enum IsType
     {
+        /// <summary>
+        /// Boolean type.
+        /// </summary>
         BOOL = 1,
+
+        /// <summary>
+        /// Number type.
+        /// </summary>
         NUMBER = 2,
-        STRING = 3,
+
+        /// <summary>
+        /// String type.
+        /// </summary>
+        STR = 3,
+
+        /// <summary>
+        /// Primative type.
+        /// </summary>
         PRIMATIVE = 4,
-        OBJECT = 5
+
+        /// <summary>
+        /// Object in ADT query langauge.
+        /// </summary>
+        OBJ = 5
     }
 }

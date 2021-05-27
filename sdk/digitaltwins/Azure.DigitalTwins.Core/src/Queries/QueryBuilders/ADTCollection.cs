@@ -12,7 +12,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public enum ADTCollection
     {
+        /// <summary>
+        /// ADT instance.
+        /// </summary>
         DigitalTwins = 0,
+
+        /// <summary>
+        /// Relationships in an ADT instance.
+        /// </summary>
         Relationship = 1,
     }
 }

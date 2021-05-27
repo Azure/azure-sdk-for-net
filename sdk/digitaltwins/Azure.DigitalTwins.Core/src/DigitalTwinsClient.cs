@@ -2163,7 +2163,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Queries for digital twins by iterating through a collection asynchronously.
         /// </summary>
-        /// <param name="query">The query string, in SQL-like syntax.</param>
+        /// <param name="query"> The fluently built query object. </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
         /// <typeparam name="T">The type to deserialize the result to.</typeparam>
@@ -2175,7 +2175,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Queries for digital twins by iterating through a collection synchronously.
         /// </summary>
-        /// <param name="query">The query string, in SQL-like syntax.</param>
+        /// <param name="query"> The fluently built query object. </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
         /// <typeparam name="T">The type to deserialize the result to.</typeparam>
