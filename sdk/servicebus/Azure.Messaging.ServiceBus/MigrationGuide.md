@@ -18,7 +18,7 @@ We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. I
       - [Consistency](#consistency)
       - [Connection Pooling](#connection-pooling)
     - [Client constructors](#client-constructors)
-      - [Service bus client](#service-bus-client)
+      - [Service Bus client](#service-bus-client)
       - [Administration client](#administration-client)
     - [Sending messages](#sending-messages)
     - [Receiving messages](#receiving-messages)
@@ -81,7 +81,7 @@ By making this connection sharing be implicit to a `ServiceBusClient` instance, 
 
 ### Client constructors
 
-#### Service bus client
+#### Service Bus client
 
 While we continue to support connection strings when constructing a client, the main difference is when using Azure Active Directory. We now use the new [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) library to share a single authentication solution between clients of different Azure services.
 
