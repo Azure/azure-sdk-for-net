@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <summary>
         /// Initializes a new instance of the ManagementCluster class.
         /// </summary>
+        /// <param name="clusterSize">The cluster size</param>
         /// <param name="provisioningState">The state of the cluster
         /// provisioning. Possible values include: 'Succeeded', 'Failed',
         /// 'Cancelled', 'Deleting', 'Updating'</param>
-        /// <param name="clusterSize">The cluster size</param>
         /// <param name="clusterId">The identity</param>
         /// <param name="hosts">The hosts</param>
-        public ManagementCluster(string provisioningState = default(string), int? clusterSize = default(int?), int? clusterId = default(int?), IList<string> hosts = default(IList<string>))
-            : base(provisioningState, clusterSize, clusterId, hosts)
+        public ManagementCluster(int? clusterSize = default(int?), string provisioningState = default(string), int? clusterId = default(int?), IList<string> hosts = default(IList<string>))
+            : base(clusterSize, provisioningState, clusterId, hosts)
         {
             CustomInit();
         }
