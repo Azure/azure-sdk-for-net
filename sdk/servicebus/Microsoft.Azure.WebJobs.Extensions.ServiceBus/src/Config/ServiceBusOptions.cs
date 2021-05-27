@@ -193,19 +193,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             return Task.CompletedTask;
         }
 
-        internal ServiceBusProcessorOptions ToProcessorOptions() =>
+        internal ServiceBusProcessorOptions ToProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue) =>
             new ServiceBusProcessorOptions
             {
-                AutoCompleteMessages = AutoCompleteMessages,
+                AutoCompleteMessages = autoCompleteMessagesOptionEvaluatedValue,
                 PrefetchCount = PrefetchCount,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxConcurrentCalls = MaxConcurrentCalls
             };
 
-        internal ServiceBusSessionProcessorOptions ToSessionProcessorOptions() =>
+        internal ServiceBusSessionProcessorOptions ToSessionProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue) =>
             new ServiceBusSessionProcessorOptions
             {
-                AutoCompleteMessages = AutoCompleteMessages,
+                AutoCompleteMessages = autoCompleteMessagesOptionEvaluatedValue,
                 PrefetchCount = PrefetchCount,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxConcurrentSessions = MaxConcurrentSessions,

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -223,9 +224,12 @@ namespace Azure.Communication.Chat
                 SenderDisplayName = senderDisplayName,
                 Type = type
             };
-            foreach (var value in metadata)
+            if (metadata != null)
             {
-                sendChatMessageRequest.Metadata.Add(value);
+                foreach (var value in metadata)
+                {
+                    sendChatMessageRequest.Metadata.Add(value);
+                }
             }
             var model = sendChatMessageRequest;
             var content0 = new Utf8JsonRequestContent();
@@ -486,9 +490,12 @@ namespace Azure.Communication.Chat
             {
                 Content = content
             };
-            foreach (var value in metadata)
+            if (metadata != null)
             {
-                updateChatMessageRequest.Metadata.Add(value);
+                foreach (var value in metadata)
+                {
+                    updateChatMessageRequest.Metadata.Add(value);
+                }
             }
             var model = updateChatMessageRequest;
             var content0 = new Utf8JsonRequestContent();
@@ -861,7 +868,7 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new AddChatParticipantsRequest(participants);
+            var model = new AddChatParticipantsRequest(participants.ToList());
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;

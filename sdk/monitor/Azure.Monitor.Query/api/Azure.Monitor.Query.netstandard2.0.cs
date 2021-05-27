@@ -62,6 +62,14 @@ namespace Azure.Monitor.Query
         public Azure.Core.DateTimeRange? TimeSpan { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
     }
+    public static partial class QueryModelFactory
+    {
+        public static Azure.Monitor.Query.Models.LogsQueryResultColumn LogsQueryResultColumn(string name = null, string type = null) { throw null; }
+        public static Azure.Monitor.Query.Models.LogsQueryResultTable LogsQueryResultTable(string name = null, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultColumn> columns = null, System.Text.Json.JsonElement internalRows = default(System.Text.Json.JsonElement)) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricAvailability MetricAvailability(System.TimeSpan? timeGrain = default(System.TimeSpan?), System.TimeSpan? retention = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricQueryResult MetricQueryResult(int? cost = default(int?), string Timespan = null, System.TimeSpan? interval = default(System.TimeSpan?), string @namespace = null, string resourceRegion = null, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.Metric> metrics = null) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricValue MetricValue(System.DateTimeOffset timeStamp = default(System.DateTimeOffset), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?)) { throw null; }
+    }
 }
 namespace Azure.Monitor.Query.Models
 {

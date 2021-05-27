@@ -257,7 +257,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         /// <summary>
-        /// Authenticate with <see cref="DefaultAzureCredential"/>.
+        /// Authenticate with a connection string/>.
         /// </summary>
         public void AuthenticateWithConnectionString()
         {
