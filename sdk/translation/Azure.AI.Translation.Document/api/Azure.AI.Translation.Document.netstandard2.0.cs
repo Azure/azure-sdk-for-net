@@ -31,6 +31,8 @@ namespace Azure.AI.Translation.Document
         protected DocumentTranslationClient() { }
         public DocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public DocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
+        public DocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public DocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.FileFormat>> GetDocumentFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
