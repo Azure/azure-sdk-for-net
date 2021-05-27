@@ -170,7 +170,8 @@ namespace Azure.ResourceManager.Core
         {
             return new TenantContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
         }
-        
+
+        /// <summary>
         /// Creates a container using the lambda expression passed in.
         /// </summary>
         /// <typeparam name="T"> The type of container to construct. </typeparam>
