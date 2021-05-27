@@ -8,8 +8,8 @@
         "Content-Length": "276",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-176b413e45749840ac964bb5962fa8af-ed3ebfe30477d542-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210517.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-2454e28f7a9f0b40b7b5ec0a79ac3c29-df92d320d38bb945-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "c99cb42a5a82e854b9e5b6d84f7b86ab",
         "x-ms-return-client-request-id": "true"
       },
@@ -39,18 +39,22 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "05e20080-d709-4b96-8a57-d1a592850754",
+        "apim-request-id": "21ad8ae4-37ed-443b-bcc4-cb75e24c7273",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 17 May 2021 19:48:34 GMT",
+        "Date": "Thu, 27 May 2021 14:18:55 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "5"
+        "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidRequest",
-          "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2019-10-01,2020-07-01."
+          "message": "Invalid parameter in request",
+          "innererror": {
+            "code": "InvalidParameterValue",
+            "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2019-10-01,2020-07-01."
+          }
         }
       }
     }

@@ -364,7 +364,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, ex.ErrorCode);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidParameterValue, ex.ErrorCode);
         }
 
         [RecordedTest]
