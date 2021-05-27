@@ -84,10 +84,7 @@ namespace Azure.Storage.Blobs.Specialized
         public AppendBlobClient(string connectionString, string blobContainerName, string blobName)
             : base(connectionString, blobContainerName, blobName)
         {
-            _appendBlobRestClient = BuildAppendBlobRestClient(
-                connectionString,
-                blobContainerName,
-                blobName);
+            _appendBlobRestClient = BuildAppendBlobRestClient(Uri.ToString());
         }
 
         /// <summary>
@@ -115,10 +112,7 @@ namespace Azure.Storage.Blobs.Specialized
         public AppendBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
-            _appendBlobRestClient = BuildAppendBlobRestClient(
-                connectionString,
-                blobContainerName,
-                blobName);
+            _appendBlobRestClient = BuildAppendBlobRestClient(Uri.ToString());
             AssertNoClientSideEncryption(options);
         }
 
@@ -141,7 +135,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, options)
         {
             AssertNoClientSideEncryption(options);
-            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri.ToString());
         }
 
         /// <summary>
@@ -166,7 +160,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, credential, options)
         {
             AssertNoClientSideEncryption(options);
-            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri.ToString());
         }
 
         /// <summary>
@@ -195,7 +189,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, credential, options)
         {
             AssertNoClientSideEncryption(options);
-            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri.ToString());
         }
 
         /// <summary>
@@ -220,7 +214,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, credential, options)
         {
             AssertNoClientSideEncryption(options);
-            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri.ToString());
         }
 
         /// <summary>
@@ -244,7 +238,7 @@ namespace Azure.Storage.Blobs.Specialized
                   clientConfiguration,
                   clientSideEncryption: default)
         {
-            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri.ToString());
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -255,35 +249,12 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
-        private AppendBlobRestClient BuildAppendBlobRestClient(Uri uri)
-            => BuildAppendBlobRestClient(new BlobUriBuilder(uri));
-
-        private AppendBlobRestClient BuildAppendBlobRestClient(
-            string connectionString,
-            string blobContainerName,
-            string blobName)
+        private AppendBlobRestClient BuildAppendBlobRestClient(string blobUri)
         {
-            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return BuildAppendBlobRestClient(uriBuilder);
-        }
-
-        private AppendBlobRestClient BuildAppendBlobRestClient(BlobUriBuilder uriBuilder)
-        {
-            string containerName = uriBuilder.BlobContainerName;
-            string blobName = uriBuilder.BlobName;
-            uriBuilder.BlobContainerName = null;
-            uriBuilder.BlobName = null;
             return new AppendBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToUri().ToString(),
-                containerName: containerName,
-                blob: blobName.EscapePath(),
+                url: blobUri.ToString(),
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
