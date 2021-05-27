@@ -277,7 +277,7 @@
 
 # PRLabel: %TimeSeriesInsights
 # ServiceLabel: %TimeSeriesInsights %Service Attention
-/sdk/timeseriesinsights/                        @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi @yeskarthik @rasidhan @dmdenmsft
+/sdk/timeseriesinsights/                        @yeskarthik @rasidhan @dmdenmsft
 
 # ServiceLabel: %Event Grid %Service Attention
 # PRLabel: %Event Grid
