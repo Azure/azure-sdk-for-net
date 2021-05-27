@@ -15,6 +15,16 @@ namespace Azure.Communication.Calling.Server.Tests
         public ServerCallingLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new ServerCallingRecordedTestSanitizer();
 
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            if (TestEnvironment.ShouldIgnoreTests)
+            {
+                Assert.Ignore("ServerCalling tests are skipped " +
+                    "because ServerCalling package is not included in the TEST_PACKAGES_ENABLED variable");
+            }
+        }
+
         public CallClient CreateServerCallingClient()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;

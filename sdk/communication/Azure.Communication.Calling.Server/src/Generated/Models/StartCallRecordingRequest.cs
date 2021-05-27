@@ -15,8 +15,6 @@ namespace Azure.Communication.Calling.Server
         {
         }
 
-        /// <summary> The context for this operation. </summary>
-        public string OperationContext { get; set; }
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }
     }

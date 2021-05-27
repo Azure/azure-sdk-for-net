@@ -1021,19 +1021,19 @@
             }
         },
         "PhoneNumberIdentifier": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/PhoneNumberIdentifierModel"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/PhoneNumberIdentifierModel"
         },
         "CommunicationIdentifier": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationIdentifierModel"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationIdentifierModel"
         },
         "CommunicationUserIdentifier": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationUserIdentifierModel"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationUserIdentifierModel"
         },
         "CommunicationCloudEnvironment": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationCloudEnvironmentModel"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationCloudEnvironmentModel"
         },
         "MicrosoftTeamsUserIdentifier": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/MicrosoftTeamsUserIdentifierModel"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/MicrosoftTeamsUserIdentifierModel"
         },
         "CreateCallResponse": {
             "description": "The response payload of the create call operation.",
@@ -1046,7 +1046,7 @@
             }
         },
         "CommunicationError": {
-            "$ref": "https://github.com/Azure/azure-rest-api-specs/tree/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationError"
+            "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationError"
         },
         "PlayAudioRequest": {
             "description": "The request payload for playing audio.",
@@ -1064,8 +1064,8 @@
                     "description": "The value to identify context of the operation.",
                     "type": "string"
                 },
-                "resourceId": {
-                    "description": "The media resource id of the play audio request. A ResourceId value\r\nindicates the media resource should be cached within the runtime service\r\nwhich handles playing audios.",
+                "audioFileId": {
+                    "description": "An id for the media in the AudioFileUri, using which we cache the media resource.",
                     "type": "string"
                 }
             }
@@ -1236,10 +1236,6 @@
             "description": "The request payload start call recording operation.",
             "type": "object",
             "properties": {
-                "operationContext": {
-                    "description": "The context for this operation.",
-                    "type": "string"
-                },
                 "recordingStateCallbackUri": {
                     "description": "The uri to send notifications to.",
                     "type": "string"

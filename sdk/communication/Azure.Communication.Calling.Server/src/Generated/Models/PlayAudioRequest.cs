@@ -29,13 +29,7 @@ namespace Azure.Communication.Calling.Server
         public bool? Loop { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
-        /// <summary>
-        /// The media resource id of the play audio request. A ResourceId value
-        /// 
-        /// indicates the media resource should be cached within the runtime service
-        /// 
-        /// which handles playing audios.
-        /// </summary>
-        public string ResourceId { get; set; }
+        /// <summary> An id for the media in the AudioFileUri, using which we cache the media resource. </summary>
+        public string AudioFileId { get; set; }
     }
 }
