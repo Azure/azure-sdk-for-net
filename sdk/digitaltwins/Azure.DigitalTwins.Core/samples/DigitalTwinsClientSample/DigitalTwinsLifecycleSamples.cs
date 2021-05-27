@@ -276,6 +276,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
                 // happens under the covers.
+
                 AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 
                 // Iterate over the twin instances in the pageable response.

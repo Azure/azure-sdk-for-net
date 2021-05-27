@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Azure.DigitalTwins.Core.QueryBuilder;
 using static Azure.DigitalTwins.Core.StreamHelper;
 
 namespace Azure.DigitalTwins.Core
@@ -2157,6 +2158,30 @@ namespace Azure.DigitalTwins.Core
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Queries for digital twins by iterating through a collection asynchronously.
+        /// </summary>
+        /// <param name="query">The query string, in SQL-like syntax.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
+        /// <typeparam name="T">The type to deserialize the result to.</typeparam>
+        public virtual AsyncPageable<T> QueryAsync<T>(ADTQuery query, CancellationToken cancellationToken = default)
+        {
+            return QueryAsync<T>(query.ToString(), cancellationToken);
+        }
+
+        /// <summary>
+        /// Queries for digital twins by iterating through a collection synchronously.
+        /// </summary>
+        /// <param name="query">The query string, in SQL-like syntax.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
+        /// <typeparam name="T">The type to deserialize the result to.</typeparam>
+        public virtual Pageable<T> Query<T>(ADTQuery query, CancellationToken cancellationToken = default)
+        {
+            return Query<T>(query.ToString(), cancellationToken);
         }
 
         /// <summary>
