@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Core
         /// <returns>Deserialized SubResource object.</returns>
         internal static SubResource<TIdentifier> DeserializeSubResource(JsonElement element)
         {
-            Optional<string> id = default;
+            string id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new SubResource<TIdentifier>(id.Value);
+            return new SubResource<TIdentifier>(id);
         }
     }
 }

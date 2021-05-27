@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="WritableSubResource"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        protected WritableSubResource() 
+        public WritableSubResource() 
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="WritableSubResource"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
-        public WritableSubResource(string id) : base(id) { }
+        protected internal WritableSubResource(string id) : base(id) { }
     }
 
     /// <summary>
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="WritableSubResource{TIdentifier}"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        protected WritableSubResource() 
+        public WritableSubResource() 
         { 
         }
 
         /// <summary> Initializes a new instance of <see cref="WritableSubResource{TIdentifier}"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
-        public WritableSubResource(string id)
+        protected internal WritableSubResource(string id)
         {
-            Id = (TIdentifier)id;
+           Id = (TIdentifier)id;
         }
 
         /// <summary>

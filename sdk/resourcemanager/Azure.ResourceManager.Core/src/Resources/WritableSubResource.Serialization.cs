@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Core
         /// <returns>Deserialized WritableSubResource object.</returns>
         internal static WritableSubResource<TIdentifier> DeserializeWritableSubResource(JsonElement element)
         {
-            Optional<string> id = default;
+            string id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new WritableSubResource<TIdentifier>(id.Value);
+            return new WritableSubResource<TIdentifier>(id);
         }
     }
 }

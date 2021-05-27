@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="SubResource"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        protected SubResource() 
+        public SubResource() 
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SubResource"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
-        public SubResource(string id) : base(id) { }
+        protected internal SubResource(string id) : base(id) { }
     }
 
     /// <summary>
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="SubResource{TIdentifier}"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        protected SubResource() 
+        public SubResource() 
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SubResource{TIdentifier}"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
-        public SubResource(string id)
+        protected internal SubResource(string id)
         {
-            Id = (TIdentifier)id;
+            Id = (TIdentifier)id; 
         }
 
         /// <summary>
