@@ -9,6 +9,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.1" />
     <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
