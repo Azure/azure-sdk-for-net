@@ -14,7 +14,7 @@ function MapLanguageName($language)
     elseif ($lang -eq "python"){
         $lang = "Python"
     }
-    return $lang
+    return $null
 }
 
 function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $apiKey)
@@ -22,6 +22,9 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
   # Get API view URL and API Key to check status
   Write-Host "Checking API review status"
   $lang = MapLanguageName -language $language
+  if ($lang -eq $null) {
+    return
+  }
   $headers = @{ "ApiKey" = $apiKey }
   $body = @{
     language = $lang
@@ -44,7 +47,6 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
   }
   catch
   {
-    Write-Host "Exception details: $($_.Exception.Response)"
     Write-Warning "Failed to check API review status for package $($PackageName). You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
   }
 }
