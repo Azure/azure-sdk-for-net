@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core
         /// <summary> Initializes a new instance of <see cref="WritableSubResource"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
-        protected internal WritableSubResource(string id) : base(id) { }
+        public WritableSubResource(string id) : base(id) { }
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Core
         /// <summary> Initializes a new instance of <see cref="WritableSubResource{TIdentifier}"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
         [SerializationConstructor]
-        protected internal WritableSubResource(string id)
+        public WritableSubResource(string id)
         {
             Id = ResourceIdentifier.Create(id) as TIdentifier;
         }
