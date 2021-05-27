@@ -1,25 +1,5 @@
 # Introduction
 
-Azure Time Series Insights provides data exploration and telemetry tools to help you improve operational analysis. It's a fully managed analytics, storage, and visualization service where you can explore and analyze billions of Internet of Things (IoT) events simultaneously.
-
-Azure Time Series Insights gives you a global view of your data, so you can quickly validate your IoT solution and avoid costly downtime to mission-critical devices. It can help you discover hidden trends, spot anomalies, and conduct root-cause analysis in near real time.
-
-If you are new to Azure Time Series Insights and would like to learn more about the platform, please make sure you check out the Azure Time Series Insights official [documentation page][tsi_product_documentation].
-
-# Time Series Insights client library for .NET
-The Time Series Insights client library for .NET provides the following functionality:
-- Retrieving and being able to make changes to the Time Series Insights environment model settings, such as changing the model name or default type ID.
-- Retrieving and being able to add, update and remove Time Series instances.
-- Retrieving and being able to make changes to the Time Series Insights environment types, such as creating, updating and deleting Time Series types.
-- Retrieving and being able to make changes to the Time Series Insights hierarchies, such as creating, updating and deleting Time Series hierarchies.
-- Querying raw events, computed series and aggregate series
-
-[Source Code][tsi_client_src] | [Package (NuGet)][tsi_nuget_package] | [Product documentation][tsi_product_documentation] | [Samples][tsi_samples]
-
-# Key concepts
-
-## TimeSeriesInsightsClient
-
 A `TimeSeriesInsightsClient` is the primary interface for developers using the Time Series Insights client library. It provides both synchronous and asynchronous operations to perform operations on a Time Series Insights environment. The `TimeSeriesInsightsClient` exposes several properties that a developer will use to perform specific operations on a Time Series Insights environment. For example, `ModelSettings` is the property that a developer can use to perform operations on the model settings of the TSI environment. `Instances` can be used to perform operations on TSI instances. Other properties include `Types`, `Hierarchies` and `Query`.
 
 ## Creating TimeSeriesInsightsClient
@@ -706,10 +686,6 @@ await foreach (TimeSeriesPoint point in query.GetResultsAsync())
 ```
 
 <!-- LINKS -->
-[tsi_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src
-[tsi_nuget_package]: https://www.bing.com
-[tsi_product_documentation]: https://docs.microsoft.com/azure/time-series-insights/
-[tsi_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples/Readme.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
 [tsi_instances_learn_more]: https://docs.microsoft.com/azure/time-series-insights/concepts-model-overview#time-series-model-instances
 [tsi_id_learn_more]: https://docs.microsoft.com/azure/time-series-insights/how-to-select-tsid
