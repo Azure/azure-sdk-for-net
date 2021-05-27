@@ -21,12 +21,12 @@ steps:
     condition: contains(variables['OSVmImage'], 'mac')
 
   - task: Powershell@2
+    displayName: Register Dogfood environment
     inputs:
-      displayName: Register Dogfood environment
       targetType: inline
       pwsh: true
       script: |
-        eng/common/TestResources/Import-AzModules.ps1
+        eng/common/scripts/Import-AzModules.ps1
 
         $environmentSpec = @"
           $(env-config-dogfood)
