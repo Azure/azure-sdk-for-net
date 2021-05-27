@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private DataFlowClient CreateClient()
         {
             return InstrumentClient(new DataFlowClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
@@ -63,13 +63,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string newFlowName = Recording.GenerateAssetName("DataFlow2");
 
             DataFlowRenameDataFlowOperation renameOperation = await client.StartRenameDataFlowAsync (resource.Name, new ArtifactRenameRequest () { NewName = newFlowName } );
-            await renameOperation.WaitForCompletionAsync();
+            await renameOperation.WaitForCompletionResponseAsync();
 
             DataFlowResource dataFlow = await client.GetDataFlowAsync (newFlowName);
             Assert.AreEqual (newFlowName, dataFlow.Name);
 
             DataFlowDeleteDataFlowOperation operation = await client.StartDeleteDataFlowAsync (newFlowName);
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionResponseAsync();
         }
 
         [RecordedTest]

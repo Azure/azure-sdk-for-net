@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/pii?showStats=false\u0026domain=phi\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Authorization": "Sanitized",
         "Content-Length": "175",
         "Content-Type": "application/json",
-        "traceparent": "00-811eed962a40c842908305b0d7f01b98-2d3950f35f22094e-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210226.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "ffe6a60e824fecc8dbd8fa9097290d8d",
+        "traceparent": "00-ddeac5c0b5e19a45bc91f15fe910b889-c7f932b9afa79340-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210514.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "66cf91a593c37d4ee57b52513ba42d19",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,21 +24,28 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4699f716-2fbc-4a62-8cfc-a7b6ecba7153",
+        "apim-request-id": "240f7b93-e8e1-4944-a87f-7252ec6c5f39",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Sat, 27 Feb 2021 00:04:05 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
+        "Date": "Fri, 14 May 2021 17:21:46 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "40"
+        "x-envoy-upstream-service-time": "33"
       },
       "ResponseBody": {
         "documents": [
           {
-            "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
+            "redactedText": "A ********* with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
             "id": "0",
             "entities": [
+              {
+                "text": "developer",
+                "category": "PersonType",
+                "offset": 2,
+                "length": 9,
+                "confidenceScore": 0.97
+              },
               {
                 "text": "859-98-0987",
                 "category": "USSocialSecurityNumber",
@@ -70,7 +77,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1616189708",
+    "RandomSeed": "397872095",
     "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
   }
 }

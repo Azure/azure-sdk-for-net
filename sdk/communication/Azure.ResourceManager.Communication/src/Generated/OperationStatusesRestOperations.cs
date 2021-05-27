@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public OperationStatusesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-08-20-preview")
+        public OperationStatusesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-08-20")
         {
             endpoint ??= new Uri("https://management.azure.com");
             if (apiVersion == null)

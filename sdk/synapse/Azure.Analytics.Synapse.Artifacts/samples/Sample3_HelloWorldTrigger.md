@@ -6,7 +6,7 @@ string triggerName = "Test-Trigger";
 ```
 
 ```C# Snippet:CreateTriggerClient
-TriggerClient client = new TriggerClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+TriggerClient client = new TriggerClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
 
 ```C# Snippet:CreateTrigger
@@ -29,5 +29,5 @@ foreach (TriggerResource trigger in triggers)
 
 ```C# Snippet:DeleteTrigger
 TriggerDeleteTriggerOperation deleteOperation = client.StartDeleteTrigger(triggerName);
-await deleteOperation.WaitForCompletionAsync();
+await deleteOperation.WaitForCompletionResponseAsync();
 ```

@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the Twitter provider.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Twitter : ProxyOnlyResource
     {
@@ -33,6 +36,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="enabled">&lt;code&gt;false&lt;/code&gt; if the Twitter
+        /// provider should not be enabled despite the set registration;
+        /// otherwise, &lt;code&gt;true&lt;/code&gt;.</param>
+        /// <param name="registration">The configuration settings of the app
+        /// registration for the Twitter provider.</param>
         public Twitter(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), TwitterRegistration registration = default(TwitterRegistration))
             : base(id, name, kind, type)
         {
@@ -47,11 +55,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; if the
+        /// Twitter provider should not be enabled despite the set
+        /// registration; otherwise,
+        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the app registration for
+        /// the Twitter provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties.registration")]
         public TwitterRegistration Registration { get; set; }

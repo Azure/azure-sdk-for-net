@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Dedicated Host Group with resource group response. </summary>
-    public partial class DedicatedHostGroupListResult
+    internal partial class DedicatedHostGroupListResult
     {
         /// <summary> Initializes a new instance of DedicatedHostGroupListResult. </summary>
         /// <param name="value"> The list of dedicated host groups. </param>

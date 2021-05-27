@@ -22,8 +22,10 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
   - [Uploading Blobs to a Container](#uploading-blobs-to-a-container)
   - [Downloading Blobs from a Container](#downloading-blobs-from-a-container)
   - [Listing Blobs in a Container](#listing-blobs-in-a-container)
+  - [Managing Blob Metadata](#managing-blob-metadata)
   - [Generate a SAS](#generate-a-sas)
   - [Content Hashes](#content-hashes)
+  - [Resiliency](#resiliency)
 - [Additional information](#additional-information)
 
 ## Migration benefits
@@ -193,9 +195,9 @@ await containerClient.SetAccessPolicyAsync(permissions: signedIdentifiers);
 
 ### Client Structure
 
-The legacy SDK used a stateful model. There were container and blob objects that held state regarding service resources and required the user to manually call their update methods. But blob contents were not a part of this state and had to be uploaded/downloaded whenever they were to be interacted with. This became increasingly confusing over time, and increasingly susceptible to thread safety issues.
+**The legacy SDK used a stateful model.** There were container and blob objects that held state regarding service resources and required the user to manually call their update methods. But blob contents were not a part of this state and had to be uploaded/downloaded whenever they were to be interacted with. This became increasingly confusing over time, and increasingly susceptible to thread safety issues.
 
-The modern SDK has taken a client-based approach. There are no objects designed to be representations of storage resources, but instead clients that act as your mechanism to interact with your storage resources in the cloud. Clients hold no state of your resources.
+The modern SDK has taken a client-based approach. There are no objects designed to be representations of storage resources, but instead clients that act as your mechanism to interact with your storage resources in the cloud. **Clients hold no state of your resources.** This is most noticable when looking at [blob metadata](#managing-blob-metadata).
 
 The hierarchical structure of Azure Blob Storage can be understood by the following diagram:  
 ![Blob Storage Hierarchy](https://docs.microsoft.com/en-us/azure/storage/blobs/media/storage-blobs-introduction/blob1.png)
@@ -260,6 +262,8 @@ BlobContainerClient containerClient = await blobServiceClient.CreateBlobContaine
 
 ### Uploading Blobs to a Container
 
+#### Uploading from a file
+
 v11
 ```csharp
 CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
@@ -272,9 +276,39 @@ BlobClient blobClient = containerClient.GetBlobClient(blobName);
 await blobClient.UploadAsync(localFilePath, overwrite: true);
 ```
 
-This example uploads from given file paths, but note that v12 also conatins an overloads for uploading from a readable `Stream` instance.
+#### Uploading from a stream
+
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+using Stream stream = File.OpenRead(localFilePath);
+await cloudBlockBlob.UploadFromStreamAsync(stream);
+```
+
+v12
+```C# Snippet:SampleSnippetsBlobMigration_UploadBlobFromStream
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+using Stream stream = File.OpenRead(localFilePath);
+await blobClient.UploadAsync(stream, overwrite: true);
+```
+
+#### Uploading text
+
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+await blob.UploadTextAsync("content");
+```
+
+v12
+```C# Snippet:SampleSnippetsBlobMigration_UploadBlobText
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+await blobClient.UploadAsync(BinaryData.FromString("hello world"), overwrite: true);
+```
 
 ### Downloading Blobs from a Container
+
+#### Downloading to a file
 
 v11
 ```csharp
@@ -283,24 +317,44 @@ await cloudBlockBlob.DownloadToFileAsync(downloadFilePath, FileMode.Create);
 ```
 
 v12
-
 ```C# Snippet:SampleSnippetsBlobMigration_DownloadBlob
 BlobClient blobClient = containerClient.GetBlobClient(blobName);
 await blobClient.DownloadToAsync(downloadFilePath);
 ```
 
-This example uploads from given file paths, but note that v12 also conatins an overloads for downloading to a writable `Stream` instance.
+#### Downloading to a stream
 
-v12 also contains overloads for reading the download stream directly, with smart retries abstracted into the stream implementation. Remember to dispose of your stream when finished, either through `Stream.Close()` or (as in this example) through a disposable pattern. Note that this is the only mechanism in v12 to download a specific range of a blob instead of the whole blob.
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+using Stream target = File.OpenWrite(downloadFilePath);
+await blob.DownloadToStreamAsync(target);
+```
 
-```C# Snippet:SampleSnippetsBlobMigration_DownloadBlobDirectStream
+v12
+```C# Snippet:SampleSnippetsBlobMigration_DownloadBlobToStream
 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-BlobDownloadInfo downloadResponse = await blobClient.DownloadAsync();
-using (Stream downloadStream = downloadResponse.Content)
+using (Stream target = File.OpenWrite(downloadFilePath))
 {
-    await MyConsumeStreamFunc(downloadStream);
+    await blobClient.DownloadToAsync(target);
 }
 ```
+
+#### Downloading text
+
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+string content = await blob.DownloadTextAsync();
+```
+
+v12
+```C# Snippet:SampleSnippetsBlobMigration_DownloadBlobText
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
+string downloadedData = downloadResult.Content.ToString();
+```
+
 
 ### Listing Blobs in a Container
 
@@ -399,6 +453,61 @@ await foreach (BlobHierarchyItem item in results)
 }
 ```
 
+### Managing Blob Metadata
+
+On the service, blob metadata is overwritten alongside blob data overwrites. If metadata is not provided on a blob content edit, that is interpreted as a metadata clear. Legacy versions of the SDK mitigated this by maintaining blob metadata internally and sending it for you on appropriate requests. This helped in simple cases, but could fall out of sync and required developers to defensively code against metadata changes in a multi-client scenario anyway.
+
+V12 has abandoned this stateful approach, having users manage their own metadata. While this requires additional code for developers, it ensures you always know how your metadata is being managed and avoid silently corrupting metadata due to SDK caching.
+
+v11 samples:
+
+The legacy SDK maintained a metadata cache, allowing you to modify metadata on the CloudBlob and invoke Update(). Calling FetchAttributes beforehand refreshed the metadata cache to avoid undoing recent changes.
+
+```csharp
+cloudBlob.FetchAttributes();
+cloudBlob.Metadata.Add("foo", "bar");
+cloudBlob.SetMetadata(metadata);
+```
+
+The legacy SDK maintained internal state for blob content uploads. Calling FetchAttributes beforehand refreshed the metadata cache to avoid undoing recent changes.
+
+```csharp
+// download blob content. blob metadata is fetched and cached on download
+cloudBlob.DownloadToByteArray(downloadBuffer, 0);
+
+// modify blob content
+string modifiedBlobContent = Encoding.UTF8.GetString(downloadBuffer) + "FizzBuzz";
+
+// reupload modified blob content while preserving metadata
+blobClient.UploadText(modifiedBlobContent);
+```
+
+v12 samples:
+
+The modern SDK requires you to hold onto metadata and update it approprately before sending off. You cannot just add a new key-value pair, you must update the collection and send the collection.
+
+```C# Snippet:SampleSnippetsBlobMigration_EditMetadata
+IDictionary<string, string> metadata = blobClient.GetProperties().Value.Metadata;
+metadata.Add("foo", "bar");
+blobClient.SetMetadata(metadata);
+```
+
+Additionally with blob content edits, if your blobs have metadata you need to get the metadata and reupload with that metadata, telling the service what metadata goes with this new blob state.
+
+```C# Snippet:SampleSnippetsBlobMigration_EditBlobWithMetadata
+// download blob content and metadata
+BlobDownloadResult blobData = blobClient.DownloadContent();
+
+// modify blob content
+string modifiedBlobContent = blobData.Content + "FizzBuzz";
+
+// reupload modified blob content while preserving metadata
+// not adding metadata is a metadata clear
+blobClient.Upload(
+    BinaryData.FromString(modifiedBlobContent),
+    new BlobUploadOptions() { Metadata = blobData.Details.Metadata });
+```
+
 ### Generate a SAS
 
  There are various SAS tokens that may be generated. Visit our documentation pages to learn more: [Create a User Delegation SAS](https://docs.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet), [Create a Service SAS](https://docs.microsoft.com/azure/storage/blobs/storage-blob-service-sas-create-dotnet), or [Create an Account SAS](https://docs.microsoft.com/azure/storage/common/storage-account-sas-create-dotnet?toc=/azure/storage/blobs/toc.json).
@@ -446,7 +555,7 @@ BlobSasBuilder sasBuilder = new BlobSasBuilder()
     // with no url in a client to read from, container and blob name must be provided if applicable
     BlobContainerName = containerName,
     BlobName = blobName,
-    ExpiresOn = DateTimeOffset.Now.AddHours(1)
+    ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
 };
 // permissions applied separately, using the appropriate enum to the scope of your SAS
 sasBuilder.SetPermissions(BlobSasPermissions.Read);
@@ -509,10 +618,10 @@ await blobClient.UploadAsync(
     });
 
 // download whole blob and validate against stored blob content hash
-Response<BlobDownloadInfo> response = await blobClient.DownloadAsync();
+Response<BlobDownloadStreamingResult> response = await blobClient.DownloadStreamingAsync();
 
 Stream downloadStream = response.Value.Content;
-byte[] blobContentMD5 = response.Value.Details.BlobContentHash ?? response.Value.ContentHash;
+byte[] blobContentMD5 = response.Value.Details.BlobContentHash ?? response.Value.Details.ContentHash;
 // validate stream against hash in your workflow
 ```
 
@@ -551,14 +660,66 @@ await blockBlobClient.StageBlockAsync(
 await blockBlobClient.CommitBlockListAsync(blockList);
 
 // download any range of blob with transactional MD5 requested (maximum 4 MB for downloads)
-Response<BlobDownloadInfo> response = await blockBlobClient.DownloadAsync(
+Response<BlobDownloadStreamingResult> response = await blockBlobClient.DownloadStreamingAsync(
     range: new HttpRange(length: 4 * Constants.MB), // a range must be provided; here we use transactional download max size
     rangeGetContentHash: true);
 
 Stream downloadStream = response.Value.Content;
-byte[] transactionalMD5 = response.Value.ContentHash;
+byte[] transactionalMD5 = response.Value.Details.ContentHash;
 // validate stream against hash in your workflow
 ```
+
+### Resiliency
+
+#### Retry policy
+
+V11
+
+```csharp
+Stream targetStream = new MemoryStream();
+BlobRequestOptions options = new BlobRequestOptions()
+{
+    RetryPolicy = new ExponentialRetry(deltaBackoff: TimeSpan.FromSeconds(10), maxAttempts: 6)
+};
+await blockBlobClient.DownloadToStreamAsync(targetStream,accessCondition: null, options: options, operationContext: null);
+```
+
+V12
+
+```C# Snippet:SampleSnippetsBlobMigration_RetryPolicy
+BlobClientOptions blobClientOptions = new BlobClientOptions();
+blobClientOptions.Retry.Mode = RetryMode.Exponential;
+blobClientOptions.Retry.Delay = TimeSpan.FromSeconds(10);
+blobClientOptions.Retry.MaxRetries = 6;
+BlobServiceClient service = new BlobServiceClient(connectionString, blobClientOptions);
+BlobClient blobClient = service.GetBlobContainerClient(containerName).GetBlobClient(blobName);
+Stream targetStream = new MemoryStream();
+await blobClient.DownloadToAsync(targetStream);
+```
+
+#### Maximum execution time
+
+V11
+
+```csharp
+Stream targetStream = new MemoryStream();
+BlobRequestOptions options = new BlobRequestOptions()
+{
+    MaximumExecutionTime = TimeSpan.FromSeconds(30)
+};
+await blockBlobClient.DownloadToStreamAsync(targetStream,accessCondition: null, options: options, operationContext: null);
+```
+
+V12
+
+```C# Snippet:SampleSnippetsBlobMigration_MaximumExecutionTime
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+Stream targetStream = new MemoryStream();
+await blobClient.DownloadToAsync(targetStream, cancellationTokenSource.Token);
+```
+
 
 ## Additional information
 

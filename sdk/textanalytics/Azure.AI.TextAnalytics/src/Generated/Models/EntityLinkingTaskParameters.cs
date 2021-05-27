@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics
+using Azure.AI.TextAnalytics;
+
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The EntityLinkingTaskParameters. </summary>
     internal partial class EntityLinkingTaskParameters
@@ -14,5 +16,9 @@ namespace Azure.AI.TextAnalytics
         public EntityLinkingTaskParameters()
         {
         }
+
+        public string ModelVersion { get; set; }
+        public bool? LoggingOptOut { get; set; }
+        public StringIndexType? StringIndexType { get; set; }
     }
 }

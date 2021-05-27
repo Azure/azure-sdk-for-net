@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
             /*@@*/endpoint = TestEnvironment.EndpointUrl;
-            var client = new NotebookClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+            var client = new NotebookClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:ConfigureNotebookResource
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeleteNotebook
             NotebookDeleteNotebookOperation deleteNotebookOperation = client.StartDeleteNotebook(notebookName);
-            await deleteNotebookOperation.WaitForCompletionAsync();
+            await deleteNotebookOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

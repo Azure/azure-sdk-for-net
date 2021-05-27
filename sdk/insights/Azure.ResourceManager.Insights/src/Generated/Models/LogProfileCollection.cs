@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> Represents a collection of log profiles. </summary>
-    public partial class LogProfileCollection
+    internal partial class LogProfileCollection
     {
         /// <summary> Initializes a new instance of LogProfileCollection. </summary>
         /// <param name="value"> the values of the log profiles. </param>

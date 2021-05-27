@@ -1,7 +1,26 @@
 # Release History
 
-## 12.8.0-beta.2 (Unreleased)
+## 12.8.0-beta.5 (Unreleased)
 
+
+## 12.7.3 (2021-05-20)
+- This release contains bug fixes to improve quality.
+
+## 12.8.0-beta.4 (2021-05-12)
+- Added ability to specify server timeout.
+- Deprecated property AccountSasBuilder.Version, so when generating SAS will always use the latest Storage Service SAS version.
+
+## 12.8.0-beta.3 (2021-04-09)
+- Fixed bug in SasQueryParameters causing services (ss) reorder when parsing externally provided URI.
+
+## 12.7.2 (2021-04-02)
+- Fixed bug in SasQueryParameters causing services (ss) reorder when parsing externally provided URI.
+
+## 12.7.1 (2021-03-29)
+- This release contains bug fixes to improve quality.
+
+## 12.8.0-beta.2 (2021-03-09)
+- This release contains bug fixes to improve quality.
 
 ## 12.8.0-beta.1 (2021-02-09)
 - Aligned storage URL parsing with other platforms

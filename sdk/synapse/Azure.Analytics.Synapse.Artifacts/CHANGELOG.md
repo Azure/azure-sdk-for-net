@@ -1,9 +1,30 @@
 # Release History
 
-## 1.0.0-preview.7 (Unreleased)
+## 1.0.0-preview.11 (Unreleased)
+
+
+## 1.0.0-preview.10 (2021-05-13)
+### Key Bug Fixes
+- LibraryRestClient.Append method nows includes comp parameter (https://github.com/Azure/azure-rest-api-specs/pull/13841)
+
+## 1.0.0-preview.9 (2021-05-11)
+### Key Bug Fixes
+- Updated dependency versions.
+- Improved deserialization of optional parameters (https://github.com/Azure/azure-sdk-for-net/issues/20051) 
+
+## 1.0.0-preview.8 (2021-04-06)
+
+### Added
+- Many additional model classes
+
+### Changed
+- Exposed Serialization and Deserialization methods.
+
+## 1.0.0-preview.7 (2021-03-17)
 
 ### Added
 - Many models classes now have public getters.
+- Added new `LibraryClient` and associated support types.
 
 ## 1.0.0-preview.6 (2021-02-10)
 

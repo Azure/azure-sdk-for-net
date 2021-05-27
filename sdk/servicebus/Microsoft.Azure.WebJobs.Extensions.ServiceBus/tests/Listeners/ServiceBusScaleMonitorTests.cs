@@ -6,11 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
+using Microsoft.Azure.WebJobs.ServiceBus.Tests;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -23,41 +27,63 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private ServiceBusListener _listener;
         private ServiceBusScaleMonitor _scaleMonitor;
         private ServiceBusOptions _serviceBusOptions;
-        private Mock<ServiceBusAccount> _mockServiceBusAccount;
         private Mock<ITriggeredFunctionExecutor> _mockExecutor;
-        private Mock<MessagingProvider> _mockMessagingProvider;
+        private Mock<MessagingProvider> _mockProvider;
+        private Mock<ServiceBusClientFactory> _mockClientFactory;
         private Mock<MessageProcessor> _mockMessageProcessor;
         private TestLoggerProvider _loggerProvider;
         private LoggerFactory _loggerFactory;
         private string _functionId = "test-functionid";
         private string _entityPath = "test-entity-path";
         private string _testConnection = "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
+        private string _connection = "connection";
+        private ServiceBusClient _client;
 
         [SetUp]
         public void Setup()
         {
             _mockExecutor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
-            var client = new ServiceBusClient(_testConnection);
+            _client = new ServiceBusClient(_testConnection);
             ServiceBusProcessorOptions processorOptions = new ServiceBusProcessorOptions();
-            ServiceBusProcessor messageProcessor = client.CreateProcessor(_entityPath);
+            ServiceBusProcessor messageProcessor = _client.CreateProcessor(_entityPath);
+            ServiceBusReceiver receiver = _client.CreateReceiver(_entityPath);
             _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, messageProcessor);
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>(_connection, _testConnection));
 
             _serviceBusOptions = new ServiceBusOptions();
-            _mockMessagingProvider = new Mock<MessagingProvider>(MockBehavior.Strict, new OptionsWrapper<ServiceBusOptions>(_serviceBusOptions));
+            _mockProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(_serviceBusOptions));
+            _mockClientFactory = new Mock<ServiceBusClientFactory>(
+                configuration,
+                 Mock.Of<AzureComponentFactory>(),
+                _mockProvider.Object,
+                new AzureEventSourceLogForwarder(new NullLoggerFactory()),
+                new OptionsWrapper<ServiceBusOptions>(_serviceBusOptions));
 
-            _mockMessagingProvider
-                .Setup(p => p.CreateMessageProcessor(_entityPath, _testConnection))
+            _mockProvider
+                .Setup(p => p.CreateMessageProcessor(_client, _entityPath, It.IsAny<ServiceBusProcessorOptions>()))
                 .Returns(_mockMessageProcessor.Object);
 
-            _mockServiceBusAccount = new Mock<ServiceBusAccount>(MockBehavior.Strict);
-            _mockServiceBusAccount.Setup(a => a.ConnectionString).Returns(_testConnection);
+            _mockProvider
+                .Setup(p => p.CreateClient(_testConnection, It.IsAny<ServiceBusClientOptions>()))
+                .Returns(_client);
 
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
 
-            _listener = new ServiceBusListener(_functionId, EntityType.Queue, _entityPath, false, _mockExecutor.Object, _serviceBusOptions, _mockServiceBusAccount.Object,
-                                _mockMessagingProvider.Object, _loggerFactory, false);
+            _listener = new ServiceBusListener(
+                _functionId,
+                ServiceBusEntityType.Queue,
+                _entityPath,
+                false,
+                _mockExecutor.Object,
+                _serviceBusOptions,
+                _connection,
+                _mockProvider.Object,
+                _loggerFactory,
+                false,
+                _mockClientFactory.Object);
+
             _scaleMonitor = (ServiceBusScaleMonitor)_listener.GetMonitor();
         }
 
@@ -109,11 +135,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         public async Task GetMetrics_HandlesExceptions()
         {
             // MessagingEntityNotFoundException
-            _mockMessagingProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _testConnection))
+            _mockProvider
+                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
                 .Throws(new ServiceBusException("", reason: ServiceBusFailureReason.MessagingEntityNotFound));
-            ServiceBusListener listener = new ServiceBusListener(_functionId, EntityType.Queue, _entityPath, false, _mockExecutor.Object, _serviceBusOptions,
-                                                _mockServiceBusAccount.Object, _mockMessagingProvider.Object, _loggerFactory, false);
+
+            ServiceBusListener listener = CreateListener();
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
@@ -127,11 +153,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _loggerProvider.ClearAllLogMessages();
 
             // UnauthorizedAccessException
-            _mockMessagingProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _testConnection))
+            _mockProvider
+                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
                 .Throws(new UnauthorizedAccessException(""));
-            listener = new ServiceBusListener(_functionId, EntityType.Queue, _entityPath, false, _mockExecutor.Object, _serviceBusOptions,
-                                                _mockServiceBusAccount.Object, _mockMessagingProvider.Object, _loggerFactory, false);
+            listener = CreateListener();
 
             metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
@@ -147,11 +172,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _loggerProvider.ClearAllLogMessages();
 
             // Generic Exception
-            _mockMessagingProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _testConnection))
+            _mockProvider
+                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
                 .Throws(new Exception("Uh oh"));
-            listener = new ServiceBusListener(_functionId, EntityType.Queue, _entityPath, false, _mockExecutor.Object, _serviceBusOptions,
-                                                _mockServiceBusAccount.Object, _mockMessagingProvider.Object, _loggerFactory, false);
+            listener = CreateListener();
 
             metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
@@ -162,6 +186,22 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
             Assert.AreEqual($"Error querying for Service Bus queue scale status: Uh oh", warning.FormattedMessage);
+        }
+
+        private ServiceBusListener CreateListener()
+        {
+            return new ServiceBusListener(
+                _functionId,
+                ServiceBusEntityType.Queue,
+                _entityPath,
+                false,
+                _mockExecutor.Object,
+                _serviceBusOptions,
+                _connection,
+                _mockProvider.Object,
+                _loggerFactory,
+                false,
+                _mockClientFactory.Object);
         }
 
         [Test]

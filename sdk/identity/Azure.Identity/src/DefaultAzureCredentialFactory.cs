@@ -8,7 +8,8 @@ namespace Azure.Identity
     internal class DefaultAzureCredentialFactory
     {
         public DefaultAzureCredentialFactory(TokenCredentialOptions options)
-            : this(CredentialPipeline.GetInstance(options)) { }
+            : this(CredentialPipeline.GetInstance(options))
+        { }
 
         protected DefaultAzureCredentialFactory(CredentialPipeline pipeline)
         {
@@ -34,7 +35,11 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId)
         {
-            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions { TokenCache = new PersistentTokenCache() }, Pipeline);
+            return new InteractiveBrowserCredential(
+                tenantId,
+                Constants.DeveloperSignOnClientId,
+                new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = new TokenCachePersistenceOptions() },
+                Pipeline);
         }
 
         public virtual TokenCredential CreateAzureCliCredential()
@@ -50,6 +55,11 @@ namespace Azure.Identity
         public virtual TokenCredential CreateVisualStudioCodeCredential(string tenantId)
         {
             return new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId }, Pipeline, default, default, default);
+        }
+
+        public virtual TokenCredential CreateAzurePowerShellCredential()
+        {
+            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), Pipeline, default);
         }
     }
 }

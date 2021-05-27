@@ -79,7 +79,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 DimensionGroupOverrideConfigurations = SeriesGroupDetectionConditions,
                 Name = Name,
                 SeriesOverrideConfigurations = SeriesDetectionConditions,
-                WholeMetricConfiguration = WholeSeriesDetectionConditions
+                //WholeMetricConfiguration = WholeSeriesDetectionConditions
             };
         }
     }

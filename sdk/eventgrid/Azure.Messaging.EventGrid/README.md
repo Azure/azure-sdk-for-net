@@ -7,7 +7,7 @@ Use the client library for Azure Event Grid to:
 - Consume events that have been delivered to event handlers
 - Generate SAS tokens to authenticate the client publishing events to Azure Event Grid topics
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventGrid/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/azure/event-grid/) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventGrid/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/azure/event-grid/) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/MigrationGuide.md)
 
 ## Getting started
 
@@ -16,7 +16,7 @@ Use the client library for Azure Event Grid to:
 Install the client library from [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.EventGrid --version 4.0.0-beta.4
+dotnet add package Azure.Messaging.EventGrid
 ```
 
 ### Prerequisites
@@ -109,16 +109,45 @@ We guarantee that all client instance methods are thread-safe and independent of
 * [Receiving and Deserializing Events](#receiving-and-deserializing-events)
 
 ### Publish Event Grid events to an Event Grid Topic
-Publishing events to Event Grid is performed using the `EventGridPublisherClient`. Use the provided `SendEvents`/`SendEventsAsync` method to publish events to the topic.
-```C# Snippet:SendEGEventsToTopic
+Publishing events to Event Grid is performed using the `EventGridPublisherClient`. Use the provided `SendEvent`/`SendEventAsync` method to publish a single event to the topic.
+```C# Snippet:SendSingleEGEventToTopic
 // Add EventGridEvents to a list to publish to the topic
-List<EventGridEvent> eventsList = new List<EventGridEvent>
-{
+EventGridEvent egEvent =
     new EventGridEvent(
         "ExampleEventSubject",
         "Example.EventType",
         "1.0",
-        "This is the event data")
+        "This is the event data");
+
+// Send the event
+await client.SendEventAsync(egEvent);
+```
+
+To publish a batch of events, use the `SendEvents`/`SendEventsAsync` method.
+```C# Snippet:SendEGEventsToTopic
+// Example of a custom ObjectSerializer used to serialize the event payload to JSON
+var myCustomDataSerializer = new JsonObjectSerializer(
+    new JsonSerializerOptions()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    });
+
+// Add EventGridEvents to a list to publish to the topic
+List<EventGridEvent> eventsList = new List<EventGridEvent>
+{
+    // EventGridEvent with custom model serialized to JSON
+    new EventGridEvent(
+        "ExampleEventSubject",
+        "Example.EventType",
+        "1.0",
+        new CustomModel() { A = 5, B = true }),
+
+    // EventGridEvent with custom model serialized to JSON using a custom serializer
+    new EventGridEvent(
+        "ExampleEventSubject",
+        "Example.EventType",
+        "1.0",
+        myCustomDataSerializer.Serialize(new CustomModel() { A = 5, B = true })),
 };
 
 // Send the events
@@ -193,14 +222,15 @@ Once events are delivered to the event handler, parse the JSON payload into list
 
 Using `EventGridEvent`:
 ```C# Snippet:EGEventParseJson
-// Parse the JSON payload into a list of events using EventGridEvent.Parse
-EventGridEvent[] egEvents = EventGridEvent.ParseEvents(jsonPayloadSampleOne);
+// Parse the JSON payload into a list of events
+EventGridEvent[] egEvents = EventGridEvent.ParseMany(BinaryData.FromStream(httpContent));
 ```
 
 Using `CloudEvent`:
 ```C# Snippet:CloudEventParseJson
-// Parse the JSON payload into a list of events using CloudEvent.Parse
-CloudEvent[] cloudEvents = CloudEvent.ParseEvents(jsonPayloadSampleTwo);
+var bytes = await httpContent.ReadAsByteArrayAsync();
+// Parse the JSON payload into a list of events
+CloudEvent[] cloudEvents = CloudEvent.ParseMany(new BinaryData(bytes));
 ```
 From here, one can access the event data by deserializing to a specific type using `GetData<T>()`. Calling `GetData()` will either return the event data wrapped in `BinaryData`, which represents the serialized JSON event data as bytes.
 
@@ -241,7 +271,7 @@ If expecting mostly system events, it may be cleaner to switch on `TryGetSystemE
 ```C# Snippet:DeserializePayloadUsingAsSystemEventData
 foreach (EventGridEvent egEvent in egEvents)
 {
-    // If the event is a system event, TryGetSystemEventData() will return the deserialized system event
+    // If the event is a system event, TryGetSystemEventData will return the deserialized system event
     if (egEvent.TryGetSystemEventData(out object systemEvent))
     {
         switch (systemEvent)

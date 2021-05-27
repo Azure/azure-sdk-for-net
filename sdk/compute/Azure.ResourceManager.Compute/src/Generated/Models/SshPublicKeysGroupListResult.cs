@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The list SSH public keys operation response. </summary>
-    public partial class SshPublicKeysGroupListResult
+    internal partial class SshPublicKeysGroupListResult
     {
         /// <summary> Initializes a new instance of SshPublicKeysGroupListResult. </summary>
         /// <param name="value"> The list of SSH public keys. </param>

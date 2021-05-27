@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedDatabasesCreateOrUpdateOperation : Operation<ManagedDatabase>, IOperationSource<ManagedDatabase>
     {
         private readonly ArmOperationHelpers<ManagedDatabase> _operation;
+
+        /// <summary> Initializes a new instance of ManagedDatabasesCreateOrUpdateOperation for mocking. </summary>
+        protected ManagedDatabasesCreateOrUpdateOperation()
+        {
+        }
+
         internal ManagedDatabasesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ManagedDatabase>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedDatabasesCreateOrUpdateOperation");

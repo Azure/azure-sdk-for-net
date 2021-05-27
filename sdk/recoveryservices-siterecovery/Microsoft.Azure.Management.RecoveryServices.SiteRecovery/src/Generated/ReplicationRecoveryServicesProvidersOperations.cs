@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Lists the registered recovery services providers for the specified fabric.
         /// </remarks>
         /// <param name='fabricName'>
-        /// Fabric name
+        /// Fabric name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Fabric name.
         /// </param>
         /// <param name='providerName'>
-        /// Recovery services provider name
+        /// Recovery services provider name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders/{providerName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders/{providerName}").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -488,7 +488,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         }
 
         /// <summary>
-        /// Purges recovery service provider from fabric
+        /// Purges recovery service provider from fabric.
         /// </summary>
         /// <remarks>
         /// The operation to purge(force delete) a recovery services provider from the
@@ -547,7 +547,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to removes/delete(unregister) a recovery services provider
-        /// from the vault
+        /// from the vault.
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.
@@ -573,7 +573,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// is a view only api.
         /// </summary>
         /// <remarks>
-        /// Lists the registered recovery services providers in the vault
+        /// Lists the registered recovery services providers in the vault.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -626,7 +626,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryServicesProviders").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryServicesProviders").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -845,7 +845,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders/{providerName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders/{providerName}").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -988,7 +988,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         }
 
         /// <summary>
-        /// Purges recovery service provider from fabric
+        /// Purges recovery service provider from fabric.
         /// </summary>
         /// <remarks>
         /// The operation to purge(force delete) a recovery services provider from the
@@ -1058,7 +1058,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders/{providerName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders/{providerName}").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -1250,7 +1250,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders/{providerName}/refreshProvider").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders/{providerName}/refreshProvider").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -1394,7 +1394,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to removes/delete(unregister) a recovery services provider
-        /// from the vault
+        /// from the vault.
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.
@@ -1460,7 +1460,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders/{providerName}/remove").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationRecoveryServicesProviders/{providerName}/remove").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -1759,7 +1759,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// is a view only api.
         /// </summary>
         /// <remarks>
-        /// Lists the registered recovery services providers in the vault
+        /// Lists the registered recovery services providers in the vault.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -6,9 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The PiiTaskParameters. </summary>
     internal partial class PiiTaskParameters
@@ -18,7 +19,12 @@ namespace Azure.AI.TextAnalytics
         {
             PiiCategories = new ChangeTrackingList<PiiEntityCategory>();
         }
+
+        public PiiTaskParametersDomain? Domain { get; set; }
+        public string ModelVersion { get; set; }
+        public bool? LoggingOptOut { get; set; }
         /// <summary> (Optional) describes the PII categories to return. </summary>
         public IList<PiiEntityCategory> PiiCategories { get; }
+        public StringIndexType? StringIndexType { get; set; }
     }
 }

@@ -73,7 +73,8 @@
 #/<NotInRepo>/            @antcp @AzureAppServiceCLI
 
 # ServiceLabel: %Attestation %Service Attention
-/sdk/attestation/            @anilba06
+/sdk/attestation/            @anilba06 @larryosterman
+/sdk/attestation/azure-security-attestation                          @larryosterman @Azure/azure-sdk-write-attestation @anilba06
 
 # ServiceLabel: %Authorization %Service Attention
 /sdk/authorization/Microsoft.Azure.Management.Authorization/            @darshanhs90 @AshishGargMicrosoft
@@ -122,7 +123,7 @@
 /sdk/cognitiveservices/Vision.ComputerVision/            @ryogok @TFR258 @tburns10 @areddish @toothache
 
 # ServiceLabel: %Cognitive - Face %Service Attention
-/sdk/cognitiveservices/Vision.Face/            @JinyuID @dipidoo @SteveMSFT @TFR258 
+/sdk/cognitiveservices/Vision.Face/            @JinyuID @dipidoo @SteveMSFT @TFR258
 
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
@@ -137,13 +138,16 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                             @annelo-msft @maririos @suhas92
+/sdk/textanalytics/                             @annelo-msft @maririos
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/            @assafi
 
 # ServiceLabel: %Cognitive - Translator %Service Attention
 #/<NotInRepo>/            @swmachan
+
+# PRLabel: %Cognitive - Translator
+/sdk/translation/                     @maririos
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
 #/<NotInRepo>/            @robch @oscholz
@@ -197,6 +201,9 @@
 # ServiceLabel: %Compute - VMSS %Service Attention
 #/<NotInRepo>/            @Drewm3 @avirishuv
 
+# PRLabel: %Confidential Ledger
+/sdk/confidentialledger/  @christothes
+
 # ServiceLabel: %Consumption %Service Attention
 /sdk/consumption/Microsoft.Azure.Management.Consumption/            @ms-premp
 
@@ -206,8 +213,11 @@
 # ServiceLabel: %Container Instances %Service Attention
 /sdk/containerinstance/Microsoft.Azure.Management.ContainerInstance/            @dkkapur
 
+# ServiceLabel: %Container Registry
+/sdk/containerregistry/   @annelo-msft
+
 # ServiceLabel: %Container Registry %Service Attention
-/sdk/containerregistry/            @toddysm @yugangw-MSFT
+/sdk/containerregistry/Microsoft.*/ @toddysm @yugangw-MSFT
 
 # ServiceLabel: %Cosmos %Service Attention
 /sdk/cosmosdb/          @Wmengmsft @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar @southpolesteve
@@ -273,11 +283,23 @@
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS @jfggdl @JoshLove-msft
 
+# PRLabel: %Event Grid %Functions
+/sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/  @pakrym @jsquire @JoshLove-msft
+
 # PRLabel: %Event Hubs
 /sdk/eventhub/                                  @serkantkaraca @jsquire
 
+# PRLabel: %Event Hubs %Functions
+/sdk/eventhub/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/ @pakrym @JoshLove-msft @jsquire
+
 # ServiceLabel: %Event Hubs %Service Attention
-/sdk/eventhub/Microsoft.*/           @serkantkaraca @samuelkoppes
+/sdk/eventhub/Microsoft.Azure.EventHubs/   @serkantkaraca @sjkwak
+
+# ServiceLabel: %Event Hubs %Service Attention
+/sdk/eventhub/Microsoft.Azure.EventHubs.Processor/  @serkantkaraca @sjkwak
+
+# ServiceLabel: %Event Hubs %Service Attention
+/sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor/  @JamesBirdsall @serkantkaraca @sjkwak
 
 # ServiceLabel: %Functions %Service Attention
 #/<NotInRepo>/            @ahmedelnably @fabiocav
@@ -366,7 +388,7 @@ sdk/monitor/           @SameergMS @dadunl
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
-/sdk/applicationinsights/Microsoft.Azure.App*/  @divyajay @geneh @alongafni @azmonapplicationinsights
+/sdk/applicationinsights/Microsoft.Azure.App*/  @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # ServiceLabel: %Monitor - Autoscale %Service Attention
 #/<NotInRepo>/            @AzMonEssential
@@ -455,7 +477,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # PRLabel: %Operational Insights
 # ServiceLabel: %Operational Insights %Service Attention
-/sdk/operationalinsights/Microsoft.Azure.Ope*/  @divyajay @geneh @alongafni @AzmonLogA
+/sdk/operationalinsights/Microsoft.Azure.Ope*/  @omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
 
 # ServiceLabel: %Policy %Service Attention
 #/<NotInRepo>/            @aperezcloud @kenieva
@@ -465,6 +487,9 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ServiceLabel: %PostgreSQL %Service Attention
 /sdk/postgresql/Microsoft.Azure.Management.PostgreSQL/            @sunilagarwal @lfittl-msft @sr-msft @niklarin
+
+# ServiceLabel: %Quantum %Service Attention
+/sdk/quantum/Azure.Quantum.Jobs/           @xfield
 
 # ServiceLabel: %Recovery Services Backup %Service Attention
 /sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup/           @pvrk
@@ -497,7 +522,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @chlahav
 
 # PRLabel: %Search
-/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @Mohit-Chakraborty @tg-msft @heaths
+/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @Mohit-Chakraborty @tg-msft
 
 # ServiceLabel: %Search %Service Attention
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy @tjacobhi @markheff @miwelsh
@@ -506,8 +531,11 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # PRLabel: %Service Bus
 /sdk/servicebus/                                @JoshLove-msft @jsquire
 
+# PRLabel: %Service Bus %Functions
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/ @pakrym @JoshLove-msft @jsquire
+
 # ServiceLabel: %Service Bus %Service Attention
-/sdk/servicebus/Microsoft.*/                    @axisc
+/sdk/servicebus/Microsoft.Azure.ServiceBus/                    @axisc
 
 # ServiceLabel: %Service Fabric %Service Attention
 /sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric/           @QingChenmsft @vaishnavk @juhacket
@@ -585,13 +613,28 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # ServiceLabel: %vFXT %Service Attention
 #/<NotInRepo>/            @zhusijia26
 
+# ServiceLabel: %VideoAnalyzer %Service Attention
+#/<NotInRepo>/            @giakas
+
+# PRLabel: %VideoAnalyzer
+/sdk/videoanalyzer/       @giakas @heaths
+
 # ServiceLabel: %Web Apps %Service Attention
 #/<NotInRepo>/            @AzureAppServiceCLI @antcp
 
+# PRLabel: %WebPubSub
+/sdk/webpubsub/  @KrzysztofCwalina
+
+# PRLabel: %WebPubSub %Functions
+/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/  @vicancy
+
+# ServiceLabel: %WebPubSub %Service Attention
+/sdk/webpubsub/  @vicancy @JialinXin
+
 # ######## Management Plane ########
 
-/**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
-/**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
+/**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @nisha-bhatia
+/**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @nisha-bhatia
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @tg-msft
@@ -603,5 +646,5 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # ######## Eng Sys ######## 
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
 /eng/mgmt/      @allenjzhang @m-nash @markcowl
-/**/tests.yml   @danieljurek
+/**/tests.yml   @benbp
 /**/ci.yml      @mitchdenny

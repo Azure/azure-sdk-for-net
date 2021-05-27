@@ -14,14 +14,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class RerunTumblingWindowTrigger : Trigger
     {
         /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
+        /// <param name="parentTrigger"> The parent trigger reference. </param>
         /// <param name="requestedStartTime"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="requestedEndTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
-        /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
-        public RerunTumblingWindowTrigger(DateTimeOffset requestedStartTime, DateTimeOffset requestedEndTime, int maxConcurrency)
+        /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parentTrigger"/> is null. </exception>
+        public RerunTumblingWindowTrigger(object parentTrigger, DateTimeOffset requestedStartTime, DateTimeOffset requestedEndTime, int rerunConcurrency)
         {
+            if (parentTrigger == null)
+            {
+                throw new ArgumentNullException(nameof(parentTrigger));
+            }
+
+            ParentTrigger = parentTrigger;
             RequestedStartTime = requestedStartTime;
             RequestedEndTime = requestedEndTime;
-            MaxConcurrency = maxConcurrency;
+            RerunConcurrency = rerunConcurrency;
             Type = "RerunTumblingWindowTrigger";
         }
 
@@ -34,13 +42,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parentTrigger"> The parent trigger reference. </param>
         /// <param name="requestedStartTime"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="requestedEndTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
-        /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
-        internal RerunTumblingWindowTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties, object parentTrigger, DateTimeOffset requestedStartTime, DateTimeOffset requestedEndTime, int maxConcurrency) : base(type, description, runtimeState, annotations, additionalProperties)
+        /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
+        internal RerunTumblingWindowTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties, object parentTrigger, DateTimeOffset requestedStartTime, DateTimeOffset requestedEndTime, int rerunConcurrency) : base(type, description, runtimeState, annotations, additionalProperties)
         {
             ParentTrigger = parentTrigger;
             RequestedStartTime = requestedStartTime;
             RequestedEndTime = requestedEndTime;
-            MaxConcurrency = maxConcurrency;
+            RerunConcurrency = rerunConcurrency;
             Type = type ?? "RerunTumblingWindowTrigger";
         }
 
@@ -51,6 +59,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
         public DateTimeOffset RequestedEndTime { get; set; }
         /// <summary> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </summary>
-        public int MaxConcurrency { get; set; }
+        public int RerunConcurrency { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListVirtualNetworks API service call. </summary>
-    public partial class VirtualNetworkListResult
+    internal partial class VirtualNetworkListResult
     {
         /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>
         internal VirtualNetworkListResult()

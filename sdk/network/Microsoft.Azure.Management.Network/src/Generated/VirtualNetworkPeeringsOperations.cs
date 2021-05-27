@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-08-01";
+            string apiVersion = "2021-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -294,16 +294,21 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters supplied to the create or update virtual network peering
         /// operation.
         /// </param>
+        /// <param name='syncRemoteAddressSpace'>
+        /// Parameter indicates the intention to sync the peering with the current
+        /// address space on the remote vNet after it's updated. Possible values
+        /// include: 'true'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualNetworkPeering>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkPeering>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, string syncRemoteAddressSpace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<VirtualNetworkPeering> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<VirtualNetworkPeering> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -351,7 +356,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-08-01";
+            string apiVersion = "2021-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -549,7 +554,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-08-01";
+            string apiVersion = "2021-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -699,6 +704,11 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters supplied to the create or update virtual network peering
         /// operation.
         /// </param>
+        /// <param name='syncRemoteAddressSpace'>
+        /// Parameter indicates the intention to sync the peering with the current
+        /// address space on the remote vNet after it's updated. Possible values
+        /// include: 'true'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -720,7 +730,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VirtualNetworkPeering>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkPeering>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, string syncRemoteAddressSpace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -746,7 +756,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-08-01";
+            string apiVersion = "2021-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -758,6 +768,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("virtualNetworkName", virtualNetworkName);
                 tracingParameters.Add("virtualNetworkPeeringName", virtualNetworkPeeringName);
                 tracingParameters.Add("virtualNetworkPeeringParameters", virtualNetworkPeeringParameters);
+                tracingParameters.Add("syncRemoteAddressSpace", syncRemoteAddressSpace);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
@@ -770,6 +781,10 @@ namespace Microsoft.Azure.Management.Network
             _url = _url.Replace("{virtualNetworkPeeringName}", System.Uri.EscapeDataString(virtualNetworkPeeringName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (syncRemoteAddressSpace != null)
+            {
+                _queryParameters.Add(string.Format("syncRemoteAddressSpace={0}", System.Uri.EscapeDataString(syncRemoteAddressSpace)));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));

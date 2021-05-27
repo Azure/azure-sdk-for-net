@@ -6,14 +6,15 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Options that allow callers to specify details about how the operation
     /// is run and what information is returned from it by the service.
-    /// <para>For example set model version, and whether to include statistics.</para>
+    /// <para>For example, set model version, whether to include statistics,
+    /// and more.</para>
     /// </summary>
     public class TextAnalyticsRequestOptions
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsRequestOptions"/>
         /// class which allows callers to specify details about how the operation
-        /// is run. For example set model version, and whether to include statistics.
+        /// is run. For example, set model version, whether to include statistics, and more.
         /// </summary>
         public TextAnalyticsRequestOptions()
         {
@@ -42,8 +43,16 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get; set; }
 
         /// <summary>
-        /// StringIndexType
+        /// Specifies the method used to interpret string offsets. Defaults to
+        /// <see cref="StringIndexType.Utf16CodeUnit"/>.
         /// </summary>
         public StringIndexType StringIndexType { get; set; } = StringIndexType.Utf16CodeUnit;
+
+        /// <summary>
+        /// The default value of this property is 'false', except for methods like 'StartAnalyzeHealthcareEntities' and 'RecognizePiiEntities'.
+        /// This means, Text Analytics service logs your input text for 48 hours, solely to allow for troubleshooting issues.
+        /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
+        /// </summary>
+        public bool? DisableServiceLogs { get; set; }
     }
 }

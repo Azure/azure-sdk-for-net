@@ -299,5 +299,69 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(5, cloudEvent.Data.ToObjectFromJson<DerivedTestPayload>().DerivedProperty);
         }
+
+        [Test]
+        public async Task RespectsPortFromUriSendingCloudEvents()
+        {
+            var mockTransport = new MockTransport((request) =>
+            {
+                Assert.AreEqual(100, request.Uri.Port);
+                return new MockResponse(200);
+            });
+            var options = new EventGridPublisherClientOptions
+            {
+                Transport = mockTransport
+            };
+            EventGridPublisherClient client =
+               new EventGridPublisherClient(
+                   new Uri("https://contoso.com:100/api/events"),
+                   new AzureKeyCredential("fakeKey"),
+                   options);
+            var cloudEvent = new CloudEvent(
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent",
+                    new TestPayload
+                    {
+                        Name = "name",
+                        Age = 10,
+                    });
+
+            List<CloudEvent> eventsList = new List<CloudEvent>()
+            {
+                cloudEvent
+            };
+
+            await client.SendEventsAsync(eventsList);
+        }
+
+        [Test]
+        public async Task DoesNotSetCredentialForSystemPublisher()
+        {
+            var mockTransport = new MockTransport((request) =>
+            {
+                Assert.IsFalse(request.Headers.TryGetValue(Constants.SasKeyName, out var _));
+                return new MockResponse(200);
+            });
+            var options = new EventGridPublisherClientOptions
+            {
+                Transport = mockTransport
+            };
+            EventGridPublisherClient client =
+               new EventGridPublisherClient(
+                   new Uri("https://contoso.com:100/api/events"),
+                   new AzureKeyCredential(EventGridKeyCredentialPolicy.SystemPublisherKey),
+                   options);
+            var cloudEvent = new CloudEvent(
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent",
+                    null);
+
+            List<CloudEvent> eventsList = new List<CloudEvent>()
+            {
+                cloudEvent
+            };
+
+            await client.SendEventsAsync(eventsList);
+        }
     }
 }

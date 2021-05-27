@@ -1,15 +1,62 @@
 # Release History
 
-## 5.1.0-beta.5 (Unreleased)
+## 5.1.0-beta.8 (Unreleased)
+### Breaking changes
+- Renamed `StartAnalyzeBatchActions` to `StartAnalyzeActions`.
+- Renamed `AnalyzeBatchActionsOperation` to `AnalyzeActionsOperation`.
+- Renamed `AnalyzeBatchActionsResult` to `AnalyzeActionsResult`.
+- Renamed `AnalyzeBatchActionsOptions` to `AnalyzeActionsOptions`.
+- `TextAnalyticsActions` now takes `xxAction` types, instead of `xxOptions` types. Renames and types are as follow:
+  - `ExtractKeyPhrasesOptions` changed to new type `ExtractKeyPhrasesActions`.
+  - `RecognizeEntitiesOptions` changed to new type `RecognizeEntitiesActions`.
+  - `RecognizePiiEntitiesOptions` changed to new type `RecognizePiiEntitiesActions`.
+  - `RecognizeLinkedEntitiesOptions` changed to new type `RecognizeLinkedEntitiesActions`.
+  - `AnalyzeSentimentOptions` changed to new type `AnalyzeSentimentActions`.
+- Renamed type `TextAnalyticsActionDetails` to `TextAnalyticsActionResult`.
+
+## 5.1.0-beta.7 (2021-05-18)
+### New features
+- Added property `DisableServiceLogs` to `TextAnalyticsRequestOptions`.
+- Added support for Sentiment Analysis as an action type for `StartAnalyzeBatchActions`.
+- Changed type of `IncludeOpinionMining` to `bool?`.
+
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `3.1-preview.5`.
+- Renamed type `TextElementsV8` to `TextElementV8` in model `StringIndexType`.
+
+## 5.1.0-beta.6 (2021-04-06)
+### New features
+- Add overloads to `ExtractKeyPhrasesBatch` and `ExtractKeyPhrasesBatchAsync` to on `TextAnalyticsClient` to accept `ExtractKeyPhrasesOptions` and hid the previous methods (non-breaking change).
+- Add overloads to `RecognizeEntitiesBatch` and `RecognizeEntitiesBatchAsync` to on `TextAnalyticsClient` to accept `RecognizeEntitiesOptions` and hid the previous methods (non-breaking change).
+- Add overloads to `RecognizeLinkedEntitiesBatch` and `RecognizeLinkedEntitiesBatch` to on `TextAnalyticsClient` to accept `RecognizeLinkedEntitiesOptions` and hid the previous methods (non-breaking change).
+
+### Breaking changes
+- Renamed `TotalActions` to `ActionsTotal`.
+
+## 5.1.0-beta.5 (2021-03-09)
 ### New features
 - Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.
+- Added the ability to recognize linked entities under `StartAnalyzeBatchActions`.
+- Added `RecognizeLinkedEntitiesOptions` to `TextAnalyticsActions`.
+- Added `RecognizeLinkedEntitiesActionsResults` to `AnalyzeBatchActionsResult`.
+- `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntityRelations`of type `HealthcareEntityRelation`.
+- Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
+- Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
+- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `EntityAssociation`, `EntityCertainity` and `EntityConditionality`.
+- Added new types under `HealthcareRelationType` class.
 
 ### Breaking changes
 - Renamed `AspectSentiment` to `TargetSentiment`.
 - Renamed `MinedOpinion` to `SentenceOpinion`.
 - Renamed `OpinionSentiment` to `AssessmentSentiment`.
 - For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
- 
+- Removed `RelatedEntities`.
+- `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
+- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level. 
+
+### Fixes
+- `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).
+
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features
 - Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.

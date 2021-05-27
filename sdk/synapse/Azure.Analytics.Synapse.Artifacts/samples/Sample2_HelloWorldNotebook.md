@@ -9,7 +9,7 @@ To interact with notebooks on Azure Synapse, you need to instantiate a `Notebook
 ```C# Snippet:CreateNotebookClient
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
-var client = new NotebookClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+var client = new NotebookClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
 
 ## Create a notebook
@@ -64,5 +64,5 @@ To delete a notebook no longer needed call `StartDeleteNotebook`, passing in the
 
 ```C# Snippet:DeleteNotebook
 NotebookDeleteNotebookOperation deleteNotebookOperation = client.StartDeleteNotebook(notebookName);
-await deleteNotebookOperation.WaitForCompletionAsync();
+await deleteNotebookOperation.WaitForCompletionResponseAsync();
 ```

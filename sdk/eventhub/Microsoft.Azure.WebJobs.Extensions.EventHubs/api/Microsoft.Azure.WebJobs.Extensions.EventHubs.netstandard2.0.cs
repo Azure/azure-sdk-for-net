@@ -24,29 +24,30 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     {
         public EventHubOptions() { }
         public int BatchCheckpointFrequency { get { throw null; } set { } }
-        public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.EventHubsRetryOptions ClientRetryOptions { get { throw null; } set { } }
+        public System.Uri CustomEndpointAddress { get { throw null; } set { } }
         public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } }
-        public bool InvokeFunctionAfterReceiveTimeout { get { throw null; } set { } }
         public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
         public int MaxBatchSize { get { throw null; } set { } }
-        public System.TimeSpan MaximumWaitTime { get { throw null; } set { } }
         public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public long? PrefetchSizeInBytes { get { throw null; } set { } }
-        public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
         public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.EventHubsTransportType TransportType { get { throw null; } set { } }
+        public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
-    }
-    public partial class EventHubsWebJobsStartup : Microsoft.Azure.WebJobs.Hosting.IWebJobsStartup
-    {
-        public EventHubsWebJobsStartup() { }
-        public void Configure(Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { }
     }
     public partial class InitialOffsetOptions
     {
         public InitialOffsetOptions() { }
-        public string EnqueuedTimeUTC { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
+        public System.DateTimeOffset? EnqueuedTimeUtc { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.EventHubs.OffsetType? Type { get { throw null; } set { } }
+    }
+    public enum OffsetType
+    {
+        FromStart = 0,
+        FromEnd = 1,
+        FromEnqueuedTime = 2,
     }
 }
 namespace Microsoft.Extensions.Hosting

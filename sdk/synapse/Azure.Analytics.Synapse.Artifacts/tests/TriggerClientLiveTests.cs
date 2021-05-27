@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private TriggerClient CreateClient()
         {
             return InstrumentClient(new TriggerClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private PipelineClient CreatePipelineClient()
         {
             return InstrumentClient(new PipelineClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
@@ -80,11 +80,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             // SYNAPSE_API_ISSUE - How do we point the trigger to our pipeline
 
             TriggerStartTriggerOperation startOperation = await client.StartStartTriggerAsync (trigger.Name);
-            Response startResponse = await startOperation.WaitForCompletionAsync();
+            Response startResponse = await startOperation.WaitForCompletionResponseAsync();
             startResponse.AssertSuccess();
 
             TriggerStopTriggerOperation stopOperation = await client.StartStopTriggerAsync (trigger.Name);
-            Response stopResponse = await stopOperation.WaitForCompletionAsync();
+            Response stopResponse = await stopOperation.WaitForCompletionResponseAsync();
             stopResponse.AssertSuccess();
         }
 

@@ -29,15 +29,43 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                 new AzureKeyCredential(topicAccessKey));
             #endregion
 
-            #region Snippet:SendEGEventsToTopic
+            #region Snippet:SendSingleEGEventToTopic
             // Add EventGridEvents to a list to publish to the topic
-            List<EventGridEvent> eventsList = new List<EventGridEvent>
-            {
+            EventGridEvent egEvent =
                 new EventGridEvent(
                     "ExampleEventSubject",
                     "Example.EventType",
                     "1.0",
-                    "This is the event data")
+                    "This is the event data");
+
+            // Send the event
+            await client.SendEventAsync(egEvent);
+            #endregion
+
+            #region Snippet:SendEGEventsToTopic
+            // Example of a custom ObjectSerializer used to serialize the event payload to JSON
+            var myCustomDataSerializer = new JsonObjectSerializer(
+                new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
+            // Add EventGridEvents to a list to publish to the topic
+            List<EventGridEvent> eventsList = new List<EventGridEvent>
+            {
+                // EventGridEvent with custom model serialized to JSON
+                new EventGridEvent(
+                    "ExampleEventSubject",
+                    "Example.EventType",
+                    "1.0",
+                    new CustomModel() { A = 5, B = true }),
+
+                // EventGridEvent with custom model serialized to JSON using a custom serializer
+                new EventGridEvent(
+                    "ExampleEventSubject",
+                    "Example.EventType",
+                    "1.0",
+                    myCustomDataSerializer.Serialize(new CustomModel() { A = 5, B = true })),
             };
 
             // Send the events

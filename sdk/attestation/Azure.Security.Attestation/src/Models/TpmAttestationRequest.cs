@@ -4,17 +4,18 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary>
-    /// Represents a response for a TPM attestation call. See https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol  for more information.
+    /// Represents a request for a TPM attestation call. See <seealso href="https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol"/> for more information.
     /// </summary>
+    [CodeGenModel("TpmAttestationRequest")]
     public partial class TpmAttestationRequest
     {
         /// <summary>
-        /// Attestation Response data. See  https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol for more details
+        /// Attestation Request data. See  <seealso href="https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol"/> for more details
         /// </summary>
-        public ReadOnlyMemory<byte> Data { get => Base64Url.Decode(InternalData); set => InternalData = Base64Url.Encode(value.ToArray()); }
+        public BinaryData Data { get => BinaryData.FromBytes(Base64Url.Decode(InternalData)); set => InternalData = Base64Url.Encode(value.ToArray()); }
 
         [CodeGenMember("Data")]
         internal string InternalData { get; set; }

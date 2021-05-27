@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Cryptography;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -357,7 +358,7 @@ namespace Azure.Storage.Blobs.Specialized
                 new BlobClientConfiguration(
                     pipeline,
                     null,
-                    new ClientDiagnostics(options),
+                    new StorageClientDiagnostics(options),
                     options.Version,
                     null,
                     null));
@@ -451,6 +452,46 @@ namespace Azure.Storage.Blobs.Specialized
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
 
             return new BlockBlobClient(builder.ToUri(), ClientConfiguration);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="BlockBlobClient"/>.
+        /// </remarks>
+        public new BlockBlobClient WithCustomerProvidedKey(CustomerProvidedKey? customerProvidedKey)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new BlockBlobClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="encryptionScope"/>.
+        ///
+        /// </summary>
+        /// <param name="encryptionScope">The encryption scope.</param>
+        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the encryption scope in the returned <see cref="BlockBlobClient"/>.
+        /// </remarks>
+        public new BlockBlobClient WithEncryptionScope(string encryptionScope)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.EncryptionScope = encryptionScope;
+            return new BlockBlobClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration);
         }
 
         ///// <summary>
@@ -2758,36 +2799,36 @@ namespace Azure.Storage.Blobs.Specialized
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken)
                     => await client.UploadInternal(
                         stream,
-                        args.HttpHeaders,
-                        args.Metadata,
-                        args.Tags,
-                        args.Conditions,
-                        args.AccessTier,
+                        args?.HttpHeaders,
+                        args?.Metadata,
+                        args?.Tags,
+                        args?.Conditions,
+                        args?.AccessTier,
                         progressHandler,
                         operationName,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
                     => await client.StageBlockInternal(
-                        StorageExtensions.GenerateBlockId(offset),
+                        Shared.StorageExtensions.GenerateBlockId(offset),
                         stream,
                         transactionalContentHash: default,
-                        args.Conditions,
+                        args?.Conditions,
                         progressHandler,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
-                        partitions.Select(partition => StorageExtensions.GenerateBlockId(partition.Offset)),
-                        args.HttpHeaders,
-                        args.Metadata,
-                        args.Tags,
-                        args.Conditions,
-                        args.AccessTier,
+                        partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
+                        args?.HttpHeaders,
+                        args?.Metadata,
+                        args?.Tags,
+                        args?.Conditions,
+                        args?.AccessTier,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
-                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}")
+                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(Storage.Blobs.BlobClient.Upload)}")
             };
         }
         #endregion

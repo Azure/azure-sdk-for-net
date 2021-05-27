@@ -16,9 +16,9 @@ namespace Azure.Identity.Tests
 {
     internal static class CredentialTestHelpers
     {
-        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForAzureCli() => CreateTokenForAzureCli(TimeSpan.FromSeconds(30));
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureCli() => CreateTokenForAzureCli(TimeSpan.FromSeconds(30));
 
-        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForAzureCli(TimeSpan expiresOffset)
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureCli(TimeSpan expiresOffset)
         {
             const string expiresOnStringFormat = "yyyy-MM-dd HH:mm:ss.ffffff";
 
@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
             return (token, expiresOn, json);
         }
 
-        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForAzureCliExpiresIn(int seconds = 30)
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureCliExpiresIn(int seconds = 30)
         {
             var expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
             var token = Guid.NewGuid().ToString();
@@ -37,9 +37,18 @@ namespace Azure.Identity.Tests
             return (token, expiresOn, json);
         }
 
-        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForVisualStudio() => CreateTokenForVisualStudio(TimeSpan.FromSeconds(30));
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
+        {
+            var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString();
+            var expiresOn = DateTimeOffset.Parse(expiresOnString,  CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            var token = Guid.NewGuid().ToString();
+            var xml = @$"<Object Type=""Microsoft.Azure.Commands.Profile.Models.PSAccessToken""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.DateTimeOffset"">{expiresOnString}</Property><Property Name=""TenantId"" Type=""System.String"">{Guid.NewGuid().ToString()}</Property><Property Name=""UserId"" Type=""System.String"">foo@contoso.com</Property><Property Name=""Type"" Type=""System.String"">Bearer</Property></Object>";
+            return (token, expiresOn, xml);
+        }
 
-        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForVisualStudio(TimeSpan expiresOffset)
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForVisualStudio() => CreateTokenForVisualStudio(TimeSpan.FromSeconds(30));
+
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForVisualStudio(TimeSpan expiresOffset)
         {
             var expiresOnString = DateTimeOffset.UtcNow.Add(expiresOffset).ToString("s");
             var expiresOn = DateTimeOffset.Parse(expiresOnString);
@@ -66,11 +75,7 @@ namespace Azure.Identity.Tests
             }
 
             var json = $"{{ \"TokenProviders\": [{sb}] }}";
-            return new TestFileSystemService
-            {
-                FileExistsHandler = p => paths.Contains(p),
-                ReadAllHandler = p => json
-            };
+            return new TestFileSystemService { FileExistsHandler = p => paths.Contains(p), ReadAllHandler = p => json };
         }
 
         public static TestFileSystemService CreateFileSystemForVisualStudioCode(IdentityTestEnvironment testEnvironment, string cloudName = default)
@@ -94,11 +99,7 @@ namespace Azure.Identity.Tests
 
             sb.Append('}');
 
-            return new TestFileSystemService
-            {
-                FileExistsHandler = p => Path.HasExtension("json"),
-                ReadAllHandler = s => sb.ToString()
-            };
+            return new TestFileSystemService { FileExistsHandler = p => Path.HasExtension("json"), ReadAllHandler = s => sb.ToString() };
         }
 
         public static async ValueTask<AuthenticationRecord> GetAuthenticationRecordAsync(IdentityTestEnvironment testEnvironment, RecordedTestMode mode)
@@ -118,8 +119,10 @@ namespace Azure.Identity.Tests
             var password = testEnvironment.Password;
             var tenantId = testEnvironment.TestTenantId;
 
-            var result = await PublicClientApplicationBuilder.Create(clientId).WithTenantId(tenantId).Build()
-                .AcquireTokenByUsernamePassword(new[] {".default"}, username, password.ToSecureString())
+            var result = await PublicClientApplicationBuilder.Create(clientId)
+                .WithTenantId(tenantId)
+                .Build()
+                .AcquireTokenByUsernamePassword(new[] { ".default" }, username, password.ToSecureString())
                 .ExecuteAsync();
 
             return new AuthenticationRecord(result, clientId);
@@ -135,13 +138,15 @@ namespace Azure.Identity.Tests
             var clientId = "aebc6443-996d-45c2-90f0-388ff96faa56";
             var username = testEnvironment.Username;
             var password = testEnvironment.Password;
+            var authorityUri = new Uri(new Uri(testEnvironment.AuthorityHostUrl), testEnvironment.TestTenantId).ToString();
 
             var client = PublicClientApplicationBuilder.Create(clientId)
+                .WithAuthority(authorityUri)
                 .WithTenantId(testEnvironment.TestTenantId)
                 .Build();
 
             var retriever = new RefreshTokenRetriever(client.UserTokenCache);
-            await client.AcquireTokenByUsernamePassword(new[] {".default"}, username, password.ToSecureString()).ExecuteAsync();
+            await client.AcquireTokenByUsernamePassword(new[] { ".default" }, username, password.ToSecureString()).ExecuteAsync();
 
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
             StaticCachesUtilities.ClearAuthorityEndpointResolutionManagerCache();

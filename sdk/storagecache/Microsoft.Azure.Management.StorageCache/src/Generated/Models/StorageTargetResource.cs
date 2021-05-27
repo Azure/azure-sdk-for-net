@@ -29,11 +29,16 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <param name="id">Resource ID of the Storage Target.</param>
         /// <param name="type">Type of the Storage Target;
         /// Microsoft.StorageCache/Cache/StorageTarget</param>
-        public StorageTargetResource(string name = default(string), string id = default(string), string type = default(string))
+        /// <param name="location">Region name string.</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public StorageTargetResource(string name = default(string), string id = default(string), string type = default(string), string location = default(string), SystemData systemData = default(SystemData))
         {
             Name = name;
             Id = id;
             Type = type;
+            Location = location;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -60,6 +65,18 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets region name string.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; private set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

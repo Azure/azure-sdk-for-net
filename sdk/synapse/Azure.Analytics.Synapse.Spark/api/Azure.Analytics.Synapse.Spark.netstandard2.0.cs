@@ -3,7 +3,7 @@ namespace Azure.Analytics.Synapse.Spark
     public partial class SparkBatchClient
     {
         protected SparkBatchClient() { }
-        public SparkBatchClient(string endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, string livyApiVersion = "2019-11-01-preview", Azure.Analytics.Synapse.Spark.SparkClientOptions options = null) { }
+        public SparkBatchClient(System.Uri endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, string livyApiVersion = "2019-11-01-preview", Azure.Analytics.Synapse.Spark.SparkClientOptions options = null) { }
         public virtual Azure.Response CancelSparkBatchJob(int batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelSparkBatchJobAsync(int batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob> GetSparkBatchJob(int batchId, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkBatchOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>
     {
-        internal SparkBatchOperation() { }
+        protected SparkBatchOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -34,10 +34,27 @@ namespace Azure.Analytics.Synapse.Spark
             V2019_11_01_preview = 1,
         }
     }
+    public static partial class SparkModelFactory
+    {
+        public static Azure.Analytics.Synapse.Spark.Models.SparkBatchJob SparkBatchJob(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, Azure.Analytics.Synapse.Spark.Models.SparkJobType? jobType = default(Azure.Analytics.Synapse.Spark.Models.SparkJobType?), Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType? result = default(Azure.Analytics.Synapse.Spark.Models.SparkBatchJobResultType?), Azure.Analytics.Synapse.Spark.Models.SparkScheduler scheduler = null, Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin plugin = null, System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Spark.Models.SparkServiceError> errors = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, int id = 0, string appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> appInfo = null, string state = null, System.Collections.Generic.IReadOnlyList<string> logLines = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkBatchJobCollection SparkBatchJobCollection(int from = 0, int total = 0, System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob> sessions = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkBatchJobState SparkBatchJobState(System.DateTimeOffset? notStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? startingAt = default(System.DateTimeOffset?), System.DateTimeOffset? runningAt = default(System.DateTimeOffset?), System.DateTimeOffset? deadAt = default(System.DateTimeOffset?), System.DateTimeOffset? successAt = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedAt = default(System.DateTimeOffset?), System.DateTimeOffset? recoveringAt = default(System.DateTimeOffset?), string currentState = null, Azure.Analytics.Synapse.Spark.Models.SparkRequest jobCreationRequest = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkRequest SparkRequest(string name = null, string file = null, string className = null, System.Collections.Generic.IReadOnlyList<string> arguments = null, System.Collections.Generic.IReadOnlyList<string> jars = null, System.Collections.Generic.IReadOnlyList<string> pythonFiles = null, System.Collections.Generic.IReadOnlyList<string> files = null, System.Collections.Generic.IReadOnlyList<string> archives = null, System.Collections.Generic.IReadOnlyDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = default(int?), string executorMemory = null, int? executorCores = default(int?), int? executorCount = default(int?)) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkScheduler SparkScheduler(System.DateTimeOffset? submittedAt = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledAt = default(System.DateTimeOffset?), System.DateTimeOffset? endedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cancellationRequestedAt = default(System.DateTimeOffset?), Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState? currentState = default(Azure.Analytics.Synapse.Spark.Models.SchedulerCurrentState?)) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkServiceError SparkServiceError(string message = null, string errorCode = null, Azure.Analytics.Synapse.Spark.Models.SparkErrorSource? source = default(Azure.Analytics.Synapse.Spark.Models.SparkErrorSource?)) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin SparkServicePlugin(System.DateTimeOffset? preparationStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? resourceAcquisitionStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? submissionStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? monitoringStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cleanupStartedAt = default(System.DateTimeOffset?), Azure.Analytics.Synapse.Spark.Models.PluginCurrentState? currentState = default(Azure.Analytics.Synapse.Spark.Models.PluginCurrentState?)) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkSession SparkSession(Azure.Analytics.Synapse.Spark.Models.SparkSessionState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, Azure.Analytics.Synapse.Spark.Models.SparkJobType? jobType = default(Azure.Analytics.Synapse.Spark.Models.SparkJobType?), Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType? result = default(Azure.Analytics.Synapse.Spark.Models.SparkSessionResultType?), Azure.Analytics.Synapse.Spark.Models.SparkScheduler scheduler = null, Azure.Analytics.Synapse.Spark.Models.SparkServicePlugin plugin = null, System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Spark.Models.SparkServiceError> errors = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, int id = 0, string appId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> appInfo = null, string state = null, System.Collections.Generic.IReadOnlyList<string> logLines = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkSessionCollection SparkSessionCollection(int from = 0, int total = 0, System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Spark.Models.SparkSession> sessions = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkSessionState SparkSessionState(System.DateTimeOffset? notStartedAt = default(System.DateTimeOffset?), System.DateTimeOffset? startingAt = default(System.DateTimeOffset?), System.DateTimeOffset? idleAt = default(System.DateTimeOffset?), System.DateTimeOffset? deadAt = default(System.DateTimeOffset?), System.DateTimeOffset? shuttingDownAt = default(System.DateTimeOffset?), System.DateTimeOffset? terminatedAt = default(System.DateTimeOffset?), System.DateTimeOffset? recoveringAt = default(System.DateTimeOffset?), System.DateTimeOffset? busyAt = default(System.DateTimeOffset?), System.DateTimeOffset? errorAt = default(System.DateTimeOffset?), string currentState = null, Azure.Analytics.Synapse.Spark.Models.SparkRequest jobCreationRequest = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkStatement SparkStatement(int id = 0, string code = null, string state = null, Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput output = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult SparkStatementCancellationResult(string message = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementCollection SparkStatementCollection(int total = 0, System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Spark.Models.SparkStatement> statements = null) { throw null; }
+        public static Azure.Analytics.Synapse.Spark.Models.SparkStatementOutput SparkStatementOutput(string status = null, int executionCount = 0, object data = null, string errorName = null, string errorValue = null, System.Collections.Generic.IReadOnlyList<string> traceback = null) { throw null; }
+    }
     public partial class SparkSessionClient
     {
         protected SparkSessionClient() { }
-        public SparkSessionClient(string endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, string livyApiVersion = "2019-11-01-preview", Azure.Analytics.Synapse.Spark.SparkClientOptions options = null) { }
+        public SparkSessionClient(System.Uri endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, string livyApiVersion = "2019-11-01-preview", Azure.Analytics.Synapse.Spark.SparkClientOptions options = null) { }
         public virtual Azure.Response CancelSparkSession(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelSparkSessionAsync(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult> CancelSparkStatement(int sessionId, int statementId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -59,7 +76,7 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkSessionOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkSession>
     {
-        internal SparkSessionOperation() { }
+        protected SparkSessionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -72,7 +89,7 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkStatementOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkStatement>
     {
-        internal SparkStatementOperation() { }
+        protected SparkStatementOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

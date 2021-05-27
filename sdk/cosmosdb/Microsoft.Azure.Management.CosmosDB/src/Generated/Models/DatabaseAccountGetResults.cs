@@ -83,6 +83,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// operations on metadata resources (databases, containers,
         /// throughput) via account keys</param>
         /// <param name="keyVaultKeyUri">The URI of the key vault</param>
+        /// <param name="defaultIdentity">The default identity for accessing
+        /// key vault used in features like customer managed keys. The default
+        /// identity needs to be explicitly set by the users. It can be
+        /// "FirstPartyIdentity", "SystemAssignedIdentity" and more.</param>
         /// <param name="publicNetworkAccess">Whether requests from Public
         /// Network are allowed. Possible values include: 'Enabled',
         /// 'Disabled'</param>
@@ -101,7 +105,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="networkAclBypassResourceIds">An array that contains
         /// the Resource Ids for Network Acl Bypass for the Cosmos DB
         /// account.</param>
-        public DatabaseAccountGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string provisioningState = default(string), string documentEndpoint = default(string), DatabaseAccountOfferType? databaseAccountOfferType = default(DatabaseAccountOfferType?), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Capability> capabilities = default(IList<Capability>), IList<Location> writeLocations = default(IList<Location>), IList<Location> readLocations = default(IList<Location>), IList<Location> locations = default(IList<Location>), IList<FailoverPolicy> failoverPolicies = default(IList<FailoverPolicy>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>))
+        public DatabaseAccountGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string provisioningState = default(string), string documentEndpoint = default(string), DatabaseAccountOfferType? databaseAccountOfferType = default(DatabaseAccountOfferType?), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Capability> capabilities = default(IList<Capability>), IList<Location> writeLocations = default(IList<Location>), IList<Location> readLocations = default(IList<Location>), IList<Location> locations = default(IList<Location>), IList<FailoverPolicy> failoverPolicies = default(IList<FailoverPolicy>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             Kind = kind;
@@ -125,6 +129,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             ConnectorOffer = connectorOffer;
             DisableKeyBasedMetadataWriteAccess = disableKeyBasedMetadataWriteAccess;
             KeyVaultKeyUri = keyVaultKeyUri;
+            DefaultIdentity = defaultIdentity;
             PublicNetworkAccess = publicNetworkAccess;
             EnableFreeTier = enableFreeTier;
             ApiProperties = apiProperties;
@@ -282,6 +287,15 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.keyVaultKeyUri")]
         public string KeyVaultKeyUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the default identity for accessing key vault used in
+        /// features like customer managed keys. The default identity needs to
+        /// be explicitly set by the users. It can be "FirstPartyIdentity",
+        /// "SystemAssignedIdentity" and more.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultIdentity")]
+        public string DefaultIdentity { get; set; }
 
         /// <summary>
         /// Gets or sets whether requests from Public Network are allowed.

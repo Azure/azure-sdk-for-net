@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Communication.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<float> percentComplete = default;
-            Optional<ErrorResponseError> error = default;
+            Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Communication.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            error = ErrorResponseError.DeserializeErrorResponseError(property0.Value);
+                            error = ErrorDetail.DeserializeErrorDetail(property0.Value);
                             continue;
                         }
                     }

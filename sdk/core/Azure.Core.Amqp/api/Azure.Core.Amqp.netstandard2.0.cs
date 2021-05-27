@@ -29,9 +29,15 @@ namespace Azure.Core.Amqp
     }
     public partial class AmqpMessageBody
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AmqpMessageBody(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { }
         public Azure.Core.Amqp.AmqpMessageBodyType BodyType { get { throw null; } }
+        public static Azure.Core.Amqp.AmqpMessageBody FromData(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { throw null; }
+        public static Azure.Core.Amqp.AmqpMessageBody FromSequence(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<object>> sequence) { throw null; }
+        public static Azure.Core.Amqp.AmqpMessageBody FromValue(object value) { throw null; }
         public bool TryGetData(out System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>>? data) { throw null; }
+        public bool TryGetSequence(out System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<object>>? sequence) { throw null; }
+        public bool TryGetValue(out object? value) { throw null; }
     }
     public enum AmqpMessageBodyType
     {

@@ -6,7 +6,7 @@ string dataFlowName = "Test-DataFlow";
 ```
 
 ```C# Snippet:CreateDataFlowClient
-DataFlowClient client = new DataFlowClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+DataFlowClient client = new DataFlowClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
 
 ```C# Snippet:CreateDataFlow
@@ -28,5 +28,5 @@ foreach (DataFlowResource dataflow in dataFlows)
 
 ```C# Snippet:DeleteDataFlow
 DataFlowDeleteDataFlowOperation deleteOperation = client.StartDeleteDataFlow(dataFlowName);
-await deleteOperation.WaitForCompletionAsync();
+await deleteOperation.WaitForCompletionResponseAsync();
 ```

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the response to a list service tier advisor request. </summary>
-    public partial class ServiceTierAdvisorListResult
+    internal partial class ServiceTierAdvisorListResult
     {
         /// <summary> Initializes a new instance of ServiceTierAdvisorListResult. </summary>
         /// <param name="value"> The list of service tier advisors for specified database. </param>

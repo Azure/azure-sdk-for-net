@@ -7,10 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Sender
@@ -40,20 +43,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         [Test]
         public async Task SendEmptyListShouldNotThrow()
         {
-            var mock = new Mock<ServiceBusSender>()
+            var mock = new Mock<ServiceBusSender>("fake", new ServiceBusSenderOptions(), CreateMockConnection().Object, null)
             {
                 CallBase = true
             };
+
             await mock.Object.SendMessagesAsync(new List<ServiceBusMessage>());
         }
 
         [Test]
         public async Task SendSingleDelegatesToSendList()
         {
-            var mock = new Mock<ServiceBusSender>()
+           var mock = new Mock<ServiceBusSender>("fake", new ServiceBusSenderOptions(), CreateMockConnection().Object, null)
             {
                 CallBase = true
             };
+
             mock
                .Setup(m => m.SendMessagesAsync(
                    It.Is<IEnumerable<ServiceBusMessage>>(value => value.Count() == 1),
@@ -97,7 +102,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         [Test]
         public async Task ScheduleEmptyListShouldNotThrow()
         {
-            var mock = new Mock<ServiceBusSender>()
+            var mock = new Mock<ServiceBusSender>("fake", new ServiceBusSenderOptions(), CreateMockConnection().Object, null)
             {
                 CallBase = true
             };
@@ -129,15 +134,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
             var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
             var client = new ServiceBusClient(connString);
-            var sender = client.CreateSender(queueName,
-                null);
+
+            Assert.That(() => client.CreateSender(queueName, null), Throws.Nothing);
         }
 
-        /// <summary>
-        ///   Verifies functionality of the <see cref="ServiceBusSender.SendMessagesAsync"/>
-        ///   method.
-        /// </summary>
-        ///
         [Test]
         public async Task SendBatchManagesLockingTheBatch()
         {
@@ -149,18 +149,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var mockScope = new EntityScopeFactory("mock", "mock");
             var batch = new ServiceBusMessageBatch(mockTransportBatch.Object, mockScope);
             var mockTransportSender = new Mock<TransportSender>();
-            var mockConnection = new Mock<ServiceBusConnection>();
+            var mockConnection = CreateMockConnection();
 
             mockConnection
-                .Setup(connection => connection.RetryOptions)
-                .Returns(new ServiceBusRetryOptions());
-
-            mockConnection
-                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<string>()))
                 .Returns(mockTransportSender.Object);
-
-            mockConnection
-                .Setup(connection => connection.ThrowIfClosed());
 
             mockTransportBatch
                 .Setup(transport => transport.TryAddMessage(It.IsAny<ServiceBusMessage>()))
@@ -187,6 +180,107 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
 
             cancellationSource.Cancel();
+        }
+
+        [Test]
+        public async Task CreateMessageBatchAsyncValidatesClientIsNotDisposed()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var sender = client.CreateSender("fake");
+
+            await client.DisposeAsync();
+            Assert.That(async () => await sender.CreateMessageBatchAsync(),
+                Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+        }
+
+        [Test]
+        public async Task SendMessageAsyncValidatesClientIsNotDisposed()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var sender = client.CreateSender("fake");
+
+            await client.DisposeAsync();
+            Assert.That(async () => await sender.SendMessageAsync(new ServiceBusMessage("test")),
+                Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+        }
+
+        [Test]
+        public async Task SendMessagesAsyncValidatesClientIsNotDisposed()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var sender = client.CreateSender("fake");
+
+            using var batch = ServiceBusModelFactory.ServiceBusMessageBatch(4096, new List<ServiceBusMessage> { new ServiceBusMessage("test") });
+
+            await client.DisposeAsync();
+            Assert.That(async () => await sender.SendMessagesAsync(batch),
+                Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+        }
+
+        [Test]
+        public async Task ScheduleMessageAsyncValidatesClientIsNotDisposed()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var sender = client.CreateSender("fake");
+
+            await client.DisposeAsync();
+            Assert.That(async () => await sender.ScheduleMessageAsync(new ServiceBusMessage("test"), new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero)),
+                Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+        }
+
+        [Test]
+        public async Task ScheduleMessagesAsyncValidatesClientIsNotDisposed()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var sender = client.CreateSender("fake");
+
+            await client.DisposeAsync();
+            Assert.That(async () => await sender.ScheduleMessagesAsync(new[] { new ServiceBusMessage("one"), new ServiceBusMessage("two") }, new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero)),
+                Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+        }
+
+        [Test]
+        public async Task CancelScheduledMessageAsyncValidatesClientIsNotDisposed()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var sender = client.CreateSender("fake");
+
+            await client.DisposeAsync();
+            Assert.That(async () => await sender.CancelScheduledMessageAsync(12345),
+                Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+        }
+
+        [Test]
+        public async Task CancelScheduledMessagesAsyncValidatesClientIsNotDisposed()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var sender = client.CreateSender("fake");
+
+            await client.DisposeAsync();
+            Assert.That(async () => await sender.CancelScheduledMessagesAsync(new[] { 12345L, 678910L }),
+                Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+        }
+
+        [Test]
+        public async Task CloseRespectsCancellationToken()
+        {
+            var mockTransportSender = new Mock<TransportSender>();
+            var cts = new CancellationTokenSource();
+
+            // mutate the cancellation token to distinguish it from CancellationToken.None
+            cts.CancelAfter(100);
+
+            var mockConnection = CreateMockConnection();
+            mockConnection.Setup(
+                    connection => connection.CreateTransportSender(
+                        It.IsAny<string>(),
+                        It.IsAny<ServiceBusRetryPolicy>(),
+                        It.IsAny<string>()))
+                .Returns(mockTransportSender.Object);
+
+            var sender = new ServiceBusSender("fake", new ServiceBusSenderOptions(), mockConnection.Object, default);
+            await sender.CloseAsync(cts.Token);
+            mockTransportSender.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }
     }
 }

@@ -39,11 +39,15 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// consumer and provider.</param>
         /// <param name="privateEndpoint">The resource of private end
         /// point.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// private endpoint connection resource. Possible values include:
+        /// 'Succeeded', 'Creating', 'Deleting', 'Failed'</param>
         /// <param name="groupIds">The private link resource group ids.</param>
-        public PrivateEndpointConnectionProperties(PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<string> groupIds = default(IList<string>))
+        public PrivateEndpointConnectionProperties(PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpoint privateEndpoint = default(PrivateEndpoint), string provisioningState = default(string), IList<string> groupIds = default(IList<string>))
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ProvisioningState = provisioningState;
             GroupIds = groupIds;
             CustomInit();
         }
@@ -65,6 +69,14 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "privateLinkServiceConnectionState")]
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the provisioning state of the private endpoint
+        /// connection resource. Possible values include: 'Succeeded',
+        /// 'Creating', 'Deleting', 'Failed'
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets the private link resource group ids.

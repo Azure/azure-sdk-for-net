@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="sourceFabricName">The source fabric name
         /// filter.</param>
+        /// <param name="sourceContainerName">The source container name
+        /// filter.</param>
         /// <param name="instanceType">The replication provider type.</param>
-        public MigrationItemsQueryParameter(string sourceFabricName = default(string), string instanceType = default(string))
+        public MigrationItemsQueryParameter(string sourceFabricName = default(string), string sourceContainerName = default(string), string instanceType = default(string))
         {
             SourceFabricName = sourceFabricName;
+            SourceContainerName = sourceContainerName;
             InstanceType = instanceType;
             CustomInit();
         }
@@ -51,6 +54,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "sourceFabricName")]
         public string SourceFabricName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the source container name filter.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceContainerName")]
+        public string SourceContainerName { get; set; }
 
         /// <summary>
         /// Gets or sets the replication provider type.

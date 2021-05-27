@@ -25,9 +25,9 @@ if (Test-Path $EngScriptsLanguageSettings) {
   . $EngScriptsLanguageSettings
 }
 
-if (!(Get-Variable -Name "LangaugeShort" -ValueOnly -ErrorAction "Ignore"))
+if (!(Get-Variable -Name "LanguageShort" -ValueOnly -ErrorAction "Ignore"))
 {
-  $LangaugeShort = $Language
+  $LanguageShort = $Language
 }
 
 if (!(Get-Variable -Name "LanguageDisplayName" -ValueOnly -ErrorAction "Ignore"))
@@ -39,6 +39,6 @@ if (!(Get-Variable -Name "LanguageDisplayName" -ValueOnly -ErrorAction "Ignore")
 $GetPackageInfoFromRepoFn = "Get-${Language}-PackageInfoFromRepo"
 $GetPackageInfoFromPackageFileFn = "Get-${Language}-PackageInfoFromPackageFile"
 $PublishGithubIODocsFn = "Publish-${Language}-GithubIODocs"
-$UpdateDocCIFn = "Update-${Language}-CIConfig"
+$UpdateDocsMsPackagesFn = "Update-${Language}-DocsMsPackages"
 $GetGithubIoDocIndexFn = "Get-${Language}-GithubIoDocIndex"
 $FindArtifactForApiReviewFn = "Find-${Language}-Artifacts-For-Apireview"

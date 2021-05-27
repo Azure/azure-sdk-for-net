@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Datadog</PackageId>
     <Description>Microsoft Azure Management Datadog library</Description>
-    <Version>0.1.0</Version>
+    <Version>1.1.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Datadog</AssemblyName>
     <PackageTags>management;datadog;</PackageTags>
     <PackageReleaseNotes>

@@ -66,7 +66,7 @@ public class AppConfigurationTestEnvironment : TestEnvironment
     // Argument is the output name in the test-resources.json
     public string Endpoint => GetRecordedVariable("APPCONFIGURATION_ENDPOINT");
     // Variables retrieved using GetVariable will not be recorded but the method will throw if the variable is not set
-    public string SystemAssignedVault => GetVariable("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT");
+    public string SystemAssignedVault => GetVariable("IDENTITYTEST_TEST_SYSTEMASSIGNEDVAULT");
     // Variables retrieved using GetOptionalVariable will not be recorded and the method will return null if variable is not set
     public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
 }
@@ -123,6 +123,40 @@ public partial class ConfigurationSamples: SamplesBase<AppConfigurationTestEnvir
     }
 }
 ```
+
+If resources require some time to become eventually consistent and there's a scenario that can be used to detect if asynchronous process completed
+then you can consider implementing `TestEnvironment.IsEnvironmentReadyAsync`. Test framework will probe the scenario couple of times before starting tests or
+fail test run if resources don't become available:
+
+``` C#
+public class AppConfigurationTestEnvironment : TestEnvironment
+{
+    // in addition to other members
+    protected override async ValueTask<bool> IsEnvironmentReadyAsync()
+    {
+        var connectionString = TestEnvironment.ConnectionString;
+        var client = new ConfigurationClient(connectionString);
+        try
+        {
+            await service.GetConfigurationSettingAsync("Setting");
+        } 
+        catch (RequestFailedException e) when (e.Status == 403)
+        {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+## Test settings
+
+Test settings can be configured via `.runsettings` files. See [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/nunit.runsettings) for available knobs.
+
+There are two ways to work with `.runsettings`. Both are picked up by Visual Studio without restart.
+- You can edit [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/nunit.runsettings) locally to achieve desired configuration.
+- You can prepare few copies of `.runsettings` by cloning [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/nunit.runsettings).
+Load them in Visual Studio (`Test>Configure Run Settings` menu) and switch between them. This option requires setting an environment variable `AZURE_SKIP_DEFAULT_RUN_SETTINGS=true`.
 
 ## TokenCredential
 
@@ -202,14 +236,13 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
 }
 ```
 
-
-## Recording
+### Recording
 
 When tests are run in recording mode, session records are saved to the project directory automatically in a folder named 'SessionRecords'.
 
 __NOTE:__ recordings are copied from `netcoreapp2.1` directory by default, make sure you are running the right target framework.
 
-## Sanitizing
+### Sanitizing
 
 Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record.
 **Do not check in session records containing secrets.** Common headers like `Authentication` are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, the `RecordedTestSanitizer` should be used as an extension point.
@@ -232,7 +265,8 @@ For example:
     }
 ```
 
-Another sanitizer property that is available for sanitizing Json payloads is the `JsonPathSanitizers`. This property contains a list of [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) format strings that will be validated against the body. If a match exists, the value will be sanitized.
+Another sanitizer feature that is available for sanitizing Json payloads is the `AddJsonPathSanitizer`.
+This method allows adding a [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) format strings that will be validated against the body. If a match exists, the value will be sanitized.
 
 ```c#
     public class FormRecognizerRecordedTestSanitizer : RecordedTestSanitizer
@@ -240,13 +274,21 @@ Another sanitizer property that is available for sanitizing Json payloads is the
         public FormRecognizerRecordedTestSanitizer()
             : base()
         {
-            JsonPathSanitizers.Add("$..accessToken");
-            JsonPathSanitizers.Add("$..source");
+            AddJsonPathSanitizer("$..accessToken");
+            AddJsonPathSanitizer("$..source");
         }
     }
 ```
 
-## Matching
+Sometimes it's useful to be able to have a custom replacement values for JsonPath-based sanitization (connection strings, JWT tokens).
+To enable this the `AddJsonPathSanitizer` provides an additional callback that would be called for every match.
+
+```C#
+AddJsonPathSanitizer("$..jwt_token", token => SanitizeJwt(token));
+```
+
+
+### Matching
 
 When tests are run in replay mode, HTTP method, Uri and headers are used to match the request to the recordings. Some headers change on every request and are not controlled by the client code and should be ignored during the matching. Common headers like `Date`, `x-ms-date`, `x-ms-client-request-id`, `User-Agent`, `Request-Id` are ignored by default but if more headers need to be ignored, use `RecordMatcher` extensions point.
 
@@ -270,7 +312,7 @@ When tests are run in replay mode, HTTP method, Uri and headers are used to matc
     }
 ```
 
-## Misc
+### Misc
 
 You can use `Recording.GenerateId()` to generate repeatable random IDs.
 
@@ -284,7 +326,7 @@ You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for
 
 You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
 
-# Support multi service version testing
+## Support multi service version testing
 
 To enable multi-version testing, add the `ClientTestFixture` attribute listing to all the service versions to the test class itself or a base class:
 
@@ -377,6 +419,7 @@ For example:
 `/SessionRecords/TableClientLiveTests(Storage)/CreatedCustomEntitiesCanBeQueriedWithFiltersAsync.json`
 
 ## Management libraries
+
 Testing of management libraries uses the Test Framework and should generally be very similar to tests that you write for data plane libraries. There is an intermediate test class that you will likely want to derive from that lives within the management code base - [ManagementRecordedTestBase](https://github.com/Azure/azure-sdk-for-net/blob/babee31b3151e4512ac5a77a55c426c136335fbb/common/ManagementTestShared/ManagementRecordedTestBase.cs). To see examples of Track 2 Management tests using the Test Framework, take a look at the [Storage tests](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.ResourceManager.Storage/tests/Tests).
 
 ## Recording tests on CI
@@ -403,7 +446,7 @@ The `Download-DevOpsRecordings.ps1` would wait for active runs to finish before 
 
 **NOTE:** these scripts require being signed in with Azure CLI (https://docs.microsoft.com/cli/azure/authenticate-azure-cli?view=azure-cli-latest) and access to the internal DevOps project (https://dev.azure.com/azure-sdk/internal/) 
 
-## Note on private/non-virtual fields in your clients (such as _clientDiagnostics) and InternalsVisibleTo
+### Note on private/non-virtual fields in your clients (such as _clientDiagnostics) and InternalsVisibleTo
 
 Some bindings require code on the customized side to access fields that are generated. For example:
 
@@ -425,10 +468,54 @@ Some bindings require code on the customized side to access fields that are gene
     }
 ```
 
-For this to work with tests, your test class must have an `InternalsVisisbleTo` in your `AssemblyInfo.cs`:
+For this to work with tests, your test class must have an `InternalsVisibleTo` in your `AssemblyInfo.cs`:
 
 ```csharp
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2, PublicKey=0024000004800000940000000602000000240000525341310004000001000100c547cac37abd99c8db225ef2f6c8a3602f3b3606cc9891605d02baa56104f4cfc0734aa39b93bf7852f7d9266654753cc297e7d2edfe0bac1cdcf9f717241550e0a7b191195b7667bb4f64bcb8e2121380fd1d9d46ad2d92d2d15605093924cceaf74c4861eff62abf69b9291ed0a340e113be11e6a7d3113e92484cf7045cc7")]
 ```
 
 If this is neglected, _clientDiagnostics will be null at test runtime.
+
+## Miscellaneous Helpers
+
+There are various helpful classes that assist in writing tests for the Azure SDK. Below are some of them.
+
+### TestEnvVar
+
+[TestEnvVar](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core.TestFramework/src/TestEnvVar.cs) allows you to wrap a block of code with a using statement inside which the configured Environment variables will be set to your supplied values.
+It ensures that the existing value of any configured environment variables are preserved before they are set them and restores them outside the scope of the using block.
+
+#### Example usage
+
+```c#
+using (var _ = new TestEnvVar("AZURE_TENANT_ID", "foo"))
+{
+    // Test code that relies on the value of AZURE_TENANT_ID
+}
+
+// The previous value of AZURE_TENANT_ID is set again here.
+```
+
+### TestAppContextSwitch
+
+[TestAppContextSwitch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core.TestFramework/src/TestAppContextSwitch.cs) allows you to wrap a block of code with a using statement inside which the configured [AppContext](https://docs.microsoft.com/dotnet/api/system.appcontext) switch will be set to your supplied values.
+It ensures that the existing value of any configured switches are preserved before they are set them and restores them outside the scope of the using block.
+Note: Even if an `AppContext` switch was un-set prior to setting it via `TestAppContextSwitch`, it will be unset after leaving the scope of the using block.
+
+#### Example usage
+
+```c#
+var isSet = AppContext.TryGetSwitch("Azure.Core.Pipeline.DisableHttpWebRequestTransport", out val))
+// isSet is false
+
+using (var _ = new TestAppContextSwitch("Azure.Core.Pipeline.DisableHttpWebRequestTransport", "true"))
+{
+    var isSet = AppContext.TryGetSwitch("Azure.Core.Pipeline.DisableHttpWebRequestTransport", out val))
+    // isSet is true
+    // val is true
+
+}
+
+var isSet = AppContext.TryGetSwitch("Azure.Core.Pipeline.DisableHttpWebRequestTransport", out val))
+// isSet is false
+```

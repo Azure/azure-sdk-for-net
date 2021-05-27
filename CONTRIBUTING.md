@@ -9,7 +9,7 @@
 - Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 5.0.100 SDK** for your specific platform. (or a higher version within the 5.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/5.0)
+- Install **.NET Core 5.0.200 SDK** for your specific platform. (or a higher version within the 5.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/5.0)
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
@@ -197,12 +197,12 @@ When run, the code regions in the format below (where `<snippetName>` is the nam
 //some sample code
 string snippet = "some snippet code";
 
-// Lines prefixed with the below comment format will be ignored by the snippet updater.
-/*@@*/ string ignored = "this code will not appear in the snippet markdown";
-
-// Lines prefixed with the below comment format will appear in the snippet markdown, but will remain comments in the C#` code.
-// Note: these comments should only be used for non-critical code as it will not be compiled or refactored as the code changes.
-//@@ snippet = "value that would never pass a test but looks good in a sample!";
+// The snippet updater defines the SNIPPET directive while parsing. You can use #if SNIPPET to filter lines in or out of the snippet.
+#if SNIPPET
+snippet = "value that would never pass a test but looks good in a sample!";
+#else
+string ignored = "this code will not appear in the snippet markdown";
+#endif
 
 #endregion
 ```
@@ -324,15 +324,16 @@ As you can see in the example below, we want to use the `Azure.Data.Tables` vers
 
 ## Preparing a new library release
 
-To prepare a package for release you should make use of `.\eng\common\scripts\Prepare-Release.ps1` script passing it appropriate arguments for the package intended for release as well as the release date. This script will correctly update the package version in the repo as well as update DevOps release work items for that release. 
+To prepare a package for release you should make use of `.\eng\common\scripts\Prepare-Release.ps1` script passing it appropriate arguments for the package intended for release. This script will correctly update the package version and changelog in the repo as well as update the DevOps release work items for that release. 
 
-If you are releasing out-of-band please use the `-ReleaseDate` parameter to specify the release data. `ReleaseDate` should be in `yyyy-MM-dd` format.
-
-Example invocations:
-
-```powershell
-.\eng\scripts\Prepare-Release.ps1 -PackageName "Azure.Core" -SerivceDirectory "core" -ReleaseDate "2020-10-01"
 ```
+.\eng\common\scripts\Prepare-Release.ps1 <PackageName> [<ServiceDirectory>] [<ReleaseDate>] [-ReleaseTrackingOnly]
+```
+
+- `<PackageName>` - Should match the full exact package name for the given ecosystem (i.e. "Azure.Core", "azure-core", "@azure/core", etc).
+- `<SerivceDirectory>` - Optional: Should be the exact directory name where the package resides in the repo. This is usually the same as the service name in most cases (i.e. "sdk<service_directory>" e.g. "core"). The parameter is optional and if provided will help speed-up the number of projects we have to parse to find the matching package project.
+- `<ReleaseDate>` - Optional: provide a specific date for when you plan to release the package. If one isn't given then one will be calculated based on the normal monthly shipping schedule.
+- `<ReleaseTrackingOnly>` - Optional: Switch that if passed will only update the release tracking data in DevOps and not update any versioning info or do validation in the local repo.
 
 ## On-boarding New Libraries
 

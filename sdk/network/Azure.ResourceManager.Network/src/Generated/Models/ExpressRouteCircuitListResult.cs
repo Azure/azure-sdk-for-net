@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListExpressRouteCircuit API service call. </summary>
-    public partial class ExpressRouteCircuitListResult
+    internal partial class ExpressRouteCircuitListResult
     {
         /// <summary> Initializes a new instance of ExpressRouteCircuitListResult. </summary>
         internal ExpressRouteCircuitListResult()

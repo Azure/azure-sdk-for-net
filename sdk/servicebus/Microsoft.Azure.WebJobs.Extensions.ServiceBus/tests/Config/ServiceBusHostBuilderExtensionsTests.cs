@@ -4,12 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Azure.WebJobs.ServiceBus.Config;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -20,13 +21,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 {
     public class ServiceBusHostBuilderExtensionsTests
     {
+        private const string ExtensionPath = "AzureWebJobs:Extensions:ServiceBus";
+
         [Test]
         public void ConfigureOptions_AppliesValuesCorrectly_BackCompat()
         {
             ServiceBusOptions options = CreateOptionsFromConfigBackCompat();
 
             Assert.AreEqual(123, options.PrefetchCount);
-            Assert.AreEqual("TestConnectionString", options.ConnectionString);
             Assert.AreEqual(123, options.MaxConcurrentCalls);
             Assert.False(options.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
@@ -36,14 +38,20 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         public void ConfigureOptions_Format_Returns_Expected_BackCompat()
         {
             ServiceBusOptions options = CreateOptionsFromConfigBackCompat();
+            JObject jObject = new JObject
+            {
+                { ExtensionPath, JObject.Parse(((IOptionsFormatter)options).Format()) }
+            };
 
-            string format = options.Format();
-            JObject iObj = JObject.Parse(format);
-            ServiceBusOptions result = iObj.ToObject<ServiceBusOptions>();
+            ServiceBusOptions result = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(
+                b =>
+                {
+                    b.AddServiceBus();
+                },
+                jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
             Assert.AreEqual(123, result.PrefetchCount);
-            // can't round trip the connection string
-            Assert.IsNull(result.ConnectionString);
+
             Assert.AreEqual(123, result.MaxConcurrentCalls);
             Assert.False(result.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), result.MaxAutoLockRenewalDuration);
@@ -55,40 +63,52 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             ServiceBusOptions options = CreateOptionsFromConfig();
 
             Assert.AreEqual(123, options.PrefetchCount);
-            Assert.AreEqual("TestConnectionString", options.ConnectionString);
             Assert.AreEqual(123, options.MaxConcurrentCalls);
             Assert.False(options.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(ServiceBusTransportType.AmqpWebSockets, options.TransportType);
+            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)options.WebProxy).Address.AbsoluteUri);
+            Assert.AreEqual(10, options.ClientRetryOptions.MaxRetries);
         }
 
         [Test]
         public void ConfigureOptions_Format_Returns_Expected()
         {
             ServiceBusOptions options = CreateOptionsFromConfig();
+            JObject jObject = new JObject
+            {
+                { ExtensionPath, JObject.Parse(((IOptionsFormatter)options).Format()) }
+            };
 
-            string format = options.Format();
-            JObject iObj = JObject.Parse(format);
-            ServiceBusOptions result = iObj.ToObject<ServiceBusOptions>();
+            ServiceBusOptions result = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(
+                b =>
+                {
+                    b.AddServiceBus();
+                },
+                jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
             Assert.AreEqual(123, result.PrefetchCount);
-            // can't round trip the connection string
-            Assert.IsNull(result.ConnectionString);
+
             Assert.AreEqual(123, result.MaxConcurrentCalls);
             Assert.False(result.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), result.MaxAutoLockRenewalDuration);
+            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)result.WebProxy).Address.AbsoluteUri);
+            Assert.AreEqual(10, result.ClientRetryOptions.MaxRetries);
         }
 
         private static ServiceBusOptions CreateOptionsFromConfig()
         {
-            string extensionPath = "AzureWebJobs:Extensions:ServiceBus";
             var values = new Dictionary<string, string>
             {
-                { $"{extensionPath}:PrefetchCount", "123" },
+                { $"{ExtensionPath}:PrefetchCount", "123" },
                 { $"ConnectionStrings:ServiceBus", "TestConnectionString" },
-                { $"{extensionPath}:MaxConcurrentCalls", "123" },
-                { $"{extensionPath}:AutoCompleteMessages", "false" },
-                { $"{extensionPath}:MaxAutoLockRenewalDuration", "00:00:15" },
-                { $"{extensionPath}:MaxConcurrentSessions", "123" },
+                { $"{ExtensionPath}:MaxConcurrentCalls", "123" },
+                { $"{ExtensionPath}:AutoCompleteMessages", "false" },
+                { $"{ExtensionPath}:MaxAutoLockRenewalDuration", "00:00:15" },
+                { $"{ExtensionPath}:MaxConcurrentSessions", "123" },
+                { $"{ExtensionPath}:TransportType", "AmqpWebSockets" },
+                { $"{ExtensionPath}:WebProxy", "http://proxyserver:8080/" },
+                { $"{ExtensionPath}:ClientRetryOptions:MaxRetries", "10" },
             };
 
             ServiceBusOptions options = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(b =>
@@ -100,18 +120,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
         private static ServiceBusOptions CreateOptionsFromConfigBackCompat()
         {
-            string extensionPath = "AzureWebJobs:Extensions:ServiceBus";
             var values = new Dictionary<string, string>
             {
-                { $"{extensionPath}:PrefetchCount", "123" },
+                { $"{ExtensionPath}:PrefetchCount", "123" },
                 { $"ConnectionStrings:ServiceBus", "TestConnectionString" },
-                { $"{extensionPath}:MessageHandlerOptions:MaxConcurrentCalls", "123" },
-                { $"{extensionPath}:MessageHandlerOptions:AutoComplete", "false" },
-                { $"{extensionPath}:MessageHandlerOptions:MaxAutoRenewDuration", "00:00:15" },
-                { $"{extensionPath}:SessionHandlerOptions:MaxConcurrentSessions", "123" },
-                { $"{extensionPath}:BatchOptions:OperationTimeout","00:00:15" },
-                { $"{extensionPath}:BatchOptions:MaxMessageCount", "123" },
-                { $"{extensionPath}:BatchOptions:AutoComplete", "true" },
+                { $"{ExtensionPath}:MessageHandlerOptions:MaxConcurrentCalls", "123" },
+                { $"{ExtensionPath}:MessageHandlerOptions:AutoComplete", "false" },
+                { $"{ExtensionPath}:MessageHandlerOptions:MaxAutoRenewDuration", "00:00:15" },
+                { $"{ExtensionPath}:SessionHandlerOptions:MaxConcurrentSessions", "123" },
+                { $"{ExtensionPath}:BatchOptions:OperationTimeout","00:00:15" },
+                { $"{ExtensionPath}:BatchOptions:MaxMessageCount", "123" },
+                { $"{ExtensionPath}:BatchOptions:AutoComplete", "true" },
             };
 
             ServiceBusOptions options = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(b =>
@@ -134,7 +153,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
             var exception = Assert.Throws<ArgumentNullException>(() => host.Services.GetServices<IExtensionConfigProvider>());
 
-            Assert.AreEqual("serviceBusOptions", exception.ParamName);
+            Assert.AreEqual("options", exception.ParamName);
         }
 
         [Test]
@@ -157,19 +176,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         [Test]
         public void AddServiceBus_ServiceBusOptionsProvided_PerformsExpectedRegistration()
         {
-            string fakeConnStr = "test service bus connection";
-
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost(b =>
                 {
                     b.AddServiceBus();
-                })
-                .ConfigureServices(s =>
-                {
-                    s.Configure<ServiceBusOptions>(o =>
-                    {
-                        o.ConnectionString = fakeConnStr;
-                    });
                 })
                 .Build();
 
@@ -179,30 +189,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
             // verify that the service bus config provider was registered
             var serviceBusExtensionConfig = configProviders.OfType<ServiceBusExtensionConfigProvider>().Single();
-
-            Assert.AreEqual(fakeConnStr, serviceBusExtensionConfig.Options.ConnectionString);
-        }
-
-        [Test]
-        [TestCase("DefaultConnectionString", "DefaultConectionSettingString", "DefaultConnectionString")]
-        [TestCase("DefaultConnectionString", null, "DefaultConnectionString")]
-        [TestCase(null, "DefaultConectionSettingString", "DefaultConectionSettingString")]
-        [TestCase(null, null, null)]
-        public void ReadDefaultConnectionString(string defaultConnectionString, string sefaultConectionSettingString, string expectedValue)
-        {
-            ServiceBusOptions options = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(b =>
-            {
-                var test = b.Services.Single(x => x.ServiceType == typeof(IConfiguration));
-
-                var envPrpvider = (test.ImplementationInstance as ConfigurationRoot).Providers
-                    .Single(x => x.GetType() == typeof(EnvironmentVariablesConfigurationProvider));
-                envPrpvider.Set("ConnectionStrings:" + Constants.DefaultConnectionStringName, defaultConnectionString);
-                envPrpvider.Set(Constants.DefaultConnectionSettingStringName, sefaultConectionSettingString);
-
-                b.AddServiceBus();
-            }, new Dictionary<string, string>());
-
-            Assert.AreEqual(options.ConnectionString, expectedValue);
         }
     }
 }

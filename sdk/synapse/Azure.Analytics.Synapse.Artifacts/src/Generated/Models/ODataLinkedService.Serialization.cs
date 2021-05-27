@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ODataLinkedServiceConverter))]
     public partial class ODataLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -78,6 +81,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("servicePrincipalId");
                 writer.WriteObjectValue(ServicePrincipalId);
             }
+            if (Optional.IsDefined(AzureCloudType))
+            {
+                writer.WritePropertyName("azureCloudType");
+                writer.WriteObjectValue(AzureCloudType);
+            }
             if (Optional.IsDefined(AadResourceId))
             {
                 writer.WritePropertyName("aadResourceId");
@@ -130,6 +138,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<SecretBase> password = default;
             Optional<object> tenant = default;
             Optional<object> servicePrincipalId = default;
+            Optional<object> azureCloudType = default;
             Optional<object> aadResourceId = default;
             Optional<ODataAadServicePrincipalCredentialType> aadServicePrincipalCredentialType = default;
             Optional<SecretBase> servicePrincipalKey = default;
@@ -254,6 +263,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             servicePrincipalId = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("azureCloudType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            azureCloudType = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("aadResourceId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -320,7 +339,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ODataLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password.Value, tenant.Value, servicePrincipalId.Value, aadResourceId.Value, Optional.ToNullable(aadServicePrincipalCredentialType), servicePrincipalKey.Value, servicePrincipalEmbeddedCert.Value, servicePrincipalEmbeddedCertPassword.Value, encryptedCredential.Value);
+            return new ODataLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password.Value, tenant.Value, servicePrincipalId.Value, azureCloudType.Value, aadResourceId.Value, Optional.ToNullable(aadServicePrincipalCredentialType), servicePrincipalKey.Value, servicePrincipalEmbeddedCert.Value, servicePrincipalEmbeddedCertPassword.Value, encryptedCredential.Value);
+        }
+
+        internal partial class ODataLinkedServiceConverter : JsonConverter<ODataLinkedService>
+        {
+            public override void Write(Utf8JsonWriter writer, ODataLinkedService model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ODataLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeODataLinkedService(document.RootElement);
+            }
         }
     }
 }

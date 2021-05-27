@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> Server response for get oauth2 permissions grants. </summary>
-    public partial class OAuth2PermissionGrantListResult
+    internal partial class OAuth2PermissionGrantListResult
     {
         /// <summary> Initializes a new instance of OAuth2PermissionGrantListResult. </summary>
         internal OAuth2PermissionGrantListResult()

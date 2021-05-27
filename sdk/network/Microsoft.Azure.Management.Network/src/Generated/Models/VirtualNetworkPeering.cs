@@ -52,22 +52,33 @@ namespace Microsoft.Azure.Management.Network.Models
         /// different region (preview). See here to register for the preview
         /// and learn more
         /// (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).</param>
-        /// <param name="remoteAddressSpace">The reference to the remote
-        /// virtual network address space.</param>
+        /// <param name="remoteAddressSpace">The reference to the address space
+        /// peered with the remote virtual network.</param>
+        /// <param name="remoteVirtualNetworkAddressSpace">The reference to the
+        /// current address space of the remote virtual network.</param>
         /// <param name="remoteBgpCommunities">The reference to the remote
         /// virtual network's Bgp Communities.</param>
         /// <param name="peeringState">The status of the virtual network
         /// peering. Possible values include: 'Initiated', 'Connected',
         /// 'Disconnected'</param>
+        /// <param name="peeringSyncLevel">The peering sync status of the
+        /// virtual network peering. Possible values include: 'FullyInSync',
+        /// 'RemoteNotInSync', 'LocalNotInSync',
+        /// 'LocalAndRemoteNotInSync'</param>
         /// <param name="provisioningState">The provisioning state of the
         /// virtual network peering resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="doNotVerifyRemoteGateways">If we need to verify the
+        /// provisioning state of the remote gateway.</param>
+        /// <param name="resourceGuid">The resourceGuid property of the Virtual
+        /// Network peering resource.</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkPeering(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), SubResource remoteVirtualNetwork = default(SubResource), AddressSpace remoteAddressSpace = default(AddressSpace), VirtualNetworkBgpCommunities remoteBgpCommunities = default(VirtualNetworkBgpCommunities), string peeringState = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Resource type.</param>
+        public VirtualNetworkPeering(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), SubResource remoteVirtualNetwork = default(SubResource), AddressSpace remoteAddressSpace = default(AddressSpace), AddressSpace remoteVirtualNetworkAddressSpace = default(AddressSpace), VirtualNetworkBgpCommunities remoteBgpCommunities = default(VirtualNetworkBgpCommunities), string peeringState = default(string), string peeringSyncLevel = default(string), string provisioningState = default(string), bool? doNotVerifyRemoteGateways = default(bool?), string resourceGuid = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
@@ -76,11 +87,16 @@ namespace Microsoft.Azure.Management.Network.Models
             UseRemoteGateways = useRemoteGateways;
             RemoteVirtualNetwork = remoteVirtualNetwork;
             RemoteAddressSpace = remoteAddressSpace;
+            RemoteVirtualNetworkAddressSpace = remoteVirtualNetworkAddressSpace;
             RemoteBgpCommunities = remoteBgpCommunities;
             PeeringState = peeringState;
+            PeeringSyncLevel = peeringSyncLevel;
             ProvisioningState = provisioningState;
+            DoNotVerifyRemoteGateways = doNotVerifyRemoteGateways;
+            ResourceGuid = resourceGuid;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -132,11 +148,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource RemoteVirtualNetwork { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference to the remote virtual network address
-        /// space.
+        /// Gets or sets the reference to the address space peered with the
+        /// remote virtual network.
         /// </summary>
         [JsonProperty(PropertyName = "properties.remoteAddressSpace")]
         public AddressSpace RemoteAddressSpace { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference to the current address space of the
+        /// remote virtual network.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.remoteVirtualNetworkAddressSpace")]
+        public AddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
 
         /// <summary>
         /// Gets or sets the reference to the remote virtual network's Bgp
@@ -153,12 +176,34 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PeeringState { get; set; }
 
         /// <summary>
+        /// Gets or sets the peering sync status of the virtual network
+        /// peering. Possible values include: 'FullyInSync', 'RemoteNotInSync',
+        /// 'LocalNotInSync', 'LocalAndRemoteNotInSync'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.peeringSyncLevel")]
+        public string PeeringSyncLevel { get; set; }
+
+        /// <summary>
         /// Gets the provisioning state of the virtual network peering
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets if we need to verify the provisioning state of the
+        /// remote gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.doNotVerifyRemoteGateways")]
+        public bool? DoNotVerifyRemoteGateways { get; set; }
+
+        /// <summary>
+        /// Gets the resourceGuid property of the Virtual Network peering
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within a
@@ -173,6 +218,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Validate the object.

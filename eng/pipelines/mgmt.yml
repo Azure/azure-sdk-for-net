@@ -4,9 +4,16 @@ pr:
     include:
     - master
     - '*-preview'
+    - 'feature/cplat*'
   paths:
     include:
+    - Directory.Build.props
+    - Directory.Build.targets
+    - mgmt.proj
+    - eng/mgmt.proj
     - eng/pipelines/mgmt.yml
+    - eng/mgmt
+    - sdk/mgmtcommon
     - sdk/advisor/Microsoft.Azure.Management.Advisor
     - sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement
     - sdk/analysisservices/Microsoft.Azure.Management.AnalysisServices
@@ -38,6 +45,7 @@ pr:
     - sdk/blueprint/Microsoft.Azure.Management.Blueprint
     - sdk/botservice/Microsoft.Azure.Management.BotService
     - sdk/cdn/Microsoft.Azure.Management.Cdn
+    - sdk/changeanalysis/Microsoft.Azure.Management.ChangeAnalysis
     - sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices
     - sdk/compute/Microsoft.Azure.Management.Compute
     - sdk/confluent/Microsoft.Azure.Management.Confluent
@@ -56,20 +64,25 @@ pr:
     - sdk/datalake-analytics/Microsoft.Azure.Management.DataLake.Analytics
     - sdk/datalake-store/Microsoft.Azure.Management.DataLake.Store
     - sdk/datamigration/Microsoft.Azure.Management.DataMigration
+    - sdk/dataprotection/Microsoft.Azure.Management.DataProtection
     - sdk/datashare/Microsoft.Azure.Management.DataShare
     - sdk/deploymentmanager/Microsoft.Azure.Management.DeploymentManager
     - sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices
+    - sdk/deviceupdate/Microsoft.Azure.Management.DeviceUpdate
     - sdk/devspaces/Microsoft.Azure.Management.DevSpaces
     - sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs
     - sdk/digitaltwins/Microsoft.Azure.Management.DigitalTwins
     - sdk/dns/Microsoft.Azure.Management.Dns
     - sdk/edgegateway/Microsoft.Azure.Management.EdgeGateway
+    - sdk/elastic/Microsoft.Azure.Management.Elastic
     - sdk/eng/mgmt
     - sdk/eventgrid/Microsoft.Azure.Management.EventGrid
     - sdk/eventhub/Microsoft.Azure.Management.EventHub
+    - sdk/extendedlocation/Microsoft.Azure.Management.ExtendedLocation
     - sdk/frontdoor/Microsoft.Azure.Management.FrontDoor
     - sdk/guestconfiguration/Microsoft.Azure.Management.GuestConfiguration
     - sdk/hdinsight/Microsoft.Azure.Management.HDInsight
+    - sdk/healthbot/Microsoft.Azure.Management.Healthbot
     - sdk/healthcareapis/Microsoft.Azure.Management.HealthcareApis
     - sdk/hybridcompute/Microsoft.Azure.Management.HybridCompute
     - sdk/hybriddatamanager/Microsoft.Azure.Management.HybridDataManager
@@ -83,9 +96,10 @@ pr:
     - sdk/labservices/Microsoft.Azure.Management.LabServices
     - sdk/locationbasedservices/Microsoft.Azure.Management.LocationBasedServices
     - sdk/logic/Microsoft.Azure.Management.Logic
+    - sdk/logz/Microsoft.Azure.Management.Logz
     - sdk/machinelearning/Microsoft.Azure.Management.MachineLearning
     - sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute
-    - sdk/machinelearningservices/Azure.ResourceManager.MachineLearningServices
+    - sdk/machinelearningservices/Microsoft.Azure.Management.MachineLearningServices
     - sdk/maintenance/Microsoft.Azure.Management.Maintenance
     - sdk/managednetwork/Microsoft.Azure.Management.ManagedNetwork
     - sdk/managedserviceidentity/Microsoft.Azure.Management.ManagedServiceIdentity
@@ -138,8 +152,7 @@ pr:
     - sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric
     - sdk/servicefabricmanagedclusters/Microsoft.Azure.Management.ServiceFabricManagedClusters
     - sdk/signalr/Microsoft.Azure.Management.SignalR
-    - sdk/sqlmanagement/Azure.ResourceManager.Sql
-    - sdk/sqlmanagement/Microsoft.Azure.Management.SqlManagement
+    - sdk/sqlmanagement/Microsoft.Azure.Management.Sql
     - sdk/sqlvirtualmachine/Microsoft.Azure.Management.SqlVirtualMachine
     - sdk/storage/Microsoft.Azure.Management.Storage
     - sdk/storagecache/Microsoft.Azure.Management.StorageCache
@@ -154,16 +167,16 @@ pr:
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - sdk/workloadmonitor/Microsoft.Azure.Management.WorkloadMonitor
 variables:
-  - template: templates/variables/globals.yml
-  - name: msBuildLogDir
-    value: msbuildlogs
-  - name: loggingArgs
-    value: /clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log
-  - name: RPScopeArgs
-    value: /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)
-  - name: timeoutInMinutes
-    value: 120
+- template: templates/variables/globals.yml
+- name: msBuildLogDir
+  value: msbuildlogs
+- name: loggingArgs
+  value: /clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log
+- name: RPScopeArgs
+  value: /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)
+- name: timeoutInMinutes
+  value: 120
 jobs:
-- template: templates/jobs/archetype-sdk-mgmt.yml
+- template: /eng/pipelines/templates/jobs/ci.mgmt.yml
   parameters:
     Scope: $(Scope)

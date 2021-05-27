@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-08-04")
         {
             if (url == null)
             {
@@ -506,7 +506,6 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Length", contentLength);
             request.Headers.Add("Content-Type", multipartContentType);
-            request.Headers.Add("Content-Type", "application/xml");
             request.Content = RequestContent.Create(body);
             return message;
         }

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 #region Snippet:Azure_Communication_Chat_Tests_Samples_UsingStatements
 using Azure.Communication.Identity;
@@ -19,18 +18,18 @@ namespace Azure.Communication.Chat.Tests.samples
         [Test]
         public async Task Threads_Async()
         {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
+            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
             Response<CommunicationUserIdentifier> threadCreatorIdentifier = await communicationIdentityClient.CreateUserAsync();
             AccessToken communicationUserToken = await communicationIdentityClient.GetTokenAsync(threadCreatorIdentifier.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
 
             ChatClient chatClient = new ChatClient(
-                TestEnvironment.Endpoint,
+                TestEnvironment.LiveTestDynamicEndpoint,
                 new CommunicationTokenCredential(userToken));
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
-            ChatThread chatThread = createChatThreadResult.ChatThread;
+            ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadClient_KeyConcepts
@@ -46,7 +45,7 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadsInfo_KeyConcepts
-            Pageable<ChatThreadInfo> threads = chatClient.GetChatThreadsInfo();
+            Pageable<ChatThreadItem> threads = chatClient.GetChatThreads();
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadsInfo_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread_KeyConcepts
@@ -57,24 +56,24 @@ namespace Azure.Communication.Chat.Tests.samples
         [Test]
         public async Task MessagesNotificationsReadReceipts_Async()
         {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
+            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
             Response<CommunicationUserIdentifier> threadCreatorIdentifier = await communicationIdentityClient.CreateUserAsync();
             AccessToken communicationUserToken = await communicationIdentityClient.GetTokenAsync(threadCreatorIdentifier.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
 
             ChatClient chatClient = new ChatClient(
-                TestEnvironment.Endpoint,
+                TestEnvironment.LiveTestDynamicEndpoint,
                 new CommunicationTokenCredential(userToken));
 
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage_KeyConcepts
-            string messageId = chatThreadClient.SendMessage("Let's meet at 11am");
+            SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage("Let's meet at 11am");
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage_KeyConcepts
-            ChatMessage message = chatThreadClient.GetMessage(messageId);
+            ChatMessage message = chatThreadClient.GetMessage(sendChatMessageResult.Id);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetMessages_KeyConcepts
@@ -82,15 +81,15 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetMessages_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_UpdateMessage_KeyConcepts
-            chatThreadClient.UpdateMessage(messageId, content: "Instead of 11am, let's meet at 2pm");
+            chatThreadClient.UpdateMessage(sendChatMessageResult.Id, content: "Instead of 11am, let's meet at 2pm");
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateMessage_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_DeleteMessage_KeyConcepts
-            chatThreadClient.DeleteMessage(messageId);
+            chatThreadClient.DeleteMessage(sendChatMessageResult.Id);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_DeleteMessage_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt_KeyConcepts
-            chatThreadClient.SendReadReceipt(messageId);
+            chatThreadClient.SendReadReceipt(sendChatMessageResult.Id);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts_KeyConcepts
@@ -105,14 +104,14 @@ namespace Azure.Communication.Chat.Tests.samples
         [Test]
         public async Task Participants_Async()
         {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
+            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
             Response<CommunicationUserIdentifier> threadCreatorIdentifier = await communicationIdentityClient.CreateUserAsync();
             Response<CommunicationUserIdentifier> participantIdentifier = await communicationIdentityClient.CreateUserAsync();
             AccessToken communicationUserToken = await communicationIdentityClient.GetTokenAsync(threadCreatorIdentifier.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
 
             ChatClient chatClient = new ChatClient(
-                TestEnvironment.Endpoint,
+                TestEnvironment.LiveTestDynamicEndpoint,
                 new CommunicationTokenCredential(userToken));
 
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
@@ -127,7 +126,7 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetParticipants_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant_KeyConcepts
-            chatThreadClient.RemoveParticipant(user: participantIdentifier);
+            chatThreadClient.RemoveParticipant(identifier: participantIdentifier);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant_KeyConcepts
         }
     }

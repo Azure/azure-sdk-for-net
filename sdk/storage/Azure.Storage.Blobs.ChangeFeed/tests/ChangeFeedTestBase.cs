@@ -12,13 +12,21 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
-    public class ChangeFeedTestBase : StorageTestBase
+    [ClientTestFixture(
+        BlobClientOptions.ServiceVersion.V2020_06_12,
+        BlobClientOptions.ServiceVersion.V2020_08_04,
+        StorageVersionExtensions.LatestVersion,
+        StorageVersionExtensions.MaxVersion,
+    RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
+    LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
+    public class ChangeFeedTestBase : StorageTestBase<StorageTestEnvironment>
     {
-        public ChangeFeedTestBase(bool async) : this(async, null) { }
+        protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
 
-        public ChangeFeedTestBase(bool async, RecordedTestMode? mode = null)
+        public ChangeFeedTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
         public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
@@ -35,7 +43,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
         public BlobClientOptions GetOptions()
         {
-            var options = new BlobClientOptions
+            var options = new BlobClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =

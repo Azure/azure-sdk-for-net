@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure data lake store read settings.
+    /// Amazon S3 read settings.
     /// </summary>
     public partial class AmazonS3ReadSettings : StoreReadSettings
     {

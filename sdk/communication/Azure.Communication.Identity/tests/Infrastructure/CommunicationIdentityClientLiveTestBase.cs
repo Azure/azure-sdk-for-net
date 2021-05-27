@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Communication.Pipeline;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 
@@ -22,21 +20,28 @@ namespace Azure.Communication.Identity.Tests
         protected CommunicationIdentityClient CreateClientWithConnectionString()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.ConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    TestEnvironment.LiveTestDynamicConnectionString,
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
         protected CommunicationIdentityClient CreateClientWithAzureKeyCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.Endpoint,
-                    new AzureKeyCredential(TestEnvironment.AccessKey),
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    TestEnvironment.LiveTestDynamicEndpoint,
+                    new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey),
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
         protected CommunicationIdentityClient CreateClientWithTokenCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.Endpoint,
+                    TestEnvironment.LiveTestDynamicEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
+
+        private CommunicationIdentityClientOptions CreateIdentityClientOptionsWithCorrelationVectorLogs()
+        {
+            CommunicationIdentityClientOptions communicationIdentityClientOptions = new CommunicationIdentityClientOptions();
+            communicationIdentityClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
+            return InstrumentClientOptions(communicationIdentityClientOptions);
+        }
     }
 }

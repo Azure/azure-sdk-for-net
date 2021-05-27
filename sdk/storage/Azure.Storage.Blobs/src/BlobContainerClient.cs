@@ -193,7 +193,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -252,7 +252,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authPolicy),
                 sharedKeyCredential: credential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -340,7 +340,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: null,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -409,7 +409,7 @@ namespace Azure.Storage.Blobs
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientDiagnostics: new ClientDiagnostics(options),
+                    clientDiagnostics: new StorageClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
                     encryptionScope: null),
@@ -2831,7 +2831,7 @@ namespace Azure.Storage.Blobs
 
         #region UploadBlob
         /// <summary>
-        /// The <see cref="UploadBlobAsync"/> operation creates a new block
+        /// The <see cref="UploadBlob(string, Stream, CancellationToken)"/> operation creates a new block
         /// blob.
         ///
         /// For partial block blob updates and other advanced features, please
@@ -2873,7 +2873,7 @@ namespace Azure.Storage.Blobs
                     cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadBlob"/> operation creates a new block
+        /// The <see cref="UploadBlobAsync(string, Stream, CancellationToken)"/> operation creates a new block
         /// blob.
         ///
         /// For partial block blob updates and other advanced features, please
@@ -2908,6 +2908,91 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
             string blobName,
             Stream content,
+            CancellationToken cancellationToken = default) =>
+            await GetBlobClient(blobName)
+                .UploadAsync(
+                    content,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadBlob(string, BinaryData, CancellationToken)"/> operation creates a new block
+        /// blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to upload.</param>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To overwrite an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<BlobContentInfo> UploadBlob(
+            string blobName,
+            BinaryData content,
+            CancellationToken cancellationToken = default) =>
+            GetBlobClient(blobName)
+                .Upload(
+                    content,
+                    cancellationToken);
+
+        /// <summary>
+        /// The <see cref="UploadBlobAsync(string, BinaryData, CancellationToken)"/> operation creates a new block
+        /// blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to upload.</param>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To overwrite an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.Upload(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
+            string blobName,
+            BinaryData content,
             CancellationToken cancellationToken = default) =>
             await GetBlobClient(blobName)
                 .UploadAsync(
@@ -3311,6 +3396,13 @@ namespace Azure.Storage.Blobs
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's origial BlobSasBuilder.
+            builder = BlobSasBuilder.DeepCopy(builder);
+
+            // Assign builder's ContainerName if it is null.
+            builder.BlobContainerName ??= Name;
+
             if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(
@@ -3327,7 +3419,7 @@ namespace Azure.Storage.Blobs
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };
             return sasUri.ToUri();
         }

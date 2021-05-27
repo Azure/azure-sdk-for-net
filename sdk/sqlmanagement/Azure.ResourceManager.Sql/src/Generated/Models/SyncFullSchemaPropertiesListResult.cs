@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of sync schema properties. </summary>
-    public partial class SyncFullSchemaPropertiesListResult
+    internal partial class SyncFullSchemaPropertiesListResult
     {
         /// <summary> Initializes a new instance of SyncFullSchemaPropertiesListResult. </summary>
         internal SyncFullSchemaPropertiesListResult()

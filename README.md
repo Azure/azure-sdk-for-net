@@ -35,7 +35,7 @@ Last stable versions of packages that are production-ready. These libraries prov
 
 A new set of management libraries that follow the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) and based on [Azure.Core libraries](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core) are now in Public Preview. These new libraries provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more. You can find the list of new packages [on this page](https://azure.github.io/azure-sdk/releases/latest/dotnet.html). 
 
-To get started with these new libraries, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md). These new libraries can be identifed by namespaces that start with `Azure.ResourceManager`, e.g. `Azure.ResourceManager.Network` 
+To get started with these new libraries, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md). These new libraries can be identified by namespaces that start with `Azure.ResourceManager`, e.g. `Azure.ResourceManager.Network` 
 
 > NOTE: If you need to ensure your code is ready for production use one of the stable, non-preview libraries.
 
@@ -59,6 +59,17 @@ Documentation and code samples for these libraries can be found [here](https://a
 ### Reporting security issues and security bugs
 
 Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) <secure@microsoft.com>. You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the MSRC PGP key, can be found in the [Security TechCenter](https://www.microsoft.com/msrc/faqs-report-an-issue).
+
+## We want your thoughts!
+
+### Feature Requests
+
+What features are important to you?  You can let us know by looking at our open [feature requests](https://github.com/Azure/azure-sdk-for-net/issues?q=is%3Aopen+label%3Afeature-request+sort%3Areactions-%2B1-desc) and sharing your thoughts by giving the issue a thumbs up or thumbs down.  (Note the list is sorted by number of thumbs up in descending order.)
+
+
+### Design Discussions
+
+We would love to incorporate the community's input into our library design process. Here's a list of [design discussions](https://github.com/Azure/azure-sdk-for-net/labels/design-discussion) that we're currently having. Participate in the discussions by leaving your comments in the issue!
 
 ## Contributing
 For details on contributing to this repository, see the [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md).

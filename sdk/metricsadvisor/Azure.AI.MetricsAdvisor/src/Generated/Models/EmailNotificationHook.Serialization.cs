@@ -27,10 +27,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ExternalLink))
+            if (Optional.IsDefined(InternalExternalLink))
             {
                 writer.WritePropertyName("externalLink");
-                writer.WriteStringValue(ExternalLink);
+                writer.WriteStringValue(InternalExternalLink);
             }
             writer.WriteEndObject();
         }

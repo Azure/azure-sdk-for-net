@@ -30,11 +30,14 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <param name="targetPath">Path in Storage Target to which
         /// namespacePath points.</param>
         /// <param name="nfsExport">NFS export where targetPath exists.</param>
-        public NamespaceJunction(string namespacePath = default(string), string targetPath = default(string), string nfsExport = default(string))
+        /// <param name="nfsAccessPolicy">Name of the access policy applied to
+        /// this junction.</param>
+        public NamespaceJunction(string namespacePath = default(string), string targetPath = default(string), string nfsExport = default(string), string nfsAccessPolicy = default(string))
         {
             NamespacePath = namespacePath;
             TargetPath = targetPath;
             NfsExport = nfsExport;
+            NfsAccessPolicy = nfsAccessPolicy;
             CustomInit();
         }
 
@@ -60,6 +63,12 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </summary>
         [JsonProperty(PropertyName = "nfsExport")]
         public string NfsExport { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of the access policy applied to this junction.
+        /// </summary>
+        [JsonProperty(PropertyName = "nfsAccessPolicy")]
+        public string NfsAccessPolicy { get; set; }
 
     }
 }

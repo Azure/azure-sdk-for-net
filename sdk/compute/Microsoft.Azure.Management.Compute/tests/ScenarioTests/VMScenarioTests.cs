@@ -105,6 +105,27 @@ namespace Compute.Tests
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
             }
         }
+        
+        /// <summary>
+        /// To record this test case, you need to run it in region which support Encryption at host
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_TrustedLaunch")]
+        public void TestVMScenarioOperations_TrustedLaunch()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                ImageReference image = new ImageReference(publisher: "MicrosoftWindowsServer", offer: "windowsserver-gen2preview-preview", version: "18363.592.2001092016", sku: "windows10-tvm");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_TrustedLaunch", vmSize: VirtualMachineSizeTypes.StandardD2sV3, hasManagedDisks: true,
+                    osDiskStorageAccountType: StorageAccountTypes.StandardSSDLRS, securityType: "TrustedLaunch", imageReference: image, validateListAvailableSize: false);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
 
         /// <summary>
         /// To record this test case, you need to run it in region which support DiskEncryptionSet resource for the Disks
@@ -241,7 +262,7 @@ namespace Compute.Tests
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A1_v2",
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null,
-            bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true)
+            string securityType = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -280,7 +301,7 @@ namespace Compute.Tests
 
                     CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
                         dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName, 
-                        diskEncryptionSetId: diskEncryptionSetId, encryptionAtHostEnabled: encryptionAtHostEnabled, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
+                        diskEncryptionSetId: diskEncryptionSetId, encryptionAtHostEnabled: encryptionAtHostEnabled, securityType: securityType, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                         dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName);
 
                     // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
@@ -325,6 +346,12 @@ namespace Compute.Tests
 
                         listVMSizesResponse = m_CrpClient.AvailabilitySets.ListAvailableSizes(rgName, asName);
                         Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
+                    }
+                    
+                    if(securityType != null && securityType.Equals("TrustedLaunch"))
+                    {
+                        Assert.True(inputVM.SecurityProfile.UefiSettings.VTpmEnabled);
+                        Assert.True(inputVM.SecurityProfile.UefiSettings.SecureBootEnabled);
                     }
 
                     if(isPpgScenario)

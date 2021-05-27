@@ -8,7 +8,7 @@ param (
   $ExitOnError=1,
   $UploadLatest=1,
   $PublicArtifactLocation = "",
-  $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master"
+  $RepoReplaceRegex = ""
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -199,7 +199,7 @@ function Upload-Blobs
     LogDebug "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
     LogDebug "Release Tag $($ReleaseTag)"
 
-    # Use the step to replace master link to release tag link 
+    # Use the step to replace default branch link to release tag link 
     if ($ReleaseTag) {
         foreach ($htmlFile in (Get-ChildItem $DocDir -include *.html -r)) 
         {
@@ -211,7 +211,7 @@ function Upload-Blobs
         }
     } 
     else {
-        LogWarning "Not able to do the master link replacement, since no release tag found for the release. Please manually check."
+        LogWarning "Not able to do the default branch link replacement, since no release tag found for the release. Please manually check."
     } 
    
     LogDebug "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."

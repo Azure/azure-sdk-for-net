@@ -8,10 +8,19 @@ namespace Azure.Analytics.Synapse.AccessControl
             V2020_08_01_preview = 1,
         }
     }
+    public static partial class AccessControlModelFactory
+    {
+        public static Azure.Analytics.Synapse.AccessControl.Models.CheckAccessDecision CheckAccessDecision(string accessDecision = null, string actionId = null, Azure.Analytics.Synapse.AccessControl.Models.RoleAssignmentDetails roleAssignment = null) { throw null; }
+        public static Azure.Analytics.Synapse.AccessControl.Models.CheckPrincipalAccessResponse CheckPrincipalAccessResponse(System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.AccessControl.Models.CheckAccessDecision> accessDecisions = null) { throw null; }
+        public static Azure.Analytics.Synapse.AccessControl.Models.RoleAssignmentDetails RoleAssignmentDetails(string id = null, System.Guid? roleDefinitionId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), string scope = null, string principalType = null) { throw null; }
+        public static Azure.Analytics.Synapse.AccessControl.Models.RoleAssignmentDetailsList RoleAssignmentDetailsList(int? count = default(int?), System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.AccessControl.Models.RoleAssignmentDetails> value = null) { throw null; }
+        public static Azure.Analytics.Synapse.AccessControl.Models.SynapseRbacPermission SynapseRbacPermission(System.Collections.Generic.IReadOnlyList<string> actions = null, System.Collections.Generic.IReadOnlyList<string> notActions = null, System.Collections.Generic.IReadOnlyList<string> dataActions = null, System.Collections.Generic.IReadOnlyList<string> notDataActions = null) { throw null; }
+        public static Azure.Analytics.Synapse.AccessControl.Models.SynapseRoleDefinition SynapseRoleDefinition(System.Guid? id = default(System.Guid?), string name = null, bool? isBuiltIn = default(bool?), string description = null, System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.AccessControl.Models.SynapseRbacPermission> permissions = null, System.Collections.Generic.IReadOnlyList<string> scopes = null, string availabilityStatus = null) { throw null; }
+    }
     public partial class RoleAssignmentsClient
     {
         protected RoleAssignmentsClient() { }
-        public RoleAssignmentsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
+        public RoleAssignmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.CheckPrincipalAccessResponse> CheckPrincipalAccess(Azure.Analytics.Synapse.AccessControl.Models.SubjectInfo subject, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.AccessControl.Models.RequiredAction> actions, string scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(Azure.Analytics.Synapse.AccessControl.Models.SubjectInfo subject, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.AccessControl.Models.RequiredAction> actions, string scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.RoleAssignmentDetails> CreateRoleAssignment(string roleAssignmentId, System.Guid roleId, System.Guid principalId, string scope, string principalType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -26,7 +35,7 @@ namespace Azure.Analytics.Synapse.AccessControl
     public partial class RoleDefinitionsClient
     {
         protected RoleDefinitionsClient() { }
-        public RoleDefinitionsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
+        public RoleDefinitionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.SynapseRoleDefinition> GetRoleDefinitionById(string roleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.AccessControl.Models.SynapseRoleDefinition>> GetRoleDefinitionByIdAsync(string roleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.AccessControl.Models.SynapseRoleDefinition>> ListRoleDefinitions(bool? isBuiltIn = default(bool?), string scope = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

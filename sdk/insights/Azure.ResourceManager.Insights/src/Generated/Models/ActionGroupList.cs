@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> A list of action groups. </summary>
-    public partial class ActionGroupList
+    internal partial class ActionGroupList
     {
         /// <summary> Initializes a new instance of ActionGroupList. </summary>
         internal ActionGroupList()

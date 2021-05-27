@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class SecurityPartnerProviderListResult
+    internal partial class SecurityPartnerProviderListResult
     {
         internal static SecurityPartnerProviderListResult DeserializeSecurityPartnerProviderListResult(JsonElement element)
         {

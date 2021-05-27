@@ -21,8 +21,13 @@ namespace Azure.Storage.Files.Shares.Tests
         ShareClientOptions.ServiceVersion.V2019_12_12,
         ShareClientOptions.ServiceVersion.V2020_02_10,
         ShareClientOptions.ServiceVersion.V2020_04_08,
-        ShareClientOptions.ServiceVersion.V2020_06_12)]
-    public class FileTestBase : StorageTestBase
+        ShareClientOptions.ServiceVersion.V2020_06_12,
+        ShareClientOptions.ServiceVersion.V2020_08_04,
+        StorageVersionExtensions.LatestVersion,
+        StorageVersionExtensions.MaxVersion,
+        RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
+    public class FileTestBase : StorageTestBase<StorageTestEnvironment>
     {
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
 
@@ -42,7 +47,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public ShareClientOptions GetOptions()
         {
-            var options = new ShareClientOptions
+            var options = new ShareClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
@@ -226,16 +231,15 @@ namespace Azure.Storage.Files.Shares.Tests
             credentials ??= GetAccountSasCredentials();
             if (!includeEndpoint)
             {
-                return TestExtensions.CreateStorageConnectionString(
+                return new StorageConnectionString(
                     credentials,
-                    TestConfigDefault.AccountName);
+                    (new Uri(TestConfigDefault.BlobServiceEndpoint), new Uri(TestConfigDefault.BlobServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.QueueServiceEndpoint), new Uri(TestConfigDefault.QueueServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.TableServiceEndpoint), new Uri(TestConfigDefault.TableServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.FileServiceEndpoint), new Uri(TestConfigDefault.FileServiceSecondaryEndpoint)));
             }
 
-            (Uri, Uri) fileUri = StorageConnectionString.ConstructFileEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
+            (Uri, Uri) fileUri = (new Uri(TestConfigDefault.FileServiceEndpoint), new Uri(TestConfigDefault.FileServiceSecondaryEndpoint));
 
             return new StorageConnectionString(
                     credentials,

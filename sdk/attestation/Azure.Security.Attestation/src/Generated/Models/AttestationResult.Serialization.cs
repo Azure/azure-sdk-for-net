@@ -7,19 +7,21 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
+    [JsonConverter(typeof(AttestationResultConverter))]
     public partial class AttestationResult
     {
         internal static AttestationResult DeserializeAttestationResult(JsonElement element)
         {
             Optional<string> jti = default;
             Optional<string> iss = default;
-            Optional<long> iat = default;
-            Optional<long> exp = default;
-            Optional<long> nbf = default;
+            Optional<double> iat = default;
+            Optional<double> exp = default;
+            Optional<double> nbf = default;
             Optional<object> cnf = default;
             Optional<string> nonce = default;
             Optional<string> xMsVer = default;
@@ -28,26 +30,26 @@ namespace Azure.Security.Attestation.Models
             Optional<object> xMsPolicy = default;
             Optional<string> xMsAttestationType = default;
             Optional<JsonWebKey> xMsPolicySigner = default;
-            Optional<byte[]> xMsPolicyHash = default;
+            Optional<string> xMsPolicyHash = default;
             Optional<bool> xMsSgxIsDebuggable = default;
             Optional<float> xMsSgxProductId = default;
             Optional<string> xMsSgxMrenclave = default;
             Optional<string> xMsSgxMrsigner = default;
             Optional<float> xMsSgxSvn = default;
-            Optional<byte[]> xMsSgxEhd = default;
+            Optional<string> xMsSgxEhd = default;
             Optional<object> xMsSgxCollateral = default;
             Optional<string> ver = default;
             Optional<bool> isDebuggable = default;
             Optional<object> maaAttestationcollateral = default;
-            Optional<byte[]> aasEhd = default;
-            Optional<byte[]> maaEhd = default;
+            Optional<string> aasEhd = default;
+            Optional<string> maaEhd = default;
             Optional<float> productId = default;
             Optional<string> sgxMrenclave = default;
             Optional<string> sgxMrsigner = default;
             Optional<float> svn = default;
             Optional<string> tee = default;
             Optional<JsonWebKey> policySigner = default;
-            Optional<byte[]> policyHash = default;
+            Optional<string> policyHash = default;
             Optional<string> rpData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +70,7 @@ namespace Azure.Security.Attestation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    iat = property.Value.GetInt64();
+                    iat = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("exp"))
@@ -78,7 +80,7 @@ namespace Azure.Security.Attestation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    exp = property.Value.GetInt64();
+                    exp = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("nbf"))
@@ -88,7 +90,7 @@ namespace Azure.Security.Attestation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nbf = property.Value.GetInt64();
+                    nbf = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("cnf"))
@@ -158,12 +160,7 @@ namespace Azure.Security.Attestation.Models
                 }
                 if (property.NameEquals("x-ms-policy-hash"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    xMsPolicyHash = property.Value.GetBytesFromBase64("U");
+                    xMsPolicyHash = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("x-ms-sgx-is-debuggable"))
@@ -208,12 +205,7 @@ namespace Azure.Security.Attestation.Models
                 }
                 if (property.NameEquals("x-ms-sgx-ehd"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    xMsSgxEhd = property.Value.GetBytesFromBase64("U");
+                    xMsSgxEhd = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("x-ms-sgx-collateral"))
@@ -253,22 +245,12 @@ namespace Azure.Security.Attestation.Models
                 }
                 if (property.NameEquals("aas-ehd"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    aasEhd = property.Value.GetBytesFromBase64("U");
+                    aasEhd = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("maa-ehd"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    maaEhd = property.Value.GetBytesFromBase64("U");
+                    maaEhd = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("product-id"))
@@ -318,12 +300,7 @@ namespace Azure.Security.Attestation.Models
                 }
                 if (property.NameEquals("policy_hash"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    policyHash = property.Value.GetBytesFromBase64("U");
+                    policyHash = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("rp_data"))
@@ -332,7 +309,20 @@ namespace Azure.Security.Attestation.Models
                     continue;
                 }
             }
-            return new AttestationResult(jti.Value, iss.Value, iat, exp, nbf, cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
+            return new AttestationResult(jti.Value, iss.Value, Optional.ToNullable(iat), Optional.ToNullable(exp), Optional.ToNullable(nbf), cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
+        }
+
+        internal partial class AttestationResultConverter : JsonConverter<AttestationResult>
+        {
+            public override void Write(Utf8JsonWriter writer, AttestationResult model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override AttestationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAttestationResult(document.RootElement);
+            }
         }
     }
 }

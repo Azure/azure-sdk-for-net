@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyRuleGroupListResult
+    internal partial class FirewallPolicyRuleGroupListResult
     {
         internal static FirewallPolicyRuleGroupListResult DeserializeFirewallPolicyRuleGroupListResult(JsonElement element)
         {
