@@ -863,7 +863,6 @@ namespace Azure.Data.Tables
         public virtual Uri GenerateSasUri(
             TableAccountSasBuilder builder)
         {
-            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
             Argument.AssertNotNull(builder, nameof(builder));
 
             TableUriBuilder sasUri = new(_endpoint);
