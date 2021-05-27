@@ -234,7 +234,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             var host = BuildHost<ServiceBusMultipleMessagesTestJob_BindToJObject_RespectsCustomJsonSettings>(
                 configurationDelegate: host =>
-                    host.ConfigureDefaultTestHost<ServiceBusMultipleMessagesTestJob_BindToJObject_RespectsCustomJsonSettings>(b =>
+                    host.ConfigureWebJobs(b =>
                     {
                         b.AddServiceBus(options =>
                         {
