@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using Azure.Core;
@@ -168,6 +169,17 @@ namespace Azure.ResourceManager.Core
         public TenantContainer GetTenants()
         {
             return new TenantContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
+        }
+        
+        /// Creates a container using the lambda expression passed in.
+        /// </summary>
+        /// <typeparam name="T"> The type of container to construct. </typeparam>
+        /// <param name="func"> The lambda expression to execute. </param>
+        /// <returns> The container type requested. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public T GetContainer<T>(Func<ArmClientOptions, TokenCredential, Uri, HttpPipeline, T> func)
+        {
+            return func(ClientOptions, Credential, BaseUri, Pipeline);
         }
     }
 }

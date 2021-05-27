@@ -32,7 +32,7 @@ namespace Proto.Compute
         public static Pageable<VirtualMachine> ListVirtualMachines(this SubscriptionOperations subscription)
         {
             return subscription.ListResources(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var vmOperations = computeClient.VirtualMachines;
@@ -52,7 +52,7 @@ namespace Proto.Compute
         public static AsyncPageable<VirtualMachine> ListVirtualMachinesAsync(this SubscriptionOperations subscription)
         {
             return subscription.ListResourcesAsync(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var vmOperations = computeClient.VirtualMachines;
@@ -104,7 +104,7 @@ namespace Proto.Compute
         public static Pageable<AvailabilitySet> ListAvailabilitySets(this SubscriptionOperations subscription)
         {
             return subscription.ListResources(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var availabilitySetOperations = computeClient.AvailabilitySets;
@@ -124,7 +124,7 @@ namespace Proto.Compute
         public static AsyncPageable<AvailabilitySet> ListAvailabilitySetsAsync(this SubscriptionOperations subscription)
         {
             return subscription.ListResourcesAsync(
-                (baseUri, credential, options) =>
+                (baseUri, credential, options, pipeline) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var availabilitySetOperations = computeClient.AvailabilitySets;

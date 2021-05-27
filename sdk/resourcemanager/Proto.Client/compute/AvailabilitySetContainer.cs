@@ -145,34 +145,6 @@ namespace Proto.Compute
             return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
-        /// <summary>
-        /// Filters the list of availability set for this resource group.
-        /// Makes an additional network call to retrieve the full data model for each resource group.
-        /// </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of availability set that may take multiple service requests to iterate over. </returns>
-        public Pageable<AvailabilitySet> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, AvailabilitySet>(results, s => new AvailabilitySetOperations(s).Get().Value);
-        }
-
-        /// <summary>
-        /// Filters the list of availability set for this resource group.
-        /// Makes an additional network call to retrieve the full data model for each resource group.
-        /// </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An asyc collection of availability set that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<AvailabilitySet> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, AvailabilitySet>(results, s => new AvailabilitySetOperations(s).Get().Value);
-        }
-
         private AvailabilitySetsOperations Operations => new ComputeManagementClient(
             BaseUri,
             Id.SubscriptionId,
