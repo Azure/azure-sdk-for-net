@@ -10,7 +10,7 @@ using Azure.AI.Translation.Document.Models;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> Job status response. </summary>
+    /// <summary> Translation job status response. </summary>
     public partial class TranslationStatusResult
     {
         /// <summary> Initializes a new instance of TranslationStatusResult. </summary>

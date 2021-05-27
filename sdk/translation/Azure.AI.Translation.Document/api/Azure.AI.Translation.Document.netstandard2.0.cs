@@ -1,5 +1,10 @@
 namespace Azure.AI.Translation.Document
 {
+    public static partial class BatchDocumentTranslationModelFactory
+    {
+        public static Azure.AI.Translation.Document.DocumentStatusResult DocumentStatusResult(System.Uri translatedDocumentUri = null, System.Uri sourceDocumentUri = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastModified = default(System.DateTimeOffset), Azure.AI.Translation.Document.TranslationStatus status = default(Azure.AI.Translation.Document.TranslationStatus), string translateTo = null, Azure.AI.Translation.Document.DocumentTranslationError error = null, float progress = 0f, string documentId = null, long charactersCharged = (long)0) { throw null; }
+        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IReadOnlyList<string> fileExtensions = null, System.Collections.Generic.IReadOnlyList<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IReadOnlyList<string> formatVersions = null) { throw null; }
+    }
     public partial class DocumentFilter
     {
         public DocumentFilter() { }
@@ -45,10 +50,10 @@ namespace Azure.AI.Translation.Document
     }
     public partial class DocumentTranslationClientOptions : Azure.Core.ClientOptions
     {
-        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V1_0_preview_1) { }
+        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V1_0) { }
         public enum ServiceVersion
         {
-            V1_0_preview_1 = 1,
+            V1_0 = 1,
         }
     }
     public partial class DocumentTranslationError

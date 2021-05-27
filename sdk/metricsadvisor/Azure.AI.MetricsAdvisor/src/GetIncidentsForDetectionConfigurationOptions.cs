@@ -57,17 +57,11 @@ namespace Azure.AI.MetricsAdvisor
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// If set, skips the first set of items returned. This property specifies the amount of items to
-        /// be skipped.
-        /// </summary>
-        internal int? SkipCount { get; set; }
-
-        /// <summary>
         /// If set, specifies the maximum limit of items returned in each page of results. Note:
         /// unless the number of pages enumerated from the service is limited, the service will
         /// return an unlimited number of total items.
         /// </summary>
-        public int? TopCount { get; set; }
+        public int? MaxPageSize { get; set; }
 
         internal DetectionIncidentFilterCondition GetDetectionIncidentFilterCondition()
         {

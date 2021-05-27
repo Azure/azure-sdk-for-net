@@ -7,8 +7,5 @@ namespace Azure.Communication.Identity.Tests
 {
     public class CommunicationIdentityClientTestEnvironment : CommunicationTestEnvironment
     {
-        // please find the allowed package value in tests.yml
-        private const string IdentityTestPackagesEnabled = "identity";
-        public override string ExpectedTestPackagesEnabled { get { return IdentityTestPackagesEnabled; } }
     }
 }

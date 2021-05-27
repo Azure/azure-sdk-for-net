@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Filters the result of the <see cref="MetricsAdvisorAdministrationClient.GetDataFeeds"/> and

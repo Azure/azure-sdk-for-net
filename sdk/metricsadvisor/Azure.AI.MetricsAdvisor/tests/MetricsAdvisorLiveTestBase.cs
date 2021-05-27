@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

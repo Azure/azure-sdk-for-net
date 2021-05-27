@@ -533,6 +533,115 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task CreatePartitionProcessorProcessingTaskClosesTheConsumerOnCancellation()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partition = new EventProcessorPartition { PartitionId = "99" };
+            var position = EventPosition.FromOffset(12);
+            var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false };
+            var receiveCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var closeCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var logCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockConnection = Mock.Of<EventHubConnection>();
+            var mockConsumer = new Mock<SettableTransportConsumer>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
+
+            mockLogger
+                .Setup(log => log.EventProcessorPartitionProcessingStopConsumerClose(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .Callback(() => logCompletionSource.TrySetResult(true))
+                .Verifiable();
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Callback(() => receiveCompletionSource.TrySetResult(true))
+                .Returns(async () =>
+                {
+                    await closeCompletionSource.Task;
+                    throw new EventHubsException(mockProcessor.Object.EventHubName, "Close called", EventHubsException.FailureReason.ClientClosed);
+                });
+
+            mockConsumer
+                .Setup(consumer => consumer.CloseAsync(It.IsAny<CancellationToken>()))
+                .Returns(() =>
+                {
+                    closeCompletionSource.TrySetResult(true);
+                    return Task.CompletedTask;
+                });
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection);
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor
+                 .Setup(processor => processor.ProcessEventBatchAsync(partition, It.IsAny<IReadOnlyList<EventData>>(), It.IsAny<bool>(), cancellationSource.Token))
+                 .Returns(Task.CompletedTask);
+
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
+
+            await Task.WhenAny(receiveCompletionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(partitionProcessor.ProcessingTask, Is.Not.Null, "There should be a processing task present.");
+            Assert.That(partitionProcessor.ProcessingTask.IsCompleted, Is.False, "The processing task should not be completed.");
+
+            cancellationSource.Cancel();
+
+            using var waitCancellation = new CancellationTokenSource(options.RetryOptions.TryTimeout);
+            var completedTask = await Task.WhenAny(logCompletionSource.Task, Task.Delay(Timeout.Infinite, waitCancellation.Token));
+
+            Assert.That(completedTask, Is.SameAs(logCompletionSource.Task), "The consumer close event should have been logged before the timeout expired.");
+            Assert.That(async () => await partitionProcessor.ProcessingTask, Throws.InstanceOf<TaskCanceledException>(), "The processing task should have been canceled and not throw the receive exception.");
+
+            // This may get called multiple times due to the race condition.
+
+            mockConsumer
+                .Verify(consumer => consumer.CloseAsync(
+                    It.IsAny<CancellationToken>()),
+                Times.AtLeast(2));
+
+            mockConsumer
+                .Verify(consumer => consumer.ReceiveAsync(
+                    It.IsAny<int>(),
+                    It.IsAny<TimeSpan?>(),
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+
+            mockLogger
+                .Verify(log => log.EventProcessorPartitionProcessingError(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()),
+                Times.Never);
+
+            mockLogger.VerifyAll();
+
+            // Cancel the wait cancellation token just in case the timer hasn't
+            // completed yet.
+
+            waitCancellation.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.CreatePartitionProcessor" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public async Task CreatePartitionProcessorProcessingTaskDispatchesEvents()
         {
             using var cancellationSource = new CancellationTokenSource();

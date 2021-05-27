@@ -1,6 +1,28 @@
 # Release History
 
-## 4.0.0-beta.5 (Unreleased)
+## 4.0.0-beta.6 (Unreleased)
+
+### Breaking Changes
+
+- Changed `KeyVaultBackupClient.StartSelectiveRestore` and `StartSelectiveRestoreAsync` to `StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`.
+
+## 4.0.0-beta.5 (2021-05-11)
+
+### Changed
+
+- Updated dependency versions
+
+### Breaking Changes
+
+- Changed parameter order in `KeyVaultAccessControlClient.DeleteRoleDefinition` and `KeyVaultAccessControlClient.DeleteRoleDefinitionAsync`.
+- Changed parameter order in `KeyVaultAccessControlClient.GetRoleDefinition` and `KeyVaultAccessControlClient.GetRoleDefinitionAsync`.
+- Changed parameters for `KeyVaultAccessControlClient.CreateOrUpdateRoleDefinition` and `KeyVaultAccessControlClient.CreateOrUpdateRoleDefinitionAsync` to accept new `CreateOrUpdateRoleDefinitionOptions` class.
+- Moved all classes from the `Azure.Security.KeyVault.Administration.Models` namespace to `Azure.Security.KeyVault.Administration`.
+- Renamed `BackupOperation` to `KeyVaultBackupOperation`.
+- Renamed `KeyVaultRoleAssignmentPropertiesWithScope` to `KeyVaultRoleAssignmentProperties`.
+- Renamed `RestoreOperation` to `KeyVaultRestoreOperation`.
+- Renamed `SelectiveKeyRestoreOperation` to `KeyVaultSelectiveRestoreOperation`.
+- Renamed `SelectiveKeyRestoreResult` to `KeyVaultSelectiveRestoreResult`.
 
 ## 4.0.0-beta.4 (2021-02-10)
 

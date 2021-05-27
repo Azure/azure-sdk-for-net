@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -261,12 +262,9 @@ namespace Azure.Core.Tests
                 using (HttpMessage message = httpPipeline.CreateMessage())
                 {
                     message.Request.Uri.Reset(testServer.Address);
-                    message.BufferResponse = false;
+                    message.BufferResponse = true;
 
                     await ExecuteRequest(message, httpPipeline);
-
-                    Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
-                    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
 
                     response = message.Response;
                 }
@@ -274,6 +272,50 @@ namespace Azure.Core.Tests
                 var memoryStream = new MemoryStream();
                 await response.ContentStream.CopyToAsync(memoryStream);
                 Assert.AreEqual(memoryStream.Length, bodySize);
+            }
+        }
+
+        [Test]
+        public async Task UnbufferedResponsesDisposedAfterMessageDisposed()
+        {
+            byte[] buffer = { 0 };
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+
+            int bodySize = 1000;
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    for (int i = 0; i < bodySize; i++)
+                    {
+                        await context.Response.Body.WriteAsync(buffer, 0, 1);
+                    }
+                });
+
+            var requestCount = 100;
+            for (int i = 0; i < requestCount; i++)
+            {
+                Response response;
+                Mock<Stream> disposeTrackingStream = null;
+                using (HttpMessage message = httpPipeline.CreateMessage())
+                {
+                    message.Request.Uri.Reset(testServer.Address);
+                    message.BufferResponse = false;
+
+                    await ExecuteRequest(message, httpPipeline);
+
+                    response = message.Response;
+                    var originalStream = response.ContentStream;
+                    disposeTrackingStream = new Mock<Stream>();
+                    disposeTrackingStream
+                        .Setup(s=>s.Close())
+                        .Callback(originalStream.Close)
+                        .Verifiable();
+                    response.ContentStream = disposeTrackingStream.Object;
+                }
+
+                disposeTrackingStream.Verify();
             }
         }
 
@@ -373,7 +415,8 @@ namespace Azure.Core.Tests
 
             cts.Cancel();
 
-            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task);
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await task);
+            Assert.AreEqual("The operation was canceled.", exception.Message);
             Assert.AreEqual(1, i);
 
             testDoneTcs.Cancel();
@@ -426,6 +469,71 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void TimeoutsResponseBuffering()
+        {
+            var testDoneTcs = new CancellationTokenSource();
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions
+            {
+                Retry =
+                {
+                    NetworkTimeout = TimeSpan.FromMilliseconds(500),
+                    MaxRetries = 0
+                }
+            });
+
+            using TestServer testServer = new TestServer(
+                async _ =>
+                {
+                    await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+                });
+
+            using HttpMessage message = httpPipeline.CreateMessage();
+            message.Request.Uri.Reset(testServer.Address);
+            message.BufferResponse = true;
+
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await ExecuteRequest(message, httpPipeline));
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
+
+            testDoneTcs.Cancel();
+        }
+
+        [Test]
+        public void TimeoutsBodyBuffering()
+        {
+            var testDoneTcs = new CancellationTokenSource();
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions
+            {
+                Retry =
+                {
+                    NetworkTimeout = TimeSpan.FromMilliseconds(500),
+                    MaxRetries = 0
+                }
+            });
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    context.Response.StatusCode = 200;
+                    context.Response.Headers.ContentLength = 10;
+                    await context.Response.WriteAsync("1");
+                    await context.Response.Body.FlushAsync();
+
+                    await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+                });
+
+            using HttpMessage message = httpPipeline.CreateMessage();
+            message.Request.Uri.Reset(testServer.Address);
+            message.BufferResponse = true;
+
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await ExecuteRequest(message, httpPipeline));
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
+
+            testDoneTcs.Cancel();
+        }
+
+        [Test]
         public async Task TimeoutsUnbufferedBodyReads()
         {
             var testDoneTcs = new CancellationTokenSource();
@@ -438,7 +546,6 @@ namespace Azure.Core.Tests
                 }
             });
 
-            Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] Starting");
             using TestServer testServer = new TestServer(
                 async context =>
                 {
@@ -461,7 +568,9 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
             var buffer = new byte[10];
             Assert.AreEqual(1, await responseContentStream.ReadAsync(buffer, 0, 1));
-            Assert.That(async () => await responseContentStream.ReadAsync(buffer, 0, 10), Throws.InstanceOf<OperationCanceledException>());
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
 
             testDoneTcs.Cancel();
         }

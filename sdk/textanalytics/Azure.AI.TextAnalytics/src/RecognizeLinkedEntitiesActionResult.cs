@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Action result class for linked entities
     /// </summary>
-    public class RecognizeLinkedEntitiesActionResult : TextAnalyticsActionDetails
+    public class RecognizeLinkedEntitiesActionResult : TextAnalyticsActionResult
     {
         internal RecognizeLinkedEntitiesActionResult(RecognizeLinkedEntitiesResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error) : base(completedOn, error)
         {
