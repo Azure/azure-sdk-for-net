@@ -410,21 +410,26 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        /// <summary>
-        /// PlayAudio
-        /// </summary>
-        /// <param name="conversationId">The conversation id.</param>
-        /// <param name="request">Play audio request.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, PlayAudioRequest request, CancellationToken cancellationToken = default)
+        /// <summary> Play Audio. </summary>
+        /// <param name="conversationId"> The conversation id. </param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="operationContext">The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string operationContext, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudioAsync)}");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(request, nameof(request));
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
+                PlayAudioRequest request = new PlayAudioRequest()
+                {
+                    AudioFileUri = audioFileUri.AbsoluteUri,
+                    Loop = false,
+                    OperationContext = operationContext
+                };
 
                 return await RestClient.PlayAudioAsync(conversationId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -435,73 +440,28 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        /// <summary>
-        /// PlayAudio
-        /// </summary>
-        /// <param name="conversationId">The conversation id.</param>
-        /// <param name="request">Play audio request.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, PlayAudioRequest request, CancellationToken cancellationToken = default)
+        /// <summary> Play Audio. </summary>
+        /// <param name="conversationId"> The conversation id. </param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="operationContext">The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string operationContext, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(request, nameof(request));
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
+                PlayAudioRequest request = new PlayAudioRequest()
+                {
+                    AudioFileUri = audioFileUri.AbsoluteUri,
+                    Loop = false,
+                    OperationContext = operationContext
+                };
 
                 return RestClient.PlayAudio(conversationId, request, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancel Media Processing.
-        /// </summary>
-        /// <param name="conversationId">The conversation id.</param>
-        /// <param name="request">Cancel media request.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public virtual async Task<Response<CancelMediaProcessingResponse>> CancelMediaOperationAsync(string conversationId, CancelMediaOperationRequest request, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(CancelMediaOperationAsync)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(request, nameof(request));
-
-                return await RestClient.CancelMediaOperationAsync(conversationId, request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancel Media Processing.
-        /// </summary>
-        /// <param name="conversationId">The conversation id.</param>
-        /// <param name="request">Cancel media request.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
-        public virtual Response<CancelMediaProcessingResponse> CancelMediaOperation(string conversationId, CancelMediaOperationRequest request, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(CancelMediaOperation)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(request, nameof(request));
-
-                return RestClient.CancelMediaOperation(conversationId, request, cancellationToken);
             }
             catch (Exception ex)
             {
