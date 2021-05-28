@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -390,7 +389,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, TagsResource parameters)
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, TagsResource parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
