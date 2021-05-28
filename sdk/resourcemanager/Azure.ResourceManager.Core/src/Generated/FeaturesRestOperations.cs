@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Core
             _pipeline = pipeline;
         }
 
-        internal Core.HttpMessage CreateListAllRequest()
+        internal Azure.Core.HttpMessage CreateListAllRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Core.HttpMessage CreateListRequest(string resourceProviderNamespace)
+        internal Azure.Core.HttpMessage CreateListRequest(string resourceProviderNamespace)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Core.HttpMessage CreateGetRequest(string resourceProviderNamespace, string featureName)
+        internal Azure.Core.HttpMessage CreateGetRequest(string resourceProviderNamespace, string featureName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public async Task<Response<FeatureResult>> GetAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureData>> GetAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -212,9 +211,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        FeatureResult value = default;
+                        FeatureData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
+                        value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public Response<FeatureResult> Get(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public Response<FeatureData> Get(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -244,9 +243,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        FeatureResult value = default;
+                        FeatureData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
+                        value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Core.HttpMessage CreateRegisterRequest(string resourceProviderNamespace, string featureName)
+        internal Azure.Core.HttpMessage CreateRegisterRequest(string resourceProviderNamespace, string featureName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -279,7 +278,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public async Task<Response<FeatureResult>> RegisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureData>> RegisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -296,9 +295,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        FeatureResult value = default;
+                        FeatureData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
+                        value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -311,7 +310,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="featureName"> The name of the feature to register. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public Response<FeatureResult> Register(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public Response<FeatureData> Register(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -328,9 +327,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        FeatureResult value = default;
+                        FeatureData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
+                        value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Core.HttpMessage CreateUnregisterRequest(string resourceProviderNamespace, string featureName)
+        internal Azure.Core.HttpMessage CreateUnregisterRequest(string resourceProviderNamespace, string featureName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -363,7 +362,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public async Task<Response<FeatureResult>> UnregisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public async Task<Response<FeatureData>> UnregisterAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -380,9 +379,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        FeatureResult value = default;
+                        FeatureData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
+                        value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="featureName"> The name of the feature to unregister. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> or <paramref name="featureName"/> is null. </exception>
-        public Response<FeatureResult> Unregister(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
+        public Response<FeatureData> Unregister(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default)
         {
             if (resourceProviderNamespace == null)
             {
@@ -412,9 +411,9 @@ namespace Azure.ResourceManager.Core
             {
                 case 200:
                     {
-                        FeatureResult value = default;
+                        FeatureData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FeatureResult.DeserializeFeatureResult(document.RootElement);
+                        value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -422,7 +421,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Core.HttpMessage CreateListAllNextPageRequest(string nextLink)
+        internal Azure.Core.HttpMessage CreateListAllNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -489,7 +488,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal Core.HttpMessage CreateListNextPageRequest(string nextLink, string resourceProviderNamespace)
+        internal Azure.Core.HttpMessage CreateListNextPageRequest(string nextLink, string resourceProviderNamespace)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

@@ -9,39 +9,39 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing a Subscription along with the instance operations that can be performed on it.
     /// </summary>
-    public class FeatureResult : FeaturesOperations
+    public class Feature : FeatureOperations
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FeatureResult"/> class for mocking.
+        /// Initializes a new instance of the <see cref="Feature"/> class for mocking.
         /// </summary>
-        protected FeatureResult()
+        protected Feature()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FeatureResult"/> class.
+        /// Initializes a new instance of the <see cref="Feature"/> class.
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
-        /// <param name="featureResultData"> The data model representing the generic azure resource. </param>
-        internal FeatureResult(OperationsBase operations, FeatureResultData featureResultData)
-            : base(operations, featureResultData.Id)
+        /// <param name="featureData"> The data model representing the generic azure resource. </param>
+        internal Feature(OperationsBase operations, FeatureData featureData)
+            : base(operations, featureData.Id)
         {
-            Data = featureResultData;
+            Data = featureData;
         }
 
         /// <summary>
         /// Gets the subscription data model.
         /// </summary>
-        public virtual FeatureResultData Data { get; }
+        public virtual FeatureData Data { get; }
 
         /// <inheritdoc />
-        protected override FeatureResult GetFeatureResult(CancellationToken cancellation = default)
+        protected override Feature GetFeature(CancellationToken cancellation = default)
         {
             return this;
         }
 
         /// <inheritdoc />
-        protected override Task<FeatureResult> GetFeatureResultAsync(CancellationToken cancellationToken = default)
+        protected override Task<Feature> GetFeatureAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(this);
         }
