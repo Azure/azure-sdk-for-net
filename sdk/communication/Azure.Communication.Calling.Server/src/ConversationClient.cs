@@ -410,6 +410,68 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
+        /// <summary> Play Audio. </summary>
+        /// <param name="conversationId"> The conversation id. </param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="operationContext">The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string operationContext, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudioAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
+                // Currently looping media is not supported for out-call scenarios, thus setting it to false.
+                PlayAudioRequest request = new PlayAudioRequest()
+                {
+                    AudioFileUri = audioFileUri.AbsoluteUri,
+                    Loop = false,
+                    OperationContext = operationContext
+                };
+
+                return await RestClient.PlayAudioAsync(conversationId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Play Audio. </summary>
+        /// <param name="conversationId"> The conversation id. </param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="operationContext">The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string operationContext, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudio)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
+                // Currently looping media is not supported for out-call scenarios, thus setting it to false.
+                PlayAudioRequest request = new PlayAudioRequest()
+                {
+                    AudioFileUri = audioFileUri.AbsoluteUri,
+                    Loop = false,
+                    OperationContext = operationContext
+                };
+
+                return RestClient.PlayAudio(conversationId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary>
         /// Add participant
         /// </summary>
