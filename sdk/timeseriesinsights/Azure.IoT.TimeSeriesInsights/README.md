@@ -32,7 +32,7 @@ The Time Series Insights client library for .NET provides the following function
 - Retrieving and being able to add, update and remove Time Series instances.
 - Retrieving and being able to make changes to the Time Series Insights environment types, such as creating, updating and deleting Time Series types.
 - Retrieving and being able to make changes to the Time Series Insights hierarchies, such as creating, updating and deleting Time Series hierarchies.
-- Querying raw events, computed series and aggregate series
+- Querying raw events, computed series and aggregate series.
 
 [Source Code][tsi_client_src] | [Package (NuGet)][tsi_nuget] | [Product documentation][tsi_product_documentation] | [Samples][tsi_samples]
 
@@ -50,7 +50,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-## Samples
+## Examples
 
 You can familiarize yourself with different APIs using [samples for Time Series Insights][tsi_samples].
 
