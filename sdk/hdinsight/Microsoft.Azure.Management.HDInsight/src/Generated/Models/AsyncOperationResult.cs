@@ -16,23 +16,23 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     /// <summary>
     /// The azure async operation response.
     /// </summary>
-    public partial class OperationResource
+    public partial class AsyncOperationResult
     {
         /// <summary>
-        /// Initializes a new instance of the OperationResource class.
+        /// Initializes a new instance of the AsyncOperationResult class.
         /// </summary>
-        public OperationResource()
+        public AsyncOperationResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationResource class.
+        /// Initializes a new instance of the AsyncOperationResult class.
         /// </summary>
         /// <param name="status">The async operation state. Possible values
         /// include: 'InProgress', 'Succeeded', 'Failed'</param>
         /// <param name="error">The operation error information.</param>
-        public OperationResource(AsyncOperationState? status = default(AsyncOperationState?), Errors error = default(Errors))
+        public AsyncOperationResult(AsyncOperationState? status = default(AsyncOperationState?), Errors error = default(Errors))
         {
             Status = status;
             Error = error;
