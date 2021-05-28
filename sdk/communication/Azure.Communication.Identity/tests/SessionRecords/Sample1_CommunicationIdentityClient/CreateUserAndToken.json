@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "34",
         "Content-Type": "application/json",
-        "Date": "Thu, 27 May 2021 02:19:00 GMT",
-        "traceparent": "00-9393874a6872f64b87aeec4eb4f74251-7b022794397d5545-00",
+        "Date": "Fri, 28 May 2021 18:52:02 GMT",
+        "traceparent": "00-adb3a8a71ed4d04a9c0a9d3f858549bd-35d872915acfae4a-00",
         "User-Agent": [
-          "azsdk-net-Communication.Identity/1.1.0-alpha.20210526.1",
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210528.1",
           "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "ab33f79e9fca0db84a28972928f0e1e9",
@@ -27,23 +27,23 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 27 May 2021 02:18:59 GMT",
-        "MS-CV": "hvpBdrg\u002Bu0\u002BxBB78uZR\u002BhA.0",
+        "Date": "Fri, 28 May 2021 18:52:01 GMT",
+        "MS-CV": "oDGnQBYFvkOcGHpti11Rcg.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0lAGvYAAAAADLrtvFzILLRZIdn7LPgcGXWVZSMzBFREdFMDMwNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "00TuxYAAAAADAVchdUcJ1T6TEBShHCe0VWVZSMzBFREdFMDMyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
         "x-ms-client-request-id": "ab33f79e9fca0db84a28972928f0e1e9",
-        "X-Processing-Time": "43ms"
+        "X-Processing-Time": "205ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:b5006058-9a48-4a02-a333-11c443e69e12_0000000a-4b7f-cf35-0e04-343a0d0014ba"
+          "id": "8:acs:b5006058-9a48-4a02-a333-11c443e69e12_0000000a-5433-4f58-51b9-a43a0d0067ac"
         },
         "accessToken": {
           "token": "Sanitized",
-          "expiresOn": "2021-05-28T02:18:59.3025641\u002B00:00"
+          "expiresOn": "2021-05-29T18:52:00.942115\u002B00:00"
         }
       }
     }
