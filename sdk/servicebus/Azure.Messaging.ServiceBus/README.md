@@ -72,7 +72,8 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-To use this you will need to add this to your configuration:
+To use the preceding code, add this to your configuration:
+
 ```json
 {
   "ConnectionStrings": {
@@ -80,7 +81,6 @@ To use this you will need to add this to your configuration:
   }
 }
 ```
-
 
 For more details, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
