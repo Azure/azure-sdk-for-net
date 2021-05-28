@@ -1,4 +1,4 @@
-# Time Series Insights client library for .NET
+# Azure Time Series Insights client library for .NET
 
 Azure Time Series Insights provides data exploration and telemetry tools to help you improve operational analysis. It's a fully managed analytics, storage, and visualization service where you can explore and analyze billions of Internet of Things (IoT) events simultaneously.
 
