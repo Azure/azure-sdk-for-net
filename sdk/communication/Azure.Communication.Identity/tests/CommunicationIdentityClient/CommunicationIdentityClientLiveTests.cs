@@ -201,5 +201,23 @@ namespace Azure.Communication.Identity.Tests
             }
             Assert.Fail("An exception should have been thrown.");
         }
+
+        [Test]
+        public async Task ExchangeTeamsTokenWithInvalidTokenShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync("invalid");
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.True(ex.Message.Contains("401"));
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
+        }
     }
 }
