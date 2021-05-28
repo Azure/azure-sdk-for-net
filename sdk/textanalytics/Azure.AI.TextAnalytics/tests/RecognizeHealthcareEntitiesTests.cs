@@ -10,9 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
     public class RecognizeHealthcareEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizeHealthcareEntitiesTests(bool isAsync) : base(isAsync) { }
+        public RecognizeHealthcareEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private static List<string> s_batchConvenienceDocuments = new List<string>
         {
