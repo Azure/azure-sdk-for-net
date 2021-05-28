@@ -14,10 +14,13 @@ namespace Azure.Learn.AppConfig.Samples
         [Test]
         public void GetConfigurationSetting()
         {
-            string endpoint = "http://example.azconfig.io";
+            string endpoint = "https://petrsvihlikapi-learn-azconfig-net.azconfig.io";
+
             ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+
             ConfigurationSetting color = client.GetConfigurationSetting("FontColor");
             ConfigurationSetting greeting = client.GetConfigurationSetting("GreetingText");
+
             Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color.Value);
             Console.WriteLine(greeting.Value);
             Console.ResetColor();
