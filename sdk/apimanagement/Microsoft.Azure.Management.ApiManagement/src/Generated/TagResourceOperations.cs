@@ -109,11 +109,14 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -124,7 +127,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByService", tracingParameters);
             }
@@ -143,9 +145,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                     _queryParameters.Add(_odataFilter);
                 }
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

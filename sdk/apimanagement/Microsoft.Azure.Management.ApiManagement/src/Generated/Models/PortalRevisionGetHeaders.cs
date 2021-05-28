@@ -14,26 +14,26 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
+    /// Defines headers for Get operation.
     /// </summary>
-    public partial class PropertyValueContract
+    public partial class PortalRevisionGetHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the PropertyValueContract class.
+        /// Initializes a new instance of the PortalRevisionGetHeaders class.
         /// </summary>
-        public PropertyValueContract()
+        public PortalRevisionGetHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PropertyValueContract class.
+        /// Initializes a new instance of the PortalRevisionGetHeaders class.
         /// </summary>
-        /// <param name="value">This is secret value of the NamedValue
-        /// entity.</param>
-        public PropertyValueContract(string value = default(string))
+        /// <param name="eTag">Current entity state version. Should be treated
+        /// as opaque and used to make conditional HTTP requests.</param>
+        public PortalRevisionGetHeaders(string eTag = default(string))
         {
-            Value = value;
+            ETag = eTag;
             CustomInit();
         }
 
@@ -43,10 +43,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets this is secret value of the NamedValue entity.
+        /// Gets or sets current entity state version. Should be treated as
+        /// opaque and used to make conditional HTTP requests.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "ETag")]
+        public string ETag { get; set; }
 
     }
 }

@@ -14,24 +14,24 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for Get operation.
+    /// Defines headers for Update operation.
     /// </summary>
-    public partial class TenantAccessGitGetHeaders
+    public partial class TagUpdateHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the TenantAccessGitGetHeaders class.
+        /// Initializes a new instance of the TagUpdateHeaders class.
         /// </summary>
-        public TenantAccessGitGetHeaders()
+        public TagUpdateHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TenantAccessGitGetHeaders class.
+        /// Initializes a new instance of the TagUpdateHeaders class.
         /// </summary>
         /// <param name="eTag">Current entity state version. Should be treated
         /// as opaque and used to make conditional HTTP requests.</param>
-        public TenantAccessGitGetHeaders(string eTag = default(string))
+        public TagUpdateHeaders(string eTag = default(string))
         {
             ETag = eTag;
             CustomInit();
