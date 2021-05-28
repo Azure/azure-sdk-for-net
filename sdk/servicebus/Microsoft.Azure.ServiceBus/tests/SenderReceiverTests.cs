@@ -59,7 +59,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    await this.ReceiveDeleteTestCase(sender, receiver, messageCount);
+                    var receiveTasks = new List<Task>();
+                    int batchSize = 10;
+                    for (var i = 0; i < messageCount / batchSize; i++)
+                    {
+                        receiveTasks.Add(this.ReceiveDeleteTestCase(sender, receiver, batchSize));
+                    }
+                    await Task.WhenAll(receiveTasks);
                 }
                 finally
                 {
