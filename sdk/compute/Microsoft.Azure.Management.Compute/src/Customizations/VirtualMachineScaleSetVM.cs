@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes a virtual machine scale set virtual machine.
+    /// Describes a virtual machine scale set virtual machine .
     /// </summary>
     public partial class VirtualMachineScaleSetVM : Resource
     {
