@@ -14,29 +14,32 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// The cluster monitoring status response.
+    /// The azure monitor status response.
     /// </summary>
-    public partial class ClusterMonitoringResponse
+    public partial class AzureMonitorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the ClusterMonitoringResponse class.
+        /// Initializes a new instance of the AzureMonitorResponse class.
         /// </summary>
-        public ClusterMonitoringResponse()
+        public AzureMonitorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ClusterMonitoringResponse class.
+        /// Initializes a new instance of the AzureMonitorResponse class.
         /// </summary>
         /// <param name="clusterMonitoringEnabled">The status of the monitor on
         /// the HDInsight cluster.</param>
         /// <param name="workspaceId">The workspace ID of the monitor on the
         /// HDInsight cluster.</param>
-        public ClusterMonitoringResponse(bool? clusterMonitoringEnabled = default(bool?), string workspaceId = default(string))
+        /// <param name="selectedConfigurations">The selected
+        /// configurations.</param>
+        public AzureMonitorResponse(bool? clusterMonitoringEnabled = default(bool?), string workspaceId = default(string), AzureMonitorSelectedConfigurations selectedConfigurations = default(AzureMonitorSelectedConfigurations))
         {
             ClusterMonitoringEnabled = clusterMonitoringEnabled;
             WorkspaceId = workspaceId;
+            SelectedConfigurations = selectedConfigurations;
             CustomInit();
         }
 
@@ -57,6 +60,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "workspaceId")]
         public string WorkspaceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the selected configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "selectedConfigurations")]
+        public AzureMonitorSelectedConfigurations SelectedConfigurations { get; set; }
 
     }
 }

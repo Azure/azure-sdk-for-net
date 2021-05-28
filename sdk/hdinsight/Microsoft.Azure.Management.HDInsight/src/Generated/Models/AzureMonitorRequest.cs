@@ -14,29 +14,30 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// Cluster monitoring extensions.
+    /// The azure monitor parameters.
     /// </summary>
-    public partial class Extension
+    public partial class AzureMonitorRequest
     {
         /// <summary>
-        /// Initializes a new instance of the Extension class.
+        /// Initializes a new instance of the AzureMonitorRequest class.
         /// </summary>
-        public Extension()
+        public AzureMonitorRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Extension class.
+        /// Initializes a new instance of the AzureMonitorRequest class.
         /// </summary>
-        /// <param name="workspaceId">The workspace ID for the cluster
-        /// monitoring extension.</param>
-        /// <param name="primaryKey">The certificate for the cluster monitoring
-        /// extensions.</param>
-        public Extension(string workspaceId = default(string), string primaryKey = default(string))
+        /// <param name="workspaceId">The Log Analytics workspace ID.</param>
+        /// <param name="primaryKey">The Log Analytics workspace key.</param>
+        /// <param name="selectedConfigurations">The selected
+        /// configurations.</param>
+        public AzureMonitorRequest(string workspaceId = default(string), string primaryKey = default(string), AzureMonitorSelectedConfigurations selectedConfigurations = default(AzureMonitorSelectedConfigurations))
         {
             WorkspaceId = workspaceId;
             PrimaryKey = primaryKey;
+            SelectedConfigurations = selectedConfigurations;
             CustomInit();
         }
 
@@ -46,16 +47,22 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the workspace ID for the cluster monitoring extension.
+        /// Gets or sets the Log Analytics workspace ID.
         /// </summary>
         [JsonProperty(PropertyName = "workspaceId")]
         public string WorkspaceId { get; set; }
 
         /// <summary>
-        /// Gets or sets the certificate for the cluster monitoring extensions.
+        /// Gets or sets the Log Analytics workspace key.
         /// </summary>
         [JsonProperty(PropertyName = "primaryKey")]
         public string PrimaryKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the selected configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "selectedConfigurations")]
+        public AzureMonitorSelectedConfigurations SelectedConfigurations { get; set; }
 
     }
 }

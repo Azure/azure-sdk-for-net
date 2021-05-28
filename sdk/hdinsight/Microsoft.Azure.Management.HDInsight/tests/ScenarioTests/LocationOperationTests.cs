@@ -41,8 +41,8 @@ namespace Management.HDInsight.Tests
             Assert.NotNull(capabilitiesResult.Quota);
             Assert.NotNull(capabilitiesResult.Regions);
             Assert.NotNull(capabilitiesResult.Versions);
-            Assert.NotNull(capabilitiesResult.VmSizeFilters);
-            Assert.NotNull(capabilitiesResult.VmSizes);
+            Assert.NotNull(capabilitiesResult.VmsizeFilters);
+            Assert.NotNull(capabilitiesResult.Vmsizes);
 
             foreach (var feature in capabilitiesResult.Features)
             {
@@ -64,14 +64,14 @@ namespace Management.HDInsight.Tests
                 Assert.NotNull(capabilitiesResult.Versions[platform]);
             }
 
-            foreach (var filter in capabilitiesResult.VmSizeFilters)
+            foreach (var filter in capabilitiesResult.VmsizeFilters)
             {
                 Assert.NotNull(filter);
             }
 
-            foreach (var platform in capabilitiesResult.VmSizes.Keys)
+            foreach (var platform in capabilitiesResult.Vmsizes.Keys)
             {
-                Assert.NotNull(capabilitiesResult.VmSizes[platform]);
+                Assert.NotNull(capabilitiesResult.Vmsizes[platform]);
             }
         }
     }

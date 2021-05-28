@@ -14,27 +14,29 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// The cluster monitor parameters.
+    /// The request spec of checking name availability.
     /// </summary>
-    public partial class ClusterMonitoringRequest
+    public partial class NameAvailabilityCheckRequestParameters
     {
         /// <summary>
-        /// Initializes a new instance of the ClusterMonitoringRequest class.
+        /// Initializes a new instance of the
+        /// NameAvailabilityCheckRequestParameters class.
         /// </summary>
-        public ClusterMonitoringRequest()
+        public NameAvailabilityCheckRequestParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ClusterMonitoringRequest class.
+        /// Initializes a new instance of the
+        /// NameAvailabilityCheckRequestParameters class.
         /// </summary>
-        /// <param name="workspaceId">The cluster monitor workspace ID.</param>
-        /// <param name="primaryKey">The cluster monitor workspace key.</param>
-        public ClusterMonitoringRequest(string workspaceId = default(string), string primaryKey = default(string))
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type</param>
+        public NameAvailabilityCheckRequestParameters(string name = default(string), string type = default(string))
         {
-            WorkspaceId = workspaceId;
-            PrimaryKey = primaryKey;
+            Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -44,16 +46,16 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the cluster monitor workspace ID.
+        /// Gets or sets the resource name.
         /// </summary>
-        [JsonProperty(PropertyName = "workspaceId")]
-        public string WorkspaceId { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the cluster monitor workspace key.
+        /// Gets or sets the resource type
         /// </summary>
-        [JsonProperty(PropertyName = "primaryKey")]
-        public string PrimaryKey { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }
