@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>NetApp.Tests</PackageId>
@@ -11,6 +11,10 @@
     <ExcludeFromBuild>false</ExcludeFromBuild>
     <ExcludeFromTest>false</ExcludeFromTest>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Polly" Version="7.2.2" />
+    <PackageReference Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.NetApp.csproj" />

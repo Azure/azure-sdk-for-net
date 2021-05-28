@@ -938,10 +938,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="deleteFileSystemVersion">
         /// The version of the previously deleted file system.
         /// </param>
-        /// <param name="destinationFileSystemName">
-        /// Optional.  Use this parameter if you would like to restore the file system
-        /// under a different name.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -956,7 +952,6 @@ namespace Azure.Storage.Files.DataLake
         public virtual Response<DataLakeFileSystemClient> UndeleteFileSystem(
             string deletedFileSystemName,
             string deleteFileSystemVersion,
-            string destinationFileSystemName = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
@@ -968,7 +963,6 @@ namespace Azure.Storage.Files.DataLake
                 Response<BlobContainerClient> response = _blobServiceClient.UndeleteBlobContainer(
                     deletedFileSystemName,
                     deleteFileSystemVersion,
-                    destinationFileSystemName,
                     cancellationToken);
 
                 DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
@@ -1001,10 +995,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="deleteFileSystemVersion">
         /// The version of the previously deleted file system.
         /// </param>
-        /// <param name="destinationFileSystemName">
-        /// Optional.  Use this parameter if you would like to restore the file system
-        /// under a different name.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1019,7 +1009,6 @@ namespace Azure.Storage.Files.DataLake
         public virtual async Task<Response<DataLakeFileSystemClient>> UndeleteFileSystemAsync(
             string deletedFileSystemName,
             string deleteFileSystemVersion,
-            string destinationFileSystemName = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
@@ -1031,7 +1020,6 @@ namespace Azure.Storage.Files.DataLake
                 Response<BlobContainerClient> response = await _blobServiceClient.UndeleteBlobContainerAsync(
                     deletedFileSystemName,
                     deleteFileSystemVersion,
-                    destinationFileSystemName,
                     cancellationToken)
                     .ConfigureAwait(false);
 

@@ -15,9 +15,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class DetectionSeriesQuery
     {
         /// <summary> Initializes a new instance of DetectionSeriesQuery. </summary>
-        /// <param name="startTime"> start time. </param>
-        /// <param name="endTime"> end time. </param>
-        /// <param name="series"> series. </param>
+        /// <param name="startTime"> This is inclusive. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="endTime"> This is exclusive. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="series"> The series to be queried. The identity must be able to define one single time series instead of a group of time series. The maximum number of series is 100. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public DetectionSeriesQuery(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<SeriesIdentity> series)
         {
@@ -31,11 +31,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             Series = series.ToList();
         }
 
-        /// <summary> start time. </summary>
+        /// <summary> This is inclusive. The maximum number of data points (series number * time range) is 10000. </summary>
         public DateTimeOffset StartTime { get; }
-        /// <summary> end time. </summary>
+        /// <summary> This is exclusive. The maximum number of data points (series number * time range) is 10000. </summary>
         public DateTimeOffset EndTime { get; }
-        /// <summary> series. </summary>
+        /// <summary> The series to be queried. The identity must be able to define one single time series instead of a group of time series. The maximum number of series is 100. </summary>
         public IList<SeriesIdentity> Series { get; }
     }
 }

@@ -22,7 +22,9 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS INSTANCES SAMPLE");
 
             // Figure out what keys make up the Time Series Id
-            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
+            TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+            TimeSeriesInsightsInstances instancesClient = client.GetInstancesClient();
+            TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
             TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
             string defaultTypeId = modelSettings.DefaultTypeId;
 
@@ -41,8 +43,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 instance,
             };
 
-            Response<TimeSeriesOperationError[]> createInstanceErrors = await client
-                .Instances
+            Response<TimeSeriesOperationError[]> createInstanceErrors = await instancesClient
                 .CreateOrReplaceAsync(tsiInstancesToCreate);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter
@@ -68,7 +69,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsGetAllInstances
 
             // Get all instances for the Time Series Insights environment
-            AsyncPageable<TimeSeriesInstance> tsiInstances = client.Instances.GetAsync();
+            AsyncPageable<TimeSeriesInstance> tsiInstances = instancesClient.GetAsync();
             await foreach (TimeSeriesInstance tsiInstance in tsiInstances)
             {
                 Console.WriteLine($"Retrieved Time Series Insights instance with Id '{tsiInstance.TimeSeriesId}' and name '{tsiInstance.Name}'.");
@@ -85,7 +86,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 tsId,
             };
 
-            Response<InstancesOperationResult[]> getInstancesByIdResult = await client.Instances.GetAsync(instanceIdsToGet);
+            Response<InstancesOperationResult[]> getInstancesByIdResult = await instancesClient.GetByIdAsync(instanceIdsToGet);
 
             TimeSeriesInstance instanceResult = getInstancesByIdResult.Value[0].Instance;
             Console.WriteLine($"Retrieved Time Series Insights instance with Id '{instanceResult.TimeSeriesId}' and name '{instanceResult.Name}'.");
@@ -98,7 +99,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 instanceResult,
             };
 
-            Response<InstancesOperationResult[]> replaceInstancesResult = await client.Instances.ReplaceAsync(instancesToReplace);
+            Response<InstancesOperationResult[]> replaceInstancesResult = await instancesClient.ReplaceAsync(instancesToReplace);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter.
             // array in the request. If the error object is set to null, this means the operation was a success.
@@ -130,7 +131,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 tsId,
             };
 
-            Response<InstancesOperationResult[]> getByIdsResult = await client.Instances.GetAsync(timeSeriesIds);
+            Response<InstancesOperationResult[]> getByIdsResult = await instancesClient.GetByIdAsync(timeSeriesIds);
 
             // The response of calling the API contains a list of instance or error objects corresponding by position to the array in the request.
             // Instance object is set when operation is successful and error object is set when operation is unsuccessful.
@@ -161,9 +162,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                     tsId,
                 };
 
-                Response<TimeSeriesOperationError[]> deleteInstanceErrors = await client
-                    .Instances
-                    .DeleteAsync(instancesToDelete);
+                Response<TimeSeriesOperationError[]> deleteInstanceErrors = await instancesClient
+                    .DeleteByIdAsync(instancesToDelete);
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
                 // array in the request. If the error object is set to null, this means the operation was a success.

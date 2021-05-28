@@ -13,7 +13,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary>
         /// The event type.
         /// </summary>
-        public const string EventType = "Microsoft.Communication.CallRecordingStateChange";
+        public const string EventType = "Microsoft.Communication.CallRecordingStateChanged";
 
         /// <summary>
         /// The call recording id

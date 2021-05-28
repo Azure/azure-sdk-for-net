@@ -320,51 +320,42 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        internal HttpMessage CreateCancelMediaProcessingRequest(string callId, CancelMediaProcessingRequest request)
+        internal HttpMessage CreateCancelMediaOperationsRequest(string callId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/calls/", false);
             uri.AppendPath(callId, true);
-            uri.AppendPath("/CancelMediaProcessing", false);
+            uri.AppendPath("/CancelMediaOperations", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Cancel Media Processing. </summary>
         /// <param name="callId"> The call id. </param>
-        /// <param name="request"> The cancel media processing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="request"/> is null. </exception>
-        public async Task<Response<CancelMediaProcessingResponse>> CancelMediaProcessingAsync(string callId, CancelMediaProcessingRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> is null. </exception>
+        public async Task<Response<CancelMediaOperationsResponse>> CancelMediaOperationsAsync(string callId, CancellationToken cancellationToken = default)
         {
             if (callId == null)
             {
                 throw new ArgumentNullException(nameof(callId));
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
 
-            using var message = CreateCancelMediaProcessingRequest(callId, request);
+            using var message = CreateCancelMediaOperationsRequest(callId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CancelMediaProcessingResponse value = default;
+                        CancelMediaOperationsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CancelMediaProcessingResponse.DeserializeCancelMediaProcessingResponse(document.RootElement);
+                        value = CancelMediaOperationsResponse.DeserializeCancelMediaOperationsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -374,29 +365,24 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Cancel Media Processing. </summary>
         /// <param name="callId"> The call id. </param>
-        /// <param name="request"> The cancel media processing request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="request"/> is null. </exception>
-        public Response<CancelMediaProcessingResponse> CancelMediaProcessing(string callId, CancelMediaProcessingRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> is null. </exception>
+        public Response<CancelMediaOperationsResponse> CancelMediaOperations(string callId, CancellationToken cancellationToken = default)
         {
             if (callId == null)
             {
                 throw new ArgumentNullException(nameof(callId));
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
 
-            using var message = CreateCancelMediaProcessingRequest(callId, request);
+            using var message = CreateCancelMediaOperationsRequest(callId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CancelMediaProcessingResponse value = default;
+                        CancelMediaOperationsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CancelMediaProcessingResponse.DeserializeCancelMediaProcessingResponse(document.RootElement);
+                        value = CancelMediaOperationsResponse.DeserializeCancelMediaOperationsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

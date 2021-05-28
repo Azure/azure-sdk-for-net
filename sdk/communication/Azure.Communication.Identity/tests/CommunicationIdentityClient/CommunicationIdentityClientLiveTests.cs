@@ -97,23 +97,6 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task CreateUserAndTokenWithNullScopeShouldThrow()
-        {
-            try
-            {
-                CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: null);
-            }
-            catch (NullReferenceException ex)
-            {
-                Assert.NotNull(ex.Message);
-                Console.WriteLine(ex.Message);
-                return;
-            }
-            Assert.Fail("CreateUserAndTokenAsync should have thrown an exception.");
-        }
-
-        [Test]
         public async Task DeleteUserWithNullUserShouldThrow()
         {
             try

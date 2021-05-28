@@ -24,7 +24,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ConversationClient(Uri endpoint, AzureKeyCredential keyCredential, CallClientOptions? options = default)
+        public ConversationClient(Uri endpoint, AzureKeyCredential keyCredential, CallClientOptions options = default)
             : this(
                 AssertNotNull(endpoint, nameof(endpoint)),
                 options ?? new CallClientOptions(),
@@ -34,7 +34,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Initializes a new instance of <see cref="ConversationClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ConversationClient(string connectionString, CallClientOptions? options = default)
+        public ConversationClient(string connectionString, CallClientOptions options = default)
             : this(
                   options ?? new CallClientOptions(),
                   ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))))
@@ -44,7 +44,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="tokenCredential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ConversationClient(Uri endpoint, TokenCredential tokenCredential, CallClientOptions? options = default)
+        public ConversationClient(Uri endpoint, TokenCredential tokenCredential, CallClientOptions options = default)
             : this(
                   endpoint,
                   options ?? new CallClientOptions(),

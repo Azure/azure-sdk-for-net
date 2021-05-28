@@ -22,6 +22,7 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
   - [Uploading Blobs to a Container](#uploading-blobs-to-a-container)
   - [Downloading Blobs from a Container](#downloading-blobs-from-a-container)
   - [Listing Blobs in a Container](#listing-blobs-in-a-container)
+  - [Managing Blob Metadata](#managing-blob-metadata)
   - [Generate a SAS](#generate-a-sas)
   - [Content Hashes](#content-hashes)
   - [Resiliency](#resiliency)
@@ -194,9 +195,9 @@ await containerClient.SetAccessPolicyAsync(permissions: signedIdentifiers);
 
 ### Client Structure
 
-The legacy SDK used a stateful model. There were container and blob objects that held state regarding service resources and required the user to manually call their update methods. But blob contents were not a part of this state and had to be uploaded/downloaded whenever they were to be interacted with. This became increasingly confusing over time, and increasingly susceptible to thread safety issues.
+**The legacy SDK used a stateful model.** There were container and blob objects that held state regarding service resources and required the user to manually call their update methods. But blob contents were not a part of this state and had to be uploaded/downloaded whenever they were to be interacted with. This became increasingly confusing over time, and increasingly susceptible to thread safety issues.
 
-The modern SDK has taken a client-based approach. There are no objects designed to be representations of storage resources, but instead clients that act as your mechanism to interact with your storage resources in the cloud. Clients hold no state of your resources.
+The modern SDK has taken a client-based approach. There are no objects designed to be representations of storage resources, but instead clients that act as your mechanism to interact with your storage resources in the cloud. **Clients hold no state of your resources.** This is most noticable when looking at [blob metadata](#managing-blob-metadata).
 
 The hierarchical structure of Azure Blob Storage can be understood by the following diagram:  
 ![Blob Storage Hierarchy](https://docs.microsoft.com/en-us/azure/storage/blobs/media/storage-blobs-introduction/blob1.png)
@@ -450,6 +451,61 @@ await foreach (BlobHierarchyItem item in results)
 {
     MyConsumeBlobItemFunc(item);
 }
+```
+
+### Managing Blob Metadata
+
+On the service, blob metadata is overwritten alongside blob data overwrites. If metadata is not provided on a blob content edit, that is interpreted as a metadata clear. Legacy versions of the SDK mitigated this by maintaining blob metadata internally and sending it for you on appropriate requests. This helped in simple cases, but could fall out of sync and required developers to defensively code against metadata changes in a multi-client scenario anyway.
+
+V12 has abandoned this stateful approach, having users manage their own metadata. While this requires additional code for developers, it ensures you always know how your metadata is being managed and avoid silently corrupting metadata due to SDK caching.
+
+v11 samples:
+
+The legacy SDK maintained a metadata cache, allowing you to modify metadata on the CloudBlob and invoke Update(). Calling FetchAttributes beforehand refreshed the metadata cache to avoid undoing recent changes.
+
+```csharp
+cloudBlob.FetchAttributes();
+cloudBlob.Metadata.Add("foo", "bar");
+cloudBlob.SetMetadata(metadata);
+```
+
+The legacy SDK maintained internal state for blob content uploads. Calling FetchAttributes beforehand refreshed the metadata cache to avoid undoing recent changes.
+
+```csharp
+// download blob content. blob metadata is fetched and cached on download
+cloudBlob.DownloadToByteArray(downloadBuffer, 0);
+
+// modify blob content
+string modifiedBlobContent = Encoding.UTF8.GetString(downloadBuffer) + "FizzBuzz";
+
+// reupload modified blob content while preserving metadata
+blobClient.UploadText(modifiedBlobContent);
+```
+
+v12 samples:
+
+The modern SDK requires you to hold onto metadata and update it approprately before sending off. You cannot just add a new key-value pair, you must update the collection and send the collection.
+
+```C# Snippet:SampleSnippetsBlobMigration_EditMetadata
+IDictionary<string, string> metadata = blobClient.GetProperties().Value.Metadata;
+metadata.Add("foo", "bar");
+blobClient.SetMetadata(metadata);
+```
+
+Additionally with blob content edits, if your blobs have metadata you need to get the metadata and reupload with that metadata, telling the service what metadata goes with this new blob state.
+
+```C# Snippet:SampleSnippetsBlobMigration_EditBlobWithMetadata
+// download blob content and metadata
+BlobDownloadResult blobData = blobClient.DownloadContent();
+
+// modify blob content
+string modifiedBlobContent = blobData.Content + "FizzBuzz";
+
+// reupload modified blob content while preserving metadata
+// not adding metadata is a metadata clear
+blobClient.Upload(
+    BinaryData.FromString(modifiedBlobContent),
+    new BlobUploadOptions() { Metadata = blobData.Details.Metadata });
 ```
 
 ### Generate a SAS

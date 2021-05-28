@@ -22,7 +22,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary>
         /// Initializes a new instance of the <see cref="CallClientOptions"/>.
         /// </summary>
-        public CallClientOptions(ServiceVersion version = LatestVersion, RetryOptions? retryOptions = default, HttpPipelineTransport? transport = default)
+        public CallClientOptions(ServiceVersion version = LatestVersion)
         {
             ApiVersion = version switch
             {
@@ -30,17 +30,6 @@ namespace Azure.Communication.Calling.Server
 
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
-
-            if (transport != default)
-                Transport = transport;
-
-            if (retryOptions != null)
-            {
-                Retry.Mode = retryOptions.Mode;
-                Retry.MaxRetries = retryOptions.MaxRetries;
-                Retry.Delay = retryOptions.Delay;
-                Retry.MaxDelay = retryOptions.MaxDelay;
-            }
         }
 
         /// <summary>

@@ -1,6 +1,14 @@
 # Release History
 
-## 12.7.0-beta.4 (Unreleased)
+## 12.7.0-beta.5 (Unreleased)
+- Fixed bug where DataLakeFileClient.Read could corrupt data on retry.
+- Fixed bug where specifying "*" as IfMatch condition could lead to inconsistend read in DataLakeFileClient.ReadTo.
+- Fixed bug where specifying conditions in DataLakeFileClient.OpenRead could override allowModifications flag in DataLakeOpenReadOptions leading to inconsistent read.
+
+## 12.6.2 (2021-05-20)
+- This release contains bug fixes to improve quality.
+
+## 12.7.0-beta.4 (2021-05-12)
 - Added support for service version 2020-08-04.
 - Added support for Soft Delete for Hierarchical-Namespace enabled accounts.
 - DataLakeLeaseClient now remembers the Lease ID after a lease change.

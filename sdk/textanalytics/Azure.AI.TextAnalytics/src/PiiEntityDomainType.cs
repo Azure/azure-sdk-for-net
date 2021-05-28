@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     {
         /// <summary>
         /// Protected Health Information entities.
-        /// For more information see <a href="https://aka.ms/tanerpii"/>.
+        /// For more information see <see href="https://aka.ms/tanerpii"/>.
         /// </summary>
         ProtectedHealthInformation
     }

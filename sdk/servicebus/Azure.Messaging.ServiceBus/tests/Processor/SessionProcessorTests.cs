@@ -378,13 +378,32 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsTrue(sessionOpenCalled);
             Assert.IsTrue(sessionCloseCalled);
         }
+
+        [Test]
+        public async Task CloseRespectsCancellationToken()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};
+            var mockSessionProcessor = new Mock<ServiceBusSessionProcessor>() {CallBase = true};
+
+            mockSessionProcessor.Setup(
+                p => p.InnerProcessor).Returns(mockProcessor.Object);
+            mockProcessor.Setup(
+                p => p.IsProcessing).Returns(true);
+            var cts = new CancellationTokenSource();
+
+            // mutate the cancellation token to distinguish it from CancellationToken.None
+            cts.CancelAfter(100);
+
+            await mockSessionProcessor.Object.CloseAsync(cts.Token);
+            mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
+        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
     internal class MockSessionProcessor : ServiceBusSessionProcessor
 #pragma warning restore SA1402 // File may only contain a single type
     {
-        protected override ServiceBusProcessor InnerProcessor { get; } = new MockProcessor();
+        protected internal override ServiceBusProcessor InnerProcessor { get; } = new MockProcessor();
 
         public MockSessionProcessor() : base()
         {

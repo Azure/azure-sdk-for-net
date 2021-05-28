@@ -48,12 +48,12 @@ namespace Azure.AI.FormRecognizer
     }
     public partial class FormRecognizerClientOptions : Azure.Core.ClientOptions
     {
-        public FormRecognizerClientOptions(Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3) { }
+        public FormRecognizerClientOptions(Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion.V2_1) { }
         public Azure.AI.FormRecognizer.FormRecognizerClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V2_0 = 1,
-            V2_1_Preview_3 = 2,
+            V2_1 = 2,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -246,36 +246,16 @@ namespace Azure.AI.FormRecognizer.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public Azure.AI.FormRecognizer.Models.FieldValueType ValueType { get { throw null; } }
-        public string AsCountryCode() { throw null; }
+        public string AsCountryRegion() { throw null; }
         public System.DateTime AsDate() { throw null; }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.Models.FormField> AsDictionary() { throw null; }
         public float AsFloat() { throw null; }
-        public Azure.AI.FormRecognizer.Models.FieldValueGender AsGender() { throw null; }
         public long AsInt64() { throw null; }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormField> AsList() { throw null; }
         public string AsPhoneNumber() { throw null; }
         public Azure.AI.FormRecognizer.Models.SelectionMarkState AsSelectionMarkState() { throw null; }
         public string AsString() { throw null; }
         public System.TimeSpan AsTime() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FieldValueGender : System.IEquatable<Azure.AI.FormRecognizer.Models.FieldValueGender>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FieldValueGender(string value) { throw null; }
-        public static Azure.AI.FormRecognizer.Models.FieldValueGender F { get { throw null; } }
-        public static Azure.AI.FormRecognizer.Models.FieldValueGender M { get { throw null; } }
-        public static Azure.AI.FormRecognizer.Models.FieldValueGender X { get { throw null; } }
-        public bool Equals(Azure.AI.FormRecognizer.Models.FieldValueGender other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.FormRecognizer.Models.FieldValueGender left, Azure.AI.FormRecognizer.Models.FieldValueGender right) { throw null; }
-        public static implicit operator Azure.AI.FormRecognizer.Models.FieldValueGender (string value) { throw null; }
-        public static bool operator !=(Azure.AI.FormRecognizer.Models.FieldValueGender left, Azure.AI.FormRecognizer.Models.FieldValueGender right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum FieldValueType
     {
@@ -288,8 +268,7 @@ namespace Azure.AI.FormRecognizer.Models
         List = 6,
         Dictionary = 7,
         SelectionMark = 8,
-        Gender = 9,
-        Country = 10,
+        CountryRegion = 9,
     }
     public abstract partial class FormElement
     {
@@ -358,7 +337,9 @@ namespace Azure.AI.FormRecognizer.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.Training.CustomFormModel CustomFormModel(string modelId, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status, System.DateTimeOffset trainingStartedOn, System.DateTimeOffset trainingCompletedOn, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.CustomFormSubmodel> submodels, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.TrainingDocumentInfo> trainingDocuments, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormRecognizerError> errors) { throw null; }
         public static Azure.AI.FormRecognizer.Training.CustomFormModel CustomFormModel(string modelId, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status, System.DateTimeOffset trainingStartedOn, System.DateTimeOffset trainingCompletedOn, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.CustomFormSubmodel> submodels, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.TrainingDocumentInfo> trainingDocuments, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormRecognizerError> errors, string modelName, Azure.AI.FormRecognizer.Training.CustomFormModelProperties properties) { throw null; }
+        public static Azure.AI.FormRecognizer.Training.CustomFormModelField CustomFormModelField(string name = null, float? accuracy = default(float?)) { throw null; }
         public static Azure.AI.FormRecognizer.Training.CustomFormModelField CustomFormModelField(string name, string label, float? accuracy) { throw null; }
+        public static Azure.AI.FormRecognizer.Training.CustomFormModelInfo CustomFormModelInfo(string modelId = null, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status = Azure.AI.FormRecognizer.Training.CustomFormModelStatus.Invalid, System.DateTimeOffset trainingStartedOn = default(System.DateTimeOffset), System.DateTimeOffset trainingCompletedOn = default(System.DateTimeOffset), string modelName = null, Azure.AI.FormRecognizer.Training.CustomFormModelProperties properties = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.Training.CustomFormModelInfo CustomFormModelInfo(string modelId, System.DateTimeOffset trainingStartedOn, System.DateTimeOffset trainingCompletedOn, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status) { throw null; }
         public static Azure.AI.FormRecognizer.Training.CustomFormModelInfo CustomFormModelInfo(string modelId, System.DateTimeOffset trainingStartedOn, System.DateTimeOffset trainingCompletedOn, Azure.AI.FormRecognizer.Training.CustomFormModelStatus status, string modelName, Azure.AI.FormRecognizer.Training.CustomFormModelProperties properties) { throw null; }
@@ -368,11 +349,10 @@ namespace Azure.AI.FormRecognizer.Models
         public static Azure.AI.FormRecognizer.Training.CustomFormSubmodel CustomFormSubmodel(string formType, float? accuracy, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.Training.CustomFormModelField> fields, string modelId) { throw null; }
         public static Azure.AI.FormRecognizer.Models.FieldBoundingBox FieldBoundingBox(System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> points) { throw null; }
         public static Azure.AI.FormRecognizer.Models.FieldData FieldData(Azure.AI.FormRecognizer.Models.FieldBoundingBox boundingBox, int pageNumber, string text, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormElement> fieldElements) { throw null; }
-        public static Azure.AI.FormRecognizer.Models.FieldValue FieldValueWithCountryCodeValueType(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.Models.FieldValue FieldValueWithCountryRegionValueType(string value) { throw null; }
         public static Azure.AI.FormRecognizer.Models.FieldValue FieldValueWithDateValueType(System.DateTime value) { throw null; }
         public static Azure.AI.FormRecognizer.Models.FieldValue FieldValueWithDictionaryValueType(System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.Models.FormField> value) { throw null; }
         public static Azure.AI.FormRecognizer.Models.FieldValue FieldValueWithFloatValueType(float value) { throw null; }
-        public static Azure.AI.FormRecognizer.Models.FieldValue FieldValueWithGenderValueType(Azure.AI.FormRecognizer.Models.FieldValueGender value) { throw null; }
         public static Azure.AI.FormRecognizer.Models.FieldValue FieldValueWithInt64ValueType(long value) { throw null; }
         public static Azure.AI.FormRecognizer.Models.FieldValue FieldValueWithListValueType(System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormField> value) { throw null; }
         public static Azure.AI.FormRecognizer.Models.FieldValue FieldValueWithPhoneNumberValueType(string value) { throw null; }
@@ -403,6 +383,7 @@ namespace Azure.AI.FormRecognizer.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.Training.TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.Models.FormRecognizerError> errors, Azure.AI.FormRecognizer.Training.TrainingStatus status) { throw null; }
         public static Azure.AI.FormRecognizer.Training.TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.Models.FormRecognizerError> errors, Azure.AI.FormRecognizer.Training.TrainingStatus status, string modelId) { throw null; }
+        public static Azure.AI.FormRecognizer.Training.TrainingDocumentInfo TrainingDocumentInfo(string name = null, int pageCount = 0, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormRecognizerError> errors = null, Azure.AI.FormRecognizer.Training.TrainingStatus status = Azure.AI.FormRecognizer.Training.TrainingStatus.Succeeded) { throw null; }
     }
     public partial class FormSelectionMark : Azure.AI.FormRecognizer.Models.FormElement
     {

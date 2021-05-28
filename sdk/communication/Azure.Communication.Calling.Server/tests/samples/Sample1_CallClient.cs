@@ -12,7 +12,7 @@ namespace Azure.Communication.Calling.Server.Tests.samples
     /// <summary>
     /// Samples that are used in the README.md file.
     /// </summary>
-    public partial class Sample1_CallClient : ServerCallingLiveTestBase
+    public partial class Sample1_CallClient : CallingServerLiveTestBase
     {
         public Sample1_CallClient(bool isAsync) : base(isAsync)
         {
@@ -22,7 +22,7 @@ namespace Azure.Communication.Calling.Server.Tests.samples
         [AsyncOnly]
         public async Task CreateCallAsync()
         {
-            var sourceIdentity = await ServerCallingClientsLiveTests.CreateUserAsync(TestEnvironment.LiveTestStaticConnectionString).ConfigureAwait(false);
+            var sourceIdentity = await CallingServerClientsLiveTests.CreateUserAsync(TestEnvironment.LiveTestStaticConnectionString).ConfigureAwait(false);
             var source = new CommunicationUserIdentifier(sourceIdentity.Id);
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
@@ -34,9 +34,9 @@ namespace Azure.Communication.Calling.Server.Tests.samples
             Console.WriteLine("Performing CreateCall operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCallAsync
             CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
-                //@@ source: "<source-identifier>", // Your Azure Communication Resource Guid Id used to make a Call
-                //@@ targets: "<targets-phone-number>", // E.164 formatted recipient phone number
-                //@@ callOptions: "<callOptions-object>", // The request payload for creating a call.
+                //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
+                //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
+                //@@ callOptions: <callOptions-object>, // The request payload for creating a call.
                 /*@@*/ source: source,
                 /*@@*/ targets: targets,
                 /*@@*/ callOptions: createCallOption);
@@ -48,7 +48,7 @@ namespace Azure.Communication.Calling.Server.Tests.samples
         [SyncOnly]
         public void CreateCall()
         {
-            var sourceIdentity = ServerCallingClientsLiveTests.CreateUser(TestEnvironment.LiveTestStaticConnectionString);
+            var sourceIdentity = CallingServerClientsLiveTests.CreateUser(TestEnvironment.LiveTestStaticConnectionString);
             var source = new CommunicationUserIdentifier(sourceIdentity.Id);
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
@@ -60,9 +60,9 @@ namespace Azure.Communication.Calling.Server.Tests.samples
             Console.WriteLine("Performing CreateCall operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCall
             CreateCallResponse createCallResponse = callClient.CreateCall(
-                //@@ source: "<source-identifier>", // Your Azure Communication Resource Guid Id used to make a Call
-                //@@ targets: "<targets-phone-number>", // E.164 formatted recipient phone number
-                //@@ callOptions: "<callOptions-object>", // The request payload for creating a call.
+                //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
+                //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
+                //@@ callOptions: <callOptions-object>, // The request payload for creating a call.
                 /*@@*/ source: source,
                 /*@@*/ targets: targets,
                 /*@@*/ callOptions: createCallOption);
