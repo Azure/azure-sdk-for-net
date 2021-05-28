@@ -16,7 +16,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary>
         /// The result info.
         /// </summary>
-        public ResultInfo ResultInfo { get; set; }
+        public ResultInfoInternal ResultInfo { get; set; }
 
         /// <summary>
         /// The operation context.
@@ -26,7 +26,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary>
         /// The status of the operation.
         /// </summary>
-        public OperationStatus Status { get; set; }
+        public OperationStatusModel Status { get; set; }
 
         /// <summary>
         /// The call leg Id .
@@ -38,7 +38,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status. </param>
         /// <param name="callLegId"> The call leg id. </param>
-        public PlayAudioResultEvent(ResultInfo resultInfo, string operationContext, OperationStatus status, string callLegId)
+        public PlayAudioResultEvent(ResultInfoInternal resultInfo, string operationContext, OperationStatusModel status, string callLegId)
         {
             ResultInfo = resultInfo;
             OperationContext = operationContext;

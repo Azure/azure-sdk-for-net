@@ -95,13 +95,13 @@ namespace Azure.Communication.Calling.Server
         /// Create a Call Requestion from source identity to targets identity asynchronously.
         /// <param name="source"> The source of the call. </param>
         /// <param name="targets"> The targets of the call. </param>
-        /// <param name="callOptions"> The call Options. </param>
+        /// <param name="options"> The call Options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual async Task<Response<CreateCallResponse>> CreateCallAsync(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions callOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        public virtual async Task<Response<CreateCallResponse>> CreateCallAsync(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(CreateCall)}");
             scope.Start();
@@ -109,21 +109,20 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(source, nameof(source));
                 Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-                Argument.AssertNotNull(callOptions, nameof(callOptions));
+                Argument.AssertNotNull(options, nameof(options));
 
-                CreateCallRequestInternal request = new CreateCallRequestInternal(
+                var sourceAlternateIdentity = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+
+                return await RestClient.CreateCallAsync(
                     targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                     CommunicationIdentifierSerializer.Serialize(source),
-                    callOptions.CallbackUri?.AbsoluteUri,
-                    callOptions.RequestedModalities,
-                    callOptions.RequestedCallEvents);
-
-                if (callOptions.AlternateCallerId != null)
-                {
-                    request.SourceAlternateIdentity = new PhoneNumberIdentifierModel(callOptions.AlternateCallerId.PhoneNumber);
-                }
-
-                return await RestClient.CreateCallAsync(request, cancellationToken).ConfigureAwait(false);
+                    options.CallbackUri.AbsoluteUri,
+                    options.RequestedModalities,
+                    options.RequestedCallEvents,
+                    sourceAlternateIdentity,
+                    options.Subject,
+                    cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -135,13 +134,13 @@ namespace Azure.Communication.Calling.Server
         /// Create a Call Requestion from source identity to targets identity.
         /// <param name="source"> The source of the call. </param>
         /// <param name="targets"> The targets of the call. </param>
-        /// <param name="callOptions"> The call Options. </param>
+        /// <param name="options"> The call Options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual Response<CreateCallResponse> CreateCall(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions callOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        public virtual Response<CreateCallResponse> CreateCall(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(CreateCall)}");
             scope.Start();
@@ -149,21 +148,20 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(source, nameof(source));
                 Argument.AssertNotNullOrEmpty(targets, nameof(targets));
-                Argument.AssertNotNull(callOptions, nameof(callOptions));
+                Argument.AssertNotNull(options, nameof(options));
 
-                CreateCallRequestInternal request = new CreateCallRequestInternal(
+                var sourceAlternateIdentity = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+
+                return  RestClient.CreateCall(
                     targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                     CommunicationIdentifierSerializer.Serialize(source),
-                    callOptions.CallbackUri.AbsoluteUri,
-                    callOptions.RequestedModalities,
-                    callOptions.RequestedCallEvents);
-
-                if (callOptions.AlternateCallerId != null)
-                {
-                    request.SourceAlternateIdentity = new PhoneNumberIdentifierModel(callOptions.AlternateCallerId.PhoneNumber);
-                }
-
-                return RestClient.CreateCall(request, cancellationToken);
+                    options.CallbackUri?.AbsoluteUri,
+                    options.RequestedModalities,
+                    options.RequestedCallEvents,
+                    sourceAlternateIdentity,
+                    options.Subject,
+                    cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -288,51 +286,6 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Play Audio. </summary>
         /// <param name="callLegId"> The call leg id. </param>
-        /// <param name="request"> Play audio request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, PlayAudioRequest request, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(PlayAudio)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(request, nameof(request));
-                return await RestClient.PlayAudioAsync(callLegId, request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Play Audio. </summary>
-        /// <param name="callLegId"> The call leg id. </param>
-        /// <param name="request"> Play audio request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual Response<PlayAudioResponse> PlayAudio(string callLegId, PlayAudioRequest request, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(PlayAudio)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(request, nameof(request));
-
-                return RestClient.PlayAudio(callLegId, request, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Play Audio. </summary>
-        /// <param name="callLegId"> The call leg id. </param>
         /// <param name="audioFileUri"> The uri of the audio file. </param>
         /// <param name="loop">The flag to indicate if audio file need to be played in a loop.</param>
         /// <param name="operationContext">The operation context. </param>
@@ -340,21 +293,23 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, Uri audioFileUri, bool loop, string operationContext, CancellationToken cancellationToken = default)
+            => await PlayAudioAsync(callLegId, new PlayAudioOptions { AudioFileUri = audioFileUri, Loop = loop, OperationContext = operationContext }, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Play Audio. </summary>
+        /// <param name="callLegId"> The call leg id. </param>
+        /// <param name="options"> Play audio request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+                Argument.AssertNotNull(options, nameof(options));
 
-                PlayAudioRequest request = new PlayAudioRequest()
-                {
-                    AudioFileUri = audioFileUri.AbsoluteUri,
-                    Loop = loop,
-                    OperationContext = operationContext
-                };
-
-                return await RestClient.PlayAudioAsync(callLegId, request, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PlayAudioAsync(callLegId, options.AudioFileId, options.Loop, options.OperationContext, options.AudioFileId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -372,21 +327,23 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
         public virtual Response<PlayAudioResponse> PlayAudio(string callLegId, Uri audioFileUri, bool loop, string operationContext, CancellationToken cancellationToken = default)
+            => PlayAudio(callLegId, new PlayAudioOptions { AudioFileUri = audioFileUri, Loop = loop, OperationContext = operationContext }, cancellationToken);
+
+        /// <summary> Play Audio. </summary>
+        /// <param name="callLegId"> The call leg id. </param>
+        /// <param name="options"> Play audio request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<PlayAudioResponse> PlayAudio(string callLegId, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+                Argument.AssertNotNull(options, nameof(options));
 
-                PlayAudioRequest request = new PlayAudioRequest()
-                {
-                    AudioFileUri = audioFileUri.AbsoluteUri,
-                    Loop = loop,
-                    OperationContext = operationContext
-                };
-
-                return RestClient.PlayAudio(callLegId, request, cancellationToken);
+                return RestClient.PlayAudio(callLegId, options.AudioFileId, options.Loop, options.OperationContext, options.AudioFileId, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -410,19 +367,14 @@ namespace Azure.Communication.Calling.Server
             try
             {
                 Argument.AssertNotNullOrEmpty(participants, nameof(participants));
+                Argument.AssertNotNullOrEmpty(alternateCallerId, nameof(alternateCallerId));
 
-                var participantsInternal = participants.Select(p => CommunicationIdentifierSerializer.Serialize(p));
-                InviteParticipantsRequestInternal request = new InviteParticipantsRequestInternal(participantsInternal)
-                {
-                    OperationContext = operationContext
-                };
-
-                if (!string.IsNullOrEmpty(alternateCallerId))
-                {
-                    request.AlternateCallerId = new PhoneNumberIdentifierModel(alternateCallerId);
-                }
-
-                return await RestClient.InviteParticipantsAsync(callLegId, request, cancellationToken).ConfigureAwait(false);
+                return await RestClient.InviteParticipantsAsync(callLegId,
+                    participants.Select(p => CommunicationIdentifierSerializer.Serialize(p)),
+                    new PhoneNumberIdentifierModel(alternateCallerId),
+                    operationContext,
+                    null,
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -446,19 +398,14 @@ namespace Azure.Communication.Calling.Server
             try
             {
                 Argument.AssertNotNullOrEmpty(participants, nameof(participants));
+                Argument.AssertNotNullOrEmpty(alternateCallerId, nameof(alternateCallerId));
 
-                var participantsInternal = participants.Select(p => CommunicationIdentifierSerializer.Serialize(p));
-                InviteParticipantsRequestInternal request = new InviteParticipantsRequestInternal(participantsInternal)
-                {
-                    OperationContext = operationContext
-                };
-
-                if (!string.IsNullOrEmpty(alternateCallerId))
-                {
-                    request.AlternateCallerId = new PhoneNumberIdentifierModel(alternateCallerId);
-                }
-
-                return RestClient.InviteParticipants(callLegId, request, cancellationToken);
+                return RestClient.InviteParticipants(callLegId,
+                    participants.Select(p => CommunicationIdentifierSerializer.Serialize(p)),
+                    new PhoneNumberIdentifierModel(alternateCallerId),
+                    operationContext,
+                    null,
+                    cancellationToken);
             }
             catch (Exception ex)
             {

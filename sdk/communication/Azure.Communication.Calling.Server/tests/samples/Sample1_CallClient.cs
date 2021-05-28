@@ -27,8 +27,8 @@ namespace Azure.Communication.Calling.Server.Tests.samples
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new List<CallModality> { CallModality.Audio },
-                   new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived });
+                   new List<CallModalityModel> { CallModalityModel.Audio },
+                   new List<EventSubscriptionTypeModel> { EventSubscriptionTypeModel.ParticipantsUpdated, EventSubscriptionTypeModel.DtmfReceived });
 
             CallClient callClient = CreateServerCallingClient();
             Console.WriteLine("Performing CreateCall operation");
@@ -36,10 +36,10 @@ namespace Azure.Communication.Calling.Server.Tests.samples
             CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-                //@@ callOptions: <callOptions-object>, // The request payload for creating a call.
+                //@@ options: <callOptions-object>, // The request payload for creating a call.
                 /*@@*/ source: source,
                 /*@@*/ targets: targets,
-                /*@@*/ callOptions: createCallOption);
+                /*@@*/ options: createCallOption);
             Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallAsync
         }
@@ -53,8 +53,8 @@ namespace Azure.Communication.Calling.Server.Tests.samples
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new List<CallModality> { CallModality.Audio },
-                   new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived });
+                   new List<CallModalityModel> { CallModalityModel.Audio },
+                   new List<EventSubscriptionTypeModel> { EventSubscriptionTypeModel.ParticipantsUpdated, EventSubscriptionTypeModel.DtmfReceived });
 
             CallClient callClient = CreateServerCallingClient();
             Console.WriteLine("Performing CreateCall operation");
@@ -62,10 +62,10 @@ namespace Azure.Communication.Calling.Server.Tests.samples
             CreateCallResponse createCallResponse = callClient.CreateCall(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-                //@@ callOptions: <callOptions-object>, // The request payload for creating a call.
+                //@@ options: <callOptions-object>, // The request payload for creating a call.
                 /*@@*/ source: source,
                 /*@@*/ targets: targets,
-                /*@@*/ callOptions: createCallOption);
+                /*@@*/ options: createCallOption);
             Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCall
         }

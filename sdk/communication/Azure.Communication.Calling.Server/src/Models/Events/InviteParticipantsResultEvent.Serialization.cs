@@ -18,9 +18,9 @@ namespace Azure.Communication.Calling.Server
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            Optional<ResultInfo> resultInfo = default;
+            Optional<ResultInfoInternal> resultInfo = default;
             Optional<string> operationContext = default;
-            Optional<OperationStatus> status = default;
+            Optional<OperationStatusModel> status = default;
             Optional<string> callLegId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -31,7 +31,7 @@ namespace Azure.Communication.Calling.Server
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resultInfo = ResultInfo.DeserializeResultInfo(property.Value);
+                    resultInfo = ResultInfoInternal.DeserializeResultInfoInternal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationContext") || property.NameEquals("OperationContext"))
@@ -46,7 +46,7 @@ namespace Azure.Communication.Calling.Server
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new OperationStatusModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("callLegId") || property.NameEquals("CallLegId"))

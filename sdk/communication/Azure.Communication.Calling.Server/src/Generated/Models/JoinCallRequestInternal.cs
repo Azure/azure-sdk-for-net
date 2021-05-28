@@ -21,7 +21,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="requestedModalities"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public JoinCallRequestInternal(CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents)
+        public JoinCallRequestInternal(CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents)
         {
             if (source == null)
             {
@@ -53,8 +53,8 @@ namespace Azure.Communication.Calling.Server
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
         /// <summary> The requested modalities. </summary>
-        public IList<CallModality> RequestedModalities { get; }
+        public IList<CallModalityModel> RequestedModalities { get; }
         /// <summary> The requested call events to subscribe to. </summary>
-        public IList<EventSubscriptionType> RequestedCallEvents { get; }
+        public IList<EventSubscriptionTypeModel> RequestedCallEvents { get; }
     }
 }

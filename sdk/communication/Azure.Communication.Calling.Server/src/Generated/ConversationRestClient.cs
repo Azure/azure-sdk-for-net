@@ -6,10 +6,13 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Communication;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -28,7 +31,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ConversationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-04-15-preview1")
+        public ConversationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-28-preview0")
         {
             if (endpoint == null)
             {
@@ -45,7 +48,7 @@ namespace Azure.Communication.Calling.Server
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateJoinCallRequest(string conversationId, JoinCallRequestInternal callRequest)
+        internal HttpMessage CreateJoinCallRequest(string conversationId, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, string subject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,29 +62,49 @@ namespace Azure.Communication.Calling.Server
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            var model = new JoinCallRequestInternal(source, callbackUri, requestedModalities.ToList(), requestedCallEvents.ToList())
+            {
+                Subject = subject
+            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(callRequest);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
         /// <summary> Join a call. </summary>
         /// <param name="conversationId"> The conversation id which can be guid or encoded cs url. </param>
-        /// <param name="callRequest"> The join call request. </param>
+        /// <param name="source"> The source of the call. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
+        /// <param name="requestedModalities"> The requested modalities. </param>
+        /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
+        /// <param name="subject"> The subject. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="callRequest"/> is null. </exception>
-        public async Task<Response<JoinCallResponse>> JoinCallAsync(string conversationId, JoinCallRequestInternal callRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/>, <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
+        public async Task<Response<JoinCallResponse>> JoinCallAsync(string conversationId, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, string subject = null, CancellationToken cancellationToken = default)
         {
             if (conversationId == null)
             {
                 throw new ArgumentNullException(nameof(conversationId));
             }
-            if (callRequest == null)
+            if (source == null)
             {
-                throw new ArgumentNullException(nameof(callRequest));
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (callbackUri == null)
+            {
+                throw new ArgumentNullException(nameof(callbackUri));
+            }
+            if (requestedModalities == null)
+            {
+                throw new ArgumentNullException(nameof(requestedModalities));
+            }
+            if (requestedCallEvents == null)
+            {
+                throw new ArgumentNullException(nameof(requestedCallEvents));
             }
 
-            using var message = CreateJoinCallRequest(conversationId, callRequest);
+            using var message = CreateJoinCallRequest(conversationId, source, callbackUri, requestedModalities, requestedCallEvents, subject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -99,21 +122,37 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Join a call. </summary>
         /// <param name="conversationId"> The conversation id which can be guid or encoded cs url. </param>
-        /// <param name="callRequest"> The join call request. </param>
+        /// <param name="source"> The source of the call. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
+        /// <param name="requestedModalities"> The requested modalities. </param>
+        /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
+        /// <param name="subject"> The subject. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="callRequest"/> is null. </exception>
-        public Response<JoinCallResponse> JoinCall(string conversationId, JoinCallRequestInternal callRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/>, <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
+        public Response<JoinCallResponse> JoinCall(string conversationId, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, string subject = null, CancellationToken cancellationToken = default)
         {
             if (conversationId == null)
             {
                 throw new ArgumentNullException(nameof(conversationId));
             }
-            if (callRequest == null)
+            if (source == null)
             {
-                throw new ArgumentNullException(nameof(callRequest));
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (callbackUri == null)
+            {
+                throw new ArgumentNullException(nameof(callbackUri));
+            }
+            if (requestedModalities == null)
+            {
+                throw new ArgumentNullException(nameof(requestedModalities));
+            }
+            if (requestedCallEvents == null)
+            {
+                throw new ArgumentNullException(nameof(requestedCallEvents));
             }
 
-            using var message = CreateJoinCallRequest(conversationId, callRequest);
+            using var message = CreateJoinCallRequest(conversationId, source, callbackUri, requestedModalities, requestedCallEvents, subject);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -129,7 +168,7 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        internal HttpMessage CreateInviteParticipantsRequest(string conversationId, InviteParticipantsRequestInternal inviteParticipantsRequest)
+        internal HttpMessage CreateInviteParticipantsRequest(string conversationId, IEnumerable<CommunicationIdentifierModel> participants, PhoneNumberIdentifierModel alternateCallerId, string operationContext, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -143,29 +182,38 @@ namespace Azure.Communication.Calling.Server
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            var model = new InviteParticipantsRequestInternal(participants.ToList())
+            {
+                AlternateCallerId = alternateCallerId,
+                OperationContext = operationContext,
+                CallbackUri = callbackUri
+            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(inviteParticipantsRequest);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
         /// <summary> Invite participants to the call. </summary>
         /// <param name="conversationId"> Conversation id. </param>
-        /// <param name="inviteParticipantsRequest"> Invite participant request. </param>
+        /// <param name="participants"> The list of participants to be added to the call. </param>
+        /// <param name="alternateCallerId"> The alternate identity of source participant. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="inviteParticipantsRequest"/> is null. </exception>
-        public async Task<Response> InviteParticipantsAsync(string conversationId, InviteParticipantsRequestInternal inviteParticipantsRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="participants"/> is null. </exception>
+        public async Task<Response> InviteParticipantsAsync(string conversationId, IEnumerable<CommunicationIdentifierModel> participants, PhoneNumberIdentifierModel alternateCallerId = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (conversationId == null)
             {
                 throw new ArgumentNullException(nameof(conversationId));
             }
-            if (inviteParticipantsRequest == null)
+            if (participants == null)
             {
-                throw new ArgumentNullException(nameof(inviteParticipantsRequest));
+                throw new ArgumentNullException(nameof(participants));
             }
 
-            using var message = CreateInviteParticipantsRequest(conversationId, inviteParticipantsRequest);
+            using var message = CreateInviteParticipantsRequest(conversationId, participants, alternateCallerId, operationContext, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -178,21 +226,24 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Invite participants to the call. </summary>
         /// <param name="conversationId"> Conversation id. </param>
-        /// <param name="inviteParticipantsRequest"> Invite participant request. </param>
+        /// <param name="participants"> The list of participants to be added to the call. </param>
+        /// <param name="alternateCallerId"> The alternate identity of source participant. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="inviteParticipantsRequest"/> is null. </exception>
-        public Response InviteParticipants(string conversationId, InviteParticipantsRequestInternal inviteParticipantsRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="participants"/> is null. </exception>
+        public Response InviteParticipants(string conversationId, IEnumerable<CommunicationIdentifierModel> participants, PhoneNumberIdentifierModel alternateCallerId = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (conversationId == null)
             {
                 throw new ArgumentNullException(nameof(conversationId));
             }
-            if (inviteParticipantsRequest == null)
+            if (participants == null)
             {
-                throw new ArgumentNullException(nameof(inviteParticipantsRequest));
+                throw new ArgumentNullException(nameof(participants));
             }
 
-            using var message = CreateInviteParticipantsRequest(conversationId, inviteParticipantsRequest);
+            using var message = CreateInviteParticipantsRequest(conversationId, participants, alternateCallerId, operationContext, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -274,43 +325,43 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        internal HttpMessage CreateStartRecordingRequest(string conversationId, StartCallRecordingRequest request)
+        internal HttpMessage CreateStartRecordingRequest(string conversationId, string recordingStateCallbackUri)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/conversations/", false);
             uri.AppendPath(conversationId, true);
             uri.AppendPath("/recordings", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new StartCallRecordingRequestInternal()
+            {
+                RecordingStateCallbackUri = recordingStateCallbackUri
+            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Start call recording request. </summary>
         /// <param name="conversationId"> Encoded conversation url. </param>
-        /// <param name="request"> Request body of start call recording request. </param>
+        /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="request"/> is null. </exception>
-        public async Task<Response<StartCallRecordingResponse>> StartRecordingAsync(string conversationId, StartCallRecordingRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        public async Task<Response<StartCallRecordingResponse>> StartRecordingAsync(string conversationId, string recordingStateCallbackUri = null, CancellationToken cancellationToken = default)
         {
             if (conversationId == null)
             {
                 throw new ArgumentNullException(nameof(conversationId));
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
 
-            using var message = CreateStartRecordingRequest(conversationId, request);
+            using var message = CreateStartRecordingRequest(conversationId, recordingStateCallbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -328,21 +379,17 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Start call recording request. </summary>
         /// <param name="conversationId"> Encoded conversation url. </param>
-        /// <param name="request"> Request body of start call recording request. </param>
+        /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="request"/> is null. </exception>
-        public Response<StartCallRecordingResponse> StartRecording(string conversationId, StartCallRecordingRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        public Response<StartCallRecordingResponse> StartRecording(string conversationId, string recordingStateCallbackUri = null, CancellationToken cancellationToken = default)
         {
             if (conversationId == null)
             {
                 throw new ArgumentNullException(nameof(conversationId));
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
 
-            using var message = CreateStartRecordingRequest(conversationId, request);
+            using var message = CreateStartRecordingRequest(conversationId, recordingStateCallbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

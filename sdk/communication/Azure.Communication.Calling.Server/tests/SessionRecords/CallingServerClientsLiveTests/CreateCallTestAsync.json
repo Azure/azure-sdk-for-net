@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "410",
         "Content-Type": "application/json",
-        "Date": "Fri, 28 May 2021 18:08:03 GMT",
-        "traceparent": "00-757e050015728c408ea32f5bb8a104e9-9d3a0b94927c6347-00",
+        "Date": "Fri, 28 May 2021 23:03:05 GMT",
+        "traceparent": "00-6b446904f88b514a88acb78abd0a8dfa-df8afd4b9326cc44-00",
         "User-Agent": "azsdk-net-Communication.Calling.Server/1.0.0-alpha.20210528.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "3311b2a5c2466c95f5e2317eac00670f",
         "x-ms-content-sha256": "Sanitized",
@@ -28,7 +28,7 @@
         ],
         "source": {
           "communicationUser": {
-            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-540b-0df9-740a-113a0d00729b"
+            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-5519-28e0-7f07-113a0d009106"
           }
         },
         "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
@@ -42,16 +42,16 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Client-Request-Id": "325e63d0-af87-4518-9245-65c61aeefe64",
+        "Client-Request-Id": "542072d1-5217-4167-aa2d-b5f80e3617da",
         "Content-Length": "52",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 28 May 2021 18:08:02 GMT",
-        "X-Azure-Ref": "0gzGxYAAAAACODWxMdZS8TZRT/DCMBIdaV1NURURHRTA4MTMAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "Date": "Fri, 28 May 2021 23:03:04 GMT",
+        "X-Azure-Ref": "0qXaxYAAAAABop8rrt65EQISrXtzQ3XCMV1NURURHRTA4MTEAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "2caf2208-4d08-4bf1-8601-2ba95c8ad806"
+        "X-Microsoft-Skype-Chain-ID": "5b0fc091-9e37-49fa-a8c2-52976d21cd45"
       },
       "ResponseBody": {
-        "callLegId": "421f0b00-8772-4661-82a7-b2204595439f"
+        "callLegId": "421f0b00-c62f-45bb-993f-fd85edf06581"
       }
     }
   ],

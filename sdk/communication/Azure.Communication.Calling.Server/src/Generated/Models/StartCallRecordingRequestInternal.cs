@@ -8,10 +8,10 @@
 namespace Azure.Communication.Calling.Server
 {
     /// <summary> The request payload start call recording operation. </summary>
-    public partial class StartCallRecordingRequest
+    internal partial class StartCallRecordingRequestInternal
     {
-        /// <summary> Initializes a new instance of StartCallRecordingRequest. </summary>
-        public StartCallRecordingRequest()
+        /// <summary> Initializes a new instance of StartCallRecordingRequestInternal. </summary>
+        public StartCallRecordingRequestInternal()
         {
         }
 

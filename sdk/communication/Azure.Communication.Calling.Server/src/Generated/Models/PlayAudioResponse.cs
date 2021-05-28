@@ -20,7 +20,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="status"> Gets or sets the status of the operation. </param>
         /// <param name="operationContext"> Gets or sets the operation context. </param>
         /// <param name="resultInfo"> Gets or sets the result info. </param>
-        internal PlayAudioResponse(string id, OperationStatus? status, string operationContext, ResultInfo resultInfo)
+        internal PlayAudioResponse(string id, OperationStatusModel? status, string operationContext, ResultInfoInternal resultInfo)
         {
             Id = id;
             Status = status;
@@ -31,10 +31,10 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Gets or sets the identifier. </summary>
         public string Id { get; }
         /// <summary> Gets or sets the status of the operation. </summary>
-        public OperationStatus? Status { get; }
+        public OperationStatusModel? Status { get; }
         /// <summary> Gets or sets the operation context. </summary>
         public string OperationContext { get; }
         /// <summary> Gets or sets the result info. </summary>
-        public ResultInfo ResultInfo { get; }
+        public ResultInfoInternal ResultInfo { get; }
     }
 }

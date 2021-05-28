@@ -17,12 +17,12 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Initializes a new instance of GetCallRecordingStateResponse. </summary>
         /// <param name="recordingState"> The recording state of the recording. </param>
-        internal GetCallRecordingStateResponse(CallRecordingState? recordingState)
+        internal GetCallRecordingStateResponse(CallRecordingStateModel? recordingState)
         {
             RecordingState = recordingState;
         }
 
         /// <summary> The recording state of the recording. </summary>
-        public CallRecordingState? RecordingState { get; }
+        public CallRecordingStateModel? RecordingState { get; }
     }
 }

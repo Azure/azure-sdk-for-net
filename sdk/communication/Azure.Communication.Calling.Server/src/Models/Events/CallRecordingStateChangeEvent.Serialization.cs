@@ -22,7 +22,7 @@ namespace Azure.Communication.Calling.Server
             JsonElement element = document.RootElement;
 
             Optional<string> recordingId = default;
-            Optional<CallRecordingState> state = default;
+            Optional<CallRecordingStateModel> state = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<string> conversationId = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.Communication.Calling.Server
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new CallRecordingState(property.Value.GetString());
+                    state = new CallRecordingStateModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startDateTime") || property.NameEquals("StartDateTime"))

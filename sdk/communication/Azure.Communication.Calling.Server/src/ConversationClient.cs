@@ -107,8 +107,6 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
                 JoinCallRequestInternal request = new JoinCallRequestInternal(
@@ -117,7 +115,15 @@ namespace Azure.Communication.Calling.Server
                     callOptions.RequestedModalities,
                     callOptions.RequestedCallEvents);
 
-                return await RestClient.JoinCallAsync(groupId, request, cancellationToken).ConfigureAwait(false);
+                return await RestClient.JoinCallAsync(
+                    groupId,
+                    CommunicationIdentifierSerializer.Serialize(source),
+                    callOptions.CallbackUri.AbsoluteUri,
+                    callOptions.RequestedModalities,
+                    callOptions.RequestedCallEvents,
+                    null,
+                    cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -141,8 +147,6 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
                 JoinCallRequestInternal request = new JoinCallRequestInternal(
@@ -151,7 +155,15 @@ namespace Azure.Communication.Calling.Server
                     callOptions.RequestedModalities,
                     callOptions.RequestedCallEvents);
 
-                return RestClient.JoinCall(groupId, request, cancellationToken);
+                return RestClient.JoinCall(
+                    groupId,
+                    CommunicationIdentifierSerializer.Serialize(source),
+                    callOptions.CallbackUri.AbsoluteUri,
+                    callOptions.RequestedModalities,
+                    callOptions.RequestedCallEvents,
+                    null,
+                    cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -172,15 +184,7 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(recordingStateCallbackUri, nameof(recordingStateCallbackUri));
-
-                StartCallRecordingRequest request = new StartCallRecordingRequest()
-                {
-                    RecordingStateCallbackUri = recordingStateCallbackUri.AbsoluteUri
-                };
-
-                return await RestClient.StartRecordingAsync(conversationId, request, cancellationToken).ConfigureAwait(false);
+                return await RestClient.StartRecordingAsync(conversationId, recordingStateCallbackUri.AbsoluteUri, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -201,15 +205,7 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(recordingStateCallbackUri, nameof(recordingStateCallbackUri));
-
-                StartCallRecordingRequest request = new StartCallRecordingRequest()
-                {
-                    RecordingStateCallbackUri = recordingStateCallbackUri.AbsoluteUri
-                };
-
-                return RestClient.StartRecording(conversationId, request, cancellationToken);
+                return RestClient.StartRecording(conversationId, recordingStateCallbackUri.AbsoluteUri, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -486,22 +482,15 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(callbackUri, nameof(callbackUri));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
                 Argument.AssertNotNull(participantId, nameof(participantId));
 
-                var target = new CommunicationUserIdentifier(participantId);
-                var participants = new List<CommunicationIdentifier> { target };
-
-                var participantsInternal = participants.Select(p => CommunicationIdentifierSerializer.Serialize(p));
-                InviteParticipantsRequestInternal request = new InviteParticipantsRequestInternal(participantsInternal)
-                {
-                    OperationContext = operationContext,
-                    CallbackUri = callbackUri.AbsoluteUri
+                var target = new CommunicationIdentifierModel() {
+                    CommunicationUser = new CommunicationUserIdentifierModel(participantId)
                 };
+                var participants = new List<CommunicationIdentifierModel> { target };
 
-                return RestClient.InviteParticipants(conversationId, request, cancellationToken);
+                return RestClient.InviteParticipants(conversationId, participants, null, operationContext, callbackUri.AbsoluteUri, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -529,17 +518,13 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(operationContext, nameof(operationContext));
                 Argument.AssertNotNull(participantId, nameof(participantId));
 
-                var target = new CommunicationUserIdentifier(participantId);
-                var participants = new List<CommunicationIdentifier> { target };
-
-                var participantsInternal = participants.Select(p => CommunicationIdentifierSerializer.Serialize(p));
-                InviteParticipantsRequestInternal request = new InviteParticipantsRequestInternal(participantsInternal)
+                var target = new CommunicationIdentifierModel()
                 {
-                    OperationContext = operationContext,
-                    CallbackUri = callbackUri.AbsoluteUri
+                    CommunicationUser = new CommunicationUserIdentifierModel(participantId)
                 };
+                var participants = new List<CommunicationIdentifierModel> { target };
 
-                return await RestClient.InviteParticipantsAsync(conversationId, request, cancellationToken).ConfigureAwait(false);
+                return await RestClient.InviteParticipantsAsync(conversationId, participants, null, operationContext, callbackUri.AbsoluteUri, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

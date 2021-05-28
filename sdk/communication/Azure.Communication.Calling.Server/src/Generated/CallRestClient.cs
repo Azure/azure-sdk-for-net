@@ -6,10 +6,13 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Communication;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -28,7 +31,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-04-15-preview1")
+        public CallRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-28-preview0")
         {
             if (endpoint == null)
             {
@@ -45,7 +48,7 @@ namespace Azure.Communication.Calling.Server
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateCallRequest(CreateCallRequestInternal callRequest)
+        internal HttpMessage CreateCreateCallRequest(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, PhoneNumberIdentifierModel sourceAlternateIdentity, string subject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,24 +60,51 @@ namespace Azure.Communication.Calling.Server
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            var model = new CreateCallRequestInternal(targets.ToList(), source, callbackUri, requestedModalities.ToList(), requestedCallEvents.ToList())
+            {
+                SourceAlternateIdentity = sourceAlternateIdentity,
+                Subject = subject
+            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(callRequest);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
         /// <summary> Create a new call. </summary>
-        /// <param name="callRequest"> Create call request. </param>
+        /// <param name="targets"> The targets of the call. </param>
+        /// <param name="source"> The source of the call. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
+        /// <param name="requestedModalities"> The requested modalities. </param>
+        /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
+        /// <param name="sourceAlternateIdentity"> The alternate identity of the source of the call if dialing out to a pstn number. </param>
+        /// <param name="subject"> The subject. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callRequest"/> is null. </exception>
-        public async Task<Response<CreateCallResponse>> CreateCallAsync(CreateCallRequestInternal callRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
+        public async Task<Response<CreateCallResponse>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, PhoneNumberIdentifierModel sourceAlternateIdentity = null, string subject = null, CancellationToken cancellationToken = default)
         {
-            if (callRequest == null)
+            if (targets == null)
             {
-                throw new ArgumentNullException(nameof(callRequest));
+                throw new ArgumentNullException(nameof(targets));
+            }
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (callbackUri == null)
+            {
+                throw new ArgumentNullException(nameof(callbackUri));
+            }
+            if (requestedModalities == null)
+            {
+                throw new ArgumentNullException(nameof(requestedModalities));
+            }
+            if (requestedCallEvents == null)
+            {
+                throw new ArgumentNullException(nameof(requestedCallEvents));
             }
 
-            using var message = CreateCreateCallRequest(callRequest);
+            using var message = CreateCreateCallRequest(targets, source, callbackUri, requestedModalities, requestedCallEvents, sourceAlternateIdentity, subject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -91,17 +121,39 @@ namespace Azure.Communication.Calling.Server
         }
 
         /// <summary> Create a new call. </summary>
-        /// <param name="callRequest"> Create call request. </param>
+        /// <param name="targets"> The targets of the call. </param>
+        /// <param name="source"> The source of the call. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
+        /// <param name="requestedModalities"> The requested modalities. </param>
+        /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
+        /// <param name="sourceAlternateIdentity"> The alternate identity of the source of the call if dialing out to a pstn number. </param>
+        /// <param name="subject"> The subject. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callRequest"/> is null. </exception>
-        public Response<CreateCallResponse> CreateCall(CreateCallRequestInternal callRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
+        public Response<CreateCallResponse> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, PhoneNumberIdentifierModel sourceAlternateIdentity = null, string subject = null, CancellationToken cancellationToken = default)
         {
-            if (callRequest == null)
+            if (targets == null)
             {
-                throw new ArgumentNullException(nameof(callRequest));
+                throw new ArgumentNullException(nameof(targets));
+            }
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (callbackUri == null)
+            {
+                throw new ArgumentNullException(nameof(callbackUri));
+            }
+            if (requestedModalities == null)
+            {
+                throw new ArgumentNullException(nameof(requestedModalities));
+            }
+            if (requestedCallEvents == null)
+            {
+                throw new ArgumentNullException(nameof(requestedCallEvents));
             }
 
-            using var message = CreateCreateCallRequest(callRequest);
+            using var message = CreateCreateCallRequest(targets, source, callbackUri, requestedModalities, requestedCallEvents, sourceAlternateIdentity, subject);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -236,43 +288,57 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        internal HttpMessage CreatePlayAudioRequest(string callId, PlayAudioRequest request)
+        internal HttpMessage CreatePlayAudioRequest(string callId, string audioFileUri, bool? loop, string operationContext, string audioFileId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/calls/", false);
             uri.AppendPath(callId, true);
             uri.AppendPath("/PlayAudio", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new PlayAudioRequestInternal()
+            {
+                AudioFileUri = audioFileUri,
+                Loop = loop,
+                OperationContext = operationContext,
+                AudioFileId = audioFileId
+            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Play audio in a call. </summary>
         /// <param name="callId"> The call id. </param>
-        /// <param name="request"> Play audio request. </param>
+        /// <param name="audioFileUri">
+        /// The media resource uri of the play audio request.
+        /// 
+        /// Currently only Wave file (.wav) format audio prompts are supported.
+        /// 
+        /// More specifically, the audio content in the wave file must be mono (single-channel),
+        /// 
+        /// 16-bit samples with a 16,000 (16KHz) sampling rate.
+        /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="request"/> is null. </exception>
-        public async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callId, PlayAudioRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> is null. </exception>
+        public async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callId, string audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, CancellationToken cancellationToken = default)
         {
             if (callId == null)
             {
                 throw new ArgumentNullException(nameof(callId));
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
 
-            using var message = CreatePlayAudioRequest(callId, request);
+            using var message = CreatePlayAudioRequest(callId, audioFileUri, loop, operationContext, audioFileId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -290,21 +356,28 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Play audio in a call. </summary>
         /// <param name="callId"> The call id. </param>
-        /// <param name="request"> Play audio request. </param>
+        /// <param name="audioFileUri">
+        /// The media resource uri of the play audio request.
+        /// 
+        /// Currently only Wave file (.wav) format audio prompts are supported.
+        /// 
+        /// More specifically, the audio content in the wave file must be mono (single-channel),
+        /// 
+        /// 16-bit samples with a 16,000 (16KHz) sampling rate.
+        /// </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="request"/> is null. </exception>
-        public Response<PlayAudioResponse> PlayAudio(string callId, PlayAudioRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> is null. </exception>
+        public Response<PlayAudioResponse> PlayAudio(string callId, string audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, CancellationToken cancellationToken = default)
         {
             if (callId == null)
             {
                 throw new ArgumentNullException(nameof(callId));
             }
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
 
-            using var message = CreatePlayAudioRequest(callId, request);
+            using var message = CreatePlayAudioRequest(callId, audioFileUri, loop, operationContext, audioFileId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -390,7 +463,7 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        internal HttpMessage CreateInviteParticipantsRequest(string callId, InviteParticipantsRequestInternal inviteParticipantsRequest)
+        internal HttpMessage CreateInviteParticipantsRequest(string callId, IEnumerable<CommunicationIdentifierModel> participants, PhoneNumberIdentifierModel alternateCallerId, string operationContext, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -404,29 +477,38 @@ namespace Azure.Communication.Calling.Server
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            var model = new InviteParticipantsRequestInternal(participants.ToList())
+            {
+                AlternateCallerId = alternateCallerId,
+                OperationContext = operationContext,
+                CallbackUri = callbackUri
+            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(inviteParticipantsRequest);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
         /// <summary> Invite participants to the call. </summary>
         /// <param name="callId"> Call id. </param>
-        /// <param name="inviteParticipantsRequest"> Invite participant request. </param>
+        /// <param name="participants"> The list of participants to be added to the call. </param>
+        /// <param name="alternateCallerId"> The alternate identity of source participant. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="inviteParticipantsRequest"/> is null. </exception>
-        public async Task<Response> InviteParticipantsAsync(string callId, InviteParticipantsRequestInternal inviteParticipantsRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="participants"/> is null. </exception>
+        public async Task<Response> InviteParticipantsAsync(string callId, IEnumerable<CommunicationIdentifierModel> participants, PhoneNumberIdentifierModel alternateCallerId = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callId == null)
             {
                 throw new ArgumentNullException(nameof(callId));
             }
-            if (inviteParticipantsRequest == null)
+            if (participants == null)
             {
-                throw new ArgumentNullException(nameof(inviteParticipantsRequest));
+                throw new ArgumentNullException(nameof(participants));
             }
 
-            using var message = CreateInviteParticipantsRequest(callId, inviteParticipantsRequest);
+            using var message = CreateInviteParticipantsRequest(callId, participants, alternateCallerId, operationContext, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -439,21 +521,24 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Invite participants to the call. </summary>
         /// <param name="callId"> Call id. </param>
-        /// <param name="inviteParticipantsRequest"> Invite participant request. </param>
+        /// <param name="participants"> The list of participants to be added to the call. </param>
+        /// <param name="alternateCallerId"> The alternate identity of source participant. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="inviteParticipantsRequest"/> is null. </exception>
-        public Response InviteParticipants(string callId, InviteParticipantsRequestInternal inviteParticipantsRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="participants"/> is null. </exception>
+        public Response InviteParticipants(string callId, IEnumerable<CommunicationIdentifierModel> participants, PhoneNumberIdentifierModel alternateCallerId = null, string operationContext = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callId == null)
             {
                 throw new ArgumentNullException(nameof(callId));
             }
-            if (inviteParticipantsRequest == null)
+            if (participants == null)
             {
-                throw new ArgumentNullException(nameof(inviteParticipantsRequest));
+                throw new ArgumentNullException(nameof(participants));
             }
 
-            using var message = CreateInviteParticipantsRequest(callId, inviteParticipantsRequest);
+            using var message = CreateInviteParticipantsRequest(callId, participants, alternateCallerId, operationContext, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

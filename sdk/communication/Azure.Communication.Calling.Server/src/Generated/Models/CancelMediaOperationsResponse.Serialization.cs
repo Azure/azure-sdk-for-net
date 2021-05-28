@@ -15,9 +15,9 @@ namespace Azure.Communication.Calling.Server
         internal static CancelMediaOperationsResponse DeserializeCancelMediaOperationsResponse(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<OperationStatus> status = default;
+            Optional<OperationStatusModel> status = default;
             Optional<string> operationContext = default;
-            Optional<ResultInfo> resultInfo = default;
+            Optional<ResultInfoInternal> resultInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -32,7 +32,7 @@ namespace Azure.Communication.Calling.Server
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new OperationStatusModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operationContext"))
@@ -47,7 +47,7 @@ namespace Azure.Communication.Calling.Server
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resultInfo = ResultInfo.DeserializeResultInfo(property.Value);
+                    resultInfo = ResultInfoInternal.DeserializeResultInfoInternal(property.Value);
                     continue;
                 }
             }

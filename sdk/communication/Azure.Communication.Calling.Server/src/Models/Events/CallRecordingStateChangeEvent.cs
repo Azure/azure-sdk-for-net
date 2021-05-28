@@ -23,7 +23,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary>
         /// The call recording state.
         /// </summary>
-        public CallRecordingState State { get; set; }
+        public CallRecordingStateModel State { get; set; }
 
         /// <summary>
         /// The time of the recording started
@@ -41,7 +41,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="startDateTime"> The startDateTime. </param>
         /// <param name="conversationId"> The conversation id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/>, <paramref name="state"/>, <paramref name="startDateTime"/>, <paramref name="conversationId"/> is null. </exception>
-        public CallRecordingStateChangeEvent(string recordingId, CallRecordingState state, DateTimeOffset startDateTime, string conversationId)
+        public CallRecordingStateChangeEvent(string recordingId, CallRecordingStateModel state, DateTimeOffset startDateTime, string conversationId)
         {
             if (recordingId == null)
             {

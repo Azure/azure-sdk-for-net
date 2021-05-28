@@ -24,12 +24,12 @@ namespace Azure.Communication.Calling.Server
         /// <param name="operationContext"> Gets or sets the operation context. </param>
         /// <param name="resultInfo"> Gets or sets the result info. </param>
         /// <returns> A new <see cref="Server.PlayAudioResponse"/> instance for mocking. </returns>
-        public static PlayAudioResponse PlayAudioResponse(string id = default, OperationStatus? status = default, string operationContext = default, ResultInfo resultInfo = default)
+        public static PlayAudioResponse PlayAudioResponse(string id = default, OperationStatusModel? status = default, string operationContext = default, ResultInfoInternal resultInfo = default)
         {
             return new PlayAudioResponse(id, status, operationContext, resultInfo);
         }
 
-        /// <summary> Initializes new instance of ResultInfo class. </summary>
+        /// <summary> Initializes new instance of ResultInfoInternal class. </summary>
         /// <param name="code">
         /// Gets or sets the result code
         /// 
@@ -45,10 +45,10 @@ namespace Azure.Communication.Calling.Server
         /// 
         /// The message is a detail explanation of subcode.
         /// </param>
-        /// <returns> A new <see cref="Server.ResultInfo"/> instance for mocking. </returns>
-        public static ResultInfo ResultInfo(int? code = default, int? subcode = default, string message = default)
+        /// <returns> A new <see cref="Server.ResultInfoInternal"/> instance for mocking. </returns>
+        public static ResultInfoInternal ResultInfoInternal(int? code = default, int? subcode = default, string message = default)
         {
-            return new ResultInfo(code, subcode, message);
+            return new ResultInfoInternal(code, subcode, message);
         }
 
         /// <summary> Initializes new instance of CancelMediaOperationsResponse class. </summary>
@@ -57,7 +57,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="operationContext"> Gets or sets the operation context. </param>
         /// <param name="resultInfo"> Gets or sets the result info. </param>
         /// <returns> A new <see cref="Server.CancelMediaOperationsResponse"/> instance for mocking. </returns>
-        public static CancelMediaOperationsResponse CancelMediaOperationsResponse(string id = default, OperationStatus? status = default, string operationContext = default, ResultInfo resultInfo = default)
+        public static CancelMediaOperationsResponse CancelMediaOperationsResponse(string id = default, OperationStatusModel? status = default, string operationContext = default, ResultInfoInternal resultInfo = default)
         {
             return new CancelMediaOperationsResponse(id, status, operationContext, resultInfo);
         }
@@ -81,7 +81,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Initializes new instance of GetCallRecordingStateResponse class. </summary>
         /// <param name="recordingState"> The recording state of the recording. </param>
         /// <returns> A new <see cref="Server.GetCallRecordingStateResponse"/> instance for mocking. </returns>
-        public static GetCallRecordingStateResponse GetCallRecordingStateResponse(CallRecordingState? recordingState = default)
+        public static GetCallRecordingStateResponse GetCallRecordingStateResponse(CallRecordingStateModel? recordingState = default)
         {
             return new GetCallRecordingStateResponse(recordingState);
         }

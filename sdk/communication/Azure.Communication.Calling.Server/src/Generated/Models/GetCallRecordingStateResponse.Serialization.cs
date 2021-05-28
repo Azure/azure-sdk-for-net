@@ -14,7 +14,7 @@ namespace Azure.Communication.Calling.Server
     {
         internal static GetCallRecordingStateResponse DeserializeGetCallRecordingStateResponse(JsonElement element)
         {
-            Optional<CallRecordingState> recordingState = default;
+            Optional<CallRecordingStateModel> recordingState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingState"))
@@ -24,7 +24,7 @@ namespace Azure.Communication.Calling.Server
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recordingState = new CallRecordingState(property.Value.GetString());
+                    recordingState = new CallRecordingStateModel(property.Value.GetString());
                     continue;
                 }
             }

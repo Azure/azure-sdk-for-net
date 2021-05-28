@@ -109,16 +109,16 @@ namespace Azure.Communication.Calling.Server.Tests
         }
 
         [TestCaseSource(nameof(TestData_PlayAudioWithRequest))]
-        public async Task PlayAudioAsyncOverload_Passes(string expectedCallLegId, PlayAudioRequest expectedRequest)
+        public async Task PlayAudioAsyncOverload_Passes(string expectedCallLegId, PlayAudioOptions expectedRequest)
         {
             Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
             Response<PlayAudioResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<string>(), It.IsAny<PlayAudioRequest>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<string>(), It.IsAny<PlayAudioOptions>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
-                .ReturnsAsync((string callLegId, PlayAudioRequest request, CancellationToken token) =>
+                .ReturnsAsync((string callLegId, PlayAudioOptions request, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedCallLegId, callLegId);
                     Assert.AreEqual(expectedRequest, request);
@@ -214,7 +214,7 @@ namespace Azure.Communication.Calling.Server.Tests
                 new object?[] {
                     new CommunicationUserIdentifier("50125645-5dca-4193-877d-4608ed2a0bc2"),
                     new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("+14052882361") },
-                    new CreateCallOptions(new Uri($"https://dummy.ngrok.io/api/incident/callback?secret=h3llowW0rld"), new List<CallModality> { CallModality.Audio }, new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived })
+                    new CreateCallOptions(new Uri($"https://dummy.ngrok.io/api/incident/callback?secret=h3llowW0rld"), new List<CallModalityModel> { CallModalityModel.Audio }, new List<EventSubscriptionTypeModel> { EventSubscriptionTypeModel.ParticipantsUpdated, EventSubscriptionTypeModel.DtmfReceived })
                 },
             };
         }
@@ -233,9 +233,9 @@ namespace Azure.Communication.Calling.Server.Tests
             return new List<object?[]>(){
                 new object?[] {
                     "4ab31d78-a189-4e50-afaa-f9610975b6cb",
-                    new PlayAudioRequest()
+                    new PlayAudioOptions()
                     {
-                        AudioFileUri = "https://av.ngrok.io/audio/sample-message.wav",
+                        AudioFileUri = new Uri("https://av.ngrok.io/audio/sample-message.wav"),
                         OperationContext = Guid.NewGuid().ToString(),
                         Loop = true,
                         AudioFileId = Guid.NewGuid().ToString()

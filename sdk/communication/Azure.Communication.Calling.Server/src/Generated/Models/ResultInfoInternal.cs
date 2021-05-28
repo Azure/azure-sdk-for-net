@@ -8,14 +8,14 @@
 namespace Azure.Communication.Calling.Server
 {
     /// <summary> Result info class to be used to report result status for actions/operations. </summary>
-    public partial class ResultInfo
+    public partial class ResultInfoInternal
     {
-        /// <summary> Initializes a new instance of ResultInfo. </summary>
-        internal ResultInfo()
+        /// <summary> Initializes a new instance of ResultInfoInternal. </summary>
+        internal ResultInfoInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of ResultInfo. </summary>
+        /// <summary> Initializes a new instance of ResultInfoInternal. </summary>
         /// <param name="code">
         /// Gets or sets the result code
         /// 
@@ -31,7 +31,7 @@ namespace Azure.Communication.Calling.Server
         /// 
         /// The message is a detail explanation of subcode.
         /// </param>
-        internal ResultInfo(int? code, int? subcode, string message)
+        internal ResultInfoInternal(int? code, int? subcode, string message)
         {
             Code = code;
             Subcode = subcode;
