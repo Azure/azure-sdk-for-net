@@ -5,3 +5,4 @@ extends:
   parameters:
     ServiceDirectory: appconfiguration
     SupportedClouds: 'Public,Preview,UsGov,China'
+    Clouds: 'Public,Preview,UsGov,China'

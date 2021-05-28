@@ -2537,6 +2537,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
 
+            string endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
             Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
 
             BlobClient initalBlob = new BlobClient(
@@ -2586,6 +2587,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
+            string endPointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
             Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
 
             BlobClient blobClientFromContainer = InstrumentClient(test.Container.GetBlobClient(blobName));
