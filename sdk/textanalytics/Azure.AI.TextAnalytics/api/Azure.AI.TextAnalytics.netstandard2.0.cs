@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeActionsOptions
     {
         public AnalyzeActionsOptions() { }
-        public bool IncludeStatistics { get { throw null; } set { } }
+        public bool? IncludeStatistics { get { throw null; } set { } }
     }
     public partial class AnalyzeActionsResult
     {
