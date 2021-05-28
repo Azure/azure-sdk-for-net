@@ -8,9 +8,6 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
-using Microsoft.Identity.Client;
-using System.Security;
-using System.Threading;
 
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
 
@@ -165,25 +162,6 @@ namespace Azure.Communication.Identity.Samples
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:ExchangeTeamsToken
-        }
-
-        private async Task<string> generateTeamsToken()
-        {
-            IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
-                                                .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
-                                                .WithRedirectUri(TestEnvironment.CommunicationM365RedirectUri)
-                                                .Build();
-            string[] scopes = { TestEnvironment.CommunicationM365Scope };
-            SecureString communicationMsalPassword = new SecureString();
-            foreach (char c in TestEnvironment.CommunicationMsalPassword)
-            {
-                communicationMsalPassword.AppendChar(c);
-            }
-            AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
-                scopes,
-                TestEnvironment.CommunicationMsalUsername,
-                communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
-            return result.AccessToken;
         }
 
         [Test]
