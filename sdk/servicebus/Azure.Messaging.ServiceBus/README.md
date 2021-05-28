@@ -81,7 +81,8 @@ To use this you will need to add this to your configuration:
 }
 ```
 
-For more details, see [Dependency injection with the Azure .NET SDK](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
+
+For more details, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
 ## Key concepts
 
