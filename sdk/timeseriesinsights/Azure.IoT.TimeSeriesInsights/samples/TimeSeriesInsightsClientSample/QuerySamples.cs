@@ -4,11 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Devices.Client;
 using static Azure.IoT.TimeSeriesInsights.Samples.SampleLogger;
 
 namespace Azure.IoT.TimeSeriesInsights.Samples
