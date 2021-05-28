@@ -424,6 +424,7 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
 
+                // Currently looping media is not supported for out-call scenarios, thus setting it to false.
                 PlayAudioRequest request = new PlayAudioRequest()
                 {
                     AudioFileUri = audioFileUri.AbsoluteUri,
@@ -454,6 +455,7 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
 
+                // Currently looping media is not supported for out-call scenarios, thus setting it to false.
                 PlayAudioRequest request = new PlayAudioRequest()
                 {
                     AudioFileUri = audioFileUri.AbsoluteUri,
