@@ -281,17 +281,17 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary>Exchange an AAD access token of a Teams user for a new ACS access token.</summary>
-        /// <param name="token">Azure Active Directory access token to acquire a new ACS access token.</param>
+        /// <summary>Exchange a teams token for a new ACS access token.</summary>
+        /// <param name="teamsToken">Teams token to acquire a new ACS access token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
-        public virtual Response<AccessToken> ExchangeAccessToken(string token, CancellationToken cancellationToken = default)
+        public virtual Response<AccessToken> ExchangeTeamsToken(string teamsToken, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(ExchangeAccessToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(ExchangeTeamsToken)}");
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessToken> response = RestClient.ExchangeTeamsUserAccessToken(token, cancellationToken);
+                Response<CommunicationIdentityAccessToken> response = RestClient.ExchangeTeamsUserAccessToken(teamsToken, cancellationToken);
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -301,16 +301,16 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary>Asynchronously exchange an AAD access token of a Teams user for a new ACS access token.</summary>
-        /// <param name="token">Azure Active Directory access token to acquire a new ACS access token.</param>
+        /// <summary>Asynchronously exchange a teams token for a new ACS access token.</summary>
+        /// <param name="teamsToken">Teams token to acquire a new ACS access token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<AccessToken>> ExchangeAccessTokenAsync(String token, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccessToken>> ExchangeTeamsTokenAsync(String teamsToken, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(ExchangeAccessToken)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(ExchangeTeamsToken)}");
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessToken> response = await RestClient.ExchangeTeamsUserAccessTokenAsync(token, cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessToken> response = await RestClient.ExchangeTeamsUserAccessTokenAsync(teamsToken, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
             catch (Exception ex)

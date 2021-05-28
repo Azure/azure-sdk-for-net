@@ -151,7 +151,7 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeAccessTokenWithValidToken()
+        public async Task ExchangeTeamsTokenWithValidToken()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
                 Assert.Ignore("Ignore exchange access token test if flag is enabled.");
@@ -162,36 +162,22 @@ namespace Azure.Communication.Identity.Tests
             {
                 token = "Sanitized";
             } else {
-                IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
-                                                    .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
-                                                    .WithRedirectUri(TestEnvironment.CommunicationM365RedirectUri)
-                                                    .Build();
-                string[] scopes = { TestEnvironment.CommunicationM365Scope };
-                SecureString communicationMsalPassword = new SecureString();
-                foreach (char c in TestEnvironment.CommunicationMsalPassword)
-                {
-                    communicationMsalPassword.AppendChar(c);
-                }
-                AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
-                    scopes,
-                    TestEnvironment.CommunicationMsalUsername,
-                    communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
-                token = result.AccessToken;
+                token = await generateTeamsToken();
             }
 
             CommunicationIdentityClient client = CreateClientWithConnectionString();
-            Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync(token);
+            Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(token);
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
         }
 
         [Test]
-        public async Task ExchangeAccessTokenWithEmptyTokenShouldThrow()
+        public async Task ExchangeTeamsTokenWithEmptyTokenShouldThrow()
         {
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync("");
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync("");
             }
             catch (RequestFailedException ex)
             {
@@ -204,12 +190,12 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task ExchangeAccessTokenWithNullTokenShouldThrow()
+        public async Task ExchangeTeamsTokenWithNullTokenShouldThrow()
         {
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync(null);
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(null);
             }
             catch (ArgumentNullException ex)
             {
@@ -217,6 +203,25 @@ namespace Azure.Communication.Identity.Tests
                 return;
             }
             Assert.Fail("An exception should have been thrown.");
+        }
+
+        private async Task<string> generateTeamsToken()
+        {
+            IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
+                                                .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
+                                                .WithRedirectUri(TestEnvironment.CommunicationM365RedirectUri)
+                                                .Build();
+            string[] scopes = { TestEnvironment.CommunicationM365Scope };
+            SecureString communicationMsalPassword = new SecureString();
+            foreach (char c in TestEnvironment.CommunicationMsalPassword)
+            {
+                communicationMsalPassword.AppendChar(c);
+            }
+            AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
+                scopes,
+                TestEnvironment.CommunicationMsalUsername,
+                communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+            return result.AccessToken;
         }
     }
 }

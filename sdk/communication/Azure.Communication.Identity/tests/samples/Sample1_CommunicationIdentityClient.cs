@@ -153,7 +153,21 @@ namespace Azure.Communication.Identity.Samples
         }
 
         [Test]
-        public async Task ExchangeAccessToken()
+        public async Task ExchangeTeamsToken()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            var teamsToken = await generateTeamsToken();
+            client = CreateClientWithConnectionString();
+
+            #region  Snippet:ExchangeTeamsToken
+            Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(teamsToken);
+            string token = tokenResponse.Value.Token;
+            Console.WriteLine($"Token: {token}");
+            #endregion Snippet:ExchangeTeamsToken
+        }
+
+        private async Task<string> generateTeamsToken()
         {
             IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
                                                 .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
@@ -169,17 +183,7 @@ namespace Azure.Communication.Identity.Samples
                 scopes,
                 TestEnvironment.CommunicationMsalUsername,
                 communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
-
-            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
-            var client = new CommunicationIdentityClient(connectionString);
-            var aadAccessToken = result.AccessToken;
-            client = CreateClientWithConnectionString();
-
-            #region  Snippet:ExchangeAccessToken
-            Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync(aadAccessToken);
-            string token = tokenResponse.Value.Token;
-            Console.WriteLine($"Token: {token}");
-            #endregion Snippet:ExchangeAccessToken
+            return result.AccessToken;
         }
 
         [Test]

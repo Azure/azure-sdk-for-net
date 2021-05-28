@@ -116,8 +116,8 @@ Response deleteResponse = client.DeleteUser(user);
 
 ### Exchange access token
 
-```C# Snippet:ExchangeAccessToken
-Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync(aadAccessToken);
+```C# Snippet:ExchangeTeamsToken
+Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(teamsToken);
 string token = tokenResponse.Value.Token;
 Console.WriteLine($"Token: {token}");
 ```
