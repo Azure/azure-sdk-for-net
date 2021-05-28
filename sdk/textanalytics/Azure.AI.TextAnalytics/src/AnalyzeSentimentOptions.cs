@@ -32,6 +32,9 @@ namespace Azure.AI.TextAnalytics
         /// will contain the result of this analysis.
         /// <para>Only available for service version v3.1-preview and up.</para>
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         public bool? IncludeOpinionMining { get; set; }
     }
 }

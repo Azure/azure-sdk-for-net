@@ -12,7 +12,10 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class RecognizeLinkedEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizeLinkedEntitiesTests(bool isAsync) : base(isAsync) { }
+        public RecognizeLinkedEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private const string EnglishDocument1 = "Microsoft was founded by Bill Gates and Paul Allen.";
         private const string EnglishDocument2 = "Pike place market is my favorite Seattle attraction.";
