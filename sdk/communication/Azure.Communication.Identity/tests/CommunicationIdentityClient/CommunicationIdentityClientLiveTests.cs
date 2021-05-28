@@ -151,7 +151,7 @@ namespace Azure.Communication.Identity.Tests
         public async Task ExchangeTeamsTokenWithValidToken()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
-                Assert.Ignore("Ignore exchange access token test if flag is enabled.");
+                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
             string token;

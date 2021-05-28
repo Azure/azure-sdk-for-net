@@ -152,6 +152,10 @@ namespace Azure.Communication.Identity.Samples
         [Test]
         public async Task ExchangeTeamsToken()
         {
+            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
+                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+            }
+
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
             var client = new CommunicationIdentityClient(connectionString);
             var teamsToken = await generateTeamsToken();
