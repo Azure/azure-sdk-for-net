@@ -415,7 +415,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } },
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { DomainFilter = PiiEntityDomain.ProtectedHealthInformation } },
                 DisplayName = "AnalyzeOperationWithPHIDomain",
             };
 
