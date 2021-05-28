@@ -8,6 +8,9 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
+using Microsoft.Identity.Client;
+using System.Security;
+using System.Threading;
 
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
 
@@ -147,6 +150,36 @@ namespace Azure.Communication.Identity.Samples
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }
+        }
+
+        [Test]
+        public async Task ExchangeAccessToken()
+        {
+            IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
+                                                .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
+                                                .WithRedirectUri(TestEnvironment.CommunicationM365RedirectUri)
+                                                .Build();
+            string[] scopes = { TestEnvironment.CommunicationM365Scope };
+            SecureString communicationMsalPassword = new SecureString();
+            foreach (char c in TestEnvironment.CommunicationMsalPassword)
+            {
+                communicationMsalPassword.AppendChar(c);
+            }
+            AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
+                scopes,
+                TestEnvironment.CommunicationMsalUsername,
+                communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            var aadAccessToken = result.AccessToken;
+            client = CreateClientWithConnectionString();
+
+            #region  Snippet:ExchangeAccessToken
+            Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync(aadAccessToken);
+            string token = tokenResponse.Value.Token;
+            Console.WriteLine($"Token: {token}");
+            #endregion Snippet:ExchangeAccessToken
         }
 
         [Test]

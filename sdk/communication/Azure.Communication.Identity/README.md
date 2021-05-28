@@ -114,6 +114,14 @@ Response revokeResponse = client.RevokeTokens(user);
 Response deleteResponse = client.DeleteUser(user);
 ```
 
+### Exchange access token
+
+```C# Snippet:ExchangeAccessToken
+Response<AccessToken> tokenResponse = await client.ExchangeAccessTokenAsync(aadAccessToken);
+string token = tokenResponse.Value.Token;
+Console.WriteLine($"Token: {token}");
+```
+
 ## Troubleshooting
 
 All User token service operations will throw a RequestFailedException on failure.
