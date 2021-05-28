@@ -83,6 +83,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Title");
             }
+            if (Title != null)
+            {
+                if (Title.Length > 1000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Title", 1000);
+                }
+                if (Title.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Title", 1);
+                }
+            }
         }
     }
 }
