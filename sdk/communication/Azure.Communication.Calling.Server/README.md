@@ -18,7 +18,7 @@ You need an [Azure subscription][azure_sub] and a [Communication Service Resourc
 To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 ### Key concepts
-`CallClient` provides the functionality to make call related operatons.
+`CallClient` provides the functionality to make call related operations.
 
 ### Using statements
 ```C# Snippet:Azure_Communication_ServerCalling_Tests_UsingStatements
@@ -37,7 +37,7 @@ CallClient client = new CallClient(connectionString);
 
 ## Examples
 ### Make a call to a phone number recipient
-To make a Call, call the `CreateCall` or `CreateCallAsync` function from the `CallClient`.
+To make a call, call the `CreateCall` or `CreateCallAsync` function from the `CallClient`.
 ```C# Snippet:Azure_Communication_Call_Tests_CreateCallAsync
 CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
     source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call

@@ -305,10 +305,6 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
 
-                PauseCallRecordingRequest request = new PauseCallRecordingRequest()
-                {
-                };
-
                 return RestClient.PauseRecording(conversationId, recordingId, cancellationToken);
             }
             catch (Exception ex)
@@ -333,10 +329,6 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
 
-                ResumeCallRecordingRequest request = new ResumeCallRecordingRequest()
-                {
-                };
-
                 return await RestClient.ResumeRecordingAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -360,10 +352,6 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(conversationId, nameof(conversationId));
                 Argument.AssertNotNull(recordingId, nameof(recordingId));
-
-                ResumeCallRecordingRequest request = new ResumeCallRecordingRequest()
-                {
-                };
 
                 return RestClient.ResumeRecording(conversationId, recordingId, cancellationToken);
             }

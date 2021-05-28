@@ -15,7 +15,7 @@ CallClient client = new CallClient(connectionString);
 
 ## Make a call to a phone number recipient
 
-To make a Call, call the `CreateCall` or `CreateCallAsync` function from the `CallClient`. The returned value is `CreateCallResponse` objects that contains the created Call's Id if succeed, else throws a RequestFailedException.
+To make a call, call the `CreateCall` or `CreateCallAsync` function from the `CallClient`. The returned value is `CreateCallResponse` objects that contains the created Call's Id if succeed, else throws a RequestFailedException.
 
 ```C# Snippet:Azure_Communication_Call_Tests_CreateCall
 CreateCallResponse createCallResponse = callClient.CreateCall(

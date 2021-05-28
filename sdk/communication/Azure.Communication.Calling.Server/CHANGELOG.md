@@ -10,7 +10,7 @@ This is a Public Preview version, so breaking changes are possible in subsequent
 - Hangup and delete the existing call.
 - Play audio in the call.
 - Outbound apis for Call Recording including start, pause, resume and stop.
-- Subscribe to tone and receive dtmf via events.
+- Subscribe to and receive DTMF tones via events.
 - Invite and remove participants from the call.
 
 <!-- LINKS -->

@@ -1,4 +1,4 @@
-# Azure.Communication.Call
+# Azure.Communication.CallingServer
 
 When a new version of the swagger needs to be updated:
 1. Open Azure.Communication.sln and under sdk\communication, run `dotnet msbuild /t:GenerateCode` to generate code.

@@ -2,7 +2,8 @@
     "swagger": "2.0",
     "info": {
         "version": "2021-04-15-preview1",
-        "title": "Azure Communication Server Calling APIs"
+        "title": "Azure Communication CallingServer Service",
+        "description": "Azure Communication CallingServer Service"
     },
     "schemes": [
         "https"
@@ -721,13 +722,6 @@
                         "type": "string"
                     },
                     {
-                        "name": "request.operationContext",
-                        "in": "query",
-                        "description": "The context of the operation.",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
                         "$ref": "#/parameters/ApiVersionParameter"
                     }
                 ],
@@ -789,15 +783,6 @@
                         "type": "string"
                     },
                     {
-                        "name": "request",
-                        "in": "body",
-                        "description": "Request body of stop call recording request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/StopCallRecordingRequest"
-                        }
-                    },
-                    {
                         "$ref": "#/parameters/ApiVersionParameter"
                     }
                 ],
@@ -851,15 +836,6 @@
                         "type": "string"
                     },
                     {
-                        "name": "request",
-                        "in": "body",
-                        "description": "Request body of pause call recording request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/PauseCallRecordingRequest"
-                        }
-                    },
-                    {
                         "$ref": "#/parameters/ApiVersionParameter"
                     }
                 ],
@@ -911,15 +887,6 @@
                         "description": "Recording id.",
                         "required": true,
                         "type": "string"
-                    },
-                    {
-                        "name": "request",
-                        "in": "body",
-                        "description": "Request body of resume call recording request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/ResumeCallRecordingRequest"
-                        }
                     },
                     {
                         "$ref": "#/parameters/ApiVersionParameter"
@@ -1252,16 +1219,6 @@
                 }
             }
         },
-        "GetCallRecordingStateRequest": {
-            "description": "The request payload of get call recording state operation.",
-            "type": "object",
-            "properties": {
-                "operationContext": {
-                    "description": "The context of the operation.",
-                    "type": "string"
-                }
-            }
-        },
         "CallRecordingState": {
             "description": "The recording state of the recording",
             "enum": [
@@ -1280,36 +1237,6 @@
             "properties": {
                 "recordingState": {
                     "$ref": "#/definitions/CallRecordingState"
-                }
-            }
-        },
-        "StopCallRecordingRequest": {
-            "description": "The request payload of stop call recording operation.",
-            "type": "object",
-            "properties": {
-                "operationContext": {
-                    "description": "The context of the operation.",
-                    "type": "string"
-                }
-            }
-        },
-        "PauseCallRecordingRequest": {
-            "description": "The request payload pause call recording operation.",
-            "type": "object",
-            "properties": {
-                "operationContext": {
-                    "description": "The context of the operation.",
-                    "type": "string"
-                }
-            }
-        },
-        "ResumeCallRecordingRequest": {
-            "description": "The request payload of resume call recording operation.",
-            "type": "object",
-            "properties": {
-                "operationContext": {
-                    "description": "The context of the operation.",
-                    "type": "string"
                 }
             }
         }
