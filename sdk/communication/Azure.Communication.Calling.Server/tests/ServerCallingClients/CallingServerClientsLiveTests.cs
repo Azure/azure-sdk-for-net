@@ -21,13 +21,13 @@ namespace Azure.Communication.Calling.Server.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class ServerCallingClientsLiveTests : ServerCallingLiveTestBase
+    public class CallingServerClientsLiveTests : CallingServerLiveTestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CommunicationIdentityClient"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public ServerCallingClientsLiveTests(bool isAsync) : base(isAsync)
+        public CallingServerClientsLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -120,8 +120,8 @@ namespace Azure.Communication.Calling.Server.Tests
         }
 
         [Test]
-        [Ignore("CancelMediaProcessing Operation required the call is under established state which is not doable for now.")]
-        public async Task CancelMediaProcessingTest()
+        [Ignore("CancelMediaOperations Operation required the call is under established state which is not doable for now.")]
+        public async Task CancelMediaOperationsTest()
         {
             CallClient client = CreateServerCallingClient();
             try
@@ -129,7 +129,7 @@ namespace Azure.Communication.Calling.Server.Tests
                 var createCallResponse = await CreateCallOperation(client).ConfigureAwait(false);
                 var callLegId = createCallResponse.Value.CallLegId;
 
-                await CancelMediaProcessingOperation(client, callLegId).ConfigureAwait(false);
+                await CancelMediaOperationsOperation(client, callLegId).ConfigureAwait(false);
                 await DeteleCallOperation(client, callLegId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -209,8 +209,8 @@ namespace Azure.Communication.Calling.Server.Tests
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_HangupCallOperation
 
-        #region Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaProcessingOperation
-        private async Task CancelMediaProcessingOperation(CallClient client, string callLegId)
+        #region Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaOperationsOperation
+        private async Task CancelMediaOperationsOperation(CallClient client, string callLegId)
         {
             var playAudioRequest = new PlayAudioRequest()
             {
@@ -223,11 +223,11 @@ namespace Azure.Communication.Calling.Server.Tests
             Console.WriteLine("Performing cancel media processing operation to stop playing audio");
 
             var operationContext = Guid.NewGuid().ToString();
-            var response = await client.CancelMediaProcessingAsync(callLegId, operationContext).ConfigureAwait(false);
+            var response = await client.CancelMediaOperationsAsync(callLegId).ConfigureAwait(false);
 
             Assert.AreEqual(response.Value.Status, OperationStatus.Running);
         }
-        #endregion Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaProcessingOperation
+        #endregion Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaOperationsOperation
 
         #endregion
 

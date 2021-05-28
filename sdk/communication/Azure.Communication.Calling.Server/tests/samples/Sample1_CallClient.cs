@@ -12,7 +12,7 @@ namespace Azure.Communication.Calling.Server.Tests.samples
     /// <summary>
     /// Samples that are used in the README.md file.
     /// </summary>
-    public partial class Sample1_CallClient : ServerCallingLiveTestBase
+    public partial class Sample1_CallClient : CallingServerLiveTestBase
     {
         public Sample1_CallClient(bool isAsync) : base(isAsync)
         {
@@ -22,7 +22,7 @@ namespace Azure.Communication.Calling.Server.Tests.samples
         [AsyncOnly]
         public async Task CreateCallAsync()
         {
-            var sourceIdentity = await ServerCallingClientsLiveTests.CreateUserAsync(TestEnvironment.LiveTestStaticConnectionString).ConfigureAwait(false);
+            var sourceIdentity = await CallingServerClientsLiveTests.CreateUserAsync(TestEnvironment.LiveTestStaticConnectionString).ConfigureAwait(false);
             var source = new CommunicationUserIdentifier(sourceIdentity.Id);
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
@@ -48,7 +48,7 @@ namespace Azure.Communication.Calling.Server.Tests.samples
         [SyncOnly]
         public void CreateCall()
         {
-            var sourceIdentity = ServerCallingClientsLiveTests.CreateUser(TestEnvironment.LiveTestStaticConnectionString);
+            var sourceIdentity = CallingServerClientsLiveTests.CreateUser(TestEnvironment.LiveTestStaticConnectionString);
             var source = new CommunicationUserIdentifier(sourceIdentity.Id);
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(

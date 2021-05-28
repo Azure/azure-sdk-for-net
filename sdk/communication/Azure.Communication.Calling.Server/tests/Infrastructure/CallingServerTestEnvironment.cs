@@ -9,7 +9,7 @@ namespace Azure.Communication.Calling.Server.Tests
     /// <summary>
     /// A helper class used to retrieve information to be used for tests.
     /// </summary>
-    public class ServerCallingTestEnvironment : CommunicationTestEnvironment
+    public class CallingServerTestEnvironment : CommunicationTestEnvironment
     {
         public string ToPhoneNumber => GetRecordedVariable(AzurePhoneNumber);
 

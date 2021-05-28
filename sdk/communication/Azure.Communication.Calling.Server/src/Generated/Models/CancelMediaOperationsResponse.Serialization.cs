@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Calling.Server
 {
-    public partial class CancelMediaProcessingResponse
+    public partial class CancelMediaOperationsResponse
     {
-        internal static CancelMediaProcessingResponse DeserializeCancelMediaProcessingResponse(JsonElement element)
+        internal static CancelMediaOperationsResponse DeserializeCancelMediaOperationsResponse(JsonElement element)
         {
             Optional<string> id = default;
             Optional<OperationStatus> status = default;
@@ -51,7 +51,7 @@ namespace Azure.Communication.Calling.Server
                     continue;
                 }
             }
-            return new CancelMediaProcessingResponse(id.Value, Optional.ToNullable(status), operationContext.Value, resultInfo.Value);
+            return new CancelMediaOperationsResponse(id.Value, Optional.ToNullable(status), operationContext.Value, resultInfo.Value);
         }
     }
 }

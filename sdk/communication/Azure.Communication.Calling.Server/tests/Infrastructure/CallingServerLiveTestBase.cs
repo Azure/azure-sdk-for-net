@@ -10,10 +10,10 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Calling.Server.Tests
 {
-    public class ServerCallingLiveTestBase : RecordedTestBase<ServerCallingTestEnvironment>
+    public class CallingServerLiveTestBase : RecordedTestBase<CallingServerTestEnvironment>
     {
-        public ServerCallingLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new ServerCallingRecordedTestSanitizer();
+        public CallingServerLiveTestBase(bool isAsync) : base(isAsync)
+            => Sanitizer = new CallingServerRecordedTestSanitizer();
 
         public CallClient CreateServerCallingClient()
         {

@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Calling.Server.Tests
 {
-    public class ServerCallingClientsTests
+    public class CallingServerClientsTests
     {
         [TestCaseSource(nameof(TestData_CreateCall))]
         public async Task CreateCallAsyncOverload_Passes(CommunicationIdentifier expectedSource, IEnumerable<CommunicationIdentifier> expectedTargets, CreateCallOptions expectedOptions)
@@ -85,25 +85,24 @@ namespace Azure.Communication.Calling.Server.Tests
             Assert.AreEqual(expectedResponse, actualResponse);
         }
 
-        [TestCaseSource(nameof(TestData_CancelMediaProcessing))]
-        public async Task CancelMediaProcessingAsyncOverload_Passes(string expectedCallLegId, string expectedOperationContext)
+        [TestCaseSource(nameof(TestData_CancelMediaOperations))]
+        public async Task CancelMediaOperationsAsyncOverload_Passes(string expectedCallLegId)
         {
             Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
-            Response<CancelMediaProcessingResponse>? expectedResponse = default;
+            Response<CancelMediaOperationsResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.CancelMediaProcessingAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.CancelMediaOperationsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
-                .ReturnsAsync((string callLegId, string operationContext, CancellationToken token) =>
+                .ReturnsAsync((string callLegId, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedCallLegId, callLegId);
-                    Assert.AreEqual(expectedOperationContext, operationContext);
                     Assert.AreEqual(cancellationToken, token);
-                    return expectedResponse = new Mock<Response<CancelMediaProcessingResponse>>().Object;
+                    return expectedResponse = new Mock<Response<CancelMediaOperationsResponse>>().Object;
                 });
 
-            Response<CancelMediaProcessingResponse> actualResponse = await mockClient.Object.CancelMediaProcessingAsync(expectedCallLegId, expectedOperationContext, cancellationToken);
+            Response<CancelMediaOperationsResponse> actualResponse = await mockClient.Object.CancelMediaOperationsAsync(expectedCallLegId, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -220,12 +219,11 @@ namespace Azure.Communication.Calling.Server.Tests
             };
         }
 
-        private static IEnumerable<object?[]> TestData_CancelMediaProcessing()
+        private static IEnumerable<object?[]> TestData_CancelMediaOperations()
         {
             return new List<object?[]>(){
                 new object?[] {
                     "4ab31d78-a189-4e50-afaa-f9610975b6cb",
-                    "af82480b-6df3-4f4c-a58c-a6a78b614b36",
                 },
             };
         }

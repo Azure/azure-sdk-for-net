@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Calling.Server.Tests
 {
-    public class ServerCallingRecordedTestSanitizer : CommunicationRecordedTestSanitizer
+    public class CallingServerRecordedTestSanitizer : CommunicationRecordedTestSanitizer
     {
     }
 }

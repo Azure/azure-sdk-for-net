@@ -248,14 +248,14 @@
                 }
             }
         },
-        "/calling/calls/{callId}/CancelMediaProcessing": {
+        "/calling/calls/{callId}/CancelMediaOperations": {
             "post": {
                 "tags": [
                     "Call"
                 ],
                 "summary": "Cancel Media Processing.",
                 "description": "Cancel Media Processing.",
-                "operationId": "Call_CancelMediaProcessing",
+                "operationId": "Call_CancelMediaOperations",
                 "consumes": [
                     "application/json"
                 ],
@@ -271,15 +271,6 @@
                         "type": "string"
                     },
                     {
-                        "name": "request",
-                        "in": "body",
-                        "description": "The cancel media processing request.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/CancelMediaProcessingRequest"
-                        }
-                    },
-                    {
                         "$ref": "#/parameters/ApiVersionParameter"
                     }
                 ],
@@ -287,7 +278,7 @@
                     "200": {
                         "description": "Returns the cancel media processing response.",
                         "schema": {
-                            "$ref": "#/definitions/CancelMediaProcessingResponse"
+                            "$ref": "#/definitions/CancelMediaOperationsResponse"
                         }
                     },
                     "401": {
@@ -949,18 +940,18 @@
             "type": "object",
             "properties": {
                 "sourceAlternateIdentity": {
-                    "$ref": "#/definitions/PhoneNumberIdentifier",
+                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
                     "description": "The alternate identity of the source of the call if dialing out to a pstn number"
                 },
                 "targets": {
                     "description": "The targets of the call.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/CommunicationIdentifier"
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
                     }
                 },
                 "source": {
-                    "$ref": "#/definitions/CommunicationIdentifier",
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
                     "description": "The source of the call."
                 },
                 "subject": {
@@ -987,19 +978,19 @@
                 }
             }
         },
-        "PhoneNumberIdentifier": {
+        "PhoneNumberIdentifierModel": {
             "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/PhoneNumberIdentifierModel"
         },
-        "CommunicationIdentifier": {
+        "CommunicationIdentifierModel": {
             "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationIdentifierModel"
         },
-        "CommunicationUserIdentifier": {
+        "CommunicationUserIdentifierModel": {
             "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationUserIdentifierModel"
         },
-        "CommunicationCloudEnvironment": {
+        "CommunicationCloudEnvironmentModel": {
             "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/CommunicationCloudEnvironmentModel"
         },
-        "MicrosoftTeamsUserIdentifier": {
+        "MicrosoftTeamsUserIdentifierModel": {
             "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/communication/data-plane/Common/stable/2021-03-07/common.json#/definitions/MicrosoftTeamsUserIdentifierModel"
         },
         "CreateCallResponse": {
@@ -1092,17 +1083,7 @@
                 }
             }
         },
-        "CancelMediaProcessingRequest": {
-            "description": "The request payload for cancel media processing",
-            "type": "object",
-            "properties": {
-                "operationContext": {
-                    "description": "The context for this operation.",
-                    "type": "string"
-                }
-            }
-        },
-        "CancelMediaProcessingResponse": {
+        "CancelMediaOperationsResponse": {
             "description": "The response payload of the cancel media processing operation.",
             "type": "object",
             "properties": {
@@ -1134,7 +1115,7 @@
             "type": "object",
             "properties": {
                 "source": {
-                    "$ref": "#/definitions/CommunicationIdentifier",
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
                     "description": "The source of the call."
                 },
                 "subject": {
@@ -1179,14 +1160,14 @@
             "type": "object",
             "properties": {
                 "alternateCallerId": {
-                    "$ref": "#/definitions/PhoneNumberIdentifier",
+                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
                     "description": "The alternate identity of source participant."
                 },
                 "participants": {
                     "description": "The list of participants to be added to the call.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/CommunicationIdentifier"
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
                     }
                 },
                 "operationContext": {

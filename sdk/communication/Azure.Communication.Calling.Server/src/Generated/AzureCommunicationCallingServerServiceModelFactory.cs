@@ -51,15 +51,15 @@ namespace Azure.Communication.Calling.Server
             return new ResultInfo(code, subcode, message);
         }
 
-        /// <summary> Initializes new instance of CancelMediaProcessingResponse class. </summary>
+        /// <summary> Initializes new instance of CancelMediaOperationsResponse class. </summary>
         /// <param name="id"> Gets or sets the identifier. </param>
         /// <param name="status"> Gets or sets the status of the operation. </param>
         /// <param name="operationContext"> Gets or sets the operation context. </param>
         /// <param name="resultInfo"> Gets or sets the result info. </param>
-        /// <returns> A new <see cref="Server.CancelMediaProcessingResponse"/> instance for mocking. </returns>
-        public static CancelMediaProcessingResponse CancelMediaProcessingResponse(string id = default, OperationStatus? status = default, string operationContext = default, ResultInfo resultInfo = default)
+        /// <returns> A new <see cref="Server.CancelMediaOperationsResponse"/> instance for mocking. </returns>
+        public static CancelMediaOperationsResponse CancelMediaOperationsResponse(string id = default, OperationStatus? status = default, string operationContext = default, ResultInfo resultInfo = default)
         {
-            return new CancelMediaProcessingResponse(id, status, operationContext, resultInfo);
+            return new CancelMediaOperationsResponse(id, status, operationContext, resultInfo);
         }
 
         /// <summary> Initializes new instance of JoinCallResponse class. </summary>
