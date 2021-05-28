@@ -45,7 +45,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact] //(Skip="Flaky test. Tracked by #16265")
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task ReceiveLotOfMessagesWithoutSettling()
@@ -61,6 +61,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 {
                     var receiveTasks = new List<Task>();
                     int batchSize = 10;
+                    // There is no guarantee that we can receive 5010 messages in one batch, so splitting them to different batches.
                     for (var i = 0; i < messageCount / batchSize; i++)
                     {
                         receiveTasks.Add(this.ReceiveDeleteTestCase(sender, receiver, batchSize));
