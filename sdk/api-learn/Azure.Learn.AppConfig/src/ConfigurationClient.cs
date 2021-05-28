@@ -119,7 +119,12 @@ namespace Azure.Learn.AppConfig
                     false => default
                 };
                 var result = await _restClient.GetKeyValueAsync(setting.Key, setting.Label, ifMatch: default, ifNoneMatch: ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(result.Value, result.GetRawResponse());
+
+                return result.GetRawResponse().Status switch
+                {
+                    304 => Response.FromValue(setting, result.GetRawResponse()),
+                    _ => Response.FromValue(result.Value, result.GetRawResponse())
+                };
             }
             catch (Exception e)
             {
