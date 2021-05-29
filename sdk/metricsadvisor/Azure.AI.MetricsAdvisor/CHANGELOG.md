@@ -9,6 +9,7 @@
 
 ### Breaking Changes
 - `NotificationHook.ExternalLink` and `WebNotificationHook.Endpoint` are now of type `Uri`.
+- Removed getter from `GetIncidentsForDetectionConfigurationOptions.DimensionsToFilter`. Elements can be added directly to it without user instantiation.
 - Renamed all `SkipCount` listing options to `Skip`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
 - Renamed all `TopCount` listing options to `MaxPageSize`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
 - Removed data feed sources `ElasticsearchDataFeedSource` and `HttpRequestDataFeedSource` as they are not supported by the service anymore. A different type of data feed source must be used for data ingestion instead.

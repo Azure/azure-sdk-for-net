@@ -109,7 +109,7 @@ namespace Azure.AI.MetricsAdvisor
     public partial class GetIncidentsForDetectionConfigurationOptions
     {
         public GetIncidentsForDetectionConfigurationOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
-        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> DimensionsToFilter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> DimensionsToFilter { get { throw null; } }
         public System.DateTimeOffset EndTime { get { throw null; } }
         public int? MaxPageSize { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
