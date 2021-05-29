@@ -40,7 +40,6 @@ function Get-ChangeLogEntriesFromContent {
   $changeLogEntries = [Ordered]@{}
   try {
     # walk the document, finding where the version specifiers are and creating lists
-    $changeLogEntry = $null
     foreach ($line in $changeLogContent) {
       if ($line -match $RELEASE_TITLE_REGEX) {
         $changeLogEntry = [pscustomobject]@{ 
@@ -48,19 +47,37 @@ function Get-ChangeLogEntriesFromContent {
           ReleaseStatus  =  $matches["releaseStatus"]
           ReleaseTitle   = "## {0} {1}" -f $matches["version"], $matches["releaseStatus"]
           ReleaseContent = @()
+          FeaturesAdded = @()
+          BreakingChanges = @()
+          KeyBugsFixed = @()
+          Fixed = @()
         }
         $changeLogEntries[$changeLogEntry.ReleaseVersion] = $changeLogEntry
       }
       else {
         if ($changeLogEntry) {
+          if ($line.Trim() -match "###\s(?<sectionName>.*)")
+          {
+            $sectionName = $matches["sectionName"]
+            $changeLogEntry.ReleaseContent += $line
+            continue
+          }
+
+          if (-not [System.String]::IsNullOrEmpty($line))
+          {
+            switch ($sectionName)
+            {
+              "Features Added" { $changeLogEntry.FeaturesAdded += $line }
+              "Breaking Changes" { $changeLogEntry.BreakingChanges += $line }
+              "Key Bugs Fixed" { $changeLogEntry.KeyBugsFixed += $line }
+              "Fixed" { $changeLogEntry.Fixed += $line }
+            }
+          }
+
           $changeLogEntry.ReleaseContent += $line
         }
       }
     }
-  }
-  catch {
-    Write-Host "Error parsing Changelog."
-    Write-Host $_.Exception.Message
   }
   return $changeLogEntries
 }
