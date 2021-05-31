@@ -13,11 +13,9 @@ string apiKey = "<apiKey>";
 var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
-## Recognizing healthcare entities in multiple documents
+## Get the Documents
 
-To recognize healthcare entities in multiple documents, call `StartAnalyzeHealthcareEntities` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeHealthcareEntitiesOperation` which polls for the results from the API.
-
-```C# Snippet:TextAnalyticsSampleHealthcareBatchConvenienceAsync
+```C#
     string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                         Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                         HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -29,7 +27,13 @@ To recognize healthcare entities in multiple documents, call `StartAnalyzeHealth
                         increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
     string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
+```
 
+## Analyze Documents
+
+To recognize healthcare entities in multiple documents, call `StartAnalyzeHealthcareEntities` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeHealthcareEntitiesOperation` which polls for the results from the API.
+
+```C# 
     List<string> batchInput = new List<string>()
     {
         document1,
@@ -42,12 +46,17 @@ To recognize healthcare entities in multiple documents, call `StartAnalyzeHealth
     AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, "en", options);
 
     await healthOperation.WaitForCompletionAsync();
+```
+To view the operation details:
 
+```C# 
     Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
     Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
     Console.WriteLine($"Status       : {healthOperation.Status}");
     Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
-
+```
+To view the final result of the long-running operation:
+```C#
     await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
     {
         Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
@@ -57,6 +66,7 @@ To recognize healthcare entities in multiple documents, call `StartAnalyzeHealth
         {
             if (!entitiesInDoc.HasError)
             {
+                // Recognized healthcare entities
                 foreach (var entity in entitiesInDoc.Entities)
                 {
                     Console.WriteLine($"    Entity: {entity.Text}");
@@ -95,6 +105,7 @@ To recognize healthcare entities in multiple documents, call `StartAnalyzeHealth
                 Console.WriteLine($"    We found {entitiesInDoc.EntityRelations.Count} relations in the current document:");
                 Console.WriteLine("");
 
+                // Recognized healthcare relations
                 foreach (HealthcareEntityRelation relations in entitiesInDoc.EntityRelations)
                 {
                     Console.WriteLine($"        Relation: {relations.RelationType}");
