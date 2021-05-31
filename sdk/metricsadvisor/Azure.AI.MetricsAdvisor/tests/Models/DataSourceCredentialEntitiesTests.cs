@@ -31,7 +31,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             ""dataSourceCredentialType"": ""ServicePrincipal"",
             ""parameters"": {
                 ""clientId"": """",
-                ""clientSecret"": """",
                 ""tenantId"": """"
             }
         }
