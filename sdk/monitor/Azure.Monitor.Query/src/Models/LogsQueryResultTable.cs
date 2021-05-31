@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query.Models
 
             foreach (var row in InternalRows.EnumerateArray())
             {
-                rows.Add(new LogsQueryResultRow(columnDictionary, row));
+                rows.Add(new LogsQueryResultRow(columnDictionary, Columns, row));
             }
 
             return rows;

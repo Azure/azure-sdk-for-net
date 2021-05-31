@@ -19,9 +19,9 @@ namespace Azure.Monitor.Query.Models
         /// <param name="type"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="unit"> the unit of the metric. </param>
-        /// <param name="timeseries"> the time series returned when a data query is performed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="type"/>, <paramref name="localizedName"/>, or <paramref name="timeseries"/> is null. </exception>
-        internal Metric(string id, string type, LocalizableString localizedName, MetricUnit unit, IEnumerable<TimeSeriesElement> timeseries)
+        /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="type"/>, <paramref name="localizedName"/>, or <paramref name="timeSeries"/> is null. </exception>
+        internal Metric(string id, string type, LocalizableString localizedName, MetricUnit unit, IEnumerable<TimeSeriesElement> timeSeries)
         {
             if (id == null)
             {
@@ -35,16 +35,16 @@ namespace Azure.Monitor.Query.Models
             {
                 throw new ArgumentNullException(nameof(localizedName));
             }
-            if (timeseries == null)
+            if (timeSeries == null)
             {
-                throw new ArgumentNullException(nameof(timeseries));
+                throw new ArgumentNullException(nameof(timeSeries));
             }
 
             Id = id;
             Type = type;
             LocalizedName = localizedName;
             Unit = unit;
-            Timeseries = timeseries.ToList();
+            TimeSeries = timeSeries.ToList();
         }
 
         /// <summary> Initializes a new instance of Metric. </summary>
@@ -52,14 +52,14 @@ namespace Azure.Monitor.Query.Models
         /// <param name="type"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="unit"> the unit of the metric. </param>
-        /// <param name="timeseries"> the time series returned when a data query is performed. </param>
-        internal Metric(string id, string type, LocalizableString localizedName, MetricUnit unit, IReadOnlyList<TimeSeriesElement> timeseries)
+        /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
+        internal Metric(string id, string type, LocalizableString localizedName, MetricUnit unit, IReadOnlyList<TimeSeriesElement> timeSeries)
         {
             Id = id;
             Type = type;
             LocalizedName = localizedName;
             Unit = unit;
-            Timeseries = timeseries;
+            TimeSeries = timeSeries;
         }
 
         /// <summary> the metric Id. </summary>
@@ -68,7 +68,5 @@ namespace Azure.Monitor.Query.Models
         public string Type { get; }
         /// <summary> the unit of the metric. </summary>
         public MetricUnit Unit { get; }
-        /// <summary> the time series returned when a data query is performed. </summary>
-        public IReadOnlyList<TimeSeriesElement> Timeseries { get; }
     }
 }

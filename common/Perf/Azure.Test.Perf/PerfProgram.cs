@@ -441,8 +441,16 @@ namespace Azure.Test.Perf
                     _lastCompletionTimes[index] = sw.Elapsed;
                 }
             }
-            catch (OperationCanceledException)
+            catch (Exception e)
             {
+                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                {
+                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 
@@ -484,8 +492,11 @@ namespace Azure.Test.Perf
             }
             catch (Exception e)
             {
-                // Ignore if any part of the exception chain is type OperationCanceledException
-                if (!PerfStressUtilities.ContainsOperationCanceledException(e))
+                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                {
+                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                }
+                else
                 {
                     throw;
                 }

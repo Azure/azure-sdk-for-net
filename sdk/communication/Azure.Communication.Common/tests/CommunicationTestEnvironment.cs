@@ -11,8 +11,8 @@ namespace Azure.Communication.Tests
         public const string LiveTestDynamicConnectionStringEnvironmentVariableName = "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING";
         public const string LiveTestStaticConnectionStringEnvironmentVariableName = "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING";
         public const string AzurePhoneNumber = "AZURE_PHONE_NUMBER";
-        protected const string TestPackagesEnabledDefaultValue = "all";
-        private const string TestPackagesEnabledEnvironmentVariableName = "TEST_PACKAGES_ENABLED";
+        private const string SkipIntSmsTestEnvironmentVariableName = "SKIP_INT_SMS_TEST";
+        private const string SkipIntPhoneNumbersTestEnvironmentVariableName = "SKIP_INT_PHONENUMBERS_TEST";
 
         public string LiveTestDynamicConnectionString => GetRecordedVariable(LiveTestDynamicConnectionStringEnvironmentVariableName);
 
@@ -28,17 +28,12 @@ namespace Azure.Communication.Tests
 
         public string CommunicationTestPhoneNumber => GetVariable(AzurePhoneNumber);
 
-        public virtual string ExpectedTestPackagesEnabled { get { return TestPackagesEnabledDefaultValue; } }
+        public string SkipSmsTest => GetOptionalVariable(SkipIntSmsTestEnvironmentVariableName) ?? "False";
 
-        public bool ShouldIgnoreTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
-            && TestPackagesEnabled != ExpectedTestPackagesEnabled;
+        public string SkipPhoneNumbersTest => GetOptionalVariable(SkipIntPhoneNumbersTestEnvironmentVariableName) ?? "False";
 
-        public string TestPackagesEnabled => GetTestPackageEnabled();
+        public bool ShouldIgnoreSMSTests => bool.Parse(SkipSmsTest);
 
-        private string GetTestPackageEnabled()
-        {
-            string? package = Environment.GetEnvironmentVariable(TestPackagesEnabledEnvironmentVariableName);
-            return package ?? TestPackagesEnabledDefaultValue;
-        }
+        public bool ShouldIgnorePhoneNumbersTests => bool.Parse(SkipPhoneNumbersTest);
     }
 }

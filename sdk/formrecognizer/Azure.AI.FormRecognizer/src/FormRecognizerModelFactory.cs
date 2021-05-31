@@ -7,13 +7,15 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using Azure.AI.FormRecognizer.Training;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// A factory that builds Azure.AI.FormRecognizer model types used for mocking.
     /// </summary>
-    public static class FormRecognizerModelFactory
+    [CodeGenType("FormRecognizerModelFactory")]
+    public static partial class FormRecognizerModelFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.AccountProperties"/> class.
@@ -247,16 +249,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithCountryCodeValueType(string value) =>
-            new FieldValue(value, FieldValueType.Country);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
-        /// </summary>
-        /// <param name="value">The actual field value.</param>
-        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
-        public static FieldValue FieldValueWithGenderValueType(FieldValueGender value) =>
-            new FieldValue(value);
+        public static FieldValue FieldValueWithCountryRegionValueType(string value) =>
+            new FieldValue(value, FieldValueType.CountryRegion);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormField"/> class.

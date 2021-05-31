@@ -11,22 +11,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 {
     public class SessionMessageProcessor
     {
-        public SessionMessageProcessor(ServiceBusClient client, ServiceBusSessionProcessor processor)
+        /// <summary>
+        /// Initializes a new instance of <see cref="SessionMessageProcessor"/>.
+        /// </summary>
+        /// <param name="processor">The <see cref="ServiceBusSessionProcessor"/> to use for processing messages from Service Bus.</param>
+        public SessionMessageProcessor(ServiceBusSessionProcessor processor)
         {
             Processor = processor ?? throw new ArgumentNullException(nameof(processor));
-            Client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="ServiceBusSessionProcessor"/> that will be used by the <see cref="SessionMessageProcessor"/>.
+        /// Gets the <see cref="ServiceBusSessionProcessor"/> that will be used by the <see cref="SessionMessageProcessor"/>.
         /// </summary>
-        protected internal ServiceBusSessionProcessor Processor { get; set; }
-
-        /// <summary>
-        /// Gets or sets the <see cref="ServiceBusClient"/> that will be used by the <see cref="SessionMessageProcessor"/> to
-        /// accept new sessions for multiple dispatch functions..
-        /// </summary>
-        protected internal ServiceBusClient Client { get; set; }
+        protected internal ServiceBusSessionProcessor Processor { get; }
 
         /// <summary>
         /// This method is called when there is a new message to process, before the job function is invoked.
@@ -60,8 +57,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 throw new ArgumentNullException(nameof(result));
             }
-
-            cancellationToken.ThrowIfCancellationRequested();
 
             if (!result.Succeeded)
             {

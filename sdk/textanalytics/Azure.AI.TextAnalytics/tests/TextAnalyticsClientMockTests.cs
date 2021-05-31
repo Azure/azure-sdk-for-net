@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -660,5 +661,160 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultError.Error.ErrorCode.ToString());
             Assert.AreEqual("Document text is empty.", resultError.Error.Message);
         }
+
+        #region Analyze
+        [Test]
+        public async Task AnalyzeOperationKeyPhrasesWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new ExtractKeyPhrasesAction()
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var content = mockTransport.Requests.Single().Content;
+            using var stream = new MemoryStream();
+            await content.WriteToAsync(stream, default);
+            stream.Position = 0;
+            using var streamReader = new StreamReader(stream);
+            string contentString = streamReader.ReadToEnd();
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public async Task AnalyzeOperationRecognizeEntitiesWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new RecognizeEntitiesAction()
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var content = mockTransport.Requests.Single().Content;
+            using var stream = new MemoryStream();
+            await content.WriteToAsync(stream, default);
+            stream.Position = 0;
+            using var streamReader = new StreamReader(stream);
+            string contentString = streamReader.ReadToEnd();
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"),19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public async Task AnalyzeOperationRecognizeLinkedEntitiesWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new RecognizeLinkedEntitiesAction()
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var content = mockTransport.Requests.Single().Content;
+            using var stream = new MemoryStream();
+            await content.WriteToAsync(stream, default);
+            stream.Position = 0;
+            using var streamReader = new StreamReader(stream);
+            string contentString = streamReader.ReadToEnd();
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public async Task AnalyzeOperationRecognizePiiEntitiesWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new RecognizePiiEntitiesAction()
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var content = mockTransport.Requests.Single().Content;
+            using var stream = new MemoryStream();
+            await content.WriteToAsync(stream, default);
+            stream.Position = 0;
+            using var streamReader = new StreamReader(stream);
+            string contentString = streamReader.ReadToEnd();
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        #endregion
     }
 }

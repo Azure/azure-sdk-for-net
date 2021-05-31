@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server that the alias is pointing to.
             /// </param>
             /// <param name='dnsAliasName'>
-            /// The name of the server DNS alias.
+            /// The name of the server dns alias.
             /// </param>
             public static ServerDnsAlias Get(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName)
             {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server that the alias is pointing to.
             /// </param>
             /// <param name='dnsAliasName'>
-            /// The name of the server DNS alias.
+            /// The name of the server dns alias.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a server dns alias.
+            /// Creates a server DNS alias.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server that the alias is pointing to.
             /// </param>
             /// <param name='dnsAliasName'>
-            /// The name of the server DNS alias.
+            /// The name of the server dns alias.
             /// </param>
             public static ServerDnsAlias CreateOrUpdate(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName)
             {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a server dns alias.
+            /// Creates a server DNS alias.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server that the alias is pointing to.
             /// </param>
             /// <param name='dnsAliasName'>
-            /// The name of the server DNS alias.
+            /// The name of the server dns alias.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server that the alias is pointing to.
             /// </param>
             /// <param name='dnsAliasName'>
-            /// The name of the server DNS alias.
+            /// The name of the server dns alias.
             /// </param>
             public static void Delete(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName)
             {
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server that the alias is pointing to.
             /// </param>
             /// <param name='dnsAliasName'>
-            /// The name of the server DNS alias.
+            /// The name of the server dns alias.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -222,9 +222,9 @@ namespace Microsoft.Azure.Management.Sql
             /// </param>
             /// <param name='parameters'>
             /// </param>
-            public static void Acquire(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters)
+            public static ServerDnsAlias Acquire(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters)
             {
-                operations.AcquireAsync(resourceGroupName, serverName, dnsAliasName, parameters).GetAwaiter().GetResult();
+                return operations.AcquireAsync(resourceGroupName, serverName, dnsAliasName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -248,13 +248,16 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AcquireAsync(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerDnsAlias> AcquireAsync(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.AcquireWithHttpMessagesAsync(resourceGroupName, serverName, dnsAliasName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.AcquireWithHttpMessagesAsync(resourceGroupName, serverName, dnsAliasName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// Creates a server dns alias.
+            /// Creates a server DNS alias.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -267,7 +270,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server that the alias is pointing to.
             /// </param>
             /// <param name='dnsAliasName'>
-            /// The name of the server DNS alias.
+            /// The name of the server dns alias.
             /// </param>
             public static ServerDnsAlias BeginCreateOrUpdate(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName)
             {
@@ -275,7 +278,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a server dns alias.
+            /// Creates a server DNS alias.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -288,7 +291,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server that the alias is pointing to.
             /// </param>
             /// <param name='dnsAliasName'>
-            /// The name of the server DNS alias.
+            /// The name of the server dns alias.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -315,7 +318,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server that the alias is pointing to.
             /// </param>
             /// <param name='dnsAliasName'>
-            /// The name of the server DNS alias.
+            /// The name of the server dns alias.
             /// </param>
             public static void BeginDelete(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName)
             {
@@ -336,7 +339,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server that the alias is pointing to.
             /// </param>
             /// <param name='dnsAliasName'>
-            /// The name of the server DNS alias.
+            /// The name of the server dns alias.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -364,9 +367,9 @@ namespace Microsoft.Azure.Management.Sql
             /// </param>
             /// <param name='parameters'>
             /// </param>
-            public static void BeginAcquire(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters)
+            public static ServerDnsAlias BeginAcquire(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters)
             {
-                operations.BeginAcquireAsync(resourceGroupName, serverName, dnsAliasName, parameters).GetAwaiter().GetResult();
+                return operations.BeginAcquireAsync(resourceGroupName, serverName, dnsAliasName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -390,9 +393,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginAcquireAsync(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerDnsAlias> BeginAcquireAsync(this IServerDnsAliasesOperations operations, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginAcquireWithHttpMessagesAsync(resourceGroupName, serverName, dnsAliasName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginAcquireWithHttpMessagesAsync(resourceGroupName, serverName, dnsAliasName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

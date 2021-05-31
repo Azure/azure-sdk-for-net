@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public void FormRecognizerClientCannotAuthenticateWithFakeApiKey()
         {
             var client = CreateFormRecognizerClient(apiKey: "fakeKey");

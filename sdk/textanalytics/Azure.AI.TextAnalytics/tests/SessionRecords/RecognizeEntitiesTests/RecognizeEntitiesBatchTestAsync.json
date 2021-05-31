@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "190",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-e3c2bb7399ae9d43a07b69fab41d800f-808b1beb2c67bc47-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-2ec4d96b3730324d8b94eb740257e0fd-756a4cbec1648e4a-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "74826ca03adf5e0230955bc11a73f253",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,14 +29,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b5f3373d-ec3f-4c7a-a7b0-803872638400",
+        "apim-request-id": "817553dc-ac1d-466b-9dc8-909786176311",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Wed, 24 Feb 2021 16:56:10 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
+        "Date": "Tue, 11 May 2021 16:08:37 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "58"
+        "x-envoy-upstream-service-time": "22"
       },
       "ResponseBody": {
         "documents": [
@@ -103,6 +103,6 @@
   "Variables": {
     "RandomSeed": "1159498521",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
   }
 }

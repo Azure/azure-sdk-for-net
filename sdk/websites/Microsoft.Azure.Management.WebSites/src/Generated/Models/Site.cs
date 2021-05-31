@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// ClientCert is required.
         /// - ClientCertEnabled: true and ClientCertMode: Optional means
         /// ClientCert is optional or accepted. Possible values include:
-        /// 'Required', 'Optional'</param>
+        /// 'Required', 'Optional', 'OptionalInteractiveUser'</param>
         /// <param name="clientCertExclusionPaths">client certificate
         /// authentication comma-separated exclusion paths</param>
         /// <param name="hostNamesDisabled">&lt;code&gt;true&lt;/code&gt; to
@@ -140,7 +140,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'GeoRedundant'</param>
         /// <param name="inProgressOperationId">Specifies an operation id if
         /// this site has a pending operation.</param>
-        public Site(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), System.DateTime? lastModifiedTimeUtc = default(System.DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), ClientCertMode? clientCertMode = default(ClientCertMode?), string clientCertExclusionPaths = default(string), bool? hostNamesDisabled = default(bool?), string customDomainVerificationId = default(string), string outboundIpAddresses = default(string), string possibleOutboundIpAddresses = default(string), int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTime? suspendedTill = default(System.DateTime?), int? maxNumberOfWorkers = default(int?), CloningInfo cloningInfo = default(CloningInfo), string resourceGroup = default(string), bool? isDefaultContainer = default(bool?), string defaultHostName = default(string), SlotSwapStatus slotSwapStatus = default(SlotSwapStatus), bool? httpsOnly = default(bool?), RedundancyMode? redundancyMode = default(RedundancyMode?), System.Guid? inProgressOperationId = default(System.Guid?), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
+        /// <param name="storageAccountRequired">Checks if Customer provided
+        /// storage account is required</param>
+        /// <param name="keyVaultReferenceIdentity">Identity to use for Key
+        /// Vault Reference authentication.</param>
+        /// <param name="virtualNetworkSubnetId">Azure Resource Manager ID of
+        /// the Virtual network and subnet to be joined by Regional VNET
+        /// Integration.
+        /// This must be of the form
+        /// /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}</param>
+        public Site(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), System.DateTime? lastModifiedTimeUtc = default(System.DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), ClientCertMode? clientCertMode = default(ClientCertMode?), string clientCertExclusionPaths = default(string), bool? hostNamesDisabled = default(bool?), string customDomainVerificationId = default(string), string outboundIpAddresses = default(string), string possibleOutboundIpAddresses = default(string), int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTime? suspendedTill = default(System.DateTime?), int? maxNumberOfWorkers = default(int?), CloningInfo cloningInfo = default(CloningInfo), string resourceGroup = default(string), bool? isDefaultContainer = default(bool?), string defaultHostName = default(string), SlotSwapStatus slotSwapStatus = default(SlotSwapStatus), bool? httpsOnly = default(bool?), RedundancyMode? redundancyMode = default(RedundancyMode?), System.Guid? inProgressOperationId = default(System.Guid?), bool? storageAccountRequired = default(bool?), string keyVaultReferenceIdentity = default(string), string virtualNetworkSubnetId = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
             : base(location, id, name, kind, type, tags)
         {
             State = state;
@@ -181,6 +190,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
             HttpsOnly = httpsOnly;
             RedundancyMode = redundancyMode;
             InProgressOperationId = inProgressOperationId;
+            StorageAccountRequired = storageAccountRequired;
+            KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
+            VirtualNetworkSubnetId = virtualNetworkSubnetId;
             Identity = identity;
             CustomInit();
         }
@@ -344,7 +356,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// ClientCert is required.
         /// - ClientCertEnabled: true and ClientCertMode: Optional means
         /// ClientCert is optional or accepted. Possible values include:
-        /// 'Required', 'Optional'
+        /// 'Required', 'Optional', 'OptionalInteractiveUser'
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientCertMode")]
         public ClientCertMode? ClientCertMode { get; set; }
@@ -470,6 +482,29 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.inProgressOperationId")]
         public System.Guid? InProgressOperationId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets checks if Customer provided storage account is
+        /// required
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageAccountRequired")]
+        public bool? StorageAccountRequired { get; set; }
+
+        /// <summary>
+        /// Gets or sets identity to use for Key Vault Reference
+        /// authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultReferenceIdentity")]
+        public string KeyVaultReferenceIdentity { get; set; }
+
+        /// <summary>
+        /// Gets or sets azure Resource Manager ID of the Virtual network and
+        /// subnet to be joined by Regional VNET Integration.
+        /// This must be of the form
+        /// /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNetworkSubnetId")]
+        public string VirtualNetworkSubnetId { get; set; }
 
         /// <summary>
         /// </summary>

@@ -20,7 +20,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             writer.WritePropertyName("timeSeriesId");
             writer.WriteStartArray();
-            foreach (string item in TimeSeriesId.ToArray())
+            foreach (string item in TimeSeriesId.ToStringArray())
             {
                 writer.WriteObjectValue(item);
             }
@@ -36,7 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 writer.WritePropertyName("projectedProperties");
                 writer.WriteStartArray();
-                foreach (EventProperty item in ProjectedProperties)
+                foreach (TimeSeriesInsightsEventProperty item in ProjectedProperties)
                 {
                     writer.WriteObjectValue(item);
                 }

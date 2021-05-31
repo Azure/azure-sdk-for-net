@@ -57,7 +57,6 @@ namespace Azure.Identity
     public partial class AzurePowerShellCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AzurePowerShellCredentialOptions() { }
-        public bool UseLegacyPowerShell { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
@@ -125,7 +124,6 @@ namespace Azure.Identity
         public string ManagedIdentityClientId { get { throw null; } set { } }
         public string SharedTokenCacheTenantId { get { throw null; } set { } }
         public string SharedTokenCacheUsername { get { throw null; } set { } }
-        public bool UseLegacyPowerShell { get { throw null; } set { } }
         public string VisualStudioCodeTenantId { get { throw null; } set { } }
         public string VisualStudioTenantId { get { throw null; } set { } }
     }
@@ -200,6 +198,7 @@ namespace Azure.Identity
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
+        public string LoginHint { get { throw null; } set { } }
         public System.Uri RedirectUri { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }

@@ -27,6 +27,7 @@ namespace Azure.Core.TestFramework
             var type = invocation.Method.ReturnType;
 
             var isAsyncEnumerable = false;
+            // cspell:ignore iface
             foreach (var iface in type.GetInterfaces())
             {
                 if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(IAsyncEnumerable<>))
@@ -79,7 +80,7 @@ namespace Azure.Core.TestFramework
 
         internal static void WrapAsyncResultCore<T>(IInvocation invocation, Type genericType, AsyncCallInterceptor<T> wrap)
         {
-            // All this ceremony is not to await the returned Task/ValueTask syncronously
+            // All this ceremony is not to await the returned Task/ValueTask synchronously
             // instead we are replacing the invocation.ReturnValue with the ValidateDiagnosticScope task
             // but we need to make sure the types match
             if (genericType == typeof(Task<>))

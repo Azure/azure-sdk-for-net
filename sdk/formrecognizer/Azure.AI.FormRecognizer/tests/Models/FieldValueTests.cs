@@ -33,8 +33,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 valueArray: default,
                 valueObject: default,
                 valueSelectionMark: default,
-                valueGender: default,
-                valueCountry: default,
+                valueCountryRegion: default,
                 text: "25.00%",
                 boundingBox: default,
                 confidence:  default,
@@ -94,15 +93,6 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(FieldValueType.SelectionMark, fieldValue.ValueType);
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
-        }
-
-        [Test]
-        public void InstantiateFieldValueWithGenderAndNoValueGender()
-        {
-            var fieldValue = new FieldValue(FieldValueType.Gender);
-
-            Assert.AreEqual(FieldValueType.Gender, fieldValue.ValueType);
-            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
         }
     }
 }
