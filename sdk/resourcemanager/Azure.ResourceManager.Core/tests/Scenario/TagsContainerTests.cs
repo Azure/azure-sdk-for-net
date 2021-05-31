@@ -24,12 +24,22 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var container = GetTagsContainer();
             var result = await container.ListAsync().ToEnumerableAsync();
-            Assert.NotNull(result);
+            Assert.GreaterOrEqual(result.Count, 0, "List result less than 0" );
+        }
+
+        [Ignore("Not Implemented")]
+        [TestCase]
+        [RecordedTest]
+        public async Task GetOperation()
+        {
+            var container = GetTagsContainer();
+            var result = await container.GetAsync(Client.DefaultSubscription.Id.SubscriptionId);
+            Assert.NotNull(result.Value);
         }
 
         protected TagsContainer GetTagsContainer()
         {
-            return new TagsContainer(new ClientContext(Client.DefaultSubscription.ClientOptions, Client.DefaultSubscription.Credential, Client.DefaultSubscription.BaseUri, Client.DefaultSubscription.Pipeline));
+            return new TagsContainer(new ClientContext(Client.DefaultSubscription.ClientOptions, Client.DefaultSubscription.Credential, Client.DefaultSubscription.BaseUri, Client.DefaultSubscription.Pipeline), Client.DefaultSubscription.Id.SubscriptionId);
         }
     }
 }

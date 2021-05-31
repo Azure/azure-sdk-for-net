@@ -25,12 +25,10 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="TagsContainer"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
-        internal TagsContainer(ClientContext clientContext)
+        /// <param name="subscriptionId"></param>
+        internal TagsContainer(ClientContext clientContext, string subscriptionId)
             : base(clientContext, null)
         {
-            string subscriptionId;
-            if (Id is null || !Id.TryGetSubscriptionId(out subscriptionId))
-                subscriptionId = Guid.NewGuid().ToString();
             RestClient = new TagsRestOperations(Diagnostics, Pipeline, subscriptionId, BaseUri);
         }
 
