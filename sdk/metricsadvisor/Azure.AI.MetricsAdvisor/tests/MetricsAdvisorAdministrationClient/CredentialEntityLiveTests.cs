@@ -91,11 +91,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private void ValidateServicePrincipalCredentialEntity(DataSourceCredentialEntity credentialEntity)
         {
             var servicePrincipalCredential = credentialEntity as ServicePrincipalCredentialEntity;
-            string expectedClientSecret = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : ClientSecret;
 
             Assert.That(servicePrincipalCredential, Is.Not.Null);
             Assert.That(servicePrincipalCredential.ClientId, Is.EqualTo(ClientId));
-            Assert.That(servicePrincipalCredential.ClientSecret, Is.EqualTo(expectedClientSecret));
             Assert.That(servicePrincipalCredential.TenantId, Is.EqualTo(TenantId));
         }
     }
