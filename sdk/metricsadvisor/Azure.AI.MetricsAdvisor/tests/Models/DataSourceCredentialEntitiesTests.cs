@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
     {
         private static object[] CredentialEntityTestCases =
         {
-            new object[] { new ServicePrincipalCredentialEntity("mock", "mock", "secret", "mock"), "\"clientId\":\"secret\"" }
+            new object[] { new ServicePrincipalCredentialEntity("mock", "mock", "secret", "mock"), "\"clientSecret\":\"secret\"" }
         };
 
         public DataSourceCredentialEntitiesTests(bool isAsync) : base(isAsync)
@@ -27,7 +28,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         private string CredentialEntityResponseContent => @"
         {
-            ""dataSourceCredentialType"": ""ServicePrincipal""
+            ""dataSourceCredentialType"": ""ServicePrincipal"",
+            ""parameters"": {
+                ""clientId"": """",
+                ""clientSecret"": """",
+                ""tenantId"": """"
+            }
         }
         ";
 
@@ -58,6 +64,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
             request.Content.WriteTo(stream, CancellationToken.None);
 
             return Encoding.UTF8.GetString(stream.ToArray());
+        }
+
+        private MetricsAdvisorAdministrationClient CreateInstrumentedAdministrationClient(MockTransport transport)
+        {
+            var fakeEndpoint = new Uri("http://notreal.azure.com");
+            var fakeCredential = new MetricsAdvisorKeyCredential("fakeSubscriptionKey", "fakeApiKey");
+            var options = new MetricsAdvisorClientsOptions() { Transport = transport };
+
+            return InstrumentClient(new MetricsAdvisorAdministrationClient(fakeEndpoint, fakeCredential, options));
         }
     }
 }
