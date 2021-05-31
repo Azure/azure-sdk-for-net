@@ -154,13 +154,7 @@ namespace Azure.Communication.Identity.Tests
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            string token;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                token = "Sanitized";
-            } else {
-                token = await generateTeamsToken();
-            }
+            string token = await generateTeamsToken();
 
             CommunicationIdentityClient client = CreateClientWithConnectionString();
             Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(token);

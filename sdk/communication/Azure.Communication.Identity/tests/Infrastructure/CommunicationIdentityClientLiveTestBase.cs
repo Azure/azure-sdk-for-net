@@ -54,7 +54,9 @@ namespace Azure.Communication.Identity.Tests
             if (Mode == RecordedTestMode.Playback)
             {
                 token = "Sanitized";
-            } else {
+            }
+            else
+            {
                 IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
                                                     .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
                                                     .WithRedirectUri(TestEnvironment.CommunicationM365RedirectUri)

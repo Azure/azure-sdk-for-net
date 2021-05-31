@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.1.0-beta.1 (Unreleased)
-- Added ExchangeTeamsToken to provide the ability to exchange a teams token for a communication access token
+- Added `ExchangeTeamsToken` to provide the ability to exchange a teams token for a communication access token
 
 ## 1.0.0 (2021-03-29)
 Updated `Azure.Communication.Identity` version.
