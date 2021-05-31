@@ -1115,9 +1115,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class ServicePrincipalCredentialEntity : Azure.AI.MetricsAdvisor.Models.DataSourceCredentialEntity
     {
         public ServicePrincipalCredentialEntity(string name, string clientId, string clientSecret, string tenantId) { }
-        public string ClientId { get { throw null; } set { } }
-        public string ClientSecret { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public string ClientId { get { throw null; } }
+        public string TenantId { get { throw null; } }
     }
     public partial class SeverityCondition
     {

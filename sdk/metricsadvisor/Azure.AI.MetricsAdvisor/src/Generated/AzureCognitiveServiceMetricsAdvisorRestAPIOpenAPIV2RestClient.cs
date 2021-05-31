@@ -1541,7 +1541,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Update data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<DataSourceCredential>> UpdateCredentialAsync(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
+        public async Task<Response<DataSourceCredentialEntity>> UpdateCredentialAsync(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1554,9 +1554,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 case 200:
                     {
-                        DataSourceCredential value = default;
+                        DataSourceCredentialEntity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataSourceCredential.DeserializeDataSourceCredential(document.RootElement);
+                        value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1569,7 +1569,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="body"> Update data source credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<DataSourceCredential> UpdateCredential(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
+        public Response<DataSourceCredentialEntity> UpdateCredential(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -1582,9 +1582,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 case 200:
                     {
-                        DataSourceCredential value = default;
+                        DataSourceCredentialEntity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataSourceCredential.DeserializeDataSourceCredential(document.RootElement);
+                        value = DataSourceCredentialEntity.DeserializeDataSourceCredentialEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
