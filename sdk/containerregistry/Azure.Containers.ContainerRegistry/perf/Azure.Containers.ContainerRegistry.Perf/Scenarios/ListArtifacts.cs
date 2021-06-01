@@ -38,7 +38,7 @@ namespace Azure.Containers.ContainerRegistry.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            foreach (var manifest in _repository.GetManifests())
+            foreach (var manifest in _repository.GetManifestPropertiesCollection())
             {
                  _client.GetArtifact($"library/node", manifest.Digest);
             }
@@ -46,7 +46,7 @@ namespace Azure.Containers.ContainerRegistry.Perf
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await foreach (var manifest in _repository.GetManifestsAsync())
+            await foreach (var manifest in _repository.GetManifestPropertiesCollectionAsync())
             {
                 _client.GetArtifact($"library/node", manifest.Digest);
             }

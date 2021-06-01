@@ -43,6 +43,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>The maximum number of failed consumers to allow when processing a partition; failed consumers are those which have been unable to receive and process events.</summary>
         private const int MaximumFailedConsumerCount = 1;
 
+        /// <summary>Indicates whether or not the consumer should consider itself invalid when a partition is stolen by another consumer, as determined by the Event Hubs service.</summary>
+        private const bool InvalidateConsumerWhenPartitionIsStolen = true;
+
         /// <summary>The primitive for synchronizing access when starting and stopping the processor.</summary>
         private readonly SemaphoreSlim ProcessorRunningGuard = new SemaphoreSlim(1, 1);
 
@@ -524,7 +527,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           EventPosition eventPosition,
                                                           EventHubConnection connection,
                                                           EventProcessorOptions options) =>
-            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount, prefetchSizeInBytes: options.PrefetchSizeInBytes, ownerLevel: 0);
+            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, prefetchCount: (uint?)options.PrefetchCount, prefetchSizeInBytes: options.PrefetchSizeInBytes, ownerLevel: 0);
 
         /// <summary>
         ///   Performs the tasks needed to process a batch of events.
@@ -739,6 +742,14 @@ namespace Azure.Messaging.EventHubs.Primitives
                                 Logger.EventProcessorPartitionProcessingStopConsumerClose(partition.PartitionId, Identifier, EventHubName, ConsumerGroup);
                                 throw new TaskCanceledException();
                             }
+                            catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
+                            {
+                                // This is an expected scenario that may occur when ownership changes; log the exception for tracking but
+                                // do not surface it to the error handler.
+
+                                Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                                throw;
+                            }
                             catch (Exception ex) when (ex.IsNotType<DeveloperCodeException>())
                             {
                                 // The error handler is invoked as a fire-and-forget task; the processor does not assume responsibility
@@ -774,6 +785,16 @@ namespace Azure.Messaging.EventHubs.Primitives
                         Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, message);
 
                         ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                    }
+                    catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
+                    {
+                        // If the partition was stolen, the consumer should not be recreated as that would reassert ownership
+                        // and potentially interfere with the new owner.  Instead, the exception should be surfaced to fault
+                        // the processor task and allow the next load balancing cycle to make the decision on whether processing
+                        // should be restarted or the new owner acknowledged.
+
+                        ReportPartitionStolen(partition.PartitionId);
+                        throw;
                     }
                     catch (Exception ex) when (ex.IsFatalException())
                     {
@@ -1091,6 +1112,28 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
+        ///   Queries for the identifiers of the Event Hub partitions.
+        /// </summary>
+        ///
+        /// <param name="connection">The active connection to the Event Hubs service.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the query.</param>
+        ///
+        /// <returns>The set of identifiers for the Event Hub partitions.</returns>
+        ///
+        protected virtual async Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
+                                                                     CancellationToken cancellationToken) =>
+            await connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        ///   Allows reporting that a partition was stolen by another event consumer causing ownership
+        ///   to be considered relinquished until the next load balancing cycle reconciles it.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition that was stolen.</param>
+        ///
+        private void ReportPartitionStolen(string partitionId) => LoadBalancer.ReportPartitionStolen(partitionId);
+
+        /// <summary>
         ///   Signals the <see cref="EventProcessor{TPartition}" /> to begin processing events. Should this method be called while the processor is running, no action is taken.
         /// </summary>
         ///
@@ -1387,7 +1430,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                     try
                     {
-                        partitionIds = await connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+                        partitionIds = await ListPartitionIdsAsync(connection, cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex) when (ex.IsNotType<TaskCanceledException>())
                     {

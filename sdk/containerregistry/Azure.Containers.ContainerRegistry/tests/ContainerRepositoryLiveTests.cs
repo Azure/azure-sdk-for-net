@@ -26,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repository = client.GetRepository(_repositoryName);
 
             // Act
-            RepositoryProperties properties = await repository.GetPropertiesAsync();
+            ContainerRepositoryProperties properties = await repository.GetPropertiesAsync();
 
             // Assert
             Assert.AreEqual(_repositoryName, properties.Name);
@@ -39,12 +39,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient();
             var repository = client.GetRepository(_repositoryName);
 
-            RepositoryProperties repositoryProperties = await repository.GetPropertiesAsync();
-            RepositoryProperties originalProperties = repositoryProperties;
+            ContainerRepositoryProperties repositoryProperties = await repository.GetPropertiesAsync();
+            ContainerRepositoryProperties originalProperties = repositoryProperties;
 
             // Act
-            RepositoryProperties properties = await repository.SetPropertiesAsync(
-                new RepositoryProperties()
+            ContainerRepositoryProperties properties = await repository.UpdatePropertiesAsync(
+                new ContainerRepositoryProperties()
                 {
                     CanList = false,
                     CanRead = false,
@@ -58,7 +58,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsFalse(properties.CanWrite);
             Assert.IsFalse(properties.CanDelete);
 
-            RepositoryProperties updatedProperties = await repository.GetPropertiesAsync();
+            ContainerRepositoryProperties updatedProperties = await repository.GetPropertiesAsync();
 
             Assert.IsFalse(updatedProperties.CanList);
             Assert.IsFalse(updatedProperties.CanRead);
@@ -66,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsFalse(updatedProperties.CanDelete);
 
             // Cleanup
-            await repository.SetPropertiesAsync(originalProperties);
+            await repository.UpdatePropertiesAsync(originalProperties);
         }
 
         [RecordedTest, NonParallelizable]
@@ -77,15 +77,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repository = client.GetRepository(_repositoryName);
 
             // Act
-            Assert.ThrowsAsync<RequestFailedException>(() =>
-                repository.SetPropertiesAsync(
-                    new RepositoryProperties()
+            Assert.ThrowsAsync<RequestFailedException>((AsyncTestDelegate)(() =>
+                repository.UpdatePropertiesAsync(
+                    new ContainerRepositoryProperties()
                     {
                         CanList = false,
                         CanRead = false,
                         CanWrite = false,
                         CanDelete = false,
-                    }));
+                    })));
         }
 
         [RecordedTest, NonParallelizable]
@@ -137,7 +137,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repository = client.GetRepository(_repositoryName);
 
             // Act
-            AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync();
+            AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestPropertiesCollectionAsync();
 
             ArtifactManifestProperties latest = null;
             await foreach (ArtifactManifestProperties manifest in manifests)
@@ -166,7 +166,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<ArtifactManifestProperties> artifacts = repository.GetManifestsAsync();
+            AsyncPageable<ArtifactManifestProperties> artifacts = repository.GetManifestPropertiesCollectionAsync();
             var pages = artifacts.AsPages(pageSizeHint: pageSize);
 
             int pageCount = 0;
@@ -191,7 +191,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int pageSize = 1;
             int minExpectedPages = 2;
 
-            AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync();
+            AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestPropertiesCollectionAsync();
             string firstDigest = null;
             string secondDigest = null;
             int artifactCount = 0;
@@ -212,7 +212,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Act
-            manifests = repository.GetManifestsAsync();
+            manifests = repository.GetManifestPropertiesCollectionAsync();
             var pages = manifests.AsPages($"</acr/v1/{_repositoryName}/_manifests?last={firstDigest}&n={pageSize}>");
 
             int pageCount = 0;
@@ -252,14 +252,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 // Act
-                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync(ManifestOrderBy.LastUpdatedOnDescending);
+                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestPropertiesCollectionAsync(ArtifactManifestOrderBy.LastUpdatedOnDescending);
 
                 // Assert
                 string digest = null;
                 await foreach (ArtifactManifestProperties manifest in manifests)
                 {
                     // Make sure we're looking at a manifest list, which has the tag
-                    if (manifest.ManifestReferences != null && manifest.ManifestReferences.Count > 0)
+                    if (manifest.RelatedArtifacts != null && manifest.RelatedArtifacts.Count > 0)
                     {
                         digest = manifest.Digest;
                         Assert.That(manifest.RepositoryName.Contains(repositoryName));
