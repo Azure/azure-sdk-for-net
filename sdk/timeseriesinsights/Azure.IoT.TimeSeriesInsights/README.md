@@ -14,7 +14,7 @@ For the best development experience, developers should use the official Microsof
 
 ### Install the package
 
-Install the Azure Time Series client Insights for .NET with NuGet:
+Install the Azure Time Series client Insights library for .NET with NuGet:
 
 ```PowerShell
 Install-Package Azure.IoT.TimeSeriesInsights
