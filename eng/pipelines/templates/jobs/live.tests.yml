@@ -137,10 +137,25 @@ jobs:
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
           testResultsFiles: "**/*.trx"
-          testRunTitle: "$(TestTargetFramework)"
+          testRunTitle: "${{ parameters.ServiceDirectory }} ${{ parameters.CloudConfig.Cloud }} $(Agent.JobName)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
 
-      - template: ../steps/code-coverage.yml
+      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Generate Code Coverage Reports
+        inputs:
+          reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
+          targetdir: $(Build.ArtifactStagingDirectory)\coverage
+          reporttypes: Cobertura
+          filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
+          verbosity: Verbose
+
+      - task: PublishCodeCoverageResults@1
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Publish Code Coverage Reports
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
 
       - ${{ parameters.PostSteps }}

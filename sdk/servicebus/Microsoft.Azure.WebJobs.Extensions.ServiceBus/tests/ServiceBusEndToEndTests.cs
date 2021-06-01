@@ -198,14 +198,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task TestBatch_AutoCompleteEnabledOnTrigger()
         {
-            var (jobHost, host) = BuildHost<TestBatch_AutoCompleteMessagesEnabledOnTrigger>(BuildHostWithAutoCompleteDisabled<TestBatch_AutoCompleteMessagesEnabledOnTrigger>());
-            using (jobHost)
+            var host = BuildHost<TestBatch_AutoCompleteMessagesEnabledOnTrigger>(BuildHostWithAutoCompleteDisabled<TestBatch_AutoCompleteMessagesEnabledOnTrigger>());
+            using (host)
             {
                 await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
                 await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}");
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
