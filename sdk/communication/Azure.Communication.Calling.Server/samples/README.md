@@ -20,7 +20,7 @@ This client library allows to do following operations:
 
  #### You can find samples for each of these functions below.
  - CreateCall [synchronously][sample_servercalling] or [asynchronously][sample_servercalling_async]
- 
+
 <!-- LINKS -->
-[sample_servercalling]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Calling.Server/samples/Sample1_CreateCall.md
-[sample_servercalling_async]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Calling.Server/samples/Sample1_CreateCallAsync.md
+[sample_servercalling]: https://github.com/Azure/azure-sdk-for-net/blob/9e82a99869d0f47c73b66191e04530537259db60/sdk/communication/Azure.Communication.Calling.Server/tests/samples/Sample1_CreateCall.md
+[sample_servercalling_async]: https://github.com/Azure/azure-sdk-for-net/blob/9e82a99869d0f47c73b66191e04530537259db60/sdk/communication/Azure.Communication.Calling.Server/tests/samples/Sample1_CreateCallAsync.md
