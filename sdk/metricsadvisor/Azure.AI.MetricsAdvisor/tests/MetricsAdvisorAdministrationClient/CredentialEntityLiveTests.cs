@@ -60,6 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21466")]
         public async Task DeleteCredentialEntity()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
