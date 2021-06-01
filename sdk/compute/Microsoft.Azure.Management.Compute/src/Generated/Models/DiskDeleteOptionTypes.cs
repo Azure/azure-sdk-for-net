@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public static class DiskDeleteOptionTypes
     {
-        public const string Delete = "Delete";
+        public const string Delete = 
+            "Delete";
         public const string Detach = "Detach";
     }
 }
