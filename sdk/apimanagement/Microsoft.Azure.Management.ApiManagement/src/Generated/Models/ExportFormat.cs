@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     public static class ExportFormat
     {
         /// <summary>
-        /// Export the Api Definition in OpenApi Specification 2.0 format to
-        /// the Storage Blob.
+        /// Export the Api Definition in OpenAPI 2.0 Specification as JSON
+        /// document to the Storage Blob.
         /// </summary>
         public const string Swagger = "swagger-link";
         /// <summary>
@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         public const string Wadl = "wadl-link";
         /// <summary>
-        /// Export the Api Definition in OpenApi Specification 3.0 to Storage
-        /// Blob.
+        /// Export the Api Definition in OpenAPI 3.0 Specification as YAML
+        /// document to Storage Blob.
         /// </summary>
         public const string Openapi = "openapi-link";
         /// <summary>
-        /// Export the Api Definition in OpenApi Specification 3.0 as JSON
+        /// Export the Api Definition in OpenAPI 3.0 Specification as JSON
         /// document to Storage Blob.
         /// </summary>
         public const string OpenapiJson = "openapi+json-link";

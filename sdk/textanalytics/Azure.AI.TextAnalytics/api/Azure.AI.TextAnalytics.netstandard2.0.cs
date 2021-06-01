@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeActionsOptions
     {
         public AnalyzeActionsOptions() { }
-        public bool IncludeStatistics { get { throw null; } set { } }
+        public bool? IncludeStatistics { get { throw null; } set { } }
     }
     public partial class AnalyzeActionsResult
     {
@@ -267,6 +267,7 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.EntityAssociation? Association { get { throw null; } }
         public Azure.AI.TextAnalytics.EntityCertainty? Certainty { get { throw null; } }
         public Azure.AI.TextAnalytics.EntityConditionality? Conditionality { get { throw null; } }
+        public override string ToString() { throw null; }
     }
     public partial class HealthcareEntityRelation
     {
@@ -557,9 +558,10 @@ namespace Azure.AI.TextAnalytics
         public string RedactedText { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
-    public enum PiiEntityDomainType
+    public enum PiiEntityDomain
     {
-        ProtectedHealthInformation = 0,
+        None = 0,
+        ProtectedHealthInformation = 1,
     }
     public partial class RecognizeEntitiesAction : Azure.AI.TextAnalytics.RecognizeEntitiesOptions
     {
@@ -622,7 +624,7 @@ namespace Azure.AI.TextAnalytics
     {
         public RecognizePiiEntitiesOptions() { }
         public System.Collections.Generic.IList<Azure.AI.TextAnalytics.PiiEntityCategory> CategoriesFilter { get { throw null; } }
-        public Azure.AI.TextAnalytics.PiiEntityDomainType? DomainFilter { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.PiiEntityDomain DomainFilter { get { throw null; } set { } }
     }
     public partial class RecognizePiiEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
@@ -886,14 +888,18 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.DetectLanguageResult DetectLanguageResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.DetectedLanguage detectedLanguage) { throw null; }
         public static Azure.AI.TextAnalytics.DetectLanguageResultCollection DetectLanguageResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.DetectLanguageResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
         public static Azure.AI.TextAnalytics.DocumentSentiment DocumentSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, System.Collections.Generic.List<Azure.AI.TextAnalytics.SentenceSentiment> sentenceSentiments, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
+        public static Azure.AI.TextAnalytics.EntityDataSource EntityDataSource(string name = null, string entityId = null) { throw null; }
         public static Azure.AI.TextAnalytics.ExtractKeyPhrasesResult ExtractKeyPhrasesResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
         public static Azure.AI.TextAnalytics.ExtractKeyPhrasesResult ExtractKeyPhrasesResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.KeyPhraseCollection keyPhrases) { throw null; }
         public static Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection ExtractKeyPhrasesResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractKeyPhrasesResult> list, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
+        public static Azure.AI.TextAnalytics.HealthcareEntityAssertion HealthcareEntityAssertion(Azure.AI.TextAnalytics.EntityConditionality? conditionality = default(Azure.AI.TextAnalytics.EntityConditionality?), Azure.AI.TextAnalytics.EntityCertainty? certainty = default(Azure.AI.TextAnalytics.EntityCertainty?), Azure.AI.TextAnalytics.EntityAssociation? association = default(Azure.AI.TextAnalytics.EntityAssociation?)) { throw null; }
         public static Azure.AI.TextAnalytics.KeyPhraseCollection KeyPhraseCollection(System.Collections.Generic.IList<string> keyPhrases, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
+        public static Azure.AI.TextAnalytics.LinkedEntity LinkedEntity(string name = null, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.LinkedEntityMatch> matches = null, string language = null, string dataSourceEntityId = null, System.Uri url = null, string dataSource = null, string bingEntitySearchApiId = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, System.Uri url, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.LinkedEntityMatch> matches) { throw null; }
         public static Azure.AI.TextAnalytics.LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, System.Uri url, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.LinkedEntityMatch> matches, string bingEntitySearchApiId) { throw null; }
         public static Azure.AI.TextAnalytics.LinkedEntityCollection LinkedEntityCollection(System.Collections.Generic.IList<Azure.AI.TextAnalytics.LinkedEntity> entities, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
+        public static Azure.AI.TextAnalytics.LinkedEntityMatch LinkedEntityMatch(double confidenceScore = 0, string text = null, int offset = 0, int length = 0) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.LinkedEntityMatch LinkedEntityMatch(string text, double score) { throw null; }
         public static Azure.AI.TextAnalytics.LinkedEntityMatch LinkedEntityMatch(string text, double score, int offset, int length) { throw null; }

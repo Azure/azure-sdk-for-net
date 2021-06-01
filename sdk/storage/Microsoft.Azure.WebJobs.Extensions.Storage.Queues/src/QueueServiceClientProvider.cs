@@ -19,6 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
     {
         private readonly QueuesOptions _queuesOptions;
         private readonly ILoggerFactory _loggerFactory;
+        private readonly ILogger<QueueServiceClient> _logger;
         private readonly IQueueProcessorFactory _queueProcessorFactory;
         private readonly SharedQueueWatcher _messageEnqueuedWatcher;
 
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             _queuesOptions = queueOptions?.Value;
             _loggerFactory = loggerFactory;
+            _logger = logger;
             _queueProcessorFactory = queueProcessorFactory;
             _messageEnqueuedWatcher = messageEnqueuedWatcher;
         }
@@ -76,10 +78,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 // This event is raised only in async paths hence args.IsRunningSynchronously is ignored.
                 if (args.ReceivedMessage != null)
                 {
+                    var receivedMessage = args.ReceivedMessage;
                     var queueClient = args.Queue;
+                    _logger.LogWarning("Message decoding has failed! Check MessageEncoding settings. MessageId={messageId}.", receivedMessage.MessageId);
                     var poisonQueueClient = QueueListenerFactory.CreatePoisonQueueReference(nonEncodingQueueServiceClient, queueClient.Name);
                     var queueProcessor = QueueListenerFactory.CreateQueueProcessor(queueClient, poisonQueueClient, _loggerFactory, _queueProcessorFactory, _queuesOptions, _messageEnqueuedWatcher);
-                    await queueProcessor.HandlePoisonMessageAsync(args.ReceivedMessage, args.CancellationToken).ConfigureAwait(false);
+                    await queueProcessor.HandlePoisonMessageAsync(receivedMessage, args.CancellationToken).ConfigureAwait(false);
                 }
             };
         }

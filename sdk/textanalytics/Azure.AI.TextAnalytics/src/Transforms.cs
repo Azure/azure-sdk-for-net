@@ -326,7 +326,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new PiiTaskParameters()
                 {
-                    Domain = action.DomainFilter.HasValue ? action.DomainFilter.Value.GetString() : (PiiTaskParametersDomain?)null,
+                    Domain = action.DomainFilter.GetString() ?? (PiiTaskParametersDomain?)null,
                     ModelVersion = action.ModelVersion,
                     StringIndexType = action.StringIndexType,
                     LoggingOptOut = action.DisableServiceLogs

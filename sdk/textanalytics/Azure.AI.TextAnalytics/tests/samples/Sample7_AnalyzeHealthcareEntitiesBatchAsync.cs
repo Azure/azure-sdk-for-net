@@ -17,12 +17,13 @@ namespace Azure.AI.TextAnalytics.Samples
         [Ignore("Healthcare not enabled yet")]
         public async Task Sample7_AnalyzeHealthcareEntitiesBatchAsync()
         {
+            // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSampleHealthcareBatchAsync
+            // get input documents
             string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE.
                                 HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months.
@@ -35,6 +36,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
 
+            // prepare analyze operation input
             List<TextDocumentInput> batchInput = new List<TextDocumentInput>()
             {
                 new TextDocumentInput("1", document1)
@@ -53,10 +55,12 @@ namespace Azure.AI.TextAnalytics.Samples
                 IncludeStatistics = true
             };
 
+            // start analysis process
             AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, options);
 
             await healthOperation.WaitForCompletionAsync();
 
+            // view operation status
             Console.WriteLine($"AnalyzeHealthcareEntities operation was completed");
 
             Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
@@ -65,6 +69,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Status       : {healthOperation.Status}");
             Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
 
+            // view operation results
             foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
             {
                 Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
@@ -88,6 +93,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     {
                         Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
+                        // view recognized healthcare entities
                         foreach (HealthcareEntity entity in result.Entities)
                         {
                             Console.WriteLine($"    Entity: {entity.Text}");
@@ -97,11 +103,14 @@ namespace Azure.AI.TextAnalytics.Samples
                             Console.WriteLine($"    NormalizedText: {entity.NormalizedText}");
                             Console.WriteLine($"    Links:");
 
+                            // view entity data sources
                             foreach (EntityDataSource entityDataSource in entity.DataSources)
                             {
                                 Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                                 Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                             }
+
+                            // view assertion
                             if (entity.Assertion != null)
                             {
                                 Console.WriteLine($"    Assertions:");
@@ -125,11 +134,13 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
                         Console.WriteLine("");
 
+                        // view recognized healthcare relations
                         foreach (HealthcareEntityRelation relations in result.EntityRelations)
                         {
                             Console.WriteLine($"        Relation: {relations.RelationType}");
                             Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
 
+                            // view relation roles
                             foreach (HealthcareEntityRelationRole role in relations.Roles)
                             {
                                 Console.WriteLine($"            Role Name: {role.Name}");
@@ -146,12 +157,14 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine("");
                     }
 
-                    Console.WriteLine($"Batch operation statistics:");
-                    Console.WriteLine($"  Document count: {result.Statistics.CharacterCount}");
-                    Console.WriteLine($"  Valid document count: {result.Statistics.TransactionCount}");
+                    // current document statistics
+                    Console.WriteLine($"    Document statistics:");
+                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
+                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Console.WriteLine("");
                 }
 
+                // view statistics about documents in current page
                 Console.WriteLine($"Batch operation statistics:");
                 Console.WriteLine($"  Document count: {documentsInPage.Statistics.DocumentCount}");
                 Console.WriteLine($"  Valid document count: {documentsInPage.Statistics.ValidDocumentCount}");

@@ -1038,6 +1038,9 @@ namespace Azure.Storage.Blobs.Specialized
                         return response.GetRawResponse().AsNoBodyResponse<BlobDownloadStreamingResult>();
                     }
 
+                    ETag etag = response.Value.Details.ETag;
+                    BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
+
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
@@ -1046,7 +1049,7 @@ namespace Azure.Storage.Blobs.Specialized
                         startOffset =>
                             StartDownloadAsync(
                                     range,
-                                    conditions,
+                                    conditionsWithEtag,
                                     rangeGetContentHash,
                                     startOffset,
                                     async,
@@ -1056,7 +1059,7 @@ namespace Azure.Storage.Blobs.Specialized
                         async startOffset =>
                             (await StartDownloadAsync(
                                 range,
-                                conditions,
+                                conditionsWithEtag,
                                 rangeGetContentHash,
                                 startOffset,
                                 async,
@@ -1849,6 +1852,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                allowModifications: options?.AllowModifications ?? false,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -1873,9 +1877,10 @@ namespace Azure.Storage.Blobs.Specialized
             BlobOpenReadOptions options,
             CancellationToken cancellationToken = default)
             => await OpenReadInternal(
-                options.Position,
+                options?.Position ?? 0,
                 options?.BufferSize,
                 options?.Conditions,
+                allowModifications: options?.AllowModifications ?? false,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1915,6 +1920,7 @@ namespace Azure.Storage.Blobs.Specialized
                 position,
                 bufferSize,
                 conditions,
+                allowModifications: false,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -1991,6 +1997,7 @@ namespace Azure.Storage.Blobs.Specialized
                 position,
                 bufferSize,
                 conditions,
+                allowModifications: false,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2048,6 +2055,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the download of the blob.
         /// </param>
+        /// <param name="allowModifications">
+        /// Whether to allow modifications during the read.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2065,6 +2075,7 @@ namespace Azure.Storage.Blobs.Specialized
             long position,
             int? bufferSize,
             BlobRequestConditions conditions,
+            bool allowModifications,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -2088,16 +2099,22 @@ namespace Azure.Storage.Blobs.Specialized
                     // This also makes sure that we fail fast if file doesn't exist.
                     var blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
 
-                    return new LazyLoadingReadOnlyStream<BlobRequestConditions, BlobProperties>(
+                    var etag = blobProperties.Value.ETag;
+                    var readConditions = conditions;
+                    if (!allowModifications)
+                    {
+                        readConditions = readConditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
+                    }
+
+                    return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
-                        BlobRequestConditions conditions,
                         bool rangeGetContentHash,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
-                                conditions,
+                                readConditions,
                                 rangeGetContentHash,
                                 operationName,
                                 async,
@@ -2107,13 +2124,12 @@ namespace Azure.Storage.Blobs.Specialized
                                 (IDownloadedContent)response.Value,
                                 response.GetRawResponse());
                         },
-                        (ETag? eTag) => new BlobRequestConditions { IfMatch = eTag },
                         async (bool async, CancellationToken cancellationToken)
                             => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                        allowModifications,
                         blobProperties.Value.ContentLength,
                         position,
-                        bufferSize,
-                        conditions);
+                        bufferSize);
                 }
                 catch (Exception ex)
                 {
