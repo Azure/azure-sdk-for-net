@@ -2,19 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Options for <see cref="LogsClient.QueryAsync"/> and <see cref="LogsBatchQuery.AddQuery"/> methods.
+    /// Options for <see cref="LogsQueryClient.QueryAsync"/> and <see cref="LogsBatchQuery.AddQuery"/> methods.
     /// </summary>
     public class LogsQueryOptions
     {
         /// <summary>
         /// Gets or sets the value indicating the service timeout for the query. Defaults to <c>null</c>.
         /// </summary>
-        public TimeSpan? Timeout { get; set; }
+        public TimeSpan? ServerTimeout { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to include query execution statistics as part of the response.
@@ -22,5 +23,25 @@ namespace Azure.Monitor.Query
         /// Defaults to <c>false</c>.
         /// </summary>
         public bool IncludeStatistics { get; set; }
+
+        /// <summary>
+        /// Gets a list of additional workspaces ids to include in the query.
+        /// </summary>
+        public IList<string> AdditionalWorkspaceIds { get; } = new List<string>();
+
+        /// <summary>
+        /// Gets a list of additional workspaces names to include in the query.
+        /// </summary>
+        public IList<string> AdditionalWorkspaceNames { get; } = new List<string>();
+
+        /// <summary>
+        /// Gets a list of additional workspaces names to include in the query.
+        /// </summary>
+        public IList<string> AdditionalWorkspaceQualifiedNames { get; } = new List<string>();
+
+        /// <summary>
+        /// Gets a list of additional resource to include in the query.
+        /// </summary>
+        public IList<string> AdditionalResourceIds { get; } = new List<string>();
     }
 }
