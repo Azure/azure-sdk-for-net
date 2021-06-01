@@ -3,8 +3,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
-namespace Azure.GeoJson
+namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// Represents a line geometry that consists of multiple coordinates.
@@ -21,6 +22,7 @@ namespace Azure.GeoJson
     /// });
     /// </code>
     /// </example>
+    [JsonConverter(typeof(GeoJsonConverter))]
     public sealed class GeoLineString : GeoObject
     {
         /// <summary>

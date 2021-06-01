@@ -94,16 +94,6 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         public virtual Uri Endpoint => _endpoint;
 
-        /// <summary>
-        /// Gets the name of this container registry.
-        /// </summary>
-        public virtual string Name => _registryName;
-
-        /// <summary>
-        /// Gets the login server name for this container registry.
-        /// </summary>
-        public virtual string LoginServer => _endpoint.Host;
-
         /// <summary> List repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
@@ -206,7 +196,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string repositoryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteRepositoryAsync(string repositoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
 
@@ -229,7 +219,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<DeleteRepositoryResult> DeleteRepository(string repositoryName, CancellationToken cancellationToken = default)
+        public virtual Response DeleteRepository(string repositoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
 

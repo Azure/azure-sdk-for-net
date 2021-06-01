@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Azure.GeoJson;
+using Azure.Core.GeoJson;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -284,18 +284,13 @@ namespace Azure.Core.Tests
             var element2 = JsonDocument.Parse(memoryStreamOutput.ToArray()).RootElement;
             var geometry2 = GeoJsonConverter.Read(element2);
 
-            var options = new JsonSerializerOptions()
-            {
-                Converters = { new GeoJsonConverter() }
-            };
-
             // Serialize and deserialize as a base class
-            var bytes = JsonSerializer.SerializeToUtf8Bytes(geometry2, typeof(GeoObject), options);
-            var geometry3 = JsonSerializer.Deserialize<GeoObject>(bytes, options);
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(geometry2, typeof(GeoObject));
+            var geometry3 = JsonSerializer.Deserialize<GeoObject>(bytes);
 
             // Serialize and deserialize as a concrete class
-            var bytes2 = JsonSerializer.SerializeToUtf8Bytes(geometry3, options);
-            var geometry4 = JsonSerializer.Deserialize<T>(bytes2, options);
+            var bytes2 = JsonSerializer.SerializeToUtf8Bytes(geometry3);
+            var geometry4 = JsonSerializer.Deserialize<T>(bytes2);
 
             return geometry4;
         }

@@ -3,9 +3,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using System.Text.Json.Serialization;
 
-namespace Azure.GeoJson
+namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// Represents a polygon consisting of outer ring and optional inner rings.
@@ -49,6 +49,7 @@ namespace Azure.GeoJson
     /// });
     /// </code>
     /// </example>
+    [JsonConverter(typeof(GeoJsonConverter))]
     public sealed class GeoPolygon : GeoObject
     {
         /// <summary>

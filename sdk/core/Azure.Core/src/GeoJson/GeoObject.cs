@@ -6,13 +6,14 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using System.Text.Json.Serialization;
 
-namespace Azure.GeoJson
+namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// A base type for all spatial types.
     /// </summary>
+    [JsonConverter(typeof(GeoJsonConverter))]
     public abstract class GeoObject
     {
         internal static readonly IReadOnlyDictionary<string, object?> DefaultProperties = new ReadOnlyDictionary<string, object?>(new Dictionary<string, object?>());
@@ -54,7 +55,7 @@ namespace Azure.GeoJson
         {
             using MemoryStream stream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            WriteTo(writer);
+            GeoJsonConverter.Write(writer, this);
             writer.Flush();
             return Encoding.UTF8.GetString(stream.ToArray());
         }
@@ -68,18 +69,6 @@ namespace Azure.GeoJson
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(json);
             return GeoJsonConverter.Read(jsonDocument.RootElement);
-        }
-
-        /// <summary>
-        /// Serializes this instance using the provided <see cref="Utf8JsonWriter"/>.
-        /// </summary>
-        /// <param name="writer">The <see cref="Utf8JsonWriter"/> to write to.</param>
-#pragma warning disable AZC0014 // do not expose Json types in public APIs
-        public void WriteTo(Utf8JsonWriter writer)
-#pragma warning restore AZC0014
-        {
-            Argument.AssertNotNull(writer, nameof(writer));
-            GeoJsonConverter.Write(writer, this);
         }
     }
 }

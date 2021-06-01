@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.GeoJson;
+using Azure.Core.GeoJson;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -88,10 +88,7 @@ namespace Azure.Core.Tests
         {
             var json = JsonData.FromString("{}");
             dynamic jsonData = json;
-            jsonData.a = new JsonData(new GeoPoint(1, 2), new JsonSerializerOptions()
-            {
-                Converters = { new GeoJsonConverter() }
-            });
+            jsonData.a = new JsonData(new GeoPoint(1, 2));
 
             Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());
         }

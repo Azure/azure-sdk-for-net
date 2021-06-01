@@ -4,13 +4,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.GeoJson
+namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// Represents a geometry coordinates array
     /// </summary>
     /// <typeparam name="T">The type of the value.</typeparam>
-    public readonly struct GeoArray<T>: IEnumerable<T>
+    public readonly struct GeoArray<T>: IReadOnlyList<T>
     {
         private readonly object _container;
 

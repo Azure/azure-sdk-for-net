@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 
-namespace Azure.GeoJson
+namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// Represents a single spatial position with altitude, longitude, and optional latitude.

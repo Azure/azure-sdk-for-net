@@ -6,13 +6,12 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Azure.GeoJson
+namespace Azure.Core.GeoJson
 {
-#pragma warning disable AZC0014 // Dont use System.Json apis.
     /// <summary>
     /// Converts a <see cref="GeoObject"/> value from and to JSON in GeoJSON format.
     /// </summary>
-    public sealed class GeoJsonConverter : JsonConverter<GeoObject>
+    internal sealed class GeoJsonConverter : JsonConverter<GeoObject>
     {
         private const string PointType = "Point";
         private const string LineStringType = "LineString";
@@ -459,5 +458,4 @@ namespace Azure.GeoJson
             return property;
         }
     }
-#pragma warning restore AZC0014
 }

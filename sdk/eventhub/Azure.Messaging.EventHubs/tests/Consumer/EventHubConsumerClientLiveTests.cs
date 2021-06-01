@@ -1638,7 +1638,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // The consumer should be able to read events from another partition after being superseded.  Start a new reader for the other partition,
                     // using the same lower level.  Wait for both readers to complete and then signal for cancellation.
 
-                    await Task.Delay(250);
+                    await Task.Delay(TimeSpan.FromSeconds(1), cancellationSource.Token);
                     var lowerReadState = await ReadEventsFromPartitionAsync(consumer, partitions[1], sourceEvents.Count, cancellationSource.Token, readOptions: lowerOptions);
 
                     await Task.WhenAny(higherMonitor.EndCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
