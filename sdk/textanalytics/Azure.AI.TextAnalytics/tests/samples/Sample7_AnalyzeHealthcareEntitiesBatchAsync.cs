@@ -69,7 +69,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Status       : {healthOperation.Status}");
             Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
 
-            // view operation result
+            // view operation results
             foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
             {
                 Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
@@ -110,7 +110,7 @@ namespace Azure.AI.TextAnalytics.Samples
                                 Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                             }
 
-                            // view assertions
+                            // view assertion
                             if (entity.Assertion != null)
                             {
                                 Console.WriteLine($"    Assertions:");
@@ -158,9 +158,9 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
 
                     // current document statistics
-                    Console.WriteLine($"Batch operation statistics:");
-                    Console.WriteLine($"  Document count: {result.Statistics.CharacterCount}");
-                    Console.WriteLine($"  Valid document count: {result.Statistics.TransactionCount}");
+                    Console.WriteLine($"    Document statistics:");
+                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
+                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Console.WriteLine("");
                 }
 

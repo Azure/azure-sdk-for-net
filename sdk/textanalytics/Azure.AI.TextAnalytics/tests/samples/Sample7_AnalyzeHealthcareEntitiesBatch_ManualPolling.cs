@@ -71,7 +71,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 await Task.Delay(pollingInterval);
             }
 
-            // view operation result
+            // view operation results
             await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
             {
                 Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
@@ -98,7 +98,7 @@ namespace Azure.AI.TextAnalytics.Samples
                             Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                         }
 
-                        // view assertions
+                        // view assertion
                         if (entity.Assertion != null)
                         {
                             Console.WriteLine($"    Assertions:");
