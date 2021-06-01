@@ -1,0 +1,109 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://631xscnapsn4prde17h.blob.preprod.core.windows.net/test-filesystem-a7c2e012-a9b6-93f2-9fc3-6167fe729386?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-7d734eb45086d84dbfebb19679bd1481-6b5ae5057ff3cd49-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.6.0-alpha.20201123.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "fb64cc09-b0c6-c725-47ab-5ae773e5b7e4",
+        "x-ms-date": "Mon, 23 Nov 2020 22:18:11 GMT",
+        "x-ms-return-client-request-id": "true",
+         "x-ms-version": "2020-08-04"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Date": "Mon, 23 Nov 2020 22:18:10 GMT",
+        "ETag": "\u00220x8D88FFDAA00A26B\u0022",
+        "Last-Modified": "Mon, 23 Nov 2020 22:18:11 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "fb64cc09-b0c6-c725-47ab-5ae773e5b7e4",
+        "x-ms-request-id": "7667f34d-f01e-0019-4fe6-c1cd21000000",
+         "x-ms-version": "2020-08-04"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://631xscnapsn4prde17h.blob.preprod.core.windows.net/test-filesystem-5fb3656a-4aa0-1698-4dce-350cdbbb598d?restype=container\u0026comp=rename",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b1355557cac400479878beb310cba4df-89238c0932516148-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.6.0-alpha.20201123.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "f0ccb69f-acc1-2228-9556-e8240edc17e6",
+        "x-ms-date": "Mon, 23 Nov 2020 22:18:11 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-source-container-name": "test-filesystem-a7c2e012-a9b6-93f2-9fc3-6167fe729386",
+        "x-ms-source-lease-id": "78d9d46a-e728-0d36-13a2-a248b06152b2",
+         "x-ms-version": "2020-08-04"
+      },
+      "RequestBody": null,
+      "StatusCode": 412,
+      "ResponseHeaders": {
+        "Content-Length": "252",
+        "Content-Type": "application/xml",
+        "Date": "Mon, 23 Nov 2020 22:18:10 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "f0ccb69f-acc1-2228-9556-e8240edc17e6",
+        "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
+        "x-ms-request-id": "7667f351-f01e-0019-50e6-c1cd21000000",
+         "x-ms-version": "2020-08-04"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
+        "\u003CError\u003E\u003CCode\u003ELeaseNotPresentWithContainerOperation\u003C/Code\u003E\u003CMessage\u003EThere is currently no lease on the container.\n",
+        "RequestId:7667f351-f01e-0019-50e6-c1cd21000000\n",
+        "Time:2020-11-23T22:18:11.5451954Z\u003C/Message\u003E\u003C/Error\u003E"
+      ]
+    },
+    {
+      "RequestUri": "https://631xscnapsn4prde17h.blob.preprod.core.windows.net/test-filesystem-a7c2e012-a9b6-93f2-9fc3-6167fe729386?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ff77ffd8ee94ba41bd9255ce0ce44ff7-3fa166868b87bd43-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.6.0-alpha.20201123.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "f9a8ca05-6194-fcf1-bce0-790074a2ce84",
+        "x-ms-date": "Mon, 23 Nov 2020 22:18:11 GMT",
+        "x-ms-return-client-request-id": "true",
+         "x-ms-version": "2020-08-04"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Date": "Mon, 23 Nov 2020 22:18:10 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "f9a8ca05-6194-fcf1-bce0-790074a2ce84",
+        "x-ms-request-id": "7667f352-f01e-0019-51e6-c1cd21000000",
+         "x-ms-version": "2020-08-04"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "626286680",
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\n631xscnapsn4prde17h\nU2FuaXRpemVk\nhttps://631xscnapsn4prde17h.blob.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.file.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.queue.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.table.preprod.core.windows.net\n\n\n\n\nhttps://631xscnapsn4prde17h-secondary.blob.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.file.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.queue.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.table.preprod.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://631xscnapsn4prde17h.blob.preprod.core.windows.net/;QueueEndpoint=https://631xscnapsn4prde17h.queue.preprod.core.windows.net/;FileEndpoint=https://631xscnapsn4prde17h.file.preprod.core.windows.net/;BlobSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.blob.preprod.core.windows.net/;QueueSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.queue.preprod.core.windows.net/;FileSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.file.preprod.core.windows.net/;AccountName=631xscnapsn4prde17h;AccountKey=Sanitized\n"
+  }
+}

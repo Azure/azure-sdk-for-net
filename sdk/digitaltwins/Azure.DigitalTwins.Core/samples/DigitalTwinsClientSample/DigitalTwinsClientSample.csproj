@@ -4,14 +4,20 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Azure.DigitalTwins.Core.Samples</RootNamespace>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- NU5104: Using a project reference to the client causes build warning/errors on build agents. -->
+  <PropertyGroup>  
+    <NoWarn>$(NoWarn);NU5104</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <!--using the preview version of Azure.Identity to have access to KnownAuthorityHosts static class.-->
-    <PackageReference Include="Azure.Identity" Version="1.2.0-preview.2" />
+    <PackageReference Include="Azure.Identity" Version="1.2.1" />
     <PackageReference Include="CommandLineParser" Version="2.7.82" />
 
-    <PackageReference Include="System.Text.Json" Version="4.7.1" />
+    <PackageReference Include="System.Text.Json" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class SubscriptionStateExtensions
+    internal static partial class SubscriptionStateExtensions
     {
         public static string ToSerialString(this SubscriptionState value) => value switch
         {

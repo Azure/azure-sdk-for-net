@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MachineLearningServicesRunStatusChangedEventDataConverter))]
     public partial class MachineLearningServicesRunStatusChangedEventData
     {
         internal static MachineLearningServicesRunStatusChangedEventData DeserializeMachineLearningServicesRunStatusChangedEventData(JsonElement element)
@@ -45,11 +48,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("runTags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     runTags = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("runProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     runProperties = property.Value.GetObject();
                     continue;
                 }
@@ -60,6 +73,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MachineLearningServicesRunStatusChangedEventData(experimentId.Value, experimentName.Value, runId.Value, runType.Value, runTags.Value, runProperties.Value, runStatus.Value);
+        }
+
+        internal partial class MachineLearningServicesRunStatusChangedEventDataConverter : JsonConverter<MachineLearningServicesRunStatusChangedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MachineLearningServicesRunStatusChangedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MachineLearningServicesRunStatusChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMachineLearningServicesRunStatusChangedEventData(document.RootElement);
+            }
         }
     }
 }

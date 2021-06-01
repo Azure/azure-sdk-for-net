@@ -4,7 +4,6 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,7 +11,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
-    internal class ImdsManagedIdentitySource : IManagedIdentitySource
+    internal class ImdsManagedIdentitySource : ManagedIdentitySource
     {
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
@@ -23,12 +22,11 @@ namespace Azure.Identity
 
         internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable. The requested identity has not been assigned to this resource.";
 
-        private readonly HttpPipeline _pipeline;
         private readonly string _clientId;
 
         private string _identityUnavailableErrorMessage;
 
-        public static async ValueTask<IManagedIdentitySource> TryCreateAsync(HttpPipeline pipeline, string clientId, bool async, CancellationToken cancellationToken)
+        public static async ValueTask<ManagedIdentitySource> TryCreateAsync(ManagedIdentityClientOptions options, bool async, CancellationToken cancellationToken)
         {
             AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);
 
@@ -53,31 +51,32 @@ namespace Azure.Identity
                 {
                     available = connectTask.Wait(ImdsAvailableTimeoutMs, cancellationToken) && client.Connected;
                 }
+
+                if (available)
+                {
+                    AzureIdentityEventSource.Singleton.ImdsEndpointFound(s_imdsEndpoint);
+                }
+                else
+                {
+                    AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint, "Establishing a connection timed out or failed without exception." );
+                }
             }
-            catch
+            catch (Exception e)
             {
+                AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint, e);
+
                 available = false;
             }
 
-            if (available)
-            {
-                AzureIdentityEventSource.Singleton.ImdsEndpointFound(s_imdsEndpoint);
-            }
-            else
-            {
-                AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint);
-            }
-
-            return available ? new ImdsManagedIdentitySource(pipeline, clientId) : default;
+            return available ? new ImdsManagedIdentitySource(options.Pipeline, options.ClientId) : default;
         }
 
-        internal ImdsManagedIdentitySource(HttpPipeline pipeline, string clientId)
+        internal ImdsManagedIdentitySource(CredentialPipeline pipeline, string clientId) : base(pipeline)
         {
-            _pipeline = pipeline;
             _clientId = clientId;
         }
 
-        public Request CreateRequest(string[] scopes)
+        protected override Request CreateRequest(string[] scopes)
         {
             if (_identityUnavailableErrorMessage != default)
             {
@@ -87,7 +86,7 @@ namespace Azure.Identity
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
 
-            Request request = _pipeline.CreateRequest();
+            Request request = Pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Headers.Add("Metadata", "true");
             request.Uri.Reset(s_imdsEndpoint);
@@ -103,30 +102,20 @@ namespace Azure.Identity
             return request;
         }
 
-        public AccessToken GetAccessTokenFromJson(in JsonElement jsonAccessToken, in JsonElement jsonExpiresOn)
+        protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
         {
-            // the seconds from epoch may be returned as a Json number or a Json string which is a number
-            // depending on the environment.  If neither of these are the case we throw an AuthException.
-            if (jsonExpiresOn.ValueKind == JsonValueKind.Number && jsonExpiresOn.TryGetInt64(out long expiresOnSec) ||
-                jsonExpiresOn.ValueKind == JsonValueKind.String && long.TryParse(jsonExpiresOn.GetString(), out expiresOnSec))
+            // 502 is typically due to the client dealing with a proxy configuration, which is not supported.
+            if (response.Status == 400 || response.Status == 502)
             {
-                return new AccessToken(jsonAccessToken.GetString(), DateTimeOffset.FromUnixTimeSeconds(expiresOnSec));
-            }
-
-            throw new AuthenticationFailedException(ManagedIdentityClient.AuthenticationResponseInvalidFormatError);
-        }
-
-        public async ValueTask HandleFailedRequestAsync(Response response, ClientDiagnostics diagnostics, bool async)
-        {
-            if (response.Status == 400)
-            {
-                string message = _identityUnavailableErrorMessage ?? await diagnostics
+                string message = _identityUnavailableErrorMessage ?? await Pipeline.Diagnostics
                     .CreateRequestFailedMessageAsync(response, IdentityUnavailableError, null, null, async)
                     .ConfigureAwait(false);
 
                 Interlocked.CompareExchange(ref _identityUnavailableErrorMessage, message, null);
                 throw new CredentialUnavailableException(message);
             }
+
+            return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
         }
     }
 }

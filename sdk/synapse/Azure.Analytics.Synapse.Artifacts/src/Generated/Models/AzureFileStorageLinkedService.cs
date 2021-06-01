@@ -37,12 +37,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
         /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password to logon the server. </param>
+        /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
+        /// <param name="sasUri"> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
+        /// <param name="fileShare"> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </param>
+        /// <param name="snapshot"> The azure file share snapshot version. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureFileStorageLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object userId, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureFileStorageLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object userId, SecretBase password, object connectionString, AzureKeyVaultSecretReference accountKey, object sasUri, AzureKeyVaultSecretReference sasToken, object fileShare, object snapshot, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             UserId = userId;
             Password = password;
+            ConnectionString = connectionString;
+            AccountKey = accountKey;
+            SasUri = sasUri;
+            SasToken = sasToken;
+            FileShare = fileShare;
+            Snapshot = snapshot;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "AzureFileStorage";
         }
@@ -53,6 +65,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object UserId { get; set; }
         /// <summary> Password to logon the server. </summary>
         public SecretBase Password { get; set; }
+        /// <summary> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        public object ConnectionString { get; set; }
+        /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
+        public AzureKeyVaultSecretReference AccountKey { get; set; }
+        /// <summary> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        public object SasUri { get; set; }
+        /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
+        public AzureKeyVaultSecretReference SasToken { get; set; }
+        /// <summary> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </summary>
+        public object FileShare { get; set; }
+        /// <summary> The azure file share snapshot version. Type: string (or Expression with resultType string). </summary>
+        public object Snapshot { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
     }

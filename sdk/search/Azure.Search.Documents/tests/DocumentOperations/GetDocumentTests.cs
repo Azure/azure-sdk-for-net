@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
     public class GetDocumentTests : SearchTestBase
     {
         public GetDocumentTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -115,7 +116,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("3", hotel.hotelId);
         }
 
-
         [Test]
         public async Task GetDocumentStatic()
         {
@@ -169,6 +169,7 @@ namespace Azure.Search.Documents.Tests
                     ["lastRenovationDate"] = null,
                     ["rating"] = null,
                     ["location"] = null,
+                    ["geoLocation"] = null,
                     ["address"] = null,
                     ["rooms"] = new[]
                     {
@@ -304,6 +305,7 @@ namespace Azure.Search.Documents.Tests
                 ["hotelId"] = "1",
                 ["hotelName"] = "2015-02-11T12:58:00Z",
                 ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586), // Test that we don't confuse Geo-JSON & complex types.
+                ["geoLocation"] = TestExtensions.CreateDynamicGeoPoint(-73.975403, 40.760586), // Test that we don't confuse Geo-JSON & complex types.
                 ["rooms"] = new[]
                 {
                     new SearchDocument
@@ -320,6 +322,7 @@ namespace Azure.Search.Documents.Tests
                     ["hotelId"] = "1",
                     ["hotelName"] = new DateTimeOffset(2015, 2, 11, 12, 58, 0, TimeSpan.Zero),
                     ["location"] = TestExtensions.CreateDynamicPoint(-73.975403, 40.760586),
+                    ["geoLocation"] = TestExtensions.CreateDynamicGeoPoint(-73.975403, 40.760586),
                     ["rooms"] = new[]
                     {
                         new SearchDocument
@@ -410,6 +413,7 @@ namespace Azure.Search.Documents.Tests
                     LastRenovationDate = null,
                     Rating = null,
                     Location = null,
+                    GeoLocation = null,
                     Address = new HotelAddress(),
                     Rooms = new[]
                     {
@@ -469,6 +473,7 @@ namespace Azure.Search.Documents.Tests
                     LastRenovationDate = new DateTimeOffset(1999, 9, 6, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                     Rating = 3,
                     Location = TestExtensions.CreatePoint(-78.940483, 35.904160),
+                    GeoLocation = TestExtensions.CreateGeoPoint(-78.940483, 35.904160),
                     Address = new HotelAddress()
                     {
                         StreetAddress = "6910 Fayetteville Rd",

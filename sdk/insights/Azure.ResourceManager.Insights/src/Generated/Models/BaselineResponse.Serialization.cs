@@ -39,11 +39,21 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("timespan"))
@@ -53,6 +63,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("interval"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             interval = property0.Value.GetTimeSpan("P");
                             continue;
                         }
@@ -63,6 +78,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("timestamps"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<DateTimeOffset> array = new List<DateTimeOffset>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -73,6 +93,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("baseline"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<Baseline> array = new List<Baseline>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -83,6 +108,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("metadata"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<BaselineMetadataValue> array = new List<BaselineMetadataValue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

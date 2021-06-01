@@ -12,8 +12,10 @@ namespace NetApp.Tests.Helpers
         public const long gibibyte = 1024L * 1024L * 1024L;
 
         private const string remoteSuffix = "-R";
+        //public const string vnet = "sdknettestqa2vnet464";
         public const string vnet = "sdknettestqa2vnet464";
-        public const string backupVnet = "sdknettestqa2vnet464euap";
+        //public const string backupVnet = "sdknettestqa2vnet464euap";
+        public const string backupVnet = "sdknettestqa2vnet464southcentralus";
         public const string repVnet = "sdktestqa2vnet464";
         //public const string remoteVnet = repVnet + remoteSuffix;
         public const string remoteVnet = "sdktestqa2vnet464east-R";
@@ -21,37 +23,40 @@ namespace NetApp.Tests.Helpers
         //public const string subsId = "0661B131-4A11-479B-96BF-2F95ACCA2F73";
         public const string subsId = "69a75bda-882e-44d5-8431-63421204132a";
         public const string location = "westus2";
+        //public const string location = "eastus2euap";
         //public const string remoteLocation = "southcentralus";
-        public const string remoteLocation = "eastus";
-        //public const string backupLocation = "westus2";
-        //public const string backupLocation = "westus2"; //"westusstage";
-        public const string backupLocation = "eastus2euap"; //"westusstage";
+        public const string remoteLocation = "eastus";                        
+        //public const string backupLocation = "eastus2euap"; //"westusstage";
+        public const string backupLocation = "southcentralusstage";        
+
         public const string resourceGroup = "sdk-net-test-qa2";
         //public const string resourceGroup = "ab_sdk_test_rg";
         public const string repResourceGroup = "sdk-test-qa2";
         public const string remoteResourceGroup = repResourceGroup + remoteSuffix;
-        public const string accountName1 = "sdk-net-tests-acc-208";        
-        public const string accountName1Repl = "sdk-net-tests-acc-20b";
+        public const string accountName1 = "sdk-net-tests-acc-212";
+        public const string accountName1Repl = "sdk-net-tests-acc-21b";
         public const string remoteAccountName1 = accountName1Repl + remoteSuffix;
-        public const string accountName2 = "sdk-net-tests-acc-21";
-        public const string poolName1 = "sdk-net-tests-pool-201";
-        public const string poolName1Repl = "sdk-net-tests-pool-10b";
+        public const string accountName2 = "sdk-net-tests-acc-23";
+        public const string poolName1 = "sdk-net-tests-pool-205";
+        public const string poolName1Repl = "sdk-net-tests-pool-11b";
         public const string remotePoolName1 = poolName1Repl + remoteSuffix;
         public const string poolName2 = "sdk-net-tests-pool-211";
-        public const string volumeName1 = "sdk-net-tests-vol-2101";
+        public const string volumeName1 = "sdk-net-tests-vol-2105";
         
-        public const string volumeBackupAccountName1 = "sdk-net-tests-acc-208v";
-        public const string backupVolumeName1 = "sdk-net-tests-vol-2105";
-
-        public const string volumeName1Repl = "sdk-net-tests-vol-1000b";
-        public const string remoteVolumeName1 = volumeName1Repl + remoteSuffix;
+        public const string volumeBackupAccountName1 = "sdk-net-tests-acc-213v";
+        public const string backupName1 = backupVolumeName1+"-b1";
+        public const string backupName2 = backupVolumeName1 + "-b2";
+        public const string backupVolumeName1 = "sdk-net-tests-vol-2109";
+        
+        public const string volumeName1ReplSource = "sdk-net-tests-vol-1001b-source";        
+        public const string volumeName1ReplDest = volumeName1ReplSource + remoteSuffix+"dest";
         public const string volumeName2 = "sdk-net-tests-vol-1001";
-        public const string snapshotName1 = "sdk-net-tests-snap-10";
-        public const string snapshotName2 = "sdk-net-tests-snap-11";
+        public const string snapshotName1 = "sdk-net-tests-snap-11";
+        public const string snapshotName2 = "sdk-net-tests-snap-12";
         public const string snapshotPolicyName1 = "sdk-net-tests-snapshotPolicy-1";
         public const string snapshotPolicyName2 = "sdk-net-tests-snapshotPolicy-2";
-        public const string backupPolicyName1 = "sdk-net-tests-backupPolicy-102a";
-        public const string backupPolicyName2 = "sdk-net-tests-backupPolicy-102b";
+        public const string backupPolicyName1 = "sdk-net-tests-backupPolicy-105a";
+        public const string backupPolicyName2 = "sdk-net-tests-backupPolicy-105b";
         //public const string backupVaultId = "cbsvault";
 
         public static ActiveDirectory activeDirectory = new ActiveDirectory()
@@ -101,7 +106,7 @@ namespace NetApp.Tests.Helpers
             // request reference example
             // az netappfiles account update -g --account-name cli-lf-acc2  --active-directories '[{"username": "aduser", "password": "aduser", "smbservername": "SMBSERVER", "dns": "1.2.3.4", "domain": "westcentralus"}]' -l westus2
 
-            var activeDirectories = activeDirectory != null ? new List <ActiveDirectory> { activeDirectory } : null;
+            var activeDirectories = activeDirectory != null ? new List <ActiveDirectory> { activeDirectory } : new List<ActiveDirectory>();
 
             var netAppAccount = new NetAppAccount()
             {
@@ -125,7 +130,7 @@ namespace NetApp.Tests.Helpers
         {
             if (!poolOnly)
             {
-                CreateAccount(netAppMgmtClient, accountName, resourceGroup: resourceGroup, location: location);
+                CreateAccount(netAppMgmtClient, accountName, resourceGroup: resourceGroup, location: location, tags: tags);
             }
 
             var pool = new CapacityPool
@@ -156,7 +161,7 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, string vnet = vnet, bool volumeOnly = false, string snapshotId = null, string snapshotPolicyId = null)
+        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, string vnet = vnet, bool volumeOnly = false, string snapshotId = null, string snapshotPolicyId = null, string backupVnetLocation = "")
         {
             if (!volumeOnly)
             {
@@ -173,7 +178,8 @@ namespace NetApp.Tests.Helpers
                 SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
                 Tags = tags,
                 ExportPolicy = exportPolicy,
-                SnapshotId = snapshotId,                
+                SnapshotId = snapshotId, 
+                SecurityStyle = "unix"
             };
             if (snapshotPolicyId != null)
             {
@@ -195,7 +201,7 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static Volume CreateDpVolume(AzureNetAppFilesManagementClient netAppMgmtClient, Volume sourceVolume, string volumeName = remoteVolumeName1, string poolName = remotePoolName1, string accountName = remoteAccountName1, string resourceGroup = remoteResourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, bool volumeOnly = false, string snapshotId = null)
+        public static Volume CreateDpVolume(AzureNetAppFilesManagementClient netAppMgmtClient, Volume sourceVolume, string volumeName = volumeName1ReplDest, string poolName = remotePoolName1, string accountName = remoteAccountName1, string resourceGroup = remoteResourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, bool volumeOnly = false, string snapshotId = null)
         {
             if (!volumeOnly)
             {
@@ -303,7 +309,10 @@ namespace NetApp.Tests.Helpers
                     Location = location,
                 };
             }
-
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                Thread.Sleep(delay); // some robustness against ARM caching
+            }
             var resource = netAppMgmtClient.Snapshots.Create(snapshot, resourceGroup, accountName, poolName, volumeName, snapshotName);
             Assert.Equal(resource.Name, accountName + '/' + poolName + '/' + volumeName + '/' + snapshotName);
         }

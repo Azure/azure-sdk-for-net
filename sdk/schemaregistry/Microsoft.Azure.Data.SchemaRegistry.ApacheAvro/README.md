@@ -42,13 +42,10 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
 ```C# Snippet:SchemaRegistryAvroCreateSchemaRegistryClient
-string endpoint = "<event_hubs_namespace_hostname>";
-var credentials = new ClientSecretCredential(
-    "<tenant_id>",
-    "<client_id>",
-    "<client_secret>"
-);
-var client = new SchemaRegistryClient(endpoint, credentials);
+// Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
+// including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+// For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+var schemaRegistryClient = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -94,10 +91,9 @@ Register a schema to be stored in the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryAvroSerialize
 var employee = new Employee { Age = 42, Name = "John Doe" };
-string groupName = "<schema_group_name>";
 
 using var memoryStream = new MemoryStream();
-var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
+var serializer = new SchemaRegistryAvroObjectSerializer(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
 serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken.None);
 ```
 
@@ -106,9 +102,7 @@ serializer.Serialize(memoryStream, employee, typeof(Employee), CancellationToken
 Retrieve a previously registered schema ID from the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryAvroDeserialize
-string groupName = "<schema_group_name>";
-
-var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
+var serializer = new SchemaRegistryAvroObjectSerializer(schemaRegistryClient, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });
 memoryStream.Position = 0;
 Employee employee = (Employee)serializer.Deserialize(memoryStream, typeof(Employee), CancellationToken.None);
 ```

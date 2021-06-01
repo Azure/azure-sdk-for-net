@@ -17,8 +17,18 @@ namespace Azure.Core.Serialization
     /// </summary>
     public class JsonObjectSerializer : ObjectSerializer, IMemberNameConverter
     {
+        private const int JsonIgnoreConditionAlways = 1;
+
+        private static PropertyInfo? s_jsonIgnoreAttributeCondition;
+        private static bool s_jsonIgnoreAttributeConditionInitialized;
+
         private readonly ConcurrentDictionary<MemberInfo, string?> _cache;
         private readonly JsonSerializerOptions _options;
+
+        /// <summary>
+        /// A shared instance of <see cref="JsonObjectSerializer"/>, initialized with the default options.
+        /// </summary>
+        public static JsonObjectSerializer Default { get; } = new JsonObjectSerializer();
 
         /// <summary>
         /// Initializes new instance of <see cref="JsonObjectSerializer"/>.
@@ -54,7 +64,7 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
-        public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override object? Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
             using var memoryStream = new MemoryStream();
             stream.CopyTo(memoryStream);
@@ -62,9 +72,23 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
-        public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override ValueTask<object?> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
-            return await JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken).ConfigureAwait(false);
+            return JsonSerializer.DeserializeAsync(stream, returnType, _options, cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public override BinaryData Serialize(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
+            SerializeToBinaryDataInternal(value, inputType);
+
+        /// <inheritdoc />
+        public override ValueTask<BinaryData> SerializeAsync(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
+             new ValueTask<BinaryData>(SerializeToBinaryDataInternal(value, inputType));
+
+        private BinaryData SerializeToBinaryDataInternal(object? value, Type? inputType)
+        {
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, inputType ?? value?.GetType() ?? typeof(object), _options);
+            return new BinaryData(bytes);
         }
 
         /// <inheritdoc/>
@@ -90,7 +114,8 @@ namespace Azure.Core.Serialization
                     if (propertyInfo.GetMethod?.IsPublic == true ||
                         propertyInfo.SetMethod?.IsPublic == true)
                     {
-                        if (propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() != null)
+                        JsonIgnoreAttribute? attr = propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>();
+                        if (attr != null && GetCondition(attr) == JsonIgnoreConditionAlways)
                         {
                             return null;
                         }
@@ -112,12 +137,29 @@ namespace Azure.Core.Serialization
             });
         }
 
+        private static int GetCondition(JsonIgnoreAttribute attribute)
+        {
+            if (!s_jsonIgnoreAttributeConditionInitialized)
+            {
+                s_jsonIgnoreAttributeCondition = typeof(JsonIgnoreAttribute).GetProperty("Condition", BindingFlags.Public | BindingFlags.Instance);
+                s_jsonIgnoreAttributeConditionInitialized = true;
+            }
+
+            if (s_jsonIgnoreAttributeCondition != null)
+            {
+                return (int)s_jsonIgnoreAttributeCondition.GetValue(attribute)!;
+            }
+
+            // Return the default value in net5.0.
+            return JsonIgnoreConditionAlways;
+        }
+
         private string GetPropertyName(MemberInfo memberInfo)
         {
             // Mimics property name determination based on
             // https://github.com/dotnet/runtime/blob/dc8b6f90/src/libraries/System.Text.Json/src/System/Text/Json/Serialization/JsonPropertyInfo.cs#L53-L90
 
-            JsonPropertyNameAttribute nameAttribute = memberInfo.GetCustomAttribute<JsonPropertyNameAttribute>(false);
+            JsonPropertyNameAttribute? nameAttribute = memberInfo.GetCustomAttribute<JsonPropertyNameAttribute>(false);
             if (nameAttribute != null)
             {
                 return nameAttribute.Name

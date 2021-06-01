@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("captureStartTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     captureStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("packetCaptureStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     packetCaptureStatus = new PcStatus(property.Value.GetString());
                     continue;
                 }
@@ -51,6 +61,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("packetCaptureError"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PcError> array = new List<PcError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

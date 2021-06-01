@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateLinkHubName'>
-            /// The name of the privateLinkHub
+            /// Name of the privateLinkHub
             /// </param>
             public static PrivateLinkHub Get(this IPrivateLinkHubsOperations operations, string resourceGroupName, string privateLinkHubName)
             {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateLinkHubName'>
-            /// The name of the privateLinkHub
+            /// Name of the privateLinkHub
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -101,18 +101,18 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='privateLinkHubPatchInfo'>
+            /// PrivateLinkHub patch request properties
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateLinkHubName'>
-            /// The name of the privateLinkHub
+            /// Name of the privateLinkHub
             /// </param>
-            /// <param name='privateLinkHubPatchInfo'>
-            /// PrivateLinkHub patch request properties
-            /// </param>
-            public static PrivateLinkHub Update(this IPrivateLinkHubsOperations operations, string resourceGroupName, string privateLinkHubName, PrivateLinkHubPatchInfo privateLinkHubPatchInfo)
+            public static PrivateLinkHub Update(this IPrivateLinkHubsOperations operations, PrivateLinkHubPatchInfo privateLinkHubPatchInfo, string resourceGroupName, string privateLinkHubName)
             {
-                return operations.UpdateAsync(resourceGroupName, privateLinkHubName, privateLinkHubPatchInfo).GetAwaiter().GetResult();
+                return operations.UpdateAsync(privateLinkHubPatchInfo, resourceGroupName, privateLinkHubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -121,21 +121,21 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='privateLinkHubPatchInfo'>
+            /// PrivateLinkHub patch request properties
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateLinkHubName'>
-            /// The name of the privateLinkHub
-            /// </param>
-            /// <param name='privateLinkHubPatchInfo'>
-            /// PrivateLinkHub patch request properties
+            /// Name of the privateLinkHub
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateLinkHub> UpdateAsync(this IPrivateLinkHubsOperations operations, string resourceGroupName, string privateLinkHubName, PrivateLinkHubPatchInfo privateLinkHubPatchInfo, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateLinkHub> UpdateAsync(this IPrivateLinkHubsOperations operations, PrivateLinkHubPatchInfo privateLinkHubPatchInfo, string resourceGroupName, string privateLinkHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, privateLinkHubName, privateLinkHubPatchInfo, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(privateLinkHubPatchInfo, resourceGroupName, privateLinkHubName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -147,18 +147,18 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='privateLinkHubInfo'>
+            /// PrivateLinkHub create or update request properties
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateLinkHubName'>
-            /// The name of the privateLinkHub
+            /// Name of the privateLinkHub
             /// </param>
-            /// <param name='privateLinkHubInfo'>
-            /// PrivateLinkHub create or update request properties
-            /// </param>
-            public static PrivateLinkHub CreateOrUpdate(this IPrivateLinkHubsOperations operations, string resourceGroupName, string privateLinkHubName, PrivateLinkHub privateLinkHubInfo)
+            public static PrivateLinkHub CreateOrUpdate(this IPrivateLinkHubsOperations operations, PrivateLinkHub privateLinkHubInfo, string resourceGroupName, string privateLinkHubName)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, privateLinkHubName, privateLinkHubInfo).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(privateLinkHubInfo, resourceGroupName, privateLinkHubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -167,21 +167,21 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='privateLinkHubInfo'>
+            /// PrivateLinkHub create or update request properties
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateLinkHubName'>
-            /// The name of the privateLinkHub
-            /// </param>
-            /// <param name='privateLinkHubInfo'>
-            /// PrivateLinkHub create or update request properties
+            /// Name of the privateLinkHub
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateLinkHub> CreateOrUpdateAsync(this IPrivateLinkHubsOperations operations, string resourceGroupName, string privateLinkHubName, PrivateLinkHub privateLinkHubInfo, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateLinkHub> CreateOrUpdateAsync(this IPrivateLinkHubsOperations operations, PrivateLinkHub privateLinkHubInfo, string resourceGroupName, string privateLinkHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateLinkHubName, privateLinkHubInfo, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(privateLinkHubInfo, resourceGroupName, privateLinkHubName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateLinkHubName'>
-            /// The name of the privateLinkHub
+            /// Name of the privateLinkHub
             /// </param>
             public static void Delete(this IPrivateLinkHubsOperations operations, string resourceGroupName, string privateLinkHubName)
             {
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateLinkHubName'>
-            /// The name of the privateLinkHub
+            /// Name of the privateLinkHub
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -250,6 +250,43 @@ namespace Microsoft.Azure.Management.Synapse
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Deletes a privateLinkHub
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateLinkHubName'>
+            /// Name of the privateLinkHub
+            /// </param>
+            public static void BeginDelete(this IPrivateLinkHubsOperations operations, string resourceGroupName, string privateLinkHubName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, privateLinkHubName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a privateLinkHub
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateLinkHubName'>
+            /// Name of the privateLinkHub
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IPrivateLinkHubsOperations operations, string resourceGroupName, string privateLinkHubName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, privateLinkHubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

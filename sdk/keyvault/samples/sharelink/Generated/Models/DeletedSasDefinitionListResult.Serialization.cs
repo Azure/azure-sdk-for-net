@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class DeletedSasDefinitionListResult
+    internal partial class DeletedSasDefinitionListResult
     {
         internal static DeletedSasDefinitionListResult DeserializeDeletedSasDefinitionListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DeletedSasDefinitionItem> array = new List<DeletedSasDefinitionItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

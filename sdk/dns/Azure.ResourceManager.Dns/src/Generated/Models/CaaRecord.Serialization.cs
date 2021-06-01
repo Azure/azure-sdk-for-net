@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 if (property.NameEquals("flags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     flags = property.Value.GetInt32();
                     continue;
                 }

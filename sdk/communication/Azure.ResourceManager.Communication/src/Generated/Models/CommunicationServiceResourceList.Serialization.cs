@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class CommunicationServiceResourceList
+    internal partial class CommunicationServiceResourceList
     {
         internal static CommunicationServiceResourceList DeserializeCommunicationServiceResourceList(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<CommunicationServiceResource> array = new List<CommunicationServiceResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

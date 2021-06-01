@@ -7,9 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Network.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 rgName,
                 new ResourceGroup(m_location)
                 {
-                    Tags ={ { rgName, Recording.UtcNow.ToString("u") } }
+                    Tags = { { rgName, Recording.UtcNow.ToString("u") } }
                 });
 
             // Create Storage Account, so that both the VMs can share it
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [Test]
-        [Ignore ("This case need to be tested by compute team")]
+        [Ignore("This case need to be tested by compute team")]
         public async Task TestEffectiveRouteAndAcls()
         {
             EnsureClientsInitialized(DefaultLocation);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 rgName,
                 new ResourceGroup(m_location)
                 {
-                    Tags ={ { rgName, Recording.UtcNow.ToString("u") } }
+                    Tags = { { rgName, Recording.UtcNow.ToString("u") } }
                 });
 
             // Create Storage Account, so that both the VMs can share it
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 rgName,
                 new ResourceGroup(m_location)
                 {
-                    Tags ={ { rgName, Recording.UtcNow.ToString("u") } }
+                    Tags = { { rgName, Recording.UtcNow.ToString("u") } }
                 });
 
             // Create Storage Account, so that both the VMs can share it
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 rgName,
                 new ResourceGroup(m_location)
                 {
-                    Tags ={ { rgName, Recording.UtcNow.ToString("u") } }
+                    Tags = { { rgName, Recording.UtcNow.ToString("u") } }
                 });
 
             // Create Storage Account, so that both the VMs can share it

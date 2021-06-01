@@ -21,16 +21,40 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal DataFlowRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of DataFlowClient for mocking. </summary>
         protected DataFlowClient()
         {
         }
+
+        /// <summary> Initializes a new instance of DataFlowClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public DataFlowClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new ArtifactsClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new DataFlowRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+        }
+
         /// <summary> Initializes a new instance of DataFlowClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal DataFlowClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        internal DataFlowClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
         {
             RestClient = new DataFlowRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -253,6 +277,66 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 var originalResponse = RestClient.DeleteDataFlow(dataFlowName, cancellationToken);
                 return new DataFlowDeleteDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteDataFlowRequest(dataFlowName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a dataflow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="request"/> is null. </exception>
+        public virtual async Task<DataFlowRenameDataFlowOperation> StartRenameDataFlowAsync(string dataFlowName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (dataFlowName == null)
+            {
+                throw new ArgumentNullException(nameof(dataFlowName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartRenameDataFlow");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RenameDataFlowAsync(dataFlowName, request, cancellationToken).ConfigureAwait(false);
+                return new DataFlowRenameDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDataFlowRequest(dataFlowName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a dataflow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="request"/> is null. </exception>
+        public virtual DataFlowRenameDataFlowOperation StartRenameDataFlow(string dataFlowName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (dataFlowName == null)
+            {
+                throw new ArgumentNullException(nameof(dataFlowName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartRenameDataFlow");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.RenameDataFlow(dataFlowName, request, cancellationToken);
+                return new DataFlowRenameDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDataFlowRequest(dataFlowName, request).Request, originalResponse);
             }
             catch (Exception e)
             {

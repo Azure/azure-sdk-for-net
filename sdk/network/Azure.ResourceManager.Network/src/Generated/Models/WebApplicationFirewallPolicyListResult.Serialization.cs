@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class WebApplicationFirewallPolicyListResult
+    internal partial class WebApplicationFirewallPolicyListResult
     {
         internal static WebApplicationFirewallPolicyListResult DeserializeWebApplicationFirewallPolicyListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<WebApplicationFirewallPolicy> array = new List<WebApplicationFirewallPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

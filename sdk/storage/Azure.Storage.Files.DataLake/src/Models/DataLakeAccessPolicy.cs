@@ -21,7 +21,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public DateTimeOffset? PolicyExpiresOn { get; set; }
 
-
         /// <summary>
         /// The <see cref="DateTimeOffset"/> the policy becomes active.
         /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.

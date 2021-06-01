@@ -50,6 +50,11 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("attributes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     attributes = CustomFormModelProperties.DeserializeCustomFormModelProperties(property.Value);
                     continue;
                 }

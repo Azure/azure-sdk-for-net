@@ -46,6 +46,19 @@ namespace Azure.AI.FormRecognizer
         /// <param name="operation">The instance that this method was invoked on.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="IReadOnlyList{T}"/>
+        /// containing the recognized business cards.</returns>
+        public static async Task<Response<RecognizedFormCollection>> WaitForCompletionAsync(this Task<RecognizeInvoicesOperation> operation, CancellationToken cancellationToken = default)
+        {
+            var o = await operation.ConfigureAwait(false);
+            return await o.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Periodically calls the server until the long-running operation completes.
+        /// </summary>
+        /// <param name="operation">The instance that this method was invoked on.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="IReadOnlyList{T}"/>
         /// containing the recognized forms.</returns>
         public static async Task<Response<RecognizedFormCollection>> WaitForCompletionAsync(this Task<RecognizeCustomFormsOperation> operation, CancellationToken cancellationToken = default)
         {

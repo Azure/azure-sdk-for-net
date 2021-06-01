@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("aggregation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     aggregation = ManagementEventAggregationCondition.DeserializeManagementEventAggregationCondition(property.Value);
                     continue;
                 }
@@ -49,6 +54,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("dataSource"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
                     continue;
                 }

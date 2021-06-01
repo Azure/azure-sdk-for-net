@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("testFrequencySec"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     testFrequencySec = property.Value.GetInt32();
                     continue;
                 }
@@ -81,26 +86,51 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("preferredIPVersion"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     preferredIPVersion = new PreferredIPVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpConfiguration"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tcpConfiguration"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("icmpConfiguration"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("successThreshold"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     successThreshold = ConnectionMonitorSuccessThreshold.DeserializeConnectionMonitorSuccessThreshold(property.Value);
                     continue;
                 }

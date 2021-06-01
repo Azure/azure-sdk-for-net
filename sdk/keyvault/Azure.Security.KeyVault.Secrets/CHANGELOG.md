@@ -1,7 +1,37 @@
 # Release History
 
-## 4.2.0-beta.3 (Unreleased)
+## 4.2.0-beta.6 (Unreleased)
 
+
+## 4.2.0-beta.5 (2021-05-11)
+
+### Changed
+
+- Updated dependency versions
+
+## 4.1.1 (2021-05-04)
+
+### Changed
+
+- Updated dependency versions
+
+## 4.2.0-beta.4 (2021-02-10)
+
+### Added
+
+- Added constructor to `KeyVaultSecretIdentifier` to parse a `Uri`.
+
+### Changed
+
+- The default service version is now "7.2" (still in preview).
+
+### Removed
+
+- Removed `KeyVaultSecretIdentifier.Parse` and `KeyVaultSecretIdentifier.TryParse` in favor of the added constructor.
+
+## 4.2.0-beta.3 (2020-11-12)
+
+- Bug fixes and performance improvements.
 
 ## 4.2.0-beta.2 (2020-10-06)
 
@@ -50,7 +80,7 @@
 
 - Challenge-based authentication requests are only sent over HTTPS.
 
-## 4.0.0 (2019-11)
+## 4.0.0 (2019-11-01)
 
 ### Breaking changes
 

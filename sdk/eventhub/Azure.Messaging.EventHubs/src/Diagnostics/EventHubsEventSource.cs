@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Consumer;
@@ -775,18 +774,16 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
-        /// <param name="eventPosition">The description of the <see cref="EventPosition" /> used as the starting point for processing.</param>
         ///
-        [Event(39, Level = EventLevel.Verbose, Message = "Completed starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Starting at position: {4}.")]
+        [Event(39, Level = EventLevel.Verbose, Message = "Completed starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
         public virtual void EventProcessorPartitionProcessingStartComplete(string partitionId,
                                                                            string identifier,
                                                                            string eventHubName,
-                                                                           string consumerGroup,
-                                                                           string eventPosition)
+                                                                           string consumerGroup)
         {
             if (IsEnabled())
             {
-                WriteEvent(39, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, eventPosition ?? string.Empty);
+                WriteEvent(39, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
             }
         }
 
@@ -1071,6 +1068,330 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(53, eventHubName ?? string.Empty, partitionId ?? string.Empty, producerGroupId, ownerLevel, lastPublishedSequence);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has closed the transport consumer in response
+        ///   to a stop request and a receive operation was aborted.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is stopping.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        ///
+        [Event(54, Level = EventLevel.Verbose, Message = "Event Processor successfully closed the transport consumer when stopping processing for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        public virtual void EventProcessorPartitionProcessingStopConsumerClose(string partitionId,
+                                                                               string identifier,
+                                                                               string eventHubName,
+                                                                               string consumerGroup)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(54, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an AMQP object was closed by the <c>FaultTolerantAmqpObject&lt;T&gt;</c> instance that manages it.
+        /// </summary>
+        ///
+        /// <param name="objectTypeName">The name of the AMQP object type being managed; normally this will be a type of AMQP link.</param>
+        /// <param name="identifier">The identifier of the client associated with the AMQP object.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the AMQP object is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the AMQP object is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition that the AMQP object is associated with.</param>
+        /// <param name="errorMessage">The message for any terminal exception that may have occurred.</param>
+        ///
+        [Event(55, Level = EventLevel.Verbose, Message = "An AMQP object of type '{0}' was closed by the fault tolerant manager for client: '{1}', Event Hub: {2}, Consumer Group: {3}, and partition: {4}.  Terminal error message: '{5}'")]
+        public virtual void FaultTolerantAmqpObjectClose(string objectTypeName,
+                                                         string identifier,
+                                                         string eventHubName,
+                                                         string consumerGroup,
+                                                         string partitionId,
+                                                         string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(55, objectTypeName ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that creating an AMQP connection has started.
+        /// </summary>
+        ///
+        /// <param name="endpoint">The service endpoint that the connection is being opened for.</param>
+        /// <param name="transportType">The type of transport being used for the connection</param>
+        ///
+        [Event(56, Level = EventLevel.Verbose, Message = "Beginning creation of an AMQP connection for endpoint: '{0}' using the transport: '{1}`.")]
+        public virtual void AmqpConnectionCreateStart(string endpoint,
+                                                      string transportType)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(56, endpoint ?? string.Empty, transportType ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that creating an AMQP connection has completed.
+        /// </summary>
+        ///
+        /// <param name="endpoint">The service endpoint that the connection is being opened for.</param>
+        /// <param name="transportType">The type of transport being used for the connection</param>
+        ///
+        [Event(57, Level = EventLevel.Verbose, Message = "Completed creation of an AMQP connection for '{0}' using the transport '{1}`.")]
+        public virtual void AmqpConnectionCreateComplete(string endpoint,
+                                                         string transportType)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(57, endpoint ?? string.Empty, transportType ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while creating an AMQP connection.
+        /// </summary>
+        ///
+        /// <param name="endpoint">The service endpoint that the connection is being opened for.</param>
+        /// <param name="transportType">The type of transport being used for the connection</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(58, Level = EventLevel.Verbose, Message = "An exception occurred while creating an AMQP connection for '{0}' using the transport '{1}`. Error Message: '{2}'")]
+        public virtual void AmqpConnectionCreateStartError(string endpoint,
+                                                           string transportType,
+                                                           string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(58, endpoint ?? string.Empty, transportType ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that creating an AMQP management link has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        ///
+        [Event(59, Level = EventLevel.Verbose, Message = "Beginning creation of an AMQP management link for Event Hub: '{0}'.")]
+        public virtual void AmqpManagementLinkCreateStart(string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(59, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that creating an AMQP management link has completed.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        ///
+        [Event(60, Level = EventLevel.Verbose, Message = "Completed creation of an AMQP management link for Event Hub: '{0}'.")]
+        public virtual void AmqpManagementLinkCreateComplete(string eventHubName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(60, eventHubName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while creating an AMQP management link.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(61, Level = EventLevel.Verbose, Message = "An exception occurred while creating an AMQP management link for Event Hub: '{0}'. Error Message: '{1}'")]
+        public virtual void AmqpManagementLinkCreateError(string eventHubName,
+                                                          string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(61, eventHubName ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that creating an AMQP consumer link has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        /// <param name="consumerGroup">The name of the consumer group that is associated with the link.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
+        /// <param name="ownerLevel">The owner level that is associated with the link.</param>
+        /// <param name="eventPosition">The position in the event stream that the link is being opened for.</param>
+        ///
+        [Event(62, Level = EventLevel.Verbose, Message = "Beginning creation of an AMQP consumer link for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}')")]
+        public virtual void AmqpConsumerLinkCreateStart(string eventHubName,
+                                                        string consumerGroup,
+                                                        string partitionId,
+                                                        string ownerLevel,
+                                                        string eventPosition)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(62, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that creating an AMQP consumer link has completed.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        /// <param name="consumerGroup">The name of the consumer group that is associated with the link.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
+        /// <param name="ownerLevel">The owner level that is associated with the link.</param>
+        /// <param name="eventPosition">The position in the event stream that the link is being opened for.</param>
+        ///
+        [Event(63, Level = EventLevel.Verbose, Message = "Completed creation of an AMQP consumer link for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}')")]
+        public virtual void AmqpConsumerLinkCreateComplete(string eventHubName,
+                                                           string consumerGroup,
+                                                           string partitionId,
+                                                           string ownerLevel,
+                                                           string eventPosition)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(63, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while creating an AMQP consumer link.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        /// <param name="consumerGroup">The name of the consumer group that is associated with the link.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
+        /// <param name="ownerLevel">The owner level that is associated with the link.</param>
+        /// <param name="eventPosition">The position in the event stream that the link is being opened for.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(64, Level = EventLevel.Verbose, Message = "An exception occurred while creating an AMQP consumer link for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}') Error Message: '{5}'")]
+        public virtual void AmqpConsumerLinkCreateError(string eventHubName,
+                                                        string consumerGroup,
+                                                        string partitionId,
+                                                        string ownerLevel,
+                                                        string eventPosition,
+                                                        string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(64, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that creating an AMQP producer link has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
+        /// <param name="featureSet">The set of active features that the link is being opened for.</param>
+        ///
+        [Event(65, Level = EventLevel.Verbose, Message = "Beginning creation of an AMQP producer link for Event Hub: '{0}', Partition: '{1}'. (Active Features: '{2}')")]
+        public virtual void AmqpProducerLinkCreateStart(string eventHubName,
+                                                        string partitionId,
+                                                        string featureSet)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(65, eventHubName ?? string.Empty, partitionId ?? string.Empty, featureSet ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that creating an AMQP producer link has completed.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
+        /// <param name="featureSet">The set of active features that the link is being opened for.</param>
+        ///
+        [Event(66, Level = EventLevel.Verbose, Message = "Completed creation of an AMQP producer link for Event Hub: '{0}', Partition: '{1}'. (Active Features: '{2}')")]
+        public virtual void AmqpProducerLinkCreateComplete(string eventHubName,
+                                                           string partitionId,
+                                                           string featureSet)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(66, eventHubName ?? string.Empty, partitionId ?? string.Empty, featureSet ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while creating an AMQP producer link.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
+        /// <param name="featureSet">The set of active features that the link is being opened for.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(67, Level = EventLevel.Verbose, Message = "An exception occurred while creating an AMQP producer link for Event Hub: '{0}', Partition: '{1}'. (Active Features: '{2}') Error Message: '{3}'")]
+        public virtual void AmqpProducerLinkCreateError(string eventHubName,
+                                                        string partitionId,
+                                                        string featureSet,
+                                                        string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(67, eventHubName ?? string.Empty, partitionId ?? string.Empty, featureSet ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that a captured exception is being surfaced during creation an AMQP consumer link.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        /// <param name="consumerGroup">The name of the consumer group that is associated with the link.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
+        /// <param name="ownerLevel">The owner level that is associated with the link.</param>
+        /// <param name="eventPosition">The position in the event stream that the link is being opened for.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(68, Level = EventLevel.Verbose, Message = "An exception captured by fault tolerant close is being surfaced during consumer link creation for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}') Error Message: '{5}'")]
+        public virtual void AmqpConsumerLinkCreateCapturedErrorThrow(string eventHubName,
+                                                                     string consumerGroup,
+                                                                     string partitionId,
+                                                                     string ownerLevel,
+                                                                     string eventPosition,
+                                                                     string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(68, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception during closing of the exception is being captured to surface during the
+        ///   next creation attempt.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The type of transport being used for the connection</param>
+        /// <param name="consumerGroup">The name of the consumer group that is associated with the link.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(69, Level = EventLevel.Verbose, Message = "An exception during fault tolerant close is being captured to surface when the consumer link is next created for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. Error Message: '{3}'")]
+        public virtual void AmqpConsumerLinkFaultCapture(string eventHubName,
+                                                         string consumerGroup,
+                                                         string partitionId,
+                                                         string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(69, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 

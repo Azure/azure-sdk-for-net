@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PercentileMetricListResult
+    internal partial class PercentileMetricListResult
     {
         internal static PercentileMetricListResult DeserializePercentileMetricListResult(JsonElement element)
         {
@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PercentileMetric> array = new List<PercentileMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

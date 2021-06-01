@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class PasswordCredentialListResult
+    internal partial class PasswordCredentialListResult
     {
         internal static PasswordCredentialListResult DeserializePasswordCredentialListResult(JsonElement element)
         {
@@ -20,6 +20,11 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PasswordCredential> array = new List<PasswordCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

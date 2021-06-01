@@ -62,11 +62,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("capacity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("locations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -77,6 +87,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("locationInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ResourceSkuLocationInfo> array = new List<ResourceSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -87,6 +102,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("apiVersions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -97,6 +117,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("costs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ResourceSkuCosts> array = new List<ResourceSkuCosts>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -107,6 +132,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("capabilities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -117,6 +147,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("restrictions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ResourceSkuRestrictions> array = new List<ResourceSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

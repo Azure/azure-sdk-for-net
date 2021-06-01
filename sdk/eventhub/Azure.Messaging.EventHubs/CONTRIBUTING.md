@@ -78,28 +78,6 @@ Help for the full set of parameters and additional information is available by s
 ./live-tests-azure-setup -Help
 ```
 
-### Samples
-
-In order to run the samples interactively, you'll need an Event Hubs namespace and an Event Hub with at least one partition.  Each sample will take a connection string and Event Hub name as parameters when executing, which can either be supplied directly as part of development or can be specified to the console application host in the `Samples` project, either using command line arguments or entered in response to prompts.
-
-### Azure Identity Samples
-
-In order to run [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) samples interactively, you'll also need to have a service principal set up on the Azure Active Directory mapped to your subscription. The service principal will need to have the role `Azure Event Hubs Data Owner` associated with your Event Hubs namespace. 
-
-A [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/identity-samples-azure-setup.ps1) can be used to create the service principal.
-
-To run the script:
-
-```powershell
-./identity-tests-azure-setup -SubscriptionName "<< YOUR SUBSCRIPTION NAME >>"
-```
-
-Help for the full set of parameters and additional information is available by specifying the `-Help` flag.
-
-```powershell
-./identity-tests-azure-setup -Help
-```
-
 ## Development history
 
 For additional insight and context, the development, release, and issue history for the Azure Event Hubs client library is available in read-only form, in its previous location, the [Azure Event Hubs .NET repository](https://github.com/Azure/azure-event-hubs-dotnet).

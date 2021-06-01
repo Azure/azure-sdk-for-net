@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("disabledSslProtocols"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationGatewaySslProtocol> array = new List<ApplicationGatewaySslProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -75,16 +80,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("policyType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     policyType = new ApplicationGatewaySslPolicyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     policyName = new ApplicationGatewaySslPolicyName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cipherSuites"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationGatewaySslCipherSuite> array = new List<ApplicationGatewaySslCipherSuite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -95,6 +115,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("minProtocolVersion"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minProtocolVersion = new ApplicationGatewaySslProtocol(property.Value.GetString());
                     continue;
                 }

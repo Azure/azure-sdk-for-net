@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Text.Json;
@@ -22,18 +20,20 @@ namespace Azure.Identity
     /// </summary>
     public class AzureCliCredential : TokenCredential
     {
-        private const string AzureCLINotInstalled = "Azure CLI not installed";
-        private const string AzNotLogIn = "Please run 'az login' to set up account";
+        internal const string AzureCLINotInstalled = "Azure CLI not installed";
+        internal const string AzNotLogIn = "Please run 'az login' to set up account";
         private const string WinAzureCLIError = "'az' is not recognized";
         private const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
-        private const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
-        private const int CliProcessTimeoutMs = 10000;
+        internal const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
+        internal const string InteractiveLoginRequired = "Azure CLI could not login. Interactive login is required.";
+        private const int CliProcessTimeoutMs = 13000;
 
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
         private static readonly string DefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
         private const string DefaultPathNonWindows = "/usr/bin:/usr/local/bin";
         private const string DefaultWorkingDirNonWindows = "/bin/";
+        private const string RefreshTokeExpired = "The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.";
         private static readonly string DefaultPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultPathWindows : DefaultPathNonWindows;
         private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
 
@@ -103,7 +103,7 @@ namespace Azure.Identity
 
             GetFileNameAndArguments(resource, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(CliProcessTimeoutMs), cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(CliProcessTimeoutMs), cancellationToken);
 
             string output;
             try
@@ -132,6 +132,13 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzNotLogIn);
                 }
 
+                bool isRefreshTokenFailedError = exception.Message.IndexOf(AzureCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 && exception.Message.IndexOf(RefreshTokeExpired, StringComparison.OrdinalIgnoreCase) != -1;
+
+                if (isRefreshTokenFailedError)
+                {
+                    throw new CredentialUnavailableException(InteractiveLoginRequired);
+                }
+
                 throw new AuthenticationFailedException($"{AzureCliFailedError} {exception.Message}");
             }
 
@@ -147,17 +154,20 @@ namespace Azure.Identity
                 ErrorDialog = false,
                 CreateNoWindow = true,
                 WorkingDirectory = DefaultWorkingDir,
-                Environment = {{"PATH", _path}}
+                Environment = { { "PATH", _path } }
             };
 
         private static void GetFileNameAndArguments(string resource, out string fileName, out string argument)
         {
             string command = $"az account get-access-token --output json --resource {resource}";
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
                 fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe");
                 argument = $"/c \"{command}\"";
-            } else {
+            }
+            else
+            {
                 fileName = "/bin/sh";
                 argument = $"-c \"{command}\"";
             }
@@ -171,7 +181,7 @@ namespace Azure.Identity
             string accessToken = root.GetProperty("accessToken").GetString();
             DateTimeOffset expiresOn = root.TryGetProperty("expiresIn", out JsonElement expiresIn)
                 ? DateTimeOffset.UtcNow + TimeSpan.FromSeconds(expiresIn.GetInt64())
-                : DateTimeOffset.ParseExact(root.GetProperty("expiresOn").GetString(), "yyyy-MM-dd HH:mm:ss.ffffff", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+                : DateTimeOffset.ParseExact(root.GetProperty("expiresOn").GetString(), "yyyy-MM-dd HH:mm:ss.ffffff", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
 
             return new AccessToken(accessToken, expiresOn);
         }

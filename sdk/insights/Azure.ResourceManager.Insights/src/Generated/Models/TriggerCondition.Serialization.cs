@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("metricTrigger"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     metricTrigger = LogMetricTrigger.DeserializeLogMetricTrigger(property.Value);
                     continue;
                 }

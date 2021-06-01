@@ -31,21 +31,41 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("disableBgpRoutePropagation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     disableBgpRoutePropagation = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("source"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     source = new EffectiveRouteSource(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     state = new EffectiveRouteState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("addressPrefix"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -56,6 +76,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextHopIpAddress"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -66,6 +91,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextHopType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     nextHopType = new RouteNextHopType(property.Value.GetString());
                     continue;
                 }

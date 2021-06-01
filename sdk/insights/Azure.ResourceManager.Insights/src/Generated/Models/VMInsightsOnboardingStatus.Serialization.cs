@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("resourceId"))
@@ -50,16 +55,31 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("onboardingStatus"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             onboardingStatus = new OnboardingStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dataStatus"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             dataStatus = new DataStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("data"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<DataContainer> array = new List<DataContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

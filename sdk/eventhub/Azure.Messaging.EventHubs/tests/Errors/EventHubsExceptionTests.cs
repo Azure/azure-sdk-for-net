@@ -164,16 +164,29 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ToStringValueContainsTheTypeNameAndFailureReason()
+        public void ToStringContainsExceptionDetails()
         {
             var message = "Test message!";
-            var namespaceValue = "the-namespace";
+            var eventHubName = "the-thub";
             var reason = EventHubsException.FailureReason.QuotaExceeded;
-            var instance = new EventHubsException(false, namespaceValue, message, reason);
 
-            Assert.That(instance.ToString(), Is.Not.Null.And.Not.Empty, "The ToString value should be populated.");
-            Assert.That(instance.ToString(), Contains.Substring(typeof(EventHubsException).Name), "The ToString value should contain the type name.");
-            Assert.That(instance.ToString(), Contains.Substring(reason.ToString()), "The ToString value should contain the failure reason.");
+            EventHubsException instance;
+
+            try
+            {
+                throw new EventHubsException(false, eventHubName, message, reason);
+            }
+            catch (EventHubsException ex)
+            {
+                instance = ex;
+            }
+
+            var exceptionString = instance.ToString();
+            Assert.That(exceptionString, Is.Not.Null.And.Not.Empty, "The ToString value should be populated.");
+            Assert.That(exceptionString, Contains.Substring(typeof(EventHubsException).FullName), "The ToString value should contain the type name.");
+            Assert.That(exceptionString, Contains.Substring(reason.ToString()), "The ToString value should contain the failure reason.");
+            Assert.That(exceptionString, Contains.Substring(eventHubName), "The ToString value should contain the Event Hub name.");
+            Assert.That(exceptionString, Contains.Substring($"{ Environment.NewLine }{ instance.StackTrace }"), "The ToString value should contain the stack trace on a new line.");
         }
     }
 }

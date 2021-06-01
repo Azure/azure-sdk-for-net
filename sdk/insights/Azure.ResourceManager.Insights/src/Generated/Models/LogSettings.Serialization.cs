@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("retentionPolicy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);
                     continue;
                 }

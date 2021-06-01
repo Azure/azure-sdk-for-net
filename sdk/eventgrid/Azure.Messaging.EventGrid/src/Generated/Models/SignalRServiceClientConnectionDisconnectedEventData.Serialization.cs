@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(SignalRServiceClientConnectionDisconnectedEventDataConverter))]
     public partial class SignalRServiceClientConnectionDisconnectedEventData
     {
         internal static SignalRServiceClientConnectionDisconnectedEventData DeserializeSignalRServiceClientConnectionDisconnectedEventData(JsonElement element)
@@ -24,6 +26,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("timestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -49,6 +56,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new SignalRServiceClientConnectionDisconnectedEventData(Optional.ToNullable(timestamp), hubName.Value, connectionId.Value, userId.Value, errorMessage.Value);
+        }
+
+        internal partial class SignalRServiceClientConnectionDisconnectedEventDataConverter : JsonConverter<SignalRServiceClientConnectionDisconnectedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, SignalRServiceClientConnectionDisconnectedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SignalRServiceClientConnectionDisconnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSignalRServiceClientConnectionDisconnectedEventData(document.RootElement);
+            }
         }
     }
 }

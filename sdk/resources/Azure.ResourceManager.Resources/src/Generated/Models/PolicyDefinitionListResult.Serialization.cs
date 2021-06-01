@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class PolicyDefinitionListResult
+    internal partial class PolicyDefinitionListResult
     {
         internal static PolicyDefinitionListResult DeserializePolicyDefinitionListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PolicyDefinition> array = new List<PolicyDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

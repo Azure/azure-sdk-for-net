@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Plan = Azure.ResourceManager.Compute.Models.Plan;
 
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Compute.Tests
             try
             {
                 var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, dummyImageRef, useVMMImage);
-                vm1 = returnTwoVM.Item1;
-                inputVM = returnTwoVM.Item2;
+                vm1 = returnTwoVM.Response;
+                inputVM = returnTwoVM.Input;
             }
             catch (Exception ex)
             {
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.Compute.Tests
             try
             {
                 var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, dummyImageRef, useVMMImage);
-                vm1 = returnTwoVM.Item1;
-                inputVM = returnTwoVM.Item2;
-                inputVMName = returnTwoVM.Item3;
+                vm1 = returnTwoVM.Response;
+                inputVM = returnTwoVM.Input;
+                inputVMName = returnTwoVM.Name;
             }
             catch (Exception ex)
             {

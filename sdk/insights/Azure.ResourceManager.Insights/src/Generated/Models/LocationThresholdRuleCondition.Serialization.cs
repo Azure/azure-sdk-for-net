@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("windowSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     windowSize = property.Value.GetTimeSpan("P");
                     continue;
                 }
@@ -58,6 +63,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("dataSource"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
                     continue;
                 }

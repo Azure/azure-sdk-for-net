@@ -93,6 +93,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("consentType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     consentType = new ConsentType(property.Value.GetString());
                     continue;
                 }

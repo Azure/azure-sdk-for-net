@@ -105,6 +105,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("sku"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sku = SnapshotSku.DeserializeSnapshotSku(property.Value);
                     continue;
                 }
@@ -130,6 +135,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -140,35 +150,70 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("timeCreated"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             timeCreated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("osType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             osType = property0.Value.GetString().ToOperatingSystemTypes();
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             hyperVGeneration = new HyperVGeneration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationData"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             creationData = CreationData.DeserializeCreationData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diskSizeGB"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             diskSizeGB = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("diskSizeBytes"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             diskSizeBytes = property0.Value.GetInt64();
                             continue;
                         }
@@ -179,6 +224,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("encryptionSettingsCollection"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             encryptionSettingsCollection = EncryptionSettingsCollection.DeserializeEncryptionSettingsCollection(property0.Value);
                             continue;
                         }
@@ -189,11 +239,21 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("incremental"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             incremental = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             encryption = Encryption.DeserializeEncryption(property0.Value);
                             continue;
                         }

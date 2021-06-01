@@ -14,10 +14,9 @@
   <!-- Add Test References -->
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="System.Memory" />
     <PackageReference Include="Azure.Search.Documents" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>

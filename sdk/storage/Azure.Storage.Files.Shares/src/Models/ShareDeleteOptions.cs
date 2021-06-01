@@ -13,23 +13,15 @@ namespace Azure.Storage.Files.Shares.Models
     public class ShareDeleteOptions
     {
         /// <summary>
-        /// A value indicating whether to delete a share's snapshots in addition
+        /// A value indicating whether to delete a share's snapshots or leased snapshots in addition
         /// to the share itself.
         /// </summary>
-        public bool IncludeSnapshots { get; set; }
+        public ShareSnapshotsDeleteOption? ShareSnapshotsDeleteOption { get; set; }
 
         /// <summary>
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on deleting the share.
         /// </summary>
         public ShareFileRequestConditions Conditions { get; set; }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public ShareDeleteOptions()
-        {
-            IncludeSnapshots = true;
-        }
     }
 }

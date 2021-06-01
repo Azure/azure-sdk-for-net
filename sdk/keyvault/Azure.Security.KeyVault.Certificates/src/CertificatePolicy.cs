@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -117,13 +117,43 @@ namespace Azure.Security.KeyVault.Certificates
             SubjectAlternativeNames = subjectAlternativeNames;
         }
 
-        internal CertificatePolicy()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificatePolicy"/> class to pass to
+        /// <see cref="CertificateClient.ImportCertificate(ImportCertificateOptions, System.Threading.CancellationToken)"/> or
+        /// <see cref="CertificateClient.ImportCertificateAsync(ImportCertificateOptions, System.Threading.CancellationToken)"/>.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Use this constructor if, for example, you want to import a PEM-encoded certificate. The <see cref="IssuerName"/> will be
+        /// <see cref="WellKnownIssuerNames.Unknown"/> and the <see cref="Subject"/> and <see cref="SubjectAlternativeNames"/> will
+        /// be parsed from the imported certificate.
+        /// <code snippet="Snippet:CertificateClientLiveTests_VerifyImportCertificatePem">
+        /// byte[] certificateBytes = File.ReadAllBytes(&quot;certificate.pem&quot;);
+        ///
+        /// ImportCertificateOptions options = new ImportCertificateOptions(certificateName, certificateBytes)
+        /// {
+        ///     Policy = new CertificatePolicy
+        ///     {
+        ///         ContentType = CertificateContentType.Pem
+        ///     }
+        /// };
+        /// </code>
+        /// </para>
+        /// <para>
+        /// You must use one of the other constructors to pass an instance to
+        /// <see cref="CertificateClient.StartCreateCertificate(string, CertificatePolicy, bool?, IDictionary{string, string}, System.Threading.CancellationToken)"/> or
+        /// <see cref="CertificateClient.StartCreateCertificateAsync(string, CertificatePolicy, bool?, IDictionary{string, string}, System.Threading.CancellationToken)"/>
+        /// because <see cref="IssuerName"/> and one of <see cref="Subject"/> or <see cref="SubjectAlternativeNames"/> are required.
+        /// </para>
+        /// </remarks>
+        public CertificatePolicy()
         {
         }
 
         /// <summary>
-        /// Gets a new <see cref="CertificatePolicy"/> suitable for self-signed certificate requests.
-        /// You should change the <see cref="Subject"/> before passing this policy to create a certificate.
+        /// Gets a new <see cref="CertificatePolicy"/> suitable for self-signed certificate requests
+        /// with the <see cref="Subject"/> "CN=DefaultPolicy". To change the Subject, create a new instance
+        /// using one of the constructors.
         /// </summary>
         public static CertificatePolicy Default => new CertificatePolicy(DefaultIssuerName, DefaultSubject);
 
@@ -172,8 +202,13 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="CertificateContentType"/> of the certificate when downloaded from GetSecret.
+        /// Gets or sets the <see cref="CertificateContentType"/> of the certificate.
         /// </summary>
+        /// <remarks>
+        /// Set to <see cref="CertificateContentType.Pkcs12"/> when <see cref="KeyVaultCertificate.Cer"/> contains your raw PKCS#12/PFX bytes,
+        /// or to <see cref="CertificateContentType.Pem"/> when <see cref="KeyVaultCertificate.Cer"/> contains your ASCII PEM-encoded bytes.
+        /// If not specified, <see cref="CertificateContentType.Pkcs12"/> is assumed.
+        /// </remarks>
         public CertificateContentType? ContentType { get; set; }
 
         /// <summary>
@@ -226,6 +261,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Gets the actions to be executed at specified times in the certificates lifetime.
+        /// Currently, only a single <see cref="LifetimeAction"/> is allowed.
         /// </summary>
         public IList<LifetimeAction> LifetimeActions { get; } = new List<LifetimeAction>();
 
@@ -261,7 +297,6 @@ namespace Azure.Security.KeyVault.Certificates
                             LifetimeActions.Add(LifetimeAction.FromJsonObject(actionElem));
                         }
                         break;
-
                 }
             }
         }

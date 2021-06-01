@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -30,6 +30,20 @@ namespace Azure.Identity
     /// constructing the <see cref="DefaultAzureCredential"/> either by setting the includeInteractiveCredentials parameter to true, or the setting the
     /// <see cref="DefaultAzureCredentialOptions.ExcludeInteractiveBrowserCredential"/> property to false when passing <see cref="DefaultAzureCredentialOptions"/>.
     /// </remarks>
+    /// <example>
+    /// <para>
+    /// This example demonstrates authenticating the BlobClient from the Azure.Storage.Blobs client library using the DefaultAzureCredential,
+    /// deployed to an Azure resource with a user assigned managed identity configured.
+    /// </para>
+    /// <code snippet="Snippet:UserAssignedManagedIdentity">
+    /// // When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
+    ///
+    /// string userAssignedClientId = &quot;&lt;your managed identity client Id&gt;&quot;;
+    /// var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+    ///
+    /// var blobClient = new BlobClient(new Uri(&quot;https://myaccount.blob.core.windows.net/mycontainer/myblob&quot;), credential);
+    /// </code>
+    /// </example>
     public class DefaultAzureCredential : TokenCredential
     {
         private const string DefaultExceptionMessage = "DefaultAzureCredential failed to retrieve a token from the included credentials.";
@@ -57,7 +71,9 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options that configure the management of the requests sent to Azure Active Directory services, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
         public DefaultAzureCredential(DefaultAzureCredentialOptions options)
-            : this(new DefaultAzureCredentialFactory(options), options)
+            // we call ValidateAuthoriyHostOption to validate that we have a valid authority host before constructing the DAC chain
+            // if we don't validate this up front it will end up throwing an exception out of a static initializer which obscures the error.
+            : this(new DefaultAzureCredentialFactory(ValidateAuthorityHostOption(options)), options)
         {
         }
 
@@ -141,7 +157,7 @@ namespace Azure.Identity
             }
         }
 
-        private static async ValueTask<(AccessToken, TokenCredential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
+        private static async ValueTask<(AccessToken Token, TokenCredential Credential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
             List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
 
@@ -172,7 +188,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            TokenCredential[] chain = new TokenCredential[7];
+            TokenCredential[] chain = new TokenCredential[8];
 
             if (!options.ExcludeEnvironmentCredential)
             {
@@ -204,6 +220,11 @@ namespace Azure.Identity
                 chain[i++] = factory.CreateAzureCliCredential();
             }
 
+            if (!options.ExcludeAzurePowerShellCredential)
+            {
+                chain[i++] = factory.CreateAzurePowerShellCredential();
+            }
+
             if (!options.ExcludeInteractiveBrowserCredential)
             {
                 chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId);
@@ -215,6 +236,13 @@ namespace Azure.Identity
             }
 
             return chain;
+        }
+
+        private static DefaultAzureCredentialOptions ValidateAuthorityHostOption(DefaultAzureCredentialOptions options)
+        {
+            Validations.ValidateAuthorityHost(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault());
+
+            return options;
         }
     }
 }

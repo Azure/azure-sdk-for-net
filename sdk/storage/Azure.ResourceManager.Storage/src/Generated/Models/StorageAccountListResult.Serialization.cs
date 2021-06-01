@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountListResult
+    internal partial class StorageAccountListResult
     {
         internal static StorageAccountListResult DeserializeStorageAccountListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<StorageAccount> array = new List<StorageAccount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

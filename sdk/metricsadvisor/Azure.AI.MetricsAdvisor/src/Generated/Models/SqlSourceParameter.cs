@@ -5,35 +5,30 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SqlSourceParameter. </summary>
     internal partial class SqlSourceParameter
     {
         /// <summary> Initializes a new instance of SqlSourceParameter. </summary>
-        /// <param name="connectionString"> Database connection string. </param>
-        /// <param name="query"> Query script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="query"/> is null. </exception>
-        public SqlSourceParameter(string connectionString, string query)
+        /// <param name="query"> The script to query this database. </param>
+        public SqlSourceParameter(string query)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
+            Query = query;
+        }
 
+        /// <summary> Initializes a new instance of SqlSourceParameter. </summary>
+        /// <param name="connectionString"> The connection string of this database. </param>
+        /// <param name="query"> The script to query this database. </param>
+        internal SqlSourceParameter(string connectionString, string query)
+        {
             ConnectionString = connectionString;
             Query = query;
         }
 
-        /// <summary> Database connection string. </summary>
+        /// <summary> The connection string of this database. </summary>
         public string ConnectionString { get; set; }
-        /// <summary> Query script. </summary>
+        /// <summary> The script to query this database. </summary>
         public string Query { get; set; }
     }
 }

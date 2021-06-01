@@ -24,26 +24,51 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("minValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scaleSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = property.Value.GetString().ToCapabilityStatus();
                     continue;
                 }

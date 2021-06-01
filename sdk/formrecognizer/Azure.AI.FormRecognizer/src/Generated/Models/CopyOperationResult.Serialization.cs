@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -39,6 +38,11 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("copyResult"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     copyResult = CopyResult.DeserializeCopyResult(property.Value);
                     continue;
                 }

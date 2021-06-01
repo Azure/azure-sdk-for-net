@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayAvailableSslPredefinedPolicies
+    internal partial class ApplicationGatewayAvailableSslPredefinedPolicies
     {
         internal static ApplicationGatewayAvailableSslPredefinedPolicies DeserializeApplicationGatewayAvailableSslPredefinedPolicies(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationGatewaySslPredefinedPolicy> array = new List<ApplicationGatewaySslPredefinedPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

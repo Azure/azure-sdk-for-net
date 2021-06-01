@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Network
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal BastionHostsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of BastionHostsOperations for mocking. </summary>
         protected BastionHostsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of BastionHostsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

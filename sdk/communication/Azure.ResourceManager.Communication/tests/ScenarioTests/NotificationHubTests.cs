@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication.Tests

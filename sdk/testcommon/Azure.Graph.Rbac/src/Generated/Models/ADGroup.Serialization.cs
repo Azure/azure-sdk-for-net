@@ -35,6 +35,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("mailEnabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     mailEnabled = property.Value.GetBoolean();
                     continue;
                 }
@@ -45,6 +50,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("securityEnabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     securityEnabled = property.Value.GetBoolean();
                     continue;
                 }
@@ -65,6 +75,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("deletionTimestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

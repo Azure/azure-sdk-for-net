@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/bvttoolrg6/providers/Microsoft.DataBox/locations/westus/availableSkus?api-version=2020-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL2J2dHRvb2xyZzYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhQm94L2xvY2F0aW9ucy93ZXN0dXMvYXZhaWxhYmxlU2t1cz9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/bvttoolrg6/providers/Microsoft.DataBox/locations/westus/availableSkus?api-version=2020-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL2J2dHRvb2xyZzYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhQm94L2xvY2F0aW9ucy93ZXN0dXMvYXZhaWxhYmxlU2t1cz9hcGktdmVyc2lvbj0yMDIwLTExLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"transferType\": \"ImportToAzure\",\r\n  \"country\": \"US\",\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dae6ec05-368a-4a2b-90ee-2a95fa15b534"
+          "b24918eb-fc7e-4504-8d9a-3c1f2f913161"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29130.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,32 +32,32 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "42f0ae63-0783-4a53-91cc-8d19d4caed54"
-        ],
-        "x-ms-client-request-id": [
-          "dae6ec05-368a-4a2b-90ee-2a95fa15b534"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
-        ],
-        "x-ms-correlation-request-id": [
-          "42f0ae63-0783-4a53-91cc-8d19d4caed54"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20200831T045543Z:42f0ae63-0783-4a53-91cc-8d19d4caed54"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "d701e404-7652-4f7d-b0f2-f9fe4764c43b"
+        ],
+        "x-ms-client-request-id": [
+          "b24918eb-fc7e-4504-8d9a-3c1f2f913161"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-correlation-request-id": [
+          "d701e404-7652-4f7d-b0f2-f9fe4764c43b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20201110T132447Z:d701e404-7652-4f7d-b0f2-f9fe4764c43b"
+        ],
         "Date": [
-          "Mon, 31 Aug 2020 04:55:42 GMT"
+          "Tue, 10 Nov 2020 13:24:47 GMT"
         ],
         "Content-Length": [
           "6743"

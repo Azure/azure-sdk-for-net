@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ODataSource. </summary>
         public ODataSource()
         {
+            AdditionalColumns = new ChangeTrackingList<AdditionalColumns>();
             Type = "ODataSource";
         }
 
@@ -25,13 +27,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> . </param>
         /// <param name="query"> OData query. For example, &quot;$top=1&quot;. Type: string (or Expression with resultType string). </param>
-        internal ODataSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="httpRequestTimeout"> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:05:00. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
+        internal ODataSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object query, object httpRequestTimeout, IList<AdditionalColumns> additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             Query = query;
+            HttpRequestTimeout = httpRequestTimeout;
+            AdditionalColumns = additionalColumns;
             Type = type ?? "ODataSource";
         }
 
         /// <summary> OData query. For example, &quot;$top=1&quot;. Type: string (or Expression with resultType string). </summary>
         public object Query { get; set; }
+        /// <summary> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:05:00. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        public object HttpRequestTimeout { get; set; }
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </summary>
+        public IList<AdditionalColumns> AdditionalColumns { get; }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class GeoBackupPolicyListResult
+    internal partial class GeoBackupPolicyListResult
     {
         internal static GeoBackupPolicyListResult DeserializeGeoBackupPolicyListResult(JsonElement element)
         {
@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<GeoBackupPolicy> array = new List<GeoBackupPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

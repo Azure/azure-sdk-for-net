@@ -10,32 +10,50 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Sql Script resource type. </summary>
-    public partial class SqlScriptResource : SubResource
+    public partial class SqlScriptResource
     {
         /// <summary> Initializes a new instance of SqlScriptResource. </summary>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="properties"> Properties of sql script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SqlScriptResource(SqlScript properties)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
+        public SqlScriptResource(string name, SqlScript properties)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             if (properties == null)
             {
                 throw new ArgumentNullException(nameof(properties));
             }
 
+            Name = name;
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of SqlScriptResource. </summary>
-        /// <param name="id"> The resource identifier. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of sql script. </param>
-        internal SqlScriptResource(string id, string name, string type, string etag, SqlScript properties) : base(id, name, type, etag)
+        internal SqlScriptResource(string id, string name, string type, string etag, SqlScript properties)
         {
+            Id = id;
+            Name = name;
+            Type = type;
+            Etag = etag;
             Properties = properties;
         }
 
+        /// <summary> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
+        public string Id { get; }
+        /// <summary> The name of the resource. </summary>
+        public string Name { get; set; }
+        /// <summary> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </summary>
+        public string Type { get; }
+        /// <summary> Resource Etag. </summary>
+        public string Etag { get; }
         /// <summary> Properties of sql script. </summary>
         public SqlScript Properties { get; set; }
     }

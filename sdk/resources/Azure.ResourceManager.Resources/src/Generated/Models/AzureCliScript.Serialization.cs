@@ -143,6 +143,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -158,6 +163,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = SystemData.DeserializeSystemData(property.Value);
                     continue;
                 }
@@ -178,35 +188,70 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("containerSettings"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageAccountSettings"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             storageAccountSettings = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cleanupPreference"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             cleanupPreference = new CleanupOptions(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ScriptProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             status = ScriptStatus.DeserializeScriptStatus(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputs"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -222,6 +267,11 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("supportingScriptUris"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -242,6 +292,11 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("environmentVariables"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<EnvironmentVariable> array = new List<EnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -262,6 +317,11 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("timeout"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             timeout = property0.Value.GetTimeSpan("P");
                             continue;
                         }

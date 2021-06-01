@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class SubnetListResult
+    internal partial class SubnetListResult
     {
         internal static SubnetListResult DeserializeSubnetListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Subnet> array = new List<Subnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

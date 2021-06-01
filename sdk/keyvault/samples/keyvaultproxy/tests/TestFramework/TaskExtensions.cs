@@ -27,7 +27,6 @@ namespace Azure.Core.TestFramework
             return task.TimeoutAfter(DefaultTimeout, filePath, lineNumber);
         }
 
-
         public static async Task<T> TimeoutAfter<T>(this Task<T> task, TimeSpan timeout,
             [CallerFilePath] string filePath = null,
             [CallerLineNumber] int lineNumber = default)

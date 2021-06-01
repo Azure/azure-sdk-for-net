@@ -24,6 +24,13 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        /// <remarks>
+        /// This property has been deprecated and we will always use the latest
+        /// storage SAS version of the Storage service supported. This change
+        /// does not have any impact on how your application generates or makes
+        /// use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
@@ -124,6 +131,61 @@ namespace Azure.Storage.Sas
         /// Override the value returned for Cache-Type response header.
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="ShareSasBuilder(ShareSasPermissions, DateTimeOffset)"/>
+        /// to create a Service SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ShareSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareSasBuilder"/>
+        /// class to create a Blob Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public ShareSasBuilder(ShareFileSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareSasBuilder"/>
+        /// class to create a Blob Container Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public ShareSasBuilder(ShareSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
 
         /// <summary>
         /// Sets the permissions for a file SAS.
@@ -327,10 +389,27 @@ namespace Azure.Storage.Sas
                 Resource = Constants.Sas.Resource.File;
             }
 
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
         }
+
+        internal static ShareSasBuilder DeepCopy(ShareSasBuilder originalShareSasBuilder)
+            => new ShareSasBuilder
+            {
+                Version = originalShareSasBuilder.Version,
+                Protocol = originalShareSasBuilder.Protocol,
+                StartsOn = originalShareSasBuilder.StartsOn,
+                ExpiresOn = originalShareSasBuilder.ExpiresOn,
+                Permissions = originalShareSasBuilder.Permissions,
+                IPRange = originalShareSasBuilder.IPRange,
+                Identifier = originalShareSasBuilder.Identifier,
+                ShareName = originalShareSasBuilder.ShareName,
+                FilePath = originalShareSasBuilder.FilePath,
+                Resource = originalShareSasBuilder.Resource,
+                CacheControl = originalShareSasBuilder.CacheControl,
+                ContentDisposition = originalShareSasBuilder.ContentDisposition,
+                ContentEncoding = originalShareSasBuilder.ContentEncoding,
+                ContentLanguage = originalShareSasBuilder.ContentLanguage,
+                ContentType = originalShareSasBuilder.ContentType
+            };
     }
 }

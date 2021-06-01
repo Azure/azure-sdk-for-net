@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("protocolType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     protocolType = new AzureFirewallApplicationRuleProtocolType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("port"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     port = property.Value.GetInt32();
                     continue;
                 }

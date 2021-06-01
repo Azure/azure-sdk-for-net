@@ -97,15 +97,30 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("lastModifiedTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("metadata"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -116,16 +131,31 @@ namespace Azure.ResourceManager.Storage.Models
                         }
                         if (property0.NameEquals("shareQuota"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             shareQuota = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("enabledProtocols"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enabledProtocols = new EnabledProtocols(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("rootSquash"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             rootSquash = new RootSquashType(property0.Value.GetString());
                             continue;
                         }
@@ -136,26 +166,51 @@ namespace Azure.ResourceManager.Storage.Models
                         }
                         if (property0.NameEquals("deleted"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             deleted = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("deletedTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             deletedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("remainingRetentionDays"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             remainingRetentionDays = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("accessTier"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             accessTier = new ShareAccessTier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accessTierChangeTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             accessTierChangeTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
@@ -166,6 +221,11 @@ namespace Azure.ResourceManager.Storage.Models
                         }
                         if (property0.NameEquals("shareUsageBytes"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             shareUsageBytes = property0.Value.GetInt64();
                             continue;
                         }

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of virtual clusters. </summary>
-    public partial class VirtualClusterListResult
+    internal partial class VirtualClusterListResult
     {
         /// <summary> Initializes a new instance of VirtualClusterListResult. </summary>
         internal VirtualClusterListResult()

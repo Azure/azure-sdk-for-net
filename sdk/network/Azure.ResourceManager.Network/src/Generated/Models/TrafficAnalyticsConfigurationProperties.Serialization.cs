@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("enabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
@@ -74,6 +79,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("trafficAnalyticsInterval"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     trafficAnalyticsInterval = property.Value.GetInt32();
                     continue;
                 }

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
@@ -21,6 +21,7 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Identity.csproj" />
     <None Update="Data\*" CopyToOutputDirectory="PreserveNewest" />
+    <ContentWithTargetPath Update="Data\*" CopyToOutputDirectory="PreserveNewest" TargetPath="certs\*" />
   </ItemGroup>
 
 </Project>

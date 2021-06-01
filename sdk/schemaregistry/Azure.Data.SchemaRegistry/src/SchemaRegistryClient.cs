@@ -58,7 +58,6 @@ namespace Azure.Data.SchemaRegistry
         private const string RegisterSchemaScopeName = "SchemaRegistryClient.RegisterSchema";
         private const string GetSchemaIdScopeName = "SchemaRegistryClient.GetSchemaId";
         private const string GetSchemaScopeName = "SchemaRegistryClient.GetSchema";
-        private const string JsonStringMask = "\"{0}\"";
 
         /// <summary>
         /// Registers a schema with the SchemaRegistry service.
@@ -75,9 +74,8 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                var jsonStringSchemaContent = string.Format(CultureInfo.InvariantCulture, JsonStringMask, JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping));
-                var response = await RestClient.RegisterAsync(groupName, schemaName, serializationType, jsonStringSchemaContent, cancellationToken).ConfigureAwait(false);
-                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                var response = await RestClient.RegisterAsync(groupName, schemaName, serializationType, schemaContent, cancellationToken).ConfigureAwait(false);
+                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
                 return Response.FromValue(properties, response);
             }
             catch (Exception e)
@@ -104,9 +102,8 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                var jsonStringSchemaContent = string.Format(CultureInfo.InvariantCulture, JsonStringMask, JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping));
-                var response = RestClient.Register(groupName, schemaName, serializationType, jsonStringSchemaContent, cancellationToken);
-                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                var response = RestClient.Register(groupName, schemaName, serializationType, schemaContent, cancellationToken);
+                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
                 return Response.FromValue(properties, response);
             }
             catch (Exception e)
@@ -131,9 +128,8 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                var jsonStringSchemaContent = string.Format(CultureInfo.InvariantCulture, JsonStringMask, JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping));
-                var response = await RestClient.QueryIdByContentAsync(groupName, schemaName, serializationType, jsonStringSchemaContent, cancellationToken).ConfigureAwait(false);
-                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                var response = await RestClient.QueryIdByContentAsync(groupName, schemaName, serializationType, schemaContent, cancellationToken).ConfigureAwait(false);
+                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
                 return Response.FromValue(properties, response);
             }
             catch (Exception e)
@@ -158,9 +154,8 @@ namespace Azure.Data.SchemaRegistry
             scope.Start();
             try
             {
-                var jsonStringSchemaContent = string.Format(CultureInfo.InvariantCulture, JsonStringMask, JsonEncodedText.Encode(schemaContent, JavaScriptEncoder.UnsafeRelaxedJsonEscaping));
-                var response = RestClient.QueryIdByContent(groupName, schemaName, serializationType, jsonStringSchemaContent, cancellationToken);
-                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                var response = RestClient.QueryIdByContent(groupName, schemaName, serializationType, schemaContent, cancellationToken);
+                var properties = new SchemaProperties(schemaContent, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
                 return Response.FromValue(properties, response);
             }
             catch (Exception e)
@@ -183,7 +178,7 @@ namespace Azure.Data.SchemaRegistry
             try
             {
                 var response = await RestClient.GetByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
-                var properties = new SchemaProperties(response.Value, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                var properties = new SchemaProperties(response.Value, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
                 return Response.FromValue(properties, response);
             }
             catch (Exception e)
@@ -206,7 +201,7 @@ namespace Azure.Data.SchemaRegistry
             try
             {
                 var response = RestClient.GetById(schemaId, cancellationToken);
-                var properties = new SchemaProperties(response.Value, response.Headers.Location, response.Headers.XSchemaType, response.Headers.XSchemaId, response.Headers.XSchemaVersion);
+                var properties = new SchemaProperties(response.Value, response.Headers.Location, response.Headers.SerializationType, response.Headers.SchemaId, response.Headers.SchemaVersion);
                 return Response.FromValue(properties, response);
             }
             catch (Exception e)

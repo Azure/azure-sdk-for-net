@@ -21,6 +21,11 @@ namespace Azure.DigitalTwins.Core
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

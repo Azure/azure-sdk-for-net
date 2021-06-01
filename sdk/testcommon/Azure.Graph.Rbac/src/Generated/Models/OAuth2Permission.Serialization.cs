@@ -87,6 +87,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("isEnabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }

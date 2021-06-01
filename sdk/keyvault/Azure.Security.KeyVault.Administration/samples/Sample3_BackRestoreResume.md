@@ -12,16 +12,16 @@ and check for status or wait for completion.
 
 ```C# Snippet:ResumeBackupAsync
 // Construct a new KeyVaultBackupClient or use an existing one.
-KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
 // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-BackupOperation backupOperation = new BackupOperation(client, backupOperationId);
+KeyVaultBackupOperation backupOperation = new KeyVaultBackupOperation(client, backupOperationId);
 
 // Wait for completion of the BackupOperation.
-Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
+Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
 // Get the Uri for the location of you backup blob.
-Uri backupBlobUri = backupResult.Value;
+Uri folderUri = backupResult.Value.FolderUri;
 ```
 
 ## Checking status of a full key restore operation
@@ -36,10 +36,10 @@ and check for status or wait for completion.
 KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
 // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-RestoreOperation restoreOperation = new RestoreOperation(client, restoreOperationId);
+KeyVaultRestoreOperation restoreOperation = new KeyVaultRestoreOperation(client, restoreOperationId);
 
 // Wait for completion of the RestoreOperation.
-Response restoreResult = await restoreOperation.WaitForCompletionAsync();
+KeyVaultRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
 ```
 
 <!-- LINKS -->

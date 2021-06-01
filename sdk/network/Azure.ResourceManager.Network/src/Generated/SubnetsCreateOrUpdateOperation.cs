@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class SubnetsCreateOrUpdateOperation : Operation<Subnet>, IOperationSource<Subnet>
     {
         private readonly ArmOperationHelpers<Subnet> _operation;
+
+        /// <summary> Initializes a new instance of SubnetsCreateOrUpdateOperation for mocking. </summary>
+        protected SubnetsCreateOrUpdateOperation()
+        {
+        }
+
         internal SubnetsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Subnet>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SubnetsCreateOrUpdateOperation");

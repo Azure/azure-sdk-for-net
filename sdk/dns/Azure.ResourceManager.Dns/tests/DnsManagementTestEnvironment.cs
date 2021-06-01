@@ -7,8 +7,5 @@ namespace Azure.ResourceManager.Dns.Tests
 {
     public class DnsManagementTestEnvironment : TestEnvironment
     {
-        public DnsManagementTestEnvironment() : base("dns")
-        {
-        }
     }
 }

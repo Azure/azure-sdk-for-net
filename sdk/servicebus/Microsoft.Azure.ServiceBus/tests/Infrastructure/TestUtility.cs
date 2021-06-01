@@ -15,6 +15,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     static class TestUtility
     {
+        const int MaxSendBatchSize = 4500;
         private static readonly Lazy<string> NamespaceConnectionStringInstance =
             new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()).ToString(), LazyThreadSafetyMode.PublicationOnly);
 
@@ -49,15 +50,19 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await Task.FromResult(false);
             }
 
-            var messagesToSend = new List<Message>();
-            for (var i = 0; i < messageCount; i++)
+            for (var j = 0; j < messageCount; j += MaxSendBatchSize)
             {
-                var message = new Message(Encoding.UTF8.GetBytes("test" + i));
-                message.Label = "test" + i;
-                messagesToSend.Add(message);
+                var messagesToSend = new List<Message>();
+                for (var i = j; i < Math.Min(messageCount, j + MaxSendBatchSize); i++)
+                {
+                    var message = new Message(Encoding.UTF8.GetBytes("test" + i));
+                    message.Label = "test" + i;
+                    messagesToSend.Add(message);
+                }
+
+                await messageSender.SendAsync(messagesToSend);
             }
 
-            await messageSender.SendAsync(messagesToSend);
             Log($"Sent {messageCount} messages");
         }
 

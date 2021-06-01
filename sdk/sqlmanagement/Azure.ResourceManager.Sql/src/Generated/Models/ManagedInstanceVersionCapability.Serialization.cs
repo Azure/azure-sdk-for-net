@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("supportedEditions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedInstanceEditionCapability> array = new List<ManagedInstanceEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -39,6 +44,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("supportedInstancePoolEditions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<InstancePoolEditionCapability> array = new List<InstancePoolEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -49,6 +59,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = property.Value.GetString().ToCapabilityStatus();
                     continue;
                 }

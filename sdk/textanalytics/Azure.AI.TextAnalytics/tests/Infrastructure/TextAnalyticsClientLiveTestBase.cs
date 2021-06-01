@@ -6,24 +6,41 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ClientTestFixture(
+    TextAnalyticsClientOptions.ServiceVersion.V3_0,
+    TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        public TextAnalyticsClientLiveTestBase(bool isAsync) : base(isAsync)
+        /// <summary>
+        /// The version of the REST API to test against.  This will be passed
+        /// to the .ctor via ClientTestFixture's values.
+        /// </summary>
+        private readonly TextAnalyticsClientOptions.ServiceVersion _serviceVersion;
+
+        public TextAnalyticsClientLiveTestBase(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
         }
 
-        public TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default)
+        public TextAnalyticsClient GetClient(
+            AzureKeyCredential credential = default,
+            TextAnalyticsClientOptions options = default,
+            bool useTokenCredential = default)
         {
-            string apiKey = TestEnvironment.ApiKey;
-            credential ??= new AzureKeyCredential(apiKey);
-            options ??= new TextAnalyticsClientOptions();
-            return InstrumentClient(
-                new TextAnalyticsClient(
-                    new Uri(TestEnvironment.Endpoint),
-                    credential,
-                    InstrumentClientOptions(options))
-            );
+            var endpoint = new Uri(TestEnvironment.Endpoint);
+            options ??= new TextAnalyticsClientOptions(_serviceVersion);
+
+            if (useTokenCredential)
+            {
+                return InstrumentClient(new TextAnalyticsClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
+            }
+            else
+            {
+                credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
+                return InstrumentClient(new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options)));
+            }
         }
     }
 }

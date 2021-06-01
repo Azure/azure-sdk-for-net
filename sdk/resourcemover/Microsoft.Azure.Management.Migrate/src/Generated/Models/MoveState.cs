@@ -29,5 +29,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         public const string CommitInProgress = "CommitInProgress";
         public const string CommitFailed = "CommitFailed";
         public const string Committed = "Committed";
+        public const string DeleteSourcePending = "DeleteSourcePending";
+        public const string ResourceMoveCompleted = "ResourceMoveCompleted";
     }
 }

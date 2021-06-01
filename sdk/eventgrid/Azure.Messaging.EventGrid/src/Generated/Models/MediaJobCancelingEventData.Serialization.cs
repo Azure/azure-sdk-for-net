@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MediaJobCancelingEventDataConverter))]
     public partial class MediaJobCancelingEventData
     {
         internal static MediaJobCancelingEventData DeserializeMediaJobCancelingEventData(JsonElement element)
@@ -22,16 +25,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("previousState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     previousState = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
                 if (property.NameEquals("state"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     state = property.Value.GetString().ToMediaJobState();
                     continue;
                 }
                 if (property.NameEquals("correlationData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -42,6 +60,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MediaJobCancelingEventData(Optional.ToNullable(previousState), Optional.ToNullable(state), Optional.ToDictionary(correlationData));
+        }
+
+        internal partial class MediaJobCancelingEventDataConverter : JsonConverter<MediaJobCancelingEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MediaJobCancelingEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MediaJobCancelingEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMediaJobCancelingEventData(document.RootElement);
+            }
         }
     }
 }

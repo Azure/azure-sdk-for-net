@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncAgentLinkedDatabaseListResult
+    internal partial class SyncAgentLinkedDatabaseListResult
     {
         internal static SyncAgentLinkedDatabaseListResult DeserializeSyncAgentLinkedDatabaseListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SyncAgentLinkedDatabase> array = new List<SyncAgentLinkedDatabase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

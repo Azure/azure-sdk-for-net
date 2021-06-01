@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(RetryPolicyConverter))]
     public partial class RetryPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -36,16 +39,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("count"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     count = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("intervalInSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     intervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
             }
             return new RetryPolicy(count.Value, Optional.ToNullable(intervalInSeconds));
+        }
+
+        internal partial class RetryPolicyConverter : JsonConverter<RetryPolicy>
+        {
+            public override void Write(Utf8JsonWriter writer, RetryPolicy model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override RetryPolicy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRetryPolicy(document.RootElement);
+            }
         }
     }
 }

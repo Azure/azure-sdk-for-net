@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IpAllocationListResult
+    internal partial class IpAllocationListResult
     {
         internal static IpAllocationListResult DeserializeIpAllocationListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<IpAllocation> array = new List<IpAllocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

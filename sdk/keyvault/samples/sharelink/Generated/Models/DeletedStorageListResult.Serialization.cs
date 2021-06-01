@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class DeletedStorageListResult
+    internal partial class DeletedStorageListResult
     {
         internal static DeletedStorageListResult DeserializeDeletedStorageListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DeletedStorageAccountItem> array = new List<DeletedStorageAccountItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

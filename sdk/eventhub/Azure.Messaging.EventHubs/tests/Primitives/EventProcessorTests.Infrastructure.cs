@@ -78,6 +78,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(Mock.Of<SettableTransportConsumer>());
 
+             mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
 
@@ -130,6 +134,10 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(Mock.Of<SettableTransportConsumer>());
+
+            mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
@@ -189,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Callback(() => claimOwnershipDelegated = true)
                 .Returns(Task.FromResult(default(IEnumerable<EventProcessorPartitionOwnership>)));
 
-            var storageManager = mockProcessor.Object.CreateStorageManager(mockProcessor.Object);
+            var storageManager = EventProcessor<EventProcessorPartition>.CreateStorageManager(mockProcessor.Object);
             Assert.That(storageManager, Is.Not.Null, "The storage manager should have been created.");
 
             await storageManager.ListCheckpointsAsync("na", "na", "na", CancellationToken.None);
@@ -215,7 +223,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "cg";
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, consumerGroup, fqNamespace, eventHub, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
-            var storageManager = mockProcessor.Object.CreateStorageManager(mockProcessor.Object);
+            var storageManager = EventProcessor<EventProcessorPartition>.CreateStorageManager(mockProcessor.Object);
             Assert.That(storageManager, Is.Not.Null, "The storage manager should have been created.");
 
             Assert.That(() => storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint(), new EventData(Array.Empty<byte>()), CancellationToken.None), Throws.InstanceOf<NotImplementedException>(), "Calling to update checkpoints should not be implemented.");

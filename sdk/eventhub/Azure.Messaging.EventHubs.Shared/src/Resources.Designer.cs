@@ -287,6 +287,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The endpoint address could not be parsed; it was either malformed or not using the `sb://` scheme..
+        /// </summary>
+        internal static string InvalidEndpointAddress
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidEndpointAddress", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The time period may not be Zero or Infinite..
         /// </summary>
         internal static string InvalidTimePeriod
@@ -723,6 +734,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("IdempotentAlreadyPublished", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The ListCheckpointsAsync method has been superseded by GetCheckpointAsync and should no longer be called..
+        /// </summary>
+        internal static string ListCheckpointsAsyncObsolete
+        {
+            get
+            {
+                return ResourceManager.GetString("ListCheckpointsAsyncObsolete", resourceCulture);
             }
         }
     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubListResult
+    internal partial class EventHubListResult
     {
         internal static EventHubListResult DeserializeEventHubListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Eventhub> array = new List<Eventhub>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

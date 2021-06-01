@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class SecurityRuleListResult
+    internal partial class SecurityRuleListResult
     {
         internal static SecurityRuleListResult DeserializeSecurityRuleListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SecurityRule> array = new List<SecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Tests
             try
             {
                 // Create Storage Account, so that both the VMs can share it
-                var storageAccountOutput = await  CreateStorageAccount(rgName, storageAccountName);
+                var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
 
                 Action<VirtualMachine> addDataDiskToVM = vm =>
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     {
                         var diskName = "dataDisk" + index;
                         var ddUri = vhdContainer + string.Format("/{0}{1}.vhd", diskName, Recording.GenerateAssetName("testvmdatadiskscenario", TestPrefix));
-                        var dd = new DataDisk(1+index, DiskCreateOptionTypes.Empty)
+                        var dd = new DataDisk(1 + index, DiskCreateOptionTypes.Empty)
                         {
                             Caching = CachingTypes.None,
                             Image = null,
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Compute.Tests
                     }; */
                 };
 
-                var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imgageRef , addDataDiskToVM);
-                VirtualMachine vm1 = returnTwoVM.Item1;
-                inputVM = returnTwoVM.Item2;
-                string inputVMName = returnTwoVM.Item3;
+                var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imgageRef, addDataDiskToVM);
+                VirtualMachine vm1 = returnTwoVM.Response;
+                inputVM = returnTwoVM.Input;
+                string inputVMName = returnTwoVM.Name;
                 var getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVMName);
                 Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
                 ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.Compute.Tests
                 passed = true;
                 Assert.True(passed);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
     }

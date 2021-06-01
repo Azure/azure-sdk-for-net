@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DiagnosticSettingsCategoryResource> array = new List<DiagnosticSettingsCategoryResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

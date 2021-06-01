@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("throughput"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     throughput = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("autoscaleSettings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     autoscaleSettings = AutoscaleSettings.DeserializeAutoscaleSettings(property.Value);
                     continue;
                 }

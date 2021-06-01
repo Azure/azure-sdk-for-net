@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class SecurityPartnerProviderListResult
+    internal partial class SecurityPartnerProviderListResult
     {
         internal static SecurityPartnerProviderListResult DeserializeSecurityPartnerProviderListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SecurityPartnerProvider> array = new List<SecurityPartnerProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

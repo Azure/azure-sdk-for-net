@@ -33,10 +33,16 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// Initializes a new instance of the DigitalTwinsPatchDescription
         /// class.
         /// </summary>
-        /// <param name="tags">Instance tags</param>
-        public DigitalTwinsPatchDescription(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="tags">Instance patch properties</param>
+        /// <param name="identity">The managed identity for the
+        /// DigitalTwinsInstance.</param>
+        /// <param name="properties">Properties for the
+        /// DigitalTwinsInstance.</param>
+        public DigitalTwinsPatchDescription(IDictionary<string, string> tags = default(IDictionary<string, string>), DigitalTwinsIdentity identity = default(DigitalTwinsIdentity), DigitalTwinsPatchProperties properties = default(DigitalTwinsPatchProperties))
         {
             Tags = tags;
+            Identity = identity;
+            Properties = properties;
             CustomInit();
         }
 
@@ -46,10 +52,22 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets instance tags
+        /// Gets or sets instance patch properties
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the managed identity for the DigitalTwinsInstance.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public DigitalTwinsIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties for the DigitalTwinsInstance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public DigitalTwinsPatchProperties Properties { get; set; }
 
     }
 }

@@ -5,19 +5,23 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.Chat
 {
-    /// <summary> The UpdateChatMessageRequest. </summary>
+    /// <summary> Request payload for updating a chat message. </summary>
     internal partial class UpdateChatMessageRequest
     {
         /// <summary> Initializes a new instance of UpdateChatMessageRequest. </summary>
         public UpdateChatMessageRequest()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Chat message content. </summary>
         public string Content { get; set; }
-        /// <summary> The chat message priority. </summary>
-        public ChatMessagePriority? Priority { get; set; }
+        /// <summary> Message metadata. </summary>
+        public IDictionary<string, string> Metadata { get; }
     }
 }

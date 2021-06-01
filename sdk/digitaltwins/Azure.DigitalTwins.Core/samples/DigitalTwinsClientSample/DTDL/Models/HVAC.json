@@ -1,5 +1,5 @@
 {
-    "@id": "dtmi:samples:HVAC;1",
+    "@id": "dtmi:com:samples:HVAC;1",
     "@type": "Interface",
     "@context": "dtmi:dtdl:context;2",
     "displayName": "HVAC",
@@ -22,7 +22,7 @@
         {
             "@type": "Relationship",
             "name": "controlsTemperature",
-            "target": "dtmi:samples:Floor;1"
+            "target": "dtmi:com:samples:Floor;1"
         }
     ]
 }

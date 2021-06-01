@@ -430,7 +430,7 @@ namespace Management.HDInsight.Tests
             authorizationManagementClient.RoleAssignments.Create(scope, assignmentName, newRoleAssignment);
         }
 
-        public VirtualNetwork CreateVirtualNetworkWithSubnet(string resourceGroupName, string location, string virtualNetworkName, string subnetName, bool subnetPrivateEndpointNetworkPoliciesFlag =true, bool subnetPrivateLinkServiceNetworkPoliciesFlag = true)
+        public VirtualNetwork CreateVirtualNetworkWithSubnet(string resourceGroupName, string location, string virtualNetworkName, string subnetName, NetworkSecurityGroup networkSecurityGroup=null, bool subnetPrivateEndpointNetworkPoliciesFlag =true, bool subnetPrivateLinkServiceNetworkPoliciesFlag = true)
         {
             VirtualNetwork vnet = new VirtualNetwork()
             {
@@ -448,12 +448,18 @@ namespace Management.HDInsight.Tests
                     {
                         Name = subnetName,
                         AddressPrefix = "10.0.0.0/24",
+                        NetworkSecurityGroup=networkSecurityGroup,
                         PrivateEndpointNetworkPolicies = subnetPrivateEndpointNetworkPoliciesFlag ? "Enabled" : "Disabled",
                         PrivateLinkServiceNetworkPolicies =subnetPrivateLinkServiceNetworkPoliciesFlag ? "Enabled" : "Disabled"
                     }
                 }
             };
             return networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, virtualNetworkName, vnet);
+        }
+
+        public NetworkSecurityGroup CreateNetworkSecurityGroup(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup networkSecurityGroupParameter)
+        {
+            return networkManagementClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroupParameter);
         }
 
         /// <summary>

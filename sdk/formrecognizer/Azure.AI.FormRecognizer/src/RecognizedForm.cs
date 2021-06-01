@@ -7,7 +7,10 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Represents a form that has been recognized by a trained model.
+    /// Represents a form that has been recognized by a trained or prebuilt model.
+    /// The <see cref="Fields"/> property contains the form fields that were extracted from the
+    /// form. Tables, text lines/words, and selection marks are extracted per page and found in the
+    /// <see cref="Pages"/> property.
     /// </summary>
     public class RecognizedForm
     {
@@ -31,9 +34,6 @@ namespace Azure.AI.FormRecognizer.Models
         {
             // Recognized form from a model trained with labels.
             FormType = documentResult.DocType;
-
-            // TODO: validate that PageRange.Length == 2.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10547
 
             PageRange = new FormPageRange(documentResult.PageRange[0], documentResult.PageRange[1]);
 
@@ -76,6 +76,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Model identifier of model used to analyze form if not using a prebuilt model.
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// </remarks>
         public string ModelId { get; }
 
         /// <summary>
@@ -83,6 +86,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// Value is 1.0 when recognition is done against a single labeled model.
         /// If recognition is based on a composed model, value is between [0.0, 1.0].
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// </remarks>
         public float? FormTypeConfidence { get; }
 
         /// <summary>

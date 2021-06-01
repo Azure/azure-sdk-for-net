@@ -48,11 +48,21 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("state"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     state = property.Value.GetString().ToSubscriptionState();
                     continue;
                 }
                 if (property.NameEquals("subscriptionPolicies"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     subscriptionPolicies = SubscriptionPolicies.DeserializeSubscriptionPolicies(property.Value);
                     continue;
                 }
@@ -63,6 +73,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("managedByTenants"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedByTenant> array = new List<ManagedByTenant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -73,6 +88,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 if (property.NameEquals("preference"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     preference = property.Value.GetInt32();
                     continue;
                 }

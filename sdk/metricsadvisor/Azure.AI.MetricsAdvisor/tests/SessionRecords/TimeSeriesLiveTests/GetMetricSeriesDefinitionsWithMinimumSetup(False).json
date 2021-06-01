@@ -1,0 +1,185 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/27e3015f-04fd-44ba-a20b-bc529a0aebae/series/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "38",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-2747575af8a7f249ae9257c30dbd4738-1be86da30baddd4c-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "134131fe2243cf5ae4f7d6014859473f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "activeSince": "2020-10-01T00:00:00Z"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d9014774-7743-4185-8f1c-33608a9329bd",
+        "Content-Length": "2487",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 19 Jan 2021 17:43:05 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "109",
+        "x-request-id": "d9014774-7743-4185-8f1c-33608a9329bd"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Miami",
+              "category": "Health \u0026 Personal Care"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Rio de Janeiro",
+              "category": "Historical \u0026 Advertising Collectibles"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Belo Horizonte",
+              "category": "Electronics (Consumer)"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Kinshasa",
+              "category": "Beauty"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Lahore",
+              "category": "Shoes Handbags \u0026 Sunglasses"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Hong Kong",
+              "category": "Electronics (Accessories)"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Sao Paulo",
+              "category": "Beauty"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Delhi",
+              "category": "Books"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Istanbul",
+              "category": "Camera \u0026 Photo"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Kinshasa",
+              "category": "Musical Instruments"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Guangzhou",
+              "category": "Jewelry"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Bengaluru",
+              "category": "Jewelry"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Kinshasa",
+              "category": "Health \u0026 Personal Care"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Dallas",
+              "category": "Office Products"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Beijing",
+              "category": "Electronics (Consumer)"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Hyderabad",
+              "category": "Handmade"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Kolkata",
+              "category": "Electronics (Consumer)"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Chicago",
+              "category": "Electronics (Accessories)"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Madrid",
+              "category": "Industrial \u0026 Scientific"
+            }
+          },
+          {
+            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+            "dimension": {
+              "city": "Buenos Aires",
+              "category": "Outdoors"
+            }
+          }
+        ],
+        "@nextLink": "https://js-metrics-advisor.cognitiveservices.azure.com:443/metricsadvisor/v1.0/metrics/27e3015f-04fd-44ba-a20b-bc529a0aebae/series/query?$top=20\u0026$skip=20"
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "995704610"
+  }
+}

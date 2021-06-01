@@ -22,21 +22,41 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("successfulInstanceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     successfulInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("failedInstanceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     failedInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("inProgressInstanceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     inProgressInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("pendingInstanceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     pendingInstanceCount = property.Value.GetInt32();
                     continue;
                 }

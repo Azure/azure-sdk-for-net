@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ElasticPoolOperationListResult
+    internal partial class ElasticPoolOperationListResult
     {
         internal static ElasticPoolOperationListResult DeserializeElasticPoolOperationListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ElasticPoolOperation> array = new List<ElasticPoolOperation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

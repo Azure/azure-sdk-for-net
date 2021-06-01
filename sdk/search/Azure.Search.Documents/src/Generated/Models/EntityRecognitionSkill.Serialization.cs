@@ -112,6 +112,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("categories"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<EntityCategory> array = new List<EntityCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

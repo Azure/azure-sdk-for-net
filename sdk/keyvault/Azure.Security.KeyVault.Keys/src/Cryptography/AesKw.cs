@@ -7,18 +7,30 @@ using System.Security.Cryptography;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// AES Key Wrap algoritm as defined in https://tools.ietf.org/html/rfc3394
+    /// Copied from Microsoft.Azure.KeyVault.Cryptography for AES Key Wrap algorithm as defined in https://tools.ietf.org/html/rfc3394.
     /// </summary>
-    internal abstract class AesKw
+    internal class AesKw
     {
         private const int BlockSizeInBits = 64;
         private const int BlockSizeInBytes = BlockSizeInBits >> 3;
 
-        private static readonly byte[] _defaultIv = new byte[] { 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6 };
+        public static readonly AesKw Aes128Kw = new AesKw("A128KW", 128);
+        public static readonly AesKw Aes192Kw = new AesKw("A192KW", 192);
+        public static readonly AesKw Aes256Kw = new AesKw("A256KW", 256);
 
-        protected static RandomNumberGenerator Rng = RandomNumberGenerator.Create();
+        private static readonly byte[] s_defaultIv = new byte[] { 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6 };
 
-        internal static Aes Create(byte[] key)
+        private AesKw(string name, int keySize)
+        {
+            Name = name;
+            KeySizeInBytes = keySize >> 3;
+        }
+
+        public string Name { get; }
+
+        public int KeySizeInBytes { get; }
+
+        private static Aes Create(byte[] key)
         {
             var aes = Aes.Create();
 
@@ -30,47 +42,47 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return aes;
         }
 
-        public static ICryptoTransform CreateEncryptor(byte[] key)
+        public ICryptoTransform CreateEncryptor(byte[] key)
         {
             return CreateEncryptor(key, null);
         }
 
-        public static ICryptoTransform CreateEncryptor(byte[] key, byte[] iv)
+        public ICryptoTransform CreateEncryptor(byte[] key, byte[] iv)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            if (key.Length != 128 >> 3 && key.Length != 192 >> 3 && key.Length != 256 >> 3)
-                throw new ArgumentException("key length must be 128, 192 or 256 bits");
+            if (key.Length < KeySizeInBytes)
+                throw new ArgumentOutOfRangeException(nameof(key), $"key must be at least {KeySizeInBytes << 3} bits");
 
             if (iv != null && iv.Length != 8)
                 throw new ArgumentException("iv length must be 64 bits");
 
-            return new AesKwEncryptor(key, iv ?? DefaultIv);
+            return new AesKwEncryptor(key.Take(KeySizeInBytes), iv ?? DefaultIv);
         }
 
-        public static ICryptoTransform CreateDecryptor(byte[] key)
+        public ICryptoTransform CreateDecryptor(byte[] key)
         {
             return CreateDecryptor(key, null);
         }
 
-        public static ICryptoTransform CreateDecryptor(byte[] key, byte[] iv)
+        public ICryptoTransform CreateDecryptor(byte[] key, byte[] iv)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            if (key.Length != 128 >> 3 && key.Length != 192 >> 3 && key.Length != 256 >> 3)
-                throw new ArgumentException("key length must be 128, 192 or 256 bits");
+            if (key.Length < KeySizeInBytes)
+                throw new ArgumentOutOfRangeException(nameof(key), $"key must be at least {KeySizeInBytes << 3} bits");
 
             if (iv != null && iv.Length != 8)
                 throw new ArgumentException("iv length must be 64 bits");
 
-            return new AesKwDecryptor(key, iv ?? DefaultIv);
+            return new AesKwDecryptor(key.Take(KeySizeInBytes), iv ?? DefaultIv);
         }
 
         private static byte[] DefaultIv
         {
-            get { return (byte[])_defaultIv.Clone(); }
+            get { return (byte[])s_defaultIv.Clone(); }
         }
 
         private static byte[] GetBytes(UInt64 i)

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Net;
 using Microsoft.Azure.Management.CosmosDB;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -17,7 +17,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "db9934";
+        const string databaseAccountName = "cli124";
         const string databaseAccountName2 = "rbac";
 
         const string databaseName = "databaseName";
@@ -29,6 +29,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
         readonly string roleDefinitionId = "70580ac3-cd0b-4549-8336-2f0d55df111e";
         readonly string roleDefinitionId2 = "fbf74201-f33f-46f0-8234-2b8bf15ecec4";
+        readonly string roleDefinitionId3 = "a5d92de7-1c34-481e-aafa-44f5cb03744c";
         readonly string roleAssignmentId = "adcb35e1-e104-41c2-b76d-70a8b03e6463";
         readonly string roleAssignmentId2 = "d5fcc566-a91c-4fce-8f54-138855981e63";
         const string principalId = "ed4c2395-a18c-4018-afb3-6e521e7534d2";
@@ -66,12 +67,11 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.GlobalDocumentDB,
-                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
-                        { 
-                            Locations = new List<Location>()
-                            { new Location(locationName: location) }
+                        Locations = new List<Location>()
+                        {
+                            {new Location(locationName: location) }
                         }
-                    };
+                };
 
                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                     Assert.Equal(databaseAccount.Name, databaseAccountName);
@@ -118,7 +118,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
                 {
-                    Resource = new SqlContainerResource { 
+                    Resource = new SqlContainerResource {
                         Id = containerName,
                         PartitionKey = new ContainerPartitionKey
                         {
@@ -406,6 +406,37 @@ namespace CosmosDB.Tests.ScenarioTests
                 {
                     cosmosDBManagementClient.SqlResources.DeleteSqlRoleDefinitionWithHttpMessagesAsync(sqlRoleDefinition.Name, resourceGroupName, databaseAccountName2).GetAwaiter().GetResult();
                 }
+
+                const string InvalidActionName = "invalid-action-name";
+
+                SqlRoleDefinitionCreateUpdateParameters sqlRoleDefinitionCreateUpdateParameters4 = new SqlRoleDefinitionCreateUpdateParameters
+                {
+                    RoleName = "roleName4",
+                    Type = RoleDefinitionType.CustomRole,
+                    AssignableScopes = new List<string>
+                    {
+                        string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DocumentDB/databaseAccounts/{2}", cosmosDBManagementClient.SubscriptionId, resourceGroupName, databaseAccountName)
+                    },
+                    Permissions = new List<Permission>
+                    {
+                        new Permission
+                        {
+                            DataActions = new List<string>
+                            {
+                                InvalidActionName,
+                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/delete",
+                                "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/replace"
+                            }
+                        }
+                    }
+                };
+
+                Exception exception =
+                    Assert.ThrowsAnyAsync<Exception>(() =>
+                        cosmosDBManagementClient.SqlResources.CreateUpdateSqlRoleDefinitionWithHttpMessagesAsync(roleDefinitionId3, resourceGroupName, databaseAccountName, sqlRoleDefinitionCreateUpdateParameters4))
+                        .GetAwaiter().GetResult();
+
+                Assert.Contains(InvalidActionName, exception.Message);
             }
         }
 

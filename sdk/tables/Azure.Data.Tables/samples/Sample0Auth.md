@@ -44,10 +44,13 @@ Portal Storage account blade or **Connection String** under Settings in the Port
 account blade.
 
 You can also get access to your account keys from the Azure CLI with:
+
 ```
 az storage account keys list --account-name <account_name> --resource-group <resource_group>
 ```
-or 
+
+or
+
 ```
 az cosmosdb list-keys --name <account_name> --resource-group <resource_group>
 ```
@@ -89,19 +92,14 @@ var serviceClient = new TableServiceClient(
 
 // Build a shared access signature with the Write and Delete permissions and access to all service resource types.
 
-TableAccountSasBuilder sasWriteDelete = serviceClient.GetSasBuilder(TableAccountSasPermissions.Write | TableAccountSasPermissions.Delete, TableAccountSasResourceTypes.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
-string tokenWriteDelete = sasWriteDelete.Sign(credential);
+var sasUri = serviceClient.GenerateSasUri(
+    TableAccountSasPermissions.Write | TableAccountSasPermissions.Delete,
+    TableAccountSasResourceTypes.All,
+    new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
 
-// Build SAS URIs.
+// Create the TableServiceClients using the SAS URI.
 
-UriBuilder sasUriWriteDelete = new UriBuilder(storageUri)
-{
-    Query = tokenWriteDelete
-};
-
-// Create the TableServiceClients using the SAS URIs.
-
-var serviceClientWithSas = new TableServiceClient(sasUriWriteDelete.Uri);
+var serviceClientWithSas = new TableServiceClient(sasUri);
 
 // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
 

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateLinkServiceListResult
+    internal partial class PrivateLinkServiceListResult
     {
         internal static PrivateLinkServiceListResult DeserializePrivateLinkServiceListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PrivateLinkService> array = new List<PrivateLinkService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -121,9 +121,24 @@ namespace Microsoft.Azure.Management.Network
         IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; }
 
         /// <summary>
+        /// Gets the IWebCategoriesOperations.
+        /// </summary>
+        IWebCategoriesOperations WebCategories { get; }
+
+        /// <summary>
         /// Gets the IBastionHostsOperations.
         /// </summary>
         IBastionHostsOperations BastionHosts { get; }
+
+        /// <summary>
+        /// Gets the INetworkInterfacesOperations.
+        /// </summary>
+        INetworkInterfacesOperations NetworkInterfaces { get; }
+
+        /// <summary>
+        /// Gets the IPublicIPAddressesOperations.
+        /// </summary>
+        IPublicIPAddressesOperations PublicIPAddresses { get; }
 
         /// <summary>
         /// Gets the ICustomIPPrefixesOperations.
@@ -271,11 +286,6 @@ namespace Microsoft.Azure.Management.Network
         INatGatewaysOperations NatGateways { get; }
 
         /// <summary>
-        /// Gets the INetworkInterfacesOperations.
-        /// </summary>
-        INetworkInterfacesOperations NetworkInterfaces { get; }
-
-        /// <summary>
         /// Gets the INetworkInterfaceIPConfigurationsOperations.
         /// </summary>
         INetworkInterfaceIPConfigurationsOperations NetworkInterfaceIPConfigurations { get; }
@@ -376,11 +386,6 @@ namespace Microsoft.Azure.Management.Network
         IPrivateLinkServicesOperations PrivateLinkServices { get; }
 
         /// <summary>
-        /// Gets the IPublicIPAddressesOperations.
-        /// </summary>
-        IPublicIPAddressesOperations PublicIPAddresses { get; }
-
-        /// <summary>
         /// Gets the IPublicIPPrefixesOperations.
         /// </summary>
         IPublicIPPrefixesOperations PublicIPPrefixes { get; }
@@ -476,6 +481,11 @@ namespace Microsoft.Azure.Management.Network
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
 
         /// <summary>
+        /// Gets the IVirtualNetworkGatewayNatRulesOperations.
+        /// </summary>
+        IVirtualNetworkGatewayNatRulesOperations VirtualNetworkGatewayNatRules { get; }
+
+        /// <summary>
         /// Gets the IVirtualNetworkTapsOperations.
         /// </summary>
         IVirtualNetworkTapsOperations VirtualNetworkTaps { get; }
@@ -531,6 +541,11 @@ namespace Microsoft.Azure.Management.Network
         IVpnGatewaysOperations VpnGateways { get; }
 
         /// <summary>
+        /// Gets the IVpnLinkConnectionsOperations.
+        /// </summary>
+        IVpnLinkConnectionsOperations VpnLinkConnections { get; }
+
+        /// <summary>
         /// Gets the IVpnConnectionsOperations.
         /// </summary>
         IVpnConnectionsOperations VpnConnections { get; }
@@ -541,9 +556,9 @@ namespace Microsoft.Azure.Management.Network
         IVpnSiteLinkConnectionsOperations VpnSiteLinkConnections { get; }
 
         /// <summary>
-        /// Gets the IVpnLinkConnectionsOperations.
+        /// Gets the INatRulesOperations.
         /// </summary>
-        IVpnLinkConnectionsOperations VpnLinkConnections { get; }
+        INatRulesOperations NatRules { get; }
 
         /// <summary>
         /// Gets the IP2sVpnGatewaysOperations.

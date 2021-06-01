@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("dimensions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MetricSingleDimension> array = new List<MetricSingleDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -60,6 +65,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("metadata"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<BaselineMetadata> array = new List<BaselineMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

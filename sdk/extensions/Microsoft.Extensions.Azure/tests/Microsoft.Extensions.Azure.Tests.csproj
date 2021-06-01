@@ -10,7 +10,6 @@
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" />
   </ItemGroup>
 

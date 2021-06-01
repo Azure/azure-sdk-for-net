@@ -17,6 +17,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
@@ -323,7 +324,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test] // multiple unalligned blocks
+        [RecordedTest] // multiple unalligned blocks
         [LiveOnly] // cannot seed content encryption key
         public async Task KeyResolverKicksIn()
         {
@@ -720,6 +721,73 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsTrue(downloadResult.Value.Details.Metadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
                 Assert.AreNotEqual(firstDownloadEncryptionData, downloadResult.Value.Details.Metadata[Constants.ClientSideEncryption.EncryptionDataKey]);
             }
+        }
+
+        [RecordedTest]
+        public void CanGenerateSas_WithClientSideEncryptionOptions_True()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
+                KeyWrapAlgorithm = "bar"
+            };
+
+            // Create blob
+            BlobClient blob = InstrumentClient(new BlobClient(
+                connectionString,
+                GetNewContainerName(),
+                GetNewBlobName()));
+            Assert.IsTrue(blob.CanGenerateSasUri);
+
+            // Act
+            BlobClient blobEncrypted = blob.WithClientSideEncryptionOptions(options);
+
+            // Assert
+            Assert.IsTrue(blobEncrypted.CanGenerateSasUri);
+        }
+
+        [RecordedTest]
+        public void CanGenerateSas_WithClientSideEncryptionOptions_False()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
+                KeyWrapAlgorithm = "bar"
+            };
+
+            // Create blob
+            BlobClient blob = InstrumentClient(new BlobClient(
+                blobEndpoint,
+                GetOptions()));
+            Assert.IsFalse(blob.CanGenerateSasUri);
+
+            // Act
+            BlobClient blobEncrypted = blob.WithClientSideEncryptionOptions(options);
+
+            // Assert
+            Assert.IsFalse(blobEncrypted.CanGenerateSasUri);
+        }
+        [Test]
+        public void CanParseLargeContentRange()
+        {
+            long compareValue = (long)Int32.MaxValue + 1; //Increase max int32 by one
+            ContentRange contentRange = ContentRange.Parse($"bytes 0 {compareValue} {compareValue}");
+            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.Size);
+            Assert.AreEqual(0, contentRange.Start);
+            Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.End);
         }
     }
 }

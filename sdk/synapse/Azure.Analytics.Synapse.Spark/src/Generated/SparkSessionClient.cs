@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Analytics.Synapse.Spark.Models;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.Spark
@@ -20,17 +21,51 @@ namespace Azure.Analytics.Synapse.Spark
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal SparkSessionRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of SparkSessionClient for mocking. </summary>
         protected SparkSessionClient()
         {
         }
+
+        /// <summary> Initializes a new instance of SparkSessionClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="sparkPoolName"> Name of the spark pool. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="livyApiVersion"> Valid api-version for the request. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public SparkSessionClient(Uri endpoint, string sparkPoolName, TokenCredential credential, string livyApiVersion = "2019-11-01-preview", SparkClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (sparkPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(sparkPoolName));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+            if (livyApiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(livyApiVersion));
+            }
+
+            options ??= new SparkClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new SparkSessionRestClient(_clientDiagnostics, _pipeline, endpoint, sparkPoolName, livyApiVersion);
+        }
+
         /// <summary> Initializes a new instance of SparkSessionClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="sparkPoolName"> Name of the spark pool. </param>
         /// <param name="livyApiVersion"> Valid api-version for the request. </param>
-        internal SparkSessionClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
+        internal SparkSessionClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
         {
             RestClient = new SparkSessionRestClient(clientDiagnostics, pipeline, endpoint, sparkPoolName, livyApiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -77,44 +112,6 @@ namespace Azure.Analytics.Synapse.Spark
             try
             {
                 return RestClient.GetSparkSessions(@from, size, detailed, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create new spark session. </summary>
-        /// <param name="sparkSessionOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkSession>> CreateSparkSessionAsync(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkSession");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateSparkSessionAsync(sparkSessionOptions, detailed, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create new spark session. </summary>
-        /// <param name="sparkSessionOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkSession> CreateSparkSession(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkSession");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateSparkSession(sparkSessionOptions, detailed, cancellationToken);
             }
             catch (Exception e)
             {
@@ -261,44 +258,6 @@ namespace Azure.Analytics.Synapse.Spark
             try
             {
                 return RestClient.GetSparkStatements(sessionId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create statement within a spark session. </summary>
-        /// <param name="sessionId"> Identifier for the session. </param>
-        /// <param name="sparkStatementOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkStatement>> CreateSparkStatementAsync(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkStatement");
-            scope.Start();
-            try
-            {
-                return await RestClient.CreateSparkStatementAsync(sessionId, sparkStatementOptions, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create statement within a spark session. </summary>
-        /// <param name="sessionId"> Identifier for the session. </param>
-        /// <param name="sparkStatementOptions"> Livy compatible batch job request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkStatement> CreateSparkStatement(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SparkSessionClient.CreateSparkStatement");
-            scope.Start();
-            try
-            {
-                return RestClient.CreateSparkStatement(sessionId, sparkStatementOptions, cancellationToken);
             }
             catch (Exception e)
             {

@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the FileShareItem class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="etag">Resource Etag.</param>
         /// <param name="lastModifiedTime">Returns the date and time the share
         /// was last modified.</param>
@@ -72,7 +72,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="shareUsageBytes">The approximate size of the data
         /// stored on the share. Note that this value may not include all
         /// recently created or recently resized files.</param>
-        public FileShareItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), string enabledProtocols = default(string), string rootSquash = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string accessTier = default(string), System.DateTime? accessTierChangeTime = default(System.DateTime?), string accessTierStatus = default(string), long? shareUsageBytes = default(long?))
+        /// <param name="leaseStatus">The lease status of the share. Possible
+        /// values include: 'Locked', 'Unlocked'</param>
+        /// <param name="leaseState">Lease state of the share. Possible values
+        /// include: 'Available', 'Leased', 'Expired', 'Breaking',
+        /// 'Broken'</param>
+        /// <param name="leaseDuration">Specifies whether the lease on a share
+        /// is of infinite or fixed duration, only when the share is leased.
+        /// Possible values include: 'Infinite', 'Fixed'</param>
+        /// <param name="signedIdentifiers">List of stored access policies
+        /// specified on the share.</param>
+        /// <param name="snapshotTime">Creation time of share snapshot returned
+        /// in the response of list shares with expand param
+        /// "snapshots".</param>
+        public FileShareItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), string enabledProtocols = default(string), string rootSquash = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string accessTier = default(string), System.DateTime? accessTierChangeTime = default(System.DateTime?), string accessTierStatus = default(string), long? shareUsageBytes = default(long?), string leaseStatus = default(string), string leaseState = default(string), string leaseDuration = default(string), IList<SignedIdentifier> signedIdentifiers = default(IList<SignedIdentifier>), System.DateTime? snapshotTime = default(System.DateTime?))
             : base(id, name, type, etag)
         {
             LastModifiedTime = lastModifiedTime;
@@ -88,6 +101,11 @@ namespace Microsoft.Azure.Management.Storage.Models
             AccessTierChangeTime = accessTierChangeTime;
             AccessTierStatus = accessTierStatus;
             ShareUsageBytes = shareUsageBytes;
+            LeaseStatus = leaseStatus;
+            LeaseState = leaseState;
+            LeaseDuration = leaseDuration;
+            SignedIdentifiers = signedIdentifiers;
+            SnapshotTime = snapshotTime;
             CustomInit();
         }
 
@@ -187,6 +205,41 @@ namespace Microsoft.Azure.Management.Storage.Models
         public long? ShareUsageBytes { get; private set; }
 
         /// <summary>
+        /// Gets the lease status of the share. Possible values include:
+        /// 'Locked', 'Unlocked'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.leaseStatus")]
+        public string LeaseStatus { get; private set; }
+
+        /// <summary>
+        /// Gets lease state of the share. Possible values include:
+        /// 'Available', 'Leased', 'Expired', 'Breaking', 'Broken'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.leaseState")]
+        public string LeaseState { get; private set; }
+
+        /// <summary>
+        /// Gets specifies whether the lease on a share is of infinite or fixed
+        /// duration, only when the share is leased. Possible values include:
+        /// 'Infinite', 'Fixed'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.leaseDuration")]
+        public string LeaseDuration { get; private set; }
+
+        /// <summary>
+        /// Gets or sets list of stored access policies specified on the share.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.signedIdentifiers")]
+        public IList<SignedIdentifier> SignedIdentifiers { get; set; }
+
+        /// <summary>
+        /// Gets creation time of share snapshot returned in the response of
+        /// list shares with expand param "snapshots".
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.snapshotTime")]
+        public System.DateTime? SnapshotTime { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -194,13 +247,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ShareQuota > 102400)
+            if (ShareQuota != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "ShareQuota", 102400);
-            }
-            if (ShareQuota < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "ShareQuota", 1);
+                if (ShareQuota > 102400)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ShareQuota", 102400);
+                }
+                if (ShareQuota < 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ShareQuota", 1);
+                }
             }
         }
     }

@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (property.NameEquals("display"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     display = OperationDefinitionDisplay.DeserializeOperationDefinitionDisplay(property.Value);
                     continue;
                 }

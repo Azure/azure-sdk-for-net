@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("locations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -58,6 +63,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("provisioningState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }

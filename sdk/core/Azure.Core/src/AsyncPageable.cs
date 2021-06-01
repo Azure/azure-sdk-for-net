@@ -128,7 +128,7 @@ namespace Azure
         /// A string representation of an <see cref="AsyncPageable{T}"/>.
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string? ToString() => base.ToString();
 
         /// <summary>
         /// Check if two <see cref="AsyncPageable{T}"/> instances are equal.

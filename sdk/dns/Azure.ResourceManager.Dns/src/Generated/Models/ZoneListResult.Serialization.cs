@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class ZoneListResult
+    internal partial class ZoneListResult
     {
         internal static ZoneListResult DeserializeZoneListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Zone> array = new List<Zone>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

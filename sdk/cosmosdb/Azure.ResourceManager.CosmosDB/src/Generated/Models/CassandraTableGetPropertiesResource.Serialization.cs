@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("_ts"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Ts = property.Value.GetObject();
                     continue;
                 }
@@ -68,16 +73,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("defaultTtl"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     defaultTtl = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("schema"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     schema = CassandraSchema.DeserializeCassandraSchema(property.Value);
                     continue;
                 }
                 if (property.NameEquals("analyticalStorageTtl"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     analyticalStorageTtl = property.Value.GetInt32();
                     continue;
                 }

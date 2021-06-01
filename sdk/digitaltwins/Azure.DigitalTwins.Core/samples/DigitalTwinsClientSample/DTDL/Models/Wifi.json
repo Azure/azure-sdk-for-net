@@ -1,5 +1,5 @@
 ﻿{
-    "@id": "dtmi:samples:Wifi;1",
+    "@id": "dtmi:com:samples:Wifi;1",
     "@type": "Interface",
     "@context": "dtmi:dtdl:context;2",
     "displayName": "Wifi",

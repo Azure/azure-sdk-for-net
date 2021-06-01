@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
@@ -60,31 +60,33 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         public DiagnosticScope CreateScope(
             string activityName,
-            string kindAttribute = default,
-            string lockToken = default,
-            string sessionId = default,
-            int? requestedMessageCount = default)
+            string kindAttribute)
         {
             DiagnosticScope scope = _scopeFactory.CreateScope(activityName);
-            scope.AddAttribute(DiagnosticProperty.KindAttribute, kindAttribute ?? DiagnosticProperty.ClientKind);
+            scope.AddAttribute(DiagnosticProperty.KindAttribute, kindAttribute);
             scope.AddAttribute(
                 DiagnosticProperty.ServiceContextAttribute,
                 DiagnosticProperty.ServiceBusServiceContext);
             scope.AddAttribute(DiagnosticProperty.EntityAttribute, _entityPath);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, _fullyQualifiedNamespace);
-            if (lockToken != null)
-            {
-                scope.AddAttribute(DiagnosticProperty.LockTokensAttribute, lockToken);
-            }
-            if (sessionId != null)
-            {
-                scope.AddAttribute(DiagnosticProperty.SessionIdAttribute, sessionId);
-            }
-            if (requestedMessageCount != null)
-            {
-                scope.AddAttribute(DiagnosticProperty.RequestedMessageCountAttribute, requestedMessageCount);
-            }
             return scope;
+        }
+
+        public void InstrumentMessage(ServiceBusMessage message)
+        {
+            if (!message.ApplicationProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
+            {
+                using DiagnosticScope messageScope = CreateScope(
+                    DiagnosticProperty.MessageActivityName,
+                    DiagnosticProperty.ProducerKind);
+                messageScope.Start();
+
+                Activity activity = Activity.Current;
+                if (activity != null)
+                {
+                    message.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
+                }
+            }
         }
     }
 }

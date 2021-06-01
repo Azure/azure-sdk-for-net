@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTg2P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/csmtg973?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3RhZ05hbWVzL2NzbXRnOTczP2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "69d29401-72e1-4cc3-813c-fd779fd419fa"
+          "35fc1609-bcec-4522-ac2c-b466566d98a2"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,13 +30,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "119ff0bd-7cf9-4728-8b42-215f42d38548"
+          "0150bf77-659f-4a04-b4d3-cfd075e3497c"
         ],
         "x-ms-correlation-request-id": [
-          "119ff0bd-7cf9-4728-8b42-215f42d38548"
+          "0150bf77-659f-4a04-b4d3-cfd075e3497c"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153257Z:119ff0bd-7cf9-4728-8b42-215f42d38548"
+          "WESTUS:20210511T205843Z:0150bf77-659f-4a04-b4d3-cfd075e3497c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:32:56 GMT"
+          "Tue, 11 May 2021 20:58:43 GMT"
         ],
         "Content-Length": [
           "146"
@@ -57,26 +57,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586\",\r\n  \"tagName\": \"csmtg586\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/csmtg973\",\r\n  \"tagName\": \"csmtg973\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586/tagValues/csmtgv4728?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTg2L3RhZ1ZhbHVlcy9jc210Z3Y0NzI4P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/csmtg973/tagValues/csmtgv9887?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3RhZ05hbWVzL2NzbXRnOTczL3RhZ1ZhbHVlcy9jc210Z3Y5ODg3P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a856f6cc-98f3-4b5a-8c4b-a649b45d8683"
+          "d8476e72-d31a-490b-b242-05cb692869f1"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -90,13 +90,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "dcc8d2c2-594c-41a5-af3f-6079b78663df"
+          "f391dc9c-6f0f-4ab1-9096-cb1d47f9a27a"
         ],
         "x-ms-correlation-request-id": [
-          "dcc8d2c2-594c-41a5-af3f-6079b78663df"
+          "f391dc9c-6f0f-4ab1-9096-cb1d47f9a27a"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153257Z:dcc8d2c2-594c-41a5-af3f-6079b78663df"
+          "WESTUS:20210511T205844Z:f391dc9c-6f0f-4ab1-9096-cb1d47f9a27a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -105,7 +105,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:32:56 GMT"
+          "Tue, 11 May 2021 20:58:44 GMT"
         ],
         "Content-Length": [
           "158"
@@ -117,26 +117,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586/tagValues/csmtgv4728\",\r\n  \"tagValue\": \"csmtgv4728\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/csmtg973/tagValues/csmtgv9887\",\r\n  \"tagValue\": \"csmtgv9887\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzP2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3RhZ05hbWVzP2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ddfbb702-25e3-4631-9a66-06b60d23d17e"
+          "60c26c38-801e-4be3-af4d-32b2e4c3a031"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -150,13 +150,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "5117370d-95d7-497a-a3ed-d5331dd39012"
+          "8429c5f5-b211-4d2a-b9b1-09587c7d3aed"
         ],
         "x-ms-correlation-request-id": [
-          "5117370d-95d7-497a-a3ed-d5331dd39012"
+          "8429c5f5-b211-4d2a-b9b1-09587c7d3aed"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153257Z:5117370d-95d7-497a-a3ed-d5331dd39012"
+          "WESTUS:20210511T205844Z:8429c5f5-b211-4d2a-b9b1-09587c7d3aed"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -165,7 +165,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:32:56 GMT"
+          "Tue, 11 May 2021 20:58:44 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -174,29 +174,29 @@
           "-1"
         ],
         "Content-Length": [
-          "2910"
+          "1262"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Blah\",\r\n      \"tagName\": \"Blah\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 29\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Blah/tagValues/Tataaaa\",\r\n          \"tagValue\": \"Tataaaa\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag1\",\r\n      \"tagName\": \"tag1\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 29\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag1/tagValues/tag2\",\r\n          \"tagValue\": \"tag2\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/TagAlong\",\r\n      \"tagName\": \"TagAlong\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 29\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/TagAlong/tagValues/TagOver\",\r\n          \"tagValue\": \"TagOver\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tagname\",\r\n      \"tagName\": \"tagname\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 29\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tagname/tagValues/tagvalue\",\r\n          \"tagValue\": \"tagvalue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ms-resource-usage\",\r\n      \"tagName\": \"ms-resource-usage\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ms-resource-usage/tagValues/azure-cloud-shell\",\r\n          \"tagValue\": \"azure-cloud-shell\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS\",\r\n      \"tagName\": \"AZ_SCRIPTS_STATUS\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-6a1d6107-00c7-4860-ac68-5d980e7285cc:Running\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-6a1d6107-00c7-4860-ac68-5d980e7285cc:Running\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586\",\r\n      \"tagName\": \"csmtg586\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586/tagValues/csmtgv4728\",\r\n          \"tagValue\": \"csmtgv4728\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ServiceDirectory\",\r\n      \"tagName\": \"ServiceDirectory\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ServiceDirectory/tagValues/resources\",\r\n          \"tagValue\": \"resources\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Creator\",\r\n      \"tagName\": \"Creator\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Creator/tagValues/stuartko\",\r\n          \"tagValue\": \"stuartko\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/ms-resource-usage\",\r\n      \"tagName\": \"ms-resource-usage\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/ms-resource-usage/tagValues/azure-cloud-shell\",\r\n          \"tagValue\": \"azure-cloud-shell\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/csmtg973\",\r\n      \"tagName\": \"csmtg973\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/csmtg973/tagValues/csmtgv9887\",\r\n          \"tagValue\": \"csmtgv9887\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/tagKey1\",\r\n      \"tagName\": \"tagKey1\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/tagKey1/tagValues/tagValue1\",\r\n          \"tagValue\": \"tagValue1\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/tagKey2\",\r\n      \"tagName\": \"tagKey2\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/tagKey2/tagValues/tagValue2\",\r\n          \"tagValue\": \"tagValue2\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586/tagValues/csmtgv4728?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTg2L3RhZ1ZhbHVlcy9jc210Z3Y0NzI4P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/csmtg973/tagValues/csmtgv9887?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3RhZ05hbWVzL2NzbXRnOTczL3RhZ1ZhbHVlcy9jc210Z3Y5ODg3P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "72940f30-8aa7-42e4-9323-5f8a636e0c0e"
+          "930af195-5871-458d-b147-b703f45d4b70"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -210,13 +210,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "c629836b-f065-4d98-be2f-9041adff1d1a"
+          "000331bd-3df6-47aa-8733-bf9b4d258198"
         ],
         "x-ms-correlation-request-id": [
-          "c629836b-f065-4d98-be2f-9041adff1d1a"
+          "000331bd-3df6-47aa-8733-bf9b4d258198"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153258Z:c629836b-f065-4d98-be2f-9041adff1d1a"
+          "WESTUS:20210511T205845Z:000331bd-3df6-47aa-8733-bf9b4d258198"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -225,7 +225,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:32:58 GMT"
+          "Tue, 11 May 2021 20:58:45 GMT"
         ],
         "Expires": [
           "-1"
@@ -238,22 +238,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTg2P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/tagNames/csmtg973?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3RhZ05hbWVzL2NzbXRnOTczP2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2e6332aa-e335-4a3c-b273-99b47ff28933"
+          "acceb951-a69b-49a5-b8d1-e6aba9202a10"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -267,13 +267,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "6341a513-584c-4f15-8dc1-87749ef67316"
+          "33203944-1b90-4871-9781-3d024f03e489"
         ],
         "x-ms-correlation-request-id": [
-          "6341a513-584c-4f15-8dc1-87749ef67316"
+          "33203944-1b90-4871-9781-3d024f03e489"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153258Z:6341a513-584c-4f15-8dc1-87749ef67316"
+          "WESTUS:20210511T205845Z:33203944-1b90-4871-9781-3d024f03e489"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -282,7 +282,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:32:58 GMT"
+          "Tue, 11 May 2021 20:58:45 GMT"
         ],
         "Expires": [
           "-1"
@@ -297,11 +297,11 @@
   ],
   "Names": {
     "CreateListAndDeleteSubscriptionTagValue": [
-      "csmtg586",
-      "csmtgv4728"
+      "csmtg973",
+      "csmtgv9887"
     ]
   },
   "Variables": {
-    "SubscriptionId": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
+    "SubscriptionId": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
   }
 }

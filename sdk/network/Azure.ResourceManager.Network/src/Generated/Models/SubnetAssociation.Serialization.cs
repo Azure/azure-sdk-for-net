@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("securityRules"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SecurityRule> array = new List<SecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

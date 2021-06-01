@@ -21,15 +21,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Art
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{5F3EE47C-1F9F-427D-A6A8-60F032753BDE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.ManagedPrivateEndpoints", "Azure.Analytics.Synapse.ManagedPrivateEndpoints\src\Azure.Analytics.Synapse.ManagedPrivateEndpoints.csproj", "{51C29022-ECBB-45C1-91DD-3DEDED059037}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests", "Azure.Analytics.Synapse.ManagedPrivateEndpoints\tests\Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests.csproj", "{EC8A0D59-E54F-4E72-A99A-6F95CA2AE52F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Monitoring", "Azure.Analytics.Synapse.Monitoring\src\Azure.Analytics.Synapse.Monitoring.csproj", "{D687E63A-5463-4247-A334-85FDE509550F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Monitoring.Tests", "Azure.Analytics.Synapse.Monitoring\tests\Azure.Analytics.Synapse.Monitoring.Tests.csproj", "{729E92B7-E47B-442C-836F-27B8A7806D2F}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Azure.Analytics.Synapse.Shared\tests\Azure.Analytics.Synapse.Shared.Tests.projitems*{1afa2644-a1d9-419f-b87d-9b519b673f24}*SharedItemsImports = 13
+		Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems*{51c29022-ecbb-45c1-91dd-3deded059037}*SharedItemsImports = 5
 		Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems*{5e1bfd9e-d39f-4ea3-8fdf-800085147bbe}*SharedItemsImports = 5
 		Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems*{6742c536-bd25-45d9-9296-e43f03ba888d}*SharedItemsImports = 13
+		Azure.Analytics.Synapse.Shared\tests\Azure.Analytics.Synapse.Shared.Tests.projitems*{729e92b7-e47b-442c-836f-27b8a7806d2f}*SharedItemsImports = 5
 		Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems*{9bb62c96-1bdc-4d50-9fa6-a899b5184454}*SharedItemsImports = 5
 		Azure.Analytics.Synapse.Shared\tests\Azure.Analytics.Synapse.Shared.Tests.projitems*{9f1e97da-6f10-4ccc-a0fe-ee7663c02514}*SharedItemsImports = 5
+		Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems*{d687e63a-5463-4247-a334-85fde509550f}*SharedItemsImports = 5
 		Azure.Analytics.Synapse.Shared\tests\Azure.Analytics.Synapse.Shared.Tests.projitems*{e07e4070-92d6-41e6-8360-f277a5682c48}*SharedItemsImports = 5
 		Azure.Analytics.Synapse.Shared\src\Azure.Analytics.Synapse.Shared.projitems*{e6060b85-1465-498e-8c3a-595c322d4c0e}*SharedItemsImports = 5
+		Azure.Analytics.Synapse.Shared\tests\Azure.Analytics.Synapse.Shared.Tests.projitems*{ec8a0d59-e54f-4e72-a99a-6f95ca2ae52f}*SharedItemsImports = 5
 		Azure.Analytics.Synapse.Shared\tests\Azure.Analytics.Synapse.Shared.Tests.projitems*{faf772fd-0ea7-4643-be44-5af5971f50e6}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +77,22 @@ Global
 		{5F3EE47C-1F9F-427D-A6A8-60F032753BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F3EE47C-1F9F-427D-A6A8-60F032753BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F3EE47C-1F9F-427D-A6A8-60F032753BDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51C29022-ECBB-45C1-91DD-3DEDED059037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51C29022-ECBB-45C1-91DD-3DEDED059037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51C29022-ECBB-45C1-91DD-3DEDED059037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51C29022-ECBB-45C1-91DD-3DEDED059037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC8A0D59-E54F-4E72-A99A-6F95CA2AE52F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC8A0D59-E54F-4E72-A99A-6F95CA2AE52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC8A0D59-E54F-4E72-A99A-6F95CA2AE52F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC8A0D59-E54F-4E72-A99A-6F95CA2AE52F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D687E63A-5463-4247-A334-85FDE509550F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D687E63A-5463-4247-A334-85FDE509550F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D687E63A-5463-4247-A334-85FDE509550F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D687E63A-5463-4247-A334-85FDE509550F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{729E92B7-E47B-442C-836F-27B8A7806D2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{729E92B7-E47B-442C-836F-27B8A7806D2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{729E92B7-E47B-442C-836F-27B8A7806D2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{729E92B7-E47B-442C-836F-27B8A7806D2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

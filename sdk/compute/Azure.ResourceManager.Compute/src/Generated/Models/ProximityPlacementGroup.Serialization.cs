@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -91,15 +96,30 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("proximityPlacementGroupType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             proximityPlacementGroupType = new ProximityPlacementGroupType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("virtualMachines"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -110,6 +130,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("virtualMachineScaleSets"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -120,6 +145,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("availabilitySets"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -130,6 +160,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("colocationStatus"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property0.Value);
                             continue;
                         }

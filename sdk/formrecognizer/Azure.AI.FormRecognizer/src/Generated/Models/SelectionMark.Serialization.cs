@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             IReadOnlyList<float> boundingBox = default;
             float confidence = default;
-            FormSelectionMarkState state = default;
+            SelectionMarkState state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boundingBox"))
@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("state"))
                 {
-                    state = property.Value.GetString().ToFormSelectionMarkState();
+                    state = property.Value.GetString().ToSelectionMarkState();
                     continue;
                 }
             }

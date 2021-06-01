@@ -51,11 +51,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// network gateway resource.</param>
         /// <param name="localNetworkGateway2">The reference to local network
         /// gateway resource.</param>
+        /// <param name="ingressNatRules">List of ingress NatRules.</param>
+        /// <param name="egressNatRules">List of egress NatRules.</param>
         /// <param name="connectionProtocol">Connection protocol used for this
         /// connection. Possible values include: 'IKEv2', 'IKEv1'</param>
         /// <param name="routingWeight">The routing weight.</param>
         /// <param name="dpdTimeoutSeconds">The dead peer detection timeout of
         /// this connection in seconds.</param>
+        /// <param name="connectionMode">The connection mode for this
+        /// connection. Possible values include: 'Default', 'ResponderOnly',
+        /// 'InitiatorOnly'</param>
         /// <param name="sharedKey">The IPSec shared key.</param>
         /// <param name="connectionStatus">Virtual Network Gateway connection
         /// status. Possible values include: 'Unknown', 'Connecting',
@@ -85,17 +90,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// for data forwarding.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionProtocol = default(string), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? useLocalAzureIpAddress = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
+        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), IList<SubResource> ingressNatRules = default(IList<SubResource>), IList<SubResource> egressNatRules = default(IList<SubResource>), string connectionProtocol = default(string), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), string connectionMode = default(string), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? useLocalAzureIpAddress = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AuthorizationKey = authorizationKey;
             VirtualNetworkGateway1 = virtualNetworkGateway1;
             VirtualNetworkGateway2 = virtualNetworkGateway2;
             LocalNetworkGateway2 = localNetworkGateway2;
+            IngressNatRules = ingressNatRules;
+            EgressNatRules = egressNatRules;
             ConnectionType = connectionType;
             ConnectionProtocol = connectionProtocol;
             RoutingWeight = routingWeight;
             DpdTimeoutSeconds = dpdTimeoutSeconds;
+            ConnectionMode = connectionMode;
             SharedKey = sharedKey;
             ConnectionStatus = connectionStatus;
             TunnelConnectionStatus = tunnelConnectionStatus;
@@ -144,6 +152,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public LocalNetworkGateway LocalNetworkGateway2 { get; set; }
 
         /// <summary>
+        /// Gets or sets list of ingress NatRules.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ingressNatRules")]
+        public IList<SubResource> IngressNatRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of egress NatRules.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.egressNatRules")]
+        public IList<SubResource> EgressNatRules { get; set; }
+
+        /// <summary>
         /// Gets or sets gateway connection type. Possible values include:
         /// 'IPsec', 'Vnet2Vnet', 'ExpressRoute', 'VPNClient'
         /// </summary>
@@ -169,6 +189,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dpdTimeoutSeconds")]
         public int? DpdTimeoutSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets the connection mode for this connection. Possible
+        /// values include: 'Default', 'ResponderOnly', 'InitiatorOnly'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.connectionMode")]
+        public string ConnectionMode { get; set; }
 
         /// <summary>
         /// Gets or sets the IPSec shared key.

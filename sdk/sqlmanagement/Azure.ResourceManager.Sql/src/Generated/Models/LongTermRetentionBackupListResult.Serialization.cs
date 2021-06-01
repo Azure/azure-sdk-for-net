@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class LongTermRetentionBackupListResult
+    internal partial class LongTermRetentionBackupListResult
     {
         internal static LongTermRetentionBackupListResult DeserializeLongTermRetentionBackupListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LongTermRetentionBackup> array = new List<LongTermRetentionBackup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

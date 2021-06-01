@@ -64,16 +64,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("microsoftPeeringConfig"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value);
                     continue;
                 }
                 if (property.NameEquals("routeFilter"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     routeFilter = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("state"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     state = new ExpressRouteCircuitPeeringState(property.Value.GetString());
                     continue;
                 }

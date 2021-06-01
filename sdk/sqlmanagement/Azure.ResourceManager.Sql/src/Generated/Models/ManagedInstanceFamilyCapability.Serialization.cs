@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("supportedLicenseTypes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -45,6 +50,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("supportedVcoresValues"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedInstanceVcoresCapability> array = new List<ManagedInstanceVcoresCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -55,6 +65,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = property.Value.GetString().ToCapabilityStatus();
                     continue;
                 }

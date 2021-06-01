@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("key"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     key = MongoIndexKeys.DeserializeMongoIndexKeys(property.Value);
                     continue;
                 }
                 if (property.NameEquals("options"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     options = MongoIndexOptions.DeserializeMongoIndexOptions(property.Value);
                     continue;
                 }

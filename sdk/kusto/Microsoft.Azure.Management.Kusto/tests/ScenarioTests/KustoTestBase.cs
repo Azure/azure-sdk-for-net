@@ -19,22 +19,29 @@ namespace Kusto.Tests.ScenarioTests
         private const string ObjectIdKey = "ObjectId";
         private const string LocationKey = "location";
         private const string SubIdKey = "SubId";
-        public string eventHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest";
-        public string storageAccountForEventGridResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest";
-        public string iotHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/OferTestGroup/providers/Microsoft.Devices/IotHubs/ofertestiot";
+        public string eventHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns/eventhubs/testclientseh";
+        public string storageAccountForEventGridResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Storage/storageAccounts/testclients";
+        public string iotHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Devices/IotHubs/test-clients-iot";
+        public string scriptUrl = "https://dortest.blob.core.windows.net/dor/df.txt";
+        public string scriptUrlSasToken = "topSecret"; // TODO: when running in recording mode - use acatual sas token.
+        public string forceUpdateTag = "tag1";
+        public string forceUpdateTag2 = "tag2";
+        public bool continueOnErrors = false;
+
         public string clientIdForPrincipal = "713c3475-5021-4f3b-a650-eaa9a83f25a4";
-        public string dBprincipalMail = "oflipman@microsoft.com";
+        public string dBprincipalMail = "astauben@microsoft.com";
         public string consumerGroupName = "$Default";
         public readonly string tableName = "MyTest";
-        public readonly string resourceGroupForTest = "ofertestgroup";
-        public readonly string clusterForEventGridTest = "ofertestforclient";
+        public readonly string resourceGroupForTest = "test-clients-rg";
+        public readonly string clusterForEventGridTest = "eventgridclienttest";
         public readonly string databaseForEventGridTest = "databasetest";
-        public readonly string sharedAccessPolicyNameForIotHub = "read";
-        public readonly string clusterForKeyVaultPropertiesTest = "ofertestforclient";
-        public readonly string KeyNameForKeyVaultPropertiesTest = "TestClientKey";
-        public readonly string KeyVersionForKeyVaultPropertiesTest = "4d294ee7ce964d8bb6d04c1245276e93";
-        public readonly string KeyVaultUriForKeyVaultPropertiesTest = "https://testforclient.vault.azure.net/";
+        public readonly string sharedAccessPolicyNameForIotHub = "registryRead";
+        public readonly string clusterForKeyVaultPropertiesTest = "eventgridclienttest";
+        public readonly string KeyNameForKeyVaultPropertiesTest = "clientstestkey";
+        public readonly string KeyVersionForKeyVaultPropertiesTest = "6fd57d53ad6b4b53bacb062c98c761a0";
+        public readonly string KeyVaultUriForKeyVaultPropertiesTest = "https://clientstestkv.vault.azure.net/";
 
+        
         public string tenantId { get; set; }
         public string location { get; set; }
         public string subscriptionId { get; set; }
@@ -48,6 +55,8 @@ namespace Kusto.Tests.ScenarioTests
         public string eventHubConnectionName { get; internal set; }
         public string eventGridConnectinoName { get; internal set; }
         public string iotHubConnectionName { get; internal set; }
+        public string scriptName { get; internal set; }
+
         public Dictionary<string, string> tags { get; internal set; }
         public AzureSku sku1 { get; set; }
         public AzureSku sku2 { get; set; }
@@ -63,6 +72,7 @@ namespace Kusto.Tests.ScenarioTests
         public EventHubDataConnection eventhubConnection { get; set; }
         public EventGridDataConnection eventGridDataConnection { get; set; }
         public IotHubDataConnection iotHubDataConnection { get; set; }
+        public Script script { get; set; }
         public List<TrustedExternalTenant> trustedExternalTenants { get; set; }
         public string dataFormat { get; set; }
         public List<DatabasePrincipal> databasePrincipals { get; set; }
@@ -116,6 +126,8 @@ namespace Kusto.Tests.ScenarioTests
             eventHubConnectionName = TestUtilities.GenerateName("eventhubConnection");
             eventGridConnectinoName = TestUtilities.GenerateName("eventGridConnection");
             iotHubConnectionName = TestUtilities.GenerateName("iothubConnection");
+            scriptName = "dor";
+
 
             sku1 = new AzureSku(name: "Standard_D13_v2", "Standard", capacity: 2);
             sku2 = new AzureSku(name: "Standard_D14_v2", "Standard", capacity: 2);
@@ -137,6 +149,7 @@ namespace Kusto.Tests.ScenarioTests
             eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: this.location);
             eventGridDataConnection = new EventGridDataConnection(storageAccountForEventGridResourceId, eventHubResourceId, consumerGroupName, tableName: tableName, dataFormat: dataFormat, location: location);
             iotHubDataConnection = new IotHubDataConnection(iotHubResourceId, consumerGroupName, sharedAccessPolicyNameForIotHub, location: location);
+            script = new Script(scriptUrl, scriptUrlSasToken, forceUpdateTag: forceUpdateTag, continueOnErrors: continueOnErrors);
 
             databasePrincipal = GetDatabasePrincipalList(dBprincipalMail, "Admin");
             databasePrincipals = new List<DatabasePrincipal> {databasePrincipal};
@@ -144,7 +157,7 @@ namespace Kusto.Tests.ScenarioTests
             var leaderClusterResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Kusto/Clusters/{clusterName}";
             attachedDatabaseConfiguration = new AttachedDatabaseConfiguration(location: this.location, databaseName: databaseName, clusterResourceId: leaderClusterResourceId, defaultPrincipalsModificationKind: defaultPrincipalsModificationKind);
 
-            keyVaultProperties = new KeyVaultProperties(KeyNameForKeyVaultPropertiesTest, KeyVersionForKeyVaultPropertiesTest, KeyVaultUriForKeyVaultPropertiesTest);
+            keyVaultProperties = new KeyVaultProperties(KeyNameForKeyVaultPropertiesTest, KeyVaultUriForKeyVaultPropertiesTest, KeyVersionForKeyVaultPropertiesTest);
         }
 
         private DatabasePrincipal GetDatabasePrincipalList(string userEmail, string role)

@@ -30,6 +30,11 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("modelId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     modelId = property.Value.GetGuid();
                     continue;
                 }
@@ -45,6 +50,11 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("docTypeConfidence"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     docTypeConfidence = property.Value.GetSingle();
                     continue;
                 }

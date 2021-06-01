@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncMemberListResult
+    internal partial class SyncMemberListResult
     {
         internal static SyncMemberListResult DeserializeSyncMemberListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SyncMember> array = new List<SyncMember>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

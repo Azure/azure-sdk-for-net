@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class SubscriptionListResult
+    internal partial class SubscriptionListResult
     {
         internal static SubscriptionListResult DeserializeSubscriptionListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Subscription> array = new List<Subscription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

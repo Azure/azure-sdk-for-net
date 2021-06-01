@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
@@ -24,28 +25,32 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusSessionProcessor : IAsyncDisposable
     {
-        private readonly ServiceBusProcessor _innerProcessor;
+        /// <summary>
+        /// The <see cref="ServiceBusProcessor"/> that the session processor delegates to.
+        /// This can be overriden for testing purposes.
+        /// </summary>
+        protected internal virtual ServiceBusProcessor InnerProcessor { get; }
 
         /// <inheritdoc cref="ServiceBusProcessor.EntityPath"/>
-        public string EntityPath => _innerProcessor.EntityPath;
+        public virtual string EntityPath => InnerProcessor.EntityPath;
 
         /// <summary>
         /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new processor has a unique ID.</remarks>
-        internal string Identifier => _innerProcessor.Identifier;
+        internal string Identifier => InnerProcessor.Identifier;
 
         /// <inheritdoc cref="ServiceBusProcessor.ReceiveMode"/>
-        public ReceiveMode ReceiveMode => _innerProcessor.ReceiveMode;
+        public virtual ServiceBusReceiveMode ReceiveMode => InnerProcessor.ReceiveMode;
 
         /// <inheritdoc cref="ServiceBusProcessor.PrefetchCount"/>
-        public int PrefetchCount => _innerProcessor.PrefetchCount;
+        public virtual int PrefetchCount => InnerProcessor.PrefetchCount;
 
         /// <inheritdoc cref="ServiceBusProcessor.IsProcessing"/>
-        public bool IsProcessing => _innerProcessor.IsProcessing;
+        public virtual bool IsProcessing => InnerProcessor.IsProcessing;
 
-        /// <inheritdoc cref="ServiceBusProcessor.AutoComplete"/>
-        public bool AutoComplete => _innerProcessor.AutoComplete;
+        /// <inheritdoc cref="ServiceBusProcessor.AutoCompleteMessages"/>
+        public virtual bool AutoCompleteMessages => InnerProcessor.AutoCompleteMessages;
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusSessionProcessor"/> has been closed.
@@ -54,7 +59,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         ///   <c>true</c> if the processor is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed => _innerProcessor.IsClosed;
+        public virtual bool IsClosed => InnerProcessor.IsClosed;
 
         /// <summary>
         /// Gets the maximum duration within which the session lock will be
@@ -66,24 +71,29 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>The session lock renewal can continue for sometime in the background
         /// after completion of message and result in a few false SessionLockLost exceptions temporarily.
         /// </remarks>
-        public TimeSpan MaxAutoLockRenewalDuration => _innerProcessor.MaxAutoLockRenewalDuration;
+        public virtual TimeSpan MaxAutoLockRenewalDuration => InnerProcessor.MaxAutoLockRenewalDuration;
 
         /// <summary>Gets the maximum number of sessions that will be processed concurrently by the processor.
         /// The default value is 8.</summary>
-        public int MaxConcurrentSessions => _innerProcessor.MaxConcurrentSessions;
+        public virtual int MaxConcurrentSessions => InnerProcessor.MaxConcurrentSessions;
 
         /// <summary>
         /// Gets the maximum number of calls to the callback the processor will initiate per session.
         /// Thus the total number of callbacks will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
         /// The default value is 1.
         /// </summary>
-        public int MaxConcurrentCallsPerSession => _innerProcessor.MaxConcurrentCallsPerSession;
+        public virtual int MaxConcurrentCallsPerSession => InnerProcessor.MaxConcurrentCallsPerSession;
 
         /// <inheritdoc cref="ServiceBusProcessor.FullyQualifiedNamespace"/>
-        public string FullyQualifiedNamespace => _innerProcessor.FullyQualifiedNamespace;
+        public virtual string FullyQualifiedNamespace => InnerProcessor.FullyQualifiedNamespace;
 
-        /// <inheritdoc cref="ServiceBusProcessor.MaxReceiveWaitTime"/>
-        public TimeSpan? MaxReceiveWaitTime => _innerProcessor.MaxReceiveWaitTime;
+        /// <summary>
+        /// Gets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        public virtual TimeSpan? SessionIdleTimeout => InnerProcessor.MaxReceiveWaitTime;
 
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,
@@ -91,13 +101,13 @@ namespace Azure.Messaging.ServiceBus
             IList<ServiceBusPlugin> plugins,
             ServiceBusSessionProcessorOptions options)
         {
-            _innerProcessor = new ServiceBusProcessor(
+            InnerProcessor = new ServiceBusProcessor(
                 connection,
                 entityPath,
                 true,
                 plugins,
                 options.ToProcessorOptions(),
-                options.SessionIds,
+                options.SessionIds.ToArray(),
                 options.MaxConcurrentSessions,
                 options.MaxConcurrentCallsPerSession);
         }
@@ -110,6 +120,42 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Invokes the process message event handler after a message has been received.
+        /// This method can be overriden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the session message.</param>
+        protected internal virtual async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
+        {
+            await InnerProcessor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc cref="ServiceBusProcessor.OnProcessErrorAsync(ProcessErrorEventArgs)"/>
+        protected internal async virtual Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+        {
+            await InnerProcessor.OnProcessErrorAsync(args).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Invokes the session open event handler when a new session is about to be processed.
+        /// This method can be overriden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the session.</param>
+        protected internal virtual async Task OnSessionInitializingAsync(ProcessSessionEventArgs args)
+        {
+            await InnerProcessor.OnSessionInitializingAsync(args).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Invokes the session close event handler when a session is about to be closed for processing.
+        /// This method can be overriden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the session.</param>
+        protected internal virtual async Task OnSessionClosingAsync(ProcessSessionEventArgs args)
+        {
+            await InnerProcessor.OnSessionClosingAsync(args).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// The handler responsible for processing messages received from the Queue or Subscription. Implementation is mandatory.
         /// </summary>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -118,13 +164,12 @@ namespace Azure.Messaging.ServiceBus
         {
             add
             {
-                _innerProcessor.ProcessSessionMessageAsync += value;
-
+                InnerProcessor.ProcessSessionMessageAsync += value;
             }
 
             remove
             {
-                _innerProcessor.ProcessSessionMessageAsync -= value;
+                InnerProcessor.ProcessSessionMessageAsync -= value;
             }
         }
 
@@ -138,12 +183,12 @@ namespace Azure.Messaging.ServiceBus
         {
             add
             {
-                _innerProcessor.ProcessErrorAsync += value;
+                InnerProcessor.ProcessErrorAsync += value;
             }
 
             remove
             {
-                _innerProcessor.ProcessErrorAsync -= value;
+                InnerProcessor.ProcessErrorAsync -= value;
             }
         }
 
@@ -156,13 +201,12 @@ namespace Azure.Messaging.ServiceBus
         {
             add
             {
-                _innerProcessor.SessionInitializingAsync += value;
-
+                InnerProcessor.SessionInitializingAsync += value;
             }
 
             remove
             {
-                _innerProcessor.SessionInitializingAsync -= value;
+                InnerProcessor.SessionInitializingAsync -= value;
             }
         }
 
@@ -177,22 +221,22 @@ namespace Azure.Messaging.ServiceBus
         {
             add
             {
-                _innerProcessor.SessionClosingAsync += value;
+                InnerProcessor.SessionClosingAsync += value;
             }
 
             remove
             {
-                _innerProcessor.SessionClosingAsync -= value;
+                InnerProcessor.SessionClosingAsync -= value;
             }
         }
 
         /// <inheritdoc cref="ServiceBusProcessor.StartProcessingAsync(CancellationToken)"/>
         public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default) =>
-            await _innerProcessor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+            await InnerProcessor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc cref="ServiceBusProcessor.StopProcessingAsync(CancellationToken)"/>
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default) =>
-            await _innerProcessor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+            await InnerProcessor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -225,19 +269,20 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSessionProcessor" />.
         /// </summary>
-        /// <param name="closeMode">The mode indicating what should happen to the link when closing.</param>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
         public virtual async Task CloseAsync(
-            LinkCloseMode closeMode = LinkCloseMode.Detach,
             CancellationToken cancellationToken = default) =>
-            await _innerProcessor.CloseAsync(closeMode).ConfigureAwait(false);
+            await InnerProcessor.CloseAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSessionProcessor" />.
-        ///   This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
+        ///   This is equivalent to calling <see cref="CloseAsync"/>.
         /// </summary>
-        public async ValueTask DisposeAsync() =>
+        public async ValueTask DisposeAsync()
+        {
             await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
     }
 }

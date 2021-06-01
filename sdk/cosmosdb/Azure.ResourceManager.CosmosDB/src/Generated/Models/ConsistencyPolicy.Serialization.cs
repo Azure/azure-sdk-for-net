@@ -44,11 +44,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("maxStalenessPrefix"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxStalenessPrefix = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxIntervalInSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }

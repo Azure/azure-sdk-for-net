@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class VirtualClusterListResult
+    internal partial class VirtualClusterListResult
     {
         internal static VirtualClusterListResult DeserializeVirtualClusterListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VirtualCluster> array = new List<VirtualCluster>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

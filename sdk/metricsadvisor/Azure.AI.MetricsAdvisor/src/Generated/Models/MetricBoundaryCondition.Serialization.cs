@@ -27,6 +27,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             writer.WritePropertyName("direction");
             writer.WriteStringValue(Direction.ToString());
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(Type.Value.ToString());
+            }
             if (Optional.IsDefined(CompanionMetricId))
             {
                 writer.WritePropertyName("metricId");
@@ -45,23 +50,44 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<double> lower = default;
             Optional<double> upper = default;
             BoundaryDirection direction = default;
+            Optional<ValueType> type = default;
             Optional<string> metricId = default;
             Optional<bool> triggerForMissing = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lower"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lower = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("upper"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     upper = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("direction"))
                 {
                     direction = new BoundaryDirection(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ValueType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("metricId"))
@@ -71,11 +97,16 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("triggerForMissing"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     triggerForMissing = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new MetricBoundaryCondition(Optional.ToNullable(lower), Optional.ToNullable(upper), direction, metricId.Value, Optional.ToNullable(triggerForMissing));
+            return new MetricBoundaryCondition(Optional.ToNullable(lower), Optional.ToNullable(upper), direction, Optional.ToNullable(type), metricId.Value, Optional.ToNullable(triggerForMissing));
         }
     }
 }

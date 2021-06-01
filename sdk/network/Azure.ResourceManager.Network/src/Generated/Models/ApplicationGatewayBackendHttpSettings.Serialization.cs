@@ -151,35 +151,70 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("port"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             port = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("protocol"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             protocol = new ApplicationGatewayProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("cookieBasedAffinity"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             cookieBasedAffinity = new ApplicationGatewayCookieBasedAffinity(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requestTimeout"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             requestTimeout = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("probe"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             probe = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authenticationCertificates"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -190,6 +225,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("trustedRootCertificates"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -200,6 +240,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("connectionDraining"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value);
                             continue;
                         }
@@ -210,6 +255,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("pickHostNameFromBackendAddress"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             pickHostNameFromBackendAddress = property0.Value.GetBoolean();
                             continue;
                         }
@@ -220,6 +270,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("probeEnabled"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             probeEnabled = property0.Value.GetBoolean();
                             continue;
                         }
@@ -230,6 +285,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }

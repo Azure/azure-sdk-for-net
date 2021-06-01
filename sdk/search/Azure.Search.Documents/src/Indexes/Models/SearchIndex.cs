@@ -10,6 +10,9 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndex
     {
+        // Force the constructor to set the field;
+        // otherwise, when getting only names, the setter will throw.
+        [CodeGenMember("fields")]
         private IList<SearchField> _fields;
 
         [CodeGenMember("etag")]
@@ -21,19 +24,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name">The name of the index.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
-        public SearchIndex(string name)
+        public SearchIndex(string name) : this(name, new List<SearchField>())
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            Name = name;
-
-            Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
-            CharFilters = new ChangeTrackingList<CharFilter>();
-            Fields = new List<SearchField>();
-            ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
-            Suggesters = new ChangeTrackingList<SearchSuggester>();
-            TokenFilters = new ChangeTrackingList<TokenFilter>();
-            Tokenizers = new ChangeTrackingList<LexicalTokenizer>();
         }
 
         /// <summary>
@@ -57,6 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Suggesters = new ChangeTrackingList<SearchSuggester>();
             TokenFilters = new ChangeTrackingList<TokenFilter>();
             Tokenizers = new ChangeTrackingList<LexicalTokenizer>();
+            Normalizers = new ChangeTrackingList<LexicalNormalizer>();
         }
 
         /// <summary>
@@ -125,6 +118,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// };
         /// </code>
         /// </example>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<SearchField> Fields
         {
             get => _fields;
@@ -133,6 +127,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 _fields = value ?? throw new ArgumentNullException(nameof(value), $"{nameof(Fields)} cannot be null. To clear values, call {nameof(Fields.Clear)}.");
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Gets the scoring profiles for the index.
@@ -153,6 +148,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Gets the tokenizers for the index.
         /// </summary>
         public IList<LexicalTokenizer> Tokenizers { get; }
+
+        /// <summary>
+        /// Gets the normalizers for the index.
+        /// </summary>
+        public IList<LexicalNormalizer> Normalizers { get; }
 
         /// <summary>
         /// The <see cref="Azure.ETag"/> of the <see cref="SearchIndex"/>.

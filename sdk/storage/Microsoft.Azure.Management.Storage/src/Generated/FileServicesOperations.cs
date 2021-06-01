@@ -302,14 +302,9 @@ namespace Microsoft.Azure.Management.Storage
         /// Storage account names must be between 3 and 24 characters in length and use
         /// numbers and lower-case letters only.
         /// </param>
-        /// <param name='cors'>
-        /// Specifies CORS rules for the File service. You can include up to five
-        /// CorsRule elements in the request. If no CorsRule elements are included in
-        /// the request body, all CORS rules will be deleted, and CORS will be disabled
-        /// for the File service.
-        /// </param>
-        /// <param name='shareDeleteRetentionPolicy'>
-        /// The file service properties for share soft delete.
+        /// <param name='parameters'>
+        /// The properties of file services in storage accounts, including CORS
+        /// (Cross-Origin Resource Sharing) rules.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -332,7 +327,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileServiceProperties>> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileServiceProperties>> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, FileServiceProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -390,17 +385,15 @@ namespace Microsoft.Azure.Management.Storage
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            if (shareDeleteRetentionPolicy != null)
+            if (parameters == null)
             {
-                shareDeleteRetentionPolicy.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (parameters != null)
+            {
+                parameters.Validate();
             }
             string fileServicesName = "default";
-            FileServiceProperties parameters = new FileServiceProperties();
-            if (cors != null || shareDeleteRetentionPolicy != null)
-            {
-                parameters.Cors = cors;
-                parameters.ShareDeleteRetentionPolicy = shareDeleteRetentionPolicy;
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

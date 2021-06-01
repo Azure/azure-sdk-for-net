@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal static class HttpProtocolExtensions
+    internal static partial class HttpProtocolExtensions
     {
         public static string ToSerialString(this HttpProtocol value) => value switch
         {

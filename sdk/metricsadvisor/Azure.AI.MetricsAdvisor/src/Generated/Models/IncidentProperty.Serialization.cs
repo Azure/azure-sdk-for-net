@@ -15,7 +15,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal static IncidentProperty DeserializeIncidentProperty(JsonElement element)
         {
             AnomalySeverity maxSeverity = default;
-            Optional<IncidentStatus> incidentStatus = default;
+            AnomalyIncidentStatus incidentStatus = default;
+            double valueOfRootNode = default;
+            Optional<double?> expectedValueOfRootNode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxSeverity"))
@@ -25,11 +27,26 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("incidentStatus"))
                 {
-                    incidentStatus = new IncidentStatus(property.Value.GetString());
+                    incidentStatus = new AnomalyIncidentStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("valueOfRootNode"))
+                {
+                    valueOfRootNode = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("expectedValueOfRootNode"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        expectedValueOfRootNode = null;
+                        continue;
+                    }
+                    expectedValueOfRootNode = property.Value.GetDouble();
                     continue;
                 }
             }
-            return new IncidentProperty(maxSeverity, Optional.ToNullable(incidentStatus));
+            return new IncidentProperty(maxSeverity, incidentStatus, valueOfRootNode, Optional.ToNullable(expectedValueOfRootNode));
         }
     }
 }

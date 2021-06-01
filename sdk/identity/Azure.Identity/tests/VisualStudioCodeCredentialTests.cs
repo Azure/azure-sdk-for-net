@@ -12,7 +12,6 @@ namespace Azure.Identity.Tests
     {
         public VisualStudioCodeCredentialTests(bool isAsync) : base(isAsync)
         {
-
         }
 
         [Test]

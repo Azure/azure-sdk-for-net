@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("throughputPolicy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     throughputPolicy = ThroughputPolicyResource.DeserializeThroughputPolicyResource(property.Value);
                     continue;
                 }

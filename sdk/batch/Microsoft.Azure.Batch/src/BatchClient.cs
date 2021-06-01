@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Batch
     /// <summary>
     /// The dispose pattern sets all references to null.
     /// Put all references into this box.
-    /// 
+    ///
     /// ONLY ACCESS VIA GetStateThrowIfNotOpen() method!
-    /// 
+    ///
     /// </summary>
     internal class BatchClientDisposableStateBox
     {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch
     public class BatchClient : IDisposable
     {
         private BatchClientDisposableStateBox _disposableStateBox;  // null state box signals that the instance is closed
-        private bool _disposed = false;  // used for dispose pattern
+        private bool _disposed;  // used for dispose pattern
         private readonly object _closeLocker = new object();
 
 #region // constructors
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Batch
         }
 
 #endregion  Constructors
-        
+
 #region IInheritedBehaviors
 
         /// <summary>
@@ -275,13 +275,13 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Holds the protocol layer to be used for this client instance.
         /// This enables "mock"ing the protocol layer for testing.
-        /// 
+        ///
         /// Since 100% of all calls indirect through this property, it
         /// provides a single place to immediately stop all (new) call attempts
         /// when the underlying BatchClient is closed.
         /// </summary>
-        internal IProtocolLayer ProtocolLayer 
-        { 
+        internal IProtocolLayer ProtocolLayer
+        {
             get
             {
                 IProtocolLayer localProto = GetStateThrowIfNotOpen().ProtocolLayer;

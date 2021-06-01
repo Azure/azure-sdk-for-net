@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace Azure.Identity
 {
-
     /// <summary>
     /// Model factory that enables mocking for the Azure Identity library.
     /// </summary>

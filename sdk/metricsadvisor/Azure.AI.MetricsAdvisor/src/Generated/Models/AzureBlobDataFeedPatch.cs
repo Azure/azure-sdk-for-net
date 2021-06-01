@@ -13,9 +13,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AzureBlobDataFeedPatch. </summary>
         public AzureBlobDataFeedPatch()
         {
-            DataSourceType = DataFeedDetailPatchDataSourceType.AzureBlob;
+            DataSourceType = DataFeedSourceType.AzureBlob;
         }
 
-        public AzureBlobParameter DataSourceParameter { get; set; }
+        public AzureBlobParameterPatch DataSourceParameter { get; set; }
     }
 }

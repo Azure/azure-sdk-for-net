@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -33,9 +34,16 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
             /// <param name='moveCollectionName'>
             /// The Move Collection Name.
             /// </param>
-            public static UnresolvedDependencyCollection Get(this IUnresolvedDependenciesOperations operations, string resourceGroupName, string moveCollectionName)
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='dependencyLevel'>
+            /// Defines the dependency level. Possible values include: 'Direct',
+            /// 'Descendant'
+            /// </param>
+            public static IPage<UnresolvedDependency> Get(this IUnresolvedDependenciesOperations operations, string resourceGroupName, string moveCollectionName, ODataQuery<UnresolvedDependenciesFilter> odataQuery = default(ODataQuery<UnresolvedDependenciesFilter>), string dependencyLevel = default(string))
             {
-                return operations.GetAsync(resourceGroupName, moveCollectionName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, moveCollectionName, odataQuery, dependencyLevel).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,12 +58,53 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
             /// <param name='moveCollectionName'>
             /// The Move Collection Name.
             /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='dependencyLevel'>
+            /// Defines the dependency level. Possible values include: 'Direct',
+            /// 'Descendant'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UnresolvedDependencyCollection> GetAsync(this IUnresolvedDependenciesOperations operations, string resourceGroupName, string moveCollectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<UnresolvedDependency>> GetAsync(this IUnresolvedDependenciesOperations operations, string resourceGroupName, string moveCollectionName, ODataQuery<UnresolvedDependenciesFilter> odataQuery = default(ODataQuery<UnresolvedDependenciesFilter>), string dependencyLevel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, moveCollectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, moveCollectionName, odataQuery, dependencyLevel, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of unresolved dependencies.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<UnresolvedDependency> GetNext(this IUnresolvedDependenciesOperations operations, string nextPageLink)
+            {
+                return operations.GetNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of unresolved dependencies.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<UnresolvedDependency>> GetNextAsync(this IUnresolvedDependenciesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

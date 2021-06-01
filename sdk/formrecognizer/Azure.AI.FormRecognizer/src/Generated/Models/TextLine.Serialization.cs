@@ -17,8 +17,8 @@ namespace Azure.AI.FormRecognizer.Models
         {
             string text = default;
             IReadOnlyList<float> boundingBox = default;
-            Optional<Language> language = default;
             IReadOnlyList<TextWord> words = default;
+            Optional<TextAppearance> appearance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -36,11 +36,6 @@ namespace Azure.AI.FormRecognizer.Models
                     boundingBox = array;
                     continue;
                 }
-                if (property.NameEquals("language"))
-                {
-                    language = new Language(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("words"))
                 {
                     List<TextWord> array = new List<TextWord>();
@@ -51,8 +46,18 @@ namespace Azure.AI.FormRecognizer.Models
                     words = array;
                     continue;
                 }
+                if (property.NameEquals("appearance"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    appearance = TextAppearance.DeserializeTextAppearance(property.Value);
+                    continue;
+                }
             }
-            return new TextLine(text, boundingBox, Optional.ToNullable(language), words);
+            return new TextLine(text, boundingBox, words, appearance.Value);
         }
     }
 }

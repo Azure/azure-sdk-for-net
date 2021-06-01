@@ -63,7 +63,7 @@ namespace Azure.Storage.Internal.Avro
         /// <summary>
         /// To detect redundant calls
         /// </summary>
-        private bool _disposed = false;
+        private bool _disposed;
 
         /// <summary>
         /// Remembers where we started if partial data stream was provided.
@@ -196,7 +196,6 @@ namespace Azure.Storage.Internal.Avro
             {
                 throw new ArgumentException("There are no more items in the stream");
             }
-
 
             object result = await _itemType.ReadAsync(_dataStream, async, cancellationToken).ConfigureAwait(false);
 

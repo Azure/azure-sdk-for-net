@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(StorageBlobCreatedEventDataConverter))]
     public partial class StorageBlobCreatedEventData
     {
         internal static StorageBlobCreatedEventData DeserializeStorageBlobCreatedEventData(JsonElement element)
@@ -55,11 +58,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("contentLength"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     contentLength = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("contentOffset"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     contentOffset = property.Value.GetInt64();
                     continue;
                 }
@@ -85,11 +98,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("storageDiagnostics"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     storageDiagnostics = property.Value.GetObject();
                     continue;
                 }
             }
             return new StorageBlobCreatedEventData(api.Value, clientRequestId.Value, requestId.Value, eTag.Value, contentType.Value, Optional.ToNullable(contentLength), Optional.ToNullable(contentOffset), blobType.Value, url.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+        }
+
+        internal partial class StorageBlobCreatedEventDataConverter : JsonConverter<StorageBlobCreatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, StorageBlobCreatedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override StorageBlobCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeStorageBlobCreatedEventData(document.RootElement);
+            }
         }
     }
 }

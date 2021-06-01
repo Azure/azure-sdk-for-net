@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ContainerRegistryArtifactEventDataConverter))]
     public partial class ContainerRegistryArtifactEventData
     {
         internal static ContainerRegistryArtifactEventData DeserializeContainerRegistryArtifactEventData(JsonElement element)
@@ -28,6 +30,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("timestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -38,11 +45,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("target"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     target = ContainerRegistryArtifactEventTarget.DeserializeContainerRegistryArtifactEventTarget(property.Value);
                     continue;
                 }
             }
             return new ContainerRegistryArtifactEventData(id.Value, Optional.ToNullable(timestamp), action.Value, target.Value);
+        }
+
+        internal partial class ContainerRegistryArtifactEventDataConverter : JsonConverter<ContainerRegistryArtifactEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ContainerRegistryArtifactEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override ContainerRegistryArtifactEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerRegistryArtifactEventData(document.RootElement);
+            }
         }
     }
 }

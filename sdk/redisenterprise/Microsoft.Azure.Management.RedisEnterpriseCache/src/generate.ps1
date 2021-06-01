@@ -1,0 +1,1 @@
+﻿Start-AutoRestCodeGeneration -ResourceProvider "redisenterprise/resource-manager" -AutoRestVersion "v2"

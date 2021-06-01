@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> Sql service management client. </summary>
-    public class SqlManagementClient
+    public partial class SqlManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

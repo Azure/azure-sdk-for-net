@@ -38,11 +38,15 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional custom metadata to set for this block blob.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata Metadata { get; set; }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Options tags to set for this block blob.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public Tags Tags { get; set; }
+#pragma warning restore CA2227 // Collection properties should be readonly
     }
 }

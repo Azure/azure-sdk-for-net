@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class InstanceFailoverGroupListResult
+    internal partial class InstanceFailoverGroupListResult
     {
         internal static InstanceFailoverGroupListResult DeserializeInstanceFailoverGroupListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<InstanceFailoverGroup> array = new List<InstanceFailoverGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

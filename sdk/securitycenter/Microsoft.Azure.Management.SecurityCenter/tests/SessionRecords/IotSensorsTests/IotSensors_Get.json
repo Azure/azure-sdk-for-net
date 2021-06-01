@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/IOT-ResourceGroup-CUS/providers/Microsoft.Devices/IotHubs/SDK-IotHub-CUS/providers/Microsoft.Security/iotSensors/iotSensor?api-version=2020-08-06-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ4N2JiNDg1LWI1YjAtNDcxZS05YzBkLTEwNzE3NjEyZjg2OS9yZXNvdXJjZUdyb3Vwcy9JT1QtUmVzb3VyY2VHcm91cC1DVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvU0RLLUlvdEh1Yi1DVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9pb3RTZW5zb3JzL2lvdFNlbnNvcj9hcGktdmVyc2lvbj0yMDIwLTA4LTA2LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e178872f-2929-42db-b32b-dd1b686b0f1c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:fe5cd4dd-bd6b-4202-a1f7-a9d691c1bc09"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "f94d7e69-6503-4ebc-8ba8-c8ee050d8efa"
+        ],
+        "x-ms-correlation-request-id": [
+          "f94d7e69-6503-4ebc-8ba8-c8ee050d8efa"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201111T101001Z:f94d7e69-6503-4ebc-8ba8-c8ee050d8efa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 11 Nov 2020 10:10:00 GMT"
+        ],
+        "Content-Length": [
+          "272"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourcegroups/iot-resourcegroup-cus/providers/microsoft.devices/iothubs/sdk-iothub-cus/providers/Microsoft.Security/iotSensors/iotSensor\",\r\n  \"type\": \"Microsoft.Security/iotSensors\",\r\n  \"name\": \"iotSensor\",\r\n  \"properties\": {}\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

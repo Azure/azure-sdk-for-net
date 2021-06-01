@@ -41,15 +41,14 @@ namespace Microsoft.Azure.Management.Avs
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Unique identifier for the Azure subscription
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Version of Azure VMware Solution API to be used with the client
-        /// request
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -89,6 +88,56 @@ namespace Microsoft.Azure.Management.Avs
         /// Gets the IClustersOperations.
         /// </summary>
         IClustersOperations Clusters { get; }
+
+        /// <summary>
+        /// Gets the IDatastoresOperations.
+        /// </summary>
+        IDatastoresOperations Datastores { get; }
+
+        /// <summary>
+        /// Gets the IHcxEnterpriseSitesOperations.
+        /// </summary>
+        IHcxEnterpriseSitesOperations HcxEnterpriseSites { get; }
+
+        /// <summary>
+        /// Gets the IAuthorizationsOperations.
+        /// </summary>
+        IAuthorizationsOperations Authorizations { get; }
+
+        /// <summary>
+        /// Gets the IGlobalReachConnectionsOperations.
+        /// </summary>
+        IGlobalReachConnectionsOperations GlobalReachConnections { get; }
+
+        /// <summary>
+        /// Gets the IWorkloadNetworksOperations.
+        /// </summary>
+        IWorkloadNetworksOperations WorkloadNetworks { get; }
+
+        /// <summary>
+        /// Gets the ICloudLinksOperations.
+        /// </summary>
+        ICloudLinksOperations CloudLinks { get; }
+
+        /// <summary>
+        /// Gets the IAddonsOperations.
+        /// </summary>
+        IAddonsOperations Addons { get; }
+
+        /// <summary>
+        /// Gets the IScriptPackagesOperations.
+        /// </summary>
+        IScriptPackagesOperations ScriptPackages { get; }
+
+        /// <summary>
+        /// Gets the IScriptCmdletsOperations.
+        /// </summary>
+        IScriptCmdletsOperations ScriptCmdlets { get; }
+
+        /// <summary>
+        /// Gets the IScriptExecutionsOperations.
+        /// </summary>
+        IScriptExecutionsOperations ScriptExecutions { get; }
 
     }
 }

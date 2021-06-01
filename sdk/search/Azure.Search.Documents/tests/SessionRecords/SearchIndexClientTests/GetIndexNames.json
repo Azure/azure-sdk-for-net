@@ -1,0 +1,114 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes?$select=name\u0026api-version=2020-06-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-d3540b119f114947b2df1dca6cc64846-451c72d5904b9b45-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "f54ad45004984495d0b20d6275e336ea",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "f54ad450-0498-4495-d0b2-0d6275e336ea",
+        "Content-Length": "532",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Sat, 27 Mar 2021 18:43:45 GMT",
+        "elapsed-time": "34",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "f54ad450-0498-4495-d0b2-0d6275e336ea",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "f54ad450-0498-4495-d0b2-0d6275e336ea"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes(name)",
+        "value": [
+          {
+            "name": "apqpjvpu"
+          },
+          {
+            "name": "fcmqouqy"
+          },
+          {
+            "name": "flwamvwo"
+          },
+          {
+            "name": "hmmcnwrd"
+          },
+          {
+            "name": "kwslcraq"
+          },
+          {
+            "name": "lrvfegpj"
+          },
+          {
+            "name": "mbqvlxmt"
+          },
+          {
+            "name": "nrmhcgbe"
+          },
+          {
+            "name": "pjfwhgmj"
+          },
+          {
+            "name": "rchjcfxp"
+          },
+          {
+            "name": "rvhlhfqb"
+          },
+          {
+            "name": "sixfvebm"
+          },
+          {
+            "name": "sxlsgnhl"
+          },
+          {
+            "name": "tsuiexnx"
+          },
+          {
+            "name": "uakwykfd"
+          },
+          {
+            "name": "unyraeil"
+          },
+          {
+            "name": "upriywvl"
+          },
+          {
+            "name": "uyfipsil"
+          },
+          {
+            "name": "vsorndid"
+          },
+          {
+            "name": "wgkunoqs"
+          },
+          {
+            "name": "wqvovvop"
+          },
+          {
+            "name": "xbnnrmdi"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2051199814",
+    "SearchIndexName": "mbqvlxmt",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
+  }
+}

@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ResourceGroupsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ResourceGroupsOperations for mocking. </summary>
         protected ResourceGroupsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ResourceGroupsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether a resource group exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to check. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckExistenceAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckExistenceAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ResourceGroupsOperations.CheckExistence");
             scope.Start();
@@ -58,7 +60,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether a resource group exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to check. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistence(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckExistence(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ResourceGroupsOperations.CheckExistence");
             scope.Start();

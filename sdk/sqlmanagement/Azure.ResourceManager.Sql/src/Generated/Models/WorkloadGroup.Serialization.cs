@@ -81,25 +81,50 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("minResourcePercent"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             minResourcePercent = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("maxResourcePercent"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             maxResourcePercent = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("minResourcePercentPerRequest"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             minResourcePercentPerRequest = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("maxResourcePercentPerRequest"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             maxResourcePercentPerRequest = property0.Value.GetDouble();
                             continue;
                         }
@@ -110,6 +135,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("queryExecutionTimeout"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             queryExecutionTimeout = property0.Value.GetInt32();
                             continue;
                         }

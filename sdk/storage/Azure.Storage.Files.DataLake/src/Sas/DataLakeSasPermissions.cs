@@ -81,7 +81,6 @@ namespace Azure.Storage.Files.DataLake
     /// </summary>
     internal static partial class DataLakeExtensions
     {
-
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="DataLakeSasBuilder.Permissions"/>.

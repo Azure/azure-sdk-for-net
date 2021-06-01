@@ -39,12 +39,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Ingestion happens once a minute.
         /// </summary>
-        public static DataFeedGranularityType Minutely { get; } = new DataFeedGranularityType(MinutelyValue);
+        [CodeGenMember("Minutely")]
+        public static DataFeedGranularityType PerMinute { get; } = new DataFeedGranularityType(PerMinuteValue);
 
         /// <summary>
         /// Ingestion happens once a second.
         /// </summary>
-        public static DataFeedGranularityType Secondly { get; } = new DataFeedGranularityType(SecondlyValue);
+        [CodeGenMember("Secondly")]
+        public static DataFeedGranularityType PerSecond { get; } = new DataFeedGranularityType(PerSecondValue);
 
         /// <summary>
         /// Ingestion happens in a customized interval. Period can be set with

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TenantListResult
+    internal partial class TenantListResult
     {
         internal static TenantListResult DeserializeTenantListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TenantIdDescription> array = new List<TenantIdDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

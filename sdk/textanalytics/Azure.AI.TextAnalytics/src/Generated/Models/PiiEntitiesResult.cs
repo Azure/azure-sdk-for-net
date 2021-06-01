@@ -8,11 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The PiiEntitiesResult. </summary>
+    /// <summary> The PiiResult. </summary>
     internal partial class PiiEntitiesResult
     {
         /// <summary> Initializes a new instance of PiiEntitiesResult. </summary>

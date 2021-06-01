@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="idleAt"> . </param>
         /// <param name="deadAt"> . </param>
         /// <param name="shuttingDownAt"> . </param>
-        /// <param name="terminatedAt"> the time that at which &quot;killed&quot; livy state was first seen. </param>
+        /// <param name="terminatedAt"> . </param>
         /// <param name="recoveringAt"> . </param>
         /// <param name="busyAt"> . </param>
         /// <param name="errorAt"> . </param>
@@ -49,7 +49,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public DateTimeOffset? IdleAt { get; }
         public DateTimeOffset? DeadAt { get; }
         public DateTimeOffset? ShuttingDownAt { get; }
-        /// <summary> the time that at which &quot;killed&quot; livy state was first seen. </summary>
         public DateTimeOffset? TerminatedAt { get; }
         public DateTimeOffset? RecoveringAt { get; }
         public DateTimeOffset? BusyAt { get; }

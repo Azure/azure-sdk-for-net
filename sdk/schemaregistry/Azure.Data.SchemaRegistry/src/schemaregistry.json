@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "title": "Azure Schema Registry",
-    "version": "2018-01-01-preview",
-    "description": "Azure Schema Registry is as a central schema repository for enterprise-level data infrastructure, complete with support for versioning and management."
+    "version": "2020-09-01-preview",
+    "description": "Azure Schema Registry is as a central schema repository, complete with support for versioning, management, compatibility checking, and RBAC."
   },
   "x-ms-parameterized-host": {
     "hostTemplate": "{endpoint}",
@@ -40,7 +40,7 @@
         },
         "operationId": "Schema_GetById",
         "produces": [
-          "application/json"
+          "text/plain; charset=utf-8"
         ],
         "parameters": [
           {
@@ -62,24 +62,25 @@
                 "type": "string",
                 "description": "URL location of schema, identified by schema group, schema name, and version."
               },
-              "X-Schema-Type": {
+              "Serialization-Type": {
                 "type": "string",
                 "description": "Serialization type for the schema being stored."
               },
-              "X-Schema-Id": {
+              "Schema-Id": {
                 "type": "string",
                 "description": "References specific schema in registry namespace."
               },
-              "X-Schema-Id-Location": {
+              "Schema-Id-Location": {
                 "type": "string",
                 "description": "URL location of schema, identified by schema ID."
               },
-              "X-Schema-Version": {
+              "Schema-Version": {
                 "type": "integer",
                 "description": "Version of the returned schema."
               }
             },
             "schema": {
+              "description": "String representation (UTF-8) of the registered schema.",
               "type": "string"
             }
           },
@@ -102,11 +103,11 @@
           }
         },
         "operationId": "Schema_QueryIdByContent",
+        "consumes": [
+          "text/plain; charset=utf-8"
+        ],
         "produces": [
           "application/json"
-        ],
-        "consumes": [
-          "text/plain"
         ],
         "parameters": [
           {
@@ -124,17 +125,7 @@
             "type": "string"
           },
           {
-            "name": "schema-content",
-            "in": "body",
-            "description": "String representation of the registered schema.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "format": "binary"
-            }
-          },
-          {
-            "name": "X-Schema-Type",
+            "name": "Serialization-Type",
             "in": "header",
             "type": "string",
             "description": "Serialization type for the schema being registered.",
@@ -156,6 +147,15 @@
             "x-nullable": false
           },
           {
+            "name": "schema-content",
+            "in": "body",
+            "description": "String representation (UTF-8) of the registered schema.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "$ref": "#/parameters/ApiVersionParameter"
           }
         ],
@@ -167,19 +167,19 @@
                 "type": "string",
                 "description": "URL location of schema, identified by schema group, schema name, and version."
               },
-              "X-Schema-Type": {
+              "Serialization-Type": {
                 "type": "string",
                 "description": "Serialization type for the schema being stored."
               },
-              "X-Schema-Id": {
+              "Schema-Id": {
                 "type": "string",
                 "description": "References specific schema in registry namespace."
               },
-              "X-Schema-Id-Location": {
+              "Schema-Id-Location": {
                 "type": "string",
                 "description": "URL location of schema, identified by schema ID."
               },
-              "X-Schema-Version": {
+              "Schema-Version": {
                 "type": "integer",
                 "description": "Version of the returned schema."
               }
@@ -205,11 +205,11 @@
           }
         },
         "operationId": "Schema_Register",
+        "consumes": [
+          "text/plain; charset=utf-8"
+        ],
         "produces": [
           "application/json"
-        ],
-        "consumes": [
-          "text/plain"
         ],
         "parameters": [
           {
@@ -227,7 +227,7 @@
             "type": "string"
           },
           {
-            "name": "X-Schema-Type",
+            "name": "Serialization-Type",
             "in": "header",
             "type": "string",
             "description": "Serialization type for the schema being registered.",
@@ -251,11 +251,10 @@
           {
             "name": "schema-content",
             "in": "body",
-            "description": "String representation of the schema being registered.",
+            "description": "String representation (UTF-8) of the schema being registered.",
             "required": true,
             "schema": {
-              "type": "object",
-              "format": "binary"
+              "type": "string"
             }
           },
           {
@@ -270,19 +269,19 @@
                 "type": "string",
                 "description": "URL location of schema, identified by schema group, schema name, and version."
               },
-              "X-Schema-Type": {
+              "Serialization-Type": {
                 "type": "string",
                 "description": "Serialization type for the schema being registered."
               },
-              "X-Schema-Id": {
+              "Schema-Id": {
                 "type": "string",
                 "description": "References specific schema in registry namespace."
               },
-              "X-Schema-Id-Location": {
+              "Schema-Id-Location": {
                 "type": "string",
                 "description": "URL location of schema, identified by schema ID."
               },
-              "X-Schema-Version": {
+              "Schema-Version": {
                 "type": "integer",
                 "description": "Version of the returned schema."
               }

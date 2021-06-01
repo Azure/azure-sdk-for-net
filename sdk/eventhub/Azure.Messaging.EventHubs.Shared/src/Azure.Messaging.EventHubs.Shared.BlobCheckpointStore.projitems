@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>826d9924-8c85-4db1-9407-1b133a3d953f</SharedGUID>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Import_RootNamespace>Azure.Messaging.EventHubs.Primitives</Import_RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisfileDirectory)BlobCheckpointStore\*.cs" Link="SharedSource\BlobCheckpointStore\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

@@ -31,8 +31,14 @@ namespace Azure.Data.Tables.Sas
         // st
         private DateTimeOffset _startTime;
 
+        // st as a string
+        private readonly string _startTimeString;
+
         // se
         private DateTimeOffset _expiryTime;
+
+        // se as a string
+        private readonly string _expiryTimeString;
 
         // sip
         private readonly TableSasIPRange _ipRange;
@@ -80,11 +86,16 @@ namespace Azure.Data.Tables.Sas
         /// </summary>
         public DateTimeOffset StartsOn => _startTime;
 
+        internal string StartsOnString => _startTimeString;
+
         /// <summary>
         /// Gets the time at which the shared access signature becomes invalid.
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
         public DateTimeOffset ExpiresOn => _expiryTime;
+
+        internal string ExpiresOnString => _expiryTimeString;
+
         /// <summary>
         /// Gets the optional IP address or a range of IP addresses from which
         /// to accept requests.  When specifying a range, note that the range
@@ -142,13 +153,15 @@ namespace Azure.Data.Tables.Sas
             _resourceTypes = resourceTypes;
             _protocol = protocol;
             _startTime = startsOn;
+            _startTimeString = startsOn.ToString(TableConstants.Sas.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
+            _expiryTime = expiresOn;
+            _expiryTimeString = expiresOn.ToString(TableConstants.Sas.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
             _expiryTime = expiresOn;
             _ipRange = ipRange;
             _identifier = identifier;
             _resource = resource;
             _permissions = permissions;
             _signature = signature;
-
         }
 
         /// <summary>
@@ -161,43 +174,43 @@ namespace Azure.Data.Tables.Sas
         internal TableAccountSasQueryParameters(
             IDictionary<string, string> values)
         {
-            // make copy, otherwise we'll get an exception when we remove
-            IEnumerable<KeyValuePair<string, string>> kvps = values.ToArray();
-            foreach (KeyValuePair<string, string> kv in kvps)
+            foreach (var key in values.Keys.ToList())
             {
                 // these are already decoded
                 var isSasKey = true;
-                switch (kv.Key.ToUpperInvariant())
+                switch (key.ToUpperInvariant())
                 {
                     case TableConstants.Sas.Parameters.VersionUpper:
-                        _version = kv.Value;
+                        _version = values[key];
                         break;
                     case TableConstants.Sas.Parameters.ResourceTypesUpper:
-                        _resourceTypes = TableSasExtensions.ParseResourceTypes(kv.Value);
+                        _resourceTypes = TableSasExtensions.ParseResourceTypes(values[key]);
                         break;
                     case TableConstants.Sas.Parameters.ProtocolUpper:
-                        _protocol = TableSasExtensions.ParseProtocol(kv.Value);
+                        _protocol = TableSasExtensions.ParseProtocol(values[key]);
                         break;
                     case TableConstants.Sas.Parameters.StartTimeUpper:
-                        _startTime = DateTimeOffset.ParseExact(kv.Value, TableConstants.Sas.SasTimeFormat, CultureInfo.InvariantCulture);
+                        _startTime = ParseSasTime(values[key]);
+                        _startTimeString = values[key];
                         break;
                     case TableConstants.Sas.Parameters.ExpiryTimeUpper:
-                        _expiryTime = DateTimeOffset.ParseExact(kv.Value, TableConstants.Sas.SasTimeFormat, CultureInfo.InvariantCulture);
+                        _expiryTime = ParseSasTime(values[key]);
+                        _expiryTimeString = values[key];
                         break;
                     case TableConstants.Sas.Parameters.IPRangeUpper:
-                        _ipRange = TableSasIPRange.Parse(kv.Value);
+                        _ipRange = TableSasIPRange.Parse(values[key]);
                         break;
                     case TableConstants.Sas.Parameters.IdentifierUpper:
-                        _identifier = kv.Value;
+                        _identifier = values[key];
                         break;
                     case TableConstants.Sas.Parameters.ResourceUpper:
-                        _resource = kv.Value;
+                        _resource = values[key];
                         break;
                     case TableConstants.Sas.Parameters.PermissionsUpper:
-                        _permissions = kv.Value;
+                        _permissions = values[key];
                         break;
                     case TableConstants.Sas.Parameters.SignatureUpper:
-                        _signature = kv.Value;
+                        _signature = values[key];
                         break;
 
                     // We didn't recognize the query parameter
@@ -206,10 +219,10 @@ namespace Azure.Data.Tables.Sas
                         break;
                 }
 
-                // Remove the query parameter if it's part of the SAS
+                // Set the value to null if it's part of the SAS
                 if (isSasKey)
                 {
-                    values.Remove(kv.Key);
+                    values[key] = null;
                 }
             }
         }
@@ -226,5 +239,21 @@ namespace Azure.Data.Tables.Sas
             this.AppendProperties(sb);
             return sb.ToString();
         }
+        private static DateTimeOffset ParseSasTime(string dateTimeString)
+        {
+            if (string.IsNullOrEmpty(dateTimeString))
+            {
+                return DateTimeOffset.MinValue;
+            }
+
+            return DateTimeOffset.ParseExact(dateTimeString, s_sasTimeFormats, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+        }
+
+        private static readonly string[] s_sasTimeFormats = {
+            TableConstants.Sas.SasTimeFormatSeconds,
+            TableConstants.Sas.SasTimeFormatSubSeconds,
+            TableConstants.Sas.SasTimeFormatMinutes,
+            TableConstants.Sas.SasTimeFormatDays
+        };
     }
 }

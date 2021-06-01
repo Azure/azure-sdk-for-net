@@ -65,20 +65,40 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("desiredState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             desiredState = property0.Value.GetString().ToAutomaticTuningServerMode();
                             continue;
                         }
                         if (property0.NameEquals("actualState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             actualState = property0.Value.GetString().ToAutomaticTuningServerMode();
                             continue;
                         }
                         if (property0.NameEquals("options"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             Dictionary<string, AutomaticTuningServerOptions> dictionary = new Dictionary<string, AutomaticTuningServerOptions>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {

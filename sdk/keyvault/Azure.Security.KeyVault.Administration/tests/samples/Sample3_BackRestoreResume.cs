@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System;
-using Azure.Identity;
+using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class Sample3_BackRestoreResume : BackupRestoreTestBase
     {
-        public Sample3_BackRestoreResume(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
+        public Sample3_BackRestoreResume(bool isAsync)
+            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [Test]
@@ -20,7 +19,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var blobStorageUrl = TestEnvironment.StorageUri;
             var blobContainerName = BlobContainerName;
             var sasToken = "?" + SasToken;
-           // var client = Mode == RecordedTestMode.Playback ? GetClient(null, false) : Client;
             var client = GetClient(false);
 
             // Create a Uri with the storage container
@@ -30,46 +28,58 @@ namespace Azure.Security.KeyVault.Administration.Tests
             };
 
             // Start the backup.
-            BackupOperation originalBackupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
+            KeyVaultBackupOperation originalBackupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
             var backupOperationId = originalBackupOperation.Id;
 
             #region Snippet:ResumeBackupAsync
+#if SNIPPET
             // Construct a new KeyVaultBackupClient or use an existing one.
-            //@@KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+#endif
 
             // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-            BackupOperation backupOperation = new BackupOperation(client, backupOperationId);
+            KeyVaultBackupOperation backupOperation = new KeyVaultBackupOperation(client, backupOperationId);
+#if !SNIPPET
+            backupOperation._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
+#endif
 
             // Wait for completion of the BackupOperation.
-            Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             // Get the Uri for the location of you backup blob.
-            Uri backupBlobUri = backupResult.Value;
+            Uri folderUri = backupResult.Value.FolderUri;
             #endregion
 
-            Assert.That(backupBlobUri, Is.Not.Null);
+            Assert.That(folderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
 
-            // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-            string[] uriSegments = backupBlobUri.Segments;
-            string folderName = uriSegments[uriSegments.Length - 1];
+            await WaitForOperationAsync();
 
-            // Start the restore.
-            RestoreOperation originalRestoreOperation = await Client.StartRestoreAsync(builder.Uri, sasToken, folderName);
+            // Start the restore using the backupBlobUri returned from a previous BackupOperation.
+            KeyVaultRestoreOperation originalRestoreOperation = await Client.StartRestoreAsync(folderUri, sasToken);
             var restoreOperationId = originalRestoreOperation.Id;
 
             #region Snippet:ResumeRestoreAsync
+#if SNIPPET
             // Construct a new KeyVaultBackupClient or use an existing one.
-            //@@KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+#endif
 
             // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.
-            RestoreOperation restoreOperation = new RestoreOperation(client, restoreOperationId);
+            KeyVaultRestoreOperation restoreOperation = new KeyVaultRestoreOperation(client, restoreOperationId);
+#if !SNIPPET
+            restoreOperation._operationInternal._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
+#endif
 
             // Wait for completion of the RestoreOperation.
-            Response restoreResult = await restoreOperation.WaitForCompletionAsync();
+            KeyVaultRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
-            Assert.That(restoreResult, Is.Not.Null);
+
             Assert.That(restoreOperation.HasValue, Is.True);
+            Assert.That(restoreResult.StartTime, Is.Not.EqualTo(default));
+            Assert.That(restoreResult.EndTime, Is.Not.EqualTo(default));
+
+            await WaitForOperationAsync();
         }
     }
 }

@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("spendingLimit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     spendingLimit = property.Value.GetString().ToSpendingLimit();
                     continue;
                 }

@@ -188,6 +188,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -198,6 +203,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("groupShortName"))
@@ -207,11 +217,21 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("enabled"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("emailReceivers"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<EmailReceiver> array = new List<EmailReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -222,6 +242,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("smsReceivers"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<SmsReceiver> array = new List<SmsReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -232,6 +257,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("webhookReceivers"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<WebhookReceiver> array = new List<WebhookReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -242,6 +272,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("itsmReceivers"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ItsmReceiver> array = new List<ItsmReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -252,6 +287,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("azureAppPushReceivers"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<AzureAppPushReceiver> array = new List<AzureAppPushReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -262,6 +302,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("automationRunbookReceivers"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<AutomationRunbookReceiver> array = new List<AutomationRunbookReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -272,6 +317,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("voiceReceivers"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<VoiceReceiver> array = new List<VoiceReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -282,6 +332,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("logicAppReceivers"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<LogicAppReceiver> array = new List<LogicAppReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -292,6 +347,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("azureFunctionReceivers"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<AzureFunctionReceiver> array = new List<AzureFunctionReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -302,6 +362,11 @@ namespace Azure.ResourceManager.Insights.Models
                         }
                         if (property0.NameEquals("armRoleReceivers"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ArmRoleReceiver> array = new List<ArmRoleReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

@@ -1,6 +1,120 @@
 # Release History
 
-## 5.3.0-beta.4 (Unreleased)
+## 5.5.0-beta.1 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### New Features
+
+-  When stopping, the `EventProcessorClient` will now attempt to force-close the connection to the Event Hubs service to abort in-process read operations blocked on their timeout.  This should significantly help reduce the amount of time the processor takes to stop in many scenarios. _(Based on a community prototype contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_  
+
+- When the `EventProcessorClient` detects a partition being stolen outside of a load balancing cycle, it will immediately surrender ownership rather than waiting for a load balancing cycle to confirm the ownership change.  This will help reduce event duplication from overlapping ownership of processors.
+
+#### Key Bug Fixes
+
+- The `EventProcessorClient` will now properly respect another another consumer stealing ownership of a partition when the service forcibly terminates the active link in the background.  Previously, the client did not observe the error directly and attempted to recover the faulted link which reasserted ownership and caused the partition to "bounce" between owners until a load balancing cycle completed.
+
+- The  `EventProcessorClient` will now be less aggressive when considering whether or not to steal a partition, doing so only when it will correct an imbalance and preferring the status quo when the overall distribution would not change.  This will help reduce event duplication due to partitions moving between owners.
+
+## 5.4.1 (2021-05-11)
+
+### Changes
+
+#### New Features
+
+- The processor will now perform validation of core configuration and permissions at startup, in order to attempt to detect unrecoverable problems more deterministically.  Validation is non-blocking and will not delay claiming of partitions.  One important note is that validation should be considered point-in-time and best effort; it is not meant to replace monitoring of error handler activity.
+
+- Partition initialization has been moved to a background operation.  This will allow partitions to be more efficiently managed and speed up ownership claims, especially when using the `LoadBalancingStrategy.Greedy` configuration or when the processor is recovering from some error conditions.
+
+#### Key Bug Fixes
+
+- Dependencies have been updated to resolve security warnings for CVE-2021-26701. _(The Event Hubs client library does not make use of the vulnerable components, directly or indirectly)_
+
+- The processor will no longer inappropriately determine that it should attempt to steal partitions from itself or when the load is balanced but there is an uneven ownership distribution.  Previously, stealing was attempted but no candidates were found, leading to log spam but no interruption in processing.
+
+## 5.4.0 (2021-04-05)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### New Features
+
+- The `EventProcessorClient` now supports shared key and shared access signature authentication using the `AzureNamedKeyCredential` and `AzureSasCredential` types in addition to the connection string.  Use of the credential allows the shared key or SAS to be updated without the need to create a new processor.
+
+- Multiple enhancements were made to the AMQP transport paths for reading events to reduce memory allocations and increase performance.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+#### Key Bug Fixes
+
+- The AMQP library used for transport has been updated, fixing several issues including a potential unobserved   `ObjectDisposedException` that could cause the host process to crash.  _(see: [release notes](https://github.com/Azure/azure-amqp/releases/tag/v2.4.13))_
+
+## 5.4.0-beta.1 (2021-03-17)
+
+### Changes
+
+- Updating package bindings for `Azure.Messaging.EventHubs` to synchronize on v5.4.0-beta.1.
+
+## 5.3.1 (2021-03-09)
+
+### Changes
+
+#### Key Bug Fixes
+
+- Fixed an issue where long-lived credentials (more than 49 days) were overflowing refresh timer limits and being rejected.
+
+- Added detection and recovery for a race condition that occurred when the Event Hubs service closed a connection or link after the client had validated its state and was performing an operation; this will now be properly retried with a fresh connection/link.
+
+- Extended retry scenarios to include generic I/O exceptions, as they are typically transient network failures.
+
+- Extended retry scenarios to include authorization failures, as the Event Hubs services do not differentiate between authentication and authorization, callers cannot reason about whether an `Unauthorized` return from an operation indicates that the call will never succeed or may trigger a credential renewal that may allow success.
+
+## 5.3.0 (2021-02-09)
+
+### Changes
+
+#### New Features
+
+- Additional options for tuning load balancing have been added to the `EventProcessorClientOptions`.
+
+- It is now possible to specify a custom endpoint to use for establishing the connection to the Event Hubs service in the `EventHubConnectionOptions` for the processor.
+
+- Interactions with Blob Storage have been tuned for better performance and more efficient resource use.  This will also improve start-up time, especially when using the `Greedy` load balancing strategy.
+
+- Errors occurring in the Event Hubs service or active transport are now preserved in full and propagated as an inner exception; this will provide deeper context for diagnosing and troubleshooting exceptions.
+
+- Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
+
+#### Key Bug Fixes
+
+- Upgraded the `Microsoft.Azure.Amqp` library to resolve crashes occurring in .NET 5.
+
+- The calculation for authorization token expiration has been fixed, resulting in fewer token refreshes and network requests.
+
+## 5.3.0-beta.4 (2020-11-10)
+
+### Changes
+
+#### New Features
+
+- Additional options for tuning load balancing have been added to the `EventProcessorClientOptions`.
+
+- Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
+
+#### Key Bug Fixes
+
+- Upgraded the `Microsoft.Azure.Amqp` library to resolve crashes occurring in .NET 5.
+
+- The calculation for authorization token expiration has been fixed, resulting in fewer token refreshes and network requests.
 
 ## 5.3.0-beta.3 (2020-09-30)
 
@@ -113,7 +227,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - A cleanup sweep was performed to tune small areas to be more efficient and perform fewer allocations.
 
-## 5.1.0
+## 5.1.0 
 
 ### Changes
 
@@ -125,7 +239,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Minor enhancements to reduce allocations and improve efficiency
 
-## 5.1.0-preview.1
+## 5.1.0-preview.1 
 
 ### Acknowledgments
 
@@ -162,7 +276,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The tests for load balancing and the Event Processor client have been tuned to remove dependencies on Azure resources and run more efficiently.  (A community contribution, courtesy of [christothes](https://github.com/christothes))
 
-## 5.0.1
+## 5.0.1 
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
@@ -192,7 +306,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The protected `On[EventName]` members have been marked private to reduce the public surface and reduce confusion.  They provided no benefit over providing a handler and the cognative cost was not justified.
 
-## 5.0.0-preview.6
+## 5.0.0-preview.6 
 
 ### Acknowledgments
 

@@ -127,6 +127,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("claims"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     claims = RuleManagementEventClaimsDataSource.DeserializeRuleManagementEventClaimsDataSource(property.Value);
                     continue;
                 }

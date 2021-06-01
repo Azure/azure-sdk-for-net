@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("zones"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -37,6 +42,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("zoneDetails"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ResourceSkuZoneDetails> array = new List<ResourceSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

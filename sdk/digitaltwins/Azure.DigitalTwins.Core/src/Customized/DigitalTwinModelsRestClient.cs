@@ -16,7 +16,10 @@ namespace Azure.DigitalTwins.Core
     {
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(IEnumerable<string> models = null, DigitalTwinModelsAddOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
+        internal async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(
+            IEnumerable<string> models = null,
+            CreateModelsOptions digitalTwinModelsAddOptions = null,
+            CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.Add");
             scope.Start();
@@ -30,7 +33,9 @@ namespace Azure.DigitalTwins.Core
                     case 201:
                         {
                             IReadOnlyList<DigitalTwinsModelData> value = default;
-                            using JsonDocument document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                            using JsonDocument document = await JsonDocument
+                                .ParseAsync(message.Response.ContentStream, default, cancellationToken)
+                                .ConfigureAwait(false);
                             List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>(document.RootElement.GetArrayLength());
                             foreach (JsonElement item in document.RootElement.EnumerateArray())
                             {
@@ -52,7 +57,10 @@ namespace Azure.DigitalTwins.Core
 
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<string> models = null, DigitalTwinModelsAddOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
+        internal Response<IReadOnlyList<DigitalTwinsModelData>> Add(
+            IEnumerable<string> models = null,
+            CreateModelsOptions digitalTwinModelsAddOptions = null,
+            CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinModelsClient.Add");
             scope.Start();
@@ -88,7 +96,11 @@ namespace Azure.DigitalTwins.Core
 
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal async Task<Response> UpdateAsync(string id, IEnumerable<string> modelUpdates, DigitalTwinModelsUpdateOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
+        internal async Task<Response> UpdateAsync(
+            string id,
+            IEnumerable<string> modelUpdates,
+            DecommissionModelOptions digitalTwinModelsUpdateOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -120,7 +132,11 @@ namespace Azure.DigitalTwins.Core
 
         // The modelUpdates parameter needs to be changed from IEnumerable<object> to IEnumerable<string>
         // and not parsed like a json object.
-        internal Response Update(string id, IEnumerable<string> modelUpdates, DigitalTwinModelsUpdateOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
+        internal Response Update(
+            string id,
+            IEnumerable<string> modelUpdates,
+            DecommissionModelOptions digitalTwinModelsUpdateOptions = null,
+            CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -152,7 +168,7 @@ namespace Azure.DigitalTwins.Core
 
         // The strings are already json, so we do not want them to be serialized.
         // Instead, the payloads need to be concatenated into a json array.
-        private HttpMessage CreateAddRequest(IEnumerable<string> models, DigitalTwinModelsAddOptions digitalTwinModelsAddOptions)
+        private HttpMessage CreateAddRequest(IEnumerable<string> models, CreateModelsOptions digitalTwinModelsAddOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -162,13 +178,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/models", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsAddOptions?.Traceparent != null)
+            if (digitalTwinModelsAddOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinModelsAddOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinModelsAddOptions.TraceParent);
             }
-            if (digitalTwinModelsAddOptions?.Tracestate != null)
+            if (digitalTwinModelsAddOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinModelsAddOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinModelsAddOptions.TraceState);
             }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
@@ -182,7 +198,7 @@ namespace Azure.DigitalTwins.Core
 
         // The strings are already json, so we do not want them to be serialized.
         // Instead, the payloads need to be concatenated into a json array.
-        private HttpMessage CreateUpdateRequest(string id, IEnumerable<string> modelUpdates, DigitalTwinModelsUpdateOptions digitalTwinModelsUpdateOptions)
+        private HttpMessage CreateUpdateRequest(string id, IEnumerable<string> modelUpdates, DecommissionModelOptions digitalTwinModelsUpdateOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -193,13 +209,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsUpdateOptions?.Traceparent != null)
+            if (digitalTwinModelsUpdateOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinModelsUpdateOptions.Traceparent);
+                request.Headers.Add("TraceParent", digitalTwinModelsUpdateOptions.TraceParent);
             }
-            if (digitalTwinModelsUpdateOptions?.Tracestate != null)
+            if (digitalTwinModelsUpdateOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinModelsUpdateOptions.Tracestate);
+                request.Headers.Add("TraceState", digitalTwinModelsUpdateOptions.TraceState);
             }
             request.Headers.Add("Content-Type", "application/json-patch+json");
             request.Headers.Add("Accept", "application/json");
@@ -219,7 +235,7 @@ namespace Azure.DigitalTwins.Core
         // As such, these methods are declared here and made private, while the public method is declared above, too.
         // These methods should never be called.
 
-#pragma warning disable CA1801, IDE0051, IDE0060 // Remove unused parameter
+#pragma warning disable CA1801, IDE0051, IDE0060, CA1822 // Remove unused parameter
 
         // Original return type is Task<Response<IReadOnlyList<ModelData>>>. Changing to object to allow returning null.
         private object AddAsync(IEnumerable<object> models = null, CancellationToken cancellationToken = default) => null;

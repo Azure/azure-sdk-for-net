@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BastionHostListResult
+    internal partial class BastionHostListResult
     {
         internal static BastionHostListResult DeserializeBastionHostListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<BastionHost> array = new List<BastionHost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

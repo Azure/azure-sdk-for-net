@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class OAuth2PermissionGrantListResult
+    internal partial class OAuth2PermissionGrantListResult
     {
         internal static OAuth2PermissionGrantListResult DeserializeOAuth2PermissionGrantListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<OAuth2PermissionGrant> array = new List<OAuth2PermissionGrant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

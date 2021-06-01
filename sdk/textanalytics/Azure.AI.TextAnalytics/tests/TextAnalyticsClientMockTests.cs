@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -243,7 +244,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Name);
             Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
-
         }
 
         [Test]
@@ -284,7 +284,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(response.FirstOrDefault().PrimaryLanguage.Name);
             Assert.IsNull(response.FirstOrDefault().PrimaryLanguage.Iso6391Name);
-
         }
 
         // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
@@ -423,7 +422,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeSentimentOpinionInOtherSentence()
+        public async Task AnalyzeSentimentAssessmentInOtherSentence()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
@@ -447,7 +446,7 @@ namespace Azure.AI.TextAnalytics.Tests
                                     ""offset"": 0,
                                     ""length"": 30,
                                     ""text"": ""The park was clean."",
-                                    ""aspects"": [
+                                    ""targets"": [
                                         {
                                             ""sentiment"": ""positive"",
                                             ""confidenceScores"": {
@@ -459,13 +458,13 @@ namespace Azure.AI.TextAnalytics.Tests
                                             ""text"": ""park"",
                                             ""relations"": [
                                                 {
-                                                    ""relationType"": ""opinion"",
-                                                    ""ref"": ""#/documents/0/sentences/0/opinions/0""
+                                                    ""relationType"": ""assessment"",
+                                                    ""ref"": ""#/documents/0/sentences/0/assessments/0""
                                                 }
                                             ]
                                         }
                                     ],
-                                    ""opinions"": [
+                                    ""assessments"": [
                                         {
                                             ""sentiment"": ""positive"",
                                             ""confidenceScores"": {
@@ -489,7 +488,7 @@ namespace Azure.AI.TextAnalytics.Tests
                                     ""offset"": 31,
                                     ""length"": 23,
                                     ""text"": ""It was clean."",
-                                    ""aspects"": [
+                                    ""targets"": [
                                         {
                                             ""sentiment"": ""positive"",
                                             ""confidenceScores"": {
@@ -501,13 +500,13 @@ namespace Azure.AI.TextAnalytics.Tests
                                             ""text"": ""park"",
                                             ""relations"": [
                                                 {
-                                                    ""relationType"": ""opinion"",
-                                                    ""ref"": ""#/documents/0/sentences/0/opinions/0""
+                                                    ""relationType"": ""assessment"",
+                                                    ""ref"": ""#/documents/0/sentences/0/assessments/0""
                                                 }
                                             ]
                                         }
                                     ],
-                                    ""opinions"": []
+                                    ""assessments"": []
                                 }
                             ],
                             ""warnings"": []
@@ -525,15 +524,15 @@ namespace Azure.AI.TextAnalytics.Tests
 
             DocumentSentiment response = await client.AnalyzeSentimentAsync("The park was clean. It was clean.");
 
-            MinedOpinion minedOpinionS1 = response.Sentences.ElementAt(0).MinedOpinions.FirstOrDefault();
-            Assert.AreEqual("park", minedOpinionS1.Aspect.Text);
-            Assert.AreEqual(TextSentiment.Positive, minedOpinionS1.Aspect.Sentiment);
-            Assert.AreEqual("clean", minedOpinionS1.Opinions.FirstOrDefault().Text);
+            SentenceOpinion opinionS1 = response.Sentences.ElementAt(0).Opinions.FirstOrDefault();
+            Assert.AreEqual("park", opinionS1.Target.Text);
+            Assert.AreEqual(TextSentiment.Positive, opinionS1.Target.Sentiment);
+            Assert.AreEqual("clean", opinionS1.Assessments.FirstOrDefault().Text);
 
-            MinedOpinion minedOpinionS2 = response.Sentences.ElementAt(1).MinedOpinions.FirstOrDefault();
-            Assert.AreEqual("park", minedOpinionS2.Aspect.Text);
-            Assert.AreEqual(TextSentiment.Positive, minedOpinionS2.Aspect.Sentiment);
-            Assert.AreEqual("clean", minedOpinionS2.Opinions.FirstOrDefault().Text);
+            SentenceOpinion opinionS2 = response.Sentences.ElementAt(1).Opinions.FirstOrDefault();
+            Assert.AreEqual("park", opinionS2.Target.Text);
+            Assert.AreEqual(TextSentiment.Positive, opinionS2.Target.Sentiment);
+            Assert.AreEqual("clean", opinionS2.Assessments.FirstOrDefault().Text);
         }
 
         [Test]
@@ -662,5 +661,160 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultError.Error.ErrorCode.ToString());
             Assert.AreEqual("Document text is empty.", resultError.Error.Message);
         }
+
+        #region Analyze
+        [Test]
+        public async Task AnalyzeOperationKeyPhrasesWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new ExtractKeyPhrasesAction()
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var content = mockTransport.Requests.Single().Content;
+            using var stream = new MemoryStream();
+            await content.WriteToAsync(stream, default);
+            stream.Position = 0;
+            using var streamReader = new StreamReader(stream);
+            string contentString = streamReader.ReadToEnd();
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public async Task AnalyzeOperationRecognizeEntitiesWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new RecognizeEntitiesAction()
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var content = mockTransport.Requests.Single().Content;
+            using var stream = new MemoryStream();
+            await content.WriteToAsync(stream, default);
+            stream.Position = 0;
+            using var streamReader = new StreamReader(stream);
+            string contentString = streamReader.ReadToEnd();
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"),19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public async Task AnalyzeOperationRecognizeLinkedEntitiesWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new RecognizeLinkedEntitiesAction()
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var content = mockTransport.Requests.Single().Content;
+            using var stream = new MemoryStream();
+            await content.WriteToAsync(stream, default);
+            stream.Position = 0;
+            using var streamReader = new StreamReader(stream);
+            string contentString = streamReader.ReadToEnd();
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public async Task AnalyzeOperationRecognizePiiEntitiesWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new RecognizePiiEntitiesAction()
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var content = mockTransport.Requests.Single().Content;
+            using var stream = new MemoryStream();
+            await content.WriteToAsync(stream, default);
+            stream.Position = 0;
+            using var streamReader = new StreamReader(stream);
+            string contentString = streamReader.ReadToEnd();
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        #endregion
     }
 }

@@ -37,22 +37,32 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="backupId">backupId</param>
         /// <param name="creationDate">name</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="size">Size of backup</param>
         /// <param name="label">Label for backup</param>
-        /// <param name="backupType">Type of backup adhoc or scheduled</param>
-        public Backup(string location, string id = default(string), string name = default(string), string type = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), long? size = default(long?), string label = default(string), string backupType = default(string))
+        /// <param name="backupType">backupType</param>
+        /// <param name="failureReason">Failure reason</param>
+        /// <param name="volumeName">Volume name</param>
+        /// <param name="useExistingSnapshot">Manual backup an already existing
+        /// snapshot. This will always be false for scheduled backups and
+        /// true/false for manual backups</param>
+        public Backup(string location, string id = default(string), string name = default(string), string type = default(string), string backupId = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), long? size = default(long?), string label = default(string), string backupType = default(string), string failureReason = default(string), string volumeName = default(string), bool? useExistingSnapshot = default(bool?))
         {
             Location = location;
             Id = id;
             Name = name;
             Type = type;
+            BackupId = backupId;
             CreationDate = creationDate;
             ProvisioningState = provisioningState;
             Size = size;
             Label = label;
             BackupType = backupType;
+            FailureReason = failureReason;
+            VolumeName = volumeName;
+            UseExistingSnapshot = useExistingSnapshot;
             CustomInit();
         }
 
@@ -86,6 +96,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Type { get; private set; }
 
         /// <summary>
+        /// Gets backupId
+        /// </summary>
+        /// <remarks>
+        /// UUID v4 used to identify the Backup
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.backupId")]
+        public string BackupId { get; private set; }
+
+        /// <summary>
         /// Gets name
         /// </summary>
         /// <remarks>
@@ -113,10 +132,34 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Label { get; set; }
 
         /// <summary>
-        /// Gets type of backup adhoc or scheduled
+        /// Gets backupType
         /// </summary>
+        /// <remarks>
+        /// Type of backup Manual or Scheduled. Possible values include:
+        /// 'Manual', 'Scheduled'
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.backupType")]
         public string BackupType { get; private set; }
+
+        /// <summary>
+        /// Gets failure reason
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.failureReason")]
+        public string FailureReason { get; private set; }
+
+        /// <summary>
+        /// Gets volume name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.volumeName")]
+        public string VolumeName { get; private set; }
+
+        /// <summary>
+        /// Gets or sets manual backup an already existing snapshot. This will
+        /// always be false for scheduled backups and true/false for manual
+        /// backups
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.useExistingSnapshot")]
+        public bool? UseExistingSnapshot { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -129,6 +172,21 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (BackupId != null)
+            {
+                if (BackupId.Length > 36)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "BackupId", 36);
+                }
+                if (BackupId.Length < 36)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "BackupId", 36);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(BackupId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "BackupId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
+                }
             }
         }
     }

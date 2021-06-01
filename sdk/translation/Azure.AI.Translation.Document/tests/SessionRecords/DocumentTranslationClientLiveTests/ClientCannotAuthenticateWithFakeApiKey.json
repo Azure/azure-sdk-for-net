@@ -1,0 +1,32 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://python-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/documents/formats",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-8fe62deffb8efe458a77eca2a67cb993-17165b708921e846-00",
+        "User-Agent": "azsdk-net-AI.DocumentTranslation/1.0.0-alpha.20210315.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "e06680268e6e78bc5f6645588508e0a5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "apim-request-id": "17f16766-3c9b-41cb-aa23-1643c3f47798",
+        "Content-Length": "225",
+        "Content-Type": "application/json",
+        "Date": "Tue, 16 Mar 2021 00:08:05 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "WWW-Authenticate": "AzureApiManagementKey realm=\u0022https://python-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1\u0022,name=\u0022Ocp-Apim-Subscription-Key\u0022,type=\u0022header\u0022",
+        "x-content-type-options": "nosniff"
+      },
+      "ResponseBody": "{\u0022error\u0022:{\u0022code\u0022:\u0022401\u0022,\u0022message\u0022: \u0022Access denied due to invalid subscription key or wrong API endpoint. Make sure to provide a valid key for an active subscription and use a correct regional API endpoint for your resource.\u0022}}"
+    }
+  ],
+  "Variables": {
+    "DOCUMENT_TRANSLATION_ENDPOINT": "https://python-doctranslation.cognitiveservices.azure.com",
+    "RandomSeed": "30113775"
+  }
+}

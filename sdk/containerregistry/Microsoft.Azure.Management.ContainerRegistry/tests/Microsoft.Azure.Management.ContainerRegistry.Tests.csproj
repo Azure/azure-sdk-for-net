@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="[7.0.0-preview,7.0)" />
     <ProjectReference Include="..\src\Microsoft.Azure.Management.ContainerRegistry.csproj" />
   </ItemGroup>
 

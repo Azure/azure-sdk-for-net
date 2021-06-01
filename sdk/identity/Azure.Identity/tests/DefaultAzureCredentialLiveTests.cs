@@ -13,19 +13,12 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class DefaultAzureCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class DefaultAzureCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
         public DefaultAzureCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
             TestDiagnostics = false;
         }
 
@@ -52,7 +45,7 @@ namespace Azure.Identity.Tests
 
             using (ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure.Identity")))
             {
-                token = await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None);
+                token = await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None);
                 scopes = diagnosticListener.Scopes;
             }
 
@@ -73,6 +66,7 @@ namespace Azure.Identity.Tests
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
+                ExcludeManagedIdentityCredential = true,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -89,7 +83,7 @@ namespace Azure.Identity.Tests
             using (await CredentialTestHelpers.CreateRefreshTokenFixtureAsync(TestEnvironment, Mode, ExpectedServiceName, cloudName))
             using (ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure.Identity")))
             {
-                token = await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None);
+                token = await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None);
                 scopes = diagnosticListener.Scopes;
             }
 
@@ -109,6 +103,7 @@ namespace Azure.Identity.Tests
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
+                ExcludeManagedIdentityCredential = true,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -124,7 +119,7 @@ namespace Azure.Identity.Tests
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    tasks.Add(Task.Run(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None)));
+                    tasks.Add(Task.Run(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None)));
                 }
 
                 await Task.WhenAll(tasks);
@@ -149,7 +144,7 @@ namespace Azure.Identity.Tests
 
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var testProcess = new TestProcess { Output = processOutput };
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), vscAdapter) { ManagedIdentitySourceFactory = () => default };
@@ -160,7 +155,7 @@ namespace Azure.Identity.Tests
 
             using (ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure.Identity")))
             {
-                token = await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None);
+                token = await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None);
                 scopes = diagnosticListener.Scopes;
             }
 
@@ -185,7 +180,7 @@ namespace Azure.Identity.Tests
 
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Output = processOutput }};
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, vscAdapter) { ManagedIdentitySourceFactory = () => default };
@@ -194,7 +189,7 @@ namespace Azure.Identity.Tests
             var tasks = new List<Task<AccessToken>>();
             for (int i = 0; i < 10; i++)
             {
-                tasks.Add(Task.Run(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None)));
+                tasks.Add(Task.Run(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None)));
             }
 
             await Task.WhenAll(tasks);
@@ -217,23 +212,24 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
             });
 
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", "{}");
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }), vscAdapter) { ManagedIdentitySourceFactory = () => default };
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }, new TestProcess{Error = "'PowerShell' is not recognized"}), vscAdapter) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
 
             using (ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure.Identity")))
             {
-                Assert.CatchAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None));
+                Assert.CatchAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None));
                 scopes = diagnosticListener.Scopes;
             }
 
-            Assert.AreEqual(4, scopes.Count);
+            Assert.AreEqual(5, scopes.Count);
             Assert.AreEqual($"{nameof(DefaultAzureCredential)}.{nameof(DefaultAzureCredential.GetToken)}", scopes[0].Name);
             Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[1].Name);
             Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[2].Name);
             Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[3].Name);
+            Assert.AreEqual($"{nameof(AzurePowerShellCredential)}.{nameof(AzurePowerShellCredential.GetToken)}", scopes[4].Name);
         }
 
         [Test]
@@ -273,7 +269,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
             });
 
-            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
@@ -281,7 +277,7 @@ namespace Azure.Identity.Tests
 
             using (ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure.Identity")))
             {
-                Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None));
+                Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None));
                 scopes = diagnosticListener.Scopes;
             }
 

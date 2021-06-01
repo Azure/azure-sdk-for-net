@@ -48,16 +48,31 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 if (property.NameEquals("priority"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     priority = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("weight"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     weight = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("port"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     port = property.Value.GetInt32();
                     continue;
                 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class EncryptionScopeListResult
+    internal partial class EncryptionScopeListResult
     {
         internal static EncryptionScopeListResult DeserializeEncryptionScopeListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<EncryptionScope> array = new List<EncryptionScope>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

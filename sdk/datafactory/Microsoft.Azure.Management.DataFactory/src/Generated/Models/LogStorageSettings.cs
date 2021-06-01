@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Log storage settings.
+    /// (Deprecated. Please use LogSettings) Log storage settings.
     /// </summary>
     public partial class LogStorageSettings
     {

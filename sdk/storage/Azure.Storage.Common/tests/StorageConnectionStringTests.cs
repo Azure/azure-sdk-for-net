@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -437,13 +437,11 @@ namespace Azure.Storage.Test
                         accountKeyParams
                         );
 
-
                 var accountStringKeyPrimarySecondary =
                     string.Format(
                         "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix={2};" + endpointCombination[2],
                         accountKeyParams
                         );
-
 
                 var conn = StorageConnectionString.Parse(accountStringKeyPrimary); // no exception expected
 
@@ -473,13 +471,11 @@ namespace Azure.Storage.Test
                         accountKeyParams
                         );
 
-
                 var accountStringKeyNoDefaultProtocolPrimarySecondary =
                     string.Format(
                         "AccountName={0};AccountKey={1};EndpointSuffix={2};" + endpointCombination[2],
                         accountKeyParams
                         );
-
 
                 StorageConnectionString.Parse(accountStringKeyNoDefaultProtocolPrimary); // no exception expected
 
@@ -629,10 +625,17 @@ namespace Azure.Storage.Test
         public void DevStorePlusEndpointFails() => Assert.IsFalse(StorageConnectionString.TryParse("UseDevelopmentStorage=false;BlobEndpoint=http://127.0.0.1:1000/devstoreaccount1", out _));
 
         [Test]
+        [Description("UseDevelopmentStorage=true should succeed")]
+        public void DevStoreTrueLowerCase() => Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true", out _));
+
+        [Test]
+        [Description("UseDevelopmentStorage=True should succeed")]
+        public void DevStoreTrueUpperCase() => Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=True", out _));
+
+        [Test]
         [Description("Custom endpoints")]
         public void DefaultEndpointOverride()
         {
-
             Assert.IsTrue(StorageConnectionString.TryParse("DefaultEndpointsProtocol=http;BlobEndpoint=http://customdomain.com/;AccountName=asdf;AccountKey=123=", out StorageConnectionString account));
             Assert.AreEqual(new Uri("http://customdomain.com/"), account.BlobEndpoint);
             Assert.IsNull(account.BlobStorageUri.SecondaryUri);
@@ -710,5 +713,4 @@ namespace Azure.Storage.Test
             TestHelper.AssertSequenceEqual(expectedKeyBytes, keyBytes);
         }
     }
-
 }

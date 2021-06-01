@@ -12,8 +12,8 @@ namespace Azure.AI.TextAnalytics
     public class DetectLanguageInput : TextAnalyticsInput
     {
         /// <summary>
-        /// A wildcard that allows to set CountryHint to None
-        /// so the servide model doesn't use any default CountryHint.
+        /// A wild card that allows to set CountryHint to None
+        /// so the service model doesn't use any default CountryHint.
         /// </summary>
         public const string None = "";
 

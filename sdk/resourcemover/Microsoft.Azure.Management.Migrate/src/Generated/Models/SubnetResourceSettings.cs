@@ -32,10 +32,11 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// <param name="name">Gets or sets the Subnet name.</param>
         /// <param name="addressPrefix">Gets or sets address prefix for the
         /// subnet.</param>
-        public SubnetResourceSettings(string name = default(string), string addressPrefix = default(string))
+        public SubnetResourceSettings(string name = default(string), string addressPrefix = default(string), NsgReference networkSecurityGroup = default(NsgReference))
         {
             Name = name;
             AddressPrefix = addressPrefix;
+            NetworkSecurityGroup = networkSecurityGroup;
             CustomInit();
         }
 
@@ -55,6 +56,11 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         [JsonProperty(PropertyName = "addressPrefix")]
         public string AddressPrefix { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "networkSecurityGroup")]
+        public NsgReference NetworkSecurityGroup { get; set; }
 
     }
 }

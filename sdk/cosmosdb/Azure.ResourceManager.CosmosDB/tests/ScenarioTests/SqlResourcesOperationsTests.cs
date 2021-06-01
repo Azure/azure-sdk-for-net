@@ -581,8 +581,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGetResults databaseAccount = await WaitForCompletionAsync(
                 await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters));
             Assert.AreEqual(databaseAccount.Name, databaseAccountName);
-            Response isDatabaseNameExists = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
-            Assert.AreEqual(200, isDatabaseNameExists.Status);
+            var isDatabaseNameExists = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
+            Assert.AreEqual(true, isDatabaseNameExists.Value);
+            Assert.AreEqual(200, isDatabaseNameExists.GetRawResponse().Status);
         }
 
         private void VerifySqlContainers(SqlContainerGetResults expectedValue, SqlContainerGetResults actualValue)

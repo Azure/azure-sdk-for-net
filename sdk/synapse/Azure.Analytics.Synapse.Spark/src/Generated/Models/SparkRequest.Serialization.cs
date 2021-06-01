@@ -48,6 +48,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("args"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -58,6 +63,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("jars"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -68,6 +78,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("pyFiles"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -78,6 +93,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("files"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -88,6 +108,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("archives"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -98,6 +123,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("conf"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -113,6 +143,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("driverCores"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     driverCores = property.Value.GetInt32();
                     continue;
                 }
@@ -123,11 +158,21 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("executorCores"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     executorCores = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("numExecutors"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     numExecutors = property.Value.GetInt32();
                     continue;
                 }

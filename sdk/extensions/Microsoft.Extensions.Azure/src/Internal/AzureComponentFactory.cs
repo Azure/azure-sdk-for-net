@@ -15,7 +15,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Creates an instance of <see cref="TokenCredential"/> from the provided <see cref="IConfiguration"/> object or returns a current default.
         /// </summary>
-        public abstract TokenCredential CreateCredential(IConfiguration configuration);
+        public abstract TokenCredential CreateTokenCredential(IConfiguration configuration);
 
         /// <summary>
         /// Creates an instance of a client options type while applying the global and configuration settings to it.

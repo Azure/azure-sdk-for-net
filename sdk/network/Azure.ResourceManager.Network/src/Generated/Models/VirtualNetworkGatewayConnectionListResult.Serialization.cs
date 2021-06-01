@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkGatewayConnectionListResult
+    internal partial class VirtualNetworkGatewayConnectionListResult
     {
         internal static VirtualNetworkGatewayConnectionListResult DeserializeVirtualNetworkGatewayConnectionListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VirtualNetworkGatewayConnection> array = new List<VirtualNetworkGatewayConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Client
@@ -11,7 +13,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
     {
         /// <summary>
         ///   Verifies that the <see cref="EventHubConnection" /> is able to
-        ///   connect to the Event Hubs service.
+        ///   connect to the Service Bus service.
         /// </summary>
         ///
         [Test]
@@ -37,7 +39,74 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                         {
                             await (receiver?.DisposeAsync() ?? new ValueTask());
                         }
+                    }, Throws.Nothing);
+                }
+            }
+        }
 
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Service Bus service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCanConnectUsingSasCredential()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions();
+                var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
+                var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
+                var parsed = ServiceBusConnectionStringProperties.Parse(connectionString);
+                var credential = new AzureSasCredential(parsed.SharedAccessSignature);
+
+                await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, options))
+                {
+                    Assert.That(async () =>
+                    {
+                        ServiceBusReceiver receiver = null;
+
+                        try
+                        {
+                            receiver = client.CreateReceiver(scope.QueueName);
+                        }
+                        finally
+                        {
+                            await (receiver?.DisposeAsync() ?? new ValueTask());
+                        }
+                    }, Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Service Bus service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCanConnectUsingSharedKeyCredential()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions();
+                var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
+                var credential = new AzureNamedKeyCredential(TestEnvironment.SharedAccessKeyName, TestEnvironment.SharedAccessKey);
+
+                await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, options))
+                {
+                    Assert.That(async () =>
+                    {
+                        ServiceBusReceiver receiver = null;
+
+                        try
+                        {
+                            receiver = client.CreateReceiver(scope.QueueName);
+                        }
+                        finally
+                        {
+                            await (receiver?.DisposeAsync() ?? new ValueTask());
+                        }
                     }, Throws.Nothing);
                 }
             }
@@ -125,6 +194,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                     await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 client.CreateProcessor(scope.QueueName);
+            }
+        }
+
+        [Test]
+        [Ignore("reverted cancellation support outside of processor")]
+        public async Task AcceptNextSessionRespectsCancellation()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                var client = CreateClient(60);
+                var duration = TimeSpan.FromSeconds(5);
+                using var cancellationTokenSource = new CancellationTokenSource(duration);
+
+                var start = DateTime.UtcNow;
+                Assert.ThrowsAsync<TaskCanceledException>(async () => await client.AcceptNextSessionAsync(scope.QueueName, cancellationToken: cancellationTokenSource.Token));
+                var stop = DateTime.UtcNow;
+
+                Assert.Less(stop - start, duration.Add(duration));
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(GetMessage("sessionId"));
+
+                start = DateTime.UtcNow;
+                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+                stop = DateTime.UtcNow;
+                Assert.Less(stop - start, duration.Add(duration));
             }
         }
     }

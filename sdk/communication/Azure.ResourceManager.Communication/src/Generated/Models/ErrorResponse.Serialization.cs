@@ -14,12 +14,17 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            Optional<ErrorResponseError> error = default;
+            Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    error = ErrorResponseError.DeserializeErrorResponseError(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;
                 }
             }

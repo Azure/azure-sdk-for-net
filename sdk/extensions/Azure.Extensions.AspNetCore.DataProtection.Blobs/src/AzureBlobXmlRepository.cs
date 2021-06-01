@@ -71,31 +71,30 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
             Task.Run(() => StoreElementAsync(element)).GetAwaiter().GetResult();
         }
 
-        private XDocument CreateDocumentFromBlob(byte[] blob)
+        private static XDocument CreateDocumentFromBlobData(BlobData blobData)
         {
-            using (var memoryStream = new MemoryStream(blob))
+            if (blobData == null || blobData.BlobContents.Length == 0)
             {
-                var xmlReaderSettings = new XmlReaderSettings()
-                {
-                    DtdProcessing = DtdProcessing.Prohibit, IgnoreProcessingInstructions = true
-                };
+                return new XDocument(new XElement(RepositoryElementName));
+            }
 
-                using (var xmlReader = XmlReader.Create(memoryStream, xmlReaderSettings))
-                {
-                    return XDocument.Load(xmlReader);
-                }
+            using var memoryStream = new MemoryStream(blobData.BlobContents);
+
+            var xmlReaderSettings = new XmlReaderSettings()
+            {
+                DtdProcessing = DtdProcessing.Prohibit,
+                IgnoreProcessingInstructions = true,
+            };
+
+            using (var xmlReader = XmlReader.Create(memoryStream, xmlReaderSettings))
+            {
+                return XDocument.Load(xmlReader);
             }
         }
 
         private async Task<IList<XElement>> GetAllElementsAsync()
         {
             var data = await GetLatestDataAsync().ConfigureAwait(false);
-
-            if (data == null || data.BlobContents.Length == 0)
-            {
-                // no data in blob storage
-                return Array.Empty<XElement>();
-            }
 
             // The document will look like this:
             //
@@ -107,7 +106,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
             //
             // We want to return the first-level child elements to our caller.
 
-            var doc = CreateDocumentFromBlob(data.BlobContents);
+            var doc = CreateDocumentFromBlobData(data);
             return doc.Root.Elements().ToList();
         }
 
@@ -144,7 +143,6 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
                         BlobContents = memoryStream.ToArray(),
                         ETag = response.Headers.ETag
                     };
-
                 }
                 Volatile.Write(ref _cachedBlobData, latestCachedData);
             }
@@ -194,9 +192,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
                 // create a new default document and inject this element into it.
 
                 var latestData = Volatile.Read(ref _cachedBlobData);
-                var doc = (latestData != null)
-                    ? CreateDocumentFromBlob(latestData.BlobContents)
-                    : new XDocument(new XElement(RepositoryElementName));
+                var doc = CreateDocumentFromBlobData(latestData);
                 doc.Root.Add(element);
 
                 // Turn this document back into a byte[].

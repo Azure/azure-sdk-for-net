@@ -84,26 +84,51 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("osProfile"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     osProfile = VirtualMachineScaleSetOSProfile.DeserializeVirtualMachineScaleSetOSProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     storageProfile = VirtualMachineScaleSetStorageProfile.DeserializeVirtualMachineScaleSetStorageProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     networkProfile = VirtualMachineScaleSetNetworkProfile.DeserializeVirtualMachineScaleSetNetworkProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnosticsProfile"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extensionProfile"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     extensionProfile = VirtualMachineScaleSetExtensionProfile.DeserializeVirtualMachineScaleSetExtensionProfile(property.Value);
                     continue;
                 }
@@ -114,21 +139,41 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("priority"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     priority = new VirtualMachinePriorityTypes(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("evictionPolicy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     evictionPolicy = new VirtualMachineEvictionPolicyTypes(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("billingProfile"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     billingProfile = BillingProfile.DeserializeBillingProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scheduledEventsProfile"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     scheduledEventsProfile = ScheduledEventsProfile.DeserializeScheduledEventsProfile(property.Value);
                     continue;
                 }

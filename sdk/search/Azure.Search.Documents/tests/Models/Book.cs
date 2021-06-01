@@ -60,5 +60,4 @@ namespace Azure.Search.Documents.Tests
         public override int GetHashCode() => LastName?.GetHashCode() ?? 0;
         public override string ToString() => $"{FirstName} {LastName}";
     }
-
 }

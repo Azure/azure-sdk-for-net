@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("networkInterfaces"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SecurityGroupNetworkInterface> array = new List<SecurityGroupNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

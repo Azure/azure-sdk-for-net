@@ -4,7 +4,7 @@ This sample illustrates how to get a setting from the configuration store only i
 
 ## Define method `GetConfigurationSettingIfChanged`
 
-When `GetConfigurationSetting` is called with `onlyIfChanged: true`, it adds an `If-None-Match` header to the HTTP request. The response will have an HTTP status code equals to either 200 if the setting value was modified or 304 otherwise. See App Configuration [REST API](https://github.com/Azure/AppConfiguration/blob/master/docs/REST/kv.md#get-conditionally) and [Azure API design](https://azure.github.io/azure-sdk/general_design.html#conditional-requests) for more information about conditional requests.
+When `GetConfigurationSetting` is called with `onlyIfChanged: true`, it adds an `If-None-Match` header to the HTTP request. The response will have an HTTP status code equals to either 200 if the setting value was modified or 304 otherwise. See App Configuration [REST API](https://docs.microsoft.com/azure/azure-app-configuration/rest-api-key-value#get-conditionally) and [Azure API design](https://azure.github.io/azure-sdk/general_design.html#conditional-requests) for more information about conditional requests.
 
 This logic can be encapsulated into a helper method that will return either a setting from the response if it was changed in the configuration store or the current local setting otherwise. The method must check the response's HTTP status code before accessing the response value. If `response.Value` is accessed when no value was returned, an exception will be thrown.
 

@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("dependsOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<BasicDependency> array = new List<BasicDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://tf93b734ab9454795-anomalydetector.cognitiveservices.azure.com/anomalydetector/v1.0/timeseries/last/detect",
+      "RequestUri": "https://shrejaanomalydetector-anomalydetector.cognitiveservices.azure.com/anomalydetector/v1.1-preview/timeseries/last/detect",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "2429",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-56817c7699f3f04b91df495242d2e0fd-bc03ad7c2740cb42-00",
+        "traceparent": "00-6bc3e9e8ff8e90418b6b05bd64e01429-baccc55f25024c48-00",
         "User-Agent": [
-          "azsdk-net-AI.AnomalyDetector/3.0.0-dev.20200825.2",
-          "(.NET Core 4.6.27514.02; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-AI.AnomalyDetector/3.0.0-alpha.20210416.1",
+          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "654e82eb9996f0d820d359d591ab9f19",
+        "x-ms-client-request-id": "0930d3aa5096fd386be1737855ec3c6b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -217,15 +217,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "66b28eaf-ef56-429d-ba52-85e003645aec",
+        "apim-request-id": "02765cbd-1f6f-439e-b86d-91ce2188d8d2",
         "Content-Length": "205",
         "Content-Type": "application/json",
         "csp-billing-usage": "CognitiveServices.AnomalyDetector.DataPoints=1",
-        "Date": "Tue, 25 Aug 2020 16:18:11 GMT",
+        "Date": "Fri, 16 Apr 2021 16:31:59 GMT",
         "model-id": "10",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "28"
+        "x-envoy-upstream-service-time": "29"
       },
       "ResponseBody": {
         "expectedValue": 809.56580169312281,
@@ -241,7 +241,7 @@
   ],
   "Variables": {
     "ANOMALY_DETECTOR_API_KEY": "Sanitized",
-    "ANOMALY_DETECTOR_ENDPOINT": "https://tf93b734ab9454795-anomalydetector.cognitiveservices.azure.com",
-    "RandomSeed": "1436850678"
+    "ANOMALY_DETECTOR_ENDPOINT": "https://shrejaanomalydetector-anomalydetector.cognitiveservices.azure.com",
+    "RandomSeed": "223311829"
   }
 }

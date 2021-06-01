@@ -54,26 +54,51 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("timeoutSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timeoutSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("retryAttempts"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     retryAttempts = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("initialRetryIntervalSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     initialRetryIntervalSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maximumRetryIntervalSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maximumRetryIntervalSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("retryIntervalBackoffMultiplier"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     retryIntervalBackoffMultiplier = property.Value.GetSingle();
                     continue;
                 }

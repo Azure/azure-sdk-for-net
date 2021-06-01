@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("level"))
@@ -80,6 +85,11 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("owners"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ManagementLockOwner> array = new List<ManagementLockOwner>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

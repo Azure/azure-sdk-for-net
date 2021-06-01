@@ -38,11 +38,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// suffix where n is the revision number.
         /// </param>
         /// <param name='filter'>
-        /// |   Field     |     Usage     |     Supported operators     |
+        /// |     Field     |     Usage     |     Supported operators     |
         /// Supported functions
         /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
         /// contentType | filter | ge, le, eq, ne, gt, lt | substringof,
-        /// contains, startswith, endswith | &lt;/br&gt;
+        /// contains, startswith, endswith |&lt;/br&gt;
         /// </param>
         /// <param name='top'>
         /// Number of records to return.

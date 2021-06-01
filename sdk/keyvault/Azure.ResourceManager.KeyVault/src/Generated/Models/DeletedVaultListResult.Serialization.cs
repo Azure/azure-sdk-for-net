@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class DeletedVaultListResult
+    internal partial class DeletedVaultListResult
     {
         internal static DeletedVaultListResult DeserializeDeletedVaultListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DeletedVault> array = new List<DeletedVault>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

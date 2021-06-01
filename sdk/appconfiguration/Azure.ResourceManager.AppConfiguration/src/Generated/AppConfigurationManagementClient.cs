@@ -13,7 +13,7 @@ using Azure.ResourceManager.AppConfiguration;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary> AppConfiguration service management client. </summary>
-    public class AppConfigurationManagementClient
+    public partial class AppConfigurationManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

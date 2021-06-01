@@ -3,13 +3,11 @@
 
 using System;
 using System.Globalization;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Authorization;
-using Azure.Messaging.ServiceBus.Core;
 
 namespace Azure.Messaging.ServiceBus.Administration
 {
@@ -24,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Path to get the namespce properties.
+        /// Path to get the namespace properties.
         /// </summary>
         private const string NamespacePath = "$namespaceinfo";
 
@@ -68,14 +66,14 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// </summary>
         ///
         /// <param name="connectionString">Namespace connection string.</param>
-        /// <param name="options"></param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         public ServiceBusAdministrationClient(
             string connectionString,
             ServiceBusAdministrationClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             options ??= new ServiceBusAdministrationClientOptions();
-            ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+            ServiceBusConnectionStringProperties connectionStringProperties = ServiceBusConnectionStringProperties.Parse(connectionString);
 
             if (string.IsNullOrEmpty(connectionStringProperties.Endpoint?.Host)
                 || string.IsNullOrEmpty(connectionStringProperties.SharedAccessKeyName)
@@ -87,19 +85,17 @@ namespace Azure.Messaging.ServiceBus.Administration
             _fullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
 
             var sharedAccessSignature = new SharedAccessSignature
-          (
+            (
                BuildAudienceResource(connectionStringProperties.Endpoint.Host),
-              connectionStringProperties.SharedAccessKeyName,
+               connectionStringProperties.SharedAccessKeyName,
                connectionStringProperties.SharedAccessKey
-          );
+            );
 
-            var sharedCredential = new SharedAccessSignatureCredential(sharedAccessSignature);
-            var tokenCredential = new ServiceBusTokenCredential(
-                sharedCredential,
-                BuildAudienceResource(connectionStringProperties.Endpoint.Host));
+            var sharedCredential = new SharedAccessCredential(sharedAccessSignature);
+            var tokenCredential = new ServiceBusTokenCredential(sharedCredential);
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new ServiceBusClientDiagnostics(options);
 
             _httpRequestAndResponse = new HttpRequestAndResponse(
                 pipeline,
@@ -114,11 +110,41 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The <see cref="AzureNamedKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
+        public ServiceBusAdministrationClient(
+            string fullyQualifiedNamespace,
+            AzureNamedKeyCredential credential,
+            ServiceBusAdministrationClientOptions options = default)
+           : this(fullyQualifiedNamespace, TranslateCredential(fullyQualifiedNamespace, credential), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform administration operations on ServiceBus entities.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The <see cref="AzureNamedKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
+        public ServiceBusAdministrationClient(
+            string fullyQualifiedNamespace,
+            AzureSasCredential credential,
+            ServiceBusAdministrationClientOptions options = default)
+            : this(fullyQualifiedNamespace, TranslateCredential(credential), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform administration operations on ServiceBus entities.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         public ServiceBusAdministrationClient(
             string fullyQualifiedNamespace,
             TokenCredential credential)
-            : this(fullyQualifiedNamespace, credential, new ServiceBusAdministrationClientOptions())
+            : this(fullyQualifiedNamespace, TranslateCredential(credential), default)
         {
         }
 
@@ -133,6 +159,21 @@ namespace Azure.Messaging.ServiceBus.Administration
             string fullyQualifiedNamespace,
             TokenCredential credential,
             ServiceBusAdministrationClientOptions options)
+            : this(fullyQualifiedNamespace, TranslateCredential(credential), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="ServiceBusAdministrationClient"/> which can be used to perform administration operations on ServiceBus entities.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
+        private ServiceBusAdministrationClient(
+            string fullyQualifiedNamespace,
+            ServiceBusTokenCredential credential,
+            ServiceBusAdministrationClientOptions options)
         {
             Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -140,27 +181,20 @@ namespace Azure.Messaging.ServiceBus.Administration
             options ??= new ServiceBusAdministrationClientOptions();
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
 
-            switch (credential)
-            {
-                case SharedAccessSignatureCredential _:
-                    break;
+            BearerTokenAuthenticationPolicy authenticationPolicy = credential.IsSharedAccessCredential
+                ? null
+                : new BearerTokenAuthenticationPolicy(credential, Constants.DefaultScope);
 
-                case ServiceBusSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(fullyQualifiedNamespace));
-                    break;
-            }
-            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(fullyQualifiedNamespace));
-
-            var authenticationPolicy = new BearerTokenAuthenticationPolicy(credential, Constants.DefaultScope);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(
                 options,
-                 authenticationPolicy);
+                authenticationPolicy);
+
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _httpRequestAndResponse = new HttpRequestAndResponse(
                 pipeline,
                 _clientDiagnostics,
-                tokenCredential,
+                credential,
                 _fullyQualifiedNamespace,
                 options.Version);
         }
@@ -185,8 +219,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     null,
                     false,
                     cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                NamespaceProperties properties = NamespacePropertiesExtensions.ParseFromContent(result);
+                NamespaceProperties properties = await NamespacePropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(properties, response);
             }
@@ -370,8 +403,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             try
             {
                 Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                QueueProperties properties = QueuePropertiesExtensions.ParseFromContent(result);
+                QueueProperties properties = await QueuePropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
                 return Response.FromValue(properties, response);
             }
             catch (Exception ex)
@@ -407,8 +439,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             try
             {
                 Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                TopicProperties properties = TopicPropertiesExtensions.ParseFromContent(result);
+                TopicProperties properties = await TopicPropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(properties, response);
             }
@@ -447,8 +478,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             try
             {
                 Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                SubscriptionProperties properties = SubscriptionPropertiesExtensions.ParseFromContent(topicName, result);
+                SubscriptionProperties properties = await SubscriptionPropertiesExtensions.ParseResponseAsync(topicName, response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(properties, response);
             }
@@ -494,8 +524,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             try
             {
                 Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                RuleProperties rule = RuleDescriptionExtensions.ParseFromContent(result);
+                RuleProperties rule = await RuleDescriptionExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(rule, response);
             }
@@ -535,8 +564,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             try
             {
                 Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, true, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                QueueRuntimeProperties runtimeProperties = QueueRuntimePropertiesExtensions.ParseFromContent(result);
+                QueueRuntimeProperties runtimeProperties = await QueueRuntimePropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(runtimeProperties, response);
             }
@@ -572,8 +600,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             try
             {
                 Response response = await _httpRequestAndResponse.GetEntityAsync(name, null, true, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                TopicRuntimeProperties runtimeProperties = TopicRuntimePropertiesExtensions.ParseFromContent(result);
+                TopicRuntimeProperties runtimeProperties = await TopicRuntimePropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(runtimeProperties, response);
             }
@@ -613,8 +640,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             try
             {
                 Response response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, true, cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                SubscriptionRuntimeProperties runtimeProperties = SubscriptionRuntimePropertiesExtensions.ParseFromContent(topicName, result);
+                SubscriptionRuntimeProperties runtimeProperties = await SubscriptionRuntimePropertiesExtensions.ParseResponseAsync(topicName, response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(runtimeProperties, response);
             }
@@ -643,22 +669,25 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
         public virtual AsyncPageable<QueueProperties> GetQueuesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetQueues");
-            scope.Start();
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip =>
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetQueues");
+                scope.Start();
 
-            try
-            {
-                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                    QueuesPath,
-                    nextSkip,
-                    rawResult => QueuePropertiesExtensions.ParseCollectionFromContent(rawResult),
-                    cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                try
+                {
+                    return _httpRequestAndResponse.GetEntitiesPageAsync<QueueProperties>(
+                        QueuesPath,
+                        nextSkip,
+                        async response => await QueuePropertiesExtensions.ParsePagedResponseAsync(response, _clientDiagnostics).ConfigureAwait(false),
+                        cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -676,22 +705,24 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
         public virtual AsyncPageable<TopicProperties> GetTopicsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetTopic");
-            scope.Start();
-
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                    TopicsPath,
-                    nextSkip,
-                    rawResult => TopicPropertiesExtensions.ParseCollectionFromContent(rawResult),
-                    cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetTopics");
+                scope.Start();
+                try
+                {
+                    return _httpRequestAndResponse.GetEntitiesPageAsync<TopicProperties>(
+                        TopicsPath,
+                        nextSkip,
+                        async response => await TopicPropertiesExtensions.ParsePagedResponseAsync(response, _clientDiagnostics).ConfigureAwait(false),
+                        cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -713,21 +744,25 @@ namespace Azure.Messaging.ServiceBus.Administration
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetSubscription");
-            scope.Start();
-            try
+
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                    string.Format(CultureInfo.CurrentCulture, SubscriptionsPath, topicName),
-                    nextSkip,
-                    rawResult => SubscriptionPropertiesExtensions.ParseCollectionFromContent(topicName, rawResult),
-                    cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetSubscriptions");
+                scope.Start();
+                try
+                {
+                    return _httpRequestAndResponse.GetEntitiesPageAsync<SubscriptionProperties>(
+                        string.Format(CultureInfo.CurrentCulture, SubscriptionsPath, topicName),
+                        nextSkip,
+                        async response => await SubscriptionPropertiesExtensions.ParsePagedResponseAsync(topicName, response, _clientDiagnostics).ConfigureAwait(false),
+                        cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -752,22 +787,24 @@ namespace Azure.Messaging.ServiceBus.Administration
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
             EntityNameFormatter.CheckValidSubscriptionName(subscriptionName);
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetRules");
-            scope.Start();
-
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetRules");
+                scope.Start();
+                try
+                {
+                    return _httpRequestAndResponse.GetEntitiesPageAsync<RuleProperties>(
                     string.Format(CultureInfo.CurrentCulture, RulesPath, topicName, subscriptionName),
                     nextSkip,
-                    rawResult => RuleDescriptionExtensions.ParseCollectionFromContent(rawResult),
-                    cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                    async response => await RuleDescriptionExtensions.ParsePagedResponseAsync(response, _clientDiagnostics).ConfigureAwait(false),
+                    cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         #endregion
@@ -788,22 +825,24 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
         public virtual AsyncPageable<QueueRuntimeProperties> GetQueuesRuntimePropertiesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetQueuesRuntimeProperties");
-            scope.Start();
-
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                    QueuesPath,
-                    nextSkip,
-                    rawResult => QueueRuntimePropertiesExtensions.ParseCollectionFromContent(rawResult),
-                    cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetQueuesRuntimeProperties");
+                scope.Start();
+                try
+                {
+                    return _httpRequestAndResponse.GetEntitiesPageAsync<QueueRuntimeProperties>(
+                            QueuesPath,
+                            nextSkip,
+                            async response => await QueueRuntimePropertiesExtensions.ParsePagedResponseAsync(response, _clientDiagnostics).ConfigureAwait(false),
+                            cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -821,22 +860,26 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
         public virtual AsyncPageable<TopicRuntimeProperties> GetTopicsRuntimePropertiesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetTopicsRuntimeProperties");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
-                    TopicsPath,
-                    nextSkip,
-                    rawResult => TopicRuntimePropertiesExtensions.ParseCollectionFromContent(rawResult),
-                    cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetTopicsRuntimeProperties");
+                scope.Start();
+                try
+                {
+                    return _httpRequestAndResponse.GetEntitiesPageAsync<TopicRuntimeProperties>(
+                        TopicsPath,
+                        nextSkip,
+                        async response => await TopicRuntimePropertiesExtensions.ParsePagedResponseAsync(response, _clientDiagnostics).ConfigureAwait(false),
+                        cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
+
         /// <summary>
         /// Retrieves the list of runtime properties for subscriptions present in the namespace.
         /// </summary>
@@ -856,21 +899,24 @@ namespace Azure.Messaging.ServiceBus.Administration
             CancellationToken cancellationToken = default)
         {
             EntityNameFormatter.CheckValidTopicName(topicName);
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetSubscriptionsRuntimeProperties");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(nextSkip => _httpRequestAndResponse.GetEntitiesPageAsync(
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServiceBusAdministrationClient)}.GetSubscriptionsRuntimeProperties");
+                scope.Start();
+                try
+                {
+                    return _httpRequestAndResponse.GetEntitiesPageAsync<SubscriptionRuntimeProperties>(
                     string.Format(CultureInfo.CurrentCulture, SubscriptionsPath, topicName),
                     nextSkip,
-                    rawResult => SubscriptionRuntimePropertiesExtensions.ParseCollectionFromContent(topicName, rawResult),
-                    cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                    async response => await SubscriptionRuntimePropertiesExtensions.ParsePagedResponseAsync(topicName, response, _clientDiagnostics).ConfigureAwait(false),
+                    cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         #endregion
@@ -936,8 +982,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     queue.ForwardDeadLetteredMessagesTo,
                     cancellationToken).ConfigureAwait(false);
 
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
+                QueueProperties description = await QueuePropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
                 return Response.FromValue(description, response);
             }
             catch (Exception ex)
@@ -1007,8 +1052,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     null,
                     null,
                     cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
+                TopicProperties description = await TopicPropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(description, response);
             }
@@ -1113,8 +1157,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     subscription.ForwardTo,
                     subscription.ForwardDeadLetteredMessagesTo,
                     cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(subscription.TopicName, result);
+                SubscriptionProperties description = await SubscriptionPropertiesExtensions.ParseResponseAsync(subscription.TopicName, response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(description, response);
             }
@@ -1167,8 +1210,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     null,
                     null,
                     cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
+                RuleProperties description = await RuleDescriptionExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(description, response);
             }
@@ -1218,8 +1260,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     queue.ForwardTo,
                     queue.ForwardDeadLetteredMessagesTo,
                     cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
+                QueueProperties description = await QueuePropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(description, response);
             }
@@ -1264,8 +1305,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     forwardTo: null,
                     fwdDeadLetterTo: null,
                     cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
+                TopicProperties description = await TopicPropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(description, response);
             }
@@ -1312,8 +1352,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     subscription.ForwardTo,
                     subscription.ForwardDeadLetteredMessagesTo,
                     cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(subscription.TopicName, result);
+                SubscriptionProperties description = await SubscriptionPropertiesExtensions.ParseResponseAsync(subscription.TopicName, response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(description, response);
             }
@@ -1365,8 +1404,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     null,
                     null,
                     cancellationToken).ConfigureAwait(false);
-                var result = await ReadAsString(response).ConfigureAwait(false);
-                RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
+                RuleProperties description = await RuleDescriptionExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
 
                 return Response.FromValue(description, response);
             }
@@ -1406,8 +1444,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 try
                 {
                     response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
-                    var result = await ReadAsString(response).ConfigureAwait(false);
-                    QueueProperties description = QueuePropertiesExtensions.ParseFromContent(result);
+                    QueueProperties description = await QueuePropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
                 }
                 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
                 {
@@ -1451,8 +1488,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 try
                 {
                     response = await _httpRequestAndResponse.GetEntityAsync(name, null, false, cancellationToken).ConfigureAwait(false);
-                    var result = await ReadAsString(response).ConfigureAwait(false);
-                    TopicProperties description = TopicPropertiesExtensions.ParseFromContent(result);
+                    TopicProperties description = await TopicPropertiesExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
                 }
                 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
                 {
@@ -1499,8 +1535,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 try
                 {
                     response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), null, false, cancellationToken).ConfigureAwait(false);
-                    var result = await ReadAsString(response).ConfigureAwait(false);
-                    SubscriptionProperties description = SubscriptionPropertiesExtensions.ParseFromContent(topicName, result);
+                    SubscriptionProperties description = await SubscriptionPropertiesExtensions.ParseResponseAsync(topicName, response, _clientDiagnostics).ConfigureAwait(false);
                 }
                 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
                 {
@@ -1549,8 +1584,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 try
                 {
                     response = await _httpRequestAndResponse.GetEntityAsync(EntityNameFormatter.FormatRulePath(topicName, subscriptionName, ruleName), null, false, cancellationToken).ConfigureAwait(false);
-                    var result = await ReadAsString(response).ConfigureAwait(false);
-                    RuleProperties description = RuleDescriptionExtensions.ParseFromContent(result);
+                    RuleProperties description = await RuleDescriptionExtensions.ParseResponseAsync(response, _clientDiagnostics).ConfigureAwait(false);
                 }
                 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
                 {
@@ -1568,14 +1602,6 @@ namespace Azure.Messaging.ServiceBus.Administration
 
         #endregion
 
-        private static async Task<string> ReadAsString(Response response)
-        {
-            string exceptionMessage;
-            using StreamReader reader = new StreamReader(response.ContentStream);
-            exceptionMessage = await reader.ReadToEndAsync().ConfigureAwait(false);
-            return exceptionMessage;
-        }
-
         /// <summary>
         /// Builds the audience for use in the signature.
         /// </summary>
@@ -1583,8 +1609,16 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
-        private static string BuildAudienceResource(string fullyQualifiedNamespace)
+        internal static string BuildAudienceResource(string fullyQualifiedNamespace)
         {
+            // If there is no namespace, there is no basis for a URL and the
+            // resource is empty.
+
+            if (string.IsNullOrEmpty(fullyQualifiedNamespace))
+            {
+                return string.Empty;
+            }
+
             var builder = new UriBuilder(fullyQualifiedNamespace)
             {
                 Scheme = Uri.UriSchemeHttps,
@@ -1601,6 +1635,14 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             return builder.Uri.AbsoluteUri.ToLowerInvariant();
         }
-    }
 
+        private static ServiceBusTokenCredential TranslateCredential(string fullyQualifiedNamespace, AzureNamedKeyCredential credential) =>
+            new ServiceBusTokenCredential(new SharedAccessCredential(credential, BuildAudienceResource(fullyQualifiedNamespace)));
+
+        private static ServiceBusTokenCredential TranslateCredential(AzureSasCredential credential) =>
+            new ServiceBusTokenCredential(new SharedAccessCredential(credential));
+
+        private static ServiceBusTokenCredential TranslateCredential(TokenCredential credential) =>
+            new ServiceBusTokenCredential(credential);
+    }
 }

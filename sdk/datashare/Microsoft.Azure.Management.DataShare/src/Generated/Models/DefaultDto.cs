@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataShare.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,7 +18,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
     /// <summary>
     /// Base data transfer object implementation for default resources.
     /// </summary>
-    public partial class DefaultDto : IResource
+    public partial class DefaultDto : ProxyDto
     {
         /// <summary>
         /// Initializes a new instance of the DefaultDto class.
@@ -34,17 +32,16 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// Initializes a new instance of the DefaultDto class.
         /// </summary>
         /// <param name="id">The resource id of the azure resource</param>
-        /// <param name="location">Location of the azure resource.</param>
         /// <param name="name">Name of the azure resource</param>
-        /// <param name="tags">Tags on the azure resource.</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
-        public DefaultDto(string id = default(string), string location = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string))
+        /// <param name="location">Location of the azure resource.</param>
+        /// <param name="tags">Tags on the azure resource.</param>
+        public DefaultDto(string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(id, name, systemData, type)
         {
-            Id = id;
             Location = location;
-            Name = name;
             Tags = tags;
-            Type = type;
             CustomInit();
         }
 
@@ -54,34 +51,16 @@ namespace Microsoft.Azure.Management.DataShare.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the resource id of the azure resource
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
         /// Gets or sets location of the azure resource.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets name of the azure resource
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
         /// Gets or sets tags on the azure resource.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets type of the azure resource
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
 
     }
 }

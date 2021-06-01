@@ -158,7 +158,6 @@ namespace ResourceGroups.Tests
 
             string resourceProviderNamespace = "Providers.Test";
 
-
             //-------------Verify get all features within a resource provider
             var getResult = await client.Features.ListAsync(resourceProviderNamespace).ToEnumerableAsync();
 
@@ -185,7 +184,6 @@ namespace ResourceGroups.Tests
             expectedUrl = expectedUrl.Replace(" ", "%20");
 
             Assert.AreEqual(expectedUrl, request.Uri.ToString());
-
         }
 
         [Test]

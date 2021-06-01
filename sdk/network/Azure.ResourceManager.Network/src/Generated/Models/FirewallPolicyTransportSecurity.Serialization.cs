@@ -53,11 +53,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("certificateAuthority"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     certificateAuthority = FirewallPolicyCertificateAuthority.DeserializeFirewallPolicyCertificateAuthority(property.Value);
                     continue;
                 }
                 if (property.NameEquals("excludedDomains"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -68,6 +78,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("trustedRootCertificates"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<FirewallPolicyTrustedRootCertificate> array = new List<FirewallPolicyTrustedRootCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

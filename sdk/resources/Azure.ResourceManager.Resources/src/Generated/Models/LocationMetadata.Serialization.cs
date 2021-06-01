@@ -26,11 +26,21 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("regionType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     regionType = new RegionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("regionCategory"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     regionCategory = new RegionCategory(property.Value.GetString());
                     continue;
                 }
@@ -56,6 +66,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("pairedRegion"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PairedRegion> array = new List<PairedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

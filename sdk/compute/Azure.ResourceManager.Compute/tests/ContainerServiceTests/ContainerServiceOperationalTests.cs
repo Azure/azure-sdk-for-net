@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     agentPoolDnsPrefixName,
                     //out inputContainerService,
                     cs => cs.OrchestratorProfile.OrchestratorType = ContainerServiceOrchestratorTypes.Dcos);
-            var containerService = getTwocontainerService.Item1;
-            inputContainerService = getTwocontainerService.Item2;
+            var containerService = getTwocontainerService.GetResponse;
+            inputContainerService = getTwocontainerService.InputContainerService;
             await WaitForCompletionAsync(await ContainerServicesOperations.StartDeleteAsync(rgName, containerService.Name));
         }
 
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 agentPoolDnsPrefixName,
                 //out inputContainerService,
                 cs => cs.OrchestratorProfile.OrchestratorType = ContainerServiceOrchestratorTypes.Swarm);
-            var containerService = getTwocontainerService.Item1;
-            inputContainerService = getTwocontainerService.Item2;
+            var containerService = getTwocontainerService.GetResponse;
+            inputContainerService = getTwocontainerService.InputContainerService;
             await WaitForCompletionAsync(await ContainerServicesOperations.StartDeleteAsync(rgName, containerService.Name));
         }
     }

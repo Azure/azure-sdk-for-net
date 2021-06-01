@@ -47,11 +47,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("tier"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     tier = new ExpressRouteCircuitSkuTier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("family"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     family = new ExpressRouteCircuitSkuFamily(property.Value.GetString());
                     continue;
                 }

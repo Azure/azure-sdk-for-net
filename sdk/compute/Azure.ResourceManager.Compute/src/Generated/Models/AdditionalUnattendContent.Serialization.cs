@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("settingName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     settingName = property.Value.GetString().ToSettingNames();
                     continue;
                 }

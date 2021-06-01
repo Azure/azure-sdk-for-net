@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     properties = MetricAlertStatusProperties.DeserializeMetricAlertStatusProperties(property.Value);
                     continue;
                 }

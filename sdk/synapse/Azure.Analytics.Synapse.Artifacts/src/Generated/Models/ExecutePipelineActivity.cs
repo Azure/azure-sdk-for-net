@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Execute pipeline activity. </summary>
-    public partial class ExecutePipelineActivity : Activity
+    public partial class ExecutePipelineActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
         /// <param name="name"> Activity name. </param>

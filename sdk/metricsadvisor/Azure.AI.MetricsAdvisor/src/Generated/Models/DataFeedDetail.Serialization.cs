@@ -149,6 +149,16 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("actionLinkTemplate");
                 writer.WriteStringValue(ActionLinkTemplate);
             }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType");
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
+            if (Optional.IsDefined(CredentialId))
+            {
+                writer.WritePropertyName("credentialId");
+                writer.WriteStringValue(CredentialId);
+            }
             writer.WriteEndObject();
         }
 
@@ -163,9 +173,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                     case "AzureCosmosDB": return AzureCosmosDBDataFeed.DeserializeAzureCosmosDBDataFeed(element);
                     case "AzureDataExplorer": return AzureDataExplorerDataFeed.DeserializeAzureDataExplorerDataFeed(element);
                     case "AzureDataLakeStorageGen2": return AzureDataLakeStorageGen2DataFeed.DeserializeAzureDataLakeStorageGen2DataFeed(element);
+                    case "AzureEventHubs": return AzureEventHubsDataFeed.DeserializeAzureEventHubsDataFeed(element);
+                    case "AzureLogAnalytics": return AzureLogAnalyticsDataFeed.DeserializeAzureLogAnalyticsDataFeed(element);
                     case "AzureTable": return AzureTableDataFeed.DeserializeAzureTableDataFeed(element);
-                    case "Elasticsearch": return ElasticsearchDataFeed.DeserializeElasticsearchDataFeed(element);
-                    case "HttpRequest": return HttpRequestDataFeed.DeserializeHttpRequestDataFeed(element);
                     case "InfluxDB": return InfluxDBDataFeed.DeserializeInfluxDBDataFeed(element);
                     case "MongoDB": return MongoDBDataFeed.DeserializeMongoDBDataFeed(element);
                     case "MySql": return MySqlDataFeed.DeserializeMySqlDataFeed(element);
@@ -180,7 +190,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataFeedGranularityType granularityName = default;
             Optional<int?> granularityAmount = default;
             IList<DataFeedMetric> metrics = default;
-            Optional<IList<MetricDimension>> dimension = default;
+            Optional<IList<DataFeedDimension>> dimension = default;
             Optional<string> timestampColumn = default;
             DateTimeOffset dataStartFrom = default;
             Optional<long> startOffsetInSeconds = default;
@@ -201,6 +211,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<DataFeedStatus> status = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> actionLinkTemplate = default;
+            Optional<AuthenticationTypeEnum> authenticationType = default;
+            Optional<string> credentialId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSourceType"))
@@ -250,10 +262,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("dimension"))
                 {
-                    List<MetricDimension> array = new List<MetricDimension>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DataFeedDimension> array = new List<DataFeedDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        array.Add(DataFeedDimension.DeserializeDataFeedDimension(item));
                     }
                     dimension = array;
                     continue;
@@ -270,36 +287,71 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("startOffsetInSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     startOffsetInSeconds = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxConcurrency"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxConcurrency = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minRetryIntervalInSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minRetryIntervalInSeconds = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("stopRetryAfterInSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     stopRetryAfterInSeconds = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("needRollup"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     needRollup = new DataFeedRollupType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rollUpMethod"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rollUpMethod = new DataFeedAutoRollupMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rollUpColumns"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -315,21 +367,41 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("fillMissingPointType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     fillMissingPointType = new DataFeedMissingDataPointFillType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fillMissingPointValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     fillMissingPointValue = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("viewMode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     viewMode = new DataFeedAccessMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("admins"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -340,6 +412,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("viewers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -350,6 +427,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("isAdmin"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isAdmin = property.Value.GetBoolean();
                     continue;
                 }
@@ -360,11 +442,21 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new DataFeedStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -373,8 +465,23 @@ namespace Azure.AI.MetricsAdvisor.Models
                     actionLinkTemplate = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("authenticationType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    authenticationType = new AuthenticationTypeEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("credentialId"))
+                {
+                    credentialId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DataFeedDetail(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value);
+            return new DataFeedDetail(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, Optional.ToNullable(authenticationType), credentialId.Value);
         }
     }
 }

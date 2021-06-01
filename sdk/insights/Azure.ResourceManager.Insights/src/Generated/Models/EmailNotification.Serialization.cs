@@ -48,16 +48,31 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("sendToSubscriptionAdministrator"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sendToSubscriptionAdministrator = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("sendToSubscriptionCoAdministrators"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sendToSubscriptionCoAdministrators = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("customEmails"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

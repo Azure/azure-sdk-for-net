@@ -13,23 +13,18 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class AnomalyAlert
     {
         /// <summary> Initializes a new instance of AnomalyAlert. </summary>
-        /// <param name="timestamp"> anomaly time. </param>
-        /// <param name="createdTime"> created time. </param>
-        /// <param name="modifiedTime"> modified time. </param>
-        internal AnomalyAlert(DateTimeOffset timestamp, DateTimeOffset createdTime, DateTimeOffset modifiedTime)
-        {
-            Timestamp = timestamp;
-            CreatedTime = createdTime;
-            ModifiedTime = modifiedTime;
-        }
-
-        /// <summary> Initializes a new instance of AnomalyAlert. </summary>
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdTime"> created time. </param>
         /// <param name="modifiedTime"> modified time. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal AnomalyAlert(string id, DateTimeOffset timestamp, DateTimeOffset createdTime, DateTimeOffset modifiedTime)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
             Id = id;
             Timestamp = timestamp;
             CreatedTime = createdTime;

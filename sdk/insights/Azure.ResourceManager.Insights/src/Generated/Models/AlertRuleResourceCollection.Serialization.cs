@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class AlertRuleResourceCollection
+    internal partial class AlertRuleResourceCollection
     {
         internal static AlertRuleResourceCollection DeserializeAlertRuleResourceCollection(JsonElement element)
         {
@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AlertRuleResource> array = new List<AlertRuleResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

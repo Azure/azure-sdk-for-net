@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class MetricBaselinesResponse
+    internal partial class MetricBaselinesResponse
     {
         internal static MetricBaselinesResponse DeserializeMetricBaselinesResponse(JsonElement element)
         {
@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SingleMetricBaseline> array = new List<SingleMetricBaseline>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

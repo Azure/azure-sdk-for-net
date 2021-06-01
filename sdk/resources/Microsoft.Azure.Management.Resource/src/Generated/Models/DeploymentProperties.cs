@@ -59,7 +59,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// deployment.</param>
         /// <param name="onErrorDeployment">The deployment on error
         /// behavior.</param>
-        public DeploymentProperties(DeploymentMode mode, object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DebugSetting debugSetting = default(DebugSetting), OnErrorDeployment onErrorDeployment = default(OnErrorDeployment))
+        /// <param name="expressionEvaluationOptions">Specifies whether
+        /// template expressions are evaluated within the scope of the parent
+        /// template or nested template. Only applicable to nested templates.
+        /// If not specified, default value is outer.</param>
+        public DeploymentProperties(DeploymentMode mode, object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DebugSetting debugSetting = default(DebugSetting), OnErrorDeployment onErrorDeployment = default(OnErrorDeployment), ExpressionEvaluationOptions expressionEvaluationOptions = default(ExpressionEvaluationOptions))
         {
             Template = template;
             TemplateLink = templateLink;
@@ -68,6 +72,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Mode = mode;
             DebugSetting = debugSetting;
             OnErrorDeployment = onErrorDeployment;
+            ExpressionEvaluationOptions = expressionEvaluationOptions;
             CustomInit();
         }
 
@@ -136,6 +141,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "onErrorDeployment")]
         public OnErrorDeployment OnErrorDeployment { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether template expressions are evaluated
+        /// within the scope of the parent template or nested template. Only
+        /// applicable to nested templates. If not specified, default value is
+        /// outer.
+        /// </summary>
+        [JsonProperty(PropertyName = "expressionEvaluationOptions")]
+        public ExpressionEvaluationOptions ExpressionEvaluationOptions { get; set; }
 
         /// <summary>
         /// Validate the object.

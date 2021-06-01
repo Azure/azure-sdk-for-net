@@ -67,8 +67,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGetResults databaseAccountGetResults1 =
                 await WaitForCompletionAsync(
                     await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountCreateOrUpdateParameters));
-            Response response = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
-            Assert.AreEqual(200, response.Status);
+            var response = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
+            Assert.AreEqual(true, response.Value);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
             DatabaseAccountGetResults databaseAccountGetResults2 = await CosmosDBManagementClient.DatabaseAccounts.GetAsync(resourceGroupName, databaseAccountName);
             VerifyCosmosDBAccount(databaseAccountGetResults1, databaseAccountGetResults2);
 

@@ -86,7 +86,7 @@ namespace HealthcareApis.Tests.Helpers
         public static ServicesDescription GetServiceDescriptionWithProperties()
         {
             var serviceProperties = GetServiceProperties();
-            var serviceDescription = new ServicesDescription(DefaultKind, DefaultLocation, default(string), default(string), default(string), DefaultTags, default(string), default(ResourceIdentity), serviceProperties);
+            var serviceDescription = new ServicesDescription(DefaultKind, DefaultLocation, default(string), default(string), default(string), DefaultTags, default(string), default(ServicesResourceIdentity), serviceProperties);
             return serviceDescription;
         }
 

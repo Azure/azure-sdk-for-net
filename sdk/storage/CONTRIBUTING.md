@@ -48,12 +48,9 @@ exercise any new features that you've added.
 
 ### Frameworks
 
-We use [nUnit 3](https://github.com/nunit/docs/wiki) as our testing framework.
+We use [NUnit 3](https://github.com/nunit/docs/wiki) as our testing framework.
 
-[Azure.Core's testing framework](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework) is
-copied into our projects' `/TestFramework` folders by the build.  _(Please be
-sure to run all of the unit tests in [Azure.Core.All.sln](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/Azure.Core.All.sln)
-if you make any changes here.)_
+[Azure.Core.TestFramework's testing framework][core_tests] provides a set of reusable primitives that simplify writing tests for new Azure SDK libraries.
 
 We also have [common test code](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/tests/Shared) in our
 projects' `/Shared` folders that provides helpful Storage specific
@@ -134,3 +131,4 @@ of test infrastructure to keep them easy to read.
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework

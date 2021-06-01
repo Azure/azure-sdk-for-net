@@ -22,6 +22,7 @@ namespace Kusto.Tests.ScenarioTests
         [Fact]
         public void OperationsTest()
         {
+            Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
             string executingAssemblyPath = typeof(KustoOperationsTests).GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
@@ -199,7 +200,7 @@ namespace Kusto.Tests.ScenarioTests
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
-        
+
         [Fact]
         public void KustoIotHubTests()
         {
@@ -245,7 +246,6 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.databaseName,
                     testBase.dataFormat);
         
-                //delete Iot hub
                 testBase.client.DataConnections.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.iotHubConnectionName);
                 Assert.Throws<CloudException>(() =>
                 {
@@ -321,7 +321,72 @@ namespace Kusto.Tests.ScenarioTests
                 });
             }
         }
-        
+
+        [Fact]
+        public void KustoDatabaseScriptTests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+
+                //create cluster
+                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+
+                //create database
+                var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
+
+                //create script
+                var createdScript = testBase.client.Scripts.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.scriptName, testBase.script);
+                VerifyScript(createdScript,
+                    testBase.scriptUrl,
+                    testBase.forceUpdateTag,
+                    testBase.continueOnErrors,
+                    testBase.clusterName,
+                    testBase.databaseName,
+                    testBase.scriptName);
+
+                // get script
+                var script = testBase.client.Scripts.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.scriptName);
+                VerifyScript(script,
+                     testBase.scriptUrl,
+                     testBase.forceUpdateTag,
+                     testBase.continueOnErrors,
+                     testBase.clusterName,
+                     testBase.databaseName,
+                     testBase.scriptName);
+
+                //update script
+                testBase.script.ForceUpdateTag = testBase.forceUpdateTag2;
+                var updatedScript = testBase.client.Scripts.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.scriptName, testBase.script);
+                 VerifyScript(updatedScript,
+                    testBase.scriptUrl,
+                    testBase.forceUpdateTag2,
+                    testBase.continueOnErrors,
+                    testBase.clusterName,
+                    testBase.databaseName,
+                    testBase.scriptName);
+
+
+                //delete event hub
+                testBase.client.Scripts.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.scriptName);
+                Assert.Throws<CloudException>(() =>
+                {
+                    testBase.client.Scripts.Get(
+                        resourceGroupName: testBase.rgName,
+                        clusterName: createdCluster.Name,
+                        databaseName: createdDb.Name,
+                        scriptName: testBase.scriptName);
+                });
+
+                //delete database
+                testBase.client.Databases.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName);
+
+                //delete cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+            }
+        }
+
+
         [Fact]
         public void KustoOptimizedAutoscaleTests()
         {
@@ -660,7 +725,7 @@ namespace Kusto.Tests.ScenarioTests
 
         private void VerifyEventHub(EventHubDataConnection createdDataConnection, string eventHubConnectionName, string eventHubResourceId, string consumerGroupName, string clusterName, string databaseName, string dataFormat)
         {
-            var eventHubFullName = ResourcesNamesUtils.GetDataConnectionFullName(clusterName, databaseName, eventHubConnectionName);
+            var eventHubFullName = ResourcesNamesUtils.GetDatabaseChildFullName(clusterName, databaseName, eventHubConnectionName);
             Assert.Equal(createdDataConnection.Name, eventHubFullName);
             Assert.Equal(createdDataConnection.EventHubResourceId, eventHubResourceId);
             Assert.Equal(createdDataConnection.ConsumerGroup, consumerGroupName);
@@ -669,7 +734,7 @@ namespace Kusto.Tests.ScenarioTests
 
         private void VerifyIotHub(IotHubDataConnection createdDataConnection, string iotHubConnectionName, string iotHubResourceId, string consumerGroupName, string clusterName, string databaseName, string dataFormat)
         {
-            var iotHubFullName = ResourcesNamesUtils.GetDataConnectionFullName(clusterName, databaseName, iotHubConnectionName);
+            var iotHubFullName = ResourcesNamesUtils.GetDatabaseChildFullName(clusterName, databaseName, iotHubConnectionName);
             Assert.Equal(createdDataConnection.Name, iotHubFullName);
             Assert.Equal(createdDataConnection.IotHubResourceId, iotHubResourceId);
             Assert.Equal(createdDataConnection.ConsumerGroup, consumerGroupName);
@@ -678,13 +743,21 @@ namespace Kusto.Tests.ScenarioTests
 
         private void VerifyEventGrid(EventGridDataConnection createdDataConnection, string eventGridConnectinoName, string eventHubResourceId, string consumerGroupName, string clusterName, string databaseName, string dataFormat, string storageAccountResourceId, string tableName)
         {
-            var eventGridFullName = ResourcesNamesUtils.GetDataConnectionFullName(clusterName, databaseName, eventGridConnectinoName);
+            var eventGridFullName = ResourcesNamesUtils.GetDatabaseChildFullName(clusterName, databaseName, eventGridConnectinoName);
             Assert.Equal(createdDataConnection.Name, eventGridFullName);
             Assert.Equal(createdDataConnection.EventHubResourceId, eventHubResourceId);
             Assert.Equal(createdDataConnection.ConsumerGroup, consumerGroupName);
             Assert.Equal(createdDataConnection.DataFormat, dataFormat);
             Assert.Equal(createdDataConnection.StorageAccountResourceId, storageAccountResourceId);
             Assert.Equal(createdDataConnection.TableName, tableName);
+        }
+
+        private void VerifyScript(Script createdScript, string scriptUrl, string forceUpdateTag, bool continueOnEerros, string clusterName, string databaseName, string scriptName)
+        {
+            var eventHubFullName = ResourcesNamesUtils.GetDatabaseChildFullName(clusterName, databaseName, scriptName);
+            Assert.Equal(createdScript.Name, eventHubFullName);
+            Assert.Equal(createdScript.ForceUpdateTag, forceUpdateTag);
+            Assert.Equal(createdScript.ScriptUrl, scriptUrl);
         }
 
         private void VerifyReadOnlyFollowingDatabase(ReadOnlyFollowingDatabase database, string databaseName, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, string principalsModificationKind, string clusterName)

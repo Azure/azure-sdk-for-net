@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("availabilities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Availability> array = new List<Availability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -68,11 +73,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("enableRegionalMdmAccount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enableRegionalMdmAccount = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("fillGapWithZero"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     fillGapWithZero = property.Value.GetBoolean();
                     continue;
                 }
@@ -83,6 +98,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("dimensions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Dimension> array = new List<Dimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -93,6 +113,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("isInternal"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isInternal = property.Value.GetBoolean();
                     continue;
                 }

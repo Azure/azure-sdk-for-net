@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("isDimensionRequired"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isDimensionRequired = property.Value.GetBoolean();
                     continue;
                 }
@@ -44,21 +49,41 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     unit = property.Value.GetString().ToUnit();
                     continue;
                 }
                 if (property.NameEquals("primaryAggregationType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     primaryAggregationType = property.Value.GetString().ToAggregationType();
                     continue;
                 }
                 if (property.NameEquals("supportedAggregationTypes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AggregationType> array = new List<AggregationType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -69,6 +94,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("metricAvailabilities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MetricAvailability> array = new List<MetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -84,6 +114,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("dimensions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LocalizableString> array = new List<LocalizableString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

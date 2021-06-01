@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RestorableDroppedManagedDatabaseListResult
+    internal partial class RestorableDroppedManagedDatabaseListResult
     {
         internal static RestorableDroppedManagedDatabaseListResult DeserializeRestorableDroppedManagedDatabaseListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<RestorableDroppedManagedDatabase> array = new List<RestorableDroppedManagedDatabase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

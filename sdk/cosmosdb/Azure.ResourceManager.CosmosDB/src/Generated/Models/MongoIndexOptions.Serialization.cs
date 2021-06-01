@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("expireAfterSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     expireAfterSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("unique"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     unique = property.Value.GetBoolean();
                     continue;
                 }

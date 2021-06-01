@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class MetricAlertResourceCollection
+    internal partial class MetricAlertResourceCollection
     {
         internal static MetricAlertResourceCollection DeserializeMetricAlertResourceCollection(JsonElement element)
         {
@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MetricAlertResource> array = new List<MetricAlertResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

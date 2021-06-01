@@ -58,14 +58,17 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// operation (e.g. a localized name for the resource provider + any
         /// special
         /// considerations like PII release).</param>
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
         /// <param name="origin">Gets or sets Origin.
         /// The intended executor of the operation; governs the display of the
         /// operation in the
         /// RBAC UX and the audit logs UX.
         /// Default value is "user,system".</param>
-        public OperationsDiscovery(string name = default(string), Display display = default(Display), string origin = default(string), object properties = default(object))
+        public OperationsDiscovery(string name = default(string), bool? isDataAction = default(bool?), Display display = default(Display), string origin = default(string), object properties = default(object))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
             Properties = properties;
@@ -110,6 +113,12 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// </summary>

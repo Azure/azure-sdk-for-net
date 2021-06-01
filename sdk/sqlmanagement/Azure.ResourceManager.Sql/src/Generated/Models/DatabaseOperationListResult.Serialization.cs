@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseOperationListResult
+    internal partial class DatabaseOperationListResult
     {
         internal static DatabaseOperationListResult DeserializeDatabaseOperationListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DatabaseOperation> array = new List<DatabaseOperation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Tests
         {
             // Make sure we're not repeating Header/Query names already defined
             // in the base ClientOptions
-            SearchClientOptions options = new SearchClientOptions();
+            SearchClientOptions options = new SearchClientOptions(ServiceVersion);
             Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedHeaderNames));
             Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedQueryParameters));
 
@@ -251,7 +251,7 @@ namespace Azure.Search.Documents.Tests
 
             // TODO: Replace with comparison of actual SearchIndex once test framework uses Azure.Search.Documents instead.
             Assert.AreEqual(resources.IndexName, index.Name);
-            Assert.AreEqual(13, index.Fields.Count);
+            Assert.AreEqual(14, index.Fields.Count);
         }
 
         [Test]
@@ -284,6 +284,22 @@ namespace Azure.Search.Documents.Tests
 
             // Given a continuationToken above, this actually starts with the second page.
             Assert.ThrowsAsync<NotSupportedException>(async () => await e.MoveNextAsync());
+        }
+
+        [Test]
+        public async Task GetIndexNames()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+
+            bool found = false;
+            await foreach (string name in client.GetIndexNamesAsync())
+            {
+                found |= string.Equals(resources.IndexName, name, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            Assert.IsTrue(found, "Shared index name not found");
         }
 
         [Test]
@@ -427,6 +443,46 @@ namespace Azure.Search.Documents.Tests
             IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
 
             Assert.AreEqual(new[] { "The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog." }, tokens.Select(t => t.Token));
+        }
+
+        [Test]
+        public async Task SetScoringProfile()
+        {
+            // Testing: https://github.com/Azure/azure-sdk-for-net/issues/16570
+
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+
+            string indexName = Recording.Random.GetName();
+            string scoringProfileName = Recording.Random.GetName();
+
+            // Make sure the index, if created, is cleaned up.
+            resources.IndexName = indexName;
+
+            SearchIndex index = new SearchIndex(indexName)
+            {
+                Fields =
+                {
+                    new SimpleField("id", SearchFieldDataType.String) { IsKey = true },
+                    new SearchableField("title") { IsFilterable = true, IsSortable = false },
+                },
+                DefaultScoringProfile = scoringProfileName,
+                ScoringProfiles =
+                {
+                    new ScoringProfile(scoringProfileName)
+                    {
+                        TextWeights = new TextWeights(new Dictionary<string, double>
+                        {
+                            { "title", 2 },
+                        }),
+                    },
+                },
+            };
+
+            SearchIndexClient client = resources.GetIndexClient();
+            SearchIndex createdIndex = await client.CreateIndexAsync(index);
+
+            Assert.AreEqual(1, createdIndex.ScoringProfiles.Count);
+            Assert.AreEqual(scoringProfileName, createdIndex.ScoringProfiles[0].Name);
         }
     }
 }

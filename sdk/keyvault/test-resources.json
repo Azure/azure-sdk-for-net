@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "baseName": {
@@ -16,18 +16,6 @@
                 "description": "The tenant ID to which the application and resources belong."
             }
         },
-        "testApplicationId": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client ID used to run tests."
-            }
-        },
-        "testApplicationSecret": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client secret used to run tests."
-            }
-        },
         "testApplicationOid": {
             "type": "string",
             "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
@@ -42,16 +30,56 @@
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
         },
+        "hsmLocation": {
+            "type": "string",
+            "defaultValue": "southcentralus",
+            "allowedValues": [
+                "australiacentral",
+                "canadacentral",
+                "centralus",
+                "eastasia",
+                "eastus2",
+                "koreacentral",
+                "northeurope",
+                "southafricanorth",
+                "southcentralus",
+                "southeastasia",
+                "switzerlandnorth",
+                "uksouth",
+                "westeurope",
+                "westus"
+            ],
+            "metadata": {
+                "description": "The location of the Managed HSM. By default, this is 'southcentralus'."
+            }
+        },
+        "enableHsm": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Whether to enable deployment of Managed HSM. The default is false."
+            }
+        },
         "enableSoftDelete": {
             "type": "bool",
             "defaultValue": true,
             "metadata": {
                 "description": "Whether to enable soft delete for the Key Vault. The default is true."
             }
+        },
+        "keyVaultSku": {
+            "type": "string",
+            "defaultValue": "premium",
+            "metadata": {
+                "description": "Key Vault SKU to deploy. The default is 'premium'"
+            }
         }
     },
     "variables": {
-        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', parameters('baseName'))]",
+        "kvApiVersion": "2019-09-01",
+        "kvName": "[parameters('baseName')]",
+        "hsmApiVersion": "2020-04-01-preview",
+        "hsmName": "[concat(parameters('baseName'), 'hsm')]",
         "mgmtApiVersion": "2019-04-01",
         "blobContainerName": "backup",
         "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
@@ -75,13 +103,13 @@
     "resources": [
         {
             "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2016-10-01",
-            "name": "[parameters('baseName')]",
+            "apiVersion": "[variables('kvApiVersion')]",
+            "name": "[variables('kvName')]",
             "location": "[parameters('location')]",
             "properties": {
                 "sku": {
                     "family": "A",
-                    "name": "premium"
+                    "name": "[parameters('keyVaultSku')]"
                 },
                 "tenantId": "[parameters('tenantId')]",
                 "accessPolicies": [
@@ -145,6 +173,25 @@
             }
         },
         {
+            "type": "Microsoft.KeyVault/managedHSMs",
+            "apiVersion": "[variables('hsmApiVersion')]",
+            "name": "[variables('hsmName')]",
+            "condition": "[parameters('enableHsm')]",
+            "location": "[parameters('hsmLocation')]",
+            "sku": {
+                "family": "B",
+                "name": "Standard_B1"
+            },
+            "properties": {
+                "tenantId": "[parameters('tenantId')]",
+                "initialAdminObjectIds": [
+                    "[parameters('testApplicationOid')]"
+                ],
+                "enablePurgeProtection": false,
+                "enableSoftDelete": "[parameters('enableSoftDelete')]"
+            }
+        },
+        {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[variables('primaryAccountName')]",
@@ -197,11 +244,16 @@
     "outputs": {
         "AZURE_KEYVAULT_URL": {
             "type": "string",
-            "value": "[variables('azureKeyVaultUrl')]"
+            "value": "[reference(variables('kvName')).vaultUri]"
+        },
+        "AZURE_MANAGEDHSM_URL": {
+            "type": "string",
+            "condition": "[parameters('enableHsm')]",
+            "value": "[reference(variables('hsmName')).hsmUri]"
         },
         "KEYVAULT_SKU": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))).sku.name]"
+            "value": "[reference(parameters('baseName')).sku.name]"
         },
         "CLIENT_OBJECTID": {
             "type": "string",
@@ -213,7 +265,7 @@
         },
         "BLOB_PRIMARY_STORAGE_ACCOUNT_KEY": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+            "value": "[listKeys(variables('primaryAccountName'), variables('mgmtApiVersion')).keys[0].value]"
         },
         "BLOB_CONTAINER_NAME" : {
             "type": "string",

@@ -27,10 +27,23 @@ namespace Microsoft.Azure.Management.Media.Models
             UnderlyingValue=underlyingValue;
         }
 
+        /// <summary>
+        /// Live output is being created. No content is archived in the asset
+        /// until the live output is in running state.
+        /// </summary>
         public static readonly LiveOutputResourceState Creating = "Creating";
 
+        /// <summary>
+        /// Live output is running and archiving live streaming content to the
+        /// asset if there is valid input from a contribution encoder.
+        /// </summary>
         public static readonly LiveOutputResourceState Running = "Running";
 
+        /// <summary>
+        /// Live output is being deleted. The live asset is being converted
+        /// from live to on-demand asset. Any streaming URLs created on the
+        /// live output asset continue to work.
+        /// </summary>
         public static readonly LiveOutputResourceState Deleting = "Deleting";
 
 

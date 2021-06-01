@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DeploymentListResult
+    internal partial class DeploymentListResult
     {
         internal static DeploymentListResult DeserializeDeploymentListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DeploymentExtended> array = new List<DeploymentExtended>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

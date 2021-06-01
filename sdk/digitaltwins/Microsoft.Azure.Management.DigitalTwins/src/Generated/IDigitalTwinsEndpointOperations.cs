@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DigitalTwinsEndpointResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties = default(DigitalTwinsEndpointResourceProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DigitalTwinsEndpointResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a DigitalTwinsInstance endpoint.
         /// </summary>
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DigitalTwinsEndpointResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties = default(DigitalTwinsEndpointResourceProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DigitalTwinsEndpointResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a DigitalTwinsInstance endpoint.
         /// </summary>

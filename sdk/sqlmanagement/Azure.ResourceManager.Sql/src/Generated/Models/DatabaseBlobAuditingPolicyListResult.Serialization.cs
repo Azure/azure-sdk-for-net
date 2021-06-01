@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseBlobAuditingPolicyListResult
+    internal partial class DatabaseBlobAuditingPolicyListResult
     {
         internal static DatabaseBlobAuditingPolicyListResult DeserializeDatabaseBlobAuditingPolicyListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DatabaseBlobAuditingPolicy> array = new List<DatabaseBlobAuditingPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

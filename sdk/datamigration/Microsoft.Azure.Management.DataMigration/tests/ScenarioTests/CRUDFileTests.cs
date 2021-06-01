@@ -24,7 +24,7 @@ namespace DataMigration.Tests.ScenarioTests
                 var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
-                var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
+                var project = CreateDMSSqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
                 var task = CreateDMSFile(context, dmsClient, resourceGroup, service, project.Name, DmsFileName);
             }
             // Wait for resource group deletion to complete.
@@ -42,7 +42,7 @@ namespace DataMigration.Tests.ScenarioTests
                 var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
-                var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
+                var project = CreateDMSSqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
                 var file = CreateDMSFile(context, dmsClient, resourceGroup, service, project.Name, DmsFileName);
                 var getResult = dmsClient.Files.Get(resourceGroup.Name, service.Name, project.Name, file.Name);
             }
@@ -61,7 +61,7 @@ namespace DataMigration.Tests.ScenarioTests
                 var resourceGroup = CreateResourceGroup(context, resourcesHandler, ResourceGroupName, TestConfiguration.Location);
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
-                var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
+                var project = CreateDMSSqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
                 var file = CreateDMSFile(context, dmsClient, resourceGroup, service, project.Name, DmsFileName);
                 var getResult = dmsClient.Files.Get(resourceGroup.Name, service.Name, project.Name, file.Name);
                 Utilities.WaitIfNotInPlaybackMode(1);

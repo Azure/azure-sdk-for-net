@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("disable"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     disable = property.Value.GetBoolean();
                     continue;
                 }

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 using NUnit.Framework;
 
-
 namespace Azure.ResourceManager.Compute.Tests
 {
     public class VMScaleSetServiceFabricScenarioTests : VMScaleSetTestsBase

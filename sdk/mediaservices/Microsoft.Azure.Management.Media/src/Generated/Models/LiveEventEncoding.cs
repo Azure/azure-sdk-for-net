@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// The Live Event encoding.
+    /// Specifies the live event type and optional encoding settings for
+    /// encoding live events.
     /// </summary>
     public partial class LiveEventEncoding
     {
@@ -29,15 +30,38 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the LiveEventEncoding class.
         /// </summary>
-        /// <param name="encodingType">The encoding type for Live Event.  This
-        /// value is specified at creation time and cannot be updated. Possible
-        /// values include: 'None', 'Basic', 'Standard', 'Premium1080p'</param>
-        /// <param name="presetName">The encoding preset name.  This value is
-        /// specified at creation time and cannot be updated.</param>
-        public LiveEventEncoding(LiveEventEncodingType? encodingType = default(LiveEventEncodingType?), string presetName = default(string))
+        /// <param name="encodingType">Live event type. When encodingType is
+        /// set to None, the service simply passes through the incoming video
+        /// and audio layer(s) to the output. When encodingType is set to
+        /// Standard or Premium1080p, a live encoder transcodes the incoming
+        /// stream into multiple bitrates or layers. See
+        /// https://go.microsoft.com/fwlink/?linkid=2095101 for more
+        /// information. This property cannot be modified after the live event
+        /// is created. Possible values include: 'None', 'Standard',
+        /// 'Premium1080p'</param>
+        /// <param name="presetName">The optional encoding preset name, used
+        /// when encodingType is not None. This value is specified at creation
+        /// time and cannot be updated. If the encodingType is set to Standard,
+        /// then the default preset name is ‘Default720p’. Else if the
+        /// encodingType is set to Premium1080p, the default preset is
+        /// ‘Default1080p’.</param>
+        /// <param name="stretchMode">Specifies how the input video will be
+        /// resized to fit the desired output resolution(s). Default is None.
+        /// Possible values include: 'None', 'AutoSize', 'AutoFit'</param>
+        /// <param name="keyFrameInterval">Use an ISO 8601 time value between
+        /// 0.5 to 20 seconds to specify the output fragment length for the
+        /// video and audio tracks of an encoding live event. For example, use
+        /// PT2S to indicate 2 seconds. For the video track it also defines the
+        /// key frame interval, or the length of a GoP (group of pictures).
+        /// If this value is not set for an encoding live event, the fragment
+        /// duration defaults to 2 seconds. The value cannot be set for
+        /// pass-through live events.</param>
+        public LiveEventEncoding(LiveEventEncodingType? encodingType = default(LiveEventEncodingType?), string presetName = default(string), StretchMode? stretchMode = default(StretchMode?), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?))
         {
             EncodingType = encodingType;
             PresetName = presetName;
+            StretchMode = stretchMode;
+            KeyFrameInterval = keyFrameInterval;
             CustomInit();
         }
 
@@ -47,19 +71,49 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the encoding type for Live Event.  This value is
-        /// specified at creation time and cannot be updated. Possible values
-        /// include: 'None', 'Basic', 'Standard', 'Premium1080p'
+        /// Gets or sets live event type. When encodingType is set to None, the
+        /// service simply passes through the incoming video and audio layer(s)
+        /// to the output. When encodingType is set to Standard or
+        /// Premium1080p, a live encoder transcodes the incoming stream into
+        /// multiple bitrates or layers. See
+        /// https://go.microsoft.com/fwlink/?linkid=2095101 for more
+        /// information. This property cannot be modified after the live event
+        /// is created. Possible values include: 'None', 'Standard',
+        /// 'Premium1080p'
         /// </summary>
         [JsonProperty(PropertyName = "encodingType")]
         public LiveEventEncodingType? EncodingType { get; set; }
 
         /// <summary>
-        /// Gets or sets the encoding preset name.  This value is specified at
-        /// creation time and cannot be updated.
+        /// Gets or sets the optional encoding preset name, used when
+        /// encodingType is not None. This value is specified at creation time
+        /// and cannot be updated. If the encodingType is set to Standard, then
+        /// the default preset name is ‘Default720p’. Else if the encodingType
+        /// is set to Premium1080p, the default preset is ‘Default1080p’.
         /// </summary>
         [JsonProperty(PropertyName = "presetName")]
         public string PresetName { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies how the input video will be resized to fit
+        /// the desired output resolution(s). Default is None. Possible values
+        /// include: 'None', 'AutoSize', 'AutoFit'
+        /// </summary>
+        [JsonProperty(PropertyName = "stretchMode")]
+        public StretchMode? StretchMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets use an ISO 8601 time value between 0.5 to 20 seconds
+        /// to specify the output fragment length for the video and audio
+        /// tracks of an encoding live event. For example, use PT2S to indicate
+        /// 2 seconds. For the video track it also defines the key frame
+        /// interval, or the length of a GoP (group of pictures).   If this
+        /// value is not set for an encoding live event, the fragment duration
+        /// defaults to 2 seconds. The value cannot be set for pass-through
+        /// live events.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyFrameInterval")]
+        public System.TimeSpan? KeyFrameInterval { get; set; }
 
     }
 }

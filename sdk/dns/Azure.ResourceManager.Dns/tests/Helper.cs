@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using System.Threading.Tasks;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Dns.Models;
 using System.Collections.Generic;
 using System.Net;
@@ -21,7 +21,6 @@ namespace Azure.Management.Dns.Tests
             Azure.ResourceManager.Dns.Models.Resource second,
             bool ignoreEtag = false)
         {
-
             if (first == null || second == null)
             {
                 return false;
@@ -327,6 +326,5 @@ namespace Azure.Management.Dns.Tests
 
             return true;
         }
-
     }
 }

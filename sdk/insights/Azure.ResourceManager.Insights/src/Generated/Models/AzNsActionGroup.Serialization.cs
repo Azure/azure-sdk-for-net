@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("actionGroup"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

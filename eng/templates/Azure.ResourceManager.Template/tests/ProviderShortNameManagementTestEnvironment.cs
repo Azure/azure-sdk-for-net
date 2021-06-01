@@ -7,8 +7,5 @@ namespace Azure.ResourceManager.Template.Tests
 {
     public class ProviderShortNameManagementTestEnvironment : TestEnvironment
     {
-        public ProviderShortNameManagementTestEnvironment() : base("ProviderNameLowercasemgmt")
-        {
-        }
     }
 }

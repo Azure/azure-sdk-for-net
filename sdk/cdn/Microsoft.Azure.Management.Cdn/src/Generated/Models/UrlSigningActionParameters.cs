@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,45 +31,29 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the UrlSigningActionParameters class.
         /// </summary>
-        /// <param name="keyId">Id reference of the key to be used to verify
-        /// the hash and should be defined in UrlSigningKeys</param>
-        /// <param name="odatatype">Possible values include:
-        /// '#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlSigningActionParameters'</param>
         /// <param name="algorithm">Algorithm to use for URL signing. Possible
         /// values include: 'SHA256'</param>
         /// <param name="parameterNameOverride">Defines which query string
         /// parameters in the url to be considered for expires, key id etc.
         /// </param>
-        /// <param name="ipSubnets">Match values to match against. Supports
-        /// CIDR ranges (both IPv4 and IPv6).</param>
-        public UrlSigningActionParameters(string keyId, string odatatype = default(string), string algorithm = default(string), IList<UrlSigningParamIdentifier> parameterNameOverride = default(IList<UrlSigningParamIdentifier>), IList<string> ipSubnets = default(IList<string>))
+        public UrlSigningActionParameters(string algorithm = default(string), IList<UrlSigningParamIdentifier> parameterNameOverride = default(IList<UrlSigningParamIdentifier>))
         {
-            Odatatype = odatatype;
-            KeyId = keyId;
             Algorithm = algorithm;
             ParameterNameOverride = parameterNameOverride;
-            IpSubnets = ipSubnets;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for UrlSigningActionParameters class.
+        /// </summary>
+        static UrlSigningActionParameters()
+        {
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlSigningActionParameters";
         }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets possible values include:
-        /// '#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlSigningActionParameters'
-        /// </summary>
-        [JsonProperty(PropertyName = "@odata.type")]
-        public string Odatatype { get; set; }
-
-        /// <summary>
-        /// Gets or sets id reference of the key to be used to verify the hash
-        /// and should be defined in UrlSigningKeys
-        /// </summary>
-        [JsonProperty(PropertyName = "keyId")]
-        public string KeyId { get; set; }
 
         /// <summary>
         /// Gets or sets algorithm to use for URL signing. Possible values
@@ -87,34 +70,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public IList<UrlSigningParamIdentifier> ParameterNameOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets match values to match against. Supports CIDR ranges
-        /// (both IPv4 and IPv6).
         /// </summary>
-        [JsonProperty(PropertyName = "ipSubnets")]
-        public IList<string> IpSubnets { get; set; }
+        [JsonProperty(PropertyName = "@odata.type")]
+        public static string Odatatype { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (KeyId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyId");
-            }
-            if (ParameterNameOverride != null)
-            {
-                foreach (var element in ParameterNameOverride)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }

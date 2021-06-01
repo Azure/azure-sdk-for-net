@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(NotebookCellConverter))]
     public partial class NotebookCell : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -29,8 +32,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Attachments))
             {
-                writer.WritePropertyName("attachments");
-                writer.WriteObjectValue(Attachments);
+                if (Attachments != null)
+                {
+                    writer.WritePropertyName("attachments");
+                    writer.WriteObjectValue(Attachments);
+                }
+                else
+                {
+                    writer.WriteNull("attachments");
+                }
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -83,11 +93,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("attachments"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        attachments = null;
+                        continue;
+                    }
                     attachments = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<NotebookCellOutputItem> array = new List<NotebookCellOutputItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -100,6 +120,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new NotebookCell(cellType, metadata, source, attachments.Value, Optional.ToList(outputs), additionalProperties);
+        }
+
+        internal partial class NotebookCellConverter : JsonConverter<NotebookCell>
+        {
+            public override void Write(Utf8JsonWriter writer, NotebookCell model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override NotebookCell Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeNotebookCell(document.RootElement);
+            }
         }
     }
 }

@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Storage.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 using System.Runtime.CompilerServices;
 
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Compute.Tests
             osProfile.Secrets.Add(
                     new VaultSecretGroup
                     {
-                         SourceVault = SecretVaultHelper.GetVaultId(m_subId, rgName, keyVaultName).Result,
-                         VaultCertificates = {
+                        SourceVault = SecretVaultHelper.GetVaultId(m_subId, rgName, keyVaultName).Result,
+                        VaultCertificates = {
                              new VaultCertificate
                              {
                                  CertificateStore = "My",
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Compute.Tests
             StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
 
             var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imageRef, vmCustomizer);
-            VirtualMachine vm = returnTwoVM.Item1;
-            inputVM = returnTwoVM.Item2;
-            string inputVMName = returnTwoVM.Item3;
+            VirtualMachine vm = returnTwoVM.Response;
+            inputVM = returnTwoVM.Input;
+            string inputVMName = returnTwoVM.Name;
             //var getVMWithInstanceViewResponse = await VirtualMachinesClient.GetAsync(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
             var getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVMName);
             ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
@@ -290,7 +290,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
             await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, vm.Name));
         }
-
 
         //Not used
         public static string ReadFromEmbeddedResource(Type type, string resourceName)

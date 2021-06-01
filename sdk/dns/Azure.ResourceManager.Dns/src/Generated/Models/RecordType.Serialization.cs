@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    internal static class RecordTypeExtensions
+    internal static partial class RecordTypeExtensions
     {
         public static string ToSerialString(this RecordType value) => value switch
         {

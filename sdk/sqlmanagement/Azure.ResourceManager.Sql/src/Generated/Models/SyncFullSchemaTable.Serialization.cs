@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("columns"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SyncFullSchemaTableColumn> array = new List<SyncFullSchemaTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -39,6 +44,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("hasError"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     hasError = property.Value.GetBoolean();
                     continue;
                 }

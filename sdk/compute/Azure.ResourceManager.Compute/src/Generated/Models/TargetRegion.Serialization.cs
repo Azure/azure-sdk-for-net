@@ -50,16 +50,31 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("regionalReplicaCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     regionalReplicaCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("storageAccountType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("encryption"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
                     continue;
                 }

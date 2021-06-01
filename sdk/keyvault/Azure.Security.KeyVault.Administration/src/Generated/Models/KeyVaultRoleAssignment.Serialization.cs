@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     public partial class KeyVaultRoleAssignment
     {
@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<KeyVaultRoleAssignmentPropertiesWithScope> properties = default;
+            Optional<KeyVaultRoleAssignmentProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -37,7 +37,12 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 if (property.NameEquals("properties"))
                 {
-                    properties = KeyVaultRoleAssignmentPropertiesWithScope.DeserializeKeyVaultRoleAssignmentPropertiesWithScope(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = KeyVaultRoleAssignmentProperties.DeserializeKeyVaultRoleAssignmentProperties(property.Value);
                     continue;
                 }
             }

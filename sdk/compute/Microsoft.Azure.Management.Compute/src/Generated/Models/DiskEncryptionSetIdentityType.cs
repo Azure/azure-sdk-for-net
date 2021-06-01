@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     public static class DiskEncryptionSetIdentityType
     {
         public const string SystemAssigned = "SystemAssigned";
+        public const string None = "None";
     }
 }

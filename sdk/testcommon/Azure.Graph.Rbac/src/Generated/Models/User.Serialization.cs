@@ -56,11 +56,21 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("userType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     userType = new UserType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accountEnabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     accountEnabled = property.Value.GetBoolean();
                     continue;
                 }
@@ -86,6 +96,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("signInNames"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SignInName> array = new List<SignInName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -106,6 +121,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("deletionTimestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

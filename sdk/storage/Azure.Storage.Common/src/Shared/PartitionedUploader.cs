@@ -130,7 +130,7 @@ namespace Azure.Storage
             }
             else
             {
-                _singleUploadThreshold = Constants.Blob.Block.MaxUploadBytes;
+                _singleUploadThreshold = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
             }
 
             // Set _blockSize

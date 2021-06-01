@@ -35,12 +35,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the BlobContainer class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="etag">Resource Etag.</param>
         /// <param name="version">The version of the deleted blob
         /// container.</param>
@@ -82,7 +82,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// been created for this container. The hasImmutabilityPolicy public
         /// property is set to false by SRP if ImmutabilityPolicy has not been
         /// created for this container.</param>
-        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string defaultEncryptionScope = default(string), bool? denyEncryptionScopeOverride = default(bool?), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), string leaseStatus = default(string), string leaseState = default(string), string leaseDuration = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHoldProperties legalHold = default(LegalHoldProperties), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?))
+        /// <param name="immutableStorageWithVersioning">The object level
+        /// immutability property of the container. The property is immutable
+        /// and can only be set to true at the container creation time.
+        /// Existing containers must undergo a migration process.</param>
+        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string defaultEncryptionScope = default(string), bool? denyEncryptionScopeOverride = default(bool?), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), string leaseStatus = default(string), string leaseState = default(string), string leaseDuration = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHoldProperties legalHold = default(LegalHoldProperties), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?), ImmutableStorageWithVersioning immutableStorageWithVersioning = default(ImmutableStorageWithVersioning))
             : base(id, name, type, etag)
         {
             Version = version;
@@ -101,6 +105,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             LegalHold = legalHold;
             HasLegalHold = hasLegalHold;
             HasImmutabilityPolicy = hasImmutabilityPolicy;
+            ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             CustomInit();
         }
 
@@ -220,6 +225,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hasImmutabilityPolicy")]
         public bool? HasImmutabilityPolicy { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the object level immutability property of the
+        /// container. The property is immutable and can only be set to true at
+        /// the container creation time. Existing containers must undergo a
+        /// migration process.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.immutableStorageWithVersioning")]
+        public ImmutableStorageWithVersioning ImmutableStorageWithVersioning { get; set; }
 
     }
 }

@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.EventHubs
             uri.AppendPath(clusterName, true);
             uri.AppendQuery("api-version", "2018-01-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;

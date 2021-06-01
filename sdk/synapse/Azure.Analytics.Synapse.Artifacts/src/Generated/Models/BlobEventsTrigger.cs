@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
-        public BlobEventsTrigger(IEnumerable<BlobEventTypes> events, string scope)
+        public BlobEventsTrigger(IEnumerable<BlobEventType> events, string scope)
         {
             if (events == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="ignoreEmptyBlobs"> If set to true, blobs with zero bytes will be ignored. </param>
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
-        internal BlobEventsTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties, IList<TriggerPipelineReference> pipelines, string blobPathBeginsWith, string blobPathEndsWith, bool? ignoreEmptyBlobs, IList<BlobEventTypes> events, string scope) : base(type, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal BlobEventsTrigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties, IList<TriggerPipelineReference> pipelines, string blobPathBeginsWith, string blobPathEndsWith, bool? ignoreEmptyBlobs, IList<BlobEventType> events, string scope) : base(type, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             BlobPathBeginsWith = blobPathBeginsWith;
             BlobPathEndsWith = blobPathEndsWith;
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> If set to true, blobs with zero bytes will be ignored. </summary>
         public bool? IgnoreEmptyBlobs { get; set; }
         /// <summary> The type of events that cause this trigger to fire. </summary>
-        public IList<BlobEventTypes> Events { get; }
+        public IList<BlobEventType> Events { get; }
         /// <summary> The ARM resource ID of the Storage Account. </summary>
         public string Scope { get; set; }
     }

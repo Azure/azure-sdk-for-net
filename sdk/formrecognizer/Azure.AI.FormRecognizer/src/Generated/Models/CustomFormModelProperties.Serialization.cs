@@ -19,6 +19,11 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 if (property.NameEquals("isComposed"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isComposed = property.Value.GetBoolean();
                     continue;
                 }

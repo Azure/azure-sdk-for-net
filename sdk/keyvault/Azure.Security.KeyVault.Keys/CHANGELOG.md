@@ -1,7 +1,66 @@
 # Release History
 
-## 4.2.0-beta.3 (Unreleased)
+## 4.2.0-beta.7 (Unreleased)
 
+### Breaking Changes
+
+- Renamed `additionalAuthenticationData` factory method parameters to `additionalAuthenticatedData` to match properties and constructor parameters.
+- Renamed `parameters` parameter to `decryptParameters` for `CryptographyClient.Decrypt` and `DecryptAsync`.
+- Renamed `parameters` parameter to `encryptParameters` for `CryptographyClient.Encrypt` and `EncryptAsync`.
+
+## 4.2.0-beta.6 (2021-05-11)
+
+### Changed
+
+- Updated dependency versions
+
+## 4.1.1 (2021-05-04)
+
+### Changed
+
+- Updated dependency versions
+
+## 4.2.0-beta.5 (2021-03-09)
+
+### Added
+
+- `LocalCryptographyClientOptions` has been added to configure diagnostics for `CryptographyClient` when used for local-only operations.
+
+### Removed
+
+- `LocalCryptographyClient` has been removed. Use `CryptographyClient` with a `JsonWebKey` instead.
+
+## 4.2.0-beta.4 (2021-02-10)
+
+### Added
+
+- Added `CreateEcKeyOptions` class.
+- Added `CreateEcKey` and `CreateEcKeyAsync` methods to the `KeyClient` class.
+- Added constructor to `KeyVaultKeyIdentifier` to parse a `Uri`.
+
+### Changed
+
+- The default service version is now "7.2" (still in preview).
+- Renamed `EncryptOptions` to `EncryptParameters`.
+- Renamed `DecryptOptions` to `DecryptParameters`.
+- Made `EncryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
+- Made `DecryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
+
+### Removed
+
+- Removed local cryptographic support for AES-GCM.
+- Removed `Export` and `ExportAsync` methods from `KeyClient`.
+- Removed `Exportable` property from `KeyProperties`'.
+- Removed `KeyReleasePolicy` class and associated properties.
+- Removed `KeyVaultKeyIdentifier.Parse` and `KeyVaultKeyIdentifier.TryParse` in favor of the added constructor.
+
+## 4.2.0-beta.3 (2020-11-12)
+
+### Added
+
+- Added `KeyType.OctHsm` to support "oct-HSM" key operations.
+- Added AES-GCM and AES-CBC support for encrypting and decrypting, including new `Encrypt` and `Decrypt` overloads.
+- Added support for Secure Key Release including the `Export` method on `KeyClient` and `ReleasePolicy` property on various models.
 
 ## 4.2.0-beta.2 (2020-10-06)
 
@@ -66,7 +125,7 @@
 
 - Challenge-based authentication requests are only sent over HTTPS.
 
-## 4.0.0 (2019-11)
+## 4.0.0 (2019-11-01)
 
 ### Breaking changes
 

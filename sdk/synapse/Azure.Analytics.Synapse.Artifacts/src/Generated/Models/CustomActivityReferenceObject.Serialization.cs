@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CustomActivityReferenceObjectConverter))]
     public partial class CustomActivityReferenceObject : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -47,6 +50,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("linkedServices"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LinkedServiceReference> array = new List<LinkedServiceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -57,6 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("datasets"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DatasetReference> array = new List<DatasetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -67,6 +80,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new CustomActivityReferenceObject(Optional.ToList(linkedServices), Optional.ToList(datasets));
+        }
+
+        internal partial class CustomActivityReferenceObjectConverter : JsonConverter<CustomActivityReferenceObject>
+        {
+            public override void Write(Utf8JsonWriter writer, CustomActivityReferenceObject model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CustomActivityReferenceObject Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCustomActivityReferenceObject(document.RootElement);
+            }
         }
     }
 }

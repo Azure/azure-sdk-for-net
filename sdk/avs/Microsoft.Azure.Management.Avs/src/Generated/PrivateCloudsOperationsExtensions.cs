@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IPage<PrivateCloud> List(this IPrivateCloudsOperations operations, string resourceGroupName)
             {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -176,17 +176,17 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            /// <param name='privateCloud'>
-            /// The private cloud
+            /// <param name='privateCloudUpdate'>
+            /// The private cloud properties to be updated
             /// </param>
-            public static PrivateCloud Update(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, PrivateCloud privateCloud)
+            public static PrivateCloud Update(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, PrivateCloudUpdate privateCloudUpdate)
             {
-                return operations.UpdateAsync(resourceGroupName, privateCloudName, privateCloud).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, privateCloudName, privateCloudUpdate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -196,20 +196,20 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            /// <param name='privateCloud'>
-            /// The private cloud
+            /// <param name='privateCloudUpdate'>
+            /// The private cloud properties to be updated
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateCloud> UpdateAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, PrivateCloud privateCloud, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateCloud> UpdateAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, PrivateCloudUpdate privateCloudUpdate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, privateCloud, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, privateCloudUpdate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -253,13 +253,87 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
+            /// Rotate the vCenter password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            public static void RotateVcenterPassword(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName)
+            {
+                operations.RotateVcenterPasswordAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate the vCenter password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RotateVcenterPasswordAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RotateVcenterPasswordWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Rotate the NSX-T Manager password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            public static void RotateNsxtPassword(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName)
+            {
+                operations.RotateNsxtPasswordAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate the NSX-T Manager password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RotateNsxtPasswordAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RotateNsxtPasswordWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// List the admin credentials for the private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -276,7 +350,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -299,7 +373,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -319,7 +393,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -345,17 +419,17 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            /// <param name='privateCloud'>
-            /// The private cloud
+            /// <param name='privateCloudUpdate'>
+            /// The private cloud properties to be updated
             /// </param>
-            public static PrivateCloud BeginUpdate(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, PrivateCloud privateCloud)
+            public static PrivateCloud BeginUpdate(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, PrivateCloudUpdate privateCloudUpdate)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, privateCloudName, privateCloud).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, privateCloudName, privateCloudUpdate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -365,20 +439,20 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            /// <param name='privateCloud'>
-            /// The private cloud
+            /// <param name='privateCloudUpdate'>
+            /// The private cloud properties to be updated
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateCloud> BeginUpdateAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, PrivateCloud privateCloud, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateCloud> BeginUpdateAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, PrivateCloudUpdate privateCloudUpdate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, privateCloud, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, privateCloudUpdate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -391,7 +465,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -408,7 +482,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -419,6 +493,80 @@ namespace Microsoft.Azure.Management.Avs
             public static async Task BeginDeleteAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Rotate the vCenter password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            public static void BeginRotateVcenterPassword(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName)
+            {
+                operations.BeginRotateVcenterPasswordAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate the vCenter password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRotateVcenterPasswordAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRotateVcenterPasswordWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Rotate the NSX-T Manager password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            public static void BeginRotateNsxtPassword(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName)
+            {
+                operations.BeginRotateNsxtPasswordAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate the NSX-T Manager password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRotateNsxtPasswordAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRotateNsxtPasswordWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

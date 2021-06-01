@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Definition of a Resource.
+    /// Definition of a Resource
     /// </summary>
     public partial class Resource : IResource
     {

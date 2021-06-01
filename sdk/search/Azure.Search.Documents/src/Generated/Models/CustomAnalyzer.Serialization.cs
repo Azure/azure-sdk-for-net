@@ -61,6 +61,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("tokenFilters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TokenFilterName> array = new List<TokenFilterName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -71,6 +76,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("charFilters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

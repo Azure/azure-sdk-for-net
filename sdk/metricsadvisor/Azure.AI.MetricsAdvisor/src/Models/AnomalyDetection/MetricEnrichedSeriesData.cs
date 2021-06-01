@@ -14,11 +14,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// point is represented by the same index across these lists.
     /// </summary>
     [CodeGenModel("SeriesResult")]
-    [CodeGenSuppress(nameof(MetricEnrichedSeriesData), typeof(SeriesIdentity), typeof(IEnumerable<DateTimeOffset>), typeof(IEnumerable<double>), typeof(IEnumerable<bool>), typeof(IEnumerable<int>), typeof(IEnumerable<double>), typeof(IEnumerable<double>), typeof(IEnumerable<double>))]
+    [CodeGenSuppress(nameof(MetricEnrichedSeriesData), typeof(SeriesIdentity), typeof(IEnumerable<DateTimeOffset>), typeof(IEnumerable<double>), typeof(IEnumerable<bool?>), typeof(IEnumerable<int?>), typeof(IEnumerable<double?>), typeof(IEnumerable<double?>), typeof(IEnumerable<double?>))]
     [CodeGenSuppress("Series")]
     public partial class MetricEnrichedSeriesData
     {
-        internal MetricEnrichedSeriesData(SeriesIdentity series, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<double> values, IReadOnlyList<bool> isAnomaly, IReadOnlyList<int> periods, IReadOnlyList<double> expectedValues, IReadOnlyList<double> lowerBoundaries, IReadOnlyList<double> upperBoundaries)
+        internal MetricEnrichedSeriesData(SeriesIdentity series, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<double> values, IReadOnlyList<bool?> isAnomaly, IReadOnlyList<int?> periods, IReadOnlyList<double?> expectedValues, IReadOnlyList<double?> lowerBoundaries, IReadOnlyList<double?> upperBoundaries)
         {
             SeriesKey = new DimensionKey(series.Dimension);
             Timestamps = timestamps;
@@ -54,21 +54,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// detector.
         /// </summary>
         [CodeGenMember("ExpectedValueList")]
-        public IReadOnlyList<double> ExpectedValues { get; }
+        public IReadOnlyList<double?> ExpectedValues { get; }
 
         /// <summary>
         /// Whether or not a data point is considered an anomaly, according to the
         /// associated <see cref="AnomalyDetectionConfiguration"/>.
         /// </summary>
         [CodeGenMember("IsAnomalyList")]
-        public IReadOnlyList<bool> IsAnomaly { get; }
+        public IReadOnlyList<bool?> IsAnomaly { get; }
 
         /// <summary>
         /// The period of every data point in this time series, measured in amount of
         /// points.
         /// </summary>
         [CodeGenMember("PeriodList")]
-        public IReadOnlyList<int> Periods { get; }
+        public IReadOnlyList<int?> Periods { get; }
 
         /// <summary>
         /// The lower boundaries the data points in this time series must cross to
@@ -76,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// smart detector.
         /// </summary>
         [CodeGenMember("LowerBoundaryList")]
-        public IReadOnlyList<double> LowerBoundaries { get; }
+        public IReadOnlyList<double?> LowerBoundaries { get; }
 
         /// <summary>
         /// The upper boundaries the data points in this time series must cross to
@@ -84,6 +84,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// smart detector.
         /// </summary>
         [CodeGenMember("UpperBoundaryList")]
-        public IReadOnlyList<double> UpperBoundaries { get; }
+        public IReadOnlyList<double?> UpperBoundaries { get; }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkListUsageResult
+    internal partial class VirtualNetworkListUsageResult
     {
         internal static VirtualNetworkListUsageResult DeserializeVirtualNetworkListUsageResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VirtualNetworkUsage> array = new List<VirtualNetworkUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

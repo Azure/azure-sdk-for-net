@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         {
                             var key = prop.Element(XName.Get("Key", AdministrationClientConstants.ServiceBusNamespace))?.Value;
                             var value = XmlObjectConvertor.ParseValueObject(prop.Element(XName.Get("Value", AdministrationClientConstants.ServiceBusNamespace)));
-                            correlationRuleFilter.Properties.Add(key, value);
+                            correlationRuleFilter.ApplicationProperties.Add(key, value);
                         }
                         break;
                     default:
@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                     "Properties",
                     AdministrationClientConstants.ServiceBusNamespace));
 
-            foreach (KeyValuePair<string, object> param in filter.Properties)
+            foreach (KeyValuePair<string, object> param in filter.ApplicationProperties)
             {
                 parameterElement.Add(
                     new XElement(XName.Get("KeyValueOfstringanyType", AdministrationClientConstants.ServiceBusNamespace),

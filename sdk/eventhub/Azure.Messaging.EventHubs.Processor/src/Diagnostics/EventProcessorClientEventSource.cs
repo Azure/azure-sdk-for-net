@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         public static EventProcessorClientEventSource Log { get; } = new EventProcessorClientEventSource(EventSourceName);
 
         /// <summary>
-        ///   Prevents an instance of the <see cref="EventProcessorClientEventSource"/> class from being created
+        ///   Prevents an instance of the <see cref="EventProcessorClientEventSource" /> class from being created
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Prevents an instance of the <see cref="EventProcessorClientEventSource"/> class from being created
+        ///   Prevents an instance of the <see cref="EventProcessorClientEventSource" /> class from being created
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
@@ -176,6 +176,27 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(25, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the process of cleaning up after startup validation has experienced an exception.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(26, Level = EventLevel.Error, Message = "An exception occurred while attempting to perform cleanup after validating the processor configuration and permissions during startup for processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}'")]
+        public virtual void ValidationCleanupError(string identifier,
+                                                   string eventHubName,
+                                                   string consumerGroup,
+                                                   string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(26, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class LogSearchRuleResourceCollection
+    internal partial class LogSearchRuleResourceCollection
     {
         internal static LogSearchRuleResourceCollection DeserializeLogSearchRuleResourceCollection(JsonElement element)
         {
@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LogSearchRuleResource> array = new List<LogSearchRuleResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

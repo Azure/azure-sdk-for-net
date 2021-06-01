@@ -81,10 +81,20 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("stepId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             stepId = property0.Value.GetInt32();
                             continue;
                         }
@@ -100,16 +110,31 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("action"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             action = JobStepAction.DeserializeJobStepAction(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("output"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             output = JobStepOutput.DeserializeJobStepOutput(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("executionOptions"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             executionOptions = JobStepExecutionOptions.DeserializeJobStepExecutionOptions(property0.Value);
                             continue;
                         }

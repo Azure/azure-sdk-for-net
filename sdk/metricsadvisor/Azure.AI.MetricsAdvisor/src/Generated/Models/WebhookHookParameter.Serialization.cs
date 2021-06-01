@@ -16,8 +16,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpoint");
-            writer.WriteStringValue(Endpoint);
+            if (Optional.IsDefined(Endpoint))
+            {
+                writer.WritePropertyName("endpoint");
+                writer.WriteStringValue(Endpoint);
+            }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");
@@ -54,7 +57,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static WebhookHookParameter DeserializeWebhookHookParameter(JsonElement element)
         {
-            string endpoint = default;
+            Optional<string> endpoint = default;
             Optional<string> username = default;
             Optional<string> password = default;
             Optional<IDictionary<string, string>> headers = default;
@@ -79,6 +82,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("headers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -98,7 +106,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new WebhookHookParameter(endpoint, username.Value, password.Value, Optional.ToDictionary(headers), certificateKey.Value, certificatePassword.Value);
+            return new WebhookHookParameter(endpoint.Value, username.Value, password.Value, Optional.ToDictionary(headers), certificateKey.Value, certificatePassword.Value);
         }
     }
 }

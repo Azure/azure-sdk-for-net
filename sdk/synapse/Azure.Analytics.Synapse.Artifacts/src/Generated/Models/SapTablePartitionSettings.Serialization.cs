@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SapTablePartitionSettingsConverter))]
     public partial class SapTablePartitionSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -48,26 +51,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("partitionColumnName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionColumnName = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionUpperBound"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionUpperBound = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionLowerBound"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionLowerBound = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("maxPartitionsNumber"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxPartitionsNumber = property.Value.GetObject();
                     continue;
                 }
             }
             return new SapTablePartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, maxPartitionsNumber.Value);
+        }
+
+        internal partial class SapTablePartitionSettingsConverter : JsonConverter<SapTablePartitionSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, SapTablePartitionSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SapTablePartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSapTablePartitionSettings(document.RootElement);
+            }
         }
     }
 }

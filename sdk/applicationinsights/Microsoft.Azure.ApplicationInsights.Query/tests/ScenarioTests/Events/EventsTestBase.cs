@@ -35,8 +35,11 @@ namespace Data.ApplicationInsights.Tests.Events
 
             Assert.NotNull(evnt.Timestamp);
             // CustomDimensions & CustomMeasurements can be null
-            if (evnt.CustomDimensions != null && evnt.CustomDimensions.TryGetValue("ProcessId", out var value)) {
-                Assert.NotNull(value);
+            if (evnt.CustomDimensions != null && evnt.CustomDimensions.TryGetValue("ProcessId", out var customDimensionsValue)) {
+                Assert.False(string.IsNullOrWhiteSpace(customDimensionsValue));
+            }
+            if (evnt.CustomMeasurements != null && evnt.CustomMeasurements.TryGetValue("FirstChanceExceptions", out var customMeasurementsValue)) {
+                Assert.False(string.IsNullOrWhiteSpace(customMeasurementsValue));
             }
 
             // Operation

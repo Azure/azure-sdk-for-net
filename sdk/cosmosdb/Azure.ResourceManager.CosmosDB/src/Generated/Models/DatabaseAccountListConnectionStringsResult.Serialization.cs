@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("connectionStrings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DatabaseAccountConnectionString> array = new List<DatabaseAccountConnectionString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

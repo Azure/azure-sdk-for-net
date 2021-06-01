@@ -44,11 +44,21 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("authorization"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     authorization = SenderAuthorization.DeserializeSenderAuthorization(property.Value);
                     continue;
                 }
                 if (property.NameEquals("claims"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -84,21 +94,41 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("eventName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     eventName = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("category"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     category = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("httpRequest"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     httpRequest = HttpRequestInfo.DeserializeHttpRequestInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("level"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     level = property.Value.GetString().ToEventLevel();
                     continue;
                 }
@@ -109,6 +139,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("resourceProviderName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     resourceProviderName = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
@@ -119,6 +154,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("resourceType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     resourceType = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
@@ -129,11 +169,21 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("operationName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     operationName = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -144,21 +194,41 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     subStatus = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     eventTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("submissionTimestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     submissionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

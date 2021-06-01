@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("priority"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     priority = property.Value.GetInt32();
                     continue;
                 }

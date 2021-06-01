@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         private readonly DataLakeSasPermissions _sasPermissions = DataLakeSasPermissions.All;
 
-        [Test]
+        [RecordedTest]
         public void EnsureStateTests()
         {
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder();
@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new InvalidOperationException("SAS is missing required parameter: ExpiresOn"));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("TLXDWCAR")]
         [TestCase("racwdxlt")]
         public async Task AccountPermissionsRawPermissions(string permissionsString)
@@ -64,13 +64,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Uri uri = new Uri($"{test.FileSystem.Uri}?{accountSasBuilder.ToSasQueryParameters(sharedKeyCredential)}");
 
-            DataLakeFileSystemClient sasFileSystemClient = new DataLakeFileSystemClient(uri, GetOptions());
+            DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(uri, GetOptions()));
 
             // Act
             await sasFileSystemClient.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AccountPermissionsRawPermissions_InvalidPermission()
         {
             // Arrange
@@ -90,10 +90,45 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new ArgumentException("e is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
-        [TestCase("LDWCAR")]
-        [TestCase("racwdl")]
+        [TestCase(DataLakeFileSystemSasPermissions.List)]
+        [TestCase(DataLakeFileSystemSasPermissions.Read | DataLakeFileSystemSasPermissions.List)]
+        [TestCase(DataLakeFileSystemSasPermissions.All)]
+        public async Task SetPermissions_Filesystem(DataLakeFileSystemSasPermissions permissions)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                FileSystemName = test.FileSystem.Name
+            };
+
+            dataLakeSasBuilder.SetPermissions(permissions);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
+            {
+                Sas = dataLakeSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            await foreach (PathItem pathItem in sasFileSystemClient.GetPathsAsync())
+            {
+                // Just make sure the call succeeds.
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        [TestCase("LDWCMEAOPR")]
+        [TestCase("racwdlmeop")]
         public async Task FileSystemPermissionsRawPermissions(string permissionsString)
         {
             // Arrange
@@ -117,7 +152,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = dataLakeSasBuilder.ToSasQueryParameters(sharedKeyCredential)
             };
 
-            DataLakeFileSystemClient sasFileSystemClient = new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions());
+            DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
 
             // Act
             await foreach (PathItem pathItem in sasFileSystemClient.GetPathsAsync())
@@ -126,8 +161,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-
-        [Test]
+        [RecordedTest]
         public async Task FileSystemPermissionsRawPermissions_Invalid()
         {
             // Arrange
@@ -148,7 +182,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new ArgumentException("s is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         [TestCase("LDWCAMEROP")]
         [TestCase("racwdlmeop")]
@@ -186,7 +220,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
             };
 
-            DataLakeFileSystemClient sasFileSystemClient = new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions());
+            DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
 
             // Act
             await foreach (PathItem pathItem in sasFileSystemClient.GetPathsAsync())
@@ -195,7 +229,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_DirectoryRawPermissions_Exists()
         {
@@ -229,13 +263,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
             };
 
-            DataLakeDirectoryClient sasDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilder.ToUri(), GetOptions());
+            DataLakeDirectoryClient sasDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(dataLakeUriBuilder.ToUri(), GetOptions()));
 
             // Act
             await sasDirectoryClient.ExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_DirectoryRawPermissions_List()
         {
@@ -270,7 +304,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
             };
 
-            DataLakeFileSystemClient sasFileSystemClient = new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions());
+            DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
 
             await foreach (PathItem pathItem in sasFileSystemClient.GetPathsAsync(directory.Path))
             {
@@ -278,7 +312,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_PreauthorizedAgentObjectId()
         {
@@ -312,7 +346,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
             };
 
-            DataLakeFileSystemClient sasFileSystemClient = new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions());
+            DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
 
             // Act
             await foreach (PathItem pathItem in sasFileSystemClient.GetPathsAsync())
@@ -321,14 +355,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_AgentObjectId()
         {
             // Arrange
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             string fileSystemName = GetNewFileSystemName();
-            string directoryName = GetNewDirectoryName();
             string unknownGuid = Recording.Random.NewGuid().ToString();
 
             await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
@@ -366,13 +399,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
             };
 
-            DataLakeDirectoryClient sasDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilder.ToUri(), GetOptions());
+            DataLakeDirectoryClient sasDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(dataLakeUriBuilder.ToUri(), GetOptions()));
 
             // Act
             DataLakeFileClient file = await sasDirectoryClient.CreateFileAsync(GetNewFileName());
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_AgentObjectId_Error()
         {
@@ -406,7 +439,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
             };
 
-            DataLakeFileSystemClient sasFileSystemClient = new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions());
+            DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -414,7 +447,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.IsNotNull(e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_BothObjectId_Error()
         {
@@ -449,7 +482,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new InvalidOperationException("SAS cannot have the following parameters specified in conjunction: PreauthorizedAgentObjectId, AgentObjectId"));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_CorrelationId()
         {
@@ -476,14 +509,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                 CorrelationId = Recording.Random.NewGuid().ToString()
             };
 
-            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
+            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.List);
 
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
             {
                 Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
             };
 
-            DataLakeFileSystemClient sasFileSystemClient = new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions());
+            DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
 
             // Act
             await foreach (PathItem pathItem in sasFileSystemClient.GetPathsAsync())
@@ -492,7 +525,47 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DataLakeSasBuilder_DirectoryDepth_SharedKey()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory2 = await subdirectory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = await subdirectory3.CreateFileAsync(GetNewFileName());
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                FileSystemName = test.FileSystem.Name,
+                Path = subdirectory3.Path,
+                IsDirectory = true
+            };
+
+            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(subdirectory3.Uri)
+            {
+                Sas = dataLakeSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            DataLakeDirectoryClient sasDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(dataLakeUriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            await sasDirectoryClient.ExistsAsync();
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task DataLakeSasBuilder_DirectoryDepth_Exists()
         {
@@ -528,13 +601,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName)
             };
 
-            DataLakeDirectoryClient sasDirectoryClient = new DataLakeDirectoryClient(dataLakeUriBuilder.ToUri(), GetOptions());
+            DataLakeDirectoryClient sasDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(dataLakeUriBuilder.ToUri(), GetOptions()));
 
             // Act
             await sasDirectoryClient.ExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("/")] // Root Directory
         [TestCase("d1")]
         [TestCase("d1/d2/d3/d4/d5")]

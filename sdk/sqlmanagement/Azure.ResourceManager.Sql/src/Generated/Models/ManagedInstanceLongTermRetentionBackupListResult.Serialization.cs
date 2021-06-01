@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceLongTermRetentionBackupListResult
+    internal partial class ManagedInstanceLongTermRetentionBackupListResult
     {
         internal static ManagedInstanceLongTermRetentionBackupListResult DeserializeManagedInstanceLongTermRetentionBackupListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedInstanceLongTermRetentionBackup> array = new List<ManagedInstanceLongTermRetentionBackup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

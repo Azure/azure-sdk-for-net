@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the SqlPoolColumn class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="columnType">The column data type. Possible values
         /// include: 'image', 'text', 'uniqueidentifier', 'date', 'time',
         /// 'datetime2', 'datetimeoffset', 'tinyint', 'smallint', 'int',
@@ -46,10 +46,13 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// 'bigint', 'hierarchyid', 'geometry', 'geography', 'varbinary',
         /// 'varchar', 'binary', 'char', 'timestamp', 'nvarchar', 'nchar',
         /// 'xml', 'sysname'</param>
-        public SqlPoolColumn(string id = default(string), string name = default(string), string type = default(string), string columnType = default(string))
+        /// <param name="isComputed">Indicates whether column value is computed
+        /// or not</param>
+        public SqlPoolColumn(string id = default(string), string name = default(string), string type = default(string), string columnType = default(string), bool? isComputed = default(bool?))
             : base(id, name, type)
         {
             ColumnType = columnType;
+            IsComputed = isComputed;
             CustomInit();
         }
 
@@ -69,6 +72,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.columnType")]
         public string ColumnType { get; set; }
+
+        /// <summary>
+        /// Gets indicates whether column value is computed or not
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isComputed")]
+        public bool? IsComputed { get; private set; }
 
     }
 }

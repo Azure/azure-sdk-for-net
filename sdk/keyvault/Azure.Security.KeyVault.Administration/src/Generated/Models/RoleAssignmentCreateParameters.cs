@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of RoleAssignmentCreateParameters. </summary>
         /// <param name="properties"> Role assignment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public RoleAssignmentCreateParameters(KeyVaultRoleAssignmentProperties properties)
+        public RoleAssignmentCreateParameters(KeyVaultRoleAssignmentPropertiesInternal properties)
         {
             if (properties == null)
             {
@@ -26,6 +27,6 @@ namespace Azure.Security.KeyVault.Administration.Models
         }
 
         /// <summary> Role assignment properties. </summary>
-        public KeyVaultRoleAssignmentProperties Properties { get; }
+        public KeyVaultRoleAssignmentPropertiesInternal Properties { get; }
     }
 }

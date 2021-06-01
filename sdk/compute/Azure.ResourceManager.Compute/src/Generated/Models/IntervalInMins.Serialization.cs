@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class IntervalInMinsExtensions
+    internal static partial class IntervalInMinsExtensions
     {
         public static string ToSerialString(this IntervalInMins value) => value switch
         {

@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("indexes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Indexes> array = new List<Indexes>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -6,15 +6,12 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.Media</PackageId>
         <Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
-        <Version>2.0.5</Version>
+        <Version>3.0.4</Version>
         <AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
         <PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-        Updates to the V3 API include:
-        
-        * Ability to play fairplay protected content offline.
-        * Added ContentAwareEncoding preset.
+        For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/mediaservices/Microsoft.Azure.Management.Media/CHANGELOG.md
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         private int _prefetchCount = 300;
 
         /// <summary>The prefetch size limit to use for the partition receiver.</summary>
-        private long? _prefetchSizeInBytes = default;
+        private long? _prefetchSizeInBytes;
 
         /// <summary>The desired amount of time to allow between load balancing verification attempts.</summary>
         private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(10);
@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   The maximum amount of time to wait for an event to become available for a given partition before emitting
+        ///   The maximum amount of time to wait for events to become available from a given partition before emitting
         ///   an empty batch of events.
         /// </summary>
         ///

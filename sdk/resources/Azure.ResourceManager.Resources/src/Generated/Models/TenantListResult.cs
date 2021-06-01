@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Tenant Ids information. </summary>
-    public partial class TenantListResult
+    internal partial class TenantListResult
     {
         /// <summary> Initializes a new instance of TenantListResult. </summary>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>

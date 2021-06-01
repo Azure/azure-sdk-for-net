@@ -1,0 +1,171 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes?api-version=2020-06-30",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "Content-Length": "412",
+        "Content-Type": "application/json",
+        "traceparent": "00-d7088d7e1de51648b81f5436e6ef5286-10a6528c61987943-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "66f853ad5f2eda57db26a01bb73effc9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "psetyxxt",
+        "fields": [
+          {
+            "name": "id",
+            "type": "Edm.String",
+            "key": true,
+            "retrievable": true,
+            "searchable": false,
+            "filterable": false,
+            "sortable": false,
+            "facetable": false
+          },
+          {
+            "name": "title",
+            "type": "Edm.String",
+            "key": false,
+            "retrievable": true,
+            "searchable": true,
+            "filterable": true,
+            "sortable": false,
+            "facetable": false
+          }
+        ],
+        "scoringProfiles": [
+          {
+            "name": "atqhwpvc",
+            "text": {
+              "weights": {
+                "title": 2
+              }
+            }
+          }
+        ],
+        "defaultScoringProfile": "atqhwpvc"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "66f853ad-5f2e-da57-db26-a01bb73effc9",
+        "Content-Length": "940",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Sat, 27 Mar 2021 18:43:46 GMT",
+        "elapsed-time": "610",
+        "ETag": "W/\u00220x8D8F1504112BAFE\u0022",
+        "Expires": "-1",
+        "Location": "https://mohitc-acs.search.windows.net/indexes(\u0027psetyxxt\u0027)?api-version=2020-06-30",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "66f853ad-5f2e-da57-db26-a01bb73effc9",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "66f853ad-5f2e-da57-db26-a01bb73effc9"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D8F1504112BAFE\u0022",
+        "name": "psetyxxt",
+        "defaultScoringProfile": "atqhwpvc",
+        "fields": [
+          {
+            "name": "id",
+            "type": "Edm.String",
+            "searchable": false,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": true,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+          },
+          {
+            "name": "title",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+          }
+        ],
+        "scoringProfiles": [
+          {
+            "name": "atqhwpvc",
+            "functionAggregation": null,
+            "text": {
+              "weights": {
+                "title": 2.0
+              }
+            },
+            "functions": []
+          }
+        ],
+        "corsOptions": null,
+        "suggesters": [],
+        "analyzers": [],
+        "tokenizers": [],
+        "tokenFilters": [],
+        "charFilters": [],
+        "encryptionKey": null,
+        "similarity": {
+          "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
+          "k1": null,
+          "b": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027psetyxxt\u0027)?api-version=2020-06-30",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-7e32a0c8a62a0d4782a6982847f09400-582de36a0023484c-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "9f208a68fc91ac26bb4221eeaaa6a1c7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "9f208a68-fc91-ac26-bb42-21eeaaa6a1c7",
+        "Date": "Sat, 27 Mar 2021 18:43:46 GMT",
+        "elapsed-time": "169",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "9f208a68-fc91-ac26-bb42-21eeaaa6a1c7",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "9f208a68-fc91-ac26-bb42-21eeaaa6a1c7"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1609538893",
+    "SearchIndexName": "psetyxxt",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
+  }
+}

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class DirectoryObjectListResult
+    internal partial class DirectoryObjectListResult
     {
         internal static DirectoryObjectListResult DeserializeDirectoryObjectListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DirectoryObject> array = new List<DirectoryObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

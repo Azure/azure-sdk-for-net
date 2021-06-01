@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,18 +14,28 @@ namespace Azure.Core.TestFramework
     public class RecordedTestSanitizer
     {
         public const string SanitizeValue = "Sanitized";
-        public List<string> JsonPathSanitizers { get; } = new List<string>();
+        private List<(string JsonPath, Func<JToken, JToken> Sanitizer)> JsonPathSanitizers { get; } = new();
 
         /// <summary>
         /// This is just a temporary workaround to avoid breaking tests that need to be re-recorded
         //  when updating the JsonPathSanitizer logic to avoid changing date formats when deserializing requests.
         //  this property will be removed in the future.
         /// </summary>
-        public bool DoNotConvertJsonDateTokens { get; set; }
+        public bool LegacyConvertJsonDateTokens { get; set; }
 
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
 
+        private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
+        {
+            DateParseHandling = DateParseHandling.None
+        };
+
         public List<string> SanitizedHeaders { get; } = new List<string> { "Authorization" };
+
+        public void AddJsonPathSanitizer(string jsonPath, Func<JToken, JToken> sanitizer = null)
+        {
+            JsonPathSanitizers.Add((jsonPath, sanitizer ?? (_ => JToken.FromObject(SanitizeValue))));
+        }
 
         public virtual string SanitizeUri(string uri)
         {
@@ -48,31 +59,26 @@ namespace Azure.Core.TestFramework
                 return body;
             try
             {
-                var settings = new JsonSerializerSettings
-                {
-                    DateParseHandling = DateParseHandling.None
-                };
-
                 JToken jsonO;
                 // Prevent default behavior where JSON.NET will convert DateTimeOffset
                 // into a DateTime.
-                if (DoNotConvertJsonDateTokens)
+                if (!LegacyConvertJsonDateTokens)
                 {
-                    jsonO = JsonConvert.DeserializeObject<JToken>(body, settings);
+                    jsonO = JsonConvert.DeserializeObject<JToken>(body, SerializerSettings);
                 }
                 else
                 {
                     jsonO = JToken.Parse(body);
                 }
 
-                foreach (string jsonPath in JsonPathSanitizers)
+                foreach (var (jsonPath, sanitizer) in JsonPathSanitizers)
                 {
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
                     {
-                        token.Replace(JToken.FromObject(SanitizeValue));
+                        token.Replace(sanitizer(token));
                     }
                 }
-                return JsonConvert.SerializeObject(jsonO, settings);
+                return JsonConvert.SerializeObject(jsonO, SerializerSettings);
             }
             catch
             {

@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (property.NameEquals("keyVaultProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<KeyVaultProperties> array = new List<KeyVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

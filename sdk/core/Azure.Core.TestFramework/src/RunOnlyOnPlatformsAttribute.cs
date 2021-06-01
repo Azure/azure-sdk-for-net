@@ -18,13 +18,14 @@ namespace Azure.Core.TestFramework
         public bool OSX { get; set; }
         public bool Windows { get; set; }
         public string[] ContainerNames { get; set; }
+        public string Reason { get; set; }
 
         public void ApplyToTest(Test test)
         {
             if (test.RunState != RunState.NotRunnable && !CanRunOnPlatform())
             {
                 test.RunState = RunState.Ignored;
-                test.Properties.Set(PropertyNames.SkipReason, $"This test can't' run on {RuntimeInformation.OSDescription}.");
+                test.Properties.Set(PropertyNames.SkipReason, $"This test can't' run on {RuntimeInformation.OSDescription}. {Reason}");
             }
         }
 

@@ -36,7 +36,12 @@ namespace Azure.Identity
 
         internal static Uri GetDefault()
         {
-            return EnvironmentVariables.AuthorityHost != null ? new Uri(EnvironmentVariables.AuthorityHost) : AzurePublicCloud;
+            if (EnvironmentVariables.AuthorityHost != null)
+            {
+                return new Uri(EnvironmentVariables.AuthorityHost);
+            }
+
+            return AzurePublicCloud;
         }
 
         internal static string GetDefaultScope(Uri authorityHost)

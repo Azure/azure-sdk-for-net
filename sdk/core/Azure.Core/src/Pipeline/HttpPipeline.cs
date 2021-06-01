@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class HttpPipeline
     {
+        private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
+
         private readonly HttpPipelineTransport _transport;
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
@@ -66,6 +69,7 @@ namespace Azure.Core.Pipeline
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
+            AddHttpMessageProperties(message);
             return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
         }
 
@@ -77,6 +81,7 @@ namespace Azure.Core.Pipeline
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
+            AddHttpMessageProperties(message);
             _pipeline.Span[0].Process(message, _pipeline.Slice(1));
         }
         /// <summary>
@@ -124,7 +129,68 @@ namespace Azure.Core.Pipeline
         /// </example>
         public static IDisposable CreateClientRequestIdScope(string? clientRequestId)
         {
-            return ReadClientRequestIdPolicy.StartScope(clientRequestId);
+            return CreateHttpMessagePropertiesScope(new Dictionary<string, object?>() { { ReadClientRequestIdPolicy.MessagePropertyKey, clientRequestId } });
+        }
+
+        /// <summary>
+        /// Creates a scope in which all <see cref="HttpMessage"/>s would have provided properties.
+        /// </summary>
+        /// <param name="messageProperties">Properties to be added to <see cref="HttpMessage"/>s</param>
+        /// <returns>The <see cref="IDisposable"/> instance that needs to be disposed when properties shouldn't be used anymore.</returns>
+        public static IDisposable CreateHttpMessagePropertiesScope(IDictionary<string, object?> messageProperties)
+        {
+            Argument.AssertNotNull(messageProperties, nameof(messageProperties));
+            CurrentHttpMessagePropertiesScope.Value = new HttpMessagePropertiesScope(messageProperties, CurrentHttpMessagePropertiesScope.Value);
+            return CurrentHttpMessagePropertiesScope.Value;
+        }
+
+        private static void AddHttpMessageProperties(HttpMessage message)
+        {
+            if (CurrentHttpMessagePropertiesScope.Value != null)
+            {
+                foreach (KeyValuePair<string, object?> kvp in CurrentHttpMessagePropertiesScope.Value.Properties)
+                {
+                    if (kvp.Value != null)
+                    {
+                        message.SetProperty(kvp.Key, kvp.Value);
+                    }
+                }
+            }
+        }
+
+        private class HttpMessagePropertiesScope : IDisposable
+        {
+            private readonly HttpMessagePropertiesScope? _parent;
+            private bool _disposed;
+
+            internal HttpMessagePropertiesScope(IDictionary<string, object?> messageProperties, HttpMessagePropertiesScope? parent)
+            {
+                if (parent != null)
+                {
+                    Properties = new Dictionary<string, object?>(parent.Properties);
+                    foreach (var kvp in messageProperties)
+                    {
+                        Properties[kvp.Key] = kvp.Value;
+                    }
+                }
+                else
+                {
+                    Properties = new Dictionary<string, object?>(messageProperties);
+                }
+                _parent = parent;
+            }
+
+            public Dictionary<string, object?> Properties { get; }
+
+            public void Dispose()
+            {
+                if (_disposed)
+                {
+                    return;
+                }
+                CurrentHttpMessagePropertiesScope.Value = _parent;
+                _disposed = true;
+            }
         }
     }
 }

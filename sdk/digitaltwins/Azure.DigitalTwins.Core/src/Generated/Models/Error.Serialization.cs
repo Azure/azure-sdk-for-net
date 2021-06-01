@@ -33,6 +33,11 @@ namespace Azure.DigitalTwins.Core
                 }
                 if (property.NameEquals("details"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Error> array = new List<Error>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -43,6 +48,11 @@ namespace Azure.DigitalTwins.Core
                 }
                 if (property.NameEquals("innererror"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     innererror = InnerError.DeserializeInnerError(property.Value);
                     continue;
                 }

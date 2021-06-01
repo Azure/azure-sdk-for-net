@@ -62,26 +62,51 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("indexingPolicy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     indexingPolicy = IndexingPolicy.DeserializeIndexingPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionKey = ContainerPartitionKey.DeserializeContainerPartitionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultTtl"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     defaultTtl = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("uniqueKeyPolicy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     uniqueKeyPolicy = UniqueKeyPolicy.DeserializeUniqueKeyPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("conflictResolutionPolicy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value);
                     continue;
                 }

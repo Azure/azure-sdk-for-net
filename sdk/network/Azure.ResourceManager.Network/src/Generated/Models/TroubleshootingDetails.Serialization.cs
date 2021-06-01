@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("recommendedActions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TroubleshootingRecommendedActions> array = new List<TroubleshootingRecommendedActions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

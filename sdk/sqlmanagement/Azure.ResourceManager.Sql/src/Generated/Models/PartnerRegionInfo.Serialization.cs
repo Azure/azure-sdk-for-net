@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("replicationRole"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     replicationRole = new InstanceFailoverGroupReplicationRole(property.Value.GetString());
                     continue;
                 }

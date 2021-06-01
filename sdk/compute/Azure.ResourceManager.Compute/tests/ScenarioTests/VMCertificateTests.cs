@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.Compute.Tests
     [AsyncOnly]
     public class VMCertificateTests : VMTestBase
     {
-
         public VMCertificateTests(bool isAsync)
            : base(isAsync)
         {
@@ -62,8 +61,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
 
             var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imageRef, AddCertificateInfo);
-            VirtualMachine vm1 = returnTwoVM.Item1;
-            inputVM = returnTwoVM.Item2;
+            VirtualMachine vm1 = returnTwoVM.Response;
+            inputVM = returnTwoVM.Input;
             await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVM.Name));
         }
 

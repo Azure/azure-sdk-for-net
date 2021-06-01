@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(IotHubDeviceCreatedEventDataConverter))]
     public partial class IotHubDeviceCreatedEventData
     {
         internal static IotHubDeviceCreatedEventData DeserializeIotHubDeviceCreatedEventData(JsonElement element)
@@ -31,11 +34,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("twin"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     twin = DeviceTwinInfo.DeserializeDeviceTwinInfo(property.Value);
                     continue;
                 }
             }
             return new IotHubDeviceCreatedEventData(deviceId.Value, hubName.Value, twin.Value);
+        }
+
+        internal partial class IotHubDeviceCreatedEventDataConverter : JsonConverter<IotHubDeviceCreatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, IotHubDeviceCreatedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override IotHubDeviceCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeIotHubDeviceCreatedEventData(document.RootElement);
+            }
         }
     }
 }

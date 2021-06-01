@@ -5,6 +5,7 @@
     <VersionPrefix>1.0.0-preview</VersionPrefix>
     <AssemblyName>CosmosDB.Tests</AssemblyName>
     <Description>CosmosDB.Tests Class Library</Description>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="[14.0.0-preview,16.0)" />

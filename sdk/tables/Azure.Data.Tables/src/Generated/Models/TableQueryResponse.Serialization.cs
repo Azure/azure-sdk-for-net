@@ -26,6 +26,11 @@ namespace Azure.Data.Tables.Models
                 }
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TableItem> array = new List<TableItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

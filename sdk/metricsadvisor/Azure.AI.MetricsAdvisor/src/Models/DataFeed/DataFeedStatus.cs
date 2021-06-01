@@ -8,7 +8,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary>
     /// The current ingestion status of a <see cref="DataFeed"/>.
     /// </summary>
-    [CodeGenModel("DataFeedDetailStatus")]
+    [CodeGenModel("EntityStatus")]
     public readonly partial struct DataFeedStatus
     {
         /// <summary>
@@ -20,22 +20,5 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The <see cref="DataFeed"/> is paused.
         /// </summary>
         public static DataFeedStatus Paused { get; } = new DataFeedStatus(PausedValue);
-
-        /// <summary>
-        /// Converts this instance into an equivalent <see cref="EntityStatus"/>.
-        /// </summary>
-        /// <returns>The equivalent <see cref="EntityStatus"/>.</returns>
-        /// <remarks>
-        /// Currently, the swagger defines two types that are literally the same thing: DataFeedDetailStatus and EntityStatus.
-        /// We're exposing both as a single type: <see cref="DataFeedStatus"/>. The service client still requires an
-        /// <see cref="EntityStatus"/> in its methods, though, so this method makes conversion easier.
-        /// </remarks>
-        internal EntityStatus ConvertToEntityStatus() => _value switch
-        {
-            ActiveValue => EntityStatus.Active,
-            PausedValue => EntityStatus.Paused,
-            null => new EntityStatus(),
-            _ => new EntityStatus(_value)
-        };
     }
 }

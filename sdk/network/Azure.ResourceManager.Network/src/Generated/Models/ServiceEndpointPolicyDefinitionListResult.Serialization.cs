@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ServiceEndpointPolicyDefinitionListResult
+    internal partial class ServiceEndpointPolicyDefinitionListResult
     {
         internal static ServiceEndpointPolicyDefinitionListResult DeserializeServiceEndpointPolicyDefinitionListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ServiceEndpointPolicyDefinition> array = new List<ServiceEndpointPolicyDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

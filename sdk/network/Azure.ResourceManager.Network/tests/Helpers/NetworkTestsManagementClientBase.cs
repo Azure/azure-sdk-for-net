@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Compute;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
-using Azure.Management.Storage;
+using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Tests;
 using Azure.ResourceManager.TestFramework;
@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public ResourcesOperations ResourcesOperations { get; set; }
         public NetworkManagementOperations ServiceOperations { get; set; }
         public PrivateLinkServicesOperations PrivateLinkServicesOperations { get; set; }
-
 
         protected void Initialize()
         {
@@ -236,7 +235,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(string resourceGroupName, string circuitName,
             RouteFilter filter, NetworkManagementClient nrpClient)
         {
-
             ExpressRouteCircuitPeering peering = new ExpressRouteCircuitPeering()
             {
                 Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
@@ -262,7 +260,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             return getCircuitResponse;
         }
-
 
         public async Task<RouteFilter> CreateDefaultRouteFilter(string resourceGroupName, string filterName, string location,
             NetworkManagementClient nrpClient, bool containsRule = false)
@@ -404,6 +401,5 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     childResourceType,
                     childResourceName);
         }
-
     }
 }

@@ -81,13 +81,15 @@ namespace ResourceGroups.Tests
             string groupName = Recording.GenerateAssetName("csmrg");;
 
             var checkExistenceFirst = await ResourceGroupsOperations.CheckExistenceAsync(groupName);
-            Assert.AreEqual(404, checkExistenceFirst.Status);
+            Assert.AreEqual(false, checkExistenceFirst.Value);
+            Assert.AreEqual(404, checkExistenceFirst.GetRawResponse().Status);
 
             await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(DefaultLocation));
 
             var checkExistenceSecond = await ResourceGroupsOperations.CheckExistenceAsync(groupName);
 
-            Assert.AreEqual(204, checkExistenceSecond.Status);
+            Assert.AreEqual(true, checkExistenceSecond.Value);
+            Assert.AreEqual(204, checkExistenceSecond.GetRawResponse().Status);
         }
 
         [Test]

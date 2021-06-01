@@ -190,7 +190,6 @@ namespace Azure.Search.Documents.Indexes.Models
         [CodeGenMember("fields")]
         public IList<SearchField> Fields { get; }
 
-
         /// <inheritdoc/>
         /// <remarks>
         /// This always returns "<see cref="Name"/> : <see cref="Type"/>" and is meant for debugging purposes.

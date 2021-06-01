@@ -31,14 +31,14 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// </summary>
         /// <param name="complianceState">The compliance state of the
         /// configuration. Possible values include: 'Pending', 'Compliant',
-        /// 'Noncompliant'</param>
+        /// 'Noncompliant', 'Installed', 'Failed'</param>
         /// <param name="lastConfigApplied">Datetime the configuration was last
         /// applied.</param>
         /// <param name="message">Message from when the configuration was
         /// applied.</param>
         /// <param name="messageLevel">Level of the message. Possible values
         /// include: 'Error', 'Warning', 'Information'</param>
-        public ComplianceStatus(ComplianceState? complianceState = default(ComplianceState?), System.DateTime? lastConfigApplied = default(System.DateTime?), string message = default(string), MessageLevel? messageLevel = default(MessageLevel?))
+        public ComplianceStatus(string complianceState = default(string), System.DateTime? lastConfigApplied = default(System.DateTime?), string message = default(string), string messageLevel = default(string))
         {
             ComplianceState = complianceState;
             LastConfigApplied = lastConfigApplied;
@@ -54,10 +54,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 
         /// <summary>
         /// Gets the compliance state of the configuration. Possible values
-        /// include: 'Pending', 'Compliant', 'Noncompliant'
+        /// include: 'Pending', 'Compliant', 'Noncompliant', 'Installed',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "complianceState")]
-        public ComplianceState? ComplianceState { get; private set; }
+        public string ComplianceState { get; private set; }
 
         /// <summary>
         /// Gets or sets datetime the configuration was last applied.
@@ -76,7 +77,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// 'Error', 'Warning', 'Information'
         /// </summary>
         [JsonProperty(PropertyName = "messageLevel")]
-        public MessageLevel? MessageLevel { get; set; }
+        public string MessageLevel { get; set; }
 
     }
 }

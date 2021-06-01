@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IEnumerable<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
         int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public object this[string key]

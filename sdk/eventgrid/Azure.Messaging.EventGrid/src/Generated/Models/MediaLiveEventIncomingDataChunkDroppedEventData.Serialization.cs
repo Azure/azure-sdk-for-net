@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MediaLiveEventIncomingDataChunkDroppedEventDataConverter))]
     public partial class MediaLiveEventIncomingDataChunkDroppedEventData
     {
         internal static MediaLiveEventIncomingDataChunkDroppedEventData DeserializeMediaLiveEventIncomingDataChunkDroppedEventData(JsonElement element)
@@ -34,6 +37,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("bitrate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     bitrate = property.Value.GetInt64();
                     continue;
                 }
@@ -54,6 +62,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MediaLiveEventIncomingDataChunkDroppedEventData(timestamp.Value, trackType.Value, Optional.ToNullable(bitrate), timescale.Value, resultCode.Value, trackName.Value);
+        }
+
+        internal partial class MediaLiveEventIncomingDataChunkDroppedEventDataConverter : JsonConverter<MediaLiveEventIncomingDataChunkDroppedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MediaLiveEventIncomingDataChunkDroppedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MediaLiveEventIncomingDataChunkDroppedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMediaLiveEventIncomingDataChunkDroppedEventData(document.RootElement);
+            }
         }
     }
 }

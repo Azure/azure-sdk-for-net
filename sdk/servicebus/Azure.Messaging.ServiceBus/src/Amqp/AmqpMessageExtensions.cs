@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using System.Runtime.InteropServices;
 using Azure.Core.Amqp;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
+using IList = System.Collections.IList;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -15,71 +17,43 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
         {
-            return AmqpMessage.Create(((AmqpDataBody)message.AmqpMessage.Body).Data.AsAmqpData());
+            if (message.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                return AmqpMessage.Create(dataBody.AsAmqpData());
+            }
+            if (message.AmqpMessage.Body.TryGetValue(out object value))
+            {
+                if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(value, MappingType.MessageBody, out object amqpObject))
+                {
+                    return AmqpMessage.Create(new AmqpValue { Value = amqpObject });
+                }
+                else
+                {
+                    throw new NotSupportedException(Resources.InvalidAmqpMessageValueBody.FormatForUser(amqpObject?.GetType()));
+                }
+            }
+            if (message.AmqpMessage.Body.TryGetSequence(out IEnumerable<IList<object>> sequence))
+            {
+                return AmqpMessage.Create(sequence.Select(s => new AmqpSequence((IList)s)).ToList());
+            }
+
+            throw new NotSupportedException($"{message.AmqpMessage.Body.GetType()} is not a supported message body type.");
         }
 
-        private static IEnumerable<Data> AsAmqpData(this IEnumerable<BinaryData> binaryData)
+        private static IEnumerable<Data> AsAmqpData(this IEnumerable<ReadOnlyMemory<byte>> binaryData)
         {
-            foreach (BinaryData data in binaryData)
+            foreach (ReadOnlyMemory<byte> data in binaryData)
             {
+                if (!MemoryMarshal.TryGetArray(data, out ArraySegment<byte> segment))
+                {
+                    segment = new ArraySegment<byte>(data.ToArray());
+                }
+
                 yield return new Data
                 {
-                    Value = new ArraySegment<byte>(data.ToBytes().IsEmpty ? Array.Empty<byte>() : data.ToBytes().ToArray())
+                    Value = segment
                 };
             }
-        }
-
-        private static byte[] GetByteArray(this Data data)
-        {
-            switch (data.Value)
-            {
-                case byte[] byteArray:
-                    return byteArray;
-                case ArraySegment<byte> arraySegment when arraySegment.Count == arraySegment.Array?.Length:
-                    return arraySegment.Array;
-                case ArraySegment<byte> arraySegment:
-                    var bytes = new byte[arraySegment.Count];
-                    Array.ConstrainedCopy(
-                        sourceArray: arraySegment.Array,
-                        sourceIndex: arraySegment.Offset,
-                        destinationArray: bytes,
-                        destinationIndex: 0,
-                        length: arraySegment.Count);
-                    return bytes;
-                default:
-                    return null;
-            }
-        }
-
-        public static IList<BinaryData> GetDataViaDataBody(this AmqpMessage message)
-        {
-            IList<BinaryData> dataList = new List<BinaryData>();
-            foreach (Data data in (message.DataBody ?? Enumerable.Empty<Data>()))
-            {
-                dataList.Add(BinaryData.FromBytes(data.GetByteArray()));
-            }
-            return dataList;
-        }
-
-        // Returns via the out parameter the flattened collection of bytes.
-        // A majority of the time, data will only contain 1 element.
-        // The method is optimized for this situation to return the pre-existing array.
-        public static BinaryData ConvertAndFlattenData(this IEnumerable<BinaryData> dataList)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            Memory<byte> memory;
-            foreach (BinaryData data in dataList)
-            {
-                ReadOnlyMemory<byte> bytes = data.ToBytes();
-                memory = writer.GetMemory(bytes.Length);
-                bytes.CopyTo(memory);
-                writer.Advance(bytes.Length);
-            }
-            if (writer.WrittenCount == 0)
-            {
-                return new BinaryData();
-            }
-            return BinaryData.FromBytes(writer.WrittenMemory);
         }
 
         public static string GetPartitionKey(this AmqpAnnotatedMessage message)
@@ -123,6 +97,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 return (DateTime)val;
             }
             return default;
+        }
+
+        public static BinaryData GetBody(this AmqpAnnotatedMessage message)
+        {
+            if (message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                return BinaryData.FromBytes(MessageBody.FromReadOnlyMemorySegments(dataBody));
+            }
+            throw new NotSupportedException($"{message.Body.BodyType} cannot be retrieved using the {nameof(ServiceBusMessage.Body)} property." +
+                $"Use {nameof(ServiceBusMessage.GetRawAmqpMessage)} to access the underlying Amqp Message object.");
         }
     }
 }

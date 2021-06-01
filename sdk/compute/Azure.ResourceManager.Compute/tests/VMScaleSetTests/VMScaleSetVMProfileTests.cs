@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests.VMScaleSetTests
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Compute.Tests.VMScaleSetTests
                     createWithManagedDisks: true,
                     vmScaleSetCustomizer: vmProfileCustomizer
                     );
-                VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-                inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+                VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+                inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
 
                 var response = (await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName)).Value;
 
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Compute.Tests.VMScaleSetTests
                 createWithManagedDisks: true,
                 vmScaleSetCustomizer: vmProfileCustomizer
                 );
-            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             var response = (await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName)).Value;
 
             Assert.True(response.VirtualMachineProfile.DiagnosticsProfile.BootDiagnostics.Enabled.GetValueOrDefault(true));

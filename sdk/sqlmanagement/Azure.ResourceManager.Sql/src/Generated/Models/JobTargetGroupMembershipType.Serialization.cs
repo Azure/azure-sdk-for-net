@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class JobTargetGroupMembershipTypeExtensions
+    internal static partial class JobTargetGroupMembershipTypeExtensions
     {
         public static string ToSerialString(this JobTargetGroupMembershipType value) => value switch
         {

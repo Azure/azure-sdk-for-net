@@ -26,7 +26,7 @@ namespace NetApp.Tests.ResourceTests
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });                
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 //create account
                 ResourceUtils.CreateAccount(netAppMgmtClient, location: ResourceUtils.backupLocation, accountName: ResourceUtils.volumeBackupAccountName1);
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
@@ -84,7 +84,9 @@ namespace NetApp.Tests.ResourceTests
                 // clean up
                 netAppMgmtClient.BackupPolicies.Delete(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName1);
                 netAppMgmtClient.BackupPolicies.Delete(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName2);
-                ResourceUtils.DeleteAccount(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1);
+
+                WaitForBackupPolicyDeleted(netAppMgmtClient, resourceGroup: ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1);
+                ResourceUtils.DeleteAccount(netAppMgmtClient, resourceGroup: ResourceUtils.resourceGroup, accountName: ResourceUtils.volumeBackupAccountName1);
             }
         }
 
@@ -119,15 +121,14 @@ namespace NetApp.Tests.ResourceTests
             }
         }
 
-        //[Fact(Skip ="Backups are not fully supported here")]
-        [Fact]
+        [Fact(Skip ="BackupPolicy service side bug causes this to fail, re-enable when fixed")]
+        //[Fact]
         public void CreateVolumeWithBackupPolicy()
-        {
+        {            
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
                 // create the Pool and account
                 ResourceUtils.CreatePool(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1, location: ResourceUtils.backupLocation);
                 // create the backupPolicy
@@ -145,7 +146,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 // Create volume 
                 //var createVolume = ResourceUtils.CreateBackedupVolume(netAppMgmtClient, location: ResourceUtils.backupLocation, accountName:ResourceUtils.volumeBackupAccountName1, vnet: ResourceUtils.backupVnet, backupPolicyId: null, backupVaultId: vaultID);
-                var createVolume = ResourceUtils.CreateVolume(netAppMgmtClient, location: ResourceUtils.backupLocation, accountName: ResourceUtils.volumeBackupAccountName1, volumeName: ResourceUtils.backupVolumeName1, vnet: ResourceUtils.backupVnet);
+                var createVolume = ResourceUtils.CreateVolume(netAppMgmtClient, location: ResourceUtils.backupLocation, accountName: ResourceUtils.volumeBackupAccountName1, volumeName: ResourceUtils.backupVolumeName1, vnet: ResourceUtils.backupVnet, volumeOnly: true);
                 Assert.Equal("Succeeded", createVolume.ProvisioningState);
                 //Get volume and check
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
@@ -205,15 +206,18 @@ namespace NetApp.Tests.ResourceTests
                     DataProtection = disableDataProtection
                 };
 
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }   
                 // patch
                 var disabledBackupVolume = netAppMgmtClient.Volumes.Update(disableVolumePatch, ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1);
-                var getDisabledVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1);
-
-
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(delay);
                 }
+                var getDisabledVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1);
+
                 //check
                 Assert.NotNull(getDisabledVolume.DataProtection);
                 Assert.NotNull(getDisabledVolume.DataProtection.Backup);
@@ -253,9 +257,16 @@ namespace NetApp.Tests.ResourceTests
                 };
 
                 var resultbackupPolicy = netAppMgmtClient.BackupPolicies.Update(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName1, patchBackupPolicy);
-                Assert.NotNull(resultbackupPolicy);                               
-                Assert.NotNull(resultbackupPolicy.DailyBackupsToKeep);
-                Assert.Equal(patchBackupPolicy.DailyBackupsToKeep, resultbackupPolicy.DailyBackupsToKeep);
+                Assert.NotNull(resultbackupPolicy);
+
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
+                var getResultbackupPolicy = netAppMgmtClient.BackupPolicies.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName1);
+                Assert.NotNull(getResultbackupPolicy);                               
+                Assert.NotNull(getResultbackupPolicy.DailyBackupsToKeep);
+                Assert.Equal(patchBackupPolicy.DailyBackupsToKeep, getResultbackupPolicy.DailyBackupsToKeep);
                 
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
@@ -282,6 +293,17 @@ namespace NetApp.Tests.ResourceTests
 
             return testBackupPolicy;
         }
+
+        private void WaitForBackupPolicyDeleted(AzureNetAppFilesManagementClient netAppMgmtClient, string resourceGroup = ResourceUtils.resourceGroup, string accountName = ResourceUtils.accountName1)
+        {
+            int count = 0;
+            do
+            {
+                count = netAppMgmtClient.BackupPolicies.List(resourceGroup, accountName).Count();
+                Thread.Sleep(5);
+            } while (count > 0);
+        }
+
 
         private static string GetSessionsDirectoryPath()
         {

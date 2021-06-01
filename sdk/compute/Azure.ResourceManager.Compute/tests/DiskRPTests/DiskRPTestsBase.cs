@@ -7,9 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using ResourceIdentityType = Azure.ResourceManager.Compute.Models.ResourceIdentityType;
 
 namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 {
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             // Patch
             var updatesnapshot = new SnapshotUpdate()
             {
-                Tags = {{tagKey, "tagvalue"}}
+                Tags = { { tagKey, "tagvalue" } }
             };
 
             snapshotOut = await WaitForCompletionAsync(await SnapshotsOperations.StartUpdateAsync(rgName, snapshotName, updatesnapshot));
@@ -516,9 +517,9 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
 
             // Create the VM, whose OS disk will be used in creating the image
             var returnTwovm = await CreateVM(rgName, asName, storageAccountOutput, imageRef);
-            var createdVM = returnTwovm.Item1;
-            inputVM = returnTwovm.Item2;
-            string inputVMName = returnTwovm.Item3;
+            var createdVM = returnTwovm.Response;
+            inputVM = returnTwovm.Input;
+            string inputVMName = returnTwovm.Name;
             var listResponse = await VirtualMachinesOperations.ListAllAsync().ToEnumerableAsync();
             Assert.True(listResponse.Count() >= 1);
             string[] id = createdVM.Id.Split('/');

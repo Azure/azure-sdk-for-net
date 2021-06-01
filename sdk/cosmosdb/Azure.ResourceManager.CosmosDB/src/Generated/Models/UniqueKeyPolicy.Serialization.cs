@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("uniqueKeys"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<UniqueKey> array = new List<UniqueKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

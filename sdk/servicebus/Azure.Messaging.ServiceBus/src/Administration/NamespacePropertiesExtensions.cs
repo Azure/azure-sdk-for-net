@@ -3,34 +3,40 @@
 
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Xml.Linq;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus.Administration
 {
     internal class NamespacePropertiesExtensions
     {
-        public static NamespaceProperties ParseFromContent(string xml)
+        public static async Task<NamespaceProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
+                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return ParseFromEntryElement(xDoc);
+                        return await ParseFromEntryElementAsync(xDoc, response, diagnostics).ConfigureAwait(false);
                     }
                 }
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                throw new ServiceBusException(false, ex.Message);
+                throw new ServiceBusException(false, ex.Message, innerException: ex);
             }
 
-            throw new ServiceBusException(false, "Unknown error.");
+            throw new ServiceBusException(
+                false,
+                "Unknown error.",
+                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
-        private static NamespaceProperties ParseFromEntryElement(XElement xEntry)
+        private static async Task<NamespaceProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
         {
             var nsInfo = new NamespaceProperties();
 
@@ -39,7 +45,10 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             if (nsInfoXml == null)
             {
-                throw new ServiceBusException(true, "Unknown error.");
+                throw new ServiceBusException(
+                    false,
+                    "Unknown error.",
+                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
             }
 
             foreach (var element in nsInfoXml.Elements())

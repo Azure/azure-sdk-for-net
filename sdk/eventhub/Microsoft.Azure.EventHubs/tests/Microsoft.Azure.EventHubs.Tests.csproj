@@ -3,7 +3,6 @@
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <VersionPrefix>2.2.0</VersionPrefix>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <LangVersion>preview</LangVersion>
     <IsClientLibrary>true</IsClientLibrary>
   </PropertyGroup>
 
@@ -32,7 +31,6 @@
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="xunit" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" />
   </ItemGroup>
 

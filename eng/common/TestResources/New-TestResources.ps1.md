@@ -16,7 +16,8 @@ Deploys live test resources defined for a service directory to Azure.
 ```
 New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-ServiceDirectory] <String>
  [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
- [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>]
+ [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>]
+ [-ArmTemplateParameters <Hashtable>] [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>]
  [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -26,8 +27,8 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
  -TenantId <String> [-SubscriptionId <String>] -ProvisionerApplicationId <String>
  -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
- [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-Environment <String>] [-ArmTemplateParameters <Hashtable>] [-AdditionalParameters <Hashtable>]
+ [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,13 +55,8 @@ specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
 
 ### EXAMPLE 1
 ```
-Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
-$testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
-New-TestResources.ps1 `
-    -BaseName 'uuid123' `
-    -ServiceDirectory 'keyvault' `
-    -TestApplicationId $testAadApp.ApplicationId.ToString() `
-    -TestApplicationSecret (ConvertFrom-SecureString $testAadApp.Secret -AsPlainText)
+Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'
+New-TestResources.ps1 keyvault
 ```
 
 Run this in a desktop environment to create new AAD apps and Service Principals
@@ -235,9 +231,15 @@ Optional subscription ID to use for new resources when logging in as a
 provisioner.
 You can also use Set-AzContext if not provisioning.
 
+If you do not specify a SubscriptionId and are not logged in, one will be
+automatically selected for you by the Connect-AzAccount cmdlet.
+
+Once you are logged in (or were previously), the selected SubscriptionId
+will be used for subsequent operations that are specific to a subscription.
+
 ```yaml
 Type: String
-Parameter Sets: Provisioner
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -288,19 +290,15 @@ Accept wildcard characters: False
 ```
 
 ### -DeleteAfterHours
-Optional.
 Positive integer number of hours from the current time to set the
 'DeleteAfter' tag on the created resource group.
 The computed value is a
 timestamp of the form "2020-03-04T09:07:04.3083910Z".
 
-If this value is not specified no 'DeleteAfter' tag will be assigned to the
-created resource group.
-
 An optional cleanup process can delete resource groups whose "DeleteAfter"
 timestamp is less than the current time.
 
-This isused for CI automation.
+This is used for CI automation.
 
 ```yaml
 Type: Int32
@@ -309,7 +307,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: 48
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -339,7 +337,7 @@ Accept wildcard characters: False
 ### -Environment
 Name of the cloud environment.
 The default is the Azure Public Cloud
-('PublicCloud')
+('AzureCloud')
 
 ```yaml
 Type: String
@@ -353,7 +351,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AdditionalParameters
+### -ArmTemplateParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).
 
 ```yaml
@@ -364,6 +362,36 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AdditionalParameters
+Optional key-value pairs of parameters to pass to the ARM template(s) and pre-post scripts.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnvironmentVariables
+Optional key-value pairs of parameters to set as environment variables to the shell.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: @{}
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -449,7 +477,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

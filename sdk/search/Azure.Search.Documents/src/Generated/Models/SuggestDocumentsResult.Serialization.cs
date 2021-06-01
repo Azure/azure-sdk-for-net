@@ -31,6 +31,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@search.coverage"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     searchCoverage = property.Value.GetDouble();
                     continue;
                 }

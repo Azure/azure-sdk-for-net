@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("isEnabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("incrementPercent"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     incrementPercent = property.Value.GetInt32();
                     continue;
                 }

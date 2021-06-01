@@ -51,14 +51,14 @@ namespace Microsoft.Azure.Management.Reservations
         public AzureReservationAPIClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the current service limits (quotas) and usage of a resource. The
-        /// response from Get API can be leveraged to submit quota update requests.
+        /// Get the current quota (service limit) and usage of a resource. You can use
+        /// the response from the GET operation to submit quota update request.
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Azure subscription id.
+        /// Azure subscription ID.
         /// </param>
         /// <param name='providerId'>
-        /// Azure resource provider id.
+        /// Azure resource provider ID.
         /// </param>
         /// <param name='location'>
         /// Azure region.
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            string apiVersion = "2019-07-19-preview";
+            string apiVersion = "2020-10-25";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.Reservations
         }
 
         /// <summary>
-        /// Create or update the service limits (quota) of a resource to requested
+        /// Create or update the quota (service limits) of a resource to the requested
         /// value.
         /// Steps:
         ///
@@ -283,10 +283,10 @@ namespace Microsoft.Azure.Management.Reservations
         /// can be used to update the quota.
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Azure subscription id.
+        /// Azure subscription ID.
         /// </param>
         /// <param name='providerId'>
-        /// Azure resource provider id.
+        /// Azure resource provider ID.
         /// </param>
         /// <param name='location'>
         /// Azure region.
@@ -313,23 +313,22 @@ namespace Microsoft.Azure.Management.Reservations
         }
 
         /// <summary>
-        /// Update the service limits (quota) of a resource to requested value.
-        /// Steps:
+        /// Update the quota (service limits) of this resource to the requested value.
         ///
-        /// 1. Make the Get request to get the quota information for specific resource.
+        /// • To get the quota information for specific resource, send a GET request.
         ///
-        /// 2. To increase the quota, update the limit field in the response from Get
-        /// request to new value.
+        /// • To increase the quota, update the limit field from the GET response to a
+        /// new value.
         ///
-        /// 3. Submit the JSON to the quota request API to update the quota.
-        /// The Update quota request may be constructed as follows. The PATCH operation
-        /// can be used to update the quota.
+        /// • To update the quota value, submit the JSON response to the quota request
+        /// API to update the quota.
+        /// • To update the quota. use the PATCH operation.
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Azure subscription id.
+        /// Azure subscription ID.
         /// </param>
         /// <param name='providerId'>
-        /// Azure resource provider id.
+        /// Azure resource provider ID.
         /// </param>
         /// <param name='location'>
         /// Azure region.
@@ -340,7 +339,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// Microsoft.MachineLearningServices
         /// </param>
         /// <param name='createQuotaRequest'>
-        /// Quota requests payload.
+        /// Payload for the quota request.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -356,15 +355,15 @@ namespace Microsoft.Azure.Management.Reservations
         }
 
         /// <summary>
-        /// Get a list of current service limits (quota) and usages of all the
-        /// resources. The response from List API can be leveraged to submit quota
-        /// update requests.
+        /// Gets a list of current quotas (service limits) and usage for all resources.
+        /// The response from the list quota operation can be leveraged to request
+        /// quota updates.
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Azure subscription id.
+        /// Azure subscription ID.
         /// </param>
         /// <param name='providerId'>
-        /// Azure resource provider id.
+        /// Azure resource provider ID.
         /// </param>
         /// <param name='location'>
         /// Azure region.
@@ -404,7 +403,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            string apiVersion = "2019-07-19-preview";
+            string apiVersion = "2020-10-25";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -564,7 +563,7 @@ namespace Microsoft.Azure.Management.Reservations
         }
 
         /// <summary>
-        /// Create or update the service limits (quota) of a resource to requested
+        /// Create or update the quota (service limits) of a resource to the requested
         /// value.
         /// Steps:
         ///
@@ -578,10 +577,10 @@ namespace Microsoft.Azure.Management.Reservations
         /// can be used to update the quota.
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Azure subscription id.
+        /// Azure subscription ID.
         /// </param>
         /// <param name='providerId'>
-        /// Azure resource provider id.
+        /// Azure resource provider ID.
         /// </param>
         /// <param name='location'>
         /// Azure region.
@@ -637,7 +636,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "createQuotaRequest");
             }
-            string apiVersion = "2019-07-19-preview";
+            string apiVersion = "2020-10-25";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -811,23 +810,22 @@ namespace Microsoft.Azure.Management.Reservations
         }
 
         /// <summary>
-        /// Update the service limits (quota) of a resource to requested value.
-        /// Steps:
+        /// Update the quota (service limits) of this resource to the requested value.
         ///
-        /// 1. Make the Get request to get the quota information for specific resource.
+        /// • To get the quota information for specific resource, send a GET request.
         ///
-        /// 2. To increase the quota, update the limit field in the response from Get
-        /// request to new value.
+        /// • To increase the quota, update the limit field from the GET response to a
+        /// new value.
         ///
-        /// 3. Submit the JSON to the quota request API to update the quota.
-        /// The Update quota request may be constructed as follows. The PATCH operation
-        /// can be used to update the quota.
+        /// • To update the quota value, submit the JSON response to the quota request
+        /// API to update the quota.
+        /// • To update the quota. use the PATCH operation.
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Azure subscription id.
+        /// Azure subscription ID.
         /// </param>
         /// <param name='providerId'>
-        /// Azure resource provider id.
+        /// Azure resource provider ID.
         /// </param>
         /// <param name='location'>
         /// Azure region.
@@ -838,7 +836,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// Microsoft.MachineLearningServices
         /// </param>
         /// <param name='createQuotaRequest'>
-        /// Quota requests payload.
+        /// Payload for the quota request.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -883,7 +881,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "createQuotaRequest");
             }
-            string apiVersion = "2019-07-19-preview";
+            string apiVersion = "2020-10-25";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1057,9 +1055,9 @@ namespace Microsoft.Azure.Management.Reservations
         }
 
         /// <summary>
-        /// Get a list of current service limits (quota) and usages of all the
-        /// resources. The response from List API can be leveraged to submit quota
-        /// update requests.
+        /// Gets a list of current quotas (service limits) and usage for all resources.
+        /// The response from the list quota operation can be leveraged to request
+        /// quota updates.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

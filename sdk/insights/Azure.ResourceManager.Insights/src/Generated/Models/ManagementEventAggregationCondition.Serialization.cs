@@ -43,16 +43,31 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("operator"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     @operator = property.Value.GetString().ToConditionOperator();
                     continue;
                 }
                 if (property.NameEquals("threshold"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     threshold = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("windowSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     windowSize = property.Value.GetTimeSpan("P");
                     continue;
                 }

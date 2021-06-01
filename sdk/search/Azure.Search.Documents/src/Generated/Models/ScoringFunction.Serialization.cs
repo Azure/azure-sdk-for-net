@@ -64,6 +64,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("interpolation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     interpolation = property.Value.GetString().ToScoringFunctionInterpolation();
                     continue;
                 }

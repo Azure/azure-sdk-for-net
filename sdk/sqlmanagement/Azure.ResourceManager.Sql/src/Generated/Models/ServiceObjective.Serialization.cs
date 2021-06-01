@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("serviceObjectiveName"))
@@ -59,11 +64,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("isDefault"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             isDefault = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("isSystem"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             isSystem = property0.Value.GetBoolean();
                             continue;
                         }
@@ -74,6 +89,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("enabled"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }

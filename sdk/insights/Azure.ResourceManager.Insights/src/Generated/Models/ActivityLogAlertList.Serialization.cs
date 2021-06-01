@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class ActivityLogAlertList
+    internal partial class ActivityLogAlertList
     {
         internal static ActivityLogAlertList DeserializeActivityLogAlertList(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ActivityLogAlertResource> array = new List<ActivityLogAlertResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-Zones-9848/providers/Microsoft.Network/dnsZones/somegibberish?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-Dns-Zones-9848/providers/Microsoft.Network/dnsZones/somegibberish?api-version=2018-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a268af90e264c14db7562b9f2a909c58-019a97974c2cfe44-00",
+        "traceparent": "00-397ffebcbd056046b83990a356885f25-6f59aa0debc55a4d-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200923.1",
-          "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20200930.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "754564d1b2cf23852a8537ce223c28cc",
         "x-ms-return-client-request-id": "true"
@@ -20,15 +20,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "234",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 23 Sep 2020 16:44:52 GMT",
+        "Date": "Wed, 30 Sep 2020 06:18:24 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "173c4032-7351-40d3-9f96-61e6af8bbd20",
+        "x-ms-correlation-request-id": "d9c009be-0034-46dd-80af-db7cfa880ff6",
         "x-ms-failure-cause": "gateway",
-        "x-ms-request-id": "173c4032-7351-40d3-9f96-61e6af8bbd20",
-        "x-ms-routing-request-id": "WESTUS2:20200923T164452Z:173c4032-7351-40d3-9f96-61e6af8bbd20"
+        "x-ms-request-id": "d9c009be-0034-46dd-80af-db7cfa880ff6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T061825Z:d9c009be-0034-46dd-80af-db7cfa880ff6"
       },
       "ResponseBody": {
         "error": {
@@ -40,6 +40,6 @@
   ],
   "Variables": {
     "RandomSeed": "960623364",
-    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+    "SUBSCRIPTION_ID": "c9cbd920-c00c-427c-852b-8aaf38badaeb"
   }
 }

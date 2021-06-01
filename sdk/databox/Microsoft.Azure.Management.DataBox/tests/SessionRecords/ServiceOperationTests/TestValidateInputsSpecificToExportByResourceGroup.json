@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg6076/providers/Microsoft.DataBox/locations/westus/validateInputs?api-version=2020-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnNjA3Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvbG9jYXRpb25zL3dlc3R1cy92YWxpZGF0ZUlucHV0cz9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg257/providers/Microsoft.DataBox/locations/westus/validateInputs?api-version=2020-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnMjU3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3ZhbGlkYXRlSW5wdXRzP2FwaS12ZXJzaW9uPTIwMjAtMTEtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"validationCategory\": \"JobCreationValidation\",\r\n  \"individualRequestDetails\": [\r\n    {\r\n      \"validationType\": \"ValidateDataTransferDetails\",\r\n      \"dataExportDetails\": [\r\n        {\r\n          \"transferConfiguration\": {\r\n            \"transferConfigurationType\": \"TransferAll\",\r\n            \"transferAllDetails\": {\r\n              \"include\": {\r\n                \"dataAccountType\": \"StorageAccount\",\r\n                \"transferAllBlobs\": true,\r\n                \"transferAllFiles\": true\r\n              }\r\n            }\r\n          },\r\n          \"accountDetails\": {\r\n            \"dataAccountType\": \"StorageAccount\",\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.Storage/storageAccounts/aaaaaa2\"\r\n          }\r\n        }\r\n      ],\r\n      \"deviceType\": \"DataBox\",\r\n      \"transferType\": \"ExportFromAzure\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateSkuAvailability\",\r\n      \"deviceType\": \"DataBox\",\r\n      \"transferType\": \"ExportFromAzure\",\r\n      \"country\": \"US\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "10224cda-25b8-4bb3-9fa3-c17221bba47d"
+          "cf698a5f-df82-4bd4-ac9f-f49745befc97"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29130.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,32 +32,32 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "d95db945-bf01-46bd-884c-c161234b6cdb"
-        ],
-        "x-ms-client-request-id": [
-          "10224cda-25b8-4bb3-9fa3-c17221bba47d"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "d95db945-bf01-46bd-884c-c161234b6cdb"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALINDIA:20200831T045552Z:d95db945-bf01-46bd-884c-c161234b6cdb"
+          "1198"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "25d60c17-885f-40ca-9481-898ed0fa411a"
+        ],
+        "x-ms-client-request-id": [
+          "cf698a5f-df82-4bd4-ac9f-f49745befc97"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-correlation-request-id": [
+          "25d60c17-885f-40ca-9481-898ed0fa411a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20201110T132454Z:25d60c17-885f-40ca-9481-898ed0fa411a"
+        ],
         "Date": [
-          "Mon, 31 Aug 2020 04:55:51 GMT"
+          "Tue, 10 Nov 2020 13:24:54 GMT"
         ],
         "Content-Length": [
           "632"
@@ -75,7 +75,7 @@
   ],
   "Names": {
     "TestValidateInputsSpecificToExportByResourceGroup": [
-      "SdkRg6076"
+      "SdkRg257"
     ]
   },
   "Variables": {

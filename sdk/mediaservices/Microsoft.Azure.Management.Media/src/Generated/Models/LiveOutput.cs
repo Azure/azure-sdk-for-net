@@ -32,27 +32,35 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the LiveOutput class.
         /// </summary>
-        /// <param name="assetName">The asset name.</param>
-        /// <param name="archiveWindowLength">ISO 8601 timespan duration of the
-        /// archive window length. This is duration that customer want to
-        /// retain the recorded content.</param>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="description">The description of the Live
-        /// Output.</param>
-        /// <param name="manifestName">The manifest file name.  If not
-        /// provided, the service will generate one automatically.</param>
-        /// <param name="hls">The HLS configuration.</param>
-        /// <param name="outputSnapTime">The output snapshot time.</param>
-        /// <param name="created">The exact time the Live Output was
-        /// created.</param>
-        /// <param name="lastModified">The exact time the Live Output was last
+        /// <param name="assetName">The asset that the live output will write
+        /// to.</param>
+        /// <param name="archiveWindowLength">ISO 8601 time between 1 minute to
+        /// 25 hours to indicate the maximum content length that can be
+        /// archived in the asset for this live output. This also sets the
+        /// maximum content length for the rewind window. For example, use
+        /// PT1H30M to indicate 1 hour and 30 minutes of archive
+        /// window.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="description">The description of the live
+        /// output.</param>
+        /// <param name="manifestName">The manifest file name. If not provided,
+        /// the service will generate one automatically.</param>
+        /// <param name="hls">HTTP Live Streaming (HLS) packing setting for the
+        /// live output.</param>
+        /// <param name="outputSnapTime">The initial timestamp that the live
+        /// output will start at, any content before this value will not be
+        /// archived.</param>
+        /// <param name="created">The creation time the live output.</param>
+        /// <param name="lastModified">The time the live output was last
         /// modified.</param>
-        /// <param name="provisioningState">The provisioning state of the Live
-        /// Output.</param>
-        /// <param name="resourceState">The resource state of the Live Output.
+        /// <param name="provisioningState">The provisioning state of the live
+        /// output.</param>
+        /// <param name="resourceState">The resource state of the live output.
         /// Possible values include: 'Creating', 'Running', 'Deleting'</param>
         public LiveOutput(string assetName, System.TimeSpan archiveWindowLength, string id = default(string), string name = default(string), string type = default(string), string description = default(string), string manifestName = default(string), Hls hls = default(Hls), long? outputSnapTime = default(long?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), string provisioningState = default(string), LiveOutputResourceState? resourceState = default(LiveOutputResourceState?))
             : base(id, name, type)
@@ -76,64 +84,68 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the description of the Live Output.
+        /// Gets or sets the description of the live output.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the asset name.
+        /// Gets or sets the asset that the live output will write to.
         /// </summary>
         [JsonProperty(PropertyName = "properties.assetName")]
         public string AssetName { get; set; }
 
         /// <summary>
-        /// Gets or sets ISO 8601 timespan duration of the archive window
-        /// length. This is duration that customer want to retain the recorded
-        /// content.
+        /// Gets or sets ISO 8601 time between 1 minute to 25 hours to indicate
+        /// the maximum content length that can be archived in the asset for
+        /// this live output. This also sets the maximum content length for the
+        /// rewind window. For example, use PT1H30M to indicate 1 hour and 30
+        /// minutes of archive window.
         /// </summary>
         [JsonProperty(PropertyName = "properties.archiveWindowLength")]
         public System.TimeSpan ArchiveWindowLength { get; set; }
 
         /// <summary>
-        /// Gets or sets the manifest file name.  If not provided, the service
+        /// Gets or sets the manifest file name. If not provided, the service
         /// will generate one automatically.
         /// </summary>
         [JsonProperty(PropertyName = "properties.manifestName")]
         public string ManifestName { get; set; }
 
         /// <summary>
-        /// Gets or sets the HLS configuration.
+        /// Gets or sets HTTP Live Streaming (HLS) packing setting for the live
+        /// output.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hls")]
         public Hls Hls { get; set; }
 
         /// <summary>
-        /// Gets or sets the output snapshot time.
+        /// Gets or sets the initial timestamp that the live output will start
+        /// at, any content before this value will not be archived.
         /// </summary>
         [JsonProperty(PropertyName = "properties.outputSnapTime")]
         public long? OutputSnapTime { get; set; }
 
         /// <summary>
-        /// Gets the exact time the Live Output was created.
+        /// Gets the creation time the live output.
         /// </summary>
         [JsonProperty(PropertyName = "properties.created")]
         public System.DateTime? Created { get; private set; }
 
         /// <summary>
-        /// Gets the exact time the Live Output was last modified.
+        /// Gets the time the live output was last modified.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModified")]
         public System.DateTime? LastModified { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning state of the Live Output.
+        /// Gets the provisioning state of the live output.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the resource state of the Live Output. Possible values
+        /// Gets the resource state of the live output. Possible values
         /// include: 'Creating', 'Running', 'Deleting'
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceState")]

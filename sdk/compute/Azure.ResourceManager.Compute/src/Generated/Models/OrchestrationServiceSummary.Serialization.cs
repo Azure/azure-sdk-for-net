@@ -20,11 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("serviceName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     serviceName = new OrchestrationServiceNames(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serviceState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     serviceState = new OrchestrationServiceState(property.Value.GetString());
                     continue;
                 }

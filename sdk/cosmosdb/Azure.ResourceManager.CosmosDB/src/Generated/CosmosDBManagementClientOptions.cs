@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> Client options for CosmosDB. </summary>
-    public class CosmosDBManagementClientOptions : ClientOptions
+    public partial class CosmosDBManagementClientOptions : ClientOptions
     {
     }
 }

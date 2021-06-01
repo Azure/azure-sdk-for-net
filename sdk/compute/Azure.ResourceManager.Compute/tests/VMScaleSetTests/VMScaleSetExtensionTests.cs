@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 imageRef,
                 extensionProfile: vmssExtProfile,
                 createWithManagedDisks: true);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             // Perform a Get operation on each extension
             VirtualMachineScaleSetExtension getVmssExtResponse = null;
             for (int i = 0; i < vmssExtProfile.Extensions.Count; i++)
@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 storageAccountOutput,
                 imageRef);
 
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             VirtualMachineScaleSetExtension vmssExtension = GetTestVMSSVMExtension();
             vmssExtension.ForceUpdateTag = "RerunExtension";
             var response = await WaitForCompletionAsync(await VirtualMachineScaleSetExtensionsOperations.StartCreateOrUpdateAsync(rgName, vmssName, vmssExtension.Name, vmssExtension));

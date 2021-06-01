@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("resourceTypes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

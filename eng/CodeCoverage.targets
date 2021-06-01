@@ -1,13 +1,89 @@
 <Project>
-  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
-    <PackageReference Include="coverlet.msbuild">
+  <PropertyGroup>
+    <!-- Conditions for which projects should be covered by default. -->
+    <_IsCodeCoverable Condition="'$(IsClientLibrary)' == 'true'">true</_IsCodeCoverable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(CollectCoverage)' == 'true' and '$(_IsCodeCoverable)' == 'true' and '$(IsTestProject)' == 'true' and '$(ExcludeFromCodeCoverage)' != 'true'">
+    <CodeCoverageDirectory Condition="'$(CodeCoverageDirectory)' == ''">$([System.IO.Path]::GetFullPath("$(MSBuildProjectDirectory)\.."))</CodeCoverageDirectory>
+    <SkipCoverageReport Condition="'$(SkipCoverageReport)' == '' and ('$(ContinuousIntegrationBuild)' == 'true' or '$(TF_BUILD)' == 'true')">true</SkipCoverageReport>
+    <VSTestCollect Condition="'$(VSTestCollect)' == ''">XPlat Code Coverage</VSTestCollect>
+    <VSTestSetting Condition="'$(VSTestSetting)' == ''">$(MSBuildThisFileDirectory)CodeCoverage.runsettings</VSTestSetting>
+    <_CollectCoverage>true</_CollectCoverage>
+    <_TestResultsDirectory>$(MSBuildProjectDirectory)\TestResults</_TestResultsDirectory>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(_CollectCoverage)' == 'true'">
+    <!--
+      Use VSTest integration to work around test host crashes on larger collections:
+      https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/VSTestIntegration.md
+    -->
+    <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
-<!-- Allows Collection of Code Coverage for Deterministic Builds 
-    https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/DeterministicBuild.md -->
+  <!-- Clean up previous TestResults so reports are recent. -->
+  <Target Name="_CleanPreviousCodeCoverage"
+          BeforeTargets="VSTest"
+          Condition="'$(_CollectCoverage)' == 'true'">
+    <RemoveDir Directories="$(_TestResultsDirectory)" />
+  </Target>
+
+  <!-- Set a variable to indicate that a report can be generated. -->
+  <Target Name="_SetCoverageCollected"
+          AfterTargets="VSTest"
+          Condition="'$(_CollectCoverage)' == 'true'">
+    <ItemGroup>
+      <_CoverageFiles Include="$(_TestResultsDirectory)\**\coverage.cobertura.xml" />
+    </ItemGroup>
+    <PropertyGroup>
+      <_CoverageCollected Condition="'@(_CoverageFiles)' != ''">true</_CoverageCollected>
+    </PropertyGroup>
+
+    <!-- Indicate to the pipeline a report can be generated. -->
+    <Message Importance="high"
+             Condition="'$(_CoverageCollected)' == 'true' and '$(TF_BUILD)' == 'true'"
+             Text="##vso[task.setvariable variable=coverage.collected]true" />
+  </Target>
+
+  <!-- Should be similar to what's in the pipelines, though generate a full HTML report. -->
+  <Target Name="GenerateCodeCoverageReport"
+          AfterTargets="VSTest"
+          DependsOnTargets="_SetCoverageCollected"
+          Condition="'$(_CollectCoverage)' == 'true' and '$(SkipCoverageReport)' != 'true' and '$(_CoverageCollected)' == 'true'">
+    <PropertyGroup>
+      <CoverageReportCommandLine>dotnet tool run reportgenerator --</CoverageReportCommandLine>
+      <CoverageReportCommandLine>$(CoverageReportCommandLine) "-reports:$(_TestResultsDirectory)\**\coverage.cobertura.xml"</CoverageReportCommandLine>
+      <CoverageReportCommandLine>$(CoverageReportCommandLine) -reporttypes:Html</CoverageReportCommandLine>
+      <CoverageReportCommandLine>$(CoverageReportCommandLine) "-targetdir:$(_TestResultsDirectory)"</CoverageReportCommandLine>
+      <CoverageReportCommandLine>$(CoverageReportCommandLine) "-filefilters:+$(CodeCoverageDirectory)\**"</CoverageReportCommandLine>
+    </PropertyGroup>
+    <Exec Command="$(CoverageReportCommandLine)"
+          IgnoreExitCode="true"
+          StandardErrorImportance="high"
+          StandardOutputImportance="low" />
+  </Target>
+
+  <Target Name="_ValidateSourceFileNames"
+          BeforeTargets="CoreBuild"
+          Condition="'$(_IsCodeCoverable)' == 'true'">
+    <ItemGroup>
+      <!-- Prevent https://github.com/Azure/azure-sdk-for-net/issues/17164 from becoming an issue further in the build process -->
+      <_ContainsCurlyBraces Include="@(Compile)" Condition="$([MSBuild]::ValueOrDefault('%(Directory)%(Filename)', '').Contains('{')) or $([MSBuild]::ValueOrDefault('%(Directory)%(Filename)', '').Contains('}'))" />
+    </ItemGroup>
+    <Error
+      Text="File name '%(_ContainsCurlyBraces.FullPath)' cannot contain { or }; remove type parameters from the file name, or change {T} to OfT and disable SA1649 if the class has a non-generic counterpart (https://github.com/Azure/azure-sdk-for-net/issues/17164)."
+      Condition="'@(_ContainsCurlyBraces)' != ''" />
+  </Target>
+
+  <!--
+    Allows Collection of Code Coverage for Deterministic Builds:
+    https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/DeterministicBuild.md
+
+    This needs to be available in all projects.
+  -->
   <ItemGroup>
     <SourceRoot Include="$(NuGetPackageRoot)" />
   </ItemGroup>
@@ -17,7 +93,8 @@
           Returns="@(_LocalTopLevelSourceRoot)"
           Condition="'$(DeterministicSourcePaths)' == 'true'">
     <ItemGroup>
-      <_LocalTopLevelSourceRoot Include="@(SourceRoot)" Condition="'%(SourceRoot.NestedRoot)' == ''"/>
+      <_LocalTopLevelSourceRoot Include="@(SourceRoot)"
+                                Condition="'%(SourceRoot.NestedRoot)' == ''"/>
     </ItemGroup>
   </Target>
 </Project>

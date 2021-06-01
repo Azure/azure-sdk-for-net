@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BgpServiceCommunityListResult
+    internal partial class BgpServiceCommunityListResult
     {
         internal static BgpServiceCommunityListResult DeserializeBgpServiceCommunityListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<BgpServiceCommunity> array = new List<BgpServiceCommunity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

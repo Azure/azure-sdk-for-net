@@ -42,11 +42,21 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("lowerBound"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lowerBound = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("upperBound"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     upperBound = property.Value.GetDouble();
                     continue;
                 }

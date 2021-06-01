@@ -131,7 +131,6 @@ namespace Azure.Management.EventHub.Tests
             DelayInTest(5);
             // Delete namespace
             await WaitForCompletionAsync(await NamespacesOperations.StartDeleteAsync(resourceGroup, namespaceName));
-
         }
     }
 }
