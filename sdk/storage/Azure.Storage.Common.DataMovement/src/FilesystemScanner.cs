@@ -23,11 +23,11 @@ namespace Azure.Storage.Common.DataMovement
             // Path type is ambiguous at start
             bool isDirectory = false;
 
-            // Make sure we're dealing with absolute path
-            path = Path.GetFullPath(path);
-
             try
             {
+                // Make sure we're dealing with absolute path
+                path = Path.GetFullPath(path);
+
                 // Check if path points to a directory
                 if ((File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory)
                 {
@@ -36,7 +36,7 @@ namespace Azure.Storage.Common.DataMovement
             }
             catch
             {
-                // If there's an error (from calling File.GetAttributes()), there aren't any valid entries to scan at the
+                // If there's an error here, there aren't any valid entries to scan at the
                 // given path; either the path is invalid/nonexistant, or it isn't accessible by the user. In this case,
                 // don't return anything.
                 yield break;
@@ -54,22 +54,38 @@ namespace Azure.Storage.Common.DataMovement
                     // Grab a folder from the queue
                     string dir = folders.Dequeue();
 
-                    // Check if we have permissions to read subdirectories, and add them to queue
-                    foreach (string subdir in Directory.EnumerateDirectories(dir))
+                    // Try to enumerate and queue all subdirectories of the current folder
+                    try
                     {
-                        if (Directory.Exists(dir))
+                        foreach (string subdir in Directory.EnumerateDirectories(dir))
                         {
                             folders.Enqueue(subdir);
                         }
                     }
+                    // If we lack permissions to enumerate, skip this folder
+                    catch
+                    {
+                        continue;
+                    }
 
-                    // Check if we have permissions to read files, and add to list if so
                     foreach (string file in Directory.EnumerateFiles(dir))
                     {
-                        if (File.Exists(file))
+                        // Try to open a stream to the file to test read permissions
+                        try
                         {
-                            yield return file;
+                            using (FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read))
+                            {
+                                goto readSuccess;
+                            }
                         }
+                        // Skip the file if opening stream fails
+                        catch
+                        {
+                            continue;
+                        }
+
+                        readSuccess:
+                            yield return file;
                     }
                 }
             }
