@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using Xunit;
 using CM=Microsoft.Azure.Management.Compute.Models;
 using NM=Microsoft.Azure.Management.Network.Models;
@@ -28,6 +29,9 @@ namespace Compute.Tests
         protected const string TestPrefix = "crptestar";
         protected const string PLACEHOLDER = "[PLACEHOLDEr1]";
         protected const string ComputerName = "Test";
+        
+        protected static readonly string DummyUserData1 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Some User Data"));
+        protected static readonly string DummyUserData2 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Some new User Data"));
 
         protected ResourceManagementClient m_ResourcesClient;
         protected ComputeManagementClient m_CrpClient;
@@ -214,9 +218,10 @@ namespace Compute.Tests
             Action<VirtualMachine> vmCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
-            bool hasManagedDisks = false)
+            bool hasManagedDisks = false,
+            string userData = null)
         {
-            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks);
+            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks, userData: userData);
         }
 
         protected VirtualMachine CreateVM(
@@ -238,7 +243,8 @@ namespace Compute.Tests
             string securityType = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            string userData = null)
         {
             try
             {
@@ -335,6 +341,8 @@ namespace Compute.Tests
                     inputVM.HardwareProfile.VmSize = vmSize;
                     inputVM.Zones = zones;
                 }
+                
+                inputVM.UserData = userData;
 
                 if (vmCustomizer != null)
                 {
