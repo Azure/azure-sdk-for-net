@@ -837,3 +837,13 @@ directive:
         }
       }
 ```
+
+## Make secrets not required in Credential-related definitions
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ServicePrincipalParam
+  transform: >
+    $["required"] = ["clientId", "tenantId"]
+```
