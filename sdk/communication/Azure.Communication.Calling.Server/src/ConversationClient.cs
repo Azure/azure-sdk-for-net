@@ -172,6 +172,156 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
+        /// <summary> Play Audio. </summary>
+        /// <param name="conversationId"> The conversation id. </param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="operationContext">The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string operationContext, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudioAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
+                // Currently looping media is not supported for out-call scenarios, thus setting it to false.
+                return await RestClient.PlayAudioAsync(conversationId, audioFileUri.AbsoluteUri, false, operationContext, null, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Play Audio. </summary>
+        /// <param name="conversationId"> The conversation id. </param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="operationContext">The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string operationContext, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudio)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+
+                // Currently looping media is not supported for out-call scenarios, thus setting it to false.
+                return RestClient.PlayAudio(conversationId, audioFileUri.AbsoluteUri, false, operationContext, null, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add participant
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="participantId"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="operationContext">The operation context.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual Response AddParticipant(string conversationId, string participantId, Uri callbackUri, string operationContext, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipant)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(participantId, nameof(participantId));
+
+                var target = new CommunicationIdentifierModel()
+                {
+                    CommunicationUser = new CommunicationUserIdentifierModel(participantId)
+                };
+                var participants = new List<CommunicationIdentifierModel> { target };
+
+                return RestClient.InviteParticipants(conversationId, participants, null, operationContext, callbackUri?.AbsoluteUri, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add participant.
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="participantId"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="operationContext">The operation context.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual async Task<Response> AddParticipantAsync(string conversationId, string participantId, Uri callbackUri, string operationContext, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipantAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(participantId, nameof(participantId));
+
+                var target = new CommunicationIdentifierModel()
+                {
+                    CommunicationUser = new CommunicationUserIdentifierModel(participantId)
+                };
+                var participants = new List<CommunicationIdentifierModel> { target };
+
+                return await RestClient.InviteParticipantsAsync(conversationId, participants, null, operationContext, callbackUri?.AbsoluteUri, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// RemoveParticipant
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual Response RemoveParticipant(string conversationId, string participantId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(RemoveParticipant)}");
+            scope.Start();
+            try
+            {
+                return RestClient.RemoveParticipant(conversationId, participantId, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove Participant
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual async Task<Response> RemoveParticipantAsync(string conversationId, string participantId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(RemoveParticipantAsync)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.RemoveParticipantAsync(conversationId, participantId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary>
         /// Start recording
         /// </summary>
@@ -215,150 +365,6 @@ namespace Azure.Communication.Calling.Server
         }
 
         /// <summary>
-        /// Stop recording
-        /// </summary>
-        /// <param name="conversationId">The conversation id.</param>
-        /// <param name="recordingId">The recording id to stop.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response> StopRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StopRecordingAsync)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(recordingId, nameof(recordingId));
-
-                return await RestClient.StopRecordingAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stop recording
-        /// </summary>
-        /// <param name="conversationId">The conversation id.</param>
-        /// <param name="recordingId">The recording id to stop.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response StopRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StopRecording)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(recordingId, nameof(recordingId));
-
-                return RestClient.StopRecording(conversationId, recordingId, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Pause recording
-        /// </summary>
-        /// <param name="conversationId">The conversation id.</param>
-        /// <param name="recordingId">The recording id to pause.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response> PauseRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PauseRecordingAsync)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(recordingId, nameof(recordingId));
-
-                return await RestClient.PauseRecordingAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Pause recording
-        /// </summary>
-        /// <param name="conversationId">The conversation id.</param>
-        /// <param name="recordingId">The recording id to pause.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response PauseRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PauseRecording)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(recordingId, nameof(recordingId));
-
-                return RestClient.PauseRecording(conversationId, recordingId, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Resume recording
-        /// </summary>
-        /// <param name="conversationId">The conversation id.</param>
-        /// <param name="recordingId">The recording id to pause.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response> ResumeRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(ResumeRecordingAsync)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(recordingId, nameof(recordingId));
-
-                return await RestClient.ResumeRecordingAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// resume recording
-        /// </summary>
-        /// <param name="conversationId">The conversation id.</param>
-        /// <param name="recordingId">The recording id to resume.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response ResumeRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(ResumeRecording)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(recordingId, nameof(recordingId));
-
-                return RestClient.ResumeRecording(conversationId, recordingId, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Get recording state
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
@@ -370,9 +376,6 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(recordingId, nameof(recordingId));
-
                 return await RestClient.RecordingStateAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -394,9 +397,6 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(recordingId, nameof(recordingId));
-
                 return RestClient.RecordingState(conversationId, recordingId, cancellationToken);
             }
             catch (Exception ex)
@@ -406,91 +406,19 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        /// <summary> Play Audio. </summary>
-        /// <param name="conversationId"> The conversation id. </param>
-        /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="operationContext">The operation context. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string operationContext, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudioAsync)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
-                // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                PlayAudioRequest request = new PlayAudioRequest()
-                {
-                    AudioFileUri = audioFileUri.AbsoluteUri,
-                    Loop = false,
-                    OperationContext = operationContext
-                };
-
-                return await RestClient.PlayAudioAsync(conversationId, request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Play Audio. </summary>
-        /// <param name="conversationId"> The conversation id. </param>
-        /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="operationContext">The operation context. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string operationContext, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudio)}");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
-
-                // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                PlayAudioRequest request = new PlayAudioRequest()
-                {
-                    AudioFileUri = audioFileUri.AbsoluteUri,
-                    Loop = false,
-                    OperationContext = operationContext
-                };
-
-                return RestClient.PlayAudio(conversationId, request, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
         /// <summary>
-        /// Add participant
+        /// Stop recording
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
-        /// <param name="participantId"></param>
-        /// <param name="callbackUri"></param>
-        /// <param name="operationContext">The operation context.</param>
+        /// <param name="recordingId">The recording id to stop.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response AddParticipant(string conversationId, string participantId, Uri callbackUri, string operationContext, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StopRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StopRecordingAsync)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(callbackUri, nameof(callbackUri));
-                Argument.AssertNotNull(participantId, nameof(participantId));
-
-                var target = new CommunicationIdentifierModel() {
-                    CommunicationUser = new CommunicationUserIdentifierModel(participantId)
-                };
-                var participants = new List<CommunicationIdentifierModel> { target };
-
-                return RestClient.InviteParticipants(conversationId, participants, null, operationContext, callbackUri.AbsoluteUri, cancellationToken);
+                return await RestClient.StopRecordingAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -500,31 +428,18 @@ namespace Azure.Communication.Calling.Server
         }
 
         /// <summary>
-        /// Add participant.
+        /// Stop recording
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
-        /// <param name="participantId"></param>
-        /// <param name="callbackUri"></param>
-        /// <param name="operationContext">The operation context.</param>
+        /// <param name="recordingId">The recording id to stop.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response> AddParticipantAsync(string conversationId, string participantId, Uri callbackUri, string operationContext, CancellationToken cancellationToken = default)
+        public virtual Response StopRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StopRecording)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(callbackUri, nameof(callbackUri));
-                Argument.AssertNotNull(operationContext, nameof(operationContext));
-                Argument.AssertNotNull(participantId, nameof(participantId));
-
-                var target = new CommunicationIdentifierModel()
-                {
-                    CommunicationUser = new CommunicationUserIdentifierModel(participantId)
-                };
-                var participants = new List<CommunicationIdentifierModel> { target };
-
-                return await RestClient.InviteParticipantsAsync(conversationId, participants, null, operationContext, callbackUri.AbsoluteUri, cancellationToken).ConfigureAwait(false);
+                return RestClient.StopRecording(conversationId, recordingId, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -534,21 +449,18 @@ namespace Azure.Communication.Calling.Server
         }
 
         /// <summary>
-        /// RemoveParticipant
+        /// Pause recording
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
-        /// <param name="participantId">The participant id.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response RemoveParticipant(string conversationId, string participantId, CancellationToken cancellationToken = default)
+        /// <param name="recordingId">The recording id to pause.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual async Task<Response> PauseRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(RemoveParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PauseRecordingAsync)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(participantId, nameof(participantId));
-
-                return RestClient.RemoveParticipant(conversationId, participantId, cancellationToken);
+                return await RestClient.PauseRecordingAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -558,21 +470,60 @@ namespace Azure.Communication.Calling.Server
         }
 
         /// <summary>
-        /// Remove Participant
+        /// Pause recording
         /// </summary>
         /// <param name="conversationId">The conversation id.</param>
-        /// <param name="participantId">The participant id.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response> RemoveParticipantAsync(string conversationId, string participantId, CancellationToken cancellationToken = default)
+        /// <param name="recordingId">The recording id to pause.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual Response PauseRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(RemoveParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PauseRecording)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(conversationId, nameof(conversationId));
-                Argument.AssertNotNull(participantId, nameof(participantId));
+                return RestClient.PauseRecording(conversationId, recordingId, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
-                return await RestClient.RemoveParticipantAsync(conversationId, participantId, cancellationToken).ConfigureAwait(false);
+        /// <summary>
+        /// Resume recording
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="recordingId">The recording id to pause.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual async Task<Response> ResumeRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(ResumeRecordingAsync)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.ResumeRecordingAsync(conversationId, recordingId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// resume recording
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="recordingId">The recording id to resume.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual Response ResumeRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(ResumeRecording)}");
+            scope.Start();
+            try
+            {
+                return RestClient.ResumeRecording(conversationId, recordingId, cancellationToken);
             }
             catch (Exception ex)
             {

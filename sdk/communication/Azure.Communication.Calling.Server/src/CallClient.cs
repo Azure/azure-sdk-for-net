@@ -116,7 +116,7 @@ namespace Azure.Communication.Calling.Server
                 return await RestClient.CreateCallAsync(
                     targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                     CommunicationIdentifierSerializer.Serialize(source),
-                    options.CallbackUri.AbsoluteUri,
+                    options.CallbackUri?.AbsoluteUri,
                     options.RequestedModalities,
                     options.RequestedCallEvents,
                     sourceAlternateIdentity,
@@ -287,12 +287,14 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Play Audio. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="loop">The flag to indicate if audio file need to be played in a loop.</param>
+        /// <param name="loop">The flag to indicate if audio file need to be played in a loop or not.</param>
         /// <param name="operationContext">The operation context. </param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, Uri audioFileUri, bool loop, string operationContext, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, Uri audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, Uri callbackUri = null, CancellationToken cancellationToken = default)
             => await PlayAudioAsync(callLegId, new PlayAudioOptions { AudioFileUri = audioFileUri, Loop = loop, OperationContext = operationContext }, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Play Audio. </summary>
@@ -309,7 +311,7 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(options, nameof(options));
 
-                return await RestClient.PlayAudioAsync(callLegId, options.AudioFileId, options.Loop, options.OperationContext, options.AudioFileId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PlayAudioAsync(callLegId, options.AudioFileUri?.AbsoluteUri, options.Loop, options.OperationContext, options.AudioFileId, options.CallbackUri?.AbsoluteUri, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -321,13 +323,24 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Play Audio. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="loop">The flag to indicate if audio file need to be played in a loop.</param>
+        /// <param name="loop">The flag to indicate if audio file need to be played in a loop or not.</param>
         /// <param name="operationContext">The operation context. </param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
-        public virtual Response<PlayAudioResponse> PlayAudio(string callLegId, Uri audioFileUri, bool loop, string operationContext, CancellationToken cancellationToken = default)
-            => PlayAudio(callLegId, new PlayAudioOptions { AudioFileUri = audioFileUri, Loop = loop, OperationContext = operationContext }, cancellationToken);
+        public virtual Response<PlayAudioResponse> PlayAudio(string callLegId, Uri audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, Uri callbackUri = null, CancellationToken cancellationToken = default)
+            => PlayAudio(
+                callLegId,
+                new PlayAudioOptions {
+                    AudioFileUri = audioFileUri,
+                    Loop = loop,
+                    OperationContext = operationContext,
+                    AudioFileId = audioFileId,
+                    CallbackUri = callbackUri
+                },
+                cancellationToken);
 
         /// <summary> Play Audio. </summary>
         /// <param name="callLegId"> The call leg id. </param>
@@ -343,7 +356,7 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(options, nameof(options));
 
-                return RestClient.PlayAudio(callLegId, options.AudioFileId, options.Loop, options.OperationContext, options.AudioFileId, cancellationToken);
+                return RestClient.PlayAudio(callLegId, options.AudioFileUri?.AbsoluteUri, options.Loop, options.OperationContext, options.AudioFileId, options.CallbackUri?.AbsoluteUri, cancellationToken);
             }
             catch (Exception ex)
             {

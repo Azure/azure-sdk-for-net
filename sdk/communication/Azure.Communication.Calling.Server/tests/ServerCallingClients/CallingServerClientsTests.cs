@@ -133,26 +133,28 @@ namespace Azure.Communication.Calling.Server.Tests
         }
 
         [TestCaseSource(nameof(TestData_PlayAudioWithoutRequest))]
-        public async Task PlayAudioAsyncOverload_Passes(string expectedCallLegId, Uri expectedAudioFileUri, bool expectedLoop, string expectedOperationContext)
+        public async Task PlayAudioAsyncOverload_Passes(string expectedCallLegId, Uri expectedAudioFileUri, bool expectedLoop, string expectedOperationContext, string expectedAudioFileId, Uri expectedCallbackUri)
         {
             Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
             Response<PlayAudioResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
-                .ReturnsAsync((string callLegId, Uri audioFileUri, bool loop, string operationContext, CancellationToken token) =>
+                .ReturnsAsync((string callLegId, Uri audioFileUri, bool loop, string operationContext, string audioFileId, Uri callbackUri, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedCallLegId, callLegId);
                     Assert.AreEqual(expectedAudioFileUri, audioFileUri);
                     Assert.AreEqual(expectedLoop, loop);
                     Assert.AreEqual(expectedOperationContext, operationContext);
+                    Assert.AreEqual(expectedAudioFileId, audioFileId);
+                    Assert.AreEqual(expectedCallbackUri, callbackUri);
                     Assert.AreEqual(cancellationToken, token);
                     return expectedResponse = new Mock<Response<PlayAudioResponse>>().Object;
                 });
 
-            Response<PlayAudioResponse> actualResponse = await mockClient.Object.PlayAudioAsync(expectedCallLegId, expectedAudioFileUri, expectedLoop, expectedOperationContext, cancellationToken);
+            Response<PlayAudioResponse> actualResponse = await mockClient.Object.PlayAudioAsync(expectedCallLegId, expectedAudioFileUri, expectedLoop, expectedOperationContext, expectedAudioFileId, expectedCallbackUri, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -252,6 +254,8 @@ namespace Azure.Communication.Calling.Server.Tests
                     new Uri("https://av.ngrok.io/audio/sample-message.wav"),
                     true,
                     "af82480b-6df3-4f4c-a58c-a6a78b614b36",
+                    "b76993e4-1906-4967-9a9b-feecbbccc60e",
+                    new Uri("http://foo.com/bar")
                 }
             };
         }

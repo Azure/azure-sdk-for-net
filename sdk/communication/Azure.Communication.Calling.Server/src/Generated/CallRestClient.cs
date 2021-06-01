@@ -288,7 +288,7 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        internal HttpMessage CreatePlayAudioRequest(string callId, string audioFileUri, bool? loop, string operationContext, string audioFileId)
+        internal HttpMessage CreatePlayAudioRequest(string callId, string audioFileUri, bool? loop, string operationContext, string audioFileId, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -307,7 +307,8 @@ namespace Azure.Communication.Calling.Server
                 AudioFileUri = audioFileUri,
                 Loop = loop,
                 OperationContext = operationContext,
-                AudioFileId = audioFileId
+                AudioFileId = audioFileId,
+                CallbackUri = callbackUri
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -329,16 +330,17 @@ namespace Azure.Communication.Calling.Server
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> is null. </exception>
-        public async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callId, string audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callId, string audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callId == null)
             {
                 throw new ArgumentNullException(nameof(callId));
             }
 
-            using var message = CreatePlayAudioRequest(callId, audioFileUri, loop, operationContext, audioFileId);
+            using var message = CreatePlayAudioRequest(callId, audioFileUri, loop, operationContext, audioFileId, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -368,16 +370,17 @@ namespace Azure.Communication.Calling.Server
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> is null. </exception>
-        public Response<PlayAudioResponse> PlayAudio(string callId, string audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, CancellationToken cancellationToken = default)
+        public Response<PlayAudioResponse> PlayAudio(string callId, string audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callId == null)
             {
                 throw new ArgumentNullException(nameof(callId));
             }
 
-            using var message = CreatePlayAudioRequest(callId, audioFileUri, loop, operationContext, audioFileId);
+            using var message = CreatePlayAudioRequest(callId, audioFileUri, loop, operationContext, audioFileId, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

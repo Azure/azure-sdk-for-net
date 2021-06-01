@@ -15,11 +15,17 @@ namespace Azure.Communication.Calling.Server
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </summary>
         public Uri AudioFileUri { get; set; }
+
         /// <summary> The flag indicating whether audio file needs to be played in loop or not. </summary>
         public bool? Loop { get; set; }
+
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
+
         /// <summary> An id for the media in the AudioFileUri, using which we cache the media resource. </summary>
         public string AudioFileId { get; set; }
+
+        /// <summary> The callback Uri to receive PlayAudio status notifications. </summary>
+        public Uri CallbackUri { get; set; }
     }
 }

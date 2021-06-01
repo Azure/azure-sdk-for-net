@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "410",
         "Content-Type": "application/json",
-        "Date": "Fri, 28 May 2021 23:03:05 GMT",
-        "traceparent": "00-6b446904f88b514a88acb78abd0a8dfa-df8afd4b9326cc44-00",
-        "User-Agent": "azsdk-net-Communication.Calling.Server/1.0.0-alpha.20210528.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "Date": "Tue, 01 Jun 2021 01:49:28 GMT",
+        "traceparent": "00-80c754bd2d701b439696b3b273a0118c-ded1346d10c80248-00",
+        "User-Agent": "azsdk-net-Communication.Calling.Server/1.0.0-alpha.20210531.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "3311b2a5c2466c95f5e2317eac00670f",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -28,7 +28,7 @@
         ],
         "source": {
           "communicationUser": {
-            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-5519-28e0-7f07-113a0d009106"
+            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-6524-927b-7f07-113a0d009a42"
           }
         },
         "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
@@ -42,16 +42,16 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Client-Request-Id": "542072d1-5217-4167-aa2d-b5f80e3617da",
+        "Client-Request-Id": "96a5d083-ee3f-439b-a3ac-fa5468497e8c",
         "Content-Length": "52",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 28 May 2021 23:03:04 GMT",
-        "X-Azure-Ref": "0qXaxYAAAAABop8rrt65EQISrXtzQ3XCMV1NURURHRTA4MTEAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "Date": "Tue, 01 Jun 2021 01:49:28 GMT",
+        "X-Azure-Ref": "0KJK1YAAAAAB6INumaCJXTqsJK5hesJ1iV1NURURHRTA4MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "5b0fc091-9e37-49fa-a8c2-52976d21cd45"
+        "X-Microsoft-Skype-Chain-ID": "4657e862-669c-4574-8d6f-fdae5c01a016"
       },
       "ResponseBody": {
-        "callLegId": "421f0b00-c62f-45bb-993f-fd85edf06581"
+        "callLegId": "421f0b00-c960-4bbc-97be-d752e4d425f7"
       }
     }
   ],

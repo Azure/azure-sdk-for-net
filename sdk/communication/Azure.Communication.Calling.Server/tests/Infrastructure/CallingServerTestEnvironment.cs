@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Web;
+using System.Net;
 using Azure.Communication.Tests;
 
 namespace Azure.Communication.Calling.Server.Tests
@@ -43,7 +43,7 @@ namespace Azure.Communication.Calling.Server.Tests
         /// <summary>
         /// The callback url of the application where notification would be received.
         /// </summary>
-        public string AppCallbackUrl => $"{AppBaseUrl}/api/incident/callback?SecretKey={HttpUtility.UrlEncode(IncomingRequestSecret)}";
+        public string AppCallbackUrl => $"{AppBaseUrl}/api/incident/callback?SecretKey={WebUtility.UrlEncode(IncomingRequestSecret)}";
 
         /// <summary>
         /// The publicly available url of the audio file which would be played as a prompt.
