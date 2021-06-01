@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
     {
         private readonly QueuesOptions _queuesOptions;
         private readonly ILoggerFactory _loggerFactory;
-        private readonly ILogger<QueueServiceClientProvider> _logger;
+        private readonly ILogger<QueueServiceClient> _logger;
         private readonly IQueueProcessorFactory _queueProcessorFactory;
         private readonly SharedQueueWatcher _messageEnqueuedWatcher;
 
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             _queuesOptions = queueOptions?.Value;
             _loggerFactory = loggerFactory;
-            _logger = loggerFactory.CreateLogger<QueueServiceClientProvider>();
+            _logger = logger;
             _queueProcessorFactory = queueProcessorFactory;
             _messageEnqueuedWatcher = messageEnqueuedWatcher;
         }
