@@ -219,11 +219,10 @@ namespace Azure.Monitor.Query
             QueryBody queryBody = CreateQueryBody(query, timeRange, options, out string prefer);
             using var message = _queryClient.CreateExecuteRequest(workspaceId, queryBody, prefer);
 
-            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/20859
-            // if (options?.Timeout != null)
-            // {
-            //     message.NetworkTimeout = options.Timeout;
-            // }
+            if (options?.Timeout != null)
+            {
+                message.NetworkTimeout = options.Timeout;
+            }
 
             if (async)
             {
