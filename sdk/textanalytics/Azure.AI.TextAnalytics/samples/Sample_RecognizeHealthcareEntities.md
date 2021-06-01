@@ -12,8 +12,9 @@ string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
 var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
+## Analyze Documents
 
-## Get the Documents
+To recognize healthcare entities in multiple documents, call `StartAnalyzeHealthcareEntities` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeHealthcareEntitiesOperation` which polls for the results from the API.
 
 ```C#
     string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
@@ -27,13 +28,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
                         increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
     string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
-```
 
-## Analyze Documents
-
-To recognize healthcare entities in multiple documents, call `StartAnalyzeHealthcareEntities` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeHealthcareEntitiesOperation` which polls for the results from the API.
-
-```C# 
     List<string> batchInput = new List<string>()
     {
         document1,
@@ -47,7 +42,8 @@ To recognize healthcare entities in multiple documents, call `StartAnalyzeHealth
 
     await healthOperation.WaitForCompletionAsync();
 ```
-To view the operation details:
+The returned healthcare operation contains general information about the status of the operation. It can be requested while the operation is running or when it completed. For example:
+
 
 ```C# 
     Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
@@ -55,7 +51,7 @@ To view the operation details:
     Console.WriteLine($"Status       : {healthOperation.Status}");
     Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
 ```
-To view the final result of the long-running operation:
+To view the final results of the long-running operation:
 ```C#
     await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
     {
