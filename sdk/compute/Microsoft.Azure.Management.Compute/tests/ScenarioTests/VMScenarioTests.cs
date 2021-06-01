@@ -34,6 +34,43 @@ namespace Compute.Tests
         {
             TestVMScenarioOperationsInternal("TestVMScenarioOperations");
         }
+        
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create VM with Terminate Notification Profile
+        /// GET VM Model View
+        /// GET VM InstanceView
+        /// GETVMs in a RG
+        /// List VMSizes in a RG
+        /// List VMSizes in an AvailabilitySet
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_TerminateNotification")]
+        public void TestVMScenarioOperations_TerminateNotification()
+        {
+            string notBeforeTimeout = "PT10M";
+            Action<VirtualMachine> vmCustomizer = (inputVM) => inputVM.ScheduledEventsProfile = new ScheduledEventsProfile()
+            {
+                TerminateNotificationProfile = new TerminateNotificationProfile()
+                {
+                    Enable = true,
+                    NotBeforeTimeout = notBeforeTimeout
+                }
+            };
+
+            Action<VirtualMachine> customVMOutputValidator = (outputVM) =>
+            {
+                Assert.True(outputVM.ScheduledEventsProfile.TerminateNotificationProfile.Enable);
+                Assert.Equal(notBeforeTimeout, outputVM.ScheduledEventsProfile.TerminateNotificationProfile.NotBeforeTimeout);
+            };
+
+            TestVMScenarioOperationsInternal("TestVMScenarioOperations_TerminateNotification", inputVMCustomizer: vmCustomizer,
+                customVMOutputValidator: customVMOutputValidator);
+        }
 
         /// <summary>
         /// Covers following Operations for managed disks:
@@ -262,7 +299,8 @@ namespace Compute.Tests
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A1_v2",
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false, string diskEncryptionSetId = null, bool? encryptionAtHostEnabled = null,
-            string securityType = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true)
+            string securityType = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false, ImageReference imageReference = null, bool validateListAvailableSize = true,
+            Action<VirtualMachine> inputVMCustomizer = null, Action<VirtualMachine> customVMOutputValidator = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -299,10 +337,10 @@ namespace Compute.Tests
                         CreateStorageAccount(rgName, storageAccountName);
                     }
 
-                    CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
+                    CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, vmCustomizer: inputVMCustomizer, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
                         dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName, 
                         diskEncryptionSetId: diskEncryptionSetId, encryptionAtHostEnabled: encryptionAtHostEnabled, securityType: securityType, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
-                        dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName);
+                        dedicatedHostGroupName: dedicatedHostGroupName, dedicatedHostName: dedicatedHostName, customVMOutputValidator: customVMOutputValidator);
 
                     // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
                     // allow GA blob to populate.
