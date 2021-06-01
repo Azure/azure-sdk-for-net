@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// Gets or sets the authentication scope to use for authentication with AAD.
-        /// This defaults to the Azure Resource Manager Azure Global scope.  To
+        /// This defaults to the Azure Resource Manager "Azure Global" scope.  To
         /// connect to a different cloud, set this value to "&lt;resource-id&gt;/.default",
         /// where &lt;resource-id&gt; is one of the Resource IDs listed at
         /// https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities#azure-resource-manager.
