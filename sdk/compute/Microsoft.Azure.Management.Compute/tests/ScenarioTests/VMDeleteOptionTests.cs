@@ -38,17 +38,17 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    VirtualMachine inputVM;
-                    CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, hasManagedDisks: true);
+                    VirtualMachine inputVMIgnored;
+                    VirtualMachine createdVM = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVMIgnored, hasManagedDisks: true);
 
-                    Assert.Equal(DiskDeleteOptionTypes.Detach, inputVM.StorageProfile.OsDisk.DeleteOption);
+                    Assert.Equal(DiskDeleteOptionTypes.Detach, createdVM.StorageProfile.OsDisk.DeleteOption);
 
-                    foreach (DataDisk disk in inputVM.StorageProfile.DataDisks)
+                    foreach (DataDisk disk in createdVM.StorageProfile.DataDisks)
                     {
                         Assert.Equal(DiskDeleteOptionTypes.Detach, disk.DeleteOption);
                     }
 
-                    m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
+                    m_CrpClient.VirtualMachines.Delete(rgName, createdVM.Name);
                 }
                 finally
                 {
