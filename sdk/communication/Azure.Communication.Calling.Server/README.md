@@ -39,13 +39,52 @@ CallClient client = new CallClient(connectionString);
 ### Make a call to a phone number recipient
 To make a call, call the `CreateCall` or `CreateCallAsync` function from the `CallClient`.
 ```C# Snippet:Azure_Communication_Call_Tests_CreateCallAsync
+var callOptions = new CreateCallOptions(
+    new Uri("AppCallbackUrl"),
+    new List<CallModality> {
+        CallModality.Audio
+    },
+    new List<EventSubscriptionTypel> {
+        EventSubscriptionType.ParticipantsUpdated,
+        EventSubscriptionType.DtmfReceived
+    });
 CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
     source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-    callOptions: <callOptions-object>, // The request payload for creating a call.
+    options: callOptions, // The options for creating a call.
 );
 Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
 ```
+
+## Troubleshooting
+A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
+```C# Snippet:Azure_Communication_Call_Tests_CreateCallAsync_Troubleshooting
+var callOption = new CreateCallOptions(
+    new Uri("AppCallbackUrl"),
+    new List<CallModality> {
+        CallModality.Audio
+    },
+    new List<EventSubscriptionTypel> {
+        EventSubscriptionType.ParticipantsUpdated,
+        EventSubscriptionType.DtmfReceived
+    });
+
+try
+{
+    CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
+        source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
+        targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
+        options: callOptions, // The options for creating a call.
+    );
+}
+catch (RequestFailedException ex)
+{
+    Console.WriteLine(ex.Message);
+}
+```
+
+
+## Next steps
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
