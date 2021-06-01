@@ -80,6 +80,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateDetectionConfigurationValidatesArguments()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -98,6 +99,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateDetectionConfigurationRespectsTheCancellationToken()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -159,10 +161,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            IAsyncEnumerator<AnomalyDetectionConfiguration> asyncEnumerator = adminClient.GetDetectionConfigurationsAsync(FakeGuid, cancellationSource.Token).GetAsyncEnumerator();
+            IAsyncEnumerator<AnomalyDetectionConfiguration> asyncEnumerator = adminClient.GetDetectionConfigurationsAsync(FakeGuid, default, cancellationSource.Token).GetAsyncEnumerator();
             Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
 
-            IEnumerator<AnomalyDetectionConfiguration> enumerator = adminClient.GetDetectionConfigurations(FakeGuid, cancellationSource.Token).GetEnumerator();
+            IEnumerator<AnomalyDetectionConfiguration> enumerator = adminClient.GetDetectionConfigurations(FakeGuid, default, cancellationSource.Token).GetEnumerator();
             Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 

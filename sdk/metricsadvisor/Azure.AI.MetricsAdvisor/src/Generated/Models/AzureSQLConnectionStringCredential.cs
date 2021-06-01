@@ -10,17 +10,17 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureSQLConnectionStringCredential. </summary>
-    internal partial class AzureSQLConnectionStringCredential : DataSourceCredential
+    internal partial class AzureSQLConnectionStringCredential : DataSourceCredentialEntity
     {
         /// <summary> Initializes a new instance of AzureSQLConnectionStringCredential. </summary>
-        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
+        /// <param name="name"> Name of data source credential. </param>
         /// <param name="parameters"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceCredentialName"/> or <paramref name="parameters"/> is null. </exception>
-        public AzureSQLConnectionStringCredential(string dataSourceCredentialName, AzureSQLConnectionStringParam parameters) : base(dataSourceCredentialName)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
+        public AzureSQLConnectionStringCredential(string name, AzureSQLConnectionStringParam parameters) : base(name)
         {
-            if (dataSourceCredentialName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(dataSourceCredentialName));
+                throw new ArgumentNullException(nameof(name));
             }
             if (parameters == null)
             {
@@ -33,11 +33,11 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> Initializes a new instance of AzureSQLConnectionStringCredential. </summary>
         /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
-        /// <param name="dataSourceCredentialId"> Unique id of data source credential. </param>
-        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
-        /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        /// <param name="id"> Unique id of data source credential. </param>
+        /// <param name="name"> Name of data source credential. </param>
+        /// <param name="description"> Description of data source credential. </param>
         /// <param name="parameters"> . </param>
-        internal AzureSQLConnectionStringCredential(DataSourceCredentialType dataSourceCredentialType, Guid? dataSourceCredentialId, string dataSourceCredentialName, string dataSourceCredentialDescription, AzureSQLConnectionStringParam parameters) : base(dataSourceCredentialType, dataSourceCredentialId, dataSourceCredentialName, dataSourceCredentialDescription)
+        internal AzureSQLConnectionStringCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, AzureSQLConnectionStringParam parameters) : base(dataSourceCredentialType, id, name, description)
         {
             Parameters = parameters;
             DataSourceCredentialType = dataSourceCredentialType;

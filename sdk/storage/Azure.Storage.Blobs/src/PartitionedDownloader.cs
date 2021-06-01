@@ -141,7 +141,7 @@ namespace Azure.Storage.Blobs
                 // conditions to ensure the blob doesn't change while we're
                 // downloading the remaining segments
                 ETag etag = initialResponse.Value.Details.ETag;
-                BlobRequestConditions conditionsWithEtag = CreateConditionsWithEtag(conditions, etag);
+                BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
                 // Create a queue of tasks that will each download one segment
                 // of the blob.  The queue maintains the order of the segments
@@ -149,6 +149,11 @@ namespace Azure.Storage.Blobs
                 // stream when each segment finishes.
                 var runningTasks = new Queue<Task<Response<BlobDownloadStreamingResult>>>();
                 runningTasks.Enqueue(initialResponseTask);
+                if (_maxWorkerCount <= 1)
+                {
+                    // consume initial task immediately if _maxWorkerCount is 1 (or less to be safe). Otherwise loop below would have 2 concurrent tasks.
+                    await ConsumeQueuedTask().ConfigureAwait(false);
+                }
 
                 // Fill the queue with tasks to download each of the remaining
                 // ranges in the blob
@@ -272,7 +277,7 @@ namespace Azure.Storage.Blobs
                 // conditions to ensure the blob doesn't change while we're
                 // downloading the remaining segments
                 ETag etag = initialResponse.Value.Details.ETag;
-                BlobRequestConditions conditionsWithEtag = CreateConditionsWithEtag(conditions, etag);
+                BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
                 // Download each of the remaining ranges in the blob
                 foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
@@ -314,16 +319,6 @@ namespace Azure.Storage.Blobs
             }
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
-
-        private static BlobRequestConditions CreateConditionsWithEtag(BlobRequestConditions conditions, ETag etag) =>
-            new BlobRequestConditions
-            {
-                LeaseId = conditions?.LeaseId,
-                IfMatch = conditions?.IfMatch ?? etag,
-                IfNoneMatch = conditions?.IfNoneMatch,
-                IfModifiedSince = conditions?.IfModifiedSince,
-                IfUnmodifiedSince = conditions?.IfUnmodifiedSince
-            };
 
         private static async Task CopyToAsync(
             BlobDownloadStreamingResult result,

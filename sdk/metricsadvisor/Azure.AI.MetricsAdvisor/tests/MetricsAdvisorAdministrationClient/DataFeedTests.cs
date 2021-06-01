@@ -96,6 +96,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateDataFeedValidatesArguments()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -114,6 +115,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateDataFeedRespectsTheCancellationToken()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();

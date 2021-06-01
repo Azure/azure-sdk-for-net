@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 
@@ -94,7 +95,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeries = metrics.Value.Metrics[0].Timeseries.FirstOrDefault();
+            var timeSeries = metrics.Value.Metrics[0].TimeSeries.FirstOrDefault();
             if (timeSeries == null)
             {
                 return false;

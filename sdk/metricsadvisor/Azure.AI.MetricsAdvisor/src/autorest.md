@@ -7,7 +7,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/53af7fc754f605aabc80a33cceb53b6b0c5da71b/specification/cognitiveservices/data-plane/MetricsAdvisor/preview/v1.0/MetricsAdvisor.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/2a25feb3b173dfe858977b2fafeeeb9ae83b2f3a/specification/cognitiveservices/data-plane/MetricsAdvisor/preview/v1.0/MetricsAdvisor.json
 ```
 
 ### Make generated models internal by default
@@ -836,4 +836,14 @@ directive:
           }
         }
       }
+```
+
+## Make secrets not required in Credential-related definitions
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ServicePrincipalParam
+  transform: >
+    $["required"] = ["clientId", "tenantId"]
 ```

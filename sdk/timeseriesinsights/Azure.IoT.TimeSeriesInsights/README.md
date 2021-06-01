@@ -1,8 +1,10 @@
-# Azure IoT Time Series Insights client library for .NET
+# Azure Time Series Insights client library for .NET
 
-This library provides access to the Azure Time Series Insights service.
+Azure Time Series Insights provides data exploration and telemetry tools to help you improve operational analysis. It's a fully managed analytics, storage, and visualization service where you can explore and analyze billions of Internet of Things (IoT) events simultaneously.
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights)
+Azure Time Series Insights gives you a global view of your data, so you can quickly validate your IoT solution and avoid costly downtime to mission-critical devices. It can help you discover hidden trends, spot anomalies, and conduct root-cause analysis in near real time.
+
+If you are new to Azure Time Series Insights and would like to learn more about the platform, please make sure you check out the Azure Time Series Insights official [documentation page][tsi_product_documentation].
 
 ## Getting started
 
@@ -12,7 +14,13 @@ For the best development experience, developers should use the official Microsof
 
 ### Install the package
 
-No package has been published for this client library yet.
+Install the Azure Time Series Insights client library for .NET with NuGet:
+
+```PowerShell
+Install-Package Azure.IoT.TimeSeriesInsights
+```
+
+View the package details at [nuget.org][tsi_nuget].
 
 ### Prerequisites
 
@@ -25,13 +33,14 @@ In order to interact with the Azure Time Series Insights service, you will need 
 
 ## Key concepts
 
-The main concepts of Time Series Insights client include:
+The Time Series Insights client library for .NET provides the following functionality:
+- Retrieving and being able to make changes to the Time Series Insights environment model settings, such as changing the model name or default type ID.
+- Retrieving and being able to add, update and remove Time Series instances.
+- Retrieving and being able to make changes to the Time Series Insights environment types, such as creating, updating and deleting Time Series types.
+- Retrieving and being able to make changes to the Time Series Insights hierarchies, such as creating, updating and deleting Time Series hierarchies.
+- Querying raw events, computed series and aggregate series.
 
-- Instances client: To perform operations such as creating, listing, replacing and deleting Time Series instances.
-- Types client: To perform operations such as creating, listing, replacing and deleting Time Series types.
-- Hierarchies client: To perform operations such as creating, listing, replacing and deleting Time Series hierarchies.
-- Model Settings client: To perform operations such as getting and updating Time Series Model configuration settings.
-- Query client: To query for events, series and aggregate series on Time Series Insights.
+[Source Code][tsi_client_src] | [Package (NuGet)][tsi_nuget] | [Product documentation][tsi_product_documentation] | [Samples][tsi_samples]
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that reusing client instances is always safe, even across threads.
@@ -49,7 +58,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [samples for Time Series Insights](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples).
+You can familiarize yourself with different APIs using [samples for Time Series Insights][tsi_samples].
 
 ## Source code folder structure
 
@@ -146,3 +155,6 @@ For more information see the Code of Conduct FAQ or contact opencode@microsoft.c
 [iot_cli_doc]: https://docs.microsoft.com/cli/azure/ext/azure-iot/dt?view=azure-cli-latest
 [http_status_code]: https://docs.microsoft.com/dotnet/api/system.net.httpstatuscode?view=netcore-3.1
 [tsi_nuget]: https://www.nuget.org/packages/Azure.IoT.TimeSeriesInsights
+[tsi_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src
+[tsi_product_documentation]: https://docs.microsoft.com/azure/time-series-insights/
+[tsi_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples/Readme.md
