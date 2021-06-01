@@ -623,7 +623,7 @@ namespace Compute.Tests
                 }
             }
 
-            if (vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy != null)
+            if (vmScaleSet.UpgradePolicy?.AutomaticOSUpgradePolicy != null)
             {
                 bool expectedDisableAutomaticRollbackValue = vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback ?? false;
                 Assert.True(vmScaleSetOut.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback == expectedDisableAutomaticRollbackValue);
