@@ -7,13 +7,26 @@ using System.Linq;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// The identifier of a Provider from Tenant
+    /// The identifier of a Provider from Tenant.
     /// </summary>
-    public class TenantProviderIdentifier : TenantResourceIdentifier
+    public class TenantProviderIdentifier : ResourceIdentifier
     {
-        internal TenantProviderIdentifier()
+        internal TenantProviderIdentifier(string nameSpace)
         {
+            NameSpace = nameSpace;
         }
+
+        internal TenantProviderIdentifier(TenantProviderIdentifier parent, string providerNamespace, ResourceType resourceType, string resourceName)
+            : base(new ResourceType(providerNamespace, resourceType), resourceName)
+        {
+            Parent = parent;
+            IsChild = true;
+        }
+
+        /// <summary>
+        /// Gets the NameSpace for the current ProviderIdentifier.
+        /// </summary>
+        public string NameSpace { get; } // rename to Provider
 
         /// <summary>
         /// Convert a string resource identifier into a TenantResourceIdentifier.
@@ -23,42 +36,10 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            TenantProviderIdentifier id = CreateTenantProviderIdentifier(other) as TenantProviderIdentifier;
-            if (id is null)
-                throw new ArgumentException("Not a valid tenant level resource", nameof(other));
+            TenantProviderIdentifier id = ResourceIdentifier.Create(other) as TenantProviderIdentifier;
+            if (other is null)
+                throw new ArgumentException("Not a valid tenant provider resource", nameof(other));
             return id;
-        }
-
-        private static TenantProviderIdentifier CreateTenantProviderIdentifier(string other)
-        {
-            if (resourceId is null)
-                throw new ArgumentNullException(nameof(resourceId));
-            if (!resourceId.StartsWith("/", StringComparison.InvariantCultureIgnoreCase))
-                throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
-            var parts = resourceId.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            if (parts.Count < 2)
-                throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
-            switch (parts[0].ToLowerInvariant())
-            {
-                case SubscriptionsKey:
-                    {
-                        ResourceIdentifier id = CreateBaseSubscriptionIdentifier(parts[1], parts.Trim(2));
-                        id.StringValue = resourceId;
-                        return id;
-                    }
-                case ProvidersKey:
-                    {
-                        if (parts.Count > 3)
-                        {
-                            ResourceIdentifier id = CreateTenantIdentifier(new TenantResourceIdentifier(new ResourceType(parts[1], parts[2]), parts[3]), parts.Trim(4));
-                            id.StringValue = resourceId;
-                            return id;
-                        }
-                        throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
-                    }
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
-            }
         }
     }
 }

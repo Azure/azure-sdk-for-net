@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Azure.ResourceManager.Core.ResourceIdentifier">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAJACgAAwAAMU0gF4ESAwgAAAQAMAhIAAABAgAQiA=</HashCode>
+      <FileName>Resources\ResourceIdentifier.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Azure.ResourceManager.Core.SubscriptionResourceIdentifier" Collapsed="true">
+    <Position X="8.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgBAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Resources\SubscriptionResourceIdentifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azure.ResourceManager.Core.TenantResourceIdentifier" Collapsed="true">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Resources\TenantResourceIdentifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Azure.ResourceManager.Core.TenantProviderIdentifier" Collapsed="true">
+    <Position X="10.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Resources\TenantProviderIdentifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

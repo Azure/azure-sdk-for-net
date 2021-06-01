@@ -75,7 +75,13 @@ namespace Azure.ResourceManager.Core
                     }
                 case ProvidersKey:
                     {
-                        if (parts.Count > 3)
+                        if (parts.Count == 2 || parts[2] == ProvidersKey)
+                        {
+                            ResourceIdentifier id = CreateTenantProviderIdentifier(new TenantProviderIdentifier(parts[1]), parts.Trim(2));
+                            id.StringValue = resourceId;
+                            return id;
+                        }
+                        else if (parts.Count > 3)
                         {
                             ResourceIdentifier id = CreateTenantIdentifier(new TenantResourceIdentifier(new ResourceType(parts[1], parts[2]), parts[3]), parts.Trim(4));
                             id.StringValue = resourceId;
@@ -85,6 +91,25 @@ namespace Azure.ResourceManager.Core
                     }
                 default:
                     throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
+            }
+        }
+
+        private static ResourceIdentifier CreateTenantProviderIdentifier(TenantProviderIdentifier id, List<string> parts)
+        {
+            if (parts.Count == 0)
+                return id;
+            if (parts.Count == 1)
+                throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
+            switch (parts[0].ToLowerInvariant())
+            {
+                case ProvidersKey:
+                    {
+                        if (parts.Count > 3)
+                            return CreateTenantProviderIdentifier(new TenantProviderIdentifier(id, parts[1], parts[2], parts[3]), parts.Trim(4));
+                        throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
+                    }
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
             }
         }
 
@@ -116,6 +141,8 @@ namespace Azure.ResourceManager.Core
                             if (parts.Count > 3)
                                 return CreateSubscriptionIdentifier(new SubscriptionResourceIdentifier(subscription,
                                     parts[1], parts[2], parts[3]), parts.Skip(4).ToList());
+                            else if (parts.Count == 2)
+                                return CreateTenantProviderIdentifier(new TenantProviderIdentifier(parts[1]), parts.Trim(2));
                             throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource string");
                         }
                     default:

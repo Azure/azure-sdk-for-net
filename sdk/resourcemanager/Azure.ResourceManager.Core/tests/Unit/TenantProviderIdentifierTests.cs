@@ -7,6 +7,7 @@ namespace Azure.ResourceManager.Core.Tests
     public class TenantProviderIdentifierTests
     {
         [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights")]
+        [TestCase("/providers/microsoft.insights")]
         public void ImplicitConstructor(string resourceProviderID)
         {
             string x = resourceProviderID;
