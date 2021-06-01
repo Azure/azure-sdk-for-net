@@ -232,8 +232,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = true };
+            var mockConsumer = new Mock<TransportConsumer>();
             var mockConnection = Mock.Of<EventHubConnection>();
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
+
+            mockConsumer
+                .SetupGet(consumer => consumer.IsClosed)
+                .Returns(true);
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -241,8 +246,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
-                .Returns(default(TransportConsumer))
-                .Callback(() => completionSource.TrySetResult(true));
+                .Callback(() => completionSource.TrySetResult(true))
+                .Returns(mockConsumer.Object);
 
             var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
 
