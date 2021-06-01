@@ -238,7 +238,8 @@ namespace Compute.Tests
             string securityType = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            Action<VirtualMachine> customVMOutputValidator = null)
         {
             try
             {
@@ -375,7 +376,7 @@ namespace Compute.Tests
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
                 ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled,
                     hasDiffDisks: hasDiffDisks, hasUserDefinedAS: hasUserDefinedAvSet, expectedPpgReferenceId: ppgId, encryptionAtHostEnabled: encryptionAtHostEnabled,
-                    expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
+                    expectedDedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId, customVMOutputValidator: customVMOutputValidator);
 
                 return getResponse;
             }
@@ -1011,7 +1012,7 @@ namespace Compute.Tests
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
             bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null,
-            bool? encryptionAtHostEnabled = null, string expectedDedicatedHostGroupReferenceId = null)
+            bool? encryptionAtHostEnabled = null, string expectedDedicatedHostGroupReferenceId = null, Action<VirtualMachine> customVMOutputValidator = null)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -1216,6 +1217,8 @@ namespace Compute.Tests
             {
                 Assert.Null(vmOut.HostGroup);
             }
+            
+            customVMOutputValidator?.Invoke(vmOut);
         }
 
         protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachine vmOut, bool hasManagedDisks = false,
