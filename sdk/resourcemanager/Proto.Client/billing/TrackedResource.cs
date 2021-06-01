@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.Core.Adapters
     /// </summary>
     /// <typeparam name="TIdentifier"> The type of the underlying resource id </typeparam>
     /// <typeparam name="TModel"> The type of the underlying model this class wraps </typeparam>
-    public abstract class TrackedResource<TIdentifier, TModel> : TrackedResource<TIdentifier> 
+    public abstract class TrackedResource<TIdentifier, TModel> : TrackedResource<TIdentifier>
         where TIdentifier : TenantResourceIdentifier
         where TModel : class
     {
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core.Adapters
         /// <param name="location"> The location of the resource. </param>
         /// <param name="data"> The model to copy from. </param>
         protected TrackedResource(TIdentifier id, LocationData location, TModel data)
-            :base(id, id?.Name, id?.ResourceType, location, null)
+            : base(id, id?.Name, id?.ResourceType, location, null)
         {
             Model = data;
         }
