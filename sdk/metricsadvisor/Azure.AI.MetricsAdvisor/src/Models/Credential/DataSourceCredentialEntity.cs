@@ -6,7 +6,11 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The credential used to authenticate a <see cref="DataFeedSource"/> for data ingestion.
+    /// Provides different ways of authenticating to a <see cref="DataFeedSource"/> for data ingestion when the
+    /// default authentication method does not suffice. The supported credentials are:
+    /// <list type="bullet">
+    ///   <item><see cref="ServicePrincipalCredentialEntity"/></item>
+    /// </list>
     /// </summary>
     [CodeGenModel("DataSourceCredential")]
     public partial class DataSourceCredentialEntity

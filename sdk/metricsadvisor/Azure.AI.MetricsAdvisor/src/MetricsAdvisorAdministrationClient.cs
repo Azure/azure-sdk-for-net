@@ -1804,7 +1804,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region Credential
 
         /// <summary>
-        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID.
+        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID. This API provides different ways of
+        /// authenticating to a <see cref="DataFeedSource"/> for data ingestion when the default authentication method does not suffice.
+        /// Please see <see cref="DataSourceCredentialEntity"/> for a list of supported credentials.
         /// </summary>
         /// <param name="credentialEntity">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1844,7 +1846,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID.
+        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID. This API provides different ways of
+        /// authenticating to a <see cref="DataFeedSource"/> for data ingestion when the default authentication method does not suffice.
+        /// Please see <see cref="DataSourceCredentialEntity"/> for a list of supported credentials.
         /// </summary>
         /// <param name="credentialEntity">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
