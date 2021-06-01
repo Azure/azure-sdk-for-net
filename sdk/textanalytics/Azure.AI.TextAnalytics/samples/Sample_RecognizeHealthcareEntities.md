@@ -16,7 +16,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 To recognize healthcare entities in multiple documents, call `StartAnalyzeHealthcareEntities` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeHealthcareEntitiesOperation` which polls for the results from the API.
 
-```C#
+```C# Snippet:TextAnalyticsSampleHealthcareBatchConvenienceAnalyzeDocumentsAsync
     string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                         Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                         HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -45,14 +45,14 @@ To recognize healthcare entities in multiple documents, call `StartAnalyzeHealth
 The returned healthcare operation contains general information about the status of the operation. It can be requested while the operation is running or when it completed. For example:
 
 
-```C# 
+```C# Snippet:TextAnalyticsSampleHealthcareOperationStatus
     Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
     Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
     Console.WriteLine($"Status       : {healthOperation.Status}");
     Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
 ```
 To view the final results of the long-running operation:
-```C#
+```C# Snippet:TextAnalyticsSampleHealthcareBatchConvenienceAsyncViewResults
     await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
     {
         Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
