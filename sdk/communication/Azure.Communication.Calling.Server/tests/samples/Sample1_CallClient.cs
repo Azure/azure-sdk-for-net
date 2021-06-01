@@ -4,10 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Communication.Calling.Server.Tests.samples
+namespace Azure.Communication.Calling.Server.Tests
 {
     /// <summary>
     /// Samples that are used in the README.md file.
@@ -22,15 +23,15 @@ namespace Azure.Communication.Calling.Server.Tests.samples
         [AsyncOnly]
         public async Task CreateCallAsync()
         {
-            var sourceIdentity = await CallingServerClientsLiveTests.CreateUserAsync(TestEnvironment.LiveTestStaticConnectionString).ConfigureAwait(false);
-            var source = new CommunicationUserIdentifier(sourceIdentity.Id);
+            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
+            var source = await communicationIdentityClient.CreateUserAsync();
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
                    new List<CallModalityModel> { CallModalityModel.Audio },
                    new List<EventSubscriptionTypeModel> { EventSubscriptionTypeModel.ParticipantsUpdated, EventSubscriptionTypeModel.DtmfReceived });
 
-            CallClient callClient = CreateServerCallingClient();
+            CallClient callClient = CreateInstrumentedCallingServerClient();
             Console.WriteLine("Performing CreateCall operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCallAsync
             CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
@@ -48,15 +49,15 @@ namespace Azure.Communication.Calling.Server.Tests.samples
         [SyncOnly]
         public void CreateCall()
         {
-            var sourceIdentity = CallingServerClientsLiveTests.CreateUser(TestEnvironment.LiveTestStaticConnectionString);
-            var source = new CommunicationUserIdentifier(sourceIdentity.Id);
+            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
+            var source = communicationIdentityClient.CreateUser();
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
                    new List<CallModalityModel> { CallModalityModel.Audio },
                    new List<EventSubscriptionTypeModel> { EventSubscriptionTypeModel.ParticipantsUpdated, EventSubscriptionTypeModel.DtmfReceived });
 
-            CallClient callClient = CreateServerCallingClient();
+            CallClient callClient = CreateInstrumentedCallingServerClient();
             Console.WriteLine("Performing CreateCall operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCall
             CreateCallResponse createCallResponse = callClient.CreateCall(
