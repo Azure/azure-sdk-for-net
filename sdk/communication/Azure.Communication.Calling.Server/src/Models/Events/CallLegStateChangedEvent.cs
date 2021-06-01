@@ -9,11 +9,6 @@ namespace Azure.Communication.Calling.Server
     public partial class CallLegStateChangedEvent : CallEventBase
     {
         /// <summary>
-        /// The event type.
-        /// </summary>
-        public const string EventType = "Microsoft.Communication.CallLegStateChanged";
-
-        /// <summary>
         /// The conversation id.
         /// </summary>
         public string ConversationId { get; set; }

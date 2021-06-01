@@ -11,11 +11,6 @@ namespace Azure.Communication.Calling.Server
     public partial class ParticipantsUpdatedEvent : CallEventBase
     {
         /// <summary>
-        /// The event type.
-        /// </summary>
-        public const string EventType = "Microsoft.Communication.ParticipantsUpdated";
-
-        /// <summary>
         /// The call leg.id.
         /// </summary>
         public string CallLegId { get; set; }

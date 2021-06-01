@@ -9,11 +9,6 @@ namespace Azure.Communication.Calling.Server
     public partial class PlayAudioResultEvent : CallEventBase
     {
         /// <summary>
-        /// The event type.
-        /// </summary>
-        public const string EventType = "Microsoft.Communication.PlayAudioResult";
-
-        /// <summary>
         /// The result info.
         /// </summary>
         public ResultInfoInternal ResultInfo { get; set; }

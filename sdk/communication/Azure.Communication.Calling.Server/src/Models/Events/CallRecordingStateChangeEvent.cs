@@ -11,11 +11,6 @@ namespace Azure.Communication.Calling.Server
     public partial class CallRecordingStateChangeEvent : CallEventBase
     {
         /// <summary>
-        /// The event type.
-        /// </summary>
-        public const string EventType = "Microsoft.Communication.CallRecordingStateChanged";
-
-        /// <summary>
         /// The call recording id
         /// </summary>
         public string RecordingId { get; set; }

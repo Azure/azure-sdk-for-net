@@ -40,7 +40,7 @@ namespace Azure.Communication.Calling.Server
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    callState = property.Value.GetString().ToCallState();
+                    callState = new CallState(property.Value.GetString());
                     continue;
                 }
             }

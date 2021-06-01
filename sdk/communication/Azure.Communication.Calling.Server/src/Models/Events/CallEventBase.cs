@@ -23,27 +23,27 @@ namespace Azure.Communication.Calling.Server
 
             switch (eventType)
             {
-                case CallLegStateChangedEvent.EventType:
+                case EventType.CallLegStateChangedEventValue:
                     {
                         return CallLegStateChangedEvent.Deserialize(eventData);
                     }
-                case ToneReceivedEvent.EventType:
+                case EventType.ToneReceivedEventValue:
                     {
                         return ToneReceivedEvent.Deserialize(eventData);
                     }
-                case PlayAudioResultEvent.EventType:
+                case EventType.PlayAudioResultEventValue:
                     {
                         return PlayAudioResultEvent.Deserialize(eventData);
                     }
-                case CallRecordingStateChangeEvent.EventType:
+                case EventType.CallRecordingStateChangeEventValue:
                     {
                         return CallRecordingStateChangeEvent.Deserialize(eventData);
                     }
-                case InviteParticipantsResultEvent.EventType:
+                case EventType.InviteParticipantsResultEventValue:
                     {
                         return InviteParticipantsResultEvent.Deserialize(eventData);
                     }
-                case ParticipantsUpdatedEvent.EventType:
+                case EventType.ParticipantsUpdatedEventValue:
                     {
                         return ParticipantsUpdatedEvent.Deserialize(eventData);
                     }
