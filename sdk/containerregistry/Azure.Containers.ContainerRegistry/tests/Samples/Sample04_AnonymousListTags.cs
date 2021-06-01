@@ -29,10 +29,10 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
             // List the set of tags on the hello_world image tagged as "latest"
-            Pageable<ArtifactTagProperties> tags = image.GetTags();
+            Pageable<ArtifactTagProperties> tags = image.GetTagPropertiesCollection();
 
             // Iterate through the image's tags, listing the tagged alias for the image
-            Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
+            Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");
             foreach (ArtifactTagProperties tag in tags)
             {
                 Console.WriteLine($"    {image.RegistryEndpoint.Host}/{image.RepositoryName}:{tag}");
@@ -57,10 +57,10 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
             // List the set of tags on the hello_world image tagged as "latest"
-            AsyncPageable<ArtifactTagProperties> tags = image.GetTagsAsync();
+            AsyncPageable<ArtifactTagProperties> tags = image.GetTagPropertiesCollectionAsync();
 
             // Iterate through the image's tags, listing the tagged alias for the image
-            Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
+            Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");
             await foreach (ArtifactTagProperties tag in tags)
             {
                 Console.WriteLine($"    {image.RegistryEndpoint.Host}/{image.RepositoryName}:{tag}");
