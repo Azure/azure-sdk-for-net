@@ -9,6 +9,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class HookInfoPatch
     {
         /// <summary> hook administrators. </summary>
-        public IList<string> Admins { get; internal set; }
+        public IReadOnlyList<string> Admins { get; internal set; }
     }
 }

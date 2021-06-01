@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Administrators = new ChangeTrackingList<string>();
         }
 
-        internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
+        internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)
         {
             HookType = hookType;
             Id = id;
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The list of user e-mails with administrative rights to manage this hook.
         /// </summary>
         [CodeGenMember("Admins")]
-        public IList<string> Administrators { get; }
+        public IReadOnlyList<string> Administrators { get; }
 
         /// <summary> The hook type. </summary>
         internal HookType HookType { get; set; }

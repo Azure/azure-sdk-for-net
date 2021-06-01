@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string hookName = default;
             Optional<string> description = default;
             Optional<string> externalLink = default;
-            Optional<IList<string>> admins = default;
+            Optional<IReadOnlyList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookParameter"))
