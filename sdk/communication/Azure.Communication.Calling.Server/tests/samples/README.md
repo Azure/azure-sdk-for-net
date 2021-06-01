@@ -19,8 +19,4 @@ This client library allows to do following operations:
  - Specify request payload for the created call.
 
  #### You can find samples for each of these functions below.
- - CreateCall [synchronously][sample_servercalling] or [asynchronously][sample_servercalling_async]
- 
-<!-- LINKS -->
-[sample_servercalling]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Calling.Server/samples/Sample1_CreateCall.md
-[sample_servercalling_async]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Calling.Server/samples/Sample1_CreateCallAsync.md
+ - CreateCall [synchronously](../Sample1_CreateCall.md) or [asynchronously](../Sample1_CreateCallAsync.md)
