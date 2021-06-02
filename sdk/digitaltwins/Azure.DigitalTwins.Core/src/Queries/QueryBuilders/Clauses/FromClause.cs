@@ -24,7 +24,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="collection"> Enum Collection that can be either a ADT instance or a relationship. </param>
         public FromClause(AdtCollection collection)
         {
-            Type = "FROM";
+            Type = ClauseType.FROM;
             Collection = collection;
         }
     }

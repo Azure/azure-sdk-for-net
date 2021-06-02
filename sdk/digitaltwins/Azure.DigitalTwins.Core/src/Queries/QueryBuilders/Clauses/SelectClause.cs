@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="argument"> Argument for what to select (collection, property, etc.). </param>
         public SelectClause(string argument)
         {
-            Type = "SELECT";
+            Type = ClauseType.SELECT;
             ClauseArg = argument;
         }
     }

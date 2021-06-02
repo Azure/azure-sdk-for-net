@@ -33,20 +33,18 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             Clauses.Add(clause);
         }
 
-        /// <summary>
-        ///  Removes the most recently added component to the Clauses list.
-        /// </summary>
-        /// <returns> The updated list of clauses. </returns>
-        protected List<BaseClause> RemoveQueryComponent()
-        {
-            return Clauses;
-        }
+        ///// <summary>
+        /////  Removes the most recently added component from the Clauses list.
+        ///// </summary>
+        //protected void RemoveQueryComponent()
+        //{
+        //}
 
         /// <summary>
         /// Called to add a select clause (and its corresponding argument) to the query.
         /// </summary>
         /// <param name="args"> The arguments that define what we select (eg. *). </param>
-        /// <returns> TODO. </returns>
+        /// <returns> Query that contains a select clause. </returns>
         public AdtQuerySelect Select(params string[] args)
         {
             Console.WriteLine(someString);
@@ -59,7 +57,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// but inserts TOP() into the query structure as well.
         /// </summary>
         /// <param name="count"> The argument for TOP(), ie the number of instances to return. </param>
-        /// <returns> The ADTQuery object itself. </returns>
+        /// <returns> Query that contains a select clause. </returns>
         public AdtQuerySelect SelectTop(int count)
         {
             Console.WriteLine(someString);
@@ -70,27 +68,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used when applying the COUNT() aggregate from the ADT query language. Similar to SelectTop().
         /// </summary>
-        /// <param name="args"> The arguments that we define what we select (eg. *). </param>
-        /// <returns> The ADTQuery object itself. </returns>
+        /// <param name="args"> The arguments that we define what we select (eg. a property name, *, collection). </param>
+        /// <returns> Query that contains a select clause. </returns>
         public AdtQuerySelect SelectCount(params string[] args)
         {
             Console.WriteLine(someString);
             Console.WriteLine(args);
             return new AdtQuerySelect();
         }
-
-        /// <summary>
-        /// Adds the logical operator AND to the query.
-        /// </summary>
-        /// <returns> The ADTQuery object itself. </returns>
-        public AdtQuery And()
-        {
-            return this;
-        }
-
-        /*
-         * The rest of the logical operators defined in a similar manner.
-         */
 
         /// <summary>
         /// Parses the Query object into a string representation.

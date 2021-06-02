@@ -8,7 +8,7 @@ using System.Text;
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// A child of Condition specifically for comparisons using the SQL-like comparison operators.
+    /// Condition specifically for comparisons using the SQL-like comparison operators.
     /// </summary>
     internal class ComparisonCondition : BaseCondition
     {
