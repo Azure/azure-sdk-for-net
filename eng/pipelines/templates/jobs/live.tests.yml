@@ -137,7 +137,7 @@ jobs:
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
           testResultsFiles: "**/*.trx"
-          testRunTitle: "$(TestTargetFramework)"
+          testRunTitle: "${{ parameters.ServiceDirectory }} ${{ parameters.CloudConfig.Cloud }} $(Agent.JobName)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
 

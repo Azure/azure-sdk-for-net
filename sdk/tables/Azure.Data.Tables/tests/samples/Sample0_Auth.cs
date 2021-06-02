@@ -17,9 +17,11 @@ namespace Azure.Data.Tables.Samples
         public async Task ConnStringAuth()
         {
             string tableName = "OfficeSupplies";
-            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={PrimaryStorageAccountKey};EndpointSuffix={StorageEndpointSuffix ?? DefaultStorageSuffix}";
+            string connectionString =
+                $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={PrimaryStorageAccountKey};EndpointSuffix={StorageEndpointSuffix ?? DefaultStorageSuffix}";
 
             #region Snippet:TablesAuthConnString
+
             // Construct a new TableClient using a connection string.
 
             var client = new TableClient(
@@ -29,6 +31,7 @@ namespace Azure.Data.Tables.Samples
             // Create the table if it doesn't already exist to verify we've successfully authenticated.
 
             await client.CreateIfNotExistsAsync();
+
             #endregion
         }
 
@@ -41,6 +44,7 @@ namespace Azure.Data.Tables.Samples
             string tableName = "OfficeSupplies";
 
             #region Snippet:TablesAuthSharedKey
+
             // Construct a new TableClient using a TableSharedKeyCredential.
 
             var client = new TableClient(
@@ -51,6 +55,7 @@ namespace Azure.Data.Tables.Samples
             // Create the table if it doesn't already exist to verify we've successfully authenticated.
 
             await client.CreateIfNotExistsAsync();
+
             #endregion
         }
 
@@ -63,6 +68,7 @@ namespace Azure.Data.Tables.Samples
             string tableName = "OfficeSupplies";
 
             #region Snippet:TablesAuthSas
+
             // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
 
             var credential = new TableSharedKeyCredential(accountName, accountKey);
@@ -73,12 +79,14 @@ namespace Azure.Data.Tables.Samples
 
             // Build a shared access signature with the Write and Delete permissions and access to all service resource types.
 
-            TableAccountSasBuilder sasWriteDelete = serviceClient.GetSasBuilder(TableAccountSasPermissions.Write | TableAccountSasPermissions.Delete, TableAccountSasResourceTypes.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
-            string tokenWriteDelete = sasWriteDelete.Sign(credential);
+            var sasUri = serviceClient.GenerateSasUri(
+                TableAccountSasPermissions.Write | TableAccountSasPermissions.Delete,
+                TableAccountSasResourceTypes.All,
+                new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
 
-            // Create the TableServiceClients using the SAS URIs.
+            // Create the TableServiceClients using the SAS URI.
 
-            var serviceClientWithSas = new TableServiceClient(new Uri(storageUri), new AzureSasCredential(tokenWriteDelete));
+            var serviceClientWithSas = new TableServiceClient(sasUri);
 
             // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
 
@@ -87,6 +95,7 @@ namespace Azure.Data.Tables.Samples
             // Validate that we are able to delete a table using the SAS URI with Write and Delete permissions.
 
             await serviceClientWithSas.DeleteTableAsync(tableName);
+
             #endregion
         }
     }

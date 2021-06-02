@@ -70,7 +70,7 @@ Train custom models to recognize specific fields and values you specify by label
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 // For instructions to create a label file for your training forms, please see:
-// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
 
 Uri trainingFileUri = <trainingFileUri>;
 string modelName = "My Model with labels";
@@ -109,4 +109,4 @@ To see the full example source files, see:
 * [Train a model with forms and labels](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample6_TrainModelWithFormsAndLabels.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
-[labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+[labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Core.GeoJson
 {
@@ -14,6 +15,7 @@ namespace Azure.Core.GeoJson
     /// var point = new GeoPoint(-122.091954, 47.607148);
     /// </code>
     /// </example>
+    [JsonConverter(typeof(GeoJsonConverter))]
     public sealed class GeoPoint : GeoObject
     {
         /// <summary>

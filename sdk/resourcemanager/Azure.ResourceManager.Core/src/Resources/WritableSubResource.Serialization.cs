@@ -10,10 +10,10 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing a sub-resource that contains only the ID.
     /// </summary>
-    public partial class WritableSubResource : IUtf8JsonSerializable
+    public partial class WritableSubResource<TIdentifier> : IUtf8JsonSerializable
     {
         /// <summary>
-        /// Serialize the input SubResourceReadOnly object.
+        /// Serialize the input WritableSubResource object.
         /// </summary>
         /// <param name="writer"> Input Json writer. </param>
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Deserialize the input JSON element to a SubResourceReadOnly object.
+        /// Deserialize the input JSON element to a WritableSubResource object.
         /// </summary>
         /// <param name="element">The JSON element to be deserialized.</param>
-        /// <returns>Deserialized SubResourceReadOnly object.</returns>
-        internal static WritableSubResource DeserializeSubResourceReadOnly(JsonElement element)
+        /// <returns>Deserialized WritableSubResource object.</returns>
+        internal static WritableSubResource<TIdentifier> DeserializeWritableSubResource(JsonElement element)
         {
-            Optional<string> id = default;
+            string id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new WritableSubResource(id.Value);
+            return new WritableSubResource<TIdentifier>(id);
         }
     }
 }

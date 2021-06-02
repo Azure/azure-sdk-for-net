@@ -66,8 +66,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 throw new ArgumentNullException(nameof(result));
             }
 
-            cancellationToken.ThrowIfCancellationRequested();
-
             if (!result.Succeeded)
             {
                 // if the invocation failed, we must propagate the
