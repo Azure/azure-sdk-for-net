@@ -734,14 +734,6 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                                 throw;
                             }
-                            catch (EventHubsException ex)
-                                when ((ex.Reason == EventHubsException.FailureReason.ClientClosed) && (cancellationSource.IsCancellationRequested))
-                            {
-                                // Do not log as an exception; this is an expected scenario when partition processing is asked to stop.
-
-                                Logger.EventProcessorPartitionProcessingStopConsumerClose(partition.PartitionId, Identifier, EventHubName, ConsumerGroup);
-                                throw new TaskCanceledException();
-                            }
                             catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
                             {
                                 // This is an expected scenario that may occur when ownership changes; log the exception for tracking but
@@ -749,6 +741,14 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                                 Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
                                 throw;
+                            }
+                            catch (Exception ex) when ((cancellationSource.IsCancellationRequested)
+                                && (((ex is EventHubsException ehEx) && (ehEx.Reason == EventHubsException.FailureReason.ClientClosed)) || (ex is ObjectDisposedException)))
+                            {
+                                // Do not log as an exception; this is an expected scenario when partition processing is asked to stop.
+
+                                Logger.EventProcessorPartitionProcessingStopConsumerClose(partition.PartitionId, Identifier, EventHubName, ConsumerGroup);
+                                throw new TaskCanceledException();
                             }
                             catch (Exception ex) when (ex.IsNotType<DeveloperCodeException>())
                             {
@@ -771,6 +771,10 @@ namespace Azure.Messaging.EventHubs.Primitives
                                 await Task.Delay(retryDelay.Value, cancellationSource.Token).ConfigureAwait(false);
                             }
                         }
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        throw;
                     }
                     catch (OperationCanceledException ex)
                     {
@@ -1434,7 +1438,17 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
                     catch (Exception ex) when (ex.IsNotType<TaskCanceledException>())
                     {
-                        // Logging for exceptions with the service operation are responsibility of the connection.
+                        // Do not invoke the error handler when failing to list partitions as the processor is
+                        // stopping.  Instead, signal cancellation to short-circuit and avoid trying to run a
+                        // load balancing cycle.
+
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            throw new TaskCanceledException();
+                        }
+
+                        // Logging for exceptions with the service operation are responsibility of the connection. Only the handler
+                        // invocation needs to be performed here.
 
                         _ = InvokeOnProcessingErrorAsync(ex, null, Resources.OperationGetPartitionIds, CancellationToken.None);
                         partitionIds = default;
@@ -1451,6 +1465,10 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // Cancellation has been requested; throw the corresponding exception to maintain consistent behavior.
 
                 throw new TaskCanceledException();
+            }
+            catch (TaskCanceledException)
+            {
+                throw;
             }
             catch (OperationCanceledException ex)
             {
