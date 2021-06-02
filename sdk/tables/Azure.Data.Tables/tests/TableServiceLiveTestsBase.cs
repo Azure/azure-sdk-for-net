@@ -50,7 +50,7 @@ namespace Azure.Data.Tables.Tests
         protected string ServiceUri;
         protected string AccountName;
         protected string AccountKey;
-        protected string ConnectionString;
+
         private readonly Dictionary<string, string> _cosmosIgnoreTests = new()
         {
             {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},
@@ -60,6 +60,7 @@ namespace Azure.Data.Tables.Tests
             {"ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported"},
             {"ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported"},
             {"ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported"},
+            {"CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405"}
         };
 
         /// <summary>

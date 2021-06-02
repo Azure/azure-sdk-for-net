@@ -3,8 +3,11 @@
 
 using System;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Core;
 using Moq;
 using NUnit.Framework;
 
@@ -237,6 +240,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await client.DisposeAsync();
             Assert.That(async () => await receiver.RenewMessageLockAsync(new ServiceBusReceivedMessage()),
                 Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
+        }
+
+        [Test]
+        public async Task CloseRespectsCancellationToken()
+        {
+            var mockTransportReceiver = new Mock<TransportReceiver>();
+            var cts = new CancellationTokenSource();
+
+            // mutate the cancellation token to distinguish it from CancellationToken.None
+            cts.CancelAfter(100);
+
+            var mockConnection = CreateMockConnection();
+            mockConnection.Setup(
+                connection => connection.CreateTransportReceiver(
+                    It.IsAny<string>(),
+                    It.IsAny<ServiceBusRetryPolicy>(),
+                    It.IsAny<ServiceBusReceiveMode>(),
+                    It.IsAny<uint>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(mockTransportReceiver.Object);
+
+            var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", default, default, new ServiceBusReceiverOptions());
+            await receiver.CloseAsync(cts.Token);
+            mockTransportReceiver.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }
     }
 }

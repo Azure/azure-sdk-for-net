@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -69,5 +70,36 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "versionHeaderName")]
         public string VersionHeaderName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (VersionQueryName != null)
+            {
+                if (VersionQueryName.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "VersionQueryName", 100);
+                }
+                if (VersionQueryName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "VersionQueryName", 1);
+                }
+            }
+            if (VersionHeaderName != null)
+            {
+                if (VersionHeaderName.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "VersionHeaderName", 100);
+                }
+                if (VersionHeaderName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "VersionHeaderName", 1);
+                }
+            }
+        }
     }
 }

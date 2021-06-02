@@ -96,7 +96,7 @@ namespace Azure.Core.Pipeline
                             ExceptionDispatchInfo.Capture(lastException).Throw();
                         }
 
-                        throw new AggregateException($"Retry failed after {attempt} tries.", exceptions);
+                        throw new AggregateException($"Retry failed after {attempt} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.", exceptions);
                     }
                 }
                 else if (message.ResponseClassifier.IsErrorResponse(message))

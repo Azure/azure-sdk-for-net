@@ -19,10 +19,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// 
         /// only return for alerting incident result.
         /// </param>
-        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus)
+        /// <param name="valueOfRootNode"> value of the root node. </param>
+        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus, double valueOfRootNode)
         {
             MaxSeverity = maxSeverity;
             IncidentStatus = incidentStatus;
+            ValueOfRootNode = valueOfRootNode;
         }
 
         /// <summary> Initializes a new instance of IncidentProperty. </summary>
@@ -36,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </param>
         /// <param name="valueOfRootNode"> value of the root node. </param>
         /// <param name="expectedValueOfRootNode"> expected value of the root node given by smart detector. </param>
-        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus, double? valueOfRootNode, double? expectedValueOfRootNode)
+        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus, double valueOfRootNode, double? expectedValueOfRootNode)
         {
             MaxSeverity = maxSeverity;
             IncidentStatus = incidentStatus;
@@ -55,7 +57,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public AnomalyIncidentStatus IncidentStatus { get; }
         /// <summary> value of the root node. </summary>
-        public double? ValueOfRootNode { get; }
+        public double ValueOfRootNode { get; }
         /// <summary> expected value of the root node given by smart detector. </summary>
         public double? ExpectedValueOfRootNode { get; }
     }

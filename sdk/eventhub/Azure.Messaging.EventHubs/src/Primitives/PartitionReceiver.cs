@@ -38,6 +38,9 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///
     public class PartitionReceiver : IAsyncDisposable
     {
+        /// <summary>Indicates whether or not the consumer should consider itself invalid when a partition is stolen by another consumer, as determined by the Event Hubs service.</summary>
+        private const bool InvalidateConsumerWhenPartitionIsStolen = false;
+
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _closed;
 
@@ -554,7 +557,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                    EventPosition eventPosition,
                                                                    EventHubsRetryPolicy retryPolicy,
                                                                    PartitionReceiverOptions options) =>
-            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount, options.PrefetchSizeInBytes);
+            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, options.OwnerLevel, (uint?)options.PrefetchCount, options.PrefetchSizeInBytes);
 
         /// <summary>
         ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.

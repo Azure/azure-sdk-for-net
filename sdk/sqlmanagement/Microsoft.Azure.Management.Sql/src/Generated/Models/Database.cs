@@ -193,7 +193,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="maintenanceConfigurationId">Maintenance configuration
         /// id assigned to the database. This configuration defines the period
         /// when the maintenance updates will occur.</param>
-        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string))
+        /// <param name="isLedgerOn">Whether or not this database is a ledger
+        /// database, which means all tables in the database are ledger tables.
+        /// Note: the value of this property cannot be changed after the
+        /// database has been created.</param>
+        /// <param name="isInfraEncryptionEnabled">Infra encryption is enabled
+        /// for this database.</param>
+        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string), bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -234,6 +240,8 @@ namespace Microsoft.Azure.Management.Sql.Models
             PausedDate = pausedDate;
             ResumedDate = resumedDate;
             MaintenanceConfigurationId = maintenanceConfigurationId;
+            IsLedgerOn = isLedgerOn;
+            IsInfraEncryptionEnabled = isInfraEncryptionEnabled;
             CustomInit();
         }
 
@@ -561,6 +569,21 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceConfigurationId")]
         public string MaintenanceConfigurationId { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not this database is a ledger database,
+        /// which means all tables in the database are ledger tables. Note: the
+        /// value of this property cannot be changed after the database has
+        /// been created.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isLedgerOn")]
+        public bool? IsLedgerOn { get; set; }
+
+        /// <summary>
+        /// Gets infra encryption is enabled for this database.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isInfraEncryptionEnabled")]
+        public bool? IsInfraEncryptionEnabled { get; private set; }
 
         /// <summary>
         /// Validate the object.
