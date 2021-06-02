@@ -1023,7 +1023,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
-                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken)
@@ -1054,7 +1054,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
-                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken);

@@ -657,7 +657,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobImmutabilityPolicy
     {
         public BlobImmutabilityPolicy() { }
-        public System.DateTimeOffset? ExpiriesOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobImmutabilityPolicyMode? PolicyMode { get { throw null; } set { } }
     }
     public enum BlobImmutabilityPolicyMode

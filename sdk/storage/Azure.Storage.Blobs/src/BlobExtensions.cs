@@ -1343,7 +1343,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobImmutabilityPolicy
             {
-                ExpiriesOn = response.Headers.ImmutabilityPolicyExpiry,
+                ExpiresOn = response.Headers.ImmutabilityPolicyExpiry,
                 PolicyMode = response.Headers.ImmutabilityPolicyMode
             };
         }

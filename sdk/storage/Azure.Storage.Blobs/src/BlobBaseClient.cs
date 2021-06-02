@@ -2570,7 +2570,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
                             sealBlob: sealBlob,
-                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken)
@@ -2596,7 +2596,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
                             sealBlob: sealBlob,
-                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken);
@@ -2998,7 +2998,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
-                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken)
@@ -3021,7 +3021,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
-                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken);
@@ -5015,7 +5015,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await BlobRestClient.SetImmutabilityPolicyAsync(
                             timeout: null,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            immutabilityPolicyExpiry: immutabilityPolicy.ExpiriesOn,
+                            immutabilityPolicyExpiry: immutabilityPolicy.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy.PolicyMode,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -5025,7 +5025,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlobRestClient.SetImmutabilityPolicy(
                             timeout: null,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            immutabilityPolicyExpiry: immutabilityPolicy.ExpiriesOn,
+                            immutabilityPolicyExpiry: immutabilityPolicy.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy.PolicyMode,
                             cancellationToken: cancellationToken);
                     }

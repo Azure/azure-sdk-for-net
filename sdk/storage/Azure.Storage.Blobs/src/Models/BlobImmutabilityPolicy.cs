@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The date and time when the Immutability Policy expires.
         /// </summary>
-        public DateTimeOffset? ExpiriesOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary>
         /// The mode of the Immutability Policy.  Valid values are <see cref="BlobImmutabilityPolicyMode.Locked"/> and

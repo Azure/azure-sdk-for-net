@@ -900,7 +900,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
-                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken)
@@ -930,7 +930,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
-                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken);
@@ -1912,7 +1912,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
-                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken)
@@ -1941,7 +1941,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
-                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken);
