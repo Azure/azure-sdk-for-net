@@ -13,9 +13,9 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// The <see cref="LogsClient"/> allows to query the Azure Monitor Logs service.
+    /// The <see cref="LogsQueryClient"/> allows to query the Azure Monitor Logs service.
     /// </summary>
-    public class LogsClient
+    public class LogsQueryClient
     {
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -23,26 +23,26 @@ namespace Azure.Monitor.Query
         private readonly RowBinder _rowBinder;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsClient"/>.
+        /// Initializes a new instance of <see cref="LogsQueryClient"/>.
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        public LogsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
+        public LogsQueryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsClient"/>.
+        /// Initializes a new instance of <see cref="LogsQueryClient"/>.
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        /// <param name="options">The <see cref="LogsClientOptions"/> instance to use as client configuration.</param>
-        public LogsClient(Uri endpoint, TokenCredential credential, LogsClientOptions options)
+        /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
+        public LogsQueryClient(Uri endpoint, TokenCredential credential, LogsQueryClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            options ??= new LogsClientOptions();
+            options ??= new LogsQueryClientOptions();
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://api.loganalytics.io//.default"));
@@ -51,9 +51,9 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsClient"/> for mocking.
+        /// Initializes a new instance of <see cref="LogsQueryClient"/> for mocking.
         /// </summary>
-        protected LogsClient()
+        protected LogsQueryClient()
         {
         }
 
@@ -100,7 +100,7 @@ namespace Azure.Monitor.Query
         /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
         public virtual Response<LogsQueryResult> Query(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
@@ -124,7 +124,7 @@ namespace Azure.Monitor.Query
         /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
         public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
@@ -147,7 +147,7 @@ namespace Azure.Monitor.Query
         {
             Argument.AssertNotNull(batch, nameof(batch));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(QueryBatch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryBatch)}");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.Monitor.Query
         {
             Argument.AssertNotNull(batch, nameof(batch));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(QueryBatch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryBatch)}");
             scope.Start();
             try
             {
@@ -196,7 +196,7 @@ namespace Azure.Monitor.Query
 
             prefer = null;
 
-            if (options?.Timeout is TimeSpan timeout)
+            if (options?.ServerTimeout is TimeSpan timeout)
             {
                 prefer = "wait=" + (int) timeout.TotalSeconds;
             }
@@ -204,6 +204,14 @@ namespace Azure.Monitor.Query
             if (options?.IncludeStatistics == true)
             {
                 prefer += " include-statistics=true";
+            }
+
+            if (options != null)
+            {
+                queryBody.Workspaces = options.AdditionalWorkspaceNames;
+                queryBody.WorkspaceIds = options.AdditionalWorkspaceIds;
+                queryBody.QualifiedNames = options.AdditionalWorkspaceQualifiedNames;
+                queryBody.AzureResourceIds = options.AdditionalResourceIds;
             }
 
             return queryBody;

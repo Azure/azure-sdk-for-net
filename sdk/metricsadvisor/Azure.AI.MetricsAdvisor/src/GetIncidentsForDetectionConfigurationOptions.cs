@@ -16,8 +16,6 @@ namespace Azure.AI.MetricsAdvisor
     /// </summary>
     public class GetIncidentsForDetectionConfigurationOptions
     {
-        private IList<DimensionKey> _dimensionsToFilter;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetIncidentsForDetectionConfigurationOptions"/> class.
         /// </summary>
@@ -44,17 +42,7 @@ namespace Azure.AI.MetricsAdvisor
         /// Filters the result by series. Only incidents detected in the time series groups specified will
         /// be returned.
         /// </summary>
-#pragma warning disable CA2227 // Collection properties should be readonly
-        public IList<DimensionKey> DimensionsToFilter
-        {
-            get => _dimensionsToFilter;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(DimensionsToFilter));
-                _dimensionsToFilter = value;
-            }
-        }
-#pragma warning restore CA2227 // Collection properties should be readonly
+        public IList<DimensionKey> DimensionsToFilter { get; }
 
         /// <summary>
         /// If set, specifies the maximum limit of items returned in each page of results. Note:

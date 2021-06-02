@@ -66,7 +66,7 @@ You can query logs using the `LogsClient.QueryAsync`. The result would be return
 Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
 
-LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
 LogsQueryResultTable table = response.Value.PrimaryTable;
@@ -90,7 +90,7 @@ public class MyLogEntryModel
 ```
 
 ```C# Snippet:QueryLogsAsModels
-LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
+LogsQueryClient client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 
 // Query TOP 10 resource groups by event count
@@ -112,7 +112,7 @@ If your query return a single column (or a single value) of a primitive type you
 Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
 
-LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
 Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(workspaceId,
@@ -133,7 +133,7 @@ You can execute multiple queries in on request using the `LogsClient.CreateBatch
 Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
 
-LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
 // And total event count
@@ -161,7 +161,7 @@ You can also dynamically inspect the list of columns. The following example prin
 Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
 
-LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
 LogsQueryResultTable table = response.Value.PrimaryTable;
@@ -193,7 +193,7 @@ Some queries take longer to execute than the default service timeout allows. You
 Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
 
-LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
 LogsQueryResultTable table = response.Value.PrimaryTable;
@@ -226,7 +226,7 @@ Uri endpoint = new Uri("https://management.azure.com");
 string resourceId =
     "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.OperationalInsights/workspaces/<workspace_name>";
 
-var metricsClient = new MetricsClient(endpoint, new DefaultAzureCredential());
+var metricsClient = new MetricsQueryClient(endpoint, new DefaultAzureCredential());
 
 Response<MetricQueryResult> results = await metricsClient.QueryAsync(
     resourceId,
@@ -260,7 +260,7 @@ For example, if you submit an invalid query a `400` error is returned, indicatin
 Uri endpoint = new Uri("https://api.loganalytics.io");
 string workspaceId = "<workspace_id>";
 
-LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 
 try
 {

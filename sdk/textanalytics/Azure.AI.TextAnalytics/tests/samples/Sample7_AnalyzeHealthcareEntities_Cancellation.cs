@@ -13,7 +13,6 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        [Ignore("Healthcare not enabled yet")]
         public void Sample7_AnalyzeHealthcareEntities_Cancellation()
         {
             string endpoint = TestEnvironment.Endpoint;
