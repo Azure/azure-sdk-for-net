@@ -20,6 +20,7 @@
 - Renamed type `PiiEntityDomainType` to `PiiEntityDomain`.
 - Changed type `RecognizePiiEntitiesOptions.DomainFilter` from `PiiEntityDomainType?` to `PiiEntityDomainType`.
 - Changed type `AnalyzeActionsOptions.IncludeStatistics` from `bool` to `bool?`.
+- Removed property `Statistics` from `AnalyzeActionsResult` as it is not currently returned by the service even if the user passes `IncludeStatistics  = true`.
 
 ## 5.1.0-beta.7 (2021-05-18)
 ### New features

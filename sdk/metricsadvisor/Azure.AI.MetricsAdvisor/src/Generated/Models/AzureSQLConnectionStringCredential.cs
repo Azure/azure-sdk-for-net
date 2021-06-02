@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureSQLConnectionStringCredential. </summary>
-    internal partial class AzureSQLConnectionStringCredential : DataSourceCredentialEntity
+    internal partial class AzureSQLConnectionStringCredential : DatasourceCredential
     {
         /// <summary> Initializes a new instance of AzureSQLConnectionStringCredential. </summary>
         /// <param name="name"> Name of data source credential. </param>
