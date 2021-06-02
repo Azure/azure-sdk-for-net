@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.Chat
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class AzureCommunicationChatServiceModelFactory
+    public static partial class AzureCommunicationServicesModelFactory
     {
         /// <summary> Initializes new instance of ChatError class. </summary>
         /// <param name="code"> The error code. </param>
