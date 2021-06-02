@@ -227,9 +227,9 @@ namespace Azure.Monitor.Query
             QueryBody queryBody = CreateQueryBody(query, timeRange, options, out string prefer);
             using var message = _queryClient.CreateExecuteRequest(workspaceId, queryBody, prefer);
 
-            if (options?.Timeout != null)
+            if (options?.ServerTimeout != null)
             {
-                message.NetworkTimeout = options.Timeout;
+                message.NetworkTimeout = options.ServerTimeout;
             }
 
             if (async)
