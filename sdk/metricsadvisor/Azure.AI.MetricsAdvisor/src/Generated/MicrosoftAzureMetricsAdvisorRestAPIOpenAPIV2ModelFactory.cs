@@ -12,7 +12,7 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2ModelFactory
+    internal static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
     {
         /// <summary> Initializes new instance of AnomalyAlertConfiguration class. </summary>
         /// <param name="id"> anomaly alerting configuration unique id. </param>
