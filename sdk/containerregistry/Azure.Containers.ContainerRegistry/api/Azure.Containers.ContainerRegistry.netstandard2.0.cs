@@ -29,6 +29,19 @@ namespace Azure.Containers.ContainerRegistry
         public static bool operator !=(Azure.Containers.ContainerRegistry.ArtifactArchitecture left, Azure.Containers.ContainerRegistry.ArtifactArchitecture right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum ArtifactManifestOrderBy
+    {
+        None = 0,
+        LastUpdatedOnDescending = 1,
+        LastUpdatedOnAscending = 2,
+    }
+    public partial class ArtifactManifestPlatform
+    {
+        internal ArtifactManifestPlatform() { }
+        public Azure.Containers.ContainerRegistry.ArtifactArchitecture? Architecture { get { throw null; } }
+        public string Digest { get { throw null; } }
+        public Azure.Containers.ContainerRegistry.ArtifactOperatingSystem? OperatingSystem { get { throw null; } }
+    }
     public partial class ArtifactManifestProperties
     {
         public ArtifactManifestProperties() { }
@@ -40,19 +53,12 @@ namespace Azure.Containers.ContainerRegistry
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string Digest { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Containers.ContainerRegistry.ArtifactManifestReference> ManifestReferences { get { throw null; } }
         public Azure.Containers.ContainerRegistry.ArtifactOperatingSystem? OperatingSystem { get { throw null; } }
         public string RegistryLoginServer { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Containers.ContainerRegistry.ArtifactManifestPlatform> RelatedArtifacts { get { throw null; } }
         public string RepositoryName { get { throw null; } }
         public long? Size { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tags { get { throw null; } }
-    }
-    public partial class ArtifactManifestReference
-    {
-        internal ArtifactManifestReference() { }
-        public Azure.Containers.ContainerRegistry.ArtifactArchitecture Architecture { get { throw null; } }
-        public string Digest { get { throw null; } }
-        public Azure.Containers.ContainerRegistry.ArtifactOperatingSystem OperatingSystem { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArtifactOperatingSystem : System.IEquatable<Azure.Containers.ContainerRegistry.ArtifactOperatingSystem>
@@ -84,6 +90,12 @@ namespace Azure.Containers.ContainerRegistry
         public static bool operator !=(Azure.Containers.ContainerRegistry.ArtifactOperatingSystem left, Azure.Containers.ContainerRegistry.ArtifactOperatingSystem right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum ArtifactTagOrderBy
+    {
+        None = 0,
+        LastUpdatedOnDescending = 1,
+        LastUpdatedOnAscending = 2,
+    }
     public partial class ArtifactTagProperties
     {
         public ArtifactTagProperties() { }
@@ -106,10 +118,8 @@ namespace Azure.Containers.ContainerRegistry
         public ContainerRegistryClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public ContainerRegistryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
-        public virtual string LoginServer { get { throw null; } }
-        public virtual string Name { get { throw null; } }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.DeleteRepositoryResult> DeleteRepository(string repositoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.DeleteRepositoryResult>> DeleteRepositoryAsync(string repositoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteRepository(string repositoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRepositoryAsync(string repositoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Containers.ContainerRegistry.RegistryArtifact GetArtifact(string repositoryName, string tagOrDigest) { throw null; }
         public virtual Azure.Containers.ContainerRegistry.ContainerRepository GetRepository(string repositoryName) { throw null; }
         public virtual Azure.Pageable<string> GetRepositoryNames(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -123,58 +133,31 @@ namespace Azure.Containers.ContainerRegistry
             V1_0 = 1,
         }
     }
+    public static partial class ContainerRegistryModelFactory
+    {
+        public static Azure.Containers.ContainerRegistry.ArtifactManifestPlatform ArtifactManifestPlatform(string digest = null, Azure.Containers.ContainerRegistry.ArtifactArchitecture? architecture = default(Azure.Containers.ContainerRegistry.ArtifactArchitecture?), Azure.Containers.ContainerRegistry.ArtifactOperatingSystem? operatingSystem = default(Azure.Containers.ContainerRegistry.ArtifactOperatingSystem?)) { throw null; }
+        public static Azure.Containers.ContainerRegistry.ArtifactManifestProperties ArtifactManifestProperties(string registryLoginServer = null, string repositoryName = null, string digest = null, long? size = default(long?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.Containers.ContainerRegistry.ArtifactArchitecture? architecture = default(Azure.Containers.ContainerRegistry.ArtifactArchitecture?), Azure.Containers.ContainerRegistry.ArtifactOperatingSystem? operatingSystem = default(Azure.Containers.ContainerRegistry.ArtifactOperatingSystem?), System.Collections.Generic.IReadOnlyList<Azure.Containers.ContainerRegistry.ArtifactManifestPlatform> relatedArtifacts = null, System.Collections.Generic.IReadOnlyList<string> tags = null, bool? canDelete = default(bool?), bool? canWrite = default(bool?), bool? canList = default(bool?), bool? canRead = default(bool?), string quarantineState = null, string quarantineDetails = null) { throw null; }
+        public static Azure.Containers.ContainerRegistry.ArtifactTagProperties ArtifactTagProperties(string registryLoginServer = null, string repositoryName = null, string name = null, string digest = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), bool? canDelete = default(bool?), bool? canWrite = default(bool?), bool? canList = default(bool?), bool? canRead = default(bool?)) { throw null; }
+        public static Azure.Containers.ContainerRegistry.ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = null, string name = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), int manifestCount = 0, int tagCount = 0, bool? canDelete = default(bool?), bool? canWrite = default(bool?), bool? canList = default(bool?), bool? canRead = default(bool?), bool? teleportEnabled = default(bool?)) { throw null; }
+    }
     public partial class ContainerRepository
     {
         protected ContainerRepository() { }
         public virtual string Name { get { throw null; } }
         public virtual System.Uri RegistryEndpoint { get { throw null; } }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.DeleteRepositoryResult> Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.DeleteRepositoryResult>> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Containers.ContainerRegistry.RegistryArtifact GetArtifact(string tagOrDigest) { throw null; }
-        public virtual Azure.Pageable<Azure.Containers.ContainerRegistry.ArtifactManifestProperties> GetManifests(Azure.Containers.ContainerRegistry.ManifestOrderBy orderBy = Azure.Containers.ContainerRegistry.ManifestOrderBy.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Containers.ContainerRegistry.ArtifactManifestProperties> GetManifestsAsync(Azure.Containers.ContainerRegistry.ManifestOrderBy orderBy = Azure.Containers.ContainerRegistry.ManifestOrderBy.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.RepositoryProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.RepositoryProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.RepositoryProperties> SetProperties(Azure.Containers.ContainerRegistry.RepositoryProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.RepositoryProperties>> SetPropertiesAsync(Azure.Containers.ContainerRegistry.RepositoryProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DeleteRepositoryResult
-    {
-        internal DeleteRepositoryResult() { }
-        public System.Collections.Generic.IReadOnlyList<string> DeletedManifests { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> DeletedTags { get { throw null; } }
-    }
-    public enum ManifestOrderBy
-    {
-        None = 0,
-        LastUpdatedOnDescending = 1,
-        LastUpdatedOnAscending = 2,
-    }
-    public partial class RegistryArtifact
-    {
-        protected RegistryArtifact() { }
-        public virtual string FullyQualifiedName { get { throw null; } }
-        public virtual System.Uri RegistryEndpoint { get { throw null; } }
-        public virtual string RepositoryName { get { throw null; } }
-        public virtual string TagOrDigest { get { throw null; } }
         public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteTag(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTagAsync(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactManifestProperties> GetManifestProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>> GetManifestPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties> GetTagProperties(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties>> GetTagPropertiesAsync(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Containers.ContainerRegistry.ArtifactTagProperties> GetTags(Azure.Containers.ContainerRegistry.TagOrderBy orderBy = Azure.Containers.ContainerRegistry.TagOrderBy.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Containers.ContainerRegistry.ArtifactTagProperties> GetTagsAsync(Azure.Containers.ContainerRegistry.TagOrderBy orderBy = Azure.Containers.ContainerRegistry.TagOrderBy.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactManifestProperties> SetManifestProperties(Azure.Containers.ContainerRegistry.ArtifactManifestProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>> SetManifestPropertiesAsync(Azure.Containers.ContainerRegistry.ArtifactManifestProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties> SetTagProperties(string tag, Azure.Containers.ContainerRegistry.ArtifactTagProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties>> SetTagPropertiesAsync(string tag, Azure.Containers.ContainerRegistry.ArtifactTagProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Containers.ContainerRegistry.RegistryArtifact GetArtifact(string tagOrDigest) { throw null; }
+        public virtual Azure.Pageable<Azure.Containers.ContainerRegistry.ArtifactManifestProperties> GetManifestPropertiesCollection(Azure.Containers.ContainerRegistry.ArtifactManifestOrderBy orderBy = Azure.Containers.ContainerRegistry.ArtifactManifestOrderBy.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Containers.ContainerRegistry.ArtifactManifestProperties> GetManifestPropertiesCollectionAsync(Azure.Containers.ContainerRegistry.ArtifactManifestOrderBy orderBy = Azure.Containers.ContainerRegistry.ArtifactManifestOrderBy.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties> UpdateProperties(Azure.Containers.ContainerRegistry.ContainerRepositoryProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ContainerRepositoryProperties>> UpdatePropertiesAsync(Azure.Containers.ContainerRegistry.ContainerRepositoryProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RepositoryProperties
+    public partial class ContainerRepositoryProperties
     {
-        public RepositoryProperties() { }
+        public ContainerRepositoryProperties() { }
         public bool? CanDelete { get { throw null; } set { } }
         public bool? CanList { get { throw null; } set { } }
         public bool? CanRead { get { throw null; } set { } }
@@ -187,10 +170,25 @@ namespace Azure.Containers.ContainerRegistry
         public int TagCount { get { throw null; } }
         public bool? TeleportEnabled { get { throw null; } set { } }
     }
-    public enum TagOrderBy
+    public partial class RegistryArtifact
     {
-        None = 0,
-        LastUpdatedOnDescending = 1,
-        LastUpdatedOnAscending = 2,
+        protected RegistryArtifact() { }
+        public virtual string FullyQualifiedReference { get { throw null; } }
+        public virtual System.Uri RegistryEndpoint { get { throw null; } }
+        public virtual string RepositoryName { get { throw null; } }
+        public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteTag(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTagAsync(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactManifestProperties> GetManifestProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>> GetManifestPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties> GetTagProperties(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties>> GetTagPropertiesAsync(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Containers.ContainerRegistry.ArtifactTagProperties> GetTagPropertiesCollection(Azure.Containers.ContainerRegistry.ArtifactTagOrderBy orderBy = Azure.Containers.ContainerRegistry.ArtifactTagOrderBy.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Containers.ContainerRegistry.ArtifactTagProperties> GetTagPropertiesCollectionAsync(Azure.Containers.ContainerRegistry.ArtifactTagOrderBy orderBy = Azure.Containers.ContainerRegistry.ArtifactTagOrderBy.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactManifestProperties> UpdateManifestProperties(Azure.Containers.ContainerRegistry.ArtifactManifestProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>> UpdateManifestPropertiesAsync(Azure.Containers.ContainerRegistry.ArtifactManifestProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties> UpdateTagProperties(string tag, Azure.Containers.ContainerRegistry.ArtifactTagProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties>> UpdateTagPropertiesAsync(string tag, Azure.Containers.ContainerRegistry.ArtifactTagProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }

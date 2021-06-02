@@ -500,7 +500,7 @@ namespace Azure.Storage.Files.DataLake
                 return null;
             }
 
-            return new BlobOpenReadOptions(options.Conditions == null)
+            return new BlobOpenReadOptions(options.AllowModifications)
             {
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),

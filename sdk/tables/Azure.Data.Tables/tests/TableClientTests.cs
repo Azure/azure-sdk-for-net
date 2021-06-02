@@ -38,7 +38,10 @@ namespace Azure.Data.Tables.Tests
         {
             _transport = new MockTransport(request => new MockResponse(204));
             var service_Instrumented = InstrumentClient(
-                new TableServiceClient(new Uri($"https://example.com?{signature}"), new AzureSasCredential("sig"), new TablesClientOptions { Transport = _transport }));
+                new TableServiceClient(
+                    new Uri($"https://example.com?{signature}"),
+                    new AzureSasCredential("sig"),
+                    new TablesClientOptions { Transport = _transport }));
             client = service_Instrumented.GetTableClient(TableName);
         }
 
@@ -209,9 +212,8 @@ namespace Azure.Data.Tables.Tests
             string token = sas.Sign(new TableSharedKeyCredential("foo", "Kg=="));
 
             Assert.That(
-                token,
-                Is.EqualTo(
-                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}=2019-02-02&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}=nUfFBSzJ7NckYoHxSeX5nKcVbqJDBJQfPpGffr5Ui2M%3D"));
+                token.StartsWith(
+                    $"{Parms.TableName}={TableName.ToLowerInvariant()}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}=2019-02-02&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
         }
 
         /// <summary>
@@ -348,7 +350,24 @@ namespace Azure.Data.Tables.Tests
         public async Task ValidateUri()
         {
             await client.UpdateEntityAsync(new TableEntity("pkā", "rk"), ETag.All).ConfigureAwait(false);
-            Assert.AreEqual($"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata", _transport.Requests[0].Uri.ToString());
+            Assert.AreEqual(
+                $"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+                _transport.Requests[0].Uri.ToString());
+        }
+
+        [Test]
+        public void GenerateSasUri()
+        {
+            TableSasPermissions permissions = TableSasPermissions.Add;
+            var expires = DateTime.Now.AddDays(1);
+            var cred = new TableSharedKeyCredential(AccountName, Secret);
+            var client = new TableClient(_url, TableName, cred);
+
+            var expectedSas = new TableSasBuilder(TableName, permissions, expires).Sign(cred);
+
+            var actualSas = client.GenerateSasUri(permissions, expires);
+
+            Assert.AreEqual("?" + expectedSas, actualSas.Query);
         }
 
         public class EnumEntity : ITableEntity
