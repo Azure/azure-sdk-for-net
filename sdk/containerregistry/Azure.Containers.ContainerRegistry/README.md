@@ -116,10 +116,10 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
 // List the set of tags on the hello_world image tagged as "latest"
-Pageable<ArtifactTagProperties> tags = image.GetTags();
+Pageable<ArtifactTagProperties> tags = image.GetTagPropertiesCollection();
 
 // Iterate through the image's tags, listing the tagged alias for the image
-Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
+Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");
 foreach (ArtifactTagProperties tag in tags)
 {
     Console.WriteLine($"    {image.RegistryEndpoint.Host}/{image.RepositoryName}:{tag}");
@@ -137,7 +137,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new Defau
 RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
 // Set permissions on the v1 image's "latest" tag
-image.SetTagProperties("latest", new ArtifactTagProperties()
+image.UpdateTagProperties("latest", new ArtifactTagProperties()
 {
     CanWrite = false,
     CanDelete = false
@@ -161,7 +161,7 @@ foreach (string repositoryName in repositoryNames)
 
     // Obtain the images ordered from newest to oldest
     Pageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifests(orderBy: ManifestOrderBy.LastUpdatedOnDescending);
+        repository.GetManifestPropertiesCollection(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
 
     // Delete images older than the first three.
     foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
@@ -209,10 +209,10 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
 // List the set of tags on the hello_world image tagged as "latest"
-AsyncPageable<ArtifactTagProperties> tags = image.GetTagsAsync();
+AsyncPageable<ArtifactTagProperties> tags = image.GetTagPropertiesCollectionAsync();
 
 // Iterate through the image's tags, listing the tagged alias for the image
-Console.WriteLine($"{image.FullyQualifiedName} has the following aliases:");
+Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");
 await foreach (ArtifactTagProperties tag in tags)
 {
     Console.WriteLine($"    {image.RegistryEndpoint.Host}/{image.RepositoryName}:{tag}");
@@ -230,7 +230,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new Defau
 RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
 // Set permissions on the image's "latest" tag
-await image.SetTagPropertiesAsync("latest", new ArtifactTagProperties()
+await image.UpdateTagPropertiesAsync("latest", new ArtifactTagProperties()
 {
     CanWrite = false,
     CanDelete = false
@@ -254,7 +254,7 @@ await foreach (string repositoryName in repositoryNames)
 
     // Obtain the images ordered from newest to oldest
     AsyncPageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifestsAsync(orderBy: ManifestOrderBy.LastUpdatedOnDescending);
+        repository.GetManifestPropertiesCollectionAsync(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
 
     // Delete images older than the first three.
     await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
