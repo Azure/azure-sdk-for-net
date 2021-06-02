@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    internal partial class AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders
+    internal partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders
     {
         private readonly Response _response;
-        public AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders(Response response)
+        public MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders(Response response)
         {
             _response = response;
         }

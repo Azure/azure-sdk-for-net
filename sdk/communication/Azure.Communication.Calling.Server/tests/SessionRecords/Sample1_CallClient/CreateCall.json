@@ -8,8 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "354",
         "Content-Type": "application/json",
-        "Date": "Tue, 01 Jun 2021 01:49:30 GMT",
-        "User-Agent": "azsdk-net-Communication.Calling.Server/1.0.0-alpha.20210531.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "Date": "Tue, 01 Jun 2021 07:22:53 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Calling.Server/1.0.0-alpha.20210601.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "f7c8910f9c6fa503ddd8b7582e6d4d17",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -24,7 +27,7 @@
         ],
         "source": {
           "communicationUser": {
-            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-6524-98d1-7f07-113a0d009a45"
+            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-6655-d195-b8ba-a43a0d0040aa"
           }
         },
         "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
@@ -38,21 +41,22 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Client-Request-Id": "c5e5c2c2-5b21-4d81-9449-ef4de822b42c",
+        "Client-Request-Id": "ed49d9be-0f79-4cae-b386-5c859f0f0d51",
         "Content-Length": "52",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 01 Jun 2021 01:49:30 GMT",
-        "X-Azure-Ref": "0KpK1YAAAAABEI86Iq\u002BEcQLLS9pMh/JDDV1NURURHRTA4MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "Date": "Tue, 01 Jun 2021 07:22:52 GMT",
+        "X-Azure-Ref": "0TeC1YAAAAACIwAkLmZVRR62upaR2VwikV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "16080791-513b-4dfc-b2fe-0a7560f4e144"
+        "X-Microsoft-Skype-Chain-ID": "6a30b141-d4d6-478e-86fe-61ec2e2dcfee"
       },
       "ResponseBody": {
-        "callLegId": "421f0b00-f19f-48be-bb89-da1eabce6f7b"
+        "callLegId": "411f0b00-5ba0-4e29-b794-a15b4fa67973"
       }
     }
   ],
   "Variables": {
     "AZURE_PHONE_NUMBER": "\u002B15129104698",
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://acstestbot3.communication.azure.com/;accesskey=Kg==",
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://acstestbot3.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "54266852"
   }

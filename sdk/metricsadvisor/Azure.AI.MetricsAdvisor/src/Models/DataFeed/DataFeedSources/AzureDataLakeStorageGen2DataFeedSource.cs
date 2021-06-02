@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class AzureDataLakeStorageGen2DataFeedSource : DataFeedSource
     {
+        private string _accountKey;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureDataLakeStorageGen2DataFeedSource"/> class.
         /// </summary>
@@ -83,11 +86,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string AccountName { get; }
 
         /// <summary>
-        /// The Storage Account key.
-        /// </summary>
-        public string AccountKey { get; }
-
-        /// <summary>
         /// The name of the file system.
         /// </summary>
         public string FileSystemName { get; }
@@ -123,5 +121,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </list>
         /// </summary>
         public string FileTemplate { get; }
+
+        /// <summary>
+        /// The Storage Account key.
+        /// </summary>
+        internal string AccountKey
+        {
+            get => Volatile.Read(ref _accountKey);
+            private set => Volatile.Write(ref _accountKey, value);
+        }
     }
 }
