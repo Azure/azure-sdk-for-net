@@ -983,7 +983,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             {
                 await receiverA.CompleteMessageAsync(receivedMessage);
 
-                SimulateNetworkFailure(client, receiverA);
+                SimulateNetworkFailure(client);
                 Assert.That(
                     async () => await senderB.SendMessageAsync(new ServiceBusMessage()),
                     Throws.InstanceOf<InvalidOperationException>());
@@ -1002,7 +1002,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             Assert.IsNotNull(await receiverB.ReceiveMessageAsync());
         }
 
-        private static void SimulateNetworkFailure(ServiceBusClient client, ServiceBusReceiver receiver)
+        private static void SimulateNetworkFailure(ServiceBusClient client)
         {
             var connection = client.Connection;
             AmqpClient amqpClient = (AmqpClient) typeof(ServiceBusConnection).GetField(
@@ -1015,30 +1015,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             ((FaultTolerantAmqpObject<AmqpConnection>) typeof(AmqpConnectionScope).GetProperty(
                 "ActiveConnection",
                 BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
-            typeof(AmqpConnection).GetProperty("State", BindingFlags.Instance | BindingFlags.Public)
-                .SetValue(activeConnection, AmqpObjectState.Faulted);
 
-            ((FaultTolerantAmqpObject<AmqpSession>) typeof(AmqpConnectionScope).GetField(
-                "_singletonSession",
-                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpSession activeSession);
-            typeof(AmqpConnection).GetProperty("State", BindingFlags.Instance | BindingFlags.Public).SetValue(activeSession, AmqpObjectState.End);
-
-            var activeLinks = (ConcurrentDictionary<AmqpObject, Timer>) typeof(AmqpConnectionScope).GetProperty(
-                "ActiveLinks",
-                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope);
-
-            activeLinks.Clear();
-
-            ((FaultTolerantAmqpObject<ReceivingAmqpLink>) typeof(AmqpReceiver).GetField(
-                    "_receiveLink",
-                    BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue((AmqpReceiver) receiver.InnerReceiver)).TryGetOpenedObject(out ReceivingAmqpLink receiveLink);
-            typeof(ReceivingAmqpLink).GetProperty("State", BindingFlags.Instance | BindingFlags.Public).SetValue(receiveLink, AmqpObjectState.End);
-            ((FaultTolerantAmqpObject<Controller>) typeof(AmqpConnectionScope).GetProperty(
-                    "TransactionController",
-                    BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(scope)).TryGetOpenedObject(out Controller controller);
-            typeof(Controller).GetProperty("State", BindingFlags.Instance | BindingFlags.Public).SetValue(controller, AmqpObjectState.End);
+            typeof(AmqpConnection).GetMethod("AbortInternal", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(activeConnection, null);
         }
 
         private ServiceBusClient CreateCrossEntityTxnClient() =>
