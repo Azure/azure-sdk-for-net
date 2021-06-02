@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,8 +15,16 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class WebhookHookParameter
     {
         /// <summary> Initializes a new instance of WebhookHookParameter. </summary>
-        public WebhookHookParameter()
+        /// <param name="endpoint"> API address, will be called when alert is triggered, only support POST method via SSL. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public WebhookHookParameter(string endpoint)
         {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+
+            Endpoint = endpoint;
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
