@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     internal partial class PolicySetDefinitionListResult
     {
         internal static PolicySetDefinitionListResult DeserializePolicySetDefinitionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PolicySetDefinition>> value = default;
+            Optional<IReadOnlyList<PolicySetDefinitionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PolicySetDefinition> array = new List<PolicySetDefinition>();
+                    List<PolicySetDefinitionData> array = new List<PolicySetDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicySetDefinition.DeserializePolicySetDefinition(item));
+                        array.Add(PolicySetDefinitionData.DeserializePolicySetDefinitionData(item));
                     }
                     value = array;
                     continue;

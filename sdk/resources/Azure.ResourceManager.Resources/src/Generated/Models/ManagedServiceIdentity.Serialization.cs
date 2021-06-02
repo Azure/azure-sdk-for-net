@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class ManagedServiceIdentity : IUtf8JsonSerializable
     {
@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element)
         {
             Optional<ManagedServiceIdentityType> type = default;
+            Optional<string> tenantId = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,6 +50,11 @@ namespace Azure.ResourceManager.Resources.Models
                         continue;
                     }
                     type = new ManagedServiceIdentityType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tenantId"))
+                {
+                    tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"))
@@ -67,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ManagedServiceIdentity(Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
+            return new ManagedServiceIdentity(Optional.ToNullable(type), tenantId.Value, Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

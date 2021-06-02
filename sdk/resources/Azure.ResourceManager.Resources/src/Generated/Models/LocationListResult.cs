@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Location list operation response. </summary>
     internal partial class LocationListResult
@@ -17,13 +17,6 @@ namespace Azure.ResourceManager.Resources.Models
         internal LocationListResult()
         {
             Value = new ChangeTrackingList<Location>();
-        }
-
-        /// <summary> Initializes a new instance of LocationListResult. </summary>
-        /// <param name="value"> An array of locations. </param>
-        internal LocationListResult(IReadOnlyList<Location> value)
-        {
-            Value = value;
         }
 
         /// <summary> An array of locations. </summary>

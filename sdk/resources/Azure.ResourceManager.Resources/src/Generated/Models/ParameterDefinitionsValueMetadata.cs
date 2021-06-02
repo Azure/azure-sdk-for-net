@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> General metadata for the parameter. </summary>
     public partial class ParameterDefinitionsValueMetadata : IDictionary<string, object>

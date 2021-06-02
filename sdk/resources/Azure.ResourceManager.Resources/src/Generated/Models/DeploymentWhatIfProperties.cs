@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Deployment What-if properties. </summary>
     public partial class DeploymentWhatIfProperties : DeploymentProperties

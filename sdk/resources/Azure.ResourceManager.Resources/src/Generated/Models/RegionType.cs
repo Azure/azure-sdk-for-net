@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The type of the region. </summary>
-    public readonly partial struct RegionType : IEquatable<RegionType>
+    internal readonly partial struct RegionType : IEquatable<RegionType>
     {
         private readonly string _value;
 

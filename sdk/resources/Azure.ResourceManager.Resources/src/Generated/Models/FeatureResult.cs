@@ -5,36 +5,19 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Previewed feature information. </summary>
-    public partial class FeatureResult
+    internal partial class FeatureResult : Resource<TenantResourceIdentifier>
     {
         /// <summary> Initializes a new instance of FeatureResult. </summary>
         internal FeatureResult()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureResult. </summary>
-        /// <param name="name"> The name of the feature. </param>
-        /// <param name="properties"> Properties of the previewed feature. </param>
-        /// <param name="id"> The resource ID of the feature. </param>
-        /// <param name="type"> The resource type of the feature. </param>
-        internal FeatureResult(string name, FeatureProperties properties, string id, string type)
-        {
-            Name = name;
-            Properties = properties;
-            Id = id;
-            Type = type;
-        }
-
-        /// <summary> The name of the feature. </summary>
-        public string Name { get; }
         /// <summary> Properties of the previewed feature. </summary>
         public FeatureProperties Properties { get; }
-        /// <summary> The resource ID of the feature. </summary>
-        public string Id { get; }
-        /// <summary> The resource type of the feature. </summary>
-        public string Type { get; }
     }
 }

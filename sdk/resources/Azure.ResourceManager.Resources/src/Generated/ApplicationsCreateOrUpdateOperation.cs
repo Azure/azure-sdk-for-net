@@ -12,24 +12,28 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Creates a new managed application. </summary>
     public partial class ApplicationsCreateOrUpdateOperation : Operation<Application>, IOperationSource<Application>
     {
-        private readonly ArmOperationHelpers<Application> _operation;
+        private readonly OperationInternals<Application> _operation;
+
+        private readonly ResourceOperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ApplicationsCreateOrUpdateOperation for mocking. </summary>
         protected ApplicationsCreateOrUpdateOperation()
         {
         }
 
-        internal ApplicationsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ApplicationsCreateOrUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Application>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ApplicationsCreateOrUpdateOperation");
+            _operation = new OperationInternals<Application>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ApplicationsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +64,13 @@ namespace Azure.ResourceManager.Resources
         Application IOperationSource<Application>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return Application.DeserializeApplication(document.RootElement);
+            return new Application(_operationBase, ApplicationData.DeserializeApplicationData(document.RootElement));
         }
 
         async ValueTask<Application> IOperationSource<Application>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return Application.DeserializeApplication(document.RootElement);
+            return new Application(_operationBase, ApplicationData.DeserializeApplicationData(document.RootElement));
         }
     }
 }

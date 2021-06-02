@@ -5,20 +5,48 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+using System;
+
+namespace Azure.ResourceManager.Resources
 {
-    /// <summary> Plan for the resource. </summary>
+    /// <summary> Plan for the managed application. </summary>
     public partial class Plan
     {
         /// <summary> Initializes a new instance of Plan. </summary>
-        public Plan()
+        /// <param name="name"> The plan name. </param>
+        /// <param name="publisher"> The publisher ID. </param>
+        /// <param name="product"> The product code. </param>
+        /// <param name="version"> The plan&apos;s version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/>, <paramref name="product"/>, or <paramref name="version"/> is null. </exception>
+        public Plan(string name, string publisher, string product, string version)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+
+            Name = name;
+            Publisher = publisher;
+            Product = product;
+            Version = version;
         }
 
         /// <summary> Initializes a new instance of Plan. </summary>
-        /// <param name="name"> The plan ID. </param>
+        /// <param name="name"> The plan name. </param>
         /// <param name="publisher"> The publisher ID. </param>
-        /// <param name="product"> The offer ID. </param>
+        /// <param name="product"> The product code. </param>
         /// <param name="promotionCode"> The promotion code. </param>
         /// <param name="version"> The plan&apos;s version. </param>
         internal Plan(string name, string publisher, string product, string promotionCode, string version)
@@ -30,11 +58,11 @@ namespace Azure.ResourceManager.Resources.Models
             Version = version;
         }
 
-        /// <summary> The plan ID. </summary>
+        /// <summary> The plan name. </summary>
         public string Name { get; set; }
         /// <summary> The publisher ID. </summary>
         public string Publisher { get; set; }
-        /// <summary> The offer ID. </summary>
+        /// <summary> The product code. </summary>
         public string Product { get; set; }
         /// <summary> The promotion code. </summary>
         public string PromotionCode { get; set; }

@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Tenant Id information. </summary>
-    public partial class TenantIdDescription
+    internal partial class TenantIdDescription : Core.SubResource
     {
         /// <summary> Initializes a new instance of TenantIdDescription. </summary>
         internal TenantIdDescription()
@@ -19,27 +20,6 @@ namespace Azure.ResourceManager.Resources.Models
             Domains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TenantIdDescription. </summary>
-        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000. </param>
-        /// <param name="tenantId"> The tenant ID. For example, 00000000-0000-0000-0000-000000000000. </param>
-        /// <param name="tenantCategory"> Category of the tenant. </param>
-        /// <param name="country"> Country/region name of the address for the tenant. </param>
-        /// <param name="countryCode"> Country/region abbreviation for the tenant. </param>
-        /// <param name="displayName"> The display name of the tenant. </param>
-        /// <param name="domains"> The list of domains for the tenant. </param>
-        internal TenantIdDescription(string id, string tenantId, TenantCategory? tenantCategory, string country, string countryCode, string displayName, IReadOnlyList<string> domains)
-        {
-            Id = id;
-            TenantId = tenantId;
-            TenantCategory = tenantCategory;
-            Country = country;
-            CountryCode = countryCode;
-            DisplayName = displayName;
-            Domains = domains;
-        }
-
-        /// <summary> The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000. </summary>
-        public string Id { get; }
         /// <summary> The tenant ID. For example, 00000000-0000-0000-0000-000000000000. </summary>
         public string TenantId { get; }
         /// <summary> Category of the tenant. </summary>
@@ -52,5 +32,11 @@ namespace Azure.ResourceManager.Resources.Models
         public string DisplayName { get; }
         /// <summary> The list of domains for the tenant. </summary>
         public IReadOnlyList<string> Domains { get; }
+        /// <summary> The default domain for the tenant. </summary>
+        public string DefaultDomain { get; }
+        /// <summary> The tenant type. Only available for &apos;Home&apos; tenant category. </summary>
+        public string TenantType { get; }
+        /// <summary> The tenant&apos;s branding logo URL. Only available for &apos;Home&apos; tenant category. </summary>
+        public string TenantBrandingLogoUrl { get; }
     }
 }

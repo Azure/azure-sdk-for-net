@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Category of the tenant. </summary>
-    public enum TenantCategory
+    internal enum TenantCategory
     {
         /// <summary> Home. </summary>
         Home,

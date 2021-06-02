@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Target resource. </summary>
-    public partial class TargetResource
+    public partial class TargetResource : Core.SubResource
     {
         /// <summary> Initializes a new instance of TargetResource. </summary>
         internal TargetResource()
@@ -16,18 +18,15 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of TargetResource. </summary>
-        /// <param name="id"> The ID of the resource. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
-        internal TargetResource(string id, string resourceName, string resourceType)
+        internal TargetResource(string id, string resourceName, string resourceType) : base(id)
         {
-            Id = id;
             ResourceName = resourceName;
             ResourceType = resourceType;
         }
 
-        /// <summary> The ID of the resource. </summary>
-        public string Id { get; }
         /// <summary> The name of the resource. </summary>
         public string ResourceName { get; }
         /// <summary> The type of the resource. </summary>

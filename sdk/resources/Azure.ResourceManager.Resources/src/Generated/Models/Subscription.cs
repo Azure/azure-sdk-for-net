@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Subscription information. </summary>
-    public partial class Subscription
+    internal partial class Subscription : Core.SubResource
     {
         /// <summary> Initializes a new instance of Subscription. </summary>
         internal Subscription()
@@ -20,31 +21,6 @@ namespace Azure.ResourceManager.Resources.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of Subscription. </summary>
-        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="displayName"> The subscription display name. </param>
-        /// <param name="tenantId"> The subscription tenant ID. </param>
-        /// <param name="state"> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </param>
-        /// <param name="subscriptionPolicies"> The subscription policies. </param>
-        /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, &apos;Legacy, RoleBased&apos;. </param>
-        /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
-        /// <param name="tags"> The tags attached to the subscription. </param>
-        internal Subscription(string id, string subscriptionId, string displayName, string tenantId, SubscriptionState? state, SubscriptionPolicies subscriptionPolicies, string authorizationSource, IReadOnlyList<ManagedByTenant> managedByTenants, IReadOnlyDictionary<string, string> tags)
-        {
-            Id = id;
-            SubscriptionId = subscriptionId;
-            DisplayName = displayName;
-            TenantId = tenantId;
-            State = state;
-            SubscriptionPolicies = subscriptionPolicies;
-            AuthorizationSource = authorizationSource;
-            ManagedByTenants = managedByTenants;
-            Tags = tags;
-        }
-
-        /// <summary> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </summary>
-        public string Id { get; }
         /// <summary> The subscription ID. </summary>
         public string SubscriptionId { get; }
         /// <summary> The subscription display name. </summary>

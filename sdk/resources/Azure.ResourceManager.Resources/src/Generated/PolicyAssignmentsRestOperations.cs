@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of PolicyAssignmentsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public PolicyAssignmentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline;
         }
 
-        internal Core.HttpMessage CreateDeleteRequest(string scope, string policyAssignmentName)
+        internal Azure.Core.HttpMessage CreateDeleteRequest(string scope, string policyAssignmentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentName"> The name of the policy assignment to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        public async Task<Response<PolicyAssignment>> DeleteAsync(string scope, string policyAssignmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignmentData>> DeleteAsync(string scope, string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -82,13 +81,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue<PolicyAssignment>(null, message.Response);
+                    return Response.FromValue((PolicyAssignmentData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentName"> The name of the policy assignment to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        public Response<PolicyAssignment> Delete(string scope, string policyAssignmentName, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignmentData> Delete(string scope, string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -116,19 +115,19 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue<PolicyAssignment>(null, message.Response);
+                    return Response.FromValue((PolicyAssignmentData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal Core.HttpMessage CreateCreateRequest(string scope, string policyAssignmentName, PolicyAssignment parameters)
+        internal Azure.Core.HttpMessage CreateCreateRequest(string scope, string policyAssignmentName, PolicyAssignmentData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for the policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="policyAssignmentName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<PolicyAssignment>> CreateAsync(string scope, string policyAssignmentName, PolicyAssignment parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignmentData>> CreateAsync(string scope, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -176,9 +175,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 201:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for the policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="policyAssignmentName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<PolicyAssignment> Create(string scope, string policyAssignmentName, PolicyAssignment parameters, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignmentData> Create(string scope, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -213,9 +212,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 201:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetRequest(string scope, string policyAssignmentName)
+        internal Azure.Core.HttpMessage CreateGetRequest(string scope, string policyAssignmentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,7 +244,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        public async Task<Response<PolicyAssignment>> GetAsync(string scope, string policyAssignmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignmentData>> GetAsync(string scope, string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -262,9 +261,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -277,7 +276,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        public Response<PolicyAssignment> Get(string scope, string policyAssignmentName, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignmentData> Get(string scope, string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             if (scope == null)
             {
@@ -294,9 +293,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListForResourceGroupRequest(string resourceGroupName, string filter)
+        internal Azure.Core.HttpMessage CreateListForResourceGroupRequest(string resourceGroupName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -382,7 +381,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListForResourceRequest(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter)
+        internal Azure.Core.HttpMessage CreateListForResourceRequest(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -508,7 +507,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListForManagementGroupRequest(string managementGroupId, string filter)
+        internal Azure.Core.HttpMessage CreateListForManagementGroupRequest(string managementGroupId, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -589,7 +588,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListRequest(string filter)
+        internal Azure.Core.HttpMessage CreateListRequest(string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -651,7 +650,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateDeleteByIdRequest(string policyAssignmentId)
+        internal Azure.Core.HttpMessage CreateDeleteByIdRequest(string policyAssignmentId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -670,7 +669,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentId"> The ID of the policy assignment to delete. Use the format &apos;{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
-        public async Task<Response<PolicyAssignment>> DeleteByIdAsync(string policyAssignmentId, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignmentData>> DeleteByIdAsync(string policyAssignmentId, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentId == null)
             {
@@ -683,13 +682,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue<PolicyAssignment>(null, message.Response);
+                    return Response.FromValue((PolicyAssignmentData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -699,7 +698,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentId"> The ID of the policy assignment to delete. Use the format &apos;{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
-        public Response<PolicyAssignment> DeleteById(string policyAssignmentId, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignmentData> DeleteById(string policyAssignmentId, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentId == null)
             {
@@ -712,19 +711,19 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue<PolicyAssignment>(null, message.Response);
+                    return Response.FromValue((PolicyAssignmentData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal Core.HttpMessage CreateCreateByIdRequest(string policyAssignmentId, PolicyAssignment parameters)
+        internal Azure.Core.HttpMessage CreateCreateByIdRequest(string policyAssignmentId, PolicyAssignmentData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -748,7 +747,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<PolicyAssignment>> CreateByIdAsync(string policyAssignmentId, PolicyAssignment parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignmentData>> CreateByIdAsync(string policyAssignmentId, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentId == null)
             {
@@ -765,9 +764,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 201:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -780,7 +779,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<PolicyAssignment> CreateById(string policyAssignmentId, PolicyAssignment parameters, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignmentData> CreateById(string policyAssignmentId, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentId == null)
             {
@@ -797,9 +796,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 201:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -807,7 +806,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetByIdRequest(string policyAssignmentId)
+        internal Azure.Core.HttpMessage CreateGetByIdRequest(string policyAssignmentId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -826,7 +825,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format &apos;{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
-        public async Task<Response<PolicyAssignment>> GetByIdAsync(string policyAssignmentId, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignmentData>> GetByIdAsync(string policyAssignmentId, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentId == null)
             {
@@ -839,9 +838,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -853,7 +852,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyAssignmentId"> The ID of the policy assignment to get. Use the format &apos;{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
-        public Response<PolicyAssignment> GetById(string policyAssignmentId, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignmentData> GetById(string policyAssignmentId, CancellationToken cancellationToken = default)
         {
             if (policyAssignmentId == null)
             {
@@ -866,9 +865,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PolicyAssignment value = default;
+                        PolicyAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PolicyAssignment.DeserializePolicyAssignment(document.RootElement);
+                        value = PolicyAssignmentData.DeserializePolicyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -876,7 +875,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListForResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string filter)
+        internal Azure.Core.HttpMessage CreateListForResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -955,7 +954,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListForResourceNextPageRequest(string nextLink, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter)
+        internal Azure.Core.HttpMessage CreateListForResourceNextPageRequest(string nextLink, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1074,7 +1073,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListForManagementGroupNextPageRequest(string nextLink, string managementGroupId, string filter)
+        internal Azure.Core.HttpMessage CreateListForManagementGroupNextPageRequest(string nextLink, string managementGroupId, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1161,7 +1160,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListNextPageRequest(string nextLink, string filter)
+        internal Azure.Core.HttpMessage CreateListNextPageRequest(string nextLink, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

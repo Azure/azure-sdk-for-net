@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> List of previewed features. </summary>
     internal partial class FeatureOperationsListResult
@@ -17,15 +17,6 @@ namespace Azure.ResourceManager.Resources.Models
         internal FeatureOperationsListResult()
         {
             Value = new ChangeTrackingList<FeatureResult>();
-        }
-
-        /// <summary> Initializes a new instance of FeatureOperationsListResult. </summary>
-        /// <param name="value"> The array of features. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal FeatureOperationsListResult(IReadOnlyList<FeatureResult> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
         }
 
         /// <summary> The array of features. </summary>

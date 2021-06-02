@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class AzureCliScript : IUtf8JsonSerializable
     {
@@ -111,9 +112,9 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
             Optional<SystemData> systemData = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceGroupResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<ContainerConfiguration> containerSettings = default;
             Optional<StorageAccountConfiguration> storageAccountSettings = default;
             Optional<CleanupOptions> cleanupPreference = default;
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new AzureCliScript(id.Value, name.Value, type.Value, identity, location, Optional.ToDictionary(tags), kind, systemData.Value, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, Optional.ToDictionary(outputs), primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
+            return new AzureCliScript(id, name, type, identity, location, Optional.ToDictionary(tags), kind, systemData.Value, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, Optional.ToDictionary(outputs), primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
         }
     }
 }

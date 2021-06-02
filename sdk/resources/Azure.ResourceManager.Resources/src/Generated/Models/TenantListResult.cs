@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Tenant Ids information. </summary>
     internal partial class TenantListResult
@@ -25,15 +25,6 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             Value = new ChangeTrackingList<TenantIdDescription>();
-            NextLink = nextLink;
-        }
-
-        /// <summary> Initializes a new instance of TenantListResult. </summary>
-        /// <param name="value"> An array of tenants. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal TenantListResult(IReadOnlyList<TenantIdDescription> value, string nextLink)
-        {
-            Value = value;
             NextLink = nextLink;
         }
 

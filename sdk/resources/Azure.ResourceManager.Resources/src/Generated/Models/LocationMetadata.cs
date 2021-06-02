@@ -8,34 +8,15 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Location metadata information. </summary>
-    public partial class LocationMetadata
+    internal partial class LocationMetadata
     {
         /// <summary> Initializes a new instance of LocationMetadata. </summary>
         internal LocationMetadata()
         {
             PairedRegion = new ChangeTrackingList<PairedRegion>();
-        }
-
-        /// <summary> Initializes a new instance of LocationMetadata. </summary>
-        /// <param name="regionType"> The type of the region. </param>
-        /// <param name="regionCategory"> The category of the region. </param>
-        /// <param name="geographyGroup"> The geography group of the location. </param>
-        /// <param name="longitude"> The longitude of the location. </param>
-        /// <param name="latitude"> The latitude of the location. </param>
-        /// <param name="physicalLocation"> The physical location of the Azure location. </param>
-        /// <param name="pairedRegion"> The regions paired to this region. </param>
-        internal LocationMetadata(RegionType? regionType, RegionCategory? regionCategory, string geographyGroup, string longitude, string latitude, string physicalLocation, IReadOnlyList<PairedRegion> pairedRegion)
-        {
-            RegionType = regionType;
-            RegionCategory = regionCategory;
-            GeographyGroup = geographyGroup;
-            Longitude = longitude;
-            Latitude = latitude;
-            PhysicalLocation = physicalLocation;
-            PairedRegion = pairedRegion;
         }
 
         /// <summary> The type of the region. </summary>
@@ -52,5 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string PhysicalLocation { get; }
         /// <summary> The regions paired to this region. </summary>
         public IReadOnlyList<PairedRegion> PairedRegion { get; }
+        /// <summary> The home location of an edge zone. </summary>
+        public string HomeLocation { get; }
     }
 }

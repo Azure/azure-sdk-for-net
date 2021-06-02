@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The environment variable to pass to the script in the container instance. </summary>
     public partial class EnvironmentVariable

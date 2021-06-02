@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The subscription spending limit. </summary>
-    public enum SpendingLimit
+    internal enum SpendingLimit
     {
         /// <summary> On. </summary>
         On,

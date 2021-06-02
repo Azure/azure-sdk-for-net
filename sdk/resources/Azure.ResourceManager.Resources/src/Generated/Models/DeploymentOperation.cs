@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Deployment operation information. </summary>
-    public partial class DeploymentOperation
+    public partial class DeploymentOperation : Core.SubResource
     {
         /// <summary> Initializes a new instance of DeploymentOperation. </summary>
         internal DeploymentOperation()
@@ -16,18 +18,15 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of DeploymentOperation. </summary>
-        /// <param name="id"> Full deployment operation ID. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="operationId"> Deployment operation ID. </param>
         /// <param name="properties"> Deployment properties. </param>
-        internal DeploymentOperation(string id, string operationId, DeploymentOperationProperties properties)
+        internal DeploymentOperation(string id, string operationId, DeploymentOperationProperties properties) : base(id)
         {
-            Id = id;
             OperationId = operationId;
             Properties = properties;
         }
 
-        /// <summary> Full deployment operation ID. </summary>
-        public string Id { get; }
         /// <summary> Deployment operation ID. </summary>
         public string OperationId { get; }
         /// <summary> Deployment properties. </summary>

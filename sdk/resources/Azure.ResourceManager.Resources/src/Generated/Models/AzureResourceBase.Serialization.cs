@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class AzureResourceBase : IUtf8JsonSerializable
     {
@@ -20,16 +21,11 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static AzureResourceBase DeserializeAzureResourceBase(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -40,8 +36,13 @@ namespace Azure.ResourceManager.Resources.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AzureResourceBase(id.Value, name.Value, type.Value);
+            return new AzureResourceBase(id, name.Value, type.Value);
         }
     }
 }

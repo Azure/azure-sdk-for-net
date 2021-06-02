@@ -5,11 +5,10 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class Identity : IUtf8JsonSerializable
     {
@@ -21,17 +20,6 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
-            {
-                writer.WritePropertyName("userAssignedIdentities");
-                writer.WriteStartObject();
-                foreach (var item in UserAssignedIdentities)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WriteEndObject();
         }
 
@@ -40,7 +28,6 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> principalId = default;
             Optional<string> tenantId = default;
             Optional<ResourceIdentityType> type = default;
-            Optional<IDictionary<string, IdentityUserAssignedIdentitiesValue>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
@@ -63,23 +50,8 @@ namespace Azure.ResourceManager.Resources.Models
                     type = property.Value.GetString().ToResourceIdentityType();
                     continue;
                 }
-                if (property.NameEquals("userAssignedIdentities"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, IdentityUserAssignedIdentitiesValue> dictionary = new Dictionary<string, IdentityUserAssignedIdentitiesValue>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, IdentityUserAssignedIdentitiesValue.DeserializeIdentityUserAssignedIdentitiesValue(property0.Value));
-                    }
-                    userAssignedIdentities = dictionary;
-                    continue;
-                }
             }
-            return new Identity(principalId.Value, tenantId.Value, Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
+            return new Identity(principalId.Value, tenantId.Value, Optional.ToNullable(type));
         }
     }
 }

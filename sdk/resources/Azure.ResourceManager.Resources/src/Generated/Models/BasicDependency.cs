@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Deployment dependency information. </summary>
-    public partial class BasicDependency
+    public partial class BasicDependency : Core.SubResource
     {
         /// <summary> Initializes a new instance of BasicDependency. </summary>
         internal BasicDependency()
@@ -16,18 +18,15 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of BasicDependency. </summary>
-        /// <param name="id"> The ID of the dependency. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
         /// <param name="resourceName"> The dependency resource name. </param>
-        internal BasicDependency(string id, string resourceType, string resourceName)
+        internal BasicDependency(string id, string resourceType, string resourceName) : base(id)
         {
-            Id = id;
             ResourceType = resourceType;
             ResourceName = resourceName;
         }
 
-        /// <summary> The ID of the dependency. </summary>
-        public string Id { get; }
         /// <summary> The dependency resource type. </summary>
         public string ResourceType { get; }
         /// <summary> The dependency resource name. </summary>

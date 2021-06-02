@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </summary>
-    public enum SubscriptionState
+    internal enum SubscriptionState
     {
         /// <summary> Enabled. </summary>
         Enabled,

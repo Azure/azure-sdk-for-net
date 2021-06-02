@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> List of resource providers. </summary>
     internal partial class ProviderListResult
@@ -17,15 +17,6 @@ namespace Azure.ResourceManager.Resources.Models
         internal ProviderListResult()
         {
             Value = new ChangeTrackingList<Provider>();
-        }
-
-        /// <summary> Initializes a new instance of ProviderListResult. </summary>
-        /// <param name="value"> An array of resource providers. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ProviderListResult(IReadOnlyList<Provider> value, string nextLink)
-        {
-            Value = value;
-            NextLink = nextLink;
         }
 
         /// <summary> An array of resource providers. </summary>

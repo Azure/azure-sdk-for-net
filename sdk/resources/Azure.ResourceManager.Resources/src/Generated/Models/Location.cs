@@ -5,39 +5,24 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Location information. </summary>
-    public partial class Location
+    internal partial class Location : Core.SubResource
     {
         /// <summary> Initializes a new instance of Location. </summary>
         internal Location()
         {
         }
 
-        /// <summary> Initializes a new instance of Location. </summary>
-        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="name"> The location name. </param>
-        /// <param name="displayName"> The display name of the location. </param>
-        /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
-        /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
-        internal Location(string id, string subscriptionId, string name, string displayName, string regionalDisplayName, LocationMetadata metadata)
-        {
-            Id = id;
-            SubscriptionId = subscriptionId;
-            Name = name;
-            DisplayName = displayName;
-            RegionalDisplayName = regionalDisplayName;
-            Metadata = metadata;
-        }
-
-        /// <summary> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </summary>
-        public string Id { get; }
         /// <summary> The subscription ID. </summary>
         public string SubscriptionId { get; }
         /// <summary> The location name. </summary>
         public string Name { get; }
+        /// <summary> The location type. </summary>
+        public LocationType? Type { get; }
         /// <summary> The display name of the location. </summary>
         public string DisplayName { get; }
         /// <summary> The display name of the location and its region. </summary>

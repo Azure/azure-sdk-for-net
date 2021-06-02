@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class AliasPath
     {
@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> path = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<AliasPattern> pattern = default;
+            Optional<AliasPathMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
@@ -50,8 +51,18 @@ namespace Azure.ResourceManager.Resources.Models
                     pattern = AliasPattern.DeserializeAliasPattern(property.Value);
                     continue;
                 }
+                if (property.NameEquals("metadata"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    metadata = AliasPathMetadata.DeserializeAliasPathMetadata(property.Value);
+                    continue;
+                }
             }
-            return new AliasPath(path.Value, Optional.ToList(apiVersions), pattern.Value);
+            return new AliasPath(path.Value, Optional.ToList(apiVersions), pattern.Value, metadata.Value);
         }
     }
 }

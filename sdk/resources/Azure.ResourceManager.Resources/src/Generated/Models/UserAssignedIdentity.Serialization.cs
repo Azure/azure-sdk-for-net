@@ -8,23 +8,13 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class UserAssignedIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalId))
-            {
-                writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
-            }
-            if (Optional.IsDefined(ClientId))
-            {
-                writer.WritePropertyName("clientId");
-                writer.WriteStringValue(ClientId);
-            }
             writer.WriteEndObject();
         }
 

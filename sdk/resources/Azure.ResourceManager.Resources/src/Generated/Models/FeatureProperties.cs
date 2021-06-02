@@ -5,21 +5,14 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Information about feature. </summary>
-    public partial class FeatureProperties
+    internal partial class FeatureProperties
     {
         /// <summary> Initializes a new instance of FeatureProperties. </summary>
         internal FeatureProperties()
         {
-        }
-
-        /// <summary> Initializes a new instance of FeatureProperties. </summary>
-        /// <param name="state"> The registration state of the feature for the subscription. </param>
-        internal FeatureProperties(string state)
-        {
-            State = state;
         }
 
         /// <summary> The registration state of the feature for the subscription. </summary>

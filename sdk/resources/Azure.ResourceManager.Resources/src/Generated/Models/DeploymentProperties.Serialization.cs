@@ -8,27 +8,27 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class DeploymentProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateJson))
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template");
-                TemplateJson.WriteTo(writer);
+                writer.WriteObjectValue(Template);
             }
             if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink");
                 writer.WriteObjectValue(TemplateLink);
             }
-            if (Optional.IsDefined(ParametersJson))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
-                ParametersJson.WriteTo(writer);
+                writer.WriteObjectValue(Parameters);
             }
             if (Optional.IsDefined(ParametersLink))
             {
@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("onErrorDeployment");
                 writer.WriteObjectValue(OnErrorDeployment);
+            }
+            if (Optional.IsDefined(ExpressionEvaluationOptions))
+            {
+                writer.WritePropertyName("expressionEvaluationOptions");
+                writer.WriteObjectValue(ExpressionEvaluationOptions);
             }
             writer.WriteEndObject();
         }

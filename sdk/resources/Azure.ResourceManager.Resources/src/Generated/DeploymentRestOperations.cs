@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DeploymentRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public DeploymentRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline;
         }
 
-        internal Core.HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName, string operationId)
+        internal Azure.Core.HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", "2021-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtScopeRequest(string scope, string deploymentName, int? top)
+        internal Azure.Core.HttpMessage CreateListAtScopeRequest(string scope, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", "2021-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetAtTenantScopeRequest(string deploymentName, string operationId)
+        internal Azure.Core.HttpMessage CreateGetAtTenantScopeRequest(string deploymentName, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -235,7 +234,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", "2021-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -305,7 +304,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtTenantScopeRequest(string deploymentName, int? top)
+        internal Azure.Core.HttpMessage CreateListAtTenantScopeRequest(string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -319,7 +318,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", "2021-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetAtManagementGroupScopeRequest(string groupId, string deploymentName, string operationId)
+        internal Azure.Core.HttpMessage CreateGetAtManagementGroupScopeRequest(string groupId, string deploymentName, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -394,7 +393,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", "2021-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -474,7 +473,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtManagementGroupScopeRequest(string groupId, string deploymentName, int? top)
+        internal Azure.Core.HttpMessage CreateListAtManagementGroupScopeRequest(string groupId, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -490,7 +489,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", "2021-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -562,7 +561,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetAtSubscriptionScopeRequest(string deploymentName, string operationId)
+        internal Azure.Core.HttpMessage CreateGetAtSubscriptionScopeRequest(string deploymentName, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -575,7 +574,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", "2021-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -645,7 +644,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtSubscriptionScopeRequest(string deploymentName, int? top)
+        internal Azure.Core.HttpMessage CreateListAtSubscriptionScopeRequest(string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -661,7 +660,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", "2021-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -723,7 +722,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetRequest(string resourceGroupName, string deploymentName, string operationId)
+        internal Azure.Core.HttpMessage CreateGetRequest(string resourceGroupName, string deploymentName, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -738,7 +737,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", "2021-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -818,7 +817,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListRequest(string resourceGroupName, string deploymentName, int? top)
+        internal Azure.Core.HttpMessage CreateListRequest(string resourceGroupName, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -836,7 +835,7 @@ namespace Azure.ResourceManager.Resources
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", "2019-10-01", true);
+            uri.AppendQuery("api-version", "2021-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -908,7 +907,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope, string deploymentName, int? top)
+        internal Azure.Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -997,7 +996,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtTenantScopeNextPageRequest(string nextLink, string deploymentName, int? top)
+        internal Azure.Core.HttpMessage CreateListAtTenantScopeNextPageRequest(string nextLink, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1076,7 +1075,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtManagementGroupScopeNextPageRequest(string nextLink, string groupId, string deploymentName, int? top)
+        internal Azure.Core.HttpMessage CreateListAtManagementGroupScopeNextPageRequest(string nextLink, string groupId, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1165,7 +1164,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtSubscriptionScopeNextPageRequest(string nextLink, string deploymentName, int? top)
+        internal Azure.Core.HttpMessage CreateListAtSubscriptionScopeNextPageRequest(string nextLink, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1244,7 +1243,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string deploymentName, int? top)
+        internal Azure.Core.HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

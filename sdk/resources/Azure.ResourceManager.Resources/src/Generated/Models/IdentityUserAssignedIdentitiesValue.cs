@@ -5,23 +5,14 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The IdentityUserAssignedIdentitiesValue. </summary>
-    public partial class IdentityUserAssignedIdentitiesValue
+    internal partial class IdentityUserAssignedIdentitiesValue
     {
         /// <summary> Initializes a new instance of IdentityUserAssignedIdentitiesValue. </summary>
-        public IdentityUserAssignedIdentitiesValue()
+        internal IdentityUserAssignedIdentitiesValue()
         {
-        }
-
-        /// <summary> Initializes a new instance of IdentityUserAssignedIdentitiesValue. </summary>
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        internal IdentityUserAssignedIdentitiesValue(string principalId, string clientId)
-        {
-            PrincipalId = principalId;
-            ClientId = clientId;
         }
 
         /// <summary> The principal id of user assigned identity. </summary>

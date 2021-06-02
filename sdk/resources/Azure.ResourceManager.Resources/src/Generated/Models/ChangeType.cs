@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Type of change that will be made to the resource when the deployment is executed. </summary>
     public enum ChangeType
@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The resource exists in the current state and the desired state and will be redeployed when the deployment is executed. The properties of the resource will not change. </summary>
         NoChange,
         /// <summary> The resource exists in the current state and the desired state and will be redeployed when the deployment is executed. The properties of the resource will change. </summary>
-        Modify
+        Modify,
+        /// <summary> The resource is not supported by What-If. </summary>
+        Unsupported
     }
 }

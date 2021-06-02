@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Common properties for all Azure resources. </summary>
-    public partial class AzureResourceBase
+    public partial class AzureResourceBase : Core.SubResource
     {
         /// <summary> Initializes a new instance of AzureResourceBase. </summary>
         public AzureResourceBase()
@@ -16,18 +18,15 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of AzureResourceBase. </summary>
-        /// <param name="id"> String Id used to locate any resource on Azure. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> Name of this resource. </param>
         /// <param name="type"> Type of this resource. </param>
-        internal AzureResourceBase(string id, string name, string type)
+        internal AzureResourceBase(string id, string name, string type) : base(id)
         {
-            Id = id;
             Name = name;
             Type = type;
         }
 
-        /// <summary> String Id used to locate any resource on Azure. </summary>
-        public string Id { get; }
         /// <summary> Name of this resource. </summary>
         public string Name { get; }
         /// <summary> Type of this resource. </summary>

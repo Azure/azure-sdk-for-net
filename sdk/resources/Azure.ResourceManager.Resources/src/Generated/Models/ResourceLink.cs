@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The resource link. </summary>
-    public partial class ResourceLink
+    public partial class ResourceLink : Core.SubResource
     {
         /// <summary> Initializes a new instance of ResourceLink. </summary>
         public ResourceLink()
@@ -16,20 +18,17 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of ResourceLink. </summary>
-        /// <param name="id"> The fully qualified ID of the resource link. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the resource link. </param>
         /// <param name="type"> The resource link object. </param>
         /// <param name="properties"> Properties for resource link. </param>
-        internal ResourceLink(string id, string name, object type, ResourceLinkProperties properties)
+        internal ResourceLink(string id, string name, object type, ResourceLinkProperties properties) : base(id)
         {
-            Id = id;
             Name = name;
             Type = type;
             Properties = properties;
         }
 
-        /// <summary> The fully qualified ID of the resource link. </summary>
-        public string Id { get; }
         /// <summary> The name of the resource link. </summary>
         public string Name { get; }
         /// <summary> The resource link object. </summary>

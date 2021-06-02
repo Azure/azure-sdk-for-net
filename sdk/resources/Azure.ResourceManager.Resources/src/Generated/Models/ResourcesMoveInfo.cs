@@ -8,20 +8,20 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Parameters of move resources. </summary>
-    public partial class ResourcesMoveInfo
+    internal partial class ResourcesMoveInfo
     {
         /// <summary> Initializes a new instance of ResourcesMoveInfo. </summary>
-        public ResourcesMoveInfo()
+        internal ResourcesMoveInfo()
         {
             Resources = new ChangeTrackingList<string>();
         }
 
         /// <summary> The IDs of the resources. </summary>
-        public IList<string> Resources { get; }
+        public IReadOnlyList<string> Resources { get; }
         /// <summary> The target resource group. </summary>
-        public string TargetResourceGroup { get; set; }
+        public string TargetResourceGroup { get; }
     }
 }

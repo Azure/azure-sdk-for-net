@@ -7,23 +7,19 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     public partial class DeploymentOperation
     {
         internal static DeploymentOperation DeserializeDeploymentOperation(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> operationId = default;
             Optional<DeploymentOperationProperties> properties = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("operationId"))
                 {
                     operationId = property.Value.GetString();
@@ -39,8 +35,13 @@ namespace Azure.ResourceManager.Resources.Models
                     properties = DeploymentOperationProperties.DeserializeDeploymentOperationProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DeploymentOperation(id.Value, operationId.Value, properties.Value);
+            return new DeploymentOperation(id, operationId.Value, properties.Value);
         }
     }
 }

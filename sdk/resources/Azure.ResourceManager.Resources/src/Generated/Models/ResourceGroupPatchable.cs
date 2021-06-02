@@ -8,24 +8,24 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Resource group information. </summary>
-    public partial class ResourceGroupPatchable
+    internal partial class ResourceGroupPatchable
     {
         /// <summary> Initializes a new instance of ResourceGroupPatchable. </summary>
-        public ResourceGroupPatchable()
+        internal ResourceGroupPatchable()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The name of the resource group. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The resource group properties. </summary>
-        public ResourceGroupProperties Properties { get; set; }
+        public ResourceGroupProperties Properties { get; }
         /// <summary> The ID of the resource that manages this resource group. </summary>
-        public string ManagedBy { get; set; }
+        public string ManagedBy { get; }
         /// <summary> The tags attached to the resource group. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }
