@@ -175,8 +175,8 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Play Audio. </summary>
         /// <param name="conversationId"> The conversation id. </param>
         /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="audioFileId">The audio file id.</param>
-        /// <param name="callbackUri">The callback uri to get notification.</param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext, CancellationToken cancellationToken = default)
@@ -188,7 +188,7 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
 
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                return await RestClient.PlayAudioAsync(conversationId, audioFileUri.AbsoluteUri, false, operationContext, audioFileId, callbackUri.AbsoluteUri, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PlayAudioAsync(conversationId, audioFileUri.AbsoluteUri, false, operationContext, audioFileId, callbackUri?.AbsoluteUri, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -200,8 +200,8 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Play Audio. </summary>
         /// <param name="conversationId"> The conversation id. </param>
         /// <param name="audioFileUri"> The uri of the audio file. </param>
-        /// <param name="audioFileId">The audio file id.</param>
-        /// <param name="callbackUri">The callback uri to get notification.</param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
