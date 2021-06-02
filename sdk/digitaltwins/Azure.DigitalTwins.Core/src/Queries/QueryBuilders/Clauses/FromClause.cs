@@ -16,13 +16,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// The collection to query from. Stored in an enum to give user some intellisense since there are only two possible collection types,
         /// ADT instances or relationships.
         /// </summary>
-        public ADTCollection Collection { get; set; }
+        public AdtCollection Collection { get; set; }
 
         /// <summary>
         /// Constructor for a FROM clause.
         /// </summary>
         /// <param name="collection"> Enum Collection that can be either a ADT instance or a relationship. </param>
-        public FromClause(ADTCollection collection)
+        public FromClause(AdtCollection collection)
         {
             Type = "FROM";
             Collection = collection;

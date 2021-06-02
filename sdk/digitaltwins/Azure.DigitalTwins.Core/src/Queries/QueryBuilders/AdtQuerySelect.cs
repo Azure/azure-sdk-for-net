@@ -17,7 +17,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection"> An enum for the two different collections that users can query from (DT instances or relationships). </param>
         /// <returns> ADT query with select and from clause. </returns>
-        public AdtQuerySelectFrom From(ADTCollection collection)
+        public AdtQuerySelectFrom From(AdtCollection collection)
         {
             Console.WriteLine(someString);
             Console.WriteLine(collection);

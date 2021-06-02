@@ -18,7 +18,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public static void main()
         {
             //"SELECT * FROM DIGITALTWINS";
-            AdtQuery query1 = new AdtQuery().Select("*").From(ADTCollection.DigitalTwins);
+            AdtQuery query1 = new AdtQuery().Select("*").From(AdtCollection.DigitalTwins);
 
             ////"SELECT * FROM DIGITALTWINS WHERE Temperature <= 50";
             //ADTQuery query2 = new ADTQuery().Select("*").From(ADTCollection.DigitalTwins).Where(new ComparisonCondition("Temperature", "<=", "50"));
@@ -54,7 +54,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
             AdtQuery query8 = new AdtQuery()
                 .Select("*")
-                .From(ADTCollection.DigitalTwins)
+                .From(AdtCollection.DigitalTwins)
                 .WhereIsOfModel("Room");
         }
     }
