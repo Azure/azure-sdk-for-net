@@ -20,17 +20,17 @@ namespace Azure.Communication.Calling.Server
         public Uri CallbackUri { get; }
 
         /// <summary> The requested modalities. </summary>
-        public IList<CallModalityModel> RequestedModalities { get; }
+        public IList<CallModality> RequestedModalities { get; }
 
         /// <summary> The requested call events to subscribe to. </summary>
-        public IList<EventSubscriptionTypeModel> RequestedCallEvents { get; }
+        public IList<EventSubscriptionType> RequestedCallEvents { get; }
 
         /// <summary> Initializes a new instance of CreateCallRequest. </summary>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="requestedModalities"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public CreateCallOptions(Uri callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents)
+        public CreateCallOptions(Uri callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents)
         {
             if (callbackUri == null)
             {

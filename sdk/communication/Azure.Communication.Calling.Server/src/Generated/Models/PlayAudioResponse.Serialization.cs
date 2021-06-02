@@ -15,9 +15,9 @@ namespace Azure.Communication.Calling.Server
         internal static PlayAudioResponse DeserializePlayAudioResponse(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<OperationStatusModel> status = default;
+            Optional<OperationStatus> status = default;
             Optional<string> operationContext = default;
-            Optional<ResultInfoInternal> resultInfo = default;
+            Optional<ResultInfo> resultInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -32,7 +32,7 @@ namespace Azure.Communication.Calling.Server
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new OperationStatusModel(property.Value.GetString());
+                    status = new OperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operationContext"))
@@ -47,7 +47,7 @@ namespace Azure.Communication.Calling.Server
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resultInfo = ResultInfoInternal.DeserializeResultInfoInternal(property.Value);
+                    resultInfo = ResultInfo.DeserializeResultInfo(property.Value);
                     continue;
                 }
             }

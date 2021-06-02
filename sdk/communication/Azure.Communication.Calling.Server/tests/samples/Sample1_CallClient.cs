@@ -27,8 +27,8 @@ namespace Azure.Communication.Calling.Server.Tests.samples
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new List<CallModalityModel> { CallModalityModel.Audio },
-                   new List<EventSubscriptionTypeModel> { EventSubscriptionTypeModel.ParticipantsUpdated, EventSubscriptionTypeModel.DtmfReceived });
+                   new List<CallModality> { CallModality.Audio },
+                   new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived });
 
             CallClient callClient = CreateServerCallingClient();
             Console.WriteLine("Performing CreateCall operation");
@@ -53,8 +53,8 @@ namespace Azure.Communication.Calling.Server.Tests.samples
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new List<CallModalityModel> { CallModalityModel.Audio },
-                   new List<EventSubscriptionTypeModel> { EventSubscriptionTypeModel.ParticipantsUpdated, EventSubscriptionTypeModel.DtmfReceived });
+                   new List<CallModality> { CallModality.Audio },
+                   new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived });
 
             CallClient callClient = CreateServerCallingClient();
             Console.WriteLine("Performing CreateCall operation");

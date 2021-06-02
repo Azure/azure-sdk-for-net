@@ -19,5 +19,19 @@ namespace Azure.Communication
             writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
+
+        internal static CommunicationUserIdentifierModel DeserializeCommunicationUserIdentifierModel(JsonElement element)
+        {
+            string id = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new CommunicationUserIdentifierModel(id);
+        }
     }
 }

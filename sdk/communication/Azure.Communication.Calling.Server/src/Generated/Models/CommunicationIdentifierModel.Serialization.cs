@@ -37,5 +37,52 @@ namespace Azure.Communication
             }
             writer.WriteEndObject();
         }
+
+        internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
+        {
+            Optional<string> rawId = default;
+            Optional<CommunicationUserIdentifierModel> communicationUser = default;
+            Optional<PhoneNumberIdentifierModel> phoneNumber = default;
+            Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("rawId"))
+                {
+                    rawId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("communicationUser"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    communicationUser = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("phoneNumber"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    phoneNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("microsoftTeamsUser"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value);
+                    continue;
+                }
+            }
+            return new CommunicationIdentifierModel(rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
+        }
     }
 }

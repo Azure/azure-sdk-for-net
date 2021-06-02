@@ -152,8 +152,8 @@ namespace Azure.Communication.Calling.Server.Tests
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new List<CallModalityModel> { CallModalityModel.Audio },
-                   new List<EventSubscriptionTypeModel> { EventSubscriptionTypeModel.ParticipantsUpdated, EventSubscriptionTypeModel.DtmfReceived });
+                   new List<CallModality> { CallModality.Audio },
+                   new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived });
             createCallOption.AlternateCallerId = new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber);
 
             Console.WriteLine("Performing CreateCall operation");
@@ -194,7 +194,7 @@ namespace Azure.Communication.Calling.Server.Tests
 
             var response = await client.PlayAudioAsync(callLegId, playAudioOptions).ConfigureAwait(false);
 
-            Assert.AreEqual(response.Value.Status, OperationStatusModel.Running);
+            Assert.AreEqual(response.Value.Status, OperationStatus.Running);
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_PlayAudioOperation
 
@@ -212,20 +212,11 @@ namespace Azure.Communication.Calling.Server.Tests
         #region Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaOperationsOperation
         private async Task CancelMediaOperationsOperation(CallClient client, string callLegId)
         {
-            var playAudioOptions = new PlayAudioOptions()
-            {
-                AudioFileUri = new Uri(TestEnvironment.AudioFileUrl),
-                OperationContext = Guid.NewGuid().ToString(),
-                Loop = true,
-                AudioFileId = Guid.NewGuid().ToString()
-            };
-
             Console.WriteLine("Performing cancel media processing operation to stop playing audio");
 
-            var operationContext = Guid.NewGuid().ToString();
-            var response = await client.CancelMediaOperationsAsync(callLegId).ConfigureAwait(false);
+            var response = await client.CancelAllMediaOperationsAsync(callLegId).ConfigureAwait(false);
 
-            Assert.AreEqual(response.Value.Status, OperationStatusModel.Running);
+            Assert.AreEqual(response.Value.Status, OperationStatus.Running);
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaOperationsOperation
 

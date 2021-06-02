@@ -19,5 +19,19 @@ namespace Azure.Communication
             writer.WriteStringValue(Value);
             writer.WriteEndObject();
         }
+
+        internal static PhoneNumberIdentifierModel DeserializePhoneNumberIdentifierModel(JsonElement element)
+        {
+            string value = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("value"))
+                {
+                    value = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new PhoneNumberIdentifierModel(value);
+        }
     }
 }

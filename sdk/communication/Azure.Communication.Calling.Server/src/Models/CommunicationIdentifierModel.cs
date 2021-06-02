@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Communication
 {
-    [CodeGenModel("CommunicationIdentifierModel")]
+    [CodeGenModel("CommunicationIdentifierModel", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     internal partial class CommunicationIdentifierModel
     {
     }

@@ -26,6 +26,6 @@ namespace Azure.Communication
         }
 
         /// <summary> The phone number in E.164 format. </summary>
-        public string Value { get; }
+        public string Value { get; set; }
     }
 }
