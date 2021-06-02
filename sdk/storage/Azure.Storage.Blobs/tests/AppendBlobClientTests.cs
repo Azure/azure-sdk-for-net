@@ -607,6 +607,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20501")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
         [TestCase(false)]
         [TestCase(true)]
@@ -661,6 +662,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20501")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
         public async Task AppendBlockAsync_EncryptionScopeIdentitySAS()
         {
