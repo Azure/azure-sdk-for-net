@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string ClientSecret = "clientSecret";
         private const string TenantId = "tenantId";
 
-        public DatasourceCredentialLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public DatasourceCredentialLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
