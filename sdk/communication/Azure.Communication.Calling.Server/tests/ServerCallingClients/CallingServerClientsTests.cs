@@ -85,24 +85,25 @@ namespace Azure.Communication.Calling.Server.Tests
             Assert.AreEqual(expectedResponse, actualResponse);
         }
 
-        [TestCaseSource(nameof(TestData_CancelMediaOperations))]
-        public async Task CancelMediaOperationsAsyncOverload_Passes(string expectedCallLegId)
+        [TestCaseSource(nameof(TestData_CancelAllMediaOperations))]
+        public async Task CancelMediaOperationsAsyncOverload_Passes(string expectedCallLegId, string expectedOperationContext)
         {
             Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
             Response<CancelAllMediaOperationsResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.CancelAllMediaOperationsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.CancelAllMediaOperationsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
                 .ReturnsAsync((string callLegId, string operationContext, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedCallLegId, callLegId);
+                    Assert.AreEqual(expectedOperationContext, operationContext);
                     Assert.AreEqual(cancellationToken, token);
                     return expectedResponse = new Mock<Response<CancelAllMediaOperationsResponse>>().Object;
                 });
 
-            Response<CancelAllMediaOperationsResponse> actualResponse = await mockClient.Object.CancelAllMediaOperationsAsync(expectedCallLegId, cancellationToken);
+            Response<CancelAllMediaOperationsResponse> actualResponse = await mockClient.Object.CancelAllMediaOperationsAsync(expectedCallLegId, expectedOperationContext, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -161,7 +162,7 @@ namespace Azure.Communication.Calling.Server.Tests
         }
 
         [TestCaseSource(nameof(TestData_InviteParticipants))]
-        public async Task InviteParticipantsAsyncOverload_Passes(string expectedCallLegId, CommunicationIdentifier expectedParticipant, string expectedOperationContext, string? expectedAlternateCallerId = null)
+        public async Task InviteParticipantsAsyncOverload_Passes(string expectedCallLegId, CommunicationIdentifier expectedParticipant, string expectedAlternateCallerId, string expectedOperationContext)
         {
             Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
             Response? expectedResponse = default;
@@ -170,7 +171,7 @@ namespace Azure.Communication.Calling.Server.Tests
 
             mockClient
                 .Setup(callExpression)
-                .ReturnsAsync((string callLegId, IEnumerable<CommunicationIdentifier> participants, string operationContext, string alternateCallerId, CancellationToken token) =>
+                .ReturnsAsync((string callLegId, CommunicationIdentifier participants, string operationContext, string alternateCallerId, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedCallLegId, callLegId);
                     Assert.AreEqual(expectedParticipant, participants);
@@ -221,11 +222,12 @@ namespace Azure.Communication.Calling.Server.Tests
             };
         }
 
-        private static IEnumerable<object?[]> TestData_CancelMediaOperations()
+        private static IEnumerable<object?[]> TestData_CancelAllMediaOperations()
         {
             return new List<object?[]>(){
                 new object?[] {
                     "4ab31d78-a189-4e50-afaa-f9610975b6cb",
+                    "af82480b-6df3-4f4c-a58c-a6a78b614b36"
                 },
             };
         }
@@ -275,15 +277,15 @@ namespace Azure.Communication.Calling.Server.Tests
             return new List<object?[]>(){
                 new object?[] {
                     "4ab31d78-a189-4e50-afaa-f9610975b6cb",
-                    new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("+14052882361"),  new CommunicationUserIdentifier("50125645-5dca-4193-877d-4608ed2a0bc2"), },
-                    "af82480b-6df3-4f4c-a58c-a6a78b614b36",
-                    "+14052882362"
+                    new CommunicationUserIdentifier("50125645-5dca-4193-877d-4608ed2a0bc2"),
+                    "+14052882362",
+                    "af82480b-6df3-4f4c-a58c-a6a78b614b36"
                 },
                  new object?[] {
                     "4ab31d78-a189-4e50-afaa-f9610975b6cb",
-                    new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("+14052882361"),  new CommunicationUserIdentifier("50125645-5dca-4193-877d-4608ed2a0bc2"), },
-                    "af82480b-6df3-4f4c-a58c-a6a78b614b36",
-                    null
+                    new CommunicationUserIdentifier("50125645-5dca-4193-877d-4608ed2a0bc2"),
+                    null,
+                    "af82480b-6df3-4f4c-a58c-a6a78b614b36"
                 },
             };
         }
