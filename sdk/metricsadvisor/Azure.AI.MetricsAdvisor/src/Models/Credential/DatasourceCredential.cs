@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 ServicePrincipalDatasourceCredential c => new ServicePrincipalCredentialPatch()
                 {
-                    Parameters = new() { ClientId = c.Parameters.ClientId, ClientSecret = c.ClientSecret, TenantId = c.TenantId }
+                    Parameters = new() { ClientId = c.ClientId, ClientSecret = c.ClientSecret, TenantId = c.TenantId }
                 },
                 _ => throw new InvalidOperationException("Invalid datasource credential type")
             };
