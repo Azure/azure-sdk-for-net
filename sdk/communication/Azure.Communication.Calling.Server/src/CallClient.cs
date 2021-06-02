@@ -368,12 +368,12 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Add a participant to the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="participant"> The identity of participant to be added to the call. </param>
-        /// <param name="operationContext">The operation context. </param>
         /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
+        /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
-        public virtual async Task<Response> AddParticipantAsync(string callLegId, CommunicationIdentifier participant, string operationContext = null, string alternateCallerId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddParticipantAsync(string callLegId, CommunicationIdentifier participant, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(AddParticipantAsync)}");
             scope.Start();
@@ -399,12 +399,12 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Add a participant to the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="participant"> The identity of participant to be added to the call. </param>
-        /// <param name="operationContext">The operation context. </param>
         /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
+        /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
-        public virtual Response AddParticipant(string callLegId, CommunicationIdentifier participant, string operationContext = null, string alternateCallerId = default, CancellationToken cancellationToken = default)
+        public virtual Response AddParticipant(string callLegId, CommunicationIdentifier participant, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(AddParticipant)}");
             scope.Start();

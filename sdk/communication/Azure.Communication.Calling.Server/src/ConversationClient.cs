@@ -228,10 +228,10 @@ namespace Azure.Communication.Calling.Server
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="participant"> The identity of participant to be added to the call. </param>
         /// <param name="callbackUri">The callback uri to receive the notification.</param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
+        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response AddParticipant(string conversationId, CommunicationIdentifier participant, Uri callbackUri, string operationContext = null, string alternateCallerId = null, CancellationToken cancellationToken = default)
+        public virtual Response AddParticipant(string conversationId, CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipant)}");
             scope.Start();
@@ -256,10 +256,10 @@ namespace Azure.Communication.Calling.Server
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="participant"> The identity of participant to be added to the call. </param>
         /// <param name="callbackUri"></param>
-        /// <param name="operationContext">The operation context.</param>
         /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
+        /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response> AddParticipantAsync(string conversationId, CommunicationIdentifier participant, Uri callbackUri, string operationContext = null, string alternateCallerId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddParticipantAsync(string conversationId, CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipantAsync)}");
             scope.Start();
