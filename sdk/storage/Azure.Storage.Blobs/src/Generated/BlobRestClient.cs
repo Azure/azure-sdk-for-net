@@ -55,7 +55,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("path:20.get", false);
             if (snapshot != null)
             {
                 uri.AppendQuery("snapshot", snapshot, true);
@@ -199,7 +198,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("path:20.head", false);
             if (snapshot != null)
             {
                 uri.AppendQuery("snapshot", snapshot, true);
@@ -317,7 +315,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("path:20.delete", false);
             if (snapshot != null)
             {
                 uri.AppendQuery("snapshot", snapshot, true);
