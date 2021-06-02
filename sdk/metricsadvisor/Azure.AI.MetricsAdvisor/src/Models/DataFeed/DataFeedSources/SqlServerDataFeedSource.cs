@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class SqlServerDataFeedSource : DataFeedSource
     {
+        private string _connectionString;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlServerDataFeedSource"/> class.
         /// </summary>
@@ -42,13 +45,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The connection string.
-        /// </summary>
-        public string ConnectionString { get; }
-
-        /// <summary>
         /// The query to retrieve the data to be ingested.
         /// </summary>
         public string Query { get; }
+
+        /// <summary>
+        /// The connection string.
+        /// </summary>
+        internal string ConnectionString
+        {
+            get => Volatile.Read(ref _connectionString);
+            private set => Volatile.Write(ref _connectionString, value);
+        }
     }
 }
