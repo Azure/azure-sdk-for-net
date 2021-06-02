@@ -96,7 +96,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="source"> The source identity </param>
         /// <param name="targets"> The target identities. </param>
         /// <param name="options"> The call options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
@@ -135,7 +135,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="source"> The source identity </param>
         /// <param name="targets"> The target identities. </param>
         /// <param name="options"> The call options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
@@ -191,7 +191,7 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Deletes the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response DeleteCall(string callLegId, CancellationToken cancellationToken = default)
         {
@@ -210,7 +210,7 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Disconnect the current caller in a group-call or end a p2p-call.</summary>
         /// <param name="callLegId"> The call leg id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> HangupCallAsync(string callLegId, CancellationToken cancellationToken = default)
         {
@@ -229,7 +229,7 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Disconnect the current caller in a group-call or end a p2p-call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response HangupCall(string callLegId, CancellationToken cancellationToken = default)
         {
@@ -248,7 +248,7 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Cancel all media operations in the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<CancelAllMediaOperationsResponse>> CancelAllMediaOperationsAsync(string callLegId, CancellationToken cancellationToken = default)
         {
@@ -267,7 +267,7 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Cancel all media operations in the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<CancelAllMediaOperationsResponse> CancelAllMediaOperations(string callLegId, CancellationToken cancellationToken = default)
         {
@@ -291,7 +291,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="operationContext">The operation context. </param>
         /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, Uri audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, Uri callbackUri = null, CancellationToken cancellationToken = default)
@@ -300,7 +300,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Play audio in the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="options"> Play audio request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, PlayAudioOptions options, CancellationToken cancellationToken = default)
@@ -327,7 +327,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="operationContext">The operation context. </param>
         /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
         public virtual Response<PlayAudioResponse> PlayAudio(string callLegId, Uri audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, Uri callbackUri = null, CancellationToken cancellationToken = default)
@@ -345,7 +345,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Play audio in the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="options"> Play audio request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<PlayAudioResponse> PlayAudio(string callLegId, PlayAudioOptions options, CancellationToken cancellationToken = default)
@@ -373,7 +373,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
-        public virtual async Task<Response> AddParticipantAsync(string callLegId, CommunicationIdentifier participant, string operationContext, string alternateCallerId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddParticipantAsync(string callLegId, CommunicationIdentifier participant, string operationContext = null, string alternateCallerId = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(AddParticipantAsync)}");
             scope.Start();
@@ -404,7 +404,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
-        public virtual Response AddParticipant(string callLegId, CommunicationIdentifier participant, string operationContext, string alternateCallerId = default, CancellationToken cancellationToken = default)
+        public virtual Response AddParticipant(string callLegId, CommunicationIdentifier participant, string operationContext = null, string alternateCallerId = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(AddParticipant)}");
             scope.Start();
@@ -430,7 +430,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Remove a participant from the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="participantId"> The participant id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantId"/> is null. </exception>
         public virtual async Task<Response> RemoveParticipantAsync(string callLegId, string participantId, CancellationToken cancellationToken = default)
@@ -453,7 +453,7 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Remove a participants from the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="participantId"> The participant id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="participantId"/> is null. </exception>
         public virtual Response RemoveParticipant(string callLegId, string participantId, CancellationToken cancellationToken = default)
