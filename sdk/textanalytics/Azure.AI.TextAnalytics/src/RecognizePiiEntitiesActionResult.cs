@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// RecognizePiiEntitiesActionResults
     /// </summary>
-    public class RecognizePiiEntitiesActionResult : TextAnalyticsActionDetails
+    public class RecognizePiiEntitiesActionResult : TextAnalyticsActionResult
     {
         internal RecognizePiiEntitiesActionResult(RecognizePiiEntitiesResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error) : base(completedOn, error)
         {

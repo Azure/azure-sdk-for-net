@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus
                 isProcessor: isProcessor);
             try
             {
-                await receiver.OpenLinkAsync(isProcessor, cancellationToken).ConfigureAwait(false);
+                await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (ServiceBusException e)
                 when (e.Reason == ServiceBusFailureReason.ServiceTimeout && isProcessor)

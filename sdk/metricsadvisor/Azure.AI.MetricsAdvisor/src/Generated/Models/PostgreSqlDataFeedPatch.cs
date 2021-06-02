@@ -16,6 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceType.PostgreSql;
         }
 
-        public SqlSourceParameter DataSourceParameter { get; set; }
+        public SQLSourceParameterPatch DataSourceParameter { get; set; }
     }
 }

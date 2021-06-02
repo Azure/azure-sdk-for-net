@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Network/trafficmanagerProfiles.</param>
+        /// Microsoft.Network/trafficManagerProfiles.</param>
         public Resource(string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
 
         /// <summary>
         /// Gets or sets the type of the resource. Ex-
-        /// Microsoft.Network/trafficmanagerProfiles.
+        /// Microsoft.Network/trafficManagerProfiles.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

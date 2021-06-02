@@ -1,0 +1,44 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/:purchase?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "30",
+        "Content-Type": "application/json",
+        "Date": "Tue, 25 May 2021 07:27:00 GMT",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.0.1-alpha.20210525.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "582c265a6710936865f0feb1b9e3f6b3",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "searchId": "\u002BSanitized"
+      },
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-03-07",
+        "Content-Type": "application/json",
+        "Date": "Tue, 25 May 2021 07:27:01 GMT",
+        "MS-CV": "gBHpaX2bmUGqkPnhUXgSbQ.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0xKasYAAAAACZfN5QdeOiRpmUUt8aW\u002BRDTEFYRURHRTEyMTIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "387ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "SearchIdNotFound",
+          "message": "The specified search id Sanitized cannot be found."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1275622495"
+  }
+}

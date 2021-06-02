@@ -2,6 +2,9 @@
 
 ## 1.5.0-beta.1 (Unreleased)
 
+### Fixes and improvements
+
+- Added `LoginHint` property to `InteractiveBrowserCredentialOptions` which allows a user name to be pre-selected for interactive logins. Setting this option skips the account selection prompt and immediately attempts to login with the specified account.
 
 ## 1.4.0 (2021-05-12)
 

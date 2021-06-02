@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// encryption.</param>
         /// <param name="administrators">The Azure Active Directory identity of
         /// the server.</param>
-        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentityWithUserAssignedIdentities identity = default(ResourceIdentityWithUserAssignedIdentities), string kind = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), string workspaceFeature = default(string), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ServerExternalAdministrator administrators = default(ServerExternalAdministrator))
+        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), string kind = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), string workspaceFeature = default(string), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ServerExternalAdministrator administrators = default(ServerExternalAdministrator))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets or sets the Azure Active Directory identity of the server.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
-        public ResourceIdentityWithUserAssignedIdentities Identity { get; set; }
+        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets kind of sql server. This is metadata used for the Azure portal

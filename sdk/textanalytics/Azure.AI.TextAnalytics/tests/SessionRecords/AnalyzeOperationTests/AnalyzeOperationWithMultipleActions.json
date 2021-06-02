@@ -5,12 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
-        "Content-Length": "645",
+        "Content-Length": "624",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-5ef7825b2bfb8849b6c2050e9f5adf59-7c08b64ac08a3d4c-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "36d74cae0543ad22b4752e104a677574",
+        "traceparent": "00-70981fa0c3e2294a8ca750cf1ab1bae3-141b72fa72fdd340-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "da9c404f19269b117394a823858b72a9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -32,7 +32,6 @@
           "entityRecognitionTasks": [
             {
               "parameters": {
-                "model-version": "latest",
                 "stringIndexType": "Utf16CodeUnit"
               }
             }
@@ -40,22 +39,25 @@
           "entityRecognitionPiiTasks": [
             {
               "parameters": {
-                "model-version": "latest",
                 "stringIndexType": "Utf16CodeUnit"
               }
             }
           ],
           "keyPhraseExtractionTasks": [
             {
-              "parameters": {
-                "model-version": "latest"
-              }
+              "parameters": {}
             }
           ],
           "entityLinkingTasks": [
             {
               "parameters": {
-                "model-version": "latest",
+                "stringIndexType": "Utf16CodeUnit"
+              }
+            }
+          ],
+          "sentimentAnalysisTasks": [
+            {
+              "parameters": {
                 "stringIndexType": "Utf16CodeUnit"
               }
             }
@@ -65,139 +67,290 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "715bd221-eb3e-4b3c-a537-c84a7fdbda48",
-        "Date": "Tue, 11 May 2021 16:01:57 GMT",
-        "operation-location": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
+        "apim-request-id": "f6288914-807f-40ee-8a3c-1c78ae6abcf9",
+        "Date": "Thu, 27 May 2021 18:05:07 GMT",
+        "operation-location": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "7763"
+        "x-envoy-upstream-service-time": "246"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "360f939000899016ea2d36ca05142466",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "9abcf455d5282fa542e4f94ff79d2572",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "38518262-a27a-4f82-a909-f1bf8ed65b6d",
+        "apim-request-id": "67a245da-8d75-43b0-be46-8901b54ed3d3",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:01:57 GMT",
+        "Date": "Thu, 27 May 2021 18:05:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "6"
+        "x-envoy-upstream-service-time": "10"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:01:57Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:07Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "notStarted",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:01:57Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:07Z"
           },
           "completed": 0,
           "failed": 0,
-          "inProgress": 4,
-          "total": 4
+          "inProgress": 5,
+          "total": 5
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "32033b4d84a2f3a2ac913141d710299b",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "38769894a9ad45aa2d9e6112ab005942",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d7236b88-59b8-4e5a-9907-c1b91070ac77",
+        "apim-request-id": "c8574358-1aa2-4897-9dcc-0233fbbc90ce",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:01:58 GMT",
+        "Date": "Thu, 27 May 2021 18:05:08 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
+        "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:01:58Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:08Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:01:58Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:08Z"
           },
           "completed": 0,
           "failed": 0,
+          "inProgress": 5,
+          "total": 5
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "95624054e5857ada9b6d97411fc2a4d6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "14e95bc2-9f58-4f72-9b63-6b1dfea4ec94",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:09 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "13"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:09Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:09Z"
+          },
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 5,
+          "total": 5
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "ec8e366f3914acfc49776d8a73938342",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "609a3b2e-d34a-470c-b1d2-e4554245f84d",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "48"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:10Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:10Z"
+          },
+          "completed": 1,
+          "failed": 0,
           "inProgress": 4,
-          "total": 4
+          "total": 5,
+          "entityLinkingTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
+              }
+            }
+          ]
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "f287b823979aae6e35464c16cf57a89f",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b6fbb78b8f3aaeedbdfc9d401268266b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "62903b70-d140-47c8-9c9d-97ea398cd0fe",
+        "apim-request-id": "060960b6-2158-4e54-8672-c09e5767056d",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:01:59 GMT",
+        "Date": "Thu, 27 May 2021 18:05:11 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "43"
+        "x-envoy-upstream-service-time": "44"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:01:58Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:10Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:01:58Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:10Z"
           },
           "completed": 1,
           "failed": 0,
-          "inProgress": 3,
-          "total": 4,
+          "inProgress": 4,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -268,156 +421,266 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "0fc2c75142640bd1f11c89f7cfd5b8da",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "75a38bf96c711b2e44b64b0e78500608",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "543f71aa-4159-4c3e-9db0-1fbf8a6d363e",
+        "apim-request-id": "3900055d-f3c3-45b9-8fa3-a19f3add63bc",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:03 GMT",
+        "Date": "Thu, 27 May 2021 18:05:12 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "2587"
+        "x-envoy-upstream-service-time": "42"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:00Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:10Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:00Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:10Z"
           },
           "completed": 1,
           "failed": 0,
+          "inProgress": 4,
+          "total": 5,
+          "entityLinkingTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "68b655e9eec6df9b48df2f189bbc99e0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "23ae1328-0486-49bc-9719-a106312c065b",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:13 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "37"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:10Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:10Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 4,
+          "total": 5,
+          "entityLinkingTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "e89101500eef1ed088e0728344df366d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c6aa5031-1528-48c1-8460-208296745ea0",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:14 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "88"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:15Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:15Z"
+          },
+          "completed": 2,
+          "failed": 0,
           "inProgress": 3,
-          "total": 4,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
-              "name": "AnalyzeOperationWithMultipleTasks",
-              "state": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "1",
-                    "entities": [
-                      {
-                        "name": "Bill Gates",
-                        "matches": [
-                          {
-                            "text": "Bill Gates",
-                            "offset": 25,
-                            "length": 10,
-                            "confidenceScore": 0.52
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Bill Gates",
-                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "name": "Paul Allen",
-                        "matches": [
-                          {
-                            "text": "Paul Allen",
-                            "offset": 40,
-                            "length": 10,
-                            "confidenceScore": 0.54
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Paul Allen",
-                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "name": "Microsoft",
-                        "matches": [
-                          {
-                            "text": "Microsoft",
-                            "offset": 0,
-                            "length": 9,
-                            "confidenceScore": 0.49
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Microsoft",
-                        "url": "https://en.wikipedia.org/wiki/Microsoft",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "2",
-                    "entities": [],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2020-02-01"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json, text/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "4da79a03318db6cbcc54fd5b388b2454",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "36559d38-0461-4d58-96ee-6551f1f8fbe4",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:04 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "65"
-      },
-      "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:03Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
-        "status": "running",
-        "errors": [],
-        "displayName": "AnalyzeOperationWithMultipleTasks",
-        "tasks": {
-          "details": {
-            "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:03Z"
-          },
-          "completed": 2,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 4,
-          "entityLinkingTasks": [
-            {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -486,7 +749,7 @@
           ],
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -519,46 +782,46 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "10ef92e91a4de036e67c017e0d76df5f",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "bc5695f5beb20ba4efc32c913d157f88",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e5a12e77-9ac7-4ac3-a6d0-78d1acfd7c05",
+        "apim-request-id": "c7f96be2-dbb7-48a5-9e65-9e087d306765",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:05 GMT",
+        "Date": "Thu, 27 May 2021 18:05:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "70"
+        "x-envoy-upstream-service-time": "100"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:03Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:15Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:03Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:15Z"
           },
           "completed": 2,
           "failed": 0,
-          "inProgress": 2,
-          "total": 4,
+          "inProgress": 3,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -627,7 +890,7 @@
           ],
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -660,328 +923,46 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "3412728d5bb02012fb0c420f4575d365",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "77bd6a1c1dbfdb188597dfe67c179b68",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "9e7b40ca-f840-4031-a215-256d2049d45c",
+        "apim-request-id": "2dc11c0e-19fe-4ddb-a93a-847db6ce2af7",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:06 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "65"
-      },
-      "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:03Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
-        "status": "running",
-        "errors": [],
-        "displayName": "AnalyzeOperationWithMultipleTasks",
-        "tasks": {
-          "details": {
-            "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:03Z"
-          },
-          "completed": 2,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 4,
-          "entityLinkingTasks": [
-            {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
-              "name": "AnalyzeOperationWithMultipleTasks",
-              "state": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "1",
-                    "entities": [
-                      {
-                        "name": "Bill Gates",
-                        "matches": [
-                          {
-                            "text": "Bill Gates",
-                            "offset": 25,
-                            "length": 10,
-                            "confidenceScore": 0.52
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Bill Gates",
-                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "name": "Paul Allen",
-                        "matches": [
-                          {
-                            "text": "Paul Allen",
-                            "offset": 40,
-                            "length": 10,
-                            "confidenceScore": 0.54
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Paul Allen",
-                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "name": "Microsoft",
-                        "matches": [
-                          {
-                            "text": "Microsoft",
-                            "offset": 0,
-                            "length": 9,
-                            "confidenceScore": 0.49
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Microsoft",
-                        "url": "https://en.wikipedia.org/wiki/Microsoft",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "2",
-                    "entities": [],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2020-02-01"
-              }
-            }
-          ],
-          "keyPhraseExtractionTasks": [
-            {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
-              "name": "AnalyzeOperationWithMultipleTasks",
-              "state": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "1",
-                    "keyPhrases": [
-                      "Bill Gates",
-                      "Paul Allen",
-                      "Microsoft"
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "2",
-                    "keyPhrases": [
-                      "gato",
-                      "perro",
-                      "veterinario"
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2020-07-01"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json, text/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "3d0e35f7a8e5e98c63c76610304da856",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "d8f93934-b799-4d60-bfcd-e123cd8107b4",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:07 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "59"
-      },
-      "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:03Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
-        "status": "running",
-        "errors": [],
-        "displayName": "AnalyzeOperationWithMultipleTasks",
-        "tasks": {
-          "details": {
-            "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:03Z"
-          },
-          "completed": 2,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 4,
-          "entityLinkingTasks": [
-            {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
-              "name": "AnalyzeOperationWithMultipleTasks",
-              "state": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "1",
-                    "entities": [
-                      {
-                        "name": "Bill Gates",
-                        "matches": [
-                          {
-                            "text": "Bill Gates",
-                            "offset": 25,
-                            "length": 10,
-                            "confidenceScore": 0.52
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Bill Gates",
-                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "name": "Paul Allen",
-                        "matches": [
-                          {
-                            "text": "Paul Allen",
-                            "offset": 40,
-                            "length": 10,
-                            "confidenceScore": 0.54
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Paul Allen",
-                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
-                        "dataSource": "Wikipedia"
-                      },
-                      {
-                        "name": "Microsoft",
-                        "matches": [
-                          {
-                            "text": "Microsoft",
-                            "offset": 0,
-                            "length": 9,
-                            "confidenceScore": 0.49
-                          }
-                        ],
-                        "language": "en",
-                        "id": "Microsoft",
-                        "url": "https://en.wikipedia.org/wiki/Microsoft",
-                        "dataSource": "Wikipedia"
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "2",
-                    "entities": [],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2020-02-01"
-              }
-            }
-          ],
-          "keyPhraseExtractionTasks": [
-            {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
-              "name": "AnalyzeOperationWithMultipleTasks",
-              "state": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "1",
-                    "keyPhrases": [
-                      "Bill Gates",
-                      "Paul Allen",
-                      "Microsoft"
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "2",
-                    "keyPhrases": [
-                      "gato",
-                      "perro",
-                      "veterinario"
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2020-07-01"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json, text/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "c5cd9d75ef798da47fcf1441d8269b70",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "827534ab-289b-4625-8ba3-428a435a1e65",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:09 GMT",
+        "Date": "Thu, 27 May 2021 18:05:17 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "x-envoy-upstream-service-time": "61"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:03Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:15Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:03Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:15Z"
           },
           "completed": 2,
           "failed": 0,
-          "inProgress": 2,
-          "total": 4,
+          "inProgress": 3,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1050,7 +1031,7 @@
           ],
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1083,46 +1064,46 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "d8869ca8a267e579e629d0e8f401f0ae",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "0522c1a9dc65922d5c85f92ce13ee173",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "54fa36dd-ec45-4f4e-a431-5bf293253f3f",
+        "apim-request-id": "21ac10f7-d613-4b7a-9fca-2acdf640390b",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:10 GMT",
+        "Date": "Thu, 27 May 2021 18:05:18 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "58"
+        "x-envoy-upstream-service-time": "70"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:03Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:15Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:03Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:15Z"
           },
           "completed": 2,
           "failed": 0,
-          "inProgress": 2,
-          "total": 4,
+          "inProgress": 3,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1191,7 +1172,7 @@
           ],
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1224,46 +1205,46 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "a79aeb630da808eb9080bd16944a103c",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "d966e960bf22d7ad7d7b371bdfbe8fd7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0204713c-8537-4955-b6a5-20ac62f896e8",
+        "apim-request-id": "e3a89f74-1f13-4f8c-8051-83ff2d6aee32",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:11 GMT",
+        "Date": "Thu, 27 May 2021 18:05:19 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "74"
+        "x-envoy-upstream-service-time": "64"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:03Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:19Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:03Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:19Z"
           },
           "completed": 2,
           "failed": 0,
-          "inProgress": 2,
-          "total": 4,
+          "inProgress": 3,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1332,7 +1313,7 @@
           ],
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1365,46 +1346,46 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "9368f62bd0c6d3ee23e8df501fbb997e",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "7be8c42879f240223c2b1a3924ebf946",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "eb304549-20ee-4af8-9c11-7d2b507ab32e",
+        "apim-request-id": "4bba9cc8-9557-4273-8760-d2e34de8a9a1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:12 GMT",
+        "Date": "Thu, 27 May 2021 18:05:20 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "72"
+        "x-envoy-upstream-service-time": "67"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:03Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:19Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:03Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:19Z"
           },
           "completed": 2,
           "failed": 0,
-          "inProgress": 2,
-          "total": 4,
+          "inProgress": 3,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1473,7 +1454,7 @@
           ],
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1506,46 +1487,46 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "ecde66dff38c9bc8b17e47e7e563509b",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "92856cb6c2b0ea46134b88eaa512b29e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "00e13a57-d015-4672-8551-04cc813824e1",
+        "apim-request-id": "f5db15a8-37a1-434e-a42e-82e047c783df",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:14 GMT",
+        "Date": "Thu, 27 May 2021 18:05:22 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "72"
+        "x-envoy-upstream-service-time": "136"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:03Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:19Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:03Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:19Z"
           },
           "completed": 2,
           "failed": 0,
-          "inProgress": 2,
-          "total": 4,
+          "inProgress": 3,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1614,7 +1595,7 @@
           ],
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1647,46 +1628,46 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "febd93185c9993e7fdc784bf2d9ae8d4",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "1d0421f66556e780c6269cf6a474b291",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e9c4e4e0-d8b3-4677-a58f-16daa383c219",
+        "apim-request-id": "6fd2b2f5-af01-4cd5-8143-c9d7ee90013d",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:15 GMT",
+        "Date": "Thu, 27 May 2021 18:05:23 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "68"
+        "x-envoy-upstream-service-time": "67"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:03Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:19Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:03Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:19Z"
           },
           "completed": 2,
           "failed": 0,
-          "inProgress": 2,
-          "total": 4,
+          "inProgress": 3,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1755,7 +1736,7 @@
           ],
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1788,99 +1769,328 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "2e363ee7236b38b02ecce2488807edc0",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "7364f182fc3866277dfd67a7f1389a2a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "82135180-bc5f-4825-88ae-a58cdcf0d1d2",
+        "apim-request-id": "0e1c05ee-f482-4dce-ae32-b84da88d7ecc",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:21 GMT",
+        "Date": "Thu, 27 May 2021 18:05:24 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "5160"
+        "x-envoy-upstream-service-time": "62"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:16Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:19Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:16Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:19Z"
+          },
+          "completed": 2,
+          "failed": 0,
+          "inProgress": 3,
+          "total": 5,
+          "entityLinkingTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "03427c78dbe751f0eb9ecb892550469f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "1ae996b7-948f-46c2-8417-82fa3844a864",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:25 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "91"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:19Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:19Z"
+          },
+          "completed": 2,
+          "failed": 0,
+          "inProgress": 3,
+          "total": 5,
+          "entityLinkingTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b367f6983fadfa65f99da058fdd9f58d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ab483d69-bc8e-4c12-8325-096ecdace773",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:26 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "95"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:26Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:26Z"
           },
           "completed": 3,
           "failed": 0,
-          "inProgress": 1,
-          "total": 4,
-          "entityRecognitionTasks": [
-            {
-              "lastUpdateDateTime": "2021-05-11T16:02:16.7301606Z",
-              "name": "AnalyzeOperationWithMultipleTasks",
-              "state": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "1",
-                    "entities": [
-                      {
-                        "text": "Microsoft",
-                        "category": "Organization",
-                        "offset": 0,
-                        "length": 9,
-                        "confidenceScore": 0.97
-                      },
-                      {
-                        "text": "Bill Gates",
-                        "category": "Person",
-                        "offset": 25,
-                        "length": 10,
-                        "confidenceScore": 1.0
-                      },
-                      {
-                        "text": "Paul Allen",
-                        "category": "Person",
-                        "offset": 40,
-                        "length": 10,
-                        "confidenceScore": 0.99
-                      }
-                    ],
-                    "warnings": []
-                  },
-                  {
-                    "id": "2",
-                    "entities": [
-                      {
-                        "text": "veterinario",
-                        "category": "PersonType",
-                        "offset": 36,
-                        "length": 11,
-                        "confidenceScore": 0.96
-                      }
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2021-01-15"
-              }
-            }
-          ],
+          "inProgress": 2,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1949,7 +2159,7 @@
           ],
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -1977,51 +2187,110 @@
                 "modelVersion": "2020-07-01"
               }
             }
+          ],
+          "sentimentAnalysisTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:26.7070032Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 51,
+                        "text": "Microsoft was founded by Bill Gates and Paul Allen."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.13,
+                      "neutral": 0.85,
+                      "negative": 0.02
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.13,
+                          "neutral": 0.85,
+                          "negative": 0.02
+                        },
+                        "offset": 0,
+                        "length": 48,
+                        "text": "Mi perro y mi gato tienen que ir al veterinario."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
           ]
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/c1f673ab-ff3b-46c3-8c83-5fef91f5c517?showStats=false",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "8b3844989bfe83e57f4befc46f086d16",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "287d728caf32a6a900138799319d402d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "fcbbf963-8255-43ae-b66c-dc8b8dbeb897",
+        "apim-request-id": "08d068f5-607b-4c1d-a003-63bb1f4ca09f",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 May 2021 16:02:23 GMT",
+        "Date": "Thu, 27 May 2021 18:05:27 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "128"
+        "x-envoy-upstream-service-time": "140"
       },
       "ResponseBody": {
-        "jobId": "c1f673ab-ff3b-46c3-8c83-5fef91f5c517",
-        "lastUpdateDateTime": "2021-05-11T16:02:23Z",
-        "createdDateTime": "2021-05-11T16:01:49Z",
-        "expirationDateTime": "2021-05-12T16:01:49Z",
-        "status": "succeeded",
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:26Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationWithMultipleTasks",
         "tasks": {
           "details": {
             "name": "AnalyzeOperationWithMultipleTasks",
-            "lastUpdateDateTime": "2021-05-11T16:02:23Z"
+            "lastUpdateDateTime": "2021-05-27T18:05:26Z"
           },
-          "completed": 4,
+          "completed": 3,
           "failed": 0,
-          "inProgress": 0,
-          "total": 4,
-          "entityRecognitionTasks": [
+          "inProgress": 2,
+          "total": 5,
+          "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:16.7301606Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -2030,51 +2299,398 @@
                     "id": "1",
                     "entities": [
                       {
-                        "text": "Microsoft",
-                        "category": "Organization",
-                        "offset": 0,
-                        "length": 9,
-                        "confidenceScore": 0.97
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
                       },
                       {
-                        "text": "Bill Gates",
-                        "category": "Person",
-                        "offset": 25,
-                        "length": 10,
-                        "confidenceScore": 1.0
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
                       },
                       {
-                        "text": "Paul Allen",
-                        "category": "Person",
-                        "offset": 40,
-                        "length": 10,
-                        "confidenceScore": 0.99
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
                       }
                     ],
                     "warnings": []
                   },
                   {
                     "id": "2",
-                    "entities": [
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ],
+          "sentimentAnalysisTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:26.7070032Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
                       {
-                        "text": "veterinario",
-                        "category": "PersonType",
-                        "offset": 36,
-                        "length": 11,
-                        "confidenceScore": 0.96
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 51,
+                        "text": "Microsoft was founded by Bill Gates and Paul Allen."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.13,
+                      "neutral": 0.85,
+                      "negative": 0.02
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.13,
+                          "neutral": 0.85,
+                          "negative": 0.02
+                        },
+                        "offset": 0,
+                        "length": 48,
+                        "text": "Mi perro y mi gato tienen que ir al veterinario."
                       }
                     ],
                     "warnings": []
                   }
                 ],
                 "errors": [],
-                "modelVersion": "2021-01-15"
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "fa0ec8b7e7d1387c164809493b975312",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "92f46841-891c-4eb1-8ef3-2f89b8573e7e",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:28 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "88"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:26Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:26Z"
+          },
+          "completed": 3,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 5,
+          "entityLinkingTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
               }
             }
           ],
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ],
+          "sentimentAnalysisTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:26.7070032Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 51,
+                        "text": "Microsoft was founded by Bill Gates and Paul Allen."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.13,
+                      "neutral": 0.85,
+                      "negative": 0.02
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.13,
+                          "neutral": 0.85,
+                          "negative": 0.02
+                        },
+                        "offset": 0,
+                        "length": 48,
+                        "text": "Mi perro y mi gato tienen que ir al veterinario."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b3fd3da81dd2e96d4dc1b39ab8cbc95c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b9198a25-1f0d-4d55-8d5c-dd90a6dc43da",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:29 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "154"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:30Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:30Z"
+          },
+          "completed": 4,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 5,
           "entityLinkingTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:01:58.8121292Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -2143,7 +2759,7 @@
           ],
           "entityRecognitionPiiTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:23.3607801Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:30.0936226Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -2177,9 +2793,17 @@
                     "warnings": []
                   },
                   {
-                    "redactedText": "Mi perro y mi gato tienen que ir al veterinario.",
+                    "redactedText": "Mi perro y mi gato tienen que ir al ***********.",
                     "id": "2",
-                    "entities": [],
+                    "entities": [
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.96
+                      }
+                    ],
                     "warnings": []
                   }
                 ],
@@ -2190,7 +2814,7 @@
           ],
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2021-05-11T16:02:03.9060681Z",
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
               "name": "AnalyzeOperationWithMultipleTasks",
               "state": "succeeded",
               "results": {
@@ -2218,13 +2842,1145 @@
                 "modelVersion": "2020-07-01"
               }
             }
+          ],
+          "sentimentAnalysisTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:26.7070032Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 51,
+                        "text": "Microsoft was founded by Bill Gates and Paul Allen."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.13,
+                      "neutral": 0.85,
+                      "negative": 0.02
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.13,
+                          "neutral": 0.85,
+                          "negative": 0.02
+                        },
+                        "offset": 0,
+                        "length": 48,
+                        "text": "Mi perro y mi gato tienen que ir al veterinario."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "35a1725dfbcaa5bcf54412e9a55f6b69",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "34f72dba-29b4-4e39-86fe-33bc69d1c481",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:31 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "142"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:30Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:30Z"
+          },
+          "completed": 4,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 5,
+          "entityLinkingTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
+              }
+            }
+          ],
+          "entityRecognitionPiiTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:30.0936226Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "redactedText": "********* was founded by ********** and **********.",
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.97
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.99
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "redactedText": "Mi perro y mi gato tienen que ir al ***********.",
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.96
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-01-15"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ],
+          "sentimentAnalysisTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:26.7070032Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 51,
+                        "text": "Microsoft was founded by Bill Gates and Paul Allen."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.13,
+                      "neutral": 0.85,
+                      "negative": 0.02
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.13,
+                          "neutral": 0.85,
+                          "negative": 0.02
+                        },
+                        "offset": 0,
+                        "length": 48,
+                        "text": "Mi perro y mi gato tienen que ir al veterinario."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f3f174c08c9f995b5b24ad1034e2804a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "5ed3b8b0-f81b-4d0a-8117-4e6f7fdbbb21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:32 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "121"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:30Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:30Z"
+          },
+          "completed": 4,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 5,
+          "entityLinkingTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
+              }
+            }
+          ],
+          "entityRecognitionPiiTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:30.0936226Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "redactedText": "********* was founded by ********** and **********.",
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.97
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.99
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "redactedText": "Mi perro y mi gato tienen que ir al ***********.",
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.96
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-01-15"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ],
+          "sentimentAnalysisTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:26.7070032Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 51,
+                        "text": "Microsoft was founded by Bill Gates and Paul Allen."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.13,
+                      "neutral": 0.85,
+                      "negative": 0.02
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.13,
+                          "neutral": 0.85,
+                          "negative": 0.02
+                        },
+                        "offset": 0,
+                        "length": 48,
+                        "text": "Mi perro y mi gato tienen que ir al veterinario."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c8ecad7f1df5ad478058be8d0b8344ed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2101b42f-b718-4a7b-b63d-a445ee3b1b36",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:33 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "123"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:30Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:30Z"
+          },
+          "completed": 4,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 5,
+          "entityLinkingTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
+              }
+            }
+          ],
+          "entityRecognitionPiiTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:30.0936226Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "redactedText": "********* was founded by ********** and **********.",
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.97
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.99
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "redactedText": "Mi perro y mi gato tienen que ir al ***********.",
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.96
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-01-15"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ],
+          "sentimentAnalysisTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:26.7070032Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 51,
+                        "text": "Microsoft was founded by Bill Gates and Paul Allen."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.13,
+                      "neutral": 0.85,
+                      "negative": 0.02
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.13,
+                          "neutral": 0.85,
+                          "negative": 0.02
+                        },
+                        "offset": 0,
+                        "length": 48,
+                        "text": "Mi perro y mi gato tienen que ir al veterinario."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze/jobs/fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "43d94955d5dad0bc1707daa64eac7113",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8eea3b51-7a74-41a6-9d02-e6246afa66c0",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 27 May 2021 18:05:35 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "205"
+      },
+      "ResponseBody": {
+        "jobId": "fddd73bc-e9ee-49a6-8649-8e7155bc91b4",
+        "lastUpdateDateTime": "2021-05-27T18:05:34Z",
+        "createdDateTime": "2021-05-27T18:05:07Z",
+        "expirationDateTime": "2021-05-28T18:05:07Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithMultipleTasks",
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationWithMultipleTasks",
+            "lastUpdateDateTime": "2021-05-27T18:05:34Z"
+          },
+          "completed": 5,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 5,
+          "entityRecognitionTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:34.6648427Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.97
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.99
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.96
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-01-15"
+              }
+            }
+          ],
+          "entityLinkingTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:10.7267805Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "name": "Bill Gates",
+                        "matches": [
+                          {
+                            "text": "Bill Gates",
+                            "offset": 25,
+                            "length": 10,
+                            "confidenceScore": 0.52
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Bill Gates",
+                        "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Paul Allen",
+                        "matches": [
+                          {
+                            "text": "Paul Allen",
+                            "offset": 40,
+                            "length": 10,
+                            "confidenceScore": 0.54
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Paul Allen",
+                        "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                        "dataSource": "Wikipedia"
+                      },
+                      {
+                        "name": "Microsoft",
+                        "matches": [
+                          {
+                            "text": "Microsoft",
+                            "offset": 0,
+                            "length": 9,
+                            "confidenceScore": 0.49
+                          }
+                        ],
+                        "language": "en",
+                        "id": "Microsoft",
+                        "url": "https://en.wikipedia.org/wiki/Microsoft",
+                        "dataSource": "Wikipedia"
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-02-01"
+              }
+            }
+          ],
+          "entityRecognitionPiiTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:30.0936226Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "redactedText": "********* was founded by ********** and **********.",
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.97
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 1.0
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.99
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "redactedText": "Mi perro y mi gato tienen que ir al ***********.",
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.96
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-01-15"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:15.0460256Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ],
+          "sentimentAnalysisTasks": [
+            {
+              "lastUpdateDateTime": "2021-05-27T18:05:26.7070032Z",
+              "name": "AnalyzeOperationWithMultipleTasks",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "neutral": 0.99,
+                      "negative": 0.0
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.01,
+                          "neutral": 0.99,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 51,
+                        "text": "Microsoft was founded by Bill Gates and Paul Allen."
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentiment": "neutral",
+                    "confidenceScores": {
+                      "positive": 0.13,
+                      "neutral": 0.85,
+                      "negative": 0.02
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "neutral",
+                        "confidenceScores": {
+                          "positive": 0.13,
+                          "neutral": 0.85,
+                          "negative": 0.02
+                        },
+                        "offset": 0,
+                        "length": 48,
+                        "text": "Mi perro y mi gato tienen que ir al veterinario."
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
           ]
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "143612553",
+    "RandomSeed": "294889338",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
   }
