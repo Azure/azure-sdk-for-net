@@ -10,10 +10,10 @@ This is a Public Preview version, so breaking changes are possible in subsequent
 - Hangup and delete the existing call.
 - Play audio in the call.
 - Outbound apis for Call Recording including start, pause, resume and stop.
-- Subscribe to and receive DTMF tones via events.
+- Subscribe to and receive [DTMF][DTMF] tones via events.
 - Invite and remove participants from the call.
 
 <!-- LINKS -->
 [read_me]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Calling.Server/README.md
-
+[DTMF]: https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling
 
