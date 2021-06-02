@@ -88,15 +88,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var hook = new EmailNotificationHook();
 
-            Assert.That(() => adminClient.UpdateHookAsync(null, hook), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateHookAsync("", hook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateHookAsync("hookId", hook), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateHookAsync(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateHookAsync(null), Throws.InstanceOf<ArgumentNullException>());
 
-            Assert.That(() => adminClient.UpdateHook(null, hook), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateHook("", hook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateHook("hookId", hook), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateHook(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateHook(null), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -110,8 +104,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => adminClient.UpdateHookAsync(FakeGuid, hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
-            Assert.That(() => adminClient.UpdateHook(FakeGuid, hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateHookAsync(hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateHook(hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]

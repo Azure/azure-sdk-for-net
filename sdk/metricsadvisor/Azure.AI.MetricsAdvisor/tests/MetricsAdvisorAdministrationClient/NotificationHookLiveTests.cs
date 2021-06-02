@@ -198,7 +198,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             hookToUpdate.EmailsToAlert.Add("fake3@email.com");
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            await adminClient.UpdateHookAsync(hookToUpdate);
 
             // Get the hook and check if updates are in place.
 
@@ -239,7 +239,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             hookToUpdate.EmailsToAlert.Add("fake3@email.com");
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            await adminClient.UpdateHookAsync(hookToUpdate);
 
             // Get the hook and check if updates are in place.
 
@@ -281,7 +281,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             hookToUpdate.ExternalLink = new Uri("http://fake.endpoint.com/");
             hookToUpdate.EmailsToAlert.Add("fake3@email.com");
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            await adminClient.UpdateHookAsync(hookToUpdate);
 
             // Get the hook and check if updates are in place.
 
@@ -327,7 +327,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             hookToUpdate.EmailsToAlert.Add("fake3@email.com");
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            await adminClient.UpdateHookAsync(hookToUpdate);
 
             // Get the hook and check if updates are in place.
 
@@ -362,7 +362,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             hookToUpdate.Username = "fakeUsername";
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            await adminClient.UpdateHookAsync(hookToUpdate);
 
             // Get the hook and check if updates are in place.
 
@@ -402,7 +402,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var hookToUpdate = new WebNotificationHook() { Endpoint = endpoint, Username = "fakeUsername" };
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            await adminClient.UpdateHookAsync(hookToUpdate);
 
             // Get the hook and check if updates are in place.
 
@@ -460,7 +460,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 hookToUpdate.Headers.Add(header);
             }
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            await adminClient.UpdateHookAsync(hookToUpdate);
 
             // Get the hook and check if updates are in place.
 
@@ -520,7 +520,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 hookToUpdate.Headers.Add(header);
             }
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            await adminClient.UpdateHookAsync(hookToUpdate);
 
             // Get the hook and check if updates are in place.
 
