@@ -6,8 +6,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net47;netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
 </Project>

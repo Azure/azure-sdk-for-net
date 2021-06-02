@@ -22,7 +22,6 @@ namespace Azure.Learn.AppConfig
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AzureAppConfigurationRestClient _restClient;
 
-
         /// <summary>Initializes a new instance of the <see cref="ConfigurationClient"/>.</summary>
         public ConfigurationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ConfigurationClientOptions())
         {
@@ -132,7 +131,6 @@ namespace Azure.Learn.AppConfig
                 throw;
             }
         }
-
 
         private static string FormatETag(ETag etag) => $"\"{etag}\"";
     }

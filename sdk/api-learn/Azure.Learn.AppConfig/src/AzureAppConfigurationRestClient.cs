@@ -13,7 +13,6 @@ namespace Azure.Learn.AppConfig
 {
     internal partial class AzureAppConfigurationRestClient
     {
-
         /// <summary> Gets a single key-value. </summary>
         /// <param name="key"> The key of the key-value to retrieve. </param>
         /// <param name="label"> The label of the key-value to retrieve. </param>

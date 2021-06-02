@@ -8,7 +8,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Will fix as a step in tutorial.", Scope = "type", Target = "~T:Azure.Learn.AppConfig.Models.Enum4")]
-[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Will fix as a step in tutorial.", Scope = "type", Target = "~T:Azure.Learn.AppConfig.Models.Enum5")]
 [assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Out of scope of tutorial.", Scope = "type", Target = "~T:Azure.Learn.AppConfig.Models.Key")]
 [assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Out of scope of tutorial.", Scope = "type", Target = "~T:Azure.Learn.AppConfig.Models.Label")]
