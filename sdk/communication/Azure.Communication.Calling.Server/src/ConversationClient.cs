@@ -179,7 +179,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string audioFileId = null, Uri callbackUri = null , string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudioAsync)}");
             scope.Start();
@@ -205,7 +205,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string audioFileId = null , Uri callbackUri = null, string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudio)}");
             scope.Start();
@@ -214,7 +214,7 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
 
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                return RestClient.PlayAudio(conversationId, audioFileUri.AbsoluteUri, false, operationContext, audioFileId, callbackUri.AbsoluteUri, cancellationToken);
+                return RestClient.PlayAudio(conversationId, audioFileUri.AbsoluteUri, false, operationContext, audioFileId, callbackUri?.AbsoluteUri, cancellationToken);
             }
             catch (Exception ex)
             {
