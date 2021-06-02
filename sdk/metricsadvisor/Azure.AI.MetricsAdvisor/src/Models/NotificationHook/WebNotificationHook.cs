@@ -69,9 +69,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Used by CodeGen during serialization.
         /// </summary>
-        internal WebhookHookParameter HookParameter => new WebhookHookParameter()
+        internal WebhookHookParameter HookParameter => new WebhookHookParameter(Endpoint.AbsoluteUri)
         {
-            Endpoint = Endpoint.AbsoluteUri,
             Username = Username,
             Password = Password,
             CertificateKey = CertificateKey,
