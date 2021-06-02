@@ -1197,23 +1197,23 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Updates an existing <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
-        /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="alertConfiguration">The <see cref="AnomalyAlertConfiguration"/> containing the updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/>
         /// instance containing information about the updated configuration.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<AnomalyAlertConfiguration>> UpdateAlertConfigurationAsync(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.Id is null.</exception>
+        public virtual async Task<Response<AnomalyAlertConfiguration>> UpdateAlertConfigurationAsync(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
-            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
-            if (!string.IsNullOrEmpty(alertConfiguration.Id) && !alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+
+            if (alertConfiguration.Id == null)
             {
-                throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
+                throw new ArgumentNullException(nameof(alertConfiguration), $"{nameof(alertConfiguration)}.Id not available. Call {nameof(GetAlertConfigurationAsync)} and update the returned model before calling this method.");
             }
+
+            Guid alertConfigurationGuid = new Guid(alertConfiguration.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAlertConfiguration)}");
             scope.Start();
@@ -1233,23 +1233,23 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Updates an existing <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
-        /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="alertConfiguration">The <see cref="AnomalyAlertConfiguration"/> containing the updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/>
         /// instance containing information about the updated configuration.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<AnomalyAlertConfiguration> UpdateAlertConfiguration(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.Id is null.</exception>
+        public virtual Response<AnomalyAlertConfiguration> UpdateAlertConfiguration(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
-            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
-            if (!string.IsNullOrEmpty(alertConfiguration.Id) && !alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+
+            if (alertConfiguration.Id == null)
             {
-                throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
+                throw new ArgumentNullException(nameof(alertConfiguration), $"{nameof(alertConfiguration)}.Id not available. Call {nameof(GetAlertConfiguration)} and update the returned model before calling this method.");
             }
+
+            Guid alertConfigurationGuid = new Guid(alertConfiguration.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAlertConfiguration)}");
             scope.Start();
