@@ -37,9 +37,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the IS_DEFINED function to the condition statement of the query.
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_defined">IS_DEFINED</see> function to the condition statement of the query.
         /// </summary>
-        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_defined">Function Reference.</see>
         /// <param name="property"> The property that the query is looking for as defined. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public AdtQuerySelectFrom WhereIsDefined(string property)
@@ -49,9 +48,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the IS_NULL function to the condition statement of the query.
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_null">IS_NULL</see> function to the condition statement of the query.
         /// </summary>
-        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_null">Function Reference.</see>
         /// <param name="expression"> The expression being checked for null. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
         public AdtQuerySelectFrom WhereIsNull(string expression)
@@ -61,9 +59,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the STARTSWITH function to the condition statement of the query.
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#startswith">STARTSWITH</see> function to the condition statement of the query.
         /// </summary>
-        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#startswith">Function Reference.</see>
         /// <param name="stringToCheck"> String to check the beginning of. </param>
         /// <param name="beginningString"> String representing the beginning to check for. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
@@ -79,9 +76,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
          */
 
         /// <summary>
-        /// Adds the IS_OF_MODEL function to the condition statement of the query.
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_of_model">IS_OF_MODEL</see> function to the condition statement of the query.
         /// </summary>
-        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_of_model">Function Reference.</see>
         /// <param name="model"> Model ID to check for. </param>
         /// <param name="exact"> Whether or not an exact match is required. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
