@@ -133,10 +133,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            IAsyncEnumerator<AnomalyAlertConfiguration> asyncEnumerator = adminClient.GetAlertConfigurationsAsync(FakeGuid, cancellationSource.Token).GetAsyncEnumerator();
+            IAsyncEnumerator<AnomalyAlertConfiguration> asyncEnumerator = adminClient.GetAlertConfigurationsAsync(FakeGuid, default, cancellationSource.Token).GetAsyncEnumerator();
             Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
 
-            IEnumerator<AnomalyAlertConfiguration> enumerator = adminClient.GetAlertConfigurations(FakeGuid, cancellationSource.Token).GetEnumerator();
+            IEnumerator<AnomalyAlertConfiguration> enumerator = adminClient.GetAlertConfigurations(FakeGuid, default, cancellationSource.Token).GetEnumerator();
             Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 

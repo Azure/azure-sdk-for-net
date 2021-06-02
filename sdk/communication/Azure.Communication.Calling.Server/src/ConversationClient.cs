@@ -174,9 +174,11 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Play audio in the call. </summary>
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string operationContext, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string audioFileId = null, Uri callbackUri = null , string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudioAsync)}");
             scope.Start();
@@ -185,7 +187,7 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
 
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                return await RestClient.PlayAudioAsync(conversationId, audioFileUri.AbsoluteUri, false, operationContext, null, null, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PlayAudioAsync(conversationId, audioFileUri.AbsoluteUri, false, operationContext, audioFileId, callbackUri?.AbsoluteUri, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -197,9 +199,12 @@ namespace Azure.Communication.Calling.Server
         /// <summary> Play audio in the call. </summary>
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string operationContext, CancellationToken cancellationToken = default)
+        /// <returns></returns>
+        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string audioFileId = null , Uri callbackUri = null, string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudio)}");
             scope.Start();
@@ -208,7 +213,7 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
 
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                return RestClient.PlayAudio(conversationId, audioFileUri.AbsoluteUri, false, operationContext, null, null, cancellationToken);
+                return RestClient.PlayAudio(conversationId, audioFileUri.AbsoluteUri, false, operationContext, audioFileId, callbackUri?.AbsoluteUri, cancellationToken);
             }
             catch (Exception ex)
             {

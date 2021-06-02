@@ -15,7 +15,22 @@ namespace Azure.Communication.Calling.Server.Tests
         public CallingServerLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new CallingServerRecordedTestSanitizer();
 
-        public CallClient CreateServerCallingClient()
+        /// <summary>
+        /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
+        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="CommunicationIdentityClient" />.</returns>
+        protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
+            => InstrumentClient(
+                new CommunicationIdentityClient(
+                    TestEnvironment.LiveTestDynamicConnectionString,
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
+
+        /// <summary>
+        /// Creates a <see cref="CallClient" />
+        /// </summary>
+        /// <returns>The instrumented <see cref="CallClient" />.</returns>
+        protected CallClient CreateInstrumentedCallingServerClient()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
             CallClient client = new CallClient(connectionString, CreateServerCallingClientOptions());
@@ -24,6 +39,7 @@ namespace Azure.Communication.Calling.Server.Tests
             //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
             //@@CallClient client = new CallClient(connectionString);
             #endregion Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
+
             return InstrumentClient(client);
         }
 
