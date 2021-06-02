@@ -12,7 +12,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class DatasourceCredentialLiveTests : MetricsAdvisorLiveTestBase
     {
-        public DatasourceCredentialLiveTests(bool isAsync) : base(isAsync)
+        private const string ClientId = "clientId";
+        private const string TenantId = "tenantId";
+
+        public DatasourceCredentialLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
@@ -32,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdCredential.Name, Is.EqualTo(credentialName));
             Assert.That(createdCredential.Description, Is.Empty);
 
-            ValidateGenericDatasourceCredential(createdCredential);
+            ValidateTestCaseDatasourceCredential(createdCredential);
         }
 
         [RecordedTest]
@@ -80,7 +83,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task UpdateServicePrincipalDatasourceCredential(string credentialTypeName)
+        public async Task UpdateServicePrincipalDatasourceCredential()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
@@ -91,13 +94,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await using var disposableCredential = await DisposableDatasourceCredential.CreateDatasourceCredentialAsync(adminClient, credentialToCreate);
             var credentialToUpdate = disposableCredential.Credential as ServicePrincipalDatasourceCredential;
 
-            credentialToUpdate.ClientId = "clientId";
-            credentialToUpdate.TenantId = "tenantId";
+            credentialToUpdate.ClientId = ClientId;
+            credentialToUpdate.TenantId = TenantId;
 
             var updatedCredential = (await adminClient.UpdateDatasourceCredentialAsync(credentialToUpdate)).Value as ServicePrincipalDatasourceCredential;
 
-            Assert.That(updatedCredential.ClientId, Is.EqualTo("clientId"));
-            Assert.That(updatedCredential.TenantId, Is.EqualTo("tenantId"));
+            Assert.That(updatedCredential.ClientId, Is.EqualTo(ClientId));
+            Assert.That(updatedCredential.TenantId, Is.EqualTo(TenantId));
         }
 
         [RecordedTest]
@@ -162,9 +165,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
         }
 
+        private void ValidateTestCaseDatasourceCredential(DatasourceCredential credential)
+        {
+            if (credential is ServicePrincipalDatasourceCredential spCredential)
+            {
+                Assert.That(spCredential.ClientId, Is.EqualTo(ClientId));
+                Assert.That(spCredential.TenantId, Is.EqualTo(TenantId));
+            }
+        }
+
         private static DatasourceCredential GetDatasourceCredentialTestCase(string credentialTypeName, string credentialName) => credentialTypeName switch
         {
-            nameof(ServicePrincipalDatasourceCredential) => new ServicePrincipalDatasourceCredential(credentialName, "mock", "mock", "mock"),
+            nameof(ServicePrincipalDatasourceCredential) => new ServicePrincipalDatasourceCredential(credentialName, ClientId, "clientSecret", TenantId),
             _ => throw new ArgumentOutOfRangeException($"Unknown typeName: {credentialTypeName}")
         };
     }
