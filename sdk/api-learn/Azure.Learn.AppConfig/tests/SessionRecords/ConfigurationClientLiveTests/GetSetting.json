@@ -1,0 +1,50 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://petrsvihlikapi-learn-azconfig-net.azconfig.io/kv/FontColor?api-version=1.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson, application/json, application/problem\u002Bjson",
+        "Authorization": "Sanitized",
+        "Sync-Token": "1.0",
+        "traceparent": "00-97c477db6e25b442a9243a36ec491287-3189aae7effb2041-00",
+        "User-Agent": "azsdk-net-Learn.AppConfig/0.0.1-alpha.20210602.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "a17ab44c556436cb0336bfd0a4c51021",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, retry-after-ms, x-ms-request-id, x-ms-client-session-id, x-ms-effective-locale, WWW-Authenticate",
+        "Connection": "keep-alive",
+        "Content-Type": "application/vnd.microsoft.appconfig.kv\u002Bjson; charset=utf-8",
+        "Date": "Wed, 02 Jun 2021 14:14:34 GMT",
+        "ETag": "\u0022w672K8RfpyzBXP2VVecwgwuN28s\u0022",
+        "Last-Modified": "Thu, 27 May 2021 09:12:23 GMT",
+        "Server": "openresty/1.17.8.2",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Sync-Token": "zAJw6V16=MjoxNyM1MTAzNDM4;sn=5103438",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "a17ab44c556436cb0336bfd0a4c51021",
+        "x-ms-correlation-request-id": "fb2cb45a-7952-4768-9d05-280ef838bb5d",
+        "x-ms-request-id": "fb2cb45a-7952-4768-9d05-280ef838bb5d"
+      },
+      "ResponseBody": {
+        "etag": "w672K8RfpyzBXP2VVecwgwuN28s",
+        "key": "FontColor",
+        "label": null,
+        "content_type": "text/plain",
+        "value": "Green",
+        "tags": {},
+        "locked": false,
+        "last_modified": "2021-05-27T09:12:23\u002B00:00"
+      }
+    }
+  ],
+  "Variables": {
+    "API-LEARN_ENDPOINT": "https://petrsvihlikapi-learn-azconfig-net.azconfig.io",
+    "RandomSeed": "1032836566"
+  }
+}
