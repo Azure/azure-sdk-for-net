@@ -496,7 +496,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -522,7 +522,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -550,7 +550,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -578,7 +578,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -608,7 +608,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -634,7 +634,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -662,7 +662,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -690,7 +690,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -718,7 +718,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -744,7 +744,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -772,7 +772,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -800,7 +800,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -828,7 +828,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -854,7 +854,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -882,7 +882,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -910,7 +910,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -938,7 +938,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -964,7 +964,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -992,7 +992,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1020,7 +1020,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1048,7 +1048,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1074,7 +1074,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1102,7 +1102,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1130,7 +1130,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1158,7 +1158,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1184,7 +1184,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1212,7 +1212,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1240,7 +1240,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1268,7 +1268,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1294,7 +1294,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1322,7 +1322,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1350,7 +1350,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1378,7 +1378,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1404,7 +1404,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1432,7 +1432,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1460,7 +1460,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1488,7 +1488,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1514,7 +1514,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1542,7 +1542,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1570,7 +1570,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1598,7 +1598,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             dataFeedToUpdate.Description = description;
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1624,7 +1624,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedToUpdate = new DataFeed() { Description = description };
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1652,7 +1652,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
@@ -1680,7 +1680,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
 
-            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+            await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
             DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
 
