@@ -11,7 +11,8 @@ If any of the new objects needs to be overwritten, add the required changes to t
 
 ``` yaml
 tag: package-chat-2021-04-05-preview6
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/896d05e37dbb00712726620b8d679cc3c3be09fb/specification/communication/data-plane/Chat/readme.md
+require:
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/896d05e37dbb00712726620b8d679cc3c3be09fb/specification/communication/data-plane/Chat/readme.md
 payload-flattening-threshold: 10
 directive:
   from: swagger-document
