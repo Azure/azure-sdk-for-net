@@ -133,7 +133,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   The AMQP connection that is active for the current scope.
         /// </summary>
-        private FaultTolerantAmqpObject<AmqpConnection> ActiveConnection { get; set; }
+        private FaultTolerantAmqpObject<AmqpConnection> ActiveConnection { get; }
 
         /// <summary>
         ///  The controller responsible for managing transactions.
