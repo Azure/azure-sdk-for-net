@@ -515,8 +515,7 @@ namespace Azure.AI.TextAnalytics
                 ConvertToRecognizeEntitiesActionsResults(jobState, map, entitiesRecognitionErrors),
                 ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors),
                 ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
-                ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
-                jobState.Statistics);
+                ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors));
         }
 
         private static IReadOnlyCollection<AnalyzeSentimentActionResult> ConvertToAnalyzeSentimentActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)
