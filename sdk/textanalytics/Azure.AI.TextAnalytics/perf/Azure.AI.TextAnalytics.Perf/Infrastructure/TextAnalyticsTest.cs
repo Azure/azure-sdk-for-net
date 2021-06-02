@@ -8,12 +8,6 @@ namespace Azure.AI.TextAnalytics.Perf
 {
     public abstract class TextAnalyticsTest<TOptions> : PerfTest<TOptions> where TOptions : PerfOptions
     {
-        /// <summary>The name of the folder in which test assets are stored.</summary>
-        private const string AssetsFolderName = "Assets";
-
-        /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
-        private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/{0}/{1}";
-
         public TextAnalyticsTest(TOptions options) : base(options)
         {
             if (options.Parallel > 1)
@@ -25,14 +19,5 @@ namespace Azure.AI.TextAnalytics.Perf
         }
 
         protected PerfTestEnvironment TestEnvironment { get; }
-
-        /// <summary>
-        /// Creates a URI to a file contained in the test assets folder stored in the
-        /// azure-sdk-for-net GitHub repo.
-        /// </summary>
-        /// <param name="filename">The name of the file to create a URI to.</param>
-        /// <returns>A URI to the specified file.</returns>
-        protected Uri CreateUri(string filename) =>
-            new Uri(string.Format(FileUriFormat, AssetsFolderName, filename));
     }
 }
