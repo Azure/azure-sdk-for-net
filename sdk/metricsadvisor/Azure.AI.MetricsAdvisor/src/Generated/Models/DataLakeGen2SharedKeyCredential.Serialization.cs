@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,11 +20,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("dataSourceCredentialType");
             writer.WriteStringValue(DataSourceCredentialType.ToString());
             writer.WritePropertyName("dataSourceCredentialName");
-            writer.WriteStringValue(DataSourceCredentialName);
-            if (Optional.IsDefined(DataSourceCredentialDescription))
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("dataSourceCredentialDescription");
-                writer.WriteStringValue(DataSourceCredentialDescription);
+                writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
         }
@@ -34,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             DataLakeGen2SharedKeyParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
-            Optional<Guid> dataSourceCredentialId = default;
+            Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
             Optional<string> dataSourceCredentialDescription = default;
             foreach (var property in element.EnumerateObject())
@@ -51,12 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("dataSourceCredentialId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dataSourceCredentialId = property.Value.GetGuid();
+                    dataSourceCredentialId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialName"))
@@ -70,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataLakeGen2SharedKeyCredential(dataSourceCredentialType, Optional.ToNullable(dataSourceCredentialId), dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new DataLakeGen2SharedKeyCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
         }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class InfluxDbDataFeedSource : DataFeedSource
     {
+        private string _connectionString;
+
+        private string _password;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InfluxDbDataFeedSource"/> class.
         /// </summary>
@@ -54,11 +59,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The connection string.
-        /// </summary>
-        public string ConnectionString { get; }
-
-        /// <summary>
         /// The name of the database.
         /// </summary>
         public string Database { get; }
@@ -69,13 +69,26 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Username { get; }
 
         /// <summary>
-        /// The access password.
-        /// </summary>
-        public string Password { get; }
-
-        /// <summary>
         /// The query to retrieve the data to be ingested.
         /// </summary>
         public string Query { get; }
+
+        /// <summary>
+        /// The connection string.
+        /// </summary>
+        internal string ConnectionString
+        {
+            get => Volatile.Read(ref _connectionString);
+            private set => Volatile.Write(ref _connectionString, value);
+        }
+
+        /// <summary>
+        /// The access password.
+        /// </summary>
+        internal string Password
+        {
+            get => Volatile.Read(ref _password);
+            private set => Volatile.Write(ref _password, value);
+        }
     }
 }

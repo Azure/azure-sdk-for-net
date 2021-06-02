@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class AzureBlobDataFeedSource : DataFeedSource
     {
+        private string _connectionString;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureBlobDataFeedSource"/> class.
         /// </summary>
@@ -70,11 +73,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The connection string for authenticating to the Azure Storage Account.
-        /// </summary>
-        public string ConnectionString { get; }
-
-        /// <summary>
         /// The name of the blob container.
         /// </summary>
         public string Container { get; }
@@ -105,5 +103,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </list>
         /// </summary>
         public string BlobTemplate { get; }
+
+        /// <summary>
+        /// The connection string for authenticating to the Azure Storage Account.
+        /// </summary>
+        internal string ConnectionString
+        {
+            get => Volatile.Read(ref _connectionString);
+            private set => Volatile.Write(ref _connectionString, value);
+        }
     }
 }
