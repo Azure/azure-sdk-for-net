@@ -28,7 +28,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Create a new ContainerRegistryClient and RegistryArtifact to access image operations
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
-            RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
+            RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
             // Set permissions on the v1 image's "latest" tag
             image.UpdateTagProperties("latest", new ArtifactTagProperties()
