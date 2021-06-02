@@ -48,7 +48,7 @@ namespace Azure.Communication.Calling.Server
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateJoinCallRequest(string conversationId, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, string subject)
+        internal HttpMessage CreateJoinCallRequest(string conversationId, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents, string subject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -81,7 +81,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="subject"> The subject. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/>, <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public async Task<Response<JoinCallResponse>> JoinCallAsync(string conversationId, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, string subject = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JoinCallResponse>> JoinCallAsync(string conversationId, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents, string subject = null, CancellationToken cancellationToken = default)
         {
             if (conversationId == null)
             {
@@ -129,7 +129,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="subject"> The subject. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/>, <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public Response<JoinCallResponse> JoinCall(string conversationId, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, string subject = null, CancellationToken cancellationToken = default)
+        public Response<JoinCallResponse> JoinCall(string conversationId, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents, string subject = null, CancellationToken cancellationToken = default)
         {
             if (conversationId == null)
             {
@@ -182,7 +182,7 @@ namespace Azure.Communication.Calling.Server
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new PlayAudioRequestInternal()
+            var model = new PlayAudioRequest()
             {
                 AudioFileUri = audioFileUri,
                 Loop = loop,
@@ -447,7 +447,7 @@ namespace Azure.Communication.Calling.Server
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new StartCallRecordingRequestInternal()
+            var model = new StartCallRecordingRequest()
             {
                 RecordingStateCallbackUri = recordingStateCallbackUri
             };

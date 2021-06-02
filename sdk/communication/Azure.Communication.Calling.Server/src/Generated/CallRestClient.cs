@@ -48,7 +48,7 @@ namespace Azure.Communication.Calling.Server
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateCallRequest(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, PhoneNumberIdentifierModel sourceAlternateIdentity, string subject)
+        internal HttpMessage CreateCreateCallRequest(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents, PhoneNumberIdentifierModel sourceAlternateIdentity, string subject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -81,7 +81,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="subject"> The subject. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public async Task<Response<CreateCallResponse>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, PhoneNumberIdentifierModel sourceAlternateIdentity = null, string subject = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateCallResponse>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents, PhoneNumberIdentifierModel sourceAlternateIdentity = null, string subject = null, CancellationToken cancellationToken = default)
         {
             if (targets == null)
             {
@@ -130,7 +130,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="subject"> The subject. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public Response<CreateCallResponse> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModalityModel> requestedModalities, IEnumerable<EventSubscriptionTypeModel> requestedCallEvents, PhoneNumberIdentifierModel sourceAlternateIdentity = null, string subject = null, CancellationToken cancellationToken = default)
+        public Response<CreateCallResponse> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents, PhoneNumberIdentifierModel sourceAlternateIdentity = null, string subject = null, CancellationToken cancellationToken = default)
         {
             if (targets == null)
             {
@@ -302,7 +302,7 @@ namespace Azure.Communication.Calling.Server
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new PlayAudioRequestInternal()
+            var model = new PlayAudioRequest()
             {
                 AudioFileUri = audioFileUri,
                 Loop = loop,
@@ -396,7 +396,7 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        internal HttpMessage CreateCancelMediaOperationsRequest(string callId)
+        internal HttpMessage CreateCancelAllMediaOperationsRequest(string callId, string operationContext)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -405,33 +405,42 @@ namespace Azure.Communication.Calling.Server
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/calling/calls/", false);
             uri.AppendPath(callId, true);
-            uri.AppendPath("/CancelMediaOperations", false);
+            uri.AppendPath("/CancelMediaProcessing", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new CancelAllMediaOperationsRequest()
+            {
+                OperationContext = operationContext
+            };
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Cancel Media Processing. </summary>
         /// <param name="callId"> The call id. </param>
+        /// <param name="operationContext"> The context for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> is null. </exception>
-        public async Task<Response<CancelMediaOperationsResponse>> CancelMediaOperationsAsync(string callId, CancellationToken cancellationToken = default)
+        public async Task<Response<CancelAllMediaOperationsResponse>> CancelAllMediaOperationsAsync(string callId, string operationContext = null, CancellationToken cancellationToken = default)
         {
             if (callId == null)
             {
                 throw new ArgumentNullException(nameof(callId));
             }
 
-            using var message = CreateCancelMediaOperationsRequest(callId);
+            using var message = CreateCancelAllMediaOperationsRequest(callId, operationContext);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CancelMediaOperationsResponse value = default;
+                        CancelAllMediaOperationsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CancelMediaOperationsResponse.DeserializeCancelMediaOperationsResponse(document.RootElement);
+                        value = CancelAllMediaOperationsResponse.DeserializeCancelAllMediaOperationsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -441,24 +450,25 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Cancel Media Processing. </summary>
         /// <param name="callId"> The call id. </param>
+        /// <param name="operationContext"> The context for this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> is null. </exception>
-        public Response<CancelMediaOperationsResponse> CancelMediaOperations(string callId, CancellationToken cancellationToken = default)
+        public Response<CancelAllMediaOperationsResponse> CancelAllMediaOperations(string callId, string operationContext = null, CancellationToken cancellationToken = default)
         {
             if (callId == null)
             {
                 throw new ArgumentNullException(nameof(callId));
             }
 
-            using var message = CreateCancelMediaOperationsRequest(callId);
+            using var message = CreateCancelAllMediaOperationsRequest(callId, operationContext);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CancelMediaOperationsResponse value = default;
+                        CancelAllMediaOperationsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CancelMediaOperationsResponse.DeserializeCancelMediaOperationsResponse(document.RootElement);
+                        value = CancelAllMediaOperationsResponse.DeserializeCancelAllMediaOperationsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

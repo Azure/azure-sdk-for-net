@@ -2,31 +2,44 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 
 namespace Azure.Communication.Calling.Server
 {
     /// <summary>
-    /// The call state change event.
+    /// The participants updated event.
     /// </summary>
-    public partial class ParticipantsUpdatedEvent : CallEventBase
+    public class ParticipantsUpdatedEvent : CallingServerEventBase
     {
+        /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
+        public ParticipantsUpdatedEvent()
+        {
+        }
+
         /// <summary>
-        /// The call leg.id.
+        /// Deserialize <see cref="ParticipantsUpdatedEvent"/> event.
         /// </summary>
+        /// <param name="content">The json content.</param>
+        /// <returns>The new <see cref="ParticipantsUpdatedEvent"/> object.</returns>
+        public static ParticipantsUpdatedEvent Deserialize(string content)
+        {
+            using var document = JsonDocument.Parse(content);
+            JsonElement element = document.RootElement;
+
+            var participantsUpdatedEventInternal = ParticipantsUpdatedEventInternal.DeserializeParticipantsUpdatedEventInternal(element);
+
+            return new ParticipantsUpdatedEvent()
+            {
+                CallLegId = participantsUpdatedEventInternal.CallLegId,
+                Participants = participantsUpdatedEventInternal.Participants?.Select(x => new CommunicationParticipant() { Identifier = CommunicationIdentifierSerializer.Deserialize(x.Identifier), IsMuted = x.IsMuted, ParticipantId = x.ParticipantId })
+            };
+        }
+
+        /// <summary> The call leg.id. </summary>
         public string CallLegId { get; set; }
 
-        /// <summary>
-        /// The list of participants.
-        /// </summary>
+        /// <summary> The list of participants. </summary>
         public IEnumerable<CommunicationParticipant> Participants { get; set; }
-
-        /// <summary> Initializes a new instance of <see cref="ParticipantsUpdatedEvent"/>. </summary>
-        /// <param name="callLegId"> The call leg id. </param>
-        /// <param name="participants"> The conversation id. </param>
-        public ParticipantsUpdatedEvent(string callLegId, IEnumerable<CommunicationParticipant> participants)
-        {
-            CallLegId = callLegId;
-            Participants = participants;
-        }
     }
 }

@@ -89,20 +89,20 @@ namespace Azure.Communication.Calling.Server.Tests
         public async Task CancelMediaOperationsAsyncOverload_Passes(string expectedCallLegId)
         {
             Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
-            Response<CancelMediaOperationsResponse>? expectedResponse = default;
+            Response<CancelAllMediaOperationsResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.CancelMediaOperationsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.CancelAllMediaOperationsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
-                .ReturnsAsync((string callLegId, CancellationToken token) =>
+                .ReturnsAsync((string callLegId, string operationContext, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedCallLegId, callLegId);
                     Assert.AreEqual(cancellationToken, token);
-                    return expectedResponse = new Mock<Response<CancelMediaOperationsResponse>>().Object;
+                    return expectedResponse = new Mock<Response<CancelAllMediaOperationsResponse>>().Object;
                 });
 
-            Response<CancelMediaOperationsResponse> actualResponse = await mockClient.Object.CancelMediaOperationsAsync(expectedCallLegId, cancellationToken);
+            Response<CancelAllMediaOperationsResponse> actualResponse = await mockClient.Object.CancelAllMediaOperationsAsync(expectedCallLegId, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -161,26 +161,26 @@ namespace Azure.Communication.Calling.Server.Tests
         }
 
         [TestCaseSource(nameof(TestData_InviteParticipants))]
-        public async Task InviteParticipantsAsyncOverload_Passes(string expectedCallLegId, IEnumerable<CommunicationIdentifier> expectedParticipants, string expectedOperationContext, string? expectedAlternateCallerId = null)
+        public async Task InviteParticipantsAsyncOverload_Passes(string expectedCallLegId, CommunicationIdentifier expectedParticipant, string expectedOperationContext, string? expectedAlternateCallerId = null)
         {
             Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
             Response? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.InviteParticipantsAsync(It.IsAny<string>(), It.IsAny<IEnumerable<CommunicationIdentifier>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.AddParticipantAsync(It.IsAny<string>(), It.IsAny<CommunicationIdentifier>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
                 .ReturnsAsync((string callLegId, IEnumerable<CommunicationIdentifier> participants, string operationContext, string alternateCallerId, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedCallLegId, callLegId);
-                    Assert.AreEqual(expectedParticipants, participants);
+                    Assert.AreEqual(expectedParticipant, participants);
                     Assert.AreEqual(expectedOperationContext, operationContext);
                     Assert.AreEqual(expectedAlternateCallerId, alternateCallerId);
                     Assert.AreEqual(cancellationToken, token);
                     return expectedResponse = new Mock<Response>().Object;
                 });
 
-            Response actualResponse = await mockClient.Object.InviteParticipantsAsync(expectedCallLegId, expectedParticipants, expectedOperationContext, expectedAlternateCallerId, cancellationToken);
+            Response actualResponse = await mockClient.Object.AddParticipantAsync(expectedCallLegId, expectedParticipant, expectedOperationContext, expectedAlternateCallerId, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -216,7 +216,7 @@ namespace Azure.Communication.Calling.Server.Tests
                 new object?[] {
                     new CommunicationUserIdentifier("50125645-5dca-4193-877d-4608ed2a0bc2"),
                     new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("+14052882361") },
-                    new CreateCallOptions(new Uri($"https://dummy.ngrok.io/api/incident/callback?secret=h3llowW0rld"), new List<CallModalityModel> { CallModalityModel.Audio }, new List<EventSubscriptionTypeModel> { EventSubscriptionTypeModel.ParticipantsUpdated, EventSubscriptionTypeModel.DtmfReceived })
+                    new CreateCallOptions(new Uri($"https://dummy.ngrok.io/api/incident/callback?secret=h3llowW0rld"), new List<CallModality> { CallModality.Audio }, new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived })
                 },
             };
         }

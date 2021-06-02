@@ -26,6 +26,6 @@ namespace Azure.Communication
         }
 
         /// <summary> The Id of the communication user. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
     }
 }

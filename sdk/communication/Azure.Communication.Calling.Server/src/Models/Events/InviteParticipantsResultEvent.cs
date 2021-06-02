@@ -1,48 +1,28 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
-using System.Collections.Generic;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.Calling.Server
 {
     /// <summary>
     /// The invited participants result event.
     /// </summary>
-    public partial class InviteParticipantsResultEvent : CallEventBase
+    [CodeGenModel("InviteParticipantsResultEvent", Usage = new string[] { "input, output" }, Formats = new string[] { "json" })]
+    public partial class InviteParticipantsResultEvent : CallingServerEventBase
     {
         /// <summary>
-        /// The result info.
+        /// Deserialize <see cref="InviteParticipantsResultEvent"/> event.
         /// </summary>
-        public ResultInfoInternal ResultInfo { get; set; }
-
-        /// <summary>
-        /// The operation context.
-        /// </summary>
-        public string OperationContext { get; set; }
-
-        /// <summary>
-        /// The status of the operation.
-        /// </summary>
-        public OperationStatusModel Status { get; set; }
-
-        /// <summary>
-        /// The call leg Id .
-        /// </summary>
-        public string CallLegId { get; set; }
-
-        /// <summary> Initializes a new instance of <see cref="InviteParticipantsResultEvent"/>. </summary>
-        /// <param name="resultInfo"> The result info. </param>
-        /// <param name="operationContext"> The operation context. </param>
-        /// <param name="status"> The status. </param>
-        /// <param name="callLegId"> The call leg id. </param>
-        public InviteParticipantsResultEvent(ResultInfoInternal resultInfo, string operationContext, OperationStatusModel status, string callLegId)
+        /// <param name="content">The json content.</param>
+        /// <returns>The new <see cref="InviteParticipantsResultEvent"/> object.</returns>
+        public static InviteParticipantsResultEvent Deserialize(string content)
         {
-            ResultInfo = resultInfo;
-            OperationContext = operationContext;
-            Status = status;
-            CallLegId = callLegId;
+            using var document = JsonDocument.Parse(content);
+            JsonElement element = document.RootElement;
+
+            return DeserializeInviteParticipantsResultEvent(element);
         }
     }
 }
