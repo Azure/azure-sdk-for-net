@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Azure.AI.MetricsAdvisor.Tests
 {
     /// <summary>
-    /// Represents an <see cref="DataSourceCredentialEntity"/> that has been created for testing purposes.
+    /// Represents an <see cref="DatasourceCredential"/> that has been created for testing purposes.
     /// In order to create a new instance of this class, the <see cref="CreateCredentialEntityAsync"/>
     /// static method must be invoked. The created credential entity will be deleted upon disposal.
     /// </summary>
@@ -39,15 +39,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         /// <summary>
         /// Creates a credential entity using the specified <see cref="MetricsAdvisorAdministrationClient"/>.
-        /// A <see cref="DataSourceCredentialEntity"/> instance is returned, from which the ID of the created
+        /// A <see cref="DatasourceCredential"/> instance is returned, from which the ID of the created
         /// entity can be obtained. Upon disposal, the associated entity will be deleted.
         /// </summary>
         /// <param name="adminClient">The client to use for creating and for deleting the credential entity.</param>
-        /// <param name="credentialEntity">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
+        /// <param name="credentialEntity">Specifies how the created <see cref="DatasourceCredential"/> should be configured.</param>
         /// <returns>A <see cref="DisposableCredentialEntity"/> instance from which the ID of the created entity can be obtained.</returns>
-        public static async Task<DisposableCredentialEntity> CreateCredentialEntityAsync(MetricsAdvisorAdministrationClient adminClient, DataSourceCredentialEntity credentialEntity)
+        public static async Task<DisposableCredentialEntity> CreateCredentialEntityAsync(MetricsAdvisorAdministrationClient adminClient, DatasourceCredential credentialEntity)
         {
-            DataSourceCredentialEntity createdCredential = await adminClient.CreateCredentialEntityAsync(credentialEntity);
+            DatasourceCredential createdCredential = await adminClient.CreateDatasourceCredentialAsync(credentialEntity);
 
             Assert.That(createdCredential, Is.Not.Null);
             Assert.That(createdCredential.Id, Is.Not.Null.And.Not.Empty);
@@ -58,6 +58,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         /// <summary>
         /// Deletes the credential entity this instance is associated with.
         /// </summary>
-        public async ValueTask DisposeAsync() => await _adminClient.DeleteCredentialEntityAsync(Id);
+        public async ValueTask DisposeAsync() => await _adminClient.DeleteDatasourceCredentialAsync(Id);
     }
 }
