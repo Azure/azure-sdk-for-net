@@ -1896,7 +1896,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
-        /// instance containing information about the created credential entity.
+        /// instance containing information about the created datasource credential.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="datasourceCredential"/> is null.</exception>
         public virtual async Task<Response<DatasourceCredential>> CreateDatasourceCredentialAsync(DatasourceCredential datasourceCredential, CancellationToken cancellationToken = default)
@@ -1919,7 +1919,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
                 catch (Exception ex)
                 {
-                    throw new RequestFailedException($"The credential entity has been created successfully, but the client failed to fetch its data. Credential Entity ID: {credentialId}", ex);
+                    throw new RequestFailedException($"The datasource credential has been created successfully, but the client failed to fetch its data. Datasource Credential ID: {credentialId}", ex);
                 }
             }
             catch (Exception e)
@@ -1938,7 +1938,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
-        /// instance containing information about the created credential entity.
+        /// instance containing information about the created datasource credential.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="datasourceCredential"/> is null.</exception>
         public virtual Response<DatasourceCredential> CreateDatasourceCredential(DatasourceCredential datasourceCredential, CancellationToken cancellationToken = default)
@@ -1961,7 +1961,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
                 catch (Exception ex)
                 {
-                    throw new RequestFailedException($"The credential entity has been created successfully, but the client failed to fetch its data. Credential Entity ID: {credentialId}", ex);
+                    throw new RequestFailedException($"The datasource credential has been created successfully, but the client failed to fetch its data. Datasource Credential ID: {credentialId}", ex);
                 }
             }
             catch (Exception e)
