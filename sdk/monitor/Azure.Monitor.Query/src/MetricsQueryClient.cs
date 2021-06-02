@@ -12,9 +12,9 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// The <see cref="LogsClient"/> allows to query the Azure Monitor Metrics service.
+    /// The <see cref="LogsQueryClient"/> allows to query the Azure Monitor Metrics service.
     /// </summary>
-    public class MetricsClient
+    public class MetricsQueryClient
     {
         private readonly MetricDefinitionsRestClient _metricDefinitionsClient;
         private readonly MetricsRestClient _metricsRestClient;
@@ -22,25 +22,25 @@ namespace Azure.Monitor.Query
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsClient"/>.
+        /// Initializes a new instance of <see cref="MetricsQueryClient"/>.
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        public MetricsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
+        public MetricsQueryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsClient"/>.
+        /// Initializes a new instance of <see cref="MetricsQueryClient"/>.
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        /// <param name="options">The <see cref="MetricsClientOptions"/> instance to as client configuration.</param>
-        public MetricsClient(Uri endpoint, TokenCredential credential, MetricsClientOptions options)
+        /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
+        public MetricsQueryClient(Uri endpoint, TokenCredential credential, MetricsQueryClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsClientOptions();
+            options ??= new MetricsQueryClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
@@ -51,9 +51,9 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsClient"/> for mocking.
+        /// Initializes a new instance of <see cref="MetricsQueryClient"/> for mocking.
         /// </summary>
-        protected MetricsClient()
+        protected MetricsQueryClient()
         {
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Monitor.Query
         /// <returns>The <see cref="MetricQueryResult"/> instance containing the query results.</returns>
         public virtual Response<MetricQueryResult> Query(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
@@ -101,7 +101,7 @@ namespace Azure.Monitor.Query
         /// <returns>The <see cref="MetricQueryResult"/> instance with query results.</returns>
         public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
@@ -134,7 +134,7 @@ namespace Azure.Monitor.Query
         /// <returns>A list of metric definitions.</returns>
         public virtual Response<IReadOnlyList<MetricDefinition>> GetMetrics(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetrics)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetrics)}");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.Monitor.Query
         /// <returns>A list of metric definitions.</returns>
         public virtual async Task<Response<IReadOnlyList<MetricDefinition>>> GetMetricsAsync(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetrics)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetrics)}");
             scope.Start();
             try
             {
@@ -184,7 +184,7 @@ namespace Azure.Monitor.Query
         /// <returns>A list of metric namespaces.</returns>
         public virtual Response<IReadOnlyList<MetricNamespace>> GetMetricNamespaces(string resourceId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetricNamespaces)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricNamespaces)}");
             scope.Start();
             try
             {
@@ -207,7 +207,7 @@ namespace Azure.Monitor.Query
         /// <returns>A list of metric namespaces.</returns>
         public virtual async Task<Response<IReadOnlyList<MetricNamespace>>> GetMetricNamespacesAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetricNamespaces)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricNamespaces)}");
             scope.Start();
             try
             {

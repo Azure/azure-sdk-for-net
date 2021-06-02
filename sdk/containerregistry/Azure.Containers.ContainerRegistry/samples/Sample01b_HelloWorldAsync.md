@@ -1,5 +1,7 @@
 # Azure.Search.Documents Samples - Hello World (async)
 
+The following sample illustrates how to list repositories in a registry, and handle errors that might arise.
+
 ## Import the namespaces
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_Namespaces
@@ -17,7 +19,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 // Create a new ContainerRegistryClient
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
-// Perform an operation
+// Get the collection of repository names from the registry
 AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
 await foreach (string repository in repositories)
 {
