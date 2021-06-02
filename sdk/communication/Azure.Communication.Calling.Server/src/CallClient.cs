@@ -92,10 +92,10 @@ namespace Azure.Communication.Calling.Server
             RestClient = null!;
         }
 
-        /// Create an outgoing call from source to target identifies.
-        /// <param name="source"> The source of the call. </param>
-        /// <param name="targets"> The targets of the call. </param>
-        /// <param name="options"> The call Options. </param>
+        /// Create an outgoing call from source to target identities.
+        /// <param name="source"> The source identity </param>
+        /// <param name="targets"> The target identities. </param>
+        /// <param name="options"> The call options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
@@ -131,9 +131,9 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        /// Create an outgoing call from source to target identifies.
-        /// <param name="source"> The source of the call. </param>
-        /// <param name="targets"> The targets of the call. </param>
+        /// Create an outgoing call from source to target identities.
+        /// <param name="source"> The source identity </param>
+        /// <param name="targets"> The target identities. </param>
         /// <param name="options"> The call options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -208,7 +208,7 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        /// <summary> Disconnect the current caller in a Group-call or end a p2p-call asynchronously.</summary>
+        /// <summary> Disconnect the current caller in a group-call or end a p2p-call.</summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -227,7 +227,7 @@ namespace Azure.Communication.Calling.Server
             }
         }
 
-        /// <summary> Disconnect the current caller in a Group-call or end a p2p-call. </summary>
+        /// <summary> Disconnect the current caller in a group-call or end a p2p-call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -297,7 +297,7 @@ namespace Azure.Communication.Calling.Server
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, Uri audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, Uri callbackUri = null, CancellationToken cancellationToken = default)
             => await PlayAudioAsync(callLegId, new PlayAudioOptions { AudioFileUri = audioFileUri, Loop = loop, OperationContext = operationContext }, cancellationToken).ConfigureAwait(false);
 
-        /// <summary> Play Audio. </summary>
+        /// <summary> Play audio in the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="options"> Play audio request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
