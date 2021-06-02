@@ -1,5 +1,7 @@
 # Azure.Containers.ContainerRegistry Samples - Hello World (sync)
 
+The following sample illustrates how to list repositories in a registry, and handle errors that might arise.
+
 ## Import the namespaces
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_Namespaces
