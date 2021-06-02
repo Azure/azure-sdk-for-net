@@ -1,54 +1,47 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Collections;
 using Azure.Core;
 
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Provides the client configuration options for connecting to Azure Monitor Logs service.
+    /// Provides the client configuration options for connecting to Azure Monitor Metrics service.
     /// </summary>
-    public class LogsClientOptions: ClientOptions
+    public class MetricsQueryClientOptions: ClientOptions
     {
         private readonly ServiceVersion _version;
 
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V1;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2018_01_01;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LogsClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="MetricsQueryClientOptions"/> class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public LogsClientOptions(ServiceVersion version = LatestVersion)
+        public MetricsQueryClientOptions(ServiceVersion version = LatestVersion)
         {
             _version = version;
         }
 
         /// <summary>
-        /// The versions of Azure Monitor Logs service supported by this client
+        /// The versions of Azure Monitor Query service supported by this client
         /// library.
         /// </summary>
         public enum ServiceVersion
         {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The V1 version of the service
+            /// Version 2018-01-01 of the service.
             /// </summary>
-            V1
-        }
-
-        internal string GetVersionString()
-        {
-            return _version switch
-            {
-                ServiceVersion.V1 => "v1",
-                _ => throw new ArgumentException(@"Unknown version {_version}")
-            };
+            V2018_01_01
+#pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }
 }
