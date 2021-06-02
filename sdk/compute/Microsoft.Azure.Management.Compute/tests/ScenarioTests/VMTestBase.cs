@@ -164,7 +164,7 @@ namespace Compute.Tests
 
         protected string getDefaultDiskEncryptionSetId()
         {
-            return "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/diskEncryptionSets/EncryptionSetforTest";
+            return "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/diskEncryptionSets/DESforTest";
         }
 
         protected StorageAccount CreateStorageAccount(string rgName, string storageAccountName)
@@ -302,6 +302,7 @@ namespace Compute.Tests
                 {
                     if(inputVM.SecurityProfile != null)
                     {
+                        inputVM.SecurityProfile.SecurityType = SecurityTypes.TrustedLaunch;
                         inputVM.SecurityProfile.UefiSettings = new UefiSettings
                         {
                             VTpmEnabled = true,
@@ -312,6 +313,7 @@ namespace Compute.Tests
                     {
                         inputVM.SecurityProfile = new SecurityProfile
                         {
+                            SecurityType = SecurityTypes.TrustedLaunch,
                             UefiSettings = new UefiSettings
                             {
                                 VTpmEnabled = true,
@@ -596,7 +598,7 @@ namespace Compute.Tests
             var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicname);
             return getNicResponse;
         }
-
+        
         protected static VirtualMachineNetworkInterfaceConfiguration CreateNICConfig(Subnet subnetResponse)
         {
             List<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigs = new List<VirtualMachineNetworkInterfaceIPConfiguration>()
@@ -961,7 +963,7 @@ namespace Compute.Tests
                     ComputerName = ComputerName
                 }
             };
-
+            
             if (!string.IsNullOrEmpty(asetId))
             {
                 vm.AvailabilitySet = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = asetId };
@@ -985,13 +987,18 @@ namespace Compute.Tests
                             vmNicConfig
                         };
             }
-            if(!string.IsNullOrEmpty(networkApiVersion))
+            if (!string.IsNullOrEmpty(networkApiVersion))
             {
                 vmNetworkProfile.NetworkApiVersion = networkApiVersion;
             }
 
             vm.NetworkProfile = vmNetworkProfile;
 
+            if (!string.IsNullOrEmpty(asetId))
+            {
+                vm.AvailabilitySet = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = asetId };
+            }
+                        
             if (dataDiskStorageAccountType == StorageAccountTypes.UltraSSDLRS)
             {
                 vm.AdditionalCapabilities = new AdditionalCapabilities

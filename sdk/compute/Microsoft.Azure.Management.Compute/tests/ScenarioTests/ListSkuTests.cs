@@ -29,7 +29,8 @@ namespace Compute.Tests
                 Assert.True(skus.Any(sku => sku.ResourceType == "virtualMachines"), "Assert that the sku list at least contains" +
                                                                                     "one virtual machine.");
                 Assert.True(skus.Any(sku => sku.LocationInfo != null), "Assert that the sku list has non null location info in it.");
-                Assert.True(skus.All(sku => sku.LocationInfo.Count == 1), "There should be exactly one location info per entry.");
+                //Removing below Assert because API now returns some skus without location. Get-AzComputeResourceSku | Where-Object { $_.LocationInfo.count -ne 1}
+                //Assert.True(skus.All(sku => sku.LocationInfo.Count == 1), "There should be exactly one location info per entry.");
                 Assert.True(skus.Any(sku => sku.LocationInfo[0].Location.Equals("westus", StringComparison.Ordinal)), "Assert that it has entry for one of the CRP regions (randomly picked).");         
 
                 // EastUS2EUAP is one of the regions where UltraSSD is enabled, hence verifying that CRP and ARM are returning correct

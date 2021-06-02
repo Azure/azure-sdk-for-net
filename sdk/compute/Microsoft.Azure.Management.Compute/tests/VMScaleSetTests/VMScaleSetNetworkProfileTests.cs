@@ -279,7 +279,7 @@ namespace Compute.Tests
                 Assert.True(passed);
             }
         }
-
+        
         /// <summary>
         /// Associates a VMScaleSet with PublicIp with Ip tags
         /// </summary>
