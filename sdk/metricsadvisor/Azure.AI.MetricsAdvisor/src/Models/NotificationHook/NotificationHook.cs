@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal NotificationHook()
         {
+            Administrators = new ChangeTrackingList<string>();
         }
 
         internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)

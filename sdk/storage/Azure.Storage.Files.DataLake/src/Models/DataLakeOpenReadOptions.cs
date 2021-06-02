@@ -26,6 +26,8 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public DataLakeRequestConditions Conditions { get; set; }
 
+        internal bool AllowModifications { get; }
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -35,13 +37,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </param>
         public DataLakeOpenReadOptions(bool allowModifications)
         {
-            // Setting the Conditions to empty means we won't automatically
-            // use the ETag as a condition and it will be possible for the blob
-            // to change while it's being read from.
-            if (allowModifications)
-            {
-                Conditions = new DataLakeRequestConditions();
-            }
+            AllowModifications = allowModifications;
         }
     }
 }

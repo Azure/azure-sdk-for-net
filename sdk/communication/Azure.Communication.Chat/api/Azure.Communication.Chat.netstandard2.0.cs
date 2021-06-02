@@ -5,6 +5,12 @@ namespace Azure.Communication.Chat
         internal AddChatParticipantsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
+    public static partial class AzureCommunicationChatServiceModelFactory
+    {
+        public static Azure.Communication.Chat.AddChatParticipantsResult AddChatParticipantsResult(System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> invalidParticipants = null) { throw null; }
+        public static Azure.Communication.Chat.ChatError ChatError(string code = null, string message = null, string target = null, System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> details = null, Azure.Communication.Chat.ChatError innerError = null) { throw null; }
+        public static Azure.Communication.Chat.ChatThreadItem ChatThreadItem(string id = null, string topic = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastMessageReceivedOn = default(System.DateTimeOffset?)) { throw null; }
+    }
     public partial class ChatClient
     {
         protected ChatClient() { }

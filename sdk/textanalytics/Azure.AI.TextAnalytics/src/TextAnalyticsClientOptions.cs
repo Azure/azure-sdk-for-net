@@ -69,14 +69,14 @@ namespace Azure.AI.TextAnalytics
             this.ConfigureLogging();
         }
 
-        internal string GetVersionString()
+        internal static string GetVersionString(ServiceVersion version)
         {
-            return Version switch
+            return version switch
             {
                 ServiceVersion.V3_0 => "v3.0",
                 ServiceVersion.V3_1_Preview_5 => "v3.1-preview.5",
 
-                _ => throw new ArgumentException($"Version {Version} not supported."),
+                _ => throw new ArgumentException($"Version {version} not supported."),
             };
         }
     }

@@ -326,7 +326,7 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new PiiTaskParameters()
                 {
-                    Domain = action.DomainFilter.HasValue ? action.DomainFilter.Value.GetString() : (PiiTaskParametersDomain?)null,
+                    Domain = action.DomainFilter.GetString() ?? (PiiTaskParametersDomain?)null,
                     ModelVersion = action.ModelVersion,
                     StringIndexType = action.StringIndexType,
                     LoggingOptOut = action.DisableServiceLogs
@@ -515,8 +515,7 @@ namespace Azure.AI.TextAnalytics
                 ConvertToRecognizeEntitiesActionsResults(jobState, map, entitiesRecognitionErrors),
                 ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors),
                 ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
-                ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
-                jobState.Statistics);
+                ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors));
         }
 
         private static IReadOnlyCollection<AnalyzeSentimentActionResult> ConvertToAnalyzeSentimentActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)

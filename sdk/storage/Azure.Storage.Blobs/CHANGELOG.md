@@ -1,6 +1,9 @@
 # Release History
 
 ## 12.9.0-beta.5 (Unreleased)
+- Fixed bug where BlobClient.DownloadStreaming or BlobClient.DownloadData could corrupt data on retry.
+- Fixed bug where specifying "*" as IfMatch condition could lead to inconsistend read in BlobClient.DownloadTo.
+- Fixed bug where specifying conditions in BlobBaseClient.OpenRead could override allowModifications flag in BlobOpenReadOptions leading to inconsistent read.
 
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
   - A new property is now available on the ClientOptions called `DisableTenantDiscovery`. If set to true, the client will not attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.

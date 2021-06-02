@@ -11,9 +11,13 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsClientLiveTests : TextAnalyticsClientLiveTestBase
     {
-        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync) { }
+        public TextAnalyticsClientLiveTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextWithEmoji()
         {
             TextAnalyticsClient client = GetClient();
@@ -28,6 +32,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextWithStringIndexType()
         {
             TextAnalyticsClient client = GetClient();
@@ -51,6 +56,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextWithDiacriticsNFC()
         {
             TextAnalyticsClient client = GetClient();
@@ -65,6 +71,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextInKoreanNFC()
         {
             TextAnalyticsClient client = GetClient();

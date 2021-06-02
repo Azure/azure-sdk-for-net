@@ -24,9 +24,9 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Filters the response entities to ones only included in the specified domain.
-        /// For more information see <a href="https://aka.ms/tanerpii"/>.
+        /// For more information see <see href="https://aka.ms/tanerpii"/>.
         /// </summary>
-        public PiiEntityDomainType? DomainFilter { get; set; }
+        public PiiEntityDomain DomainFilter { get; set; }
 
         /// <summary>
         /// Filters the response entities to entities that match the <see cref="PiiEntityCategory"/> specified.

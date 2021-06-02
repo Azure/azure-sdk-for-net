@@ -28,7 +28,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Adds the specified query to the batch. Results can be retrieved after the query is submitted via the <see cref="LogsClient.QueryBatchAsync"/> call.
+        /// Adds the specified query to the batch. Results can be retrieved after the query is submitted via the <see cref="LogsQueryClient.QueryBatchAsync"/> call.
         /// </summary>
         /// <param name="workspaceId">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query
             var logQueryRequest = new LogQueryRequest()
             {
                 Id = id,
-                Body = LogsClient.CreateQueryBody(query, timeRange, options, out string prefer),
+                Body = LogsQueryClient.CreateQueryBody(query, timeRange, options, out string prefer),
                 Workspace = workspaceId
             };
             if (prefer != null)

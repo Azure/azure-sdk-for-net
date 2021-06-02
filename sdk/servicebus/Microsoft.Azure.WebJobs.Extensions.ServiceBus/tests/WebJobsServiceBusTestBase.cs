@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using static Azure.Messaging.ServiceBus.Tests.ServiceBusScope;
 
@@ -117,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await _topicScope.DisposeAsync();
         }
 
-        protected (JobHost JobHost, IHost Host) BuildHost<TJobClass>(
+        protected IHost BuildHost<TJobClass>(
             Action<IHostBuilder> configurationDelegate = null,
             bool startHost = true,
             bool useTokenCredential = false)
@@ -156,16 +158,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                .ConfigureServices(s =>
                {
                    s.Configure<HostOptions>(opts => opts.ShutdownTimeout = HostShutdownTimeout);
+                   s.AddHostedService<ServiceBusEndToEndTestService>();
                });
             configurationDelegate?.Invoke(hostBuilder);
             IHost host = hostBuilder.Build();
-            JobHost jobHost = host.GetJobHost();
             if (startHost)
             {
-                jobHost.StartAsync().GetAwaiter().GetResult();
+                host.StartAsync().GetAwaiter().GetResult();
             }
 
-            return (jobHost, host);
+            return host;
         }
 
         internal async Task WriteQueueMessage(string message, string sessionId = null, string connectionString = default, string queueName = default)
@@ -214,6 +216,31 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 messageObj.SessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
+        }
+    }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    public class ServiceBusEndToEndTestService : IHostedService
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        private readonly IHost _host;
+
+        public ServiceBusEndToEndTestService(IHost host)
+        {
+            _host = host;
+        }
+
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
+            var errors = logs.Where(p => p.Level == LogLevel.Error);
+            Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.FormattedMessage)));
+            return Task.CompletedTask;
         }
     }
 }
