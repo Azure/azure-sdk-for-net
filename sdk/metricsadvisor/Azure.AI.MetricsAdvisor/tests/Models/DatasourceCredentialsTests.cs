@@ -14,14 +14,14 @@ using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
-    public class DataSourceCredentialEntitiesTests : MockClientTestBase
+    public class DatasourceCredentialsTests : MockClientTestBase
     {
         private static object[] CredentialEntityTestCases =
         {
             new object[] { new ServicePrincipalDatasourceCredential("mock", "mock", "secret", "mock"), "\"clientSecret\":\"secret\"" }
         };
 
-        public DataSourceCredentialEntitiesTests(bool isAsync) : base(isAsync)
+        public DatasourceCredentialsTests(bool isAsync) : base(isAsync)
         {
         }
 
