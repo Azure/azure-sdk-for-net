@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// 
         /// Only string and numeral values are supported.
         /// </param>
-        internal FarmBeatsSeasonalFieldChangedEventData(string farmerId, string seasonId, string fieldId, string farmId, ResourceActionType? actionType, string status, DateTimeOffset? modifiedDateTime, string eTag, string id, string name, string description, DateTimeOffset? createdDateTime, IReadOnlyDictionary<string, object> properties)
+        internal FarmBeatsSeasonalFieldChangedEventData(string farmerId, string seasonId, string fieldId, string farmId, FarmBeatsResourceActionType? actionType, string status, DateTimeOffset? modifiedDateTime, string eTag, string id, string name, string description, DateTimeOffset? createdDateTime, IReadOnlyDictionary<string, object> properties)
         {
             FarmerId = farmerId;
             SeasonId = seasonId;
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Id of the associated Farm. </summary>
         public string FarmId { get; }
         /// <summary> Action occurred on a resource. </summary>
-        public ResourceActionType? ActionType { get; }
+        public FarmBeatsResourceActionType? ActionType { get; }
         /// <summary> Status of the resource. </summary>
         public string Status { get; }
         /// <summary> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>

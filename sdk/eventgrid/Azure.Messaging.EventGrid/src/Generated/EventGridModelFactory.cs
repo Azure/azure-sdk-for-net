@@ -1888,7 +1888,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsBoundaryChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsBoundaryChangedEventData FarmBeatsBoundaryChangedEventData(string farmerId = default, string parentId = default, string parentType = default, bool? isPrimary = default, ResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsBoundaryChangedEventData FarmBeatsBoundaryChangedEventData(string farmerId = default, string parentId = default, string parentType = default, bool? isPrimary = default, FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsBoundaryChangedEventData(farmerId, parentId, parentType, isPrimary, actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -1909,7 +1909,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsCropChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsCropChangedEventData FarmBeatsCropChangedEventData(ResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsCropChangedEventData FarmBeatsCropChangedEventData(FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsCropChangedEventData(actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -1931,7 +1931,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsCropVarietyChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsCropVarietyChangedEventData FarmBeatsCropVarietyChangedEventData(string cropId = default, ResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsCropVarietyChangedEventData FarmBeatsCropVarietyChangedEventData(string cropId = default, FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsCropVarietyChangedEventData(cropId, actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -1953,7 +1953,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsFarmChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsFarmChangedEventData FarmBeatsFarmChangedEventData(string farmerId = default, ResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsFarmChangedEventData FarmBeatsFarmChangedEventData(string farmerId = default, FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsFarmChangedEventData(farmerId, actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -1974,7 +1974,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsFarmerChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsFarmerChangedEventData FarmBeatsFarmerChangedEventData(ResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsFarmerChangedEventData FarmBeatsFarmerChangedEventData(FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsFarmerChangedEventData(actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -1997,7 +1997,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsFieldChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsFieldChangedEventData FarmBeatsFieldChangedEventData(string farmerId = default, string farmId = default, ResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsFieldChangedEventData FarmBeatsFieldChangedEventData(string farmerId = default, string farmId = default, FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsFieldChangedEventData(farmerId, farmId, actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -2022,7 +2022,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsSeasonalFieldChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsSeasonalFieldChangedEventData FarmBeatsSeasonalFieldChangedEventData(string farmerId = default, string seasonId = default, string fieldId = default, string farmId = default, ResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsSeasonalFieldChangedEventData FarmBeatsSeasonalFieldChangedEventData(string farmerId = default, string seasonId = default, string fieldId = default, string farmId = default, FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsSeasonalFieldChangedEventData(farmerId, seasonId, fieldId, farmId, actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -2043,7 +2043,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsSeasonChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsSeasonChangedEventData FarmBeatsSeasonChangedEventData(ResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsSeasonChangedEventData FarmBeatsSeasonChangedEventData(FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsSeasonChangedEventData(actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -2066,7 +2066,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsApplicationDataChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsApplicationDataChangedEventData FarmBeatsApplicationDataChangedEventData(ResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsApplicationDataChangedEventData FarmBeatsApplicationDataChangedEventData(FarmBeatsResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsApplicationDataChangedEventData(actionType, farmerId, status, source, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -2089,7 +2089,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsPlantingDataChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsPlantingDataChangedEventData FarmBeatsPlantingDataChangedEventData(ResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsPlantingDataChangedEventData FarmBeatsPlantingDataChangedEventData(FarmBeatsResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsPlantingDataChangedEventData(actionType, farmerId, status, source, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -2112,7 +2112,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsHarvestDataChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsHarvestDataChangedEventData FarmBeatsHarvestDataChangedEventData(ResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsHarvestDataChangedEventData FarmBeatsHarvestDataChangedEventData(FarmBeatsResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsHarvestDataChangedEventData(actionType, farmerId, status, source, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -2135,7 +2135,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsTillageDataChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsTillageDataChangedEventData FarmBeatsTillageDataChangedEventData(ResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsTillageDataChangedEventData FarmBeatsTillageDataChangedEventData(FarmBeatsResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsTillageDataChangedEventData(actionType, farmerId, status, source, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
@@ -2157,7 +2157,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsSatelliteDataIngestionJobStatusChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsSatelliteDataIngestionJobStatusChangedEventData FarmBeatsSatelliteDataIngestionJobStatusChangedEventData(string farmerId = default, string message = default, JobStatus? status = default, DateTimeOffset? lastActionDateTime = default, bool? isCancellationRequested = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsSatelliteDataIngestionJobStatusChangedEventData FarmBeatsSatelliteDataIngestionJobStatusChangedEventData(string farmerId = default, string message = default, FarmBeatsJobStatus? status = default, DateTimeOffset? lastActionDateTime = default, bool? isCancellationRequested = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsSatelliteDataIngestionJobStatusChangedEventData(farmerId, message, status, lastActionDateTime, isCancellationRequested, id, name, description, createdDateTime, properties);
@@ -2179,7 +2179,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsWeatherDataIngestionJobStatusChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsWeatherDataIngestionJobStatusChangedEventData FarmBeatsWeatherDataIngestionJobStatusChangedEventData(string farmerId = default, string message = default, JobStatus? status = default, DateTimeOffset? lastActionDateTime = default, bool? isCancellationRequested = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsWeatherDataIngestionJobStatusChangedEventData FarmBeatsWeatherDataIngestionJobStatusChangedEventData(string farmerId = default, string message = default, FarmBeatsJobStatus? status = default, DateTimeOffset? lastActionDateTime = default, bool? isCancellationRequested = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsWeatherDataIngestionJobStatusChangedEventData(farmerId, message, status, lastActionDateTime, isCancellationRequested, id, name, description, createdDateTime, properties);
@@ -2201,7 +2201,7 @@ namespace Azure.Messaging.EventGrid
         /// Only string and numeral values are supported.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData"/> instance for mocking. </returns>
-        public static FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData(string farmerId = default, string message = default, JobStatus? status = default, DateTimeOffset? lastActionDateTime = default, bool? isCancellationRequested = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        public static FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData(string farmerId = default, string message = default, FarmBeatsJobStatus? status = default, DateTimeOffset? lastActionDateTime = default, bool? isCancellationRequested = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
         {
             properties ??= new Dictionary<string, object>();
             return new FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData(farmerId, message, status, lastActionDateTime, isCancellationRequested, id, name, description, createdDateTime, properties);

@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// 
         /// Only string and numeral values are supported.
         /// </param>
-        internal FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData(string farmerId, string message, JobStatus? status, DateTimeOffset? lastActionDateTime, bool? isCancellationRequested, string id, string name, string description, DateTimeOffset? createdDateTime, IReadOnlyDictionary<string, object> properties)
+        internal FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData(string farmerId, string message, FarmBeatsJobStatus? status, DateTimeOffset? lastActionDateTime, bool? isCancellationRequested, string id, string name, string description, DateTimeOffset? createdDateTime, IReadOnlyDictionary<string, object> properties)
         {
             FarmerId = farmerId;
             Message = message;
@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Status message to capture more details of the job. </summary>
         public string Message { get; }
         /// <summary> Various states a job can be in. </summary>
-        public JobStatus? Status { get; }
+        public FarmBeatsJobStatus? Status { get; }
         /// <summary> Date-time when last action was taken on job, sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>
         public DateTimeOffset? LastActionDateTime { get; }
         /// <summary> Flag that gets set when job cancellation is requested. </summary>

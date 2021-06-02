@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// 
         /// Only string and numeral values are supported.
         /// </param>
-        internal FarmBeatsCropVarietyChangedEventData(string cropId, ResourceActionType? actionType, string status, DateTimeOffset? modifiedDateTime, string eTag, string id, string name, string description, DateTimeOffset? createdDateTime, IReadOnlyDictionary<string, object> properties)
+        internal FarmBeatsCropVarietyChangedEventData(string cropId, FarmBeatsResourceActionType? actionType, string status, DateTimeOffset? modifiedDateTime, string eTag, string id, string name, string description, DateTimeOffset? createdDateTime, IReadOnlyDictionary<string, object> properties)
         {
             CropId = cropId;
             ActionType = actionType;
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Id of the crop it belongs to. </summary>
         public string CropId { get; }
         /// <summary> Action occurred on a resource. </summary>
-        public ResourceActionType? ActionType { get; }
+        public FarmBeatsResourceActionType? ActionType { get; }
         /// <summary> Status of the resource. </summary>
         public string Status { get; }
         /// <summary> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>

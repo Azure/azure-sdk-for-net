@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> parentId = default;
             Optional<string> parentType = default;
             Optional<bool> isPrimary = default;
-            Optional<ResourceActionType> actionType = default;
+            Optional<FarmBeatsResourceActionType> actionType = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> modifiedDateTime = default;
             Optional<string> eTag = default;
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionType = new ResourceActionType(property.Value.GetString());
+                    actionType = new FarmBeatsResourceActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))

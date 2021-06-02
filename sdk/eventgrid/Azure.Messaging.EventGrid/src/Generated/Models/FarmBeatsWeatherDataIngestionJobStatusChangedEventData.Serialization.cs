@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             Optional<string> farmerId = default;
             Optional<string> message = default;
-            Optional<JobStatus> status = default;
+            Optional<FarmBeatsJobStatus> status = default;
             Optional<DateTimeOffset> lastActionDateTime = default;
             Optional<bool> isCancellationRequested = default;
             Optional<string> id = default;
@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new JobStatus(property.Value.GetString());
+                    status = new FarmBeatsJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastActionDateTime"))

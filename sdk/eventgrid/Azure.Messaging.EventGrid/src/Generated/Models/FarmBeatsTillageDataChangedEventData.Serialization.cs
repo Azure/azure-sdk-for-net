@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static FarmBeatsTillageDataChangedEventData DeserializeFarmBeatsTillageDataChangedEventData(JsonElement element)
         {
-            Optional<ResourceActionType> actionType = default;
+            Optional<FarmBeatsResourceActionType> actionType = default;
             Optional<string> farmerId = default;
             Optional<string> status = default;
             Optional<string> source = default;
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionType = new ResourceActionType(property.Value.GetString());
+                    actionType = new FarmBeatsResourceActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("farmerId"))
