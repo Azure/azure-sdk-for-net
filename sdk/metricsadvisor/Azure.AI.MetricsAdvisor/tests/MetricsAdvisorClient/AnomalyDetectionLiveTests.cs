@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
+    [Ignore("Data is old and tests can't be recorded again")]
     public class AnomalyDetectionLiveTests : MetricsAdvisorLiveTestBase
     {
         public AnomalyDetectionLiveTests(bool isAsync) : base(isAsync)
