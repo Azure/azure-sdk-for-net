@@ -5,7 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Runtime.ExceptionServices;
 using System.Threading;
@@ -836,7 +835,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 lock (_syncLock)
                 {
                     // The send-via entity is a receiver and there are no active links. We are reconnecting the connection.
-                    if (_sendViaReceiverEntityPath != null && !ActiveLinks.Any())
+                    if (_sendViaReceiverEntityPath != null && ActiveLinks.IsEmpty)
                     {
                         // The sender is not going to the send-via entity path, so we need to ensure the receiver is reconnected first.
                         if (entityPath != _sendViaReceiverEntityPath)
