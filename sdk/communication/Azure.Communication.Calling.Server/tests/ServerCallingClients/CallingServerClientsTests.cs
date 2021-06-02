@@ -133,12 +133,12 @@ namespace Azure.Communication.Calling.Server.Tests
         }
 
         [TestCaseSource(nameof(TestData_PlayAudioWithoutRequest))]
-        public async Task PlayAudioAsyncOverload_Passes(string expectedCallLegId, Uri expectedAudioFileUri, bool expectedLoop, string expectedOperationContext, string expectedAudioFileId, Uri expectedCallbackUri)
+        public async Task PlayAudioAsyncOverload_Passes(string expectedCallLegId, Uri expectedAudioFileUri, bool expectedLoop, string expectedAudioFileId, Uri expectedCallbackUri, string expectedOperationContext)
         {
             Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
             Response<PlayAudioResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
@@ -154,7 +154,7 @@ namespace Azure.Communication.Calling.Server.Tests
                     return expectedResponse = new Mock<Response<PlayAudioResponse>>().Object;
                 });
 
-            Response<PlayAudioResponse> actualResponse = await mockClient.Object.PlayAudioAsync(expectedCallLegId, expectedAudioFileUri, expectedLoop, expectedOperationContext, expectedAudioFileId, expectedCallbackUri, cancellationToken);
+            Response<PlayAudioResponse> actualResponse = await mockClient.Object.PlayAudioAsync(expectedCallLegId, expectedAudioFileUri, expectedLoop, expectedAudioFileId, expectedCallbackUri, expectedOperationContext, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);

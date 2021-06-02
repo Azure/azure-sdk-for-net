@@ -58,7 +58,7 @@ Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
 
 ## Troubleshooting
 A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
-```C# Snippet:Azure_Communication_Call_Tests_CreateCallAsync_Troubleshooting
+```C# Snippet:Azure_Communication_Call_Tests_CreateCallAsync
 var callOption = new CreateCallOptions(
     new Uri("AppCallbackUrl"),
     new List<CallModality> {
