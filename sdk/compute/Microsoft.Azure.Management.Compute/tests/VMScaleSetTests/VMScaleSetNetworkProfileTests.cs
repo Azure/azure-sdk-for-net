@@ -210,7 +210,7 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-
+                              
                 // Create resource group
                 string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
                 var vmssName = TestUtilities.GenerateName("vmss");
@@ -221,6 +221,7 @@ namespace Compute.Tests
                 bool passed = false;
                 try
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                     EnsureClientsInitialized(context);
 
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
