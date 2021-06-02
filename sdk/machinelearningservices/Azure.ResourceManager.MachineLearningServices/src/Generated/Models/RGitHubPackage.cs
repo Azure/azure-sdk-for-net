@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The RGitHubPackage. </summary>
     public partial class RGitHubPackage

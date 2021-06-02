@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> An Image asset. </summary>
-    public partial class ImageAsset
+    public partial class ImageAsset : WritableSubResource
     {
         /// <summary> Initializes a new instance of ImageAsset. </summary>
         public ImageAsset()
@@ -16,20 +18,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ImageAsset. </summary>
-        /// <param name="id"> The Asset Id. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="mimeType"> The mime type. </param>
         /// <param name="url"> The Url of the Asset. </param>
         /// <param name="unpack"> Whether the Asset is unpacked. </param>
-        internal ImageAsset(string id, string mimeType, string url, bool? unpack)
+        internal ImageAsset(string id, string mimeType, string url, bool? unpack) : base(id)
         {
-            Id = id;
             MimeType = mimeType;
             Url = url;
             Unpack = unpack;
         }
 
-        /// <summary> The Asset Id. </summary>
-        public string Id { get; set; }
         /// <summary> The mime type. </summary>
         public string MimeType { get; set; }
         /// <summary> The Url of the Asset. </summary>

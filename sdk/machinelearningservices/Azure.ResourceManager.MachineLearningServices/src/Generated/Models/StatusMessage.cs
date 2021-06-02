@@ -7,13 +7,13 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Active message associated with project. </summary>
     public partial class StatusMessage
     {
         /// <summary> Initializes a new instance of StatusMessage. </summary>
-        public StatusMessage()
+        internal StatusMessage()
         {
         }
 

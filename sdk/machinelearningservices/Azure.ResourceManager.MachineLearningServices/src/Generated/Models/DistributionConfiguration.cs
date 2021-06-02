@@ -5,9 +5,9 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> The DistributionConfiguration. </summary>
+    /// <summary> Base definition for job distribution configuration. </summary>
     public partial class DistributionConfiguration
     {
         /// <summary> Initializes a new instance of DistributionConfiguration. </summary>

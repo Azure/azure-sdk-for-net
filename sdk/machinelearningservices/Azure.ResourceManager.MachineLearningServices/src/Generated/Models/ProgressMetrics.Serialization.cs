@@ -9,16 +9,10 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    public partial class ProgressMetrics : IUtf8JsonSerializable
+    public partial class ProgressMetrics
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static ProgressMetrics DeserializeProgressMetrics(JsonElement element)
         {
             Optional<long> totalDatapointCount = default;

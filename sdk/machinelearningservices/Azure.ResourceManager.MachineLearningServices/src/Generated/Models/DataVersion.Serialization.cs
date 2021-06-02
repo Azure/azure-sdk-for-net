@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class DataVersion : IUtf8JsonSerializable
     {
@@ -26,10 +26,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("datastoreId");
                 writer.WriteStringValue(DatastoreId);
             }
-            if (Optional.IsDefined(AssetPath))
+            writer.WritePropertyName("path");
+            writer.WriteStringValue(Path);
+            if (Optional.IsDefined(IsAnonymous))
             {
-                writer.WritePropertyName("assetPath");
-                writer.WriteObjectValue(AssetPath);
+                writer.WritePropertyName("isAnonymous");
+                writer.WriteBooleanValue(IsAnonymous.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -65,7 +67,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             Optional<DatasetType> datasetType = default;
             Optional<string> datastoreId = default;
-            Optional<AssetPath> assetPath = default;
+            string path = default;
+            Optional<bool> isAnonymous = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> properties = default;
@@ -86,14 +89,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     datastoreId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assetPath"))
+                if (property.NameEquals("path"))
+                {
+                    path = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isAnonymous"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    assetPath = AssetPath.DeserializeAssetPath(property.Value);
+                    isAnonymous = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -132,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new DataVersion(Optional.ToNullable(datasetType), datastoreId.Value, assetPath.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new DataVersion(Optional.ToNullable(datasetType), datastoreId.Value, path, Optional.ToNullable(isAnonymous), description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
         }
     }
 }

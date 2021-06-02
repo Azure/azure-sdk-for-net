@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Enable or disable ssl for scoring. </summary>
     public readonly partial struct SslConfigurationStatus : IEquatable<SslConfigurationStatus>
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
+        private const string AutoValue = "Auto";
 
         /// <summary> Disabled. </summary>
         public static SslConfigurationStatus Disabled { get; } = new SslConfigurationStatus(DisabledValue);
         /// <summary> Enabled. </summary>
         public static SslConfigurationStatus Enabled { get; } = new SslConfigurationStatus(EnabledValue);
+        /// <summary> Auto. </summary>
+        public static SslConfigurationStatus Auto { get; } = new SslConfigurationStatus(AutoValue);
         /// <summary> Determines if two <see cref="SslConfigurationStatus"/> values are the same. </summary>
         public static bool operator ==(SslConfigurationStatus left, SslConfigurationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SslConfigurationStatus"/> values are not the same. </summary>

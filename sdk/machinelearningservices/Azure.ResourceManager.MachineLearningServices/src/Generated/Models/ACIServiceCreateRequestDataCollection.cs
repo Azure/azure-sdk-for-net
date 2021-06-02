@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Details of the data collection options specified. </summary>
     public partial class ACIServiceCreateRequestDataCollection : ModelDataCollection

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The current provisioning state. </summary>
     public readonly partial struct PrivateEndpointConnectionProvisioningState : IEquatable<PrivateEndpointConnectionProvisioningState>

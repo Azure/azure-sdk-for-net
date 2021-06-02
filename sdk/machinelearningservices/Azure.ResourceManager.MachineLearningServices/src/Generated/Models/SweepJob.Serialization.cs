@@ -5,47 +5,71 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class SweepJob : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            writer.WritePropertyName("compute");
+            writer.WriteObjectValue(Compute);
+            if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            writer.WritePropertyName("parameterSamplingConfiguration");
-            writer.WriteObjectValue(ParameterSamplingConfiguration);
-            if (Optional.IsDefined(TerminationConfiguration))
-            {
-                writer.WritePropertyName("terminationConfiguration");
-                writer.WriteObjectValue(TerminationConfiguration);
-            }
-            writer.WritePropertyName("evaluationConfiguration");
-            writer.WriteObjectValue(EvaluationConfiguration);
-            if (Optional.IsDefined(TrialComponent))
-            {
-                writer.WritePropertyName("trialComponent");
-                writer.WriteObjectValue(TrialComponent);
+                writer.WritePropertyName("priority");
+                writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName");
                 writer.WriteStringValue(ExperimentName);
             }
-            writer.WritePropertyName("computeBinding");
-            writer.WriteObjectValue(ComputeBinding);
-            if (Optional.IsDefined(Output))
+            writer.WritePropertyName("searchSpace");
+            writer.WriteStartObject();
+            foreach (var item in SearchSpace)
             {
-                writer.WritePropertyName("output");
-                writer.WriteObjectValue(Output);
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("algorithm");
+            writer.WriteStringValue(Algorithm.ToString());
+            if (Optional.IsDefined(MaxTotalTrials))
+            {
+                writer.WritePropertyName("maxTotalTrials");
+                writer.WriteNumberValue(MaxTotalTrials.Value);
+            }
+            if (Optional.IsDefined(MaxConcurrentTrials))
+            {
+                writer.WritePropertyName("maxConcurrentTrials");
+                writer.WriteNumberValue(MaxConcurrentTrials.Value);
+            }
+            if (Optional.IsDefined(Timeout))
+            {
+                writer.WritePropertyName("timeout");
+                writer.WriteStringValue(Timeout.Value, "P");
+            }
+            if (Optional.IsDefined(EarlyTermination))
+            {
+                writer.WritePropertyName("earlyTermination");
+                writer.WriteObjectValue(EarlyTermination);
+            }
+            writer.WritePropertyName("objective");
+            writer.WriteObjectValue(Objective);
+            if (Optional.IsDefined(Trial))
+            {
+                writer.WritePropertyName("trial");
+                writer.WriteObjectValue(Trial);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("jobType");
             writer.WriteStringValue(JobType.ToString());
@@ -81,69 +105,46 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static SweepJob DeserializeSweepJob(JsonElement element)
         {
-            Optional<JobStatus> status = default;
-            ParameterSamplingConfiguration parameterSamplingConfiguration = default;
-            Optional<TerminationConfiguration> terminationConfiguration = default;
-            EvaluationConfiguration evaluationConfiguration = default;
-            Optional<TrialComponent> trialComponent = default;
+            ComputeConfiguration compute = default;
+            Optional<int> priority = default;
             Optional<string> experimentName = default;
-            ComputeBinding computeBinding = default;
             Optional<JobOutput> output = default;
+            Optional<JobStatus> status = default;
+            IDictionary<string, object> searchSpace = default;
+            SamplingAlgorithm algorithm = default;
+            Optional<int> maxTotalTrials = default;
+            Optional<int> maxConcurrentTrials = default;
+            Optional<TimeSpan> timeout = default;
+            Optional<EarlyTerminationPolicy> earlyTermination = default;
+            Objective objective = default;
+            Optional<TrialComponent> trial = default;
+            Optional<IdentityConfiguration> identity = default;
             JobType jobType = default;
-            Optional<JobBaseInteractionEndpoints> interactionEndpoints = default;
+            Optional<JobProvisioningState> provisioningState = default;
+            Optional<IReadOnlyDictionary<string, JobEndpoint>> interactionEndpoints = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("compute"))
+                {
+                    compute = ComputeConfiguration.DeserializeComputeConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("priority"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new JobStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("parameterSamplingConfiguration"))
-                {
-                    parameterSamplingConfiguration = ParameterSamplingConfiguration.DeserializeParameterSamplingConfiguration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("terminationConfiguration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    terminationConfiguration = TerminationConfiguration.DeserializeTerminationConfiguration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("evaluationConfiguration"))
-                {
-                    evaluationConfiguration = EvaluationConfiguration.DeserializeEvaluationConfiguration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("trialComponent"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    trialComponent = TrialComponent.DeserializeTrialComponent(property.Value);
+                    priority = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("experimentName"))
                 {
                     experimentName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("computeBinding"))
-                {
-                    computeBinding = ComputeBinding.DeserializeComputeBinding(property.Value);
                     continue;
                 }
                 if (property.NameEquals("output"))
@@ -156,9 +157,109 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     output = JobOutput.DeserializeJobOutput(property.Value);
                     continue;
                 }
+                if (property.NameEquals("status"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    status = new JobStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("searchSpace"))
+                {
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    searchSpace = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("algorithm"))
+                {
+                    algorithm = new SamplingAlgorithm(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("maxTotalTrials"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    maxTotalTrials = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxConcurrentTrials"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    maxConcurrentTrials = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("timeout"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    timeout = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("earlyTermination"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    earlyTermination = EarlyTerminationPolicy.DeserializeEarlyTerminationPolicy(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("objective"))
+                {
+                    objective = Objective.DeserializeObjective(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("trial"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    trial = TrialComponent.DeserializeTrialComponent(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = IdentityConfiguration.DeserializeIdentityConfiguration(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("jobType"))
                 {
                     jobType = new JobType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new JobProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interactionEndpoints"))
@@ -168,7 +269,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    interactionEndpoints = JobBaseInteractionEndpoints.DeserializeJobBaseInteractionEndpoints(property.Value);
+                    Dictionary<string, JobEndpoint> dictionary = new Dictionary<string, JobEndpoint>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, JobEndpoint.DeserializeJobEndpoint(property0.Value));
+                    }
+                    interactionEndpoints = dictionary;
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -207,7 +313,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new SweepJob(jobType, interactionEndpoints.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties), experimentName.Value, computeBinding, output.Value, Optional.ToNullable(status), parameterSamplingConfiguration, terminationConfiguration.Value, evaluationConfiguration, trialComponent.Value);
+            return new SweepJob(jobType, Optional.ToNullable(provisioningState), Optional.ToDictionary(interactionEndpoints), description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties), compute, Optional.ToNullable(priority), experimentName.Value, output.Value, Optional.ToNullable(status), searchSpace, algorithm, Optional.ToNullable(maxTotalTrials), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(timeout), earlyTermination.Value, objective, trial.Value, identity.Value);
         }
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Settings for a Python environment. </summary>
     public partial class ModelEnvironmentDefinitionPython : ModelPythonSection

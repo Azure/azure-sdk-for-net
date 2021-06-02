@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> An array of operations supported by the resource provider. </summary>
     internal partial class OperationListResult
@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of OperationListResult. </summary>
         internal OperationListResult()
         {
-            Value = new ChangeTrackingList<Operation>();
+            Value = new ChangeTrackingList<RestApi>();
         }
 
         /// <summary> Initializes a new instance of OperationListResult. </summary>
         /// <param name="value"> List of AML workspace operations supported by the AML workspace resource provider. </param>
-        internal OperationListResult(IReadOnlyList<Operation> value)
+        internal OperationListResult(IReadOnlyList<RestApi> value)
         {
             Value = value;
         }
 
         /// <summary> List of AML workspace operations supported by the AML workspace resource provider. </summary>
-        public IReadOnlyList<Operation> Value { get; }
+        public IReadOnlyList<RestApi> Value { get; }
     }
 }

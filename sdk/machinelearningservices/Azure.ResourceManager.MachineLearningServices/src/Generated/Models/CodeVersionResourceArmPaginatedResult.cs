@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A paginated list of CodeVersion entities. </summary>
     internal partial class CodeVersionResourceArmPaginatedResult
@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of CodeVersionResourceArmPaginatedResult. </summary>
         internal CodeVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<CodeVersionResource>();
+            Value = new ChangeTrackingList<CodeVersionResourceData>();
         }
 
         /// <summary> Initializes a new instance of CodeVersionResourceArmPaginatedResult. </summary>
         /// <param name="value"> An array of objects of type CodeVersion. </param>
         /// <param name="nextLink"> . </param>
-        internal CodeVersionResourceArmPaginatedResult(IReadOnlyList<CodeVersionResource> value, string nextLink)
+        internal CodeVersionResourceArmPaginatedResult(IReadOnlyList<CodeVersionResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of objects of type CodeVersion. </summary>
-        public IReadOnlyList<CodeVersionResource> Value { get; }
+        public IReadOnlyList<CodeVersionResourceData> Value { get; }
         public string NextLink { get; }
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The request to create an AKS service. </summary>
     public partial class AKSServiceCreateRequest : CreateEndpointVariantRequest

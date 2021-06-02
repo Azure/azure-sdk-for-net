@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The ACIServiceCreateRequest. </summary>
     public partial class ACIServiceCreateRequest : CreateServiceRequest

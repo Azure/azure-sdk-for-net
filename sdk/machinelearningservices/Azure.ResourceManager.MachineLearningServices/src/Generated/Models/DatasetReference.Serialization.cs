@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class DatasetReference : IUtf8JsonSerializable
     {
@@ -20,18 +21,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static DatasetReference DeserializeDatasetReference(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -45,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new DatasetReference(name.Value, id.Value);
+            return new DatasetReference(id, name.Value);
         }
     }
 }

@@ -8,14 +8,10 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary>
-    /// Data Transfer Object (DTO) for an Execution Environment Specification. Name and
-    /// 
-    /// version should default to the AzureML-Minimal environment version tested with the
-    /// 
-    /// current SDK client version as this is a main use-case.
+    /// Environment specification version details.
     /// 
     /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/specification.html&quot; /&gt;.
     /// </summary>
@@ -29,29 +25,29 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of EnvironmentSpecificationVersion. </summary>
-        /// <param name="type">
+        /// <param name="environmentSpecificationType">
         /// Environment specification is either user managed or curated by the Azure ML service
         /// 
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;.
         /// </param>
-        /// <param name="docker"> Class to represent configuration settings for Docker. </param>
+        /// <param name="docker"> Configuration settings for Docker. </param>
         /// <param name="condaFile">
-        /// Standard configuration file used by conda that lets you install any kind of package, including Python, R, and C/C++ packages
+        /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
         /// 
         /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;.
         /// </param>
-        /// <param name="datastoreId"> The asset datastoreId. </param>
-        /// <param name="assetPath"> Details of an AssetUri. </param>
+        /// <param name="inferenceContainerProperties"> Defines configuration specific to inference. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        internal EnvironmentSpecificationVersion(EnvironmentSpecificationType? type, DockerSpecification docker, string condaFile, string datastoreId, AssetPath assetPath, string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
+        internal EnvironmentSpecificationVersion(EnvironmentSpecificationType? environmentSpecificationType, DockerSpecification docker, string condaFile, InferenceContainerProperties inferenceContainerProperties, bool? isAnonymous, string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
         {
-            Type = type;
+            EnvironmentSpecificationType = environmentSpecificationType;
             Docker = docker;
             CondaFile = condaFile;
-            DatastoreId = datastoreId;
-            AssetPath = assetPath;
+            InferenceContainerProperties = inferenceContainerProperties;
+            IsAnonymous = isAnonymous;
             Description = description;
             Tags = tags;
             Properties = properties;
@@ -62,19 +58,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// 
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;.
         /// </summary>
-        public EnvironmentSpecificationType? Type { get; }
-        /// <summary> Class to represent configuration settings for Docker. </summary>
+        public EnvironmentSpecificationType? EnvironmentSpecificationType { get; }
+        /// <summary> Configuration settings for Docker. </summary>
         public DockerSpecification Docker { get; set; }
         /// <summary>
-        /// Standard configuration file used by conda that lets you install any kind of package, including Python, R, and C/C++ packages
+        /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
         /// 
         /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;.
         /// </summary>
         public string CondaFile { get; set; }
-        /// <summary> The asset datastoreId. </summary>
-        public string DatastoreId { get; set; }
-        /// <summary> Details of an AssetUri. </summary>
-        public AssetPath AssetPath { get; set; }
+        /// <summary> Defines configuration specific to inference. </summary>
+        public InferenceContainerProperties InferenceContainerProperties { get; set; }
+        /// <summary> If the name version are system generated (anonymous registration). </summary>
+        public bool? IsAnonymous { get; set; }
         /// <summary> The asset description text. </summary>
         public string Description { get; set; }
         /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The auto scaler properties. </summary>
     public partial class AKSServiceResponseAutoScaler : AutoScaler

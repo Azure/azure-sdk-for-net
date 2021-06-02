@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A paginated list of DataContainer entities. </summary>
     internal partial class DataContainerResourceArmPaginatedResult
@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of DataContainerResourceArmPaginatedResult. </summary>
         internal DataContainerResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<DataContainerResource>();
+            Value = new ChangeTrackingList<DataContainerResourceData>();
         }
 
         /// <summary> Initializes a new instance of DataContainerResourceArmPaginatedResult. </summary>
         /// <param name="value"> An array of objects of type DataContainer. </param>
         /// <param name="nextLink"> . </param>
-        internal DataContainerResourceArmPaginatedResult(IReadOnlyList<DataContainerResource> value, string nextLink)
+        internal DataContainerResourceArmPaginatedResult(IReadOnlyList<DataContainerResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of objects of type DataContainer. </summary>
-        public IReadOnlyList<DataContainerResource> Value { get; }
+        public IReadOnlyList<DataContainerResourceData> Value { get; }
         public string NextLink { get; }
     }
 }

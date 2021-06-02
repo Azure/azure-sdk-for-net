@@ -8,31 +8,34 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> Job base definition. </summary>
+    /// <summary> Base definition for a job. </summary>
     public partial class JobBase
     {
         /// <summary> Initializes a new instance of JobBase. </summary>
         public JobBase()
         {
+            InteractionEndpoints = new ChangeTrackingDictionary<string, JobEndpoint>();
             Tags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of JobBase. </summary>
         /// <param name="jobType"> Specifies the type of job. </param>
+        /// <param name="provisioningState"> . </param>
         /// <param name="interactionEndpoints">
-        /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
+        /// List of JobEndpoints.
         /// 
-        /// For local jobs, a job endpoint will have a value of FileStreamObject.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        internal JobBase(JobType jobType, JobBaseInteractionEndpoints interactionEndpoints, string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
+        internal JobBase(JobType jobType, JobProvisioningState? provisioningState, IReadOnlyDictionary<string, JobEndpoint> interactionEndpoints, string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
         {
             JobType = jobType;
+            ProvisioningState = provisioningState;
             InteractionEndpoints = interactionEndpoints;
             Description = description;
             Tags = tags;
@@ -41,12 +44,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Specifies the type of job. </summary>
         internal JobType JobType { get; set; }
+        public JobProvisioningState? ProvisioningState { get; }
         /// <summary>
-        /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
+        /// List of JobEndpoints.
         /// 
-        /// For local jobs, a job endpoint will have a value of FileStreamObject.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </summary>
-        public JobBaseInteractionEndpoints InteractionEndpoints { get; }
+        public IReadOnlyDictionary<string, JobEndpoint> InteractionEndpoints { get; }
         /// <summary> The asset description text. </summary>
         public string Description { get; set; }
         /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>

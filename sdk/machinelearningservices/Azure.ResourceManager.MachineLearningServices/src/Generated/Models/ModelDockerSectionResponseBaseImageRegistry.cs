@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Image registry that contains the base image. </summary>
     public partial class ModelDockerSectionResponseBaseImageRegistry : ContainerRegistryResponse

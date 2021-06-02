@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class EnvironmentSpecificationVersion : IUtf8JsonSerializable
     {
@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("condaFile");
                 writer.WriteStringValue(CondaFile);
             }
-            if (Optional.IsDefined(DatastoreId))
+            if (Optional.IsDefined(InferenceContainerProperties))
             {
-                writer.WritePropertyName("datastoreId");
-                writer.WriteStringValue(DatastoreId);
+                writer.WritePropertyName("inferenceContainerProperties");
+                writer.WriteObjectValue(InferenceContainerProperties);
             }
-            if (Optional.IsDefined(AssetPath))
+            if (Optional.IsDefined(IsAnonymous))
             {
-                writer.WritePropertyName("assetPath");
-                writer.WriteObjectValue(AssetPath);
+                writer.WritePropertyName("isAnonymous");
+                writer.WriteBooleanValue(IsAnonymous.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -68,24 +68,24 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static EnvironmentSpecificationVersion DeserializeEnvironmentSpecificationVersion(JsonElement element)
         {
-            Optional<EnvironmentSpecificationType> type = default;
+            Optional<EnvironmentSpecificationType> environmentSpecificationType = default;
             Optional<DockerSpecification> docker = default;
             Optional<string> condaFile = default;
-            Optional<string> datastoreId = default;
-            Optional<AssetPath> assetPath = default;
+            Optional<InferenceContainerProperties> inferenceContainerProperties = default;
+            Optional<bool> isAnonymous = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("environmentSpecificationType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new EnvironmentSpecificationType(property.Value.GetString());
+                    environmentSpecificationType = new EnvironmentSpecificationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("docker"))
@@ -103,19 +103,24 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     condaFile = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datastoreId"))
-                {
-                    datastoreId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("assetPath"))
+                if (property.NameEquals("inferenceContainerProperties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    assetPath = AssetPath.DeserializeAssetPath(property.Value);
+                    inferenceContainerProperties = InferenceContainerProperties.DeserializeInferenceContainerProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("isAnonymous"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isAnonymous = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -154,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new EnvironmentSpecificationVersion(Optional.ToNullable(type), docker.Value, condaFile.Value, datastoreId.Value, assetPath.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new EnvironmentSpecificationVersion(Optional.ToNullable(environmentSpecificationType), docker.Value, condaFile.Value, inferenceContainerProperties.Value, Optional.ToNullable(isAnonymous), description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
         }
     }
 }

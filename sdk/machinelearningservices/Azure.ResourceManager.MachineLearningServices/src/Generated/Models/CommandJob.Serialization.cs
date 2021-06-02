@@ -5,61 +5,89 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class CommandJob : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            writer.WritePropertyName("compute");
+            writer.WriteObjectValue(Compute);
+            if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (Optional.IsDefined(MaxRunDurationSeconds))
-            {
-                writer.WritePropertyName("maxRunDurationSeconds");
-                writer.WriteNumberValue(MaxRunDurationSeconds.Value);
-            }
-            writer.WritePropertyName("codeConfiguration");
-            writer.WriteObjectValue(CodeConfiguration);
-            if (Optional.IsDefined(EnvironmentId))
-            {
-                writer.WritePropertyName("environmentId");
-                writer.WriteStringValue(EnvironmentId);
-            }
-            if (Optional.IsCollectionDefined(DataBindings))
-            {
-                writer.WritePropertyName("dataBindings");
-                writer.WriteStartObject();
-                foreach (var item in DataBindings)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(DistributionConfiguration))
-            {
-                writer.WritePropertyName("distributionConfiguration");
-                writer.WriteObjectValue(DistributionConfiguration);
+                writer.WritePropertyName("priority");
+                writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName");
                 writer.WriteStringValue(ExperimentName);
             }
-            writer.WritePropertyName("computeBinding");
-            writer.WriteObjectValue(ComputeBinding);
-            if (Optional.IsDefined(Output))
+            if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("output");
-                writer.WriteObjectValue(Output);
+                writer.WritePropertyName("timeout");
+                writer.WriteStringValue(Timeout.Value, "P");
+            }
+            if (Optional.IsDefined(CodeId))
+            {
+                writer.WritePropertyName("codeId");
+                writer.WriteStringValue(CodeId);
+            }
+            writer.WritePropertyName("command");
+            writer.WriteStringValue(Command);
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                writer.WritePropertyName("environmentId");
+                writer.WriteStringValue(EnvironmentId);
+            }
+            if (Optional.IsCollectionDefined(InputDataBindings))
+            {
+                writer.WritePropertyName("inputDataBindings");
+                writer.WriteStartObject();
+                foreach (var item in InputDataBindings)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(OutputDataBindings))
+            {
+                writer.WritePropertyName("outputDataBindings");
+                writer.WriteStartObject();
+                foreach (var item in OutputDataBindings)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Distribution))
+            {
+                writer.WritePropertyName("distribution");
+                writer.WriteObjectValue(Distribution);
+            }
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            {
+                writer.WritePropertyName("environmentVariables");
+                writer.WriteStartObject();
+                foreach (var item in EnvironmentVariables)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("jobType");
             writer.WriteStringValue(JobType.ToString());
@@ -95,85 +123,47 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static CommandJob DeserializeCommandJob(JsonElement element)
         {
-            Optional<JobStatus> status = default;
-            Optional<long> maxRunDurationSeconds = default;
-            CodeConfiguration codeConfiguration = default;
-            Optional<string> environmentId = default;
-            Optional<IDictionary<string, DataBinding>> dataBindings = default;
-            Optional<DistributionConfiguration> distributionConfiguration = default;
+            ComputeConfiguration compute = default;
+            Optional<int> priority = default;
             Optional<string> experimentName = default;
-            ComputeBinding computeBinding = default;
             Optional<JobOutput> output = default;
+            Optional<JobStatus> status = default;
+            Optional<TimeSpan> timeout = default;
+            Optional<string> codeId = default;
+            string command = default;
+            Optional<string> environmentId = default;
+            Optional<IDictionary<string, InputDataBinding>> inputDataBindings = default;
+            Optional<IDictionary<string, OutputDataBinding>> outputDataBindings = default;
+            Optional<DistributionConfiguration> distribution = default;
+            Optional<IDictionary<string, string>> environmentVariables = default;
+            Optional<IdentityConfiguration> identity = default;
+            Optional<IReadOnlyDictionary<string, object>> parameters = default;
             JobType jobType = default;
-            Optional<JobBaseInteractionEndpoints> interactionEndpoints = default;
+            Optional<JobProvisioningState> provisioningState = default;
+            Optional<IReadOnlyDictionary<string, JobEndpoint>> interactionEndpoints = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("compute"))
+                {
+                    compute = ComputeConfiguration.DeserializeComputeConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("priority"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new JobStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("maxRunDurationSeconds"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    maxRunDurationSeconds = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("codeConfiguration"))
-                {
-                    codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("environmentId"))
-                {
-                    environmentId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataBindings"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, DataBinding> dictionary = new Dictionary<string, DataBinding>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, DataBinding.DeserializeDataBinding(property0.Value));
-                    }
-                    dataBindings = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("distributionConfiguration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    distributionConfiguration = DistributionConfiguration.DeserializeDistributionConfiguration(property.Value);
+                    priority = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("experimentName"))
                 {
                     experimentName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("computeBinding"))
-                {
-                    computeBinding = ComputeBinding.DeserializeComputeBinding(property.Value);
                     continue;
                 }
                 if (property.NameEquals("output"))
@@ -186,9 +176,134 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     output = JobOutput.DeserializeJobOutput(property.Value);
                     continue;
                 }
+                if (property.NameEquals("status"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    status = new JobStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("timeout"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    timeout = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("codeId"))
+                {
+                    codeId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("command"))
+                {
+                    command = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("environmentId"))
+                {
+                    environmentId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("inputDataBindings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, InputDataBinding> dictionary = new Dictionary<string, InputDataBinding>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, InputDataBinding.DeserializeInputDataBinding(property0.Value));
+                    }
+                    inputDataBindings = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("outputDataBindings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, OutputDataBinding> dictionary = new Dictionary<string, OutputDataBinding>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, OutputDataBinding.DeserializeOutputDataBinding(property0.Value));
+                    }
+                    outputDataBindings = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("distribution"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    distribution = DistributionConfiguration.DeserializeDistributionConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("environmentVariables"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    environmentVariables = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = IdentityConfiguration.DeserializeIdentityConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("parameters"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    parameters = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("jobType"))
                 {
                     jobType = new JobType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new JobProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interactionEndpoints"))
@@ -198,7 +313,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    interactionEndpoints = JobBaseInteractionEndpoints.DeserializeJobBaseInteractionEndpoints(property.Value);
+                    Dictionary<string, JobEndpoint> dictionary = new Dictionary<string, JobEndpoint>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, JobEndpoint.DeserializeJobEndpoint(property0.Value));
+                    }
+                    interactionEndpoints = dictionary;
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -237,7 +357,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new CommandJob(jobType, interactionEndpoints.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties), experimentName.Value, computeBinding, output.Value, Optional.ToNullable(status), Optional.ToNullable(maxRunDurationSeconds), codeConfiguration, environmentId.Value, Optional.ToDictionary(dataBindings), distributionConfiguration.Value);
+            return new CommandJob(jobType, Optional.ToNullable(provisioningState), Optional.ToDictionary(interactionEndpoints), description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties), compute, Optional.ToNullable(priority), experimentName.Value, output.Value, Optional.ToNullable(status), Optional.ToNullable(timeout), codeId.Value, command, environmentId.Value, Optional.ToDictionary(inputDataBindings), Optional.ToDictionary(outputDataBindings), distribution.Value, Optional.ToDictionary(environmentVariables), identity.Value, Optional.ToDictionary(parameters));
         }
     }
 }

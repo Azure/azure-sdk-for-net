@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     internal partial class EnvironmentContainerResourceArmPaginatedResult
     {
         internal static EnvironmentContainerResourceArmPaginatedResult DeserializeEnvironmentContainerResourceArmPaginatedResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EnvironmentContainerResource>> value = default;
+            Optional<IReadOnlyList<EnvironmentContainerResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EnvironmentContainerResource> array = new List<EnvironmentContainerResource>();
+                    List<EnvironmentContainerResourceData> array = new List<EnvironmentContainerResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentContainerResource.DeserializeEnvironmentContainerResource(item));
+                        array.Add(EnvironmentContainerResourceData.DeserializeEnvironmentContainerResourceData(item));
                     }
                     value = array;
                     continue;

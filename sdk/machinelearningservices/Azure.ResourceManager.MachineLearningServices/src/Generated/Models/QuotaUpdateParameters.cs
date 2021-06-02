@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Quota update parameters. </summary>
-    public partial class QuotaUpdateParameters
+    internal partial class QuotaUpdateParameters
     {
         /// <summary> Initializes a new instance of QuotaUpdateParameters. </summary>
         public QuotaUpdateParameters()

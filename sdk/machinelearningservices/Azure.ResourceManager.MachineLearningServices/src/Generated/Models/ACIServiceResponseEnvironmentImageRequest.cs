@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The Environment, models and assets used for inferencing. </summary>
     public partial class ACIServiceResponseEnvironmentImageRequest : EnvironmentImageResponse

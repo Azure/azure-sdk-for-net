@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A paginated list of DataVersion entities. </summary>
     internal partial class DataVersionResourceArmPaginatedResult
@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of DataVersionResourceArmPaginatedResult. </summary>
         internal DataVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<DataVersionResource>();
+            Value = new ChangeTrackingList<DataVersionResourceData>();
         }
 
         /// <summary> Initializes a new instance of DataVersionResourceArmPaginatedResult. </summary>
         /// <param name="value"> An array of objects of type DataVersion. </param>
         /// <param name="nextLink"> . </param>
-        internal DataVersionResourceArmPaginatedResult(IReadOnlyList<DataVersionResource> value, string nextLink)
+        internal DataVersionResourceArmPaginatedResult(IReadOnlyList<DataVersionResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of objects of type DataVersion. </summary>
-        public IReadOnlyList<DataVersionResource> Value { get; }
+        public IReadOnlyList<DataVersionResourceData> Value { get; }
         public string NextLink { get; }
     }
 }

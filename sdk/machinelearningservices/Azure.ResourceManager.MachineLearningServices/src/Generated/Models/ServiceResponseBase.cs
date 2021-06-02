@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The base service response. The correct inherited response based on computeType will be returned (ex. ACIServiceResponse). </summary>
     public partial class ServiceResponseBase

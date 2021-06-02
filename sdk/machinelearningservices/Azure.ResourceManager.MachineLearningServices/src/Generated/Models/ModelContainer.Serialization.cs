@@ -9,23 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class ModelContainer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LatestVersions))
-            {
-                writer.WritePropertyName("latestVersions");
-                writer.WriteStartArray();
-                foreach (var item in LatestVersions)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
@@ -58,27 +48,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static ModelContainer DeserializeModelContainer(JsonElement element)
         {
-            Optional<IList<ModelVersionResource>> latestVersions = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("latestVersions"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ModelVersionResource> array = new List<ModelVersionResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModelVersionResource.DeserializeModelVersionResource(item));
-                    }
-                    latestVersions = array;
-                    continue;
-                }
                 if (property.NameEquals("description"))
                 {
                     description = property.Value.GetString();
@@ -115,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new ModelContainer(Optional.ToList(latestVersions), description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new ModelContainer(description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
         }
     }
 }

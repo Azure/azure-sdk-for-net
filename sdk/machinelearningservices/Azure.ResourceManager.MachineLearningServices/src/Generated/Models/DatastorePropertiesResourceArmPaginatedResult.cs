@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A paginated list of DatastoreProperties entities. </summary>
     internal partial class DatastorePropertiesResourceArmPaginatedResult
@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of DatastorePropertiesResourceArmPaginatedResult. </summary>
         internal DatastorePropertiesResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<DatastorePropertiesResource>();
+            Value = new ChangeTrackingList<DatastorePropertiesResourceData>();
         }
 
         /// <summary> Initializes a new instance of DatastorePropertiesResourceArmPaginatedResult. </summary>
         /// <param name="value"> An array of objects of type DatastoreProperties. </param>
         /// <param name="nextLink"> . </param>
-        internal DatastorePropertiesResourceArmPaginatedResult(IReadOnlyList<DatastorePropertiesResource> value, string nextLink)
+        internal DatastorePropertiesResourceArmPaginatedResult(IReadOnlyList<DatastorePropertiesResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of objects of type DatastoreProperties. </summary>
-        public IReadOnlyList<DatastorePropertiesResource> Value { get; }
+        public IReadOnlyList<DatastorePropertiesResourceData> Value { get; }
         public string NextLink { get; }
     }
 }

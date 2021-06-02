@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Service principal credentials. </summary>
     internal partial class ServicePrincipalCredentials

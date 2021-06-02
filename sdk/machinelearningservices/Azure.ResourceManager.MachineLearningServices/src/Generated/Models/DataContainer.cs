@@ -8,9 +8,9 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> The DataContainer. </summary>
+    /// <summary> Container for data asset versions. </summary>
     public partial class DataContainer
     {
         /// <summary> Initializes a new instance of DataContainer. </summary>
@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DataContainer. </summary>
-        /// <param name="properties"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="description"> . </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="description"> The asset description text. </param>
         internal DataContainer(IDictionary<string, string> properties, IDictionary<string, string> tags, string description)
         {
             Properties = properties;
@@ -31,10 +31,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Description = description;
         }
 
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> The asset property dictionary. </summary>
         public IDictionary<string, string> Properties { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> The asset description text. </summary>
         public string Description { get; set; }
     }
 }

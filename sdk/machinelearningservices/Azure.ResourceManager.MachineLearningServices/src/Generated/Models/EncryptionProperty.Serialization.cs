@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class EncryptionProperty : IUtf8JsonSerializable
     {
@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("status");
             writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
+            }
             writer.WritePropertyName("keyVaultProperties");
             writer.WriteObjectValue(KeyVaultProperties);
             writer.WriteEndObject();
@@ -25,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static EncryptionProperty DeserializeEncryptionProperty(JsonElement element)
         {
             EncryptionStatus status = default;
+            Optional<IdentityForCmk> identity = default;
             KeyVaultProperties keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,13 +39,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     status = new EncryptionStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = IdentityForCmk.DeserializeIdentityForCmk(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("keyVaultProperties"))
                 {
                     keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
                     continue;
                 }
             }
-            return new EncryptionProperty(status, keyVaultProperties);
+            return new EncryptionProperty(status, identity.Value, keyVaultProperties);
         }
     }
 }

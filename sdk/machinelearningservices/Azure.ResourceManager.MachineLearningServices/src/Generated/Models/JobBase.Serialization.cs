@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class JobBase : IUtf8JsonSerializable
     {
@@ -55,13 +55,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 switch (discriminator.GetString())
                 {
                     case "Command": return CommandJob.DeserializeCommandJob(element);
-                    case "ComputeJobBase": return ComputeJobBase.DeserializeComputeJobBase(element);
-                    case "Labeling": return LabelingJob.DeserializeLabelingJob(element);
                     case "Sweep": return SweepJob.DeserializeSweepJob(element);
                 }
             }
             JobType jobType = default;
-            Optional<JobBaseInteractionEndpoints> interactionEndpoints = default;
+            Optional<JobProvisioningState> provisioningState = default;
+            Optional<IReadOnlyDictionary<string, JobEndpoint>> interactionEndpoints = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> properties = default;
@@ -72,6 +71,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     jobType = new JobType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new JobProvisioningState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("interactionEndpoints"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -79,7 +88,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    interactionEndpoints = JobBaseInteractionEndpoints.DeserializeJobBaseInteractionEndpoints(property.Value);
+                    Dictionary<string, JobEndpoint> dictionary = new Dictionary<string, JobEndpoint>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, JobEndpoint.DeserializeJobEndpoint(property0.Value));
+                    }
+                    interactionEndpoints = dictionary;
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -118,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new JobBase(jobType, interactionEndpoints.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new JobBase(jobType, Optional.ToNullable(provisioningState), Optional.ToDictionary(interactionEndpoints), description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
         }
     }
 }

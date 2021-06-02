@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The reason for the restriction. </summary>
     public readonly partial struct ReasonCode : IEquatable<ReasonCode>

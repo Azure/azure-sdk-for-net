@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The dataset reference object. </summary>
-    public partial class DatasetReference
+    public partial class DatasetReference : WritableSubResource
     {
         /// <summary> Initializes a new instance of DatasetReference. </summary>
         public DatasetReference()
@@ -16,17 +18,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DatasetReference. </summary>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The name of the dataset reference. </param>
-        /// <param name="id"> The id of the dataset reference. </param>
-        internal DatasetReference(string name, string id)
+        internal DatasetReference(string id, string name) : base(id)
         {
             Name = name;
-            Id = id;
         }
 
         /// <summary> The name of the dataset reference. </summary>
         public string Name { get; set; }
-        /// <summary> The id of the dataset reference. </summary>
-        public string Id { get; set; }
     }
 }

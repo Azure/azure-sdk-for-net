@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     internal partial class LabelingJobResourceArmPaginatedResult
     {
         internal static LabelingJobResourceArmPaginatedResult DeserializeLabelingJobResourceArmPaginatedResult(JsonElement element)
         {
-            Optional<IReadOnlyList<LabelingJobResource>> value = default;
+            Optional<IReadOnlyList<LabelingJobResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LabelingJobResource> array = new List<LabelingJobResource>();
+                    List<LabelingJobResourceData> array = new List<LabelingJobResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabelingJobResource.DeserializeLabelingJobResource(item));
+                        array.Add(LabelingJobResourceData.DeserializeLabelingJobResourceData(item));
                     }
                     value = array;
                     continue;

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The virtual network configuration. </summary>
     public partial class ACIServiceResponseVnetConfiguration : VnetConfiguration

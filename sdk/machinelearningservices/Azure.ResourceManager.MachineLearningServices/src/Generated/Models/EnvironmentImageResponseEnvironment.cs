@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The details of the AZURE ML environment. </summary>
     public partial class EnvironmentImageResponseEnvironment : ModelEnvironmentDefinitionResponse

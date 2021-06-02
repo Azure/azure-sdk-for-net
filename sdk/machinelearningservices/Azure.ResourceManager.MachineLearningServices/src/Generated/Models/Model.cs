@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> An Azure Machine Learning Model. </summary>
-    public partial class Model
+    public partial class Model : WritableSubResource
     {
         /// <summary> Initializes a new instance of Model. </summary>
         /// <param name="name"> The Model name. </param>
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of Model. </summary>
-        /// <param name="id"> The Model Id. </param>
+        /// <param name="id"> The id. </param>
         /// <param name="name"> The Model name. </param>
         /// <param name="framework"> The Model framework. </param>
         /// <param name="frameworkVersion"> The Model framework version. </param>
@@ -65,9 +66,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="sampleInputData"> Sample Input Data for the Model. A reference to a dataset in the workspace in the format aml://dataset/{datasetId}. </param>
         /// <param name="sampleOutputData"> Sample Output Data for the Model. A reference to a dataset in the workspace in the format aml://dataset/{datasetId}. </param>
         /// <param name="resourceRequirements"> Resource requirements for the model. </param>
-        internal Model(string id, string name, string framework, string frameworkVersion, long? version, IList<DatasetReference> datasets, string url, string mimeType, string description, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, bool? unpack, string parentModelId, string runId, string experimentName, IDictionary<string, string> kvTags, IDictionary<string, string> properties, IList<string> derivedModelIds, string sampleInputData, string sampleOutputData, ContainerResourceRequirements resourceRequirements)
+        internal Model(string id, string name, string framework, string frameworkVersion, long? version, IList<DatasetReference> datasets, string url, string mimeType, string description, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, bool? unpack, string parentModelId, string runId, string experimentName, IDictionary<string, string> kvTags, IDictionary<string, string> properties, IList<string> derivedModelIds, string sampleInputData, string sampleOutputData, ContainerResourceRequirements resourceRequirements) : base(id)
         {
-            Id = id;
             Name = name;
             Framework = framework;
             FrameworkVersion = frameworkVersion;
@@ -90,8 +90,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             ResourceRequirements = resourceRequirements;
         }
 
-        /// <summary> The Model Id. </summary>
-        public string Id { get; set; }
         /// <summary> The Model name. </summary>
         public string Name { get; set; }
         /// <summary> The Model framework. </summary>

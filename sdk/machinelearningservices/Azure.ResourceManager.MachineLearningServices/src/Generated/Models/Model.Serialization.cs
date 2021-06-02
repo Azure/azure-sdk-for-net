@@ -9,19 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class Model : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Framework))
@@ -135,12 +131,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("resourceRequirements");
                 writer.WriteObjectValue(ResourceRequirements);
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static Model DeserializeModel(JsonElement element)
         {
-            Optional<string> id = default;
             string name = default;
             Optional<string> framework = default;
             Optional<string> frameworkVersion = default;
@@ -161,13 +158,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> sampleInputData = default;
             Optional<string> sampleOutputData = default;
             Optional<ContainerResourceRequirements> resourceRequirements = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -333,8 +326,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     resourceRequirements = ContainerResourceRequirements.DeserializeContainerResourceRequirements(property.Value);
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new Model(id.Value, name, framework.Value, frameworkVersion.Value, Optional.ToNullable(version), Optional.ToList(datasets), url, mimeType, description.Value, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(unpack), parentModelId.Value, runId.Value, experimentName.Value, Optional.ToDictionary(kvTags), Optional.ToDictionary(properties), Optional.ToList(derivedModelIds), sampleInputData.Value, sampleOutputData.Value, resourceRequirements.Value);
+            return new Model(id, name, framework.Value, frameworkVersion.Value, Optional.ToNullable(version), Optional.ToList(datasets), url, mimeType, description.Value, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(unpack), parentModelId.Value, runId.Value, experimentName.Value, Optional.ToDictionary(kvTags), Optional.ToDictionary(properties), Optional.ToList(derivedModelIds), sampleInputData.Value, sampleOutputData.Value, resourceRequirements.Value);
         }
     }
 }

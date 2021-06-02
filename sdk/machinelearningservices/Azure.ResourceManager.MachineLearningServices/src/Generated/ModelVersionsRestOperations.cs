@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -27,11 +26,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of ModelVersionsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> Azure subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ModelVersionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01-preview")
+        public ModelVersionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-03-01-preview")
         {
             if (subscriptionId == null)
             {
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListRequest(string name, string resourceGroupName, string workspaceName, string skiptoken, string version, string description, int? count, int? offset, string tags, string properties, string orderBy, bool? latestVersionOnly)
+        internal HttpMessage CreateListRequest(string name, string resourceGroupName, string workspaceName, string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,9 +66,17 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            if (skiptoken != null)
+            if (skip != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skip", skip, true);
+            }
+            if (orderBy != null)
+            {
+                uri.AppendQuery("$orderBy", orderBy, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
             }
             if (version != null)
             {
@@ -78,10 +85,6 @@ namespace Azure.ResourceManager.MachineLearningServices
             if (description != null)
             {
                 uri.AppendQuery("description", description, true);
-            }
-            if (count != null)
-            {
-                uri.AppendQuery("count", count.Value, true);
             }
             if (offset != null)
             {
@@ -95,14 +98,6 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 uri.AppendQuery("properties", properties, true);
             }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (latestVersionOnly != null)
-            {
-                uri.AppendQuery("latestVersionOnly", latestVersionOnly.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -110,20 +105,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> List model versions. </summary>
         /// <param name="name"> Model name. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="orderBy"> Ordering of list. </param>
+        /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="version"> Model version. </param>
         /// <param name="description"> Model description. </param>
-        /// <param name="count"> Maximum number of results to return. </param>
         /// <param name="offset"> Number of initial results to skip. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="properties"> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </param>
-        /// <param name="orderBy"> Property by which to order the results. </param>
-        /// <param name="latestVersionOnly"> Only return the most recent version of a model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<ModelVersionResourceArmPaginatedResult>> ListAsync(string name, string resourceGroupName, string workspaceName, string skiptoken = null, string version = null, string description = null, int? count = null, int? offset = null, string tags = null, string properties = null, string orderBy = null, bool? latestVersionOnly = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ModelVersionResourceArmPaginatedResult>> ListAsync(string name, string resourceGroupName, string workspaceName, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -138,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateListRequest(name, resourceGroupName, workspaceName, skiptoken, version, description, count, offset, tags, properties, orderBy, latestVersionOnly);
+            using var message = CreateListRequest(name, resourceGroupName, workspaceName, skip, orderBy, top, version, description, offset, tags, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -156,20 +150,19 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> List model versions. </summary>
         /// <param name="name"> Model name. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="orderBy"> Ordering of list. </param>
+        /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="version"> Model version. </param>
         /// <param name="description"> Model description. </param>
-        /// <param name="count"> Maximum number of results to return. </param>
         /// <param name="offset"> Number of initial results to skip. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="properties"> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </param>
-        /// <param name="orderBy"> Property by which to order the results. </param>
-        /// <param name="latestVersionOnly"> Only return the most recent version of a model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<ModelVersionResourceArmPaginatedResult> List(string name, string resourceGroupName, string workspaceName, string skiptoken = null, string version = null, string description = null, int? count = null, int? offset = null, string tags = null, string properties = null, string orderBy = null, bool? latestVersionOnly = null, CancellationToken cancellationToken = default)
+        public Response<ModelVersionResourceArmPaginatedResult> List(string name, string resourceGroupName, string workspaceName, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -184,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateListRequest(name, resourceGroupName, workspaceName, skiptoken, version, description, count, offset, tags, properties, orderBy, latestVersionOnly);
+            using var message = CreateListRequest(name, resourceGroupName, workspaceName, skip, orderBy, top, version, description, offset, tags, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -200,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string name, string version, string resourceGroupName, string workspaceName, ModelVersionResource body)
+        internal HttpMessage CreateCreateOrUpdateRequest(string name, string version, string resourceGroupName, string workspaceName, ModelVersion properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -220,25 +213,23 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new ModelVersionResourceData(properties);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Create or update version. </summary>
         /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="body"> Version entity to create or update. </param>
+        /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<ModelVersionResource>> CreateOrUpdateAsync(string name, string version, string resourceGroupName, string workspaceName, ModelVersionResource body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="properties"/> is null. </exception>
+        public async Task<Response<ModelVersionResourceData>> CreateOrUpdateAsync(string name, string version, string resourceGroupName, string workspaceName, ModelVersion properties, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -256,17 +247,21 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
 
-            using var message = CreateCreateOrUpdateRequest(name, version, resourceGroupName, workspaceName, body);
+            using var message = CreateCreateOrUpdateRequest(name, version, resourceGroupName, workspaceName, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        ModelVersionResource value = default;
+                        ModelVersionResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ModelVersionResource.DeserializeModelVersionResource(document.RootElement);
+                        value = ModelVersionResourceData.DeserializeModelVersionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -277,12 +272,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Create or update version. </summary>
         /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="body"> Version entity to create or update. </param>
+        /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<ModelVersionResource> CreateOrUpdate(string name, string version, string resourceGroupName, string workspaceName, ModelVersionResource body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="properties"/> is null. </exception>
+        public Response<ModelVersionResourceData> CreateOrUpdate(string name, string version, string resourceGroupName, string workspaceName, ModelVersion properties, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -300,17 +295,21 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
 
-            using var message = CreateCreateOrUpdateRequest(name, version, resourceGroupName, workspaceName, body);
+            using var message = CreateCreateOrUpdateRequest(name, version, resourceGroupName, workspaceName, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        ModelVersionResource value = default;
+                        ModelVersionResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ModelVersionResource.DeserializeModelVersionResource(document.RootElement);
+                        value = ModelVersionResourceData.DeserializeModelVersionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -344,11 +343,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Get version. </summary>
         /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<ModelVersionResource>> GetAsync(string name, string version, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ModelVersionResourceData>> GetAsync(string name, string version, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -373,9 +372,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ModelVersionResource value = default;
+                        ModelVersionResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ModelVersionResource.DeserializeModelVersionResource(document.RootElement);
+                        value = ModelVersionResourceData.DeserializeModelVersionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -386,11 +385,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Get version. </summary>
         /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<ModelVersionResource> Get(string name, string version, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<ModelVersionResourceData> Get(string name, string version, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -415,9 +414,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        ModelVersionResource value = default;
+                        ModelVersionResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ModelVersionResource.DeserializeModelVersionResource(document.RootElement);
+                        value = ModelVersionResourceData.DeserializeModelVersionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -451,7 +450,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Delete version. </summary>
         /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
@@ -489,7 +488,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Delete version. </summary>
         /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
@@ -524,7 +523,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string name, string resourceGroupName, string workspaceName, string skiptoken, string version, string description, int? count, int? offset, string tags, string properties, string orderBy, bool? latestVersionOnly)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string name, string resourceGroupName, string workspaceName, string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -540,20 +539,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> List model versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="name"> Model name. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="orderBy"> Ordering of list. </param>
+        /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="version"> Model version. </param>
         /// <param name="description"> Model description. </param>
-        /// <param name="count"> Maximum number of results to return. </param>
         /// <param name="offset"> Number of initial results to skip. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="properties"> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </param>
-        /// <param name="orderBy"> Property by which to order the results. </param>
-        /// <param name="latestVersionOnly"> Only return the most recent version of a model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="name"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<ModelVersionResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string name, string resourceGroupName, string workspaceName, string skiptoken = null, string version = null, string description = null, int? count = null, int? offset = null, string tags = null, string properties = null, string orderBy = null, bool? latestVersionOnly = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ModelVersionResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string name, string resourceGroupName, string workspaceName, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -572,7 +570,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, name, resourceGroupName, workspaceName, skiptoken, version, description, count, offset, tags, properties, orderBy, latestVersionOnly);
+            using var message = CreateListNextPageRequest(nextLink, name, resourceGroupName, workspaceName, skip, orderBy, top, version, description, offset, tags, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -591,20 +589,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> List model versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="name"> Model name. </param>
-        /// <param name="resourceGroupName"> Name of the resource group in which workspace is located. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="skiptoken"> Continuation token for pagination. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="orderBy"> Ordering of list. </param>
+        /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="version"> Model version. </param>
         /// <param name="description"> Model description. </param>
-        /// <param name="count"> Maximum number of results to return. </param>
         /// <param name="offset"> Number of initial results to skip. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="properties"> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </param>
-        /// <param name="orderBy"> Property by which to order the results. </param>
-        /// <param name="latestVersionOnly"> Only return the most recent version of a model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="name"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<ModelVersionResourceArmPaginatedResult> ListNextPage(string nextLink, string name, string resourceGroupName, string workspaceName, string skiptoken = null, string version = null, string description = null, int? count = null, int? offset = null, string tags = null, string properties = null, string orderBy = null, bool? latestVersionOnly = null, CancellationToken cancellationToken = default)
+        public Response<ModelVersionResourceArmPaginatedResult> ListNextPage(string nextLink, string name, string resourceGroupName, string workspaceName, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -623,7 +620,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(workspaceName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, name, resourceGroupName, workspaceName, skiptoken, version, description, count, offset, tags, properties, orderBy, latestVersionOnly);
+            using var message = CreateListNextPageRequest(nextLink, name, resourceGroupName, workspaceName, skip, orderBy, top, version, description, offset, tags, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -9,41 +9,49 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Labeling job definition. </summary>
-    public partial class LabelingJob : JobBase
+    public partial class LabelingJob
     {
         /// <summary> Initializes a new instance of LabelingJob. </summary>
-        public LabelingJob()
+        /// <param name="jobType"> Specifies the type of job. This field should always be set to &quot;Labeling&quot;. </param>
+        public LabelingJob(JobType jobType)
         {
+            JobType = jobType;
+            InteractionEndpoints = new ChangeTrackingDictionary<string, JobEndpoint>();
             LabelCategories = new ChangeTrackingDictionary<string, LabelCategory>();
             StatusMessages = new ChangeTrackingList<StatusMessage>();
-            JobType = JobType.Labeling;
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of LabelingJob. </summary>
-        /// <param name="jobType"> Specifies the type of job. </param>
+        /// <param name="provisioningState"> . </param>
+        /// <param name="jobType"> Specifies the type of job. This field should always be set to &quot;Labeling&quot;. </param>
         /// <param name="interactionEndpoints">
-        /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
+        /// List of JobEndpoints.
         /// 
-        /// For local jobs, a job endpoint will have a value of FileStreamObject.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
+        /// <param name="labelCategories"> Label categories of the job. </param>
+        /// <param name="jobInstructions"> Labeling instructions of the job. </param>
+        /// <param name="datasetConfiguration"> Configuration of dataset used in the job. </param>
+        /// <param name="mlAssistConfiguration"> Configuration of MLAssist feature in the job. </param>
+        /// <param name="labelingJobMediaProperties"> Media type specific properties in the job. </param>
+        /// <param name="projectId"> Internal id of the job(Previously called project). </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="progressMetrics"> Progress metrics of the job. </param>
+        /// <param name="statusMessages"> Status messages of the job. </param>
+        /// <param name="createdTimeUtc"> Created time of the job in UTC timezone. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="labelCategories"> Label categories of the job. </param>
-        /// <param name="jobInstructions"> Instructions for labeling job. </param>
-        /// <param name="datasetConfiguration"> Labeling dataset configuration definition. </param>
-        /// <param name="mlAssistConfiguration"> Labeling MLAssist configuration definition. </param>
-        /// <param name="labelingJobMediaProperties"> Properties of a labeling job. </param>
-        /// <param name="projectId"> Internal id of the job(Previously called project). </param>
-        /// <param name="status"> Status of the job. </param>
-        /// <param name="progressMetrics"> Progress metrics definition. </param>
-        /// <param name="statusMessages"> Status messages of the job. </param>
-        /// <param name="createdTimeUtc"> Created time of the job in UTC timezone. </param>
-        internal LabelingJob(JobType jobType, JobBaseInteractionEndpoints interactionEndpoints, string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, LabelCategory> labelCategories, LabelingJobInstructions jobInstructions, LabelingDatasetConfiguration datasetConfiguration, MLAssistConfiguration mlAssistConfiguration, LabelingJobMediaProperties labelingJobMediaProperties, Guid? projectId, JobStatus? status, ProgressMetrics progressMetrics, IList<StatusMessage> statusMessages, DateTimeOffset? createdTimeUtc) : base(jobType, interactionEndpoints, description, tags, properties)
+        internal LabelingJob(JobProvisioningState? provisioningState, JobType jobType, IReadOnlyDictionary<string, JobEndpoint> interactionEndpoints, IDictionary<string, LabelCategory> labelCategories, LabelingJobInstructions jobInstructions, LabelingDatasetConfiguration datasetConfiguration, MLAssistConfiguration mlAssistConfiguration, LabelingJobMediaProperties labelingJobMediaProperties, Guid? projectId, JobStatus? status, ProgressMetrics progressMetrics, IReadOnlyList<StatusMessage> statusMessages, DateTimeOffset? createdTimeUtc, string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
         {
+            ProvisioningState = provisioningState;
+            JobType = jobType;
+            InteractionEndpoints = interactionEndpoints;
             LabelCategories = labelCategories;
             JobInstructions = jobInstructions;
             DatasetConfiguration = datasetConfiguration;
@@ -54,28 +62,45 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             ProgressMetrics = progressMetrics;
             StatusMessages = statusMessages;
             CreatedTimeUtc = createdTimeUtc;
-            JobType = jobType;
+            Description = description;
+            Tags = tags;
+            Properties = properties;
         }
 
+        public JobProvisioningState? ProvisioningState { get; }
+        /// <summary> Specifies the type of job. This field should always be set to &quot;Labeling&quot;. </summary>
+        public JobType JobType { get; set; }
+        /// <summary>
+        /// List of JobEndpoints.
+        /// 
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </summary>
+        public IReadOnlyDictionary<string, JobEndpoint> InteractionEndpoints { get; }
         /// <summary> Label categories of the job. </summary>
         public IDictionary<string, LabelCategory> LabelCategories { get; }
-        /// <summary> Instructions for labeling job. </summary>
+        /// <summary> Labeling instructions of the job. </summary>
         public LabelingJobInstructions JobInstructions { get; set; }
-        /// <summary> Labeling dataset configuration definition. </summary>
+        /// <summary> Configuration of dataset used in the job. </summary>
         public LabelingDatasetConfiguration DatasetConfiguration { get; set; }
-        /// <summary> Labeling MLAssist configuration definition. </summary>
+        /// <summary> Configuration of MLAssist feature in the job. </summary>
         public MLAssistConfiguration MlAssistConfiguration { get; set; }
-        /// <summary> Properties of a labeling job. </summary>
+        /// <summary> Media type specific properties in the job. </summary>
         public LabelingJobMediaProperties LabelingJobMediaProperties { get; set; }
         /// <summary> Internal id of the job(Previously called project). </summary>
-        public Guid? ProjectId { get; set; }
+        public Guid? ProjectId { get; }
         /// <summary> Status of the job. </summary>
-        public JobStatus? Status { get; set; }
-        /// <summary> Progress metrics definition. </summary>
-        public ProgressMetrics ProgressMetrics { get; set; }
+        public JobStatus? Status { get; }
+        /// <summary> Progress metrics of the job. </summary>
+        public ProgressMetrics ProgressMetrics { get; }
         /// <summary> Status messages of the job. </summary>
-        public IList<StatusMessage> StatusMessages { get; }
+        public IReadOnlyList<StatusMessage> StatusMessages { get; }
         /// <summary> Created time of the job in UTC timezone. </summary>
-        public DateTimeOffset? CreatedTimeUtc { get; set; }
+        public DateTimeOffset? CreatedTimeUtc { get; }
+        /// <summary> The asset description text. </summary>
+        public string Description { get; set; }
+        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The asset property dictionary. </summary>
+        public IDictionary<string, string> Properties { get; }
     }
 }

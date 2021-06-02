@@ -9,70 +9,126 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> Code Job definition. </summary>
-    public partial class CommandJob : ComputeJobBase
+    /// <summary> Command job definition. </summary>
+    public partial class CommandJob : JobBase
     {
         /// <summary> Initializes a new instance of CommandJob. </summary>
-        /// <param name="computeBinding"> Compute binding definition. </param>
-        /// <param name="codeConfiguration"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="computeBinding"/> or <paramref name="codeConfiguration"/> is null. </exception>
-        public CommandJob(ComputeBinding computeBinding, CodeConfiguration codeConfiguration) : base(computeBinding)
+        /// <param name="compute"> Compute binding for the job. </param>
+        /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="compute"/> or <paramref name="command"/> is null. </exception>
+        public CommandJob(ComputeConfiguration compute, string command)
         {
-            if (computeBinding == null)
+            if (compute == null)
             {
-                throw new ArgumentNullException(nameof(computeBinding));
+                throw new ArgumentNullException(nameof(compute));
             }
-            if (codeConfiguration == null)
+            if (command == null)
             {
-                throw new ArgumentNullException(nameof(codeConfiguration));
+                throw new ArgumentNullException(nameof(command));
             }
 
-            CodeConfiguration = codeConfiguration;
-            DataBindings = new ChangeTrackingDictionary<string, DataBinding>();
+            Compute = compute;
+            Command = command;
+            InputDataBindings = new ChangeTrackingDictionary<string, InputDataBinding>();
+            OutputDataBindings = new ChangeTrackingDictionary<string, OutputDataBinding>();
+            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+            Parameters = new ChangeTrackingDictionary<string, object>();
             JobType = JobType.Command;
         }
 
         /// <summary> Initializes a new instance of CommandJob. </summary>
         /// <param name="jobType"> Specifies the type of job. </param>
+        /// <param name="provisioningState"> . </param>
         /// <param name="interactionEndpoints">
-        /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
+        /// List of JobEndpoints.
         /// 
-        /// For local jobs, a job endpoint will have a value of FileStreamObject.
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="compute"> Compute binding for the job. </param>
+        /// <param name="priority">
+        /// Job priority for scheduling policy. Only applies to AMLCompute.
+        /// 
+        /// Private preview feature and only available to users on the allow list.
+        /// </param>
         /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
-        /// <param name="computeBinding"> Compute binding definition. </param>
-        /// <param name="output"> . </param>
+        /// <param name="output"> Location of the job output logs and artifacts. </param>
         /// <param name="status"> Status of the job. </param>
-        /// <param name="maxRunDurationSeconds"> The max run duration in seconds, after which the job will be cancelled. </param>
-        /// <param name="codeConfiguration"> . </param>
-        /// <param name="environmentId"> Environment specification of the job. </param>
-        /// <param name="dataBindings"> Mapping of data bindings used in the job. </param>
-        /// <param name="distributionConfiguration"> . </param>
-        internal CommandJob(JobType jobType, JobBaseInteractionEndpoints interactionEndpoints, string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string experimentName, ComputeBinding computeBinding, JobOutput output, JobStatus? status, long? maxRunDurationSeconds, CodeConfiguration codeConfiguration, string environmentId, IDictionary<string, DataBinding> dataBindings, DistributionConfiguration distributionConfiguration) : base(jobType, interactionEndpoints, description, tags, properties, experimentName, computeBinding, output)
+        /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
+        /// <param name="codeId"> ARM resource ID of the code asset. </param>
+        /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="inputDataBindings"> Mapping of input data bindings used in the job. </param>
+        /// <param name="outputDataBindings"> Mapping of output data bindings used in the job. </param>
+        /// <param name="distribution"> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </param>
+        /// <param name="environmentVariables"> Environment variables included in the job. </param>
+        /// <param name="identity">
+        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, or null.
+        /// 
+        /// Defaults to AmlToken if null.
+        /// </param>
+        /// <param name="parameters"> Input parameters. </param>
+        internal CommandJob(JobType jobType, JobProvisioningState? provisioningState, IReadOnlyDictionary<string, JobEndpoint> interactionEndpoints, string description, IDictionary<string, string> tags, IDictionary<string, string> properties, ComputeConfiguration compute, int? priority, string experimentName, JobOutput output, JobStatus? status, TimeSpan? timeout, string codeId, string command, string environmentId, IDictionary<string, InputDataBinding> inputDataBindings, IDictionary<string, OutputDataBinding> outputDataBindings, DistributionConfiguration distribution, IDictionary<string, string> environmentVariables, IdentityConfiguration identity, IReadOnlyDictionary<string, object> parameters) : base(jobType, provisioningState, interactionEndpoints, description, tags, properties)
         {
+            Compute = compute;
+            Priority = priority;
+            ExperimentName = experimentName;
+            Output = output;
             Status = status;
-            MaxRunDurationSeconds = maxRunDurationSeconds;
-            CodeConfiguration = codeConfiguration;
+            Timeout = timeout;
+            CodeId = codeId;
+            Command = command;
             EnvironmentId = environmentId;
-            DataBindings = dataBindings;
-            DistributionConfiguration = distributionConfiguration;
+            InputDataBindings = inputDataBindings;
+            OutputDataBindings = outputDataBindings;
+            Distribution = distribution;
+            EnvironmentVariables = environmentVariables;
+            Identity = identity;
+            Parameters = parameters;
             JobType = jobType;
         }
 
+        /// <summary> Compute binding for the job. </summary>
+        public ComputeConfiguration Compute { get; set; }
+        /// <summary>
+        /// Job priority for scheduling policy. Only applies to AMLCompute.
+        /// 
+        /// Private preview feature and only available to users on the allow list.
+        /// </summary>
+        public int? Priority { get; set; }
+        /// <summary> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </summary>
+        public string ExperimentName { get; set; }
+        /// <summary> Location of the job output logs and artifacts. </summary>
+        public JobOutput Output { get; }
         /// <summary> Status of the job. </summary>
-        public JobStatus? Status { get; set; }
-        /// <summary> The max run duration in seconds, after which the job will be cancelled. </summary>
-        public long? MaxRunDurationSeconds { get; set; }
-        public CodeConfiguration CodeConfiguration { get; set; }
-        /// <summary> Environment specification of the job. </summary>
+        public JobStatus? Status { get; }
+        /// <summary> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </summary>
+        public TimeSpan? Timeout { get; set; }
+        /// <summary> ARM resource ID of the code asset. </summary>
+        public string CodeId { get; set; }
+        /// <summary> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
+        public string Command { get; set; }
+        /// <summary> The ARM resource ID of the Environment specification for the job. </summary>
         public string EnvironmentId { get; set; }
-        /// <summary> Mapping of data bindings used in the job. </summary>
-        public IDictionary<string, DataBinding> DataBindings { get; }
-        public DistributionConfiguration DistributionConfiguration { get; set; }
+        /// <summary> Mapping of input data bindings used in the job. </summary>
+        public IDictionary<string, InputDataBinding> InputDataBindings { get; }
+        /// <summary> Mapping of output data bindings used in the job. </summary>
+        public IDictionary<string, OutputDataBinding> OutputDataBindings { get; }
+        /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
+        public DistributionConfiguration Distribution { get; set; }
+        /// <summary> Environment variables included in the job. </summary>
+        public IDictionary<string, string> EnvironmentVariables { get; }
+        /// <summary>
+        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, or null.
+        /// 
+        /// Defaults to AmlToken if null.
+        /// </summary>
+        public IdentityConfiguration Identity { get; set; }
+        /// <summary> Input parameters. </summary>
+        public IReadOnlyDictionary<string, object> Parameters { get; }
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> object used for creating workspace connection. </summary>
     public partial class WorkspaceConnectionDto
@@ -25,5 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string AuthType { get; set; }
         /// <summary> Value details of the workspace connection. </summary>
         public string Value { get; set; }
+        /// <summary> format for the workspace connection value. </summary>
+        public ValueFormat? ValueFormat { get; set; }
     }
 }

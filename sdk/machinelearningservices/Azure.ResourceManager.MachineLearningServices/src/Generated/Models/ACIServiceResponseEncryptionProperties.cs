@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The encryption properties. </summary>
     public partial class ACIServiceResponseEncryptionProperties : EncryptionProperties

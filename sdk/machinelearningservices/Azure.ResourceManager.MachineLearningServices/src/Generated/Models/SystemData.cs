@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
     public partial class SystemData
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="createdAt"> The timestamp of resource creation (UTC). </param>
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedAt"> The type of identity that last modified the resource. </param>
+        /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
         internal SystemData(string createdBy, CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt)
         {
             CreatedBy = createdBy;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string LastModifiedBy { get; }
         /// <summary> The type of identity that last modified the resource. </summary>
         public CreatedByType? LastModifiedByType { get; }
-        /// <summary> The type of identity that last modified the resource. </summary>
+        /// <summary> The timestamp of resource last modification (UTC). </summary>
         public DateTimeOffset? LastModifiedAt { get; }
     }
 }

@@ -9,16 +9,10 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    public partial class StatusMessage : IUtf8JsonSerializable
+    public partial class StatusMessage
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static StatusMessage DeserializeStatusMessage(JsonElement element)
         {
             Optional<StatusMessageLevel> level = default;

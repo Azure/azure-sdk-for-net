@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The error details. </summary>
     public partial class AKSReplicaStatusError : ErrorResponse
@@ -18,10 +16,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AKSReplicaStatusError. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="details"> An array of error detail objects. </param>
-        internal AKSReplicaStatusError(string code, string message, IReadOnlyList<ErrorDetail> details) : base(code, message, details)
+        /// <param name="error"> The error object. </param>
+        internal AKSReplicaStatusError(ErrorDetail error) : base(error)
         {
         }
     }

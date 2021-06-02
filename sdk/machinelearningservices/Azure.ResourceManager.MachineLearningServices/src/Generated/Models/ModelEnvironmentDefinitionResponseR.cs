@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Settings for a R environment. </summary>
     public partial class ModelEnvironmentDefinitionResponseR : RSectionResponse

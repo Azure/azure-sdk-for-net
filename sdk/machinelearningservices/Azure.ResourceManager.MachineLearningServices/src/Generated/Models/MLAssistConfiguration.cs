@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Labeling MLAssist configuration definition. </summary>
     public partial class MLAssistConfiguration
@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of MLAssistConfiguration. </summary>
-        /// <param name="inferencingComputeBinding"> Compute binding definition. </param>
-        /// <param name="trainingComputeBinding"> Compute binding definition. </param>
+        /// <param name="inferencingComputeBinding"> AML compute binding used in inferencing. </param>
+        /// <param name="trainingComputeBinding"> AML compute binding used in training. </param>
         /// <param name="mlAssistEnabled"> Indicates whether MLAssist feature is enabled. </param>
-        internal MLAssistConfiguration(ComputeBinding inferencingComputeBinding, ComputeBinding trainingComputeBinding, bool? mlAssistEnabled)
+        internal MLAssistConfiguration(ComputeConfiguration inferencingComputeBinding, ComputeConfiguration trainingComputeBinding, bool? mlAssistEnabled)
         {
             InferencingComputeBinding = inferencingComputeBinding;
             TrainingComputeBinding = trainingComputeBinding;
             MlAssistEnabled = mlAssistEnabled;
         }
 
-        /// <summary> Compute binding definition. </summary>
-        public ComputeBinding InferencingComputeBinding { get; set; }
-        /// <summary> Compute binding definition. </summary>
-        public ComputeBinding TrainingComputeBinding { get; set; }
+        /// <summary> AML compute binding used in inferencing. </summary>
+        public ComputeConfiguration InferencingComputeBinding { get; set; }
+        /// <summary> AML compute binding used in training. </summary>
+        public ComputeConfiguration TrainingComputeBinding { get; set; }
         /// <summary> Indicates whether MLAssist feature is enabled. </summary>
         public bool? MlAssistEnabled { get; set; }
     }

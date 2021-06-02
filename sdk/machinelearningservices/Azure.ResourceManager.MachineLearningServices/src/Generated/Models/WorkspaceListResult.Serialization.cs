@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     internal partial class WorkspaceListResult
     {
         internal static WorkspaceListResult DeserializeWorkspaceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Workspace>> value = default;
+            Optional<IReadOnlyList<WorkspaceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Workspace> array = new List<Workspace>();
+                    List<WorkspaceData> array = new List<WorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Workspace.DeserializeWorkspace(item));
+                        array.Add(WorkspaceData.DeserializeWorkspaceData(item));
                     }
                     value = array;
                     continue;

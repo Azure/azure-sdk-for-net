@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> scale settings for AML Compute. </summary>
     public partial class ScaleSettings

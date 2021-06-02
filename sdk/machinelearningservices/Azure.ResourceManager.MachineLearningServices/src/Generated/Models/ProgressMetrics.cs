@@ -7,13 +7,13 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Progress metrics definition. </summary>
     public partial class ProgressMetrics
     {
         /// <summary> Initializes a new instance of ProgressMetrics. </summary>
-        public ProgressMetrics()
+        internal ProgressMetrics()
         {
         }
 

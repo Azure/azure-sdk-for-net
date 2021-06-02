@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class MLAssistConfiguration : IUtf8JsonSerializable
     {
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static MLAssistConfiguration DeserializeMLAssistConfiguration(JsonElement element)
         {
-            Optional<ComputeBinding> inferencingComputeBinding = default;
-            Optional<ComputeBinding> trainingComputeBinding = default;
+            Optional<ComputeConfiguration> inferencingComputeBinding = default;
+            Optional<ComputeConfiguration> trainingComputeBinding = default;
             Optional<bool> mlAssistEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    inferencingComputeBinding = ComputeBinding.DeserializeComputeBinding(property.Value);
+                    inferencingComputeBinding = ComputeConfiguration.DeserializeComputeConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trainingComputeBinding"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    trainingComputeBinding = ComputeBinding.DeserializeComputeBinding(property.Value);
+                    trainingComputeBinding = ComputeConfiguration.DeserializeComputeConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mlAssistEnabled"))

@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     internal partial class PaginatedServiceList
     {
         internal static PaginatedServiceList DeserializePaginatedServiceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceResource>> value = default;
+            Optional<IReadOnlyList<ServiceResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceResource> array = new List<ServiceResource>();
+                    List<ServiceResourceData> array = new List<ServiceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceResource.DeserializeServiceResource(item));
+                        array.Add(ServiceResourceData.DeserializeServiceResourceData(item));
                     }
                     value = array;
                     continue;

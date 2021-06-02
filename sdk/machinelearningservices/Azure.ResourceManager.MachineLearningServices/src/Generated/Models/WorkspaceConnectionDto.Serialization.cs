@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class WorkspaceConnectionDto : IUtf8JsonSerializable
     {
@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             {
                 writer.WritePropertyName("value");
                 writer.WriteStringValue(Value);
+            }
+            if (Optional.IsDefined(ValueFormat))
+            {
+                writer.WritePropertyName("valueFormat");
+                writer.WriteStringValue(ValueFormat.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

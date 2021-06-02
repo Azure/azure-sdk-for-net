@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The details of the AZURE ML environment. </summary>
     public partial class EnvironmentImageRequestEnvironment : ModelEnvironmentDefinition

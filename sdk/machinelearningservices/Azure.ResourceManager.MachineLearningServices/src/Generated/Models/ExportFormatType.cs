@@ -8,9 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> The format of exported labels, also as the discriminator. </summary>
+    /// <summary> The format of exported labels. </summary>
     public readonly partial struct ExportFormatType : IEquatable<ExportFormatType>
     {
         private readonly string _value;

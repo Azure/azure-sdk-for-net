@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The configuration for a Spark environment. </summary>
     public partial class ModelEnvironmentDefinitionSpark : ModelSparkSection

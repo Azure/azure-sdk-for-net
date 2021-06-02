@@ -9,27 +9,35 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class ModelVersion : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Stage))
+            if (Optional.IsCollectionDefined(Flavors))
             {
-                writer.WritePropertyName("stage");
-                writer.WriteStringValue(Stage);
+                writer.WritePropertyName("flavors");
+                writer.WriteStartObject();
+                foreach (var item in Flavors)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(DatastoreId))
             {
                 writer.WritePropertyName("datastoreId");
                 writer.WriteStringValue(DatastoreId);
             }
-            if (Optional.IsDefined(AssetPath))
+            writer.WritePropertyName("path");
+            writer.WriteStringValue(Path);
+            if (Optional.IsDefined(IsAnonymous))
             {
-                writer.WritePropertyName("assetPath");
-                writer.WriteObjectValue(AssetPath);
+                writer.WritePropertyName("isAnonymous");
+                writer.WriteBooleanValue(IsAnonymous.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -63,17 +71,28 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static ModelVersion DeserializeModelVersion(JsonElement element)
         {
-            Optional<string> stage = default;
+            Optional<IDictionary<string, FlavorData>> flavors = default;
             Optional<string> datastoreId = default;
-            Optional<AssetPath> assetPath = default;
+            string path = default;
+            Optional<bool> isAnonymous = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stage"))
+                if (property.NameEquals("flavors"))
                 {
-                    stage = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, FlavorData> dictionary = new Dictionary<string, FlavorData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, FlavorData.DeserializeFlavorData(property0.Value));
+                    }
+                    flavors = dictionary;
                     continue;
                 }
                 if (property.NameEquals("datastoreId"))
@@ -81,14 +100,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     datastoreId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assetPath"))
+                if (property.NameEquals("path"))
+                {
+                    path = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isAnonymous"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    assetPath = AssetPath.DeserializeAssetPath(property.Value);
+                    isAnonymous = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -127,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new ModelVersion(stage.Value, datastoreId.Value, assetPath.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new ModelVersion(Optional.ToDictionary(flavors), datastoreId.Value, path, Optional.ToNullable(isAnonymous), description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
         }
     }
 }

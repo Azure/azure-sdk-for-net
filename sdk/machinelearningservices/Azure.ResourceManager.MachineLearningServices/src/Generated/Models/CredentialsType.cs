@@ -8,9 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> Credential type used to authentication with storage. </summary>
+    /// <summary> Enum to determine the datastore credentials type. </summary>
     public readonly partial struct CredentialsType : IEquatable<CredentialsType>
     {
         private readonly string _value;

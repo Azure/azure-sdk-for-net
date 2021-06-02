@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The compute environment type for the service. </summary>
     public readonly partial struct ComputeEnvironmentType : IEquatable<ComputeEnvironmentType>

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The ModelEnvironmentDefinitionResponse. </summary>
     public partial class ModelEnvironmentDefinitionResponse

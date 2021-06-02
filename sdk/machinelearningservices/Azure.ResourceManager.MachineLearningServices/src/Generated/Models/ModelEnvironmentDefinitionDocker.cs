@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The definition of a Docker container. </summary>
     public partial class ModelEnvironmentDefinitionDocker : ModelDockerSection

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The ModelContainer. </summary>
     public partial class ModelContainer
@@ -16,26 +16,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of ModelContainer. </summary>
         public ModelContainer()
         {
-            LatestVersions = new ChangeTrackingList<ModelVersionResource>();
             Tags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ModelContainer. </summary>
-        /// <param name="latestVersions"> Latest model versions for each stage. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        internal ModelContainer(IList<ModelVersionResource> latestVersions, string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
+        internal ModelContainer(string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
         {
-            LatestVersions = latestVersions;
             Description = description;
             Tags = tags;
             Properties = properties;
         }
 
-        /// <summary> Latest model versions for each stage. </summary>
-        public IList<ModelVersionResource> LatestVersions { get; }
         /// <summary> The asset description text. </summary>
         public string Description { get; set; }
         /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The Environment, models and assets needed for inferencing. </summary>
     public partial class CreateServiceRequestEnvironmentImageRequest : EnvironmentImageRequest

@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The response for an AKS variant. </summary>
     public partial class AKSVariantResponse : ServiceResponseBase

@@ -12,13 +12,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class NotebooksPrepareOperation : Operation<NotebookResourceInfo>, IOperationSource<NotebookResourceInfo>
     {
-        private readonly ArmOperationHelpers<NotebookResourceInfo> _operation;
+        private readonly OperationInternals<NotebookResourceInfo> _operation;
 
         /// <summary> Initializes a new instance of NotebooksPrepareOperation for mocking. </summary>
         protected NotebooksPrepareOperation()
@@ -27,8 +26,9 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         internal NotebooksPrepareOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<NotebookResourceInfo>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebooksPrepareOperation");
+            _operation = new OperationInternals<NotebookResourceInfo>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebooksPrepareOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
