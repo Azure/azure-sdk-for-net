@@ -6,51 +6,51 @@ using System;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// The identifier of a Provider from Tenant.
+    /// The identifier of a Provider from Subscription.
     /// </summary>
-    public class TenantProviderIdentifier : ResourceIdentifier
+    public class SubscriptionProviderIdentifier : TenantProviderIdentifier
     {
-        internal TenantProviderIdentifier(string provider)
+        internal SubscriptionProviderIdentifier(string subscriptionId) : base(subscriptionId)
         {
-            Provider = provider;
+            SubscriptionId = subscriptionId;
         }
 
-        internal TenantProviderIdentifier(TenantProviderIdentifier parent, string providerNamespace, ResourceType resourceType, string resourceName)
-            : base(new ResourceType(providerNamespace, resourceType), resourceName)
+        internal SubscriptionProviderIdentifier(SubscriptionProviderIdentifier parent, string providerNamespace, ResourceType resourceType, string resourceName)
+            : base(parent, providerNamespace, resourceType, resourceName)
         {
             Parent = parent;
             IsChild = true;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TenantProviderIdentifier"/> class 
+        /// The subscription id (Guid) for this resource.
+        /// </summary>
+        public string SubscriptionId { get; internal set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionProviderIdentifier"/> class 
         /// for resources in the sanem namespace as their parent resource.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
         /// <param name="childResourceType"> The simple type of this resource, for example 'subnets'. </param>
         /// <param name="childResourceName"> The name of this resource. </param>
         /// <returns> The resource identifier for the given child resource. </returns>
-        internal TenantProviderIdentifier(TenantProviderIdentifier parent, string childResourceType, string childResourceName)
-            : base(childResourceType, childResourceName)
+        internal SubscriptionProviderIdentifier(SubscriptionProviderIdentifier parent, string childResourceType, string childResourceName)
+            : base(parent, childResourceType, childResourceName)
         {
             Parent = parent;
             IsChild = true;
         }
 
         /// <summary>
-        /// Gets the Provider for the current ProviderIdentifier.
-        /// </summary>
-        public string Provider { get; }
-
-        /// <summary>
         /// Convert a string resource identifier into a TenantResourceIdentifier.
         /// </summary>
         /// <param name="other"> The string representation of a subscription resource identifier. </param>
-        public static implicit operator TenantProviderIdentifier(string other)
+        public static implicit operator SubscriptionProviderIdentifier(string other)
         {
             if (other is null)
                 return null;
-            TenantProviderIdentifier id = ResourceIdentifier.Create(other) as TenantProviderIdentifier;
+            SubscriptionProviderIdentifier id = ResourceIdentifier.Create(other) as SubscriptionProviderIdentifier;
             if (other is null)
                 throw new ArgumentException("Not a valid tenant provider resource", nameof(other));
             return id;
