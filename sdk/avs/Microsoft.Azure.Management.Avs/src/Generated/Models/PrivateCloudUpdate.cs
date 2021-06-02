@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <summary>
         /// Initializes a new instance of the PrivateCloudUpdate class.
         /// </summary>
-        /// <param name="tags">Resource tags.</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="managementCluster">The default cluster used for
         /// management</param>
         /// <param name="internet">Connectivity to internet is enabled or
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags.
+        /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

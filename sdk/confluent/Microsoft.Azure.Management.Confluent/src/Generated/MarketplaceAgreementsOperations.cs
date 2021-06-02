@@ -95,6 +95,10 @@ namespace Microsoft.Azure.Management.Confluent
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -216,10 +220,10 @@ namespace Microsoft.Azure.Management.Confluent
         }
 
         /// <summary>
-        /// Accept marketplace terms.
+        /// Create Confluent Marketplace agreement in the subscription.
         /// </summary>
         /// <param name='body'>
-        /// Confluent Agreement resource
+        /// Confluent Marketplace Agreement resource
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -264,6 +268,10 @@ namespace Microsoft.Azure.Management.Confluent
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);

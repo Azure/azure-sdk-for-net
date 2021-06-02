@@ -87,6 +87,11 @@ namespace Microsoft.Azure.Management.SignalR
         public virtual ISignalROperations SignalR { get; private set; }
 
         /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        public virtual IUsagesOperations Usages { get; private set; }
+
+        /// <summary>
         /// Gets the ISignalRPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual ISignalRPrivateEndpointConnectionsOperations SignalRPrivateEndpointConnections { get; private set; }
@@ -97,9 +102,9 @@ namespace Microsoft.Azure.Management.SignalR
         public virtual ISignalRPrivateLinkResourcesOperations SignalRPrivateLinkResources { get; private set; }
 
         /// <summary>
-        /// Gets the IUsagesOperations.
+        /// Gets the ISignalRSharedPrivateLinkResourcesOperations.
         /// </summary>
-        public virtual IUsagesOperations Usages { get; private set; }
+        public virtual ISignalRSharedPrivateLinkResourcesOperations SignalRSharedPrivateLinkResources { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SignalRManagementClient class.
@@ -344,11 +349,12 @@ namespace Microsoft.Azure.Management.SignalR
         {
             Operations = new Operations(this);
             SignalR = new SignalROperations(this);
+            Usages = new UsagesOperations(this);
             SignalRPrivateEndpointConnections = new SignalRPrivateEndpointConnectionsOperations(this);
             SignalRPrivateLinkResources = new SignalRPrivateLinkResourcesOperations(this);
-            Usages = new UsagesOperations(this);
+            SignalRSharedPrivateLinkResources = new SignalRSharedPrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-07-01-preview";
+            ApiVersion = "2021-04-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

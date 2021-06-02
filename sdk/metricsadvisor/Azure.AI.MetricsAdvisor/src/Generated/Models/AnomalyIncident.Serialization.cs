@@ -15,6 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyIncident DeserializeAnomalyIncident(JsonElement element)
         {
+            Optional<Guid> dataFeedId = default;
             Optional<string> metricId = default;
             Optional<string> anomalyDetectionConfigurationId = default;
             string incidentId = default;
@@ -24,6 +25,16 @@ namespace Azure.AI.MetricsAdvisor.Models
             IncidentProperty property = default;
             foreach (var property0 in element.EnumerateObject())
             {
+                if (property0.NameEquals("dataFeedId"))
+                {
+                    if (property0.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property0.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataFeedId = property0.Value.GetGuid();
+                    continue;
+                }
                 if (property0.NameEquals("metricId"))
                 {
                     metricId = property0.Value.GetString();
@@ -60,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyIncident(metricId.Value, anomalyDetectionConfigurationId.Value, incidentId, startTime, lastTime, rootNode, property);
+            return new AnomalyIncident(Optional.ToNullable(dataFeedId), metricId.Value, anomalyDetectionConfigurationId.Value, incidentId, startTime, lastTime, rootNode, property);
         }
     }
 }

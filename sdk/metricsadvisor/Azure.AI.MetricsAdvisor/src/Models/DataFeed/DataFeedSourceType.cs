@@ -43,16 +43,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedSourceType AzureTable { get; } = new DataFeedSourceType(AzureTableValue);
 
         /// <summary>
-        /// Elasticsearch.
-        /// </summary>
-        public static DataFeedSourceType Elasticsearch { get; } = new DataFeedSourceType(ElasticsearchValue);
-
-        /// <summary>
-        /// HTTP Request.
-        /// </summary>
-        public static DataFeedSourceType HttpRequest { get; } = new DataFeedSourceType(HttpRequestValue);
-
-        /// <summary>
         /// InfluxDB.
         /// </summary>
         [CodeGenMember("InfluxDB")]

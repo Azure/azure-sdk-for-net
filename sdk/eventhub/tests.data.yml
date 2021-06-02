@@ -7,4 +7,5 @@ extends:
     ServiceDirectory: eventhub
     SDKType: data
     TimeoutInMinutes: 240
-    Clouds: 'Public,UsGov,China,Canary'
+    Clouds: 'Public,Canary'
+    SupportedClouds: 'Public,UsGov,China,Canary'

@@ -32,10 +32,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the RecipientUserCollection class.
         /// </summary>
         /// <param name="value">Page values.</param>
+        /// <param name="count">Total record count number across all
+        /// pages.</param>
         /// <param name="nextLink">Next page link if any.</param>
-        public RecipientUserCollection(IList<RecipientUserContract> value = default(IList<RecipientUserContract>), string nextLink = default(string))
+        public RecipientUserCollection(IList<RecipientUserContract> value = default(IList<RecipientUserContract>), long? count = default(long?), string nextLink = default(string))
         {
             Value = value;
+            Count = count;
             NextLink = nextLink;
             CustomInit();
         }
@@ -50,6 +53,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<RecipientUserContract> Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets total record count number across all pages.
+        /// </summary>
+        [JsonProperty(PropertyName = "count")]
+        public long? Count { get; set; }
 
         /// <summary>
         /// Gets or sets next page link if any.

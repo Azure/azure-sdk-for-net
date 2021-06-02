@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Identit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Identity.Tests", "Azure.Communication.Identity\tests\Azure.Communication.Identity.Tests.csproj", "{EB52F268-C8C0-4395-9925-E914923D586E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.NetworkTraversal", "Azure.Communication.NetworkTraversal\src\Azure.Communication.NetworkTraversal.csproj", "{38284EE4-B29B-48B2-8CCB-1E2469BE6E2E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.NetworkTraversal.Tests", "Azure.Communication.NetworkTraversal\tests\Azure.Communication.NetworkTraversal.Tests.csproj", "{AE51BEF4-AAA3-4EAB-BC11-9BFA1182A3A5}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.PhoneNumbers", "Azure.Communication.PhoneNumbers\src\Azure.Communication.PhoneNumbers.csproj", "{F10D25F9-A415-43EE-8A62-76A38E7B7D5D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.PhoneNumbers.Tests", "Azure.Communication.PhoneNumbers\tests\Azure.Communication.PhoneNumbers.Tests.csproj", "{7A17601B-FDEC-49E7-BFD1-7AFE9C0B6A89}"
@@ -87,6 +91,14 @@ Global
 		{EB52F268-C8C0-4395-9925-E914923D586E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB52F268-C8C0-4395-9925-E914923D586E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB52F268-C8C0-4395-9925-E914923D586E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38284EE4-B29B-48B2-8CCB-1E2469BE6E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38284EE4-B29B-48B2-8CCB-1E2469BE6E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38284EE4-B29B-48B2-8CCB-1E2469BE6E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38284EE4-B29B-48B2-8CCB-1E2469BE6E2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE51BEF4-AAA3-4EAB-BC11-9BFA1182A3A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE51BEF4-AAA3-4EAB-BC11-9BFA1182A3A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE51BEF4-AAA3-4EAB-BC11-9BFA1182A3A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE51BEF4-AAA3-4EAB-BC11-9BFA1182A3A5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F10D25F9-A415-43EE-8A62-76A38E7B7D5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F10D25F9-A415-43EE-8A62-76A38E7B7D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F10D25F9-A415-43EE-8A62-76A38E7B7D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU

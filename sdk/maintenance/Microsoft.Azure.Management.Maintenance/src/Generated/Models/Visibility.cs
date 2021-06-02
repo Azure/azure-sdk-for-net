@@ -16,7 +16,13 @@ namespace Microsoft.Azure.Management.Maintenance.Models
     /// </summary>
     public static class Visibility
     {
+        /// <summary>
+        /// Only visible to users with permissions.
+        /// </summary>
         public const string Custom = "Custom";
+        /// <summary>
+        /// Visible to all users.
+        /// </summary>
         public const string Public = "Public";
     }
 }

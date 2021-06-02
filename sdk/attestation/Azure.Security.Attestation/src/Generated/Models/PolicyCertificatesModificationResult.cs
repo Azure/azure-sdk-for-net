@@ -11,22 +11,22 @@ namespace Azure.Security.Attestation
     public partial class PolicyCertificatesModificationResult
     {
         /// <summary> Initializes a new instance of PolicyCertificatesModificationResult. </summary>
-        internal PolicyCertificatesModificationResult()
+        public PolicyCertificatesModificationResult()
         {
         }
 
         /// <summary> Initializes a new instance of PolicyCertificatesModificationResult. </summary>
         /// <param name="certificateThumbprint"> Hex encoded SHA1 Hash of the binary representation certificate which was added or removed. </param>
         /// <param name="certificateResolution"> The result of the operation. </param>
-        internal PolicyCertificatesModificationResult(string certificateThumbprint, CertificateModification? certificateResolution)
+        internal PolicyCertificatesModificationResult(string certificateThumbprint, PolicyCertificateResolution? certificateResolution)
         {
             CertificateThumbprint = certificateThumbprint;
             CertificateResolution = certificateResolution;
         }
 
         /// <summary> Hex encoded SHA1 Hash of the binary representation certificate which was added or removed. </summary>
-        public string CertificateThumbprint { get; }
+        public string CertificateThumbprint { get; set; }
         /// <summary> The result of the operation. </summary>
-        public CertificateModification? CertificateResolution { get; }
+        public PolicyCertificateResolution? CertificateResolution { get; set; }
     }
 }

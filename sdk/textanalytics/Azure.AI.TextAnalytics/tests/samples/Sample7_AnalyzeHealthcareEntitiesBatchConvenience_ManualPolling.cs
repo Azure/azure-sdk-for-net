@@ -16,12 +16,13 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task Sample7_AnalyzeHealthcareEntities_ManualPolling()
         {
+            // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:RecognizeHealthcareEntitiesAsyncManualPolling
+            // get input documents
             string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                                 HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -32,8 +33,10 @@ namespace Azure.AI.TextAnalytics.Samples
                                 minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                                 increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
+            // start analysis process
             AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(new List<string>() { document });
 
+            // wait for completion with manual polling
             TimeSpan pollingInterval = new TimeSpan(1000);
 
             while (true)
@@ -47,6 +50,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 await Task.Delay(pollingInterval);
             }
 
+            // view operation results
             await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
             {
                 Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
@@ -56,6 +60,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                     Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
+                    // view recognized healthcare entities
                     foreach (HealthcareEntity entity in result.Entities)
                     {
                         Console.WriteLine($"    Entity: {entity.Text}");
@@ -65,11 +70,14 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine($"    NormalizedText: {entity.NormalizedText}");
                         Console.WriteLine($"    Links:");
 
+                        // view entity data sources
                         foreach (EntityDataSource entityDataSource in entity.DataSources)
                         {
                             Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                             Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                         }
+
+                        // view assertion
                         if (entity.Assertion != null)
                         {
                             Console.WriteLine($"    Assertions:");
@@ -92,11 +100,13 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
                         Console.WriteLine("");
 
+                        // view recognized healthcare relations
                         foreach (HealthcareEntityRelation relations in result.EntityRelations)
                         {
                             Console.WriteLine($"        Relation: {relations.RelationType}");
                             Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
 
+                            // view relation roles
                             foreach (HealthcareEntityRelationRole role in relations.Roles)
                             {
                                 Console.WriteLine($"            Role Name: {role.Name}");

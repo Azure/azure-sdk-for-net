@@ -5,13 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
     public class RecognizeLinkedEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizeLinkedEntitiesTests(bool isAsync) : base(isAsync) { }
+        public RecognizeLinkedEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private const string EnglishDocument1 = "Microsoft was founded by Bill Gates and Paul Allen.";
         private const string EnglishDocument2 = "Pike place market is my favorite Seattle attraction.";
@@ -49,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Tests
             "Seattle"
         };
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -58,7 +62,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -67,7 +71,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -76,7 +80,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -98,7 +102,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public void RecognizeLinkedEntitiesBatchWithInvalidDocumentBatch()
         {
             TextAnalyticsClient client = GetClient();
@@ -118,7 +122,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocumentBatch, ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -133,7 +137,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
@@ -154,7 +158,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchConvenienceWithRecognizeLinkedEntitiesOptionsStatisticsTest()
         {
             RecognizeLinkedEntitiesOptions options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
@@ -175,7 +179,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -190,7 +194,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
@@ -211,7 +215,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchWithRecognizeLinkedEntitiesOptionsStatisticsTest()
         {
             RecognizeLinkedEntitiesOptions options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
@@ -232,7 +236,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
-        [Test]
+        [RecordedTest]
         public void RecognizeLinkedEntitiesBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -242,7 +246,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();

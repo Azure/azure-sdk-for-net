@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ExtendedLocation
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/extendedlocation/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\amalladi\\test-apps\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "86aebe0f4e974b72dffe19a293465a76d664f8e0";
+      public static readonly String GithubCommidId = "dceaa75fe47854ad7b0fcc0c7cf38677b4bb181f";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

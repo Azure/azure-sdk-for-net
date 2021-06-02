@@ -1321,5 +1321,6 @@ namespace Azure.Storage.Blobs
             return metadata;
         }
         #endregion
+
     }
 }

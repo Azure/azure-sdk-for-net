@@ -139,9 +139,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="identifier">The identifier for the sender.</param>
         /// <param name="sessionId">The session ID to receive messages for.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
-        /// open link operation. Only applicable for session receivers.</param>
-        ///
+        ///     open link operation. Only applicable for session receivers.</param>
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
         public override TransportReceiver CreateReceiver(
             string entityPath,
@@ -151,6 +151,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string identifier,
             string sessionId,
             bool isSessionReceiver,
+            bool isProcessor,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
@@ -165,6 +166,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 identifier,
                 sessionId,
                 isSessionReceiver,
+                isProcessor,
                 cancellationToken
             );
         }

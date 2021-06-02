@@ -77,5 +77,22 @@ namespace Azure.Messaging.EventHubs.Amqp
                     return instance;
             }
         }
+
+        /// <summary>
+        ///   Determines whether an exception signifies that a partition was stolen from an Event Hub
+        ///   consumer.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance that this method was invoked on.</param>
+        ///
+        /// <returns><c>true</c> if <paramref name="instance" /> represents a partition being stolen from a consumer; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool IsConsumerPartitionStolenException(this Exception instance) =>
+            instance switch
+            {
+                EventHubsException ex when ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected => true,
+                AmqpException ex when string.Equals(ex.Error.Condition.Value, AmqpErrorCode.Stolen.Value, StringComparison.InvariantCultureIgnoreCase) => true,
+                _ => false
+            };
     }
 }

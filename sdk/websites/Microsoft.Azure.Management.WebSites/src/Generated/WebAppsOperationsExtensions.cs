@@ -1604,6 +1604,200 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static IPage<ApiKVReference> GetAppSettingsKeyVaultReferences(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetAppSettingsKeyVaultReferencesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetAppSettingsKeyVaultReferencesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingsKeyVaultReferencesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='appSettingKey'>
+            /// App Setting key name.
+            /// </param>
+            public static ApiKVReference GetAppSettingKeyVaultReference(this IWebAppsOperations operations, string resourceGroupName, string name, string appSettingKey)
+            {
+                return operations.GetAppSettingKeyVaultReferenceAsync(resourceGroupName, name, appSettingKey).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='appSettingKey'>
+            /// App Setting key name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiKVReference> GetAppSettingKeyVaultReferenceAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string appSettingKey, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingKeyVaultReferenceWithHttpMessagesAsync(resourceGroupName, name, appSettingKey, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static IPage<ApiKVReference> GetSiteConnectionStringKeyVaultReferences(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferencesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetSiteConnectionStringKeyVaultReferencesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferencesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionStringKey'>
+            /// </param>
+            public static ApiKVReference GetSiteConnectionStringKeyVaultReference(this IWebAppsOperations operations, string resourceGroupName, string name, string connectionStringKey)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferenceAsync(resourceGroupName, name, connectionStringKey).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionStringKey'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiKVReference> GetSiteConnectionStringKeyVaultReferenceAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string connectionStringKey, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferenceWithHttpMessagesAsync(resourceGroupName, name, connectionStringKey, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Replaces the connection strings of an app.
             /// </summary>
             /// <remarks>
@@ -6130,9 +6324,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='connectionEnvelope'>
             /// Properties of the Virtual Network connection. See example.
             /// </param>
-            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
+            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnectionWithCheck(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
             {
-                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -6163,9 +6357,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -6219,72 +6413,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Description for Integrates this Web App with a Virtual Network. This
-            /// requires that 1) "swiftSupported" is true when doing a GET against this
-            /// resource, and 2) that the target Subnet has already been delegated, and is
-            /// not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
-            {
-                return operations.UpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Description for Integrates this Web App with a Virtual Network. This
-            /// requires that 1) "swiftSupported" is true when doing a GET against this
-            /// resource, and 2) that the target Subnet has already been delegated, and is
-            /// not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all network features used by the app (or deployment slot, if
             /// specified).
             /// </summary>
@@ -6302,7 +6430,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='view'>
-            /// The type of view. This can either be "summary" or "detailed".
+            /// The type of view. Only "summary" is supported at this time.
             /// </param>
             public static NetworkFeatures ListNetworkFeatures(this IWebAppsOperations operations, string resourceGroupName, string name, string view)
             {
@@ -6327,7 +6455,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='view'>
-            /// The type of view. This can either be "summary" or "detailed".
+            /// The type of view. Only "summary" is supported at this time.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -7252,6 +7380,256 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<PrivateAccess> PutPrivateAccessVnetAsync(this IWebAppsOperations operations, string resourceGroupName, string name, PrivateAccess access, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PutPrivateAccessVnetWithHttpMessagesAsync(resourceGroupName, name, access, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionList(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetPrivateEndpointConnectionListAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource GetPrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.GetPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource ApproveOrRejectPrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+            {
+                return operations.ApproveOrRejectPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> ApproveOrRejectPrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            public static object DeletePrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.DeletePrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeletePrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the private link resources
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the private link resources
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            public static PrivateLinkResourcesWrapper GetPrivateLinkResources(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetPrivateLinkResourcesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the private link resources
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the private link resources
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateLinkResourcesWrapper> GetPrivateLinkResourcesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateLinkResourcesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -8374,59 +8752,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Copies a deployment slot to another deployment slot of an app.
-            /// </summary>
-            /// <remarks>
-            /// Description for Copies a deployment slot to another deployment slot of an
-            /// app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='copySlotEntity'>
-            /// JSON object that contains the target slot name and site config properties
-            /// to override the source slot config. See example.
-            /// </param>
-            public static void CopyProductionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity)
-            {
-                operations.CopyProductionSlotAsync(resourceGroupName, name, copySlotEntity).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Copies a deployment slot to another deployment slot of an app.
-            /// </summary>
-            /// <remarks>
-            /// Description for Copies a deployment slot to another deployment slot of an
-            /// app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='copySlotEntity'>
-            /// JSON object that contains the target slot name and site config properties
-            /// to override the source slot config. See example.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task CopyProductionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.CopyProductionSlotWithHttpMessagesAsync(resourceGroupName, name, copySlotEntity, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Gets an app's deployment slots.
             /// </summary>
             /// <remarks>
@@ -8616,9 +8941,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// If true, web app metrics are also deleted.
             /// </param>
             /// <param name='deleteEmptyServerFarm'>
-            /// Specify true if the App Service plan will be empty after app deletion and
-            /// you want to delete the empty App Service plan. By default, the empty App
-            /// Service plan is not deleted.
+            /// Specify false if you want to keep empty App Service plan. By default, empty
+            /// App Service plan is deleted.
             /// </param>
             public static void DeleteSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?))
             {
@@ -8649,9 +8973,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// If true, web app metrics are also deleted.
             /// </param>
             /// <param name='deleteEmptyServerFarm'>
-            /// Specify true if the App Service plan will be empty after app deletion and
-            /// you want to delete the empty App Service plan. By default, the empty App
-            /// Service plan is not deleted.
+            /// Specify false if you want to keep empty App Service plan. By default, empty
+            /// App Service plan is deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -9224,6 +9547,272 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task RestoreSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RestoreSlotWithHttpMessagesAsync(resourceGroupName, name, backupId, request, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesCollection GetBasicPublishingCredentialsPoliciesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetBasicPublishingCredentialsPoliciesSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesCollection> GetBasicPublishingCredentialsPoliciesSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBasicPublishingCredentialsPoliciesSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity GetFtpAllowedSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetFtpAllowedSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> GetFtpAllowedSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFtpAllowedSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity UpdateFtpAllowedSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, string slot)
+            {
+                return operations.UpdateFtpAllowedSlotAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> UpdateFtpAllowedSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateFtpAllowedSlotWithHttpMessagesAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed on the site or
+            /// not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity GetScmAllowedSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetScmAllowedSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed on the site or
+            /// not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> GetScmAllowedSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetScmAllowedSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates whether user publishing credentials are allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether user publishing credentials are allowed on
+            /// the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity UpdateScmAllowedSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, string slot)
+            {
+                return operations.UpdateScmAllowedSlotAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates whether user publishing credentials are allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether user publishing credentials are allowed on
+            /// the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> UpdateScmAllowedSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateScmAllowedSlotWithHttpMessagesAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -9908,6 +10497,216 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<BackupRequest> GetBackupConfigurationSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetBackupConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static IPage<ApiKVReference> GetAppSettingsKeyVaultReferencesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetAppSettingsKeyVaultReferencesSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetAppSettingsKeyVaultReferencesSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingsKeyVaultReferencesSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='appSettingKey'>
+            /// App Setting key name.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static ApiKVReference GetAppSettingKeyVaultReferenceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string appSettingKey, string slot)
+            {
+                return operations.GetAppSettingKeyVaultReferenceSlotAsync(resourceGroupName, name, appSettingKey, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='appSettingKey'>
+            /// App Setting key name.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiKVReference> GetAppSettingKeyVaultReferenceSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string appSettingKey, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingKeyVaultReferenceSlotWithHttpMessagesAsync(resourceGroupName, name, appSettingKey, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static IPage<ApiKVReference> GetSiteConnectionStringKeyVaultReferencesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferencesSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetSiteConnectionStringKeyVaultReferencesSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferencesSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionStringKey'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static ApiKVReference GetSiteConnectionStringKeyVaultReferenceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string connectionStringKey, string slot)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferenceSlotAsync(resourceGroupName, name, connectionStringKey, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionStringKey'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiKVReference> GetSiteConnectionStringKeyVaultReferenceSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string connectionStringKey, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferenceSlotWithHttpMessagesAsync(resourceGroupName, name, connectionStringKey, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -14806,80 +15605,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Description for Integrates this Web App with a Virtual Network. This
-            /// requires that 1) "swiftSupported" is true when doing a GET against this
-            /// resource, and 2) that the target Subnet has already been delegated, and is
-            /// not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update connections for the production slot.
-            /// </param>
-            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
-            {
-                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Description for Integrates this Web App with a Virtual Network. This
-            /// requires that 1) "swiftSupported" is true when doing a GET against this
-            /// resource, and 2) that the target Subnet has already been delegated, and is
-            /// not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update connections for the production slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes a Swift Virtual Network connection from an app (or deployment
             /// slot).
             /// </summary>
@@ -14935,80 +15660,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Description for Integrates this Web App with a Virtual Network. This
-            /// requires that 1) "swiftSupported" is true when doing a GET against this
-            /// resource, and 2) that the target Subnet has already been delegated, and is
-            /// not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update connections for the production slot.
-            /// </param>
-            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
-            {
-                return operations.UpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Description for Integrates this Web App with a Virtual Network. This
-            /// requires that 1) "swiftSupported" is true when doing a GET against this
-            /// resource, and 2) that the target Subnet has already been delegated, and is
-            /// not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update connections for the production slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all network features used by the app (or deployment slot, if
             /// specified).
             /// </summary>
@@ -15026,7 +15677,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='view'>
-            /// The type of view. This can either be "summary" or "detailed".
+            /// The type of view. Only "summary" is supported at this time.
             /// </param>
             /// <param name='slot'>
             /// Name of the deployment slot. If a slot is not specified, the API will get
@@ -15055,7 +15706,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='view'>
-            /// The type of view. This can either be "summary" or "detailed".
+            /// The type of view. Only "summary" is supported at this time.
             /// </param>
             /// <param name='slot'>
             /// Name of the deployment slot. If a slot is not specified, the API will get
@@ -16116,10 +16767,11 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Gets a private endpoint connection
+            /// Gets the list of private endpoint connections associated with a site
             /// </summary>
             /// <remarks>
-            /// Description for Gets a private endpoint connection
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16130,11 +16782,42 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the site.
             /// </param>
-            /// <param name='privateEndpointConnectionName'>
+            /// <param name='slot'>
+            /// Name of the site deployment slot.
             /// </param>
-            public static PrivateEndpointConnectionResource GetPrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionListSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
             {
-                return operations.GetPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+                return operations.GetPrivateEndpointConnectionListSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the site deployment slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -16153,13 +16836,43 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the site.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the site deployment slot.
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource GetPrivateEndpointConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot)
+            {
+                return operations.GetPrivateEndpointConnectionSlotAsync(resourceGroupName, name, privateEndpointConnectionName, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the site deployment slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnectionResource> GetPrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPrivateEndpointConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -16184,9 +16897,11 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='privateEndpointWrapper'>
             /// </param>
-            public static PrivateEndpointConnectionResource ApproveOrRejectPrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+            /// <param name='slot'>
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource ApproveOrRejectPrivateEndpointConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, string slot)
             {
-                return operations.ApproveOrRejectPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper).GetAwaiter().GetResult();
+                return operations.ApproveOrRejectPrivateEndpointConnectionSlotAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -16208,12 +16923,14 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='privateEndpointWrapper'>
             /// </param>
+            /// <param name='slot'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnectionResource> ApproveOrRejectPrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RemotePrivateEndpointConnectionARMResource> ApproveOrRejectPrivateEndpointConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ApproveOrRejectPrivateEndpointConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -16236,9 +16953,11 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// </param>
-            public static object DeletePrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            /// <param name='slot'>
+            /// </param>
+            public static object DeletePrivateEndpointConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot)
             {
-                return operations.DeletePrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+                return operations.DeletePrivateEndpointConnectionSlotAsync(resourceGroupName, name, privateEndpointConnectionName, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -16258,12 +16977,14 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// </param>
+            /// <param name='slot'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> DeletePrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeletePrivateEndpointConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeletePrivateEndpointConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -16284,9 +17005,11 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the site.
             /// </param>
-            public static PrivateLinkResourcesWrapper GetPrivateLinkResources(this IWebAppsOperations operations, string resourceGroupName, string name)
+            /// <param name='slot'>
+            /// </param>
+            public static PrivateLinkResourcesWrapper GetPrivateLinkResourcesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
             {
-                return operations.GetPrivateLinkResourcesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+                return operations.GetPrivateLinkResourcesSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -16304,12 +17027,14 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the site.
             /// </param>
+            /// <param name='slot'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateLinkResourcesWrapper> GetPrivateLinkResourcesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateLinkResourcesWrapper> GetPrivateLinkResourcesSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPrivateLinkResourcesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPrivateLinkResourcesSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -17600,67 +18325,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Copies a deployment slot to another deployment slot of an app.
-            /// </summary>
-            /// <remarks>
-            /// Description for Copies a deployment slot to another deployment slot of an
-            /// app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='copySlotEntity'>
-            /// JSON object that contains the target slot name and site config properties
-            /// to override the source slot config. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the source slot. If a slot is not specified, the production slot is
-            /// used as the source slot.
-            /// </param>
-            public static void CopySlotSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity, string slot)
-            {
-                operations.CopySlotSlotAsync(resourceGroupName, name, copySlotEntity, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Copies a deployment slot to another deployment slot of an app.
-            /// </summary>
-            /// <remarks>
-            /// Description for Copies a deployment slot to another deployment slot of an
-            /// app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='copySlotEntity'>
-            /// JSON object that contains the target slot name and site config properties
-            /// to override the source slot config. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the source slot. If a slot is not specified, the production slot is
-            /// used as the source slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task CopySlotSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.CopySlotSlotWithHttpMessagesAsync(resourceGroupName, name, copySlotEntity, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Get the difference in configuration settings between two web app slots.
             /// </summary>
             /// <remarks>
@@ -18018,9 +18682,11 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// delete the source control configuration for the production slot.
             /// </param>
-            public static void DeleteSourceControlSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            /// <param name='additionalFlags'>
+            /// </param>
+            public static void DeleteSourceControlSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string additionalFlags = default(string))
             {
-                operations.DeleteSourceControlSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+                operations.DeleteSourceControlSlotAsync(resourceGroupName, name, slot, additionalFlags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -18042,12 +18708,14 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// delete the source control configuration for the production slot.
             /// </param>
+            /// <param name='additionalFlags'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteSourceControlSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteSourceControlSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string additionalFlags = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteSourceControlSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteSourceControlSlotWithHttpMessagesAsync(resourceGroupName, name, slot, additionalFlags, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -19824,9 +20492,11 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static void DeleteSourceControl(this IWebAppsOperations operations, string resourceGroupName, string name)
+            /// <param name='additionalFlags'>
+            /// </param>
+            public static void DeleteSourceControl(this IWebAppsOperations operations, string resourceGroupName, string name, string additionalFlags = default(string))
             {
-                operations.DeleteSourceControlAsync(resourceGroupName, name).GetAwaiter().GetResult();
+                operations.DeleteSourceControlAsync(resourceGroupName, name, additionalFlags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -19844,12 +20514,14 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the app.
             /// </param>
+            /// <param name='additionalFlags'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteSourceControlAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteSourceControlAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string additionalFlags = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteSourceControlWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteSourceControlWithHttpMessagesAsync(resourceGroupName, name, additionalFlags, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -21638,6 +22310,110 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource BeginApproveOrRejectPrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+            {
+                return operations.BeginApproveOrRejectPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> BeginApproveOrRejectPrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            public static object BeginDeletePrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.BeginDeletePrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> BeginDeletePrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
@@ -21836,59 +22612,6 @@ namespace Microsoft.Azure.Management.WebSites
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Copies a deployment slot to another deployment slot of an app.
-            /// </summary>
-            /// <remarks>
-            /// Description for Copies a deployment slot to another deployment slot of an
-            /// app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='copySlotEntity'>
-            /// JSON object that contains the target slot name and site config properties
-            /// to override the source slot config. See example.
-            /// </param>
-            public static void BeginCopyProductionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity)
-            {
-                operations.BeginCopyProductionSlotAsync(resourceGroupName, name, copySlotEntity).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Copies a deployment slot to another deployment slot of an app.
-            /// </summary>
-            /// <remarks>
-            /// Description for Copies a deployment slot to another deployment slot of an
-            /// app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='copySlotEntity'>
-            /// JSON object that contains the target slot name and site config properties
-            /// to override the source slot config. See example.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginCopyProductionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginCopyProductionSlotWithHttpMessagesAsync(resourceGroupName, name, copySlotEntity, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -22357,9 +23080,11 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='privateEndpointWrapper'>
             /// </param>
-            public static PrivateEndpointConnectionResource BeginApproveOrRejectPrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+            /// <param name='slot'>
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource BeginApproveOrRejectPrivateEndpointConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, string slot)
             {
-                return operations.BeginApproveOrRejectPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper).GetAwaiter().GetResult();
+                return operations.BeginApproveOrRejectPrivateEndpointConnectionSlotAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -22381,12 +23106,14 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='privateEndpointWrapper'>
             /// </param>
+            /// <param name='slot'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnectionResource> BeginApproveOrRejectPrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RemotePrivateEndpointConnectionARMResource> BeginApproveOrRejectPrivateEndpointConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginApproveOrRejectPrivateEndpointConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -22409,9 +23136,11 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// </param>
-            public static object BeginDeletePrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            /// <param name='slot'>
+            /// </param>
+            public static object BeginDeletePrivateEndpointConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot)
             {
-                return operations.BeginDeletePrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+                return operations.BeginDeletePrivateEndpointConnectionSlotAsync(resourceGroupName, name, privateEndpointConnectionName, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -22431,12 +23160,14 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// </param>
+            /// <param name='slot'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> BeginDeletePrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> BeginDeletePrivateEndpointConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginDeletePrivateEndpointConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -22673,67 +23404,6 @@ namespace Microsoft.Azure.Management.WebSites
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Copies a deployment slot to another deployment slot of an app.
-            /// </summary>
-            /// <remarks>
-            /// Description for Copies a deployment slot to another deployment slot of an
-            /// app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='copySlotEntity'>
-            /// JSON object that contains the target slot name and site config properties
-            /// to override the source slot config. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the source slot. If a slot is not specified, the production slot is
-            /// used as the source slot.
-            /// </param>
-            public static void BeginCopySlotSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity, string slot)
-            {
-                operations.BeginCopySlotSlotAsync(resourceGroupName, name, copySlotEntity, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Copies a deployment slot to another deployment slot of an app.
-            /// </summary>
-            /// <remarks>
-            /// Description for Copies a deployment slot to another deployment slot of an
-            /// app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='copySlotEntity'>
-            /// JSON object that contains the target slot name and site config properties
-            /// to override the source slot config. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the source slot. If a slot is not specified, the production slot is
-            /// used as the source slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginCopySlotSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginCopySlotSlotWithHttpMessagesAsync(resourceGroupName, name, copySlotEntity, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -23251,6 +23921,86 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApiKVReference> GetAppSettingsKeyVaultReferencesNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetAppSettingsKeyVaultReferencesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetAppSettingsKeyVaultReferencesNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingsKeyVaultReferencesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApiKVReference> GetSiteConnectionStringKeyVaultReferencesNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferencesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetSiteConnectionStringKeyVaultReferencesNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferencesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of web app configuration snapshots identifiers. Each element of
             /// the list contains a timestamp and the ID of the snapshot.
             /// </summary>
@@ -23749,6 +24499,48 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionListNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetPrivateEndpointConnectionListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get list of processes for a web site, or a deployment slot, or for a
             /// specific scaled-out instance in a web site.
             /// </summary>
@@ -24077,6 +24869,86 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<SiteConfigResource>> ListConfigurationsSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListConfigurationsSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApiKVReference> GetAppSettingsKeyVaultReferencesSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetAppSettingsKeyVaultReferencesSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetAppSettingsKeyVaultReferencesSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingsKeyVaultReferencesSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApiKVReference> GetSiteConnectionStringKeyVaultReferencesSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferencesSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetSiteConnectionStringKeyVaultReferencesSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferencesSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -24575,6 +25447,48 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<PerfMonResponse>> ListPerfMonCountersSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListPerfMonCountersSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionListSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetPrivateEndpointConnectionListSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

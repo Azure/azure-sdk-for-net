@@ -13,12 +13,15 @@ namespace Azure.Security.Attestation
     {
         internal string Version { get; }
 
-        internal TokenValidationOptions TokenOptions { get; private set; }
+        /// <summary>
+        /// Options used when validating tokens.
+        /// </summary>
+        public AttestationTokenValidationOptions TokenOptions { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttestationClientOptions"/>.</summary>
         public AttestationClientOptions(
             ServiceVersion version = ServiceVersion.V2020_10_01,
-            TokenValidationOptions tokenOptions = default
+            AttestationTokenValidationOptions tokenOptions = default
             )
         {
             if (version == default)
@@ -34,7 +37,7 @@ namespace Azure.Security.Attestation
 
             // If the caller specified that they have token validation options, use them, otherwise
             // use the defaults.
-            TokenOptions = tokenOptions ?? new TokenValidationOptions();
+            TokenOptions = tokenOptions != null ? tokenOptions.Clone() :  new AttestationTokenValidationOptions();
         }
 
         /// <summary>
