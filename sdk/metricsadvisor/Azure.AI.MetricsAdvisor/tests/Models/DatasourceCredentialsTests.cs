@@ -56,6 +56,28 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(content, Contains.Substring(expectedSubstring));
         }
 
+        [Test]
+        public async Task ServicePrincipalDatasourceCredentialSendsSecretDuringUpdate()
+        {
+            MockResponse updateResponse = new MockResponse(200);
+            updateResponse.SetContent(DatasourceCredentialResponseContent);
+
+            MockTransport mockTransport = new MockTransport(updateResponse);
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
+
+            var credential = new ServicePrincipalDatasourceCredential(DataSourceCredentialType.ServicePrincipal, FakeGuid,
+                default, default, new ServicePrincipalParam("mock", "mock"));
+
+            credential.UpdateClientSecret("secret");
+
+            await adminClient.UpdateDatasourceCredentialAsync(credential);
+
+            MockRequest request = mockTransport.Requests.First();
+            string content = ReadContent(request);
+
+            Assert.That(content, Contains.Substring("\"clientSecret\":\"secret\""));
+        }
+
         private string ReadContent(Request request)
         {
             using MemoryStream stream = new MemoryStream();
