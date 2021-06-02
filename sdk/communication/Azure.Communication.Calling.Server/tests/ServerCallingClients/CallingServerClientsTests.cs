@@ -142,14 +142,14 @@ namespace Azure.Communication.Calling.Server.Tests
 
             mockClient
                 .Setup(callExpression)
-                .ReturnsAsync((string callLegId, Uri audioFileUri, bool loop, string operationContext, string audioFileId, Uri callbackUri, CancellationToken token) =>
+                .ReturnsAsync((string callLegId, Uri audioFileUri, bool loop, string audioFileId, Uri callbackUri, string operationContext, CancellationToken token) =>
                 {
                     Assert.AreEqual(expectedCallLegId, callLegId);
                     Assert.AreEqual(expectedAudioFileUri, audioFileUri);
                     Assert.AreEqual(expectedLoop, loop);
-                    Assert.AreEqual(expectedOperationContext, operationContext);
                     Assert.AreEqual(expectedAudioFileId, audioFileId);
                     Assert.AreEqual(expectedCallbackUri, callbackUri);
+                    Assert.AreEqual(expectedOperationContext, operationContext);
                     Assert.AreEqual(cancellationToken, token);
                     return expectedResponse = new Mock<Response<PlayAudioResponse>>().Object;
                 });
@@ -238,9 +238,10 @@ namespace Azure.Communication.Calling.Server.Tests
                     new PlayAudioOptions()
                     {
                         AudioFileUri = new Uri("https://av.ngrok.io/audio/sample-message.wav"),
-                        OperationContext = Guid.NewGuid().ToString(),
                         Loop = true,
-                        AudioFileId = Guid.NewGuid().ToString()
+                        AudioFileId = Guid.NewGuid().ToString(),
+                        CallbackUri = new Uri("https://av.ngrok.io/someCallbackUri"),
+                        OperationContext = Guid.NewGuid().ToString(),
                     }
                 }
             };
@@ -253,9 +254,9 @@ namespace Azure.Communication.Calling.Server.Tests
                     "4ab31d78-a189-4e50-afaa-f9610975b6cb",
                     new Uri("https://av.ngrok.io/audio/sample-message.wav"),
                     true,
-                    "af82480b-6df3-4f4c-a58c-a6a78b614b36",
                     "b76993e4-1906-4967-9a9b-feecbbccc60e",
-                    new Uri("http://foo.com/bar")
+                    new Uri("http://foo.com/bar"),
+                    "af82480b-6df3-4f4c-a58c-a6a78b614b36"
                 }
             };
         }

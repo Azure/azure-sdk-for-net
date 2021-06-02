@@ -8,11 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "354",
         "Content-Type": "application/json",
-        "Date": "Tue, 01 Jun 2021 07:22:53 GMT",
-        "User-Agent": [
-          "azsdk-net-Communication.Calling.Server/1.0.0-alpha.20210601.1",
-          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
-        ],
+        "Date": "Wed, 02 Jun 2021 21:28:27 GMT",
+        "User-Agent": "azsdk-net-Communication.Calling.Server/1.0.0-alpha.20210602.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "f7c8910f9c6fa503ddd8b7582e6d4d17",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -27,7 +24,7 @@
         ],
         "source": {
           "communicationUser": {
-            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-6655-d195-b8ba-a43a0d0040aa"
+            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-6e82-5005-63b2-a43a0d00393c"
           }
         },
         "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
@@ -41,16 +38,16 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Client-Request-Id": "ed49d9be-0f79-4cae-b386-5c859f0f0d51",
+        "Client-Request-Id": "c4d55e4e-e491-434b-a9f1-37a9234d4f51",
         "Content-Length": "52",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 01 Jun 2021 07:22:52 GMT",
-        "X-Azure-Ref": "0TeC1YAAAAACIwAkLmZVRR62upaR2VwikV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "Date": "Wed, 02 Jun 2021 21:28:27 GMT",
+        "X-Azure-Ref": "0\u002B/e3YAAAAAD7jnJZgiP4TKurZwfRajDbV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "6a30b141-d4d6-478e-86fe-61ec2e2dcfee"
+        "X-Microsoft-Skype-Chain-ID": "03025d96-60d3-4ff7-843b-3a4023911570"
       },
       "ResponseBody": {
-        "callLegId": "411f0b00-5ba0-4e29-b794-a15b4fa67973"
+        "callLegId": "6c1f6900-1fbd-4ee0-a4b9-2aa0b5f40ad1"
       }
     }
   ],
