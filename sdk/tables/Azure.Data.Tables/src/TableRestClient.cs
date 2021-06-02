@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,10 +16,8 @@ namespace Azure.Data.Tables
 {
     internal partial class TableRestClient
     {
-        internal ClientDiagnostics clientDiagnostics => _clientDiagnostics;
         internal string endpoint => url;
         internal string clientVersion => version;
-        private static readonly Regex s_entityIndexRegex = new Regex(@"""value"":""(?<index>[\d]+):", RegexOptions.Compiled);
 
         internal HttpMessage CreateBatchRequest(MultipartContent content, string requestId, ResponseFormat? responsePreference)
         {
@@ -57,7 +54,7 @@ namespace Azure.Data.Tables
         /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public async Task<Response<List<Response>>> SendBatchRequestAsync(HttpMessage message, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<Response>>> SendBatchRequestAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -70,39 +67,23 @@ namespace Azure.Data.Tables
                 case 202:
                     {
                         var responses = await Multipart.ParseAsync(
-                            message.Response.ContentStream,
-                            message.Response.Headers.ContentType,
-                            expectBoundariesWithCRLF: false,
-                            async: true,
-                            cancellationToken).ConfigureAwait(false);
+                                message.Response.ContentStream,
+                                message.Response.Headers.ContentType,
+                                false,
+                                true,
+                                cancellationToken)
+                            .ConfigureAwait(false);
 
-                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
+                        if (failedSubResponse == null)
                         {
-                            // Batch error messages should be formatted as follows:
-                            // "0:<some error message>"
-                            // where the number prefix is the index of the sub request that failed.
-                            var ex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(responses[0]).ConfigureAwait(false);
-
-                            //Get the failed index
-                            var match = s_entityIndexRegex.Match(ex.Message);
-
-                            if (match.Success && int.TryParse(match.Groups["index"].Value, out int failedEntityIndex))
-                            {
-                                // create a new exception with the additional info populated.
-                                var appendedMessage = AppendEntityInfoToMessage(ex.Message);
-                                var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
-
-                                // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
-                                rfe.Data[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex;
-                                throw rfe;
-                            }
-                            else
-                            {
-                                throw ex;
-                            }
+                            return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        return Response.FromValue(responses.ToList(), message.Response);
+                        RequestFailedException rfex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
+
+                        var ex = new TableTransactionFailedException(rfex);
+                        throw ex;
                     }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -113,7 +94,7 @@ namespace Azure.Data.Tables
         /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public Response<List<Response>> SendBatchRequest(HttpMessage message, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<Response>> SendBatchRequest(HttpMessage message, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -126,49 +107,26 @@ namespace Azure.Data.Tables
                 case 202:
                     {
                         var responses = Multipart.ParseAsync(
-                            message.Response.ContentStream,
-                            message.Response.Headers.ContentType,
-                            expectBoundariesWithCRLF: false,
-                            async: false,
-                            cancellationToken).EnsureCompleted();
+                                message.Response.ContentStream,
+                                message.Response.Headers.ContentType,
+                                false,
+                                false,
+                                cancellationToken)
+                            .EnsureCompleted();
 
-                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
+                        if (failedSubResponse == null)
                         {
-                            // Batch error messages should be formatted as follows:
-                            // "0:<some error message>"
-                            // where the number prefix is the index of the sub request that failed.
-                            var ex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
-
-                            //Get the failed index
-                            var match = s_entityIndexRegex.Match(ex.Message);
-
-                            if (match.Success && int.TryParse(match.Groups["index"].Value, out int failedEntityIndex))
-                            {
-                                // create a new exception with the additional info populated.
-                                // reset the response stream position so we can read it again
-                                var appendedMessage = AppendEntityInfoToMessage(ex.Message);
-                                var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
-
-                                // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
-                                rfe.Data[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex;
-                                throw rfe;
-                            }
-                            else
-                            {
-                                throw ex;
-                            }
+                            return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        return Response.FromValue(responses.ToList(), message.Response);
+                        RequestFailedException rfex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                        var ex = new TableTransactionFailedException(rfex);
+                        throw ex;
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
-        }
-
-        private static string AppendEntityInfoToMessage(string messsage)
-        {
-            return messsage += $"\nYou can retrieve the entity that caused the error by calling {nameof(TableTransactionalBatch.TryGetFailedEntityFromException)} and passing this exception instance to the method.";
         }
     }
 }

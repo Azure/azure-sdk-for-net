@@ -75,6 +75,10 @@ namespace Azure.Test.Perf
             }));
             Console.WriteLine();
 
+            ConfigureThreadPool(options);
+
+            PrintEnvironment();
+
             using var setupStatusCts = new CancellationTokenSource();
             var setupStatusThread = PerfStressUtilities.PrintStatus("=== Setup ===", () => ".", newLine: false, setupStatusCts.Token);
 
@@ -174,6 +178,52 @@ namespace Azure.Test.Perf
             PrintAssemblyVersions(testType);
         }
 
+        private static void ConfigureThreadPool(PerfOptions options)
+        {
+            if (options.MinWorkerThreads.HasValue || options.MinIOCompletionThreads.HasValue)
+            {
+                ThreadPool.GetMinThreads(out var minWorkerThreads, out var minIOCompletionThreads);
+                var successful = ThreadPool.SetMinThreads(options.MinWorkerThreads ?? minWorkerThreads,
+                    options.MinIOCompletionThreads ?? minIOCompletionThreads);
+
+                if (!successful)
+                {
+                    throw new InvalidOperationException("ThreadPool.SetMinThreads() was unsuccessful");
+                }
+            }
+
+            if (options.MaxWorkerThreads.HasValue || options.MaxIOCompletionThreads.HasValue)
+            {
+                ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxIOCompletionThreads);
+                var successful = ThreadPool.SetMaxThreads(options.MaxWorkerThreads ?? maxWorkerThreads,
+                    options.MaxIOCompletionThreads ?? maxIOCompletionThreads);
+
+                if (!successful)
+                {
+                    throw new InvalidOperationException("ThreadPool.SetMaxThreads() was unsuccessful");
+                }
+            }
+        }
+
+        private static void PrintEnvironment()
+        {
+            Console.WriteLine("=== Environment ===");
+
+            Console.WriteLine($"GCSettings.IsServerGC: {GCSettings.IsServerGC}");
+
+            Console.WriteLine($"Environment.ProcessorCount: {Environment.ProcessorCount}");
+            Console.WriteLine($"Environment.Is64BitProcess: {Environment.Is64BitProcess}");
+
+            ThreadPool.GetMinThreads(out var minWorkerThreads, out var minCompletionPortThreads);
+            ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxCompletionPortThreads);
+            Console.WriteLine($"ThreadPool.MinWorkerThreads: {minWorkerThreads}");
+            Console.WriteLine($"ThreadPool.MinCompletionPortThreads: {minCompletionPortThreads}");
+            Console.WriteLine($"ThreadPool.MaxWorkerThreads: {maxWorkerThreads}");
+            Console.WriteLine($"ThreadPool.MaxCompletionPortThreads: {maxCompletionPortThreads}");
+
+            Console.WriteLine();
+        }
+
         private static void PrintAssemblyVersions(Type testType)
         {
             Console.WriteLine("=== Versions ===");
@@ -186,10 +236,6 @@ namespace Azure.Test.Perf
                 // Include all Track1 and Track2 assemblies
                 .Where(a => a.GetName().Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) ||
                             a.GetName().Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
-                // Exclude this perf framework
-                .Where(a => a != Assembly.GetExecutingAssembly())
-                // Exclude assembly containing the perf test itself
-                .Where(a => a != testType.Assembly)
                 // Exclude Azure.Core.TestFramework since it is only used to setup environment and should not impact results
                 .Where(a => !a.GetName().Name.Equals("Azure.Core.TestFramework", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(a => a.GetName().Name);
@@ -200,11 +246,16 @@ namespace Azure.Test.Perf
                 var referencedVersion = referencedAssemblies.Where(r => r.Name == name).SingleOrDefault()?.Version;
                 var loadedVersion = a.GetName().Version;
                 var informationalVersion = FileVersionInfo.GetVersionInfo(a.Location).ProductVersion;
+                var debuggableAttribute = (DebuggableAttribute)(a.GetCustomAttribute(typeof(DebuggableAttribute)));
 
                 Console.WriteLine($"{name}:");
-                Console.WriteLine($"  Referenced:    {referencedVersion}");
+                if (referencedVersion != null)
+                {
+                    Console.WriteLine($"  Referenced:    {referencedVersion}");
+                }
                 Console.WriteLine($"  Loaded:        {loadedVersion}");
                 Console.WriteLine($"  Informational: {informationalVersion}");
+                Console.WriteLine($"  JITOptimizer:  {(debuggableAttribute.IsJITOptimizerDisabled ? "Disabled" : "Enabled")}");
             }
 
             Console.WriteLine();
@@ -390,8 +441,16 @@ namespace Azure.Test.Perf
                     _lastCompletionTimes[index] = sw.Elapsed;
                 }
             }
-            catch (OperationCanceledException)
+            catch (Exception e)
             {
+                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                {
+                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 
@@ -433,8 +492,11 @@ namespace Azure.Test.Perf
             }
             catch (Exception e)
             {
-                // Ignore if any part of the exception chain is type OperationCanceledException
-                if (!PerfStressUtilities.ContainsOperationCanceledException(e))
+                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                {
+                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                }
+                else
                 {
                     throw;
                 }
@@ -453,7 +515,7 @@ namespace Azure.Test.Perf
                 {
                     while (writtenOperations < (rate * sw.Elapsed.TotalSeconds))
                     {
-                        _pendingOperations.Writer.TryWrite(ValueTuple.Create(sw.Elapsed, sw));
+                        _pendingOperations.Writer.TryWrite((sw.Elapsed, sw));
                         writtenOperations++;
                     }
 

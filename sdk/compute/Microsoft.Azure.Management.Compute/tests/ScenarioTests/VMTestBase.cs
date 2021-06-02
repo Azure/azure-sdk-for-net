@@ -302,6 +302,7 @@ namespace Compute.Tests
                 {
                     if(inputVM.SecurityProfile != null)
                     {
+                        inputVM.SecurityProfile.SecurityType = SecurityTypes.TrustedLaunch;
                         inputVM.SecurityProfile.UefiSettings = new UefiSettings
                         {
                             VTpmEnabled = true,
@@ -312,6 +313,7 @@ namespace Compute.Tests
                     {
                         inputVM.SecurityProfile = new SecurityProfile
                         {
+                            SecurityType = SecurityTypes.TrustedLaunch,
                             UefiSettings = new UefiSettings
                             {
                                 VTpmEnabled = true,

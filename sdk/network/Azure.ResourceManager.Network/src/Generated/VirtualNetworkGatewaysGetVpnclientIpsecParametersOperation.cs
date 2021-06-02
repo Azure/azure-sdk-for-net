@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation : Operation<VpnClientIPsecParameters>, IOperationSource<VpnClientIPsecParameters>
     {
         private readonly ArmOperationHelpers<VpnClientIPsecParameters> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation for mocking. </summary>
+        protected VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation()
+        {
+        }
+
         internal VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VpnClientIPsecParameters>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation");

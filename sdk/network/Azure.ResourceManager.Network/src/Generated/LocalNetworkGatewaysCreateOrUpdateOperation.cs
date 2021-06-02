@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class LocalNetworkGatewaysCreateOrUpdateOperation : Operation<LocalNetworkGateway>, IOperationSource<LocalNetworkGateway>
     {
         private readonly ArmOperationHelpers<LocalNetworkGateway> _operation;
+
+        /// <summary> Initializes a new instance of LocalNetworkGatewaysCreateOrUpdateOperation for mocking. </summary>
+        protected LocalNetworkGatewaysCreateOrUpdateOperation()
+        {
+        }
+
         internal LocalNetworkGatewaysCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<LocalNetworkGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LocalNetworkGatewaysCreateOrUpdateOperation");

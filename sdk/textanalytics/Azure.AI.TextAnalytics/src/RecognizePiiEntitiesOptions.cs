@@ -7,16 +7,16 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Options that allow callers to specify details about how the operation
-    /// is run. For example set model version, whether to include statistics,
-    /// and filter the response entities by a given domain filter.
+    /// is run. For example, set model version, whether to include statistics,
+    /// filter the response entities by a given domain filter, and more.
     /// </summary>
     public class RecognizePiiEntitiesOptions : TextAnalyticsRequestOptions
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RecognizePiiEntitiesOptions"/>
         /// class which allows callers to specify details about how the operation
-        /// is run. For example set model version, whether to include statistics,
-        /// and filter the response entities by a given domain filter.
+        /// is run. For example, set model version, whether to include statistics,
+        /// filter the response entities by a given domain filter, and more.
         /// </summary>
         public RecognizePiiEntitiesOptions()
         {

@@ -37,7 +37,7 @@ List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Where(e => e.Trim().Length != 0)
     .Select(e => e.Split(','))
     .Where(e => e.Length == 2)
-    .Select(e => new TimeSeriesPoint(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
+    .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
 
 //create request
 ChangePointDetectRequest request = new ChangePointDetectRequest(list, TimeGranularity.Daily);

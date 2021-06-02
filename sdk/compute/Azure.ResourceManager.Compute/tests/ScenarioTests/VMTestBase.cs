@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await (StorageAccountsOperations.ListByResourceGroupAsync(rgName)).ToEnumerableAsync();
         }
 
-        protected async Task<(VirtualMachine, VirtualMachine, string)> CreateVM(
+        protected async Task<(VirtualMachine Response, VirtualMachine Input, string Name)> CreateVM(
             string rgName, string asName, StorageAccount storageAccount, ImageReference imageRef,
             //out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await CreateVM(rgName, asName, storageAccount.Name, imageRef, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks);
         }
 
-        protected async Task<(VirtualMachine, VirtualMachine, string)> CreateVM(
+        protected async Task<(VirtualMachine Response, VirtualMachine Input, string Name)> CreateVM(
             string rgName, string asName, string storageAccountName, ImageReference imageRef,
             //out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await CreateProximityPlacementGroup(m_subId, rgName, ppgName, ComputeManagementClient, m_location);
         }
 
-        protected (string, VirtualMachine) CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
+        protected (string Name, VirtualMachine VirtualMachine) CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
             string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
             string diskEncryptionSetId = null)
         {

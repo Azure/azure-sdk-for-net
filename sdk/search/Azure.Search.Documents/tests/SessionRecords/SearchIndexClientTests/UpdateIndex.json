@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "4032",
+        "Content-Length": "4314",
         "Content-Type": "application/json",
-        "traceparent": "00-b2479108e9952e4b8b0207240727ea70-6fd3f839318abf46-00",
+        "traceparent": "00-951d2c7bf72cb54b9269df706e99172e-ba3d2e40f0b1334b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "26f7066d315f5ab3f827c83cbd605a50",
         "x-ms-return-client-request-id": "true"
@@ -123,6 +123,16 @@
           },
           {
             "name": "location",
+            "type": "Edm.GeographyPoint",
+            "key": false,
+            "retrievable": true,
+            "searchable": false,
+            "filterable": true,
+            "sortable": true,
+            "facetable": false
+          },
+          {
+            "name": "geoLocation",
             "type": "Edm.GeographyPoint",
             "key": false,
             "retrievable": true,
@@ -288,6 +298,15 @@
                 "type": "distance",
                 "fieldName": "location",
                 "boost": 2
+              },
+              {
+                "distance": {
+                  "referencePointParameter": "mygeoloc",
+                  "boostingDistance": 100
+                },
+                "type": "distance",
+                "fieldName": "geoLocation",
+                "boost": 2
               }
             ],
             "functionAggregation": "sum"
@@ -308,13 +327,13 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "26f7066d-315f-5ab3-f827-c83cbd605a50",
-        "Content-Length": "6234",
+        "Content-Length": "6655",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 17 Jul 2020 21:45:55 GMT",
-        "elapsed-time": "1067",
-        "ETag": "W/\u00220x8D82A9AC952C584\u0022",
+        "Date": "Sat, 27 Mar 2021 18:43:49 GMT",
+        "elapsed-time": "721",
+        "ETag": "W/\u00220x8D8F15042DA11AC\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
+        "Location": "https://mohitc-acs.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -323,8 +342,8 @@
         "x-ms-client-request-id": "26f7066d-315f-5ab3-f827-c83cbd605a50"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-pakrymsearch2.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D82A9AC952C584\u0022",
+        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D8F15042DA11AC\u0022",
         "name": "ptbgbued",
         "defaultScoringProfile": null,
         "fields": [
@@ -470,6 +489,20 @@
           },
           {
             "name": "location",
+            "type": "Edm.GeographyPoint",
+            "searchable": false,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": true,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+          },
+          {
+            "name": "geoLocation",
             "type": "Edm.GeographyPoint",
             "searchable": false,
             "filterable": true,
@@ -695,6 +728,19 @@
                   "boostingDistance": 100.0
                 },
                 "tag": null
+              },
+              {
+                "fieldName": "geoLocation",
+                "interpolation": "linear",
+                "type": "distance",
+                "boost": 2.0,
+                "freshness": null,
+                "magnitude": null,
+                "distance": {
+                  "referencePointParameter": "mygeoloc",
+                  "boostingDistance": 100.0
+                },
+                "tag": null
               }
             ]
           }
@@ -723,19 +769,19 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027ptbgbued\u0027)?allowIndexDowntime=true\u0026api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027ptbgbued\u0027)?allowIndexDowntime=true\u0026api-version=2020-06-30",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "4994",
+        "Content-Length": "5318",
         "Content-Type": "application/json",
-        "If-Match": "\u00220x8D82A9AC952C584\u0022",
+        "If-Match": "\u00220x8D8F15042DA11AC\u0022",
         "Prefer": "return=representation",
-        "traceparent": "00-cac761f7f0974b448a168ec5af7e3a80-c4cbfe86ccfb3c45-00",
+        "traceparent": "00-4d8d68a545c8ef49859e6b9f2a8ec95a-f9581e0829834049-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "5c92b4cdda72b9dbb6ec10cb1f481d99",
         "x-ms-return-client-request-id": "true"
@@ -857,6 +903,17 @@
           },
           {
             "name": "location",
+            "type": "Edm.GeographyPoint",
+            "key": false,
+            "retrievable": true,
+            "searchable": false,
+            "filterable": true,
+            "sortable": true,
+            "facetable": false,
+            "synonymMaps": []
+          },
+          {
+            "name": "geoLocation",
             "type": "Edm.GeographyPoint",
             "key": false,
             "retrievable": true,
@@ -1048,6 +1105,16 @@
                 "fieldName": "location",
                 "boost": 2,
                 "interpolation": "linear"
+              },
+              {
+                "distance": {
+                  "referencePointParameter": "mygeoloc",
+                  "boostingDistance": 100
+                },
+                "type": "distance",
+                "fieldName": "geoLocation",
+                "boost": 2,
+                "interpolation": "linear"
               }
             ],
             "functionAggregation": "sum"
@@ -1082,17 +1149,17 @@
         "similarity": {
           "@odata.type": "#Microsoft.Azure.Search.BM25Similarity"
         },
-        "@odata.etag": "\u00220x8D82A9AC952C584\u0022"
+        "@odata.etag": "\u00220x8D8F15042DA11AC\u0022"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "5c92b4cd-da72-b9db-b6ec-10cb1f481d99",
-        "Content-Length": "6653",
+        "Content-Length": "7074",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 17 Jul 2020 21:45:58 GMT",
-        "elapsed-time": "1831",
-        "ETag": "W/\u00220x8D82A9ACA6CF3F7\u0022",
+        "Date": "Sat, 27 Mar 2021 18:43:49 GMT",
+        "elapsed-time": "669",
+        "ETag": "W/\u00220x8D8F150434A9B19\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -1102,8 +1169,8 @@
         "x-ms-client-request-id": "5c92b4cd-da72-b9db-b6ec-10cb1f481d99"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-pakrymsearch2.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D82A9ACA6CF3F7\u0022",
+        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D8F150434A9B19\u0022",
         "name": "ptbgbued",
         "defaultScoringProfile": null,
         "fields": [
@@ -1249,6 +1316,20 @@
           },
           {
             "name": "location",
+            "type": "Edm.GeographyPoint",
+            "searchable": false,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": true,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+          },
+          {
+            "name": "geoLocation",
             "type": "Edm.GeographyPoint",
             "searchable": false,
             "filterable": true,
@@ -1488,6 +1569,19 @@
                   "boostingDistance": 100.0
                 },
                 "tag": null
+              },
+              {
+                "fieldName": "geoLocation",
+                "interpolation": "linear",
+                "type": "distance",
+                "boost": 2.0,
+                "freshness": null,
+                "magnitude": null,
+                "distance": {
+                  "referencePointParameter": "mygeoloc",
+                  "boostingDistance": 100.0
+                },
+                "tag": null
               }
             ]
           }
@@ -1529,15 +1623,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027ptbgbued\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-de309c7515b2844088b439fa08d05f19-e5a101709041234b-00",
+        "traceparent": "00-1413787c7435ef4ebe7fbf41bba33322-cc3b34c12a4b824b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "bcb37215e67e50e3b4d10c4369758711",
         "x-ms-return-client-request-id": "true"
@@ -1547,8 +1641,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "bcb37215-e67e-50e3-b4d1-0c4369758711",
-        "Date": "Fri, 17 Jul 2020 21:45:58 GMT",
-        "elapsed-time": "865",
+        "Date": "Sat, 27 Mar 2021 18:43:49 GMT",
+        "elapsed-time": "168",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "bcb37215-e67e-50e3-b4d1-0c4369758711",
@@ -1562,6 +1656,7 @@
     "RandomSeed": "1669853055",
     "SearchIndexName": "ptbgbued",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-pakrymsearch2"
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

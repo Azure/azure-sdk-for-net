@@ -11,11 +11,12 @@
   <PropertyGroup>
     <PackageTags>IoT;ModelsRepository;Pnp;DigitalTwins$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure IoT Models Repository</Description>
-    <Version>1.0.0-preview.2</Version>
+    <Version>1.0.0-preview.4</Version>
   </PropertyGroup>
 
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -53,5 +54,4 @@
     </Compile>
   </ItemGroup>
 
-  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />
 </Project>

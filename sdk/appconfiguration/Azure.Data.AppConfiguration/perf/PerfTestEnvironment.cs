@@ -9,6 +9,6 @@ namespace Azure.Data.AppConfiguration.Perf
     {
         public string ConnectionString => GetVariable("APPCONFIGURATION_CONNECTION_STRING");
 
-        public static PerfTestEnvironment Instance { get; } = new ();
+        public static PerfTestEnvironment Instance { get; } = new();
     }
 }

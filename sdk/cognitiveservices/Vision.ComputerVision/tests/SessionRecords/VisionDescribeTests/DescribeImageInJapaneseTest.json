@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v3.1/describe?maxCandidates=1&language=ja",
-      "EncodedRequestUri": "L3Zpc2lvbi92My4xL2Rlc2NyaWJlP21heENhbmRpZGF0ZXM9MSZsYW5ndWFnZT1qYQ==",
+      "RequestUri": "/vision/v3.2/describe?maxCandidates=1&language=ja&model-version=latest",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4yL2Rlc2NyaWJlP21heENhbmRpZGF0ZXM9MSZsYW5ndWFnZT1qYSZtb2RlbC12ZXJzaW9uPWxhdGVzdA==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/dog.jpg\"\r\n}",
       "RequestHeaders": {
@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.29220.03",
+          "FxVersion/4.8.4300.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/6.0.0.0"
+          "OSVersion/10.0.19042.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -27,28 +27,28 @@
           "CognitiveServices.ComputerVision.Describe=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "552"
+          "476"
         ],
         "apim-request-id": [
-          "c211816c-1479-4d63-87a0-3993820889fa"
+          "1d1cd36c-42ba-4a27-92ff-1fd87bd57f62"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "X-Content-Type-Options": [
+        "x-content-type-options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 30 Sep 2020 21:51:14 GMT"
+          "Wed, 24 Mar 2021 06:45:01 GMT"
         ],
         "Content-Length": [
-          "401"
+          "429"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"犬\",\r\n      \"屋外\",\r\n      \"座る\",\r\n      \"動物\",\r\n      \"哺乳類\",\r\n      \"探す\",\r\n      \"茶色\",\r\n      \"ベンチ\",\r\n      \"フロント\",\r\n      \"木製\",\r\n      \"大きい\",\r\n      \"小さい\",\r\n      \"立つ\",\r\n      \"閉じる\",\r\n      \"テーブル\",\r\n      \"オレンジ\",\r\n      \"横たわる\",\r\n      \"公園\",\r\n      \"頭\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"犬の顔\",\r\n        \"confidence\": 0.79938099007893149\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"c211816c-1479-4d63-87a0-3993820889fa\",\r\n  \"metadata\": {\r\n    \"height\": 599,\r\n    \"width\": 455,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"犬\",\r\n      \"屋外\",\r\n      \"座る\",\r\n      \"動物\",\r\n      \"哺乳類\",\r\n      \"探す\",\r\n      \"茶色\",\r\n      \"ベンチ\",\r\n      \"フロント\",\r\n      \"木製\",\r\n      \"大きい\",\r\n      \"小さい\",\r\n      \"立つ\",\r\n      \"閉じる\",\r\n      \"テーブル\",\r\n      \"オレンジ\",\r\n      \"横たわる\",\r\n      \"公園\",\r\n      \"頭\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"犬の顔\",\r\n        \"confidence\": 0.79938099007893149\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"1d1cd36c-42ba-4a27-92ff-1fd87bd57f62\",\r\n  \"metadata\": {\r\n    \"height\": 599,\r\n    \"width\": 455,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

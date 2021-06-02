@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
+    [CodeGenModel("RuntimeData")]
     internal partial class RuntimeData
     {
     }

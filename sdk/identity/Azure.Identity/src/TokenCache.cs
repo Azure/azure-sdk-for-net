@@ -24,9 +24,6 @@ namespace Azure.Identity
         private DateTimeOffset _lastUpdated;
         private ConditionalWeakTable<object, CacheTimestamp> _cacheAccessMap;
         internal Func<IPublicClientApplication> _publicClientApplicationFactory;
-        // we are creating the MsalCacheHelper with a random guid based clientId to work around issue https://github.com/AzureAD/microsoft-authentication-extensions-for-dotnet/issues/98
-        // This does not impact the functionality of the cacheHelper as the ClientId is only used to iterate accounts in the cache not for authentication purposes.
-        internal static readonly string s_msalCacheClientId = Guid.NewGuid().ToString();
         private readonly bool _allowUnencryptedStorage;
         private readonly string _name;
         private readonly bool _persistToDisk;
@@ -252,7 +249,7 @@ namespace Azure.Identity
 
         private async Task<MsalCacheHelperWrapper> GetProtectedCacheHelperAsync(bool async, string name)
         {
-            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(name, Constants.DefaultMsalTokenCacheDirectory, s_msalCacheClientId)
+            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(name, Constants.DefaultMsalTokenCacheDirectory)
                 .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, name)
                 .WithLinuxKeyring(Constants.DefaultMsalTokenCacheKeyringSchema, Constants.DefaultMsalTokenCacheKeyringCollection, name, Constants.DefaultMsaltokenCacheKeyringAttribute1, Constants.DefaultMsaltokenCacheKeyringAttribute2)
                 .Build();
@@ -264,7 +261,7 @@ namespace Azure.Identity
 
         private async Task<MsalCacheHelperWrapper> GetFallbackCacheHelperAsync(bool async, string name = Constants.DefaultMsalTokenCacheName)
         {
-            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(name, Constants.DefaultMsalTokenCacheDirectory, s_msalCacheClientId)
+            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(name, Constants.DefaultMsalTokenCacheDirectory)
                 .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, name)
                 .WithLinuxUnprotectedFile()
                 .Build();

@@ -3,13 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -22,11 +21,12 @@ namespace Azure.Core.Tests
         public async Task BearerTokenAuthenticationPolicy_UsesTokenProvidedByCredentials()
         {
             var credential = new TokenCredentialStub(
-                (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default, IsAsync);
+                (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default,
+                IsAsync);
             var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope1", "scope2" });
 
             MockTransport transport = CreateMockTransport(new MockResponse(200));
-            await SendGetRequest(transport, policy, uri:new Uri("https://example.com"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
 
             Assert.True(transport.SingleRequest.Headers.TryGetValue("Authorization", out string authValue));
             Assert.AreEqual("Bearer token", authValue);
@@ -40,7 +40,8 @@ namespace Azure.Core.Tests
             accessTokens.Enqueue(new AccessToken("token2", DateTimeOffset.UtcNow));
 
             var credential = new TokenCredentialStub(
-                (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? accessTokens.Dequeue() : default, IsAsync);
+                (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? accessTokens.Dequeue() : default,
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope1", "scope2" });
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -59,7 +60,8 @@ namespace Azure.Core.Tests
         public async Task BearerTokenAuthenticationPolicy_CachesHeaderValue()
         {
             var credential = new TokenCredentialStub(
-                (r, c) => r.Scopes.SequenceEqual(new[] { "scope" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default, IsAsync);
+                (r, c) => r.Scopes.SequenceEqual(new[] { "scope" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default,
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -78,7 +80,8 @@ namespace Azure.Core.Tests
         public void BearerTokenAuthenticationPolicy_ThrowsForNonTlsEndpoint()
         {
             var credential = new TokenCredentialStub(
-                (r, c) => r.Scopes.SequenceEqual(new[] { "scope" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default, IsAsync);
+                (r, c) => r.Scopes.SequenceEqual(new[] { "scope" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default,
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport();
@@ -101,10 +104,11 @@ namespace Azure.Core.Tests
         public async Task BearerTokenAuthenticationPolicy_OneHundredConcurrentCalls()
         {
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                Thread.Sleep(100);
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(30));
-            }, IsAsync);
+                {
+                    Thread.Sleep(100);
+                    return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(30));
+                },
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(r => new MockResponse(200));
@@ -131,11 +135,12 @@ namespace Azure.Core.Tests
             var requestMre = new ManualResetEventSlim(false);
             var responseMre = new ManualResetEventSlim(false);
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(30));
-            }, IsAsync);
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(30));
+                },
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -160,15 +165,16 @@ namespace Azure.Core.Tests
             var requestMre = new ManualResetEventSlim(false);
             var callCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                Interlocked.Increment(ref callCount);
-                var offsetTime = DateTimeOffset.UtcNow;
-                requestMre.Set();
+                {
+                    Interlocked.Increment(ref callCount);
+                    var offsetTime = DateTimeOffset.UtcNow;
+                    requestMre.Set();
 
-                return callCount == 2
-                    ? throw new InvalidOperationException("Call Failed")
-                    : new AccessToken(Guid.NewGuid().ToString(), offsetTime.AddMilliseconds(1000));
-            }, IsAsync);
+                    return callCount == 2
+                        ? throw new InvalidOperationException("Call Failed")
+                        : new AccessToken(Guid.NewGuid().ToString(), offsetTime.AddMilliseconds(1000));
+                },
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(30));
             MockTransport transport = CreateMockTransport(r => new MockResponse(200));
@@ -220,14 +226,15 @@ namespace Azure.Core.Tests
             var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddMinutes(2), currentTime.AddMinutes(30) });
             var callCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                requestMre.Reset();
-                callCount++;
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    requestMre.Reset();
+                    callCount++;
 
-                return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
-            }, IsAsync);
+                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
+                },
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
@@ -266,13 +273,14 @@ namespace Azure.Core.Tests
             var callCount = 0;
 
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                callCount++;
-                responseMre.Wait(c);
-                requestMre.Set();
+                {
+                    callCount++;
+                    responseMre.Wait(c);
+                    requestMre.Set();
 
-                return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
-            }, IsAsync);
+                    return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
+                },
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
@@ -309,13 +317,14 @@ namespace Azure.Core.Tests
             var currentTime = DateTimeOffset.UtcNow;
             var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddSeconds(2), currentTime.AddMinutes(30) });
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
-            }, IsAsync);
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
+                },
+                IsAsync);
 
-            var policy = new BearerTokenAuthenticationPolicy(credential, new[]{ "scope" }, TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(50));
+            var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(50));
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/0"));
@@ -345,10 +354,11 @@ namespace Azure.Core.Tests
         public void BearerTokenAuthenticationPolicy_OneHundredConcurrentCallsFailed()
         {
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                Thread.Sleep(100);
-                throw new InvalidOperationException("Error");
-            }, IsAsync);
+                {
+                    Thread.Sleep(100);
+                    throw new InvalidOperationException("Error");
+                },
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(r => new MockResponse(200));
@@ -373,11 +383,12 @@ namespace Azure.Core.Tests
             var requestMre = new ManualResetEventSlim(false);
             var responseMre = new ManualResetEventSlim(false);
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                throw new InvalidOperationException("Error");
-            }, IsAsync);
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    throw new InvalidOperationException("Error");
+                },
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -403,19 +414,20 @@ namespace Azure.Core.Tests
             var responseMre = new ManualResetEventSlim(true);
             var fail = false;
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                if (fail)
                 {
-                    throw new InvalidOperationException("Error");
-                }
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    if (fail)
+                    {
+                        throw new InvalidOperationException("Error");
+                    }
 
-                fail = true;
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddSeconds(2));
-            }, IsAsync);
+                    fail = true;
+                    return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddSeconds(2));
+                },
+                IsAsync);
 
-            var policy = new BearerTokenAuthenticationPolicy(credential, new[]{ "scope" }, TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(50));
+            var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(50));
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/0"));
@@ -451,19 +463,20 @@ namespace Azure.Core.Tests
             var getTokenRequestTimes = new List<DateTimeOffset>();
             var transportCallCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                if (transportCallCount > 0)
                 {
-                    credentialMre.Set();
-                    getTokenRequestTimes.Add(DateTimeOffset.UtcNow);
-                    throw new InvalidOperationException("Error");
-                }
+                    if (transportCallCount > 0)
+                    {
+                        credentialMre.Set();
+                        getTokenRequestTimes.Add(DateTimeOffset.UtcNow);
+                        throw new InvalidOperationException("Error");
+                    }
 
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(1.5));
-            }, IsAsync);
+                    return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(1.5));
+                },
+                IsAsync);
 
             var tokenRefreshRetryDelay = TimeSpan.FromSeconds(2);
-            var policy = new BearerTokenAuthenticationPolicy(credential, new[] {"scope"}, TimeSpan.FromMinutes(2), tokenRefreshRetryDelay);
+            var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromMinutes(2), tokenRefreshRetryDelay);
             MockTransport transport = CreateMockTransport(r =>
             {
                 requestMre.Set();
@@ -518,11 +531,12 @@ namespace Azure.Core.Tests
             var responseMre = new ManualResetEventSlim(false);
             var cts = new CancellationTokenSource();
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                throw new InvalidOperationException("Error");
-            }, IsAsync);
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    throw new InvalidOperationException("Error");
+                },
+                IsAsync);
 
             var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -537,6 +551,221 @@ namespace Azure.Core.Tests
             responseMre.Set();
 
             Assert.CatchAsync<InvalidOperationException>(async () => await firstRequestTask);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_CancelledFirstRequestDoesNotCancelPendingSecondRequest()
+        {
+            var currentTime = DateTime.UtcNow;
+            var requestMre = new ManualResetEventSlim(false);
+            var responseMre = new ManualResetEventSlim(false);
+            var cts = new CancellationTokenSource();
+            var credential = new TokenCredentialStub((r, c) =>
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
+                },
+                IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport((req) =>
+            {
+                return new MockResponse(200);
+            });
+
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts.Token);
+            requestMre.Wait();
+
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
+            cts.Cancel();
+
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
+            responseMre.Set();
+
+            var response = await secondRequestTask;
+            Assert.That(response.Status, Is.EqualTo(200));
+        }
+
+        [Test]
+        public void BearerTokenAuthenticationPolicy_CancelledFirstRequestAndCancelledSecondRequest()
+        {
+            var currentTime = DateTime.UtcNow;
+            var requestMre = new ManualResetEventSlim(false);
+            var responseMre = new ManualResetEventSlim(false);
+            var cts1 = new CancellationTokenSource();
+            var cts2 = new CancellationTokenSource();
+            var credential = new TokenCredentialStub((r, c) =>
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
+                },
+                IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport((req) =>
+            {
+                return new MockResponse(200);
+            });
+
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example1.com"), cancellationToken: cts1.Token);
+            requestMre.Wait();
+
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example2.com"), cancellationToken: cts2.Token);
+            cts1.Cancel();
+            cts2.Cancel();
+
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
+            responseMre.Set();
+
+            Assert.CatchAsync<OperationCanceledException>(async () => await secondRequestTask);
+        }
+
+        [Test]
+        [Repeat(10)]
+        public void BearerTokenAuthenticationPolicy_UnobservedTaskException()
+        {
+            var unobservedTaskExceptionWasRaised = false;
+            var expectedFailedException = new RequestFailedException("Communication Error");
+            try
+            {
+                TaskScheduler.UnobservedTaskException += UnobservedTaskExceptionHandler;
+                var credential =
+                    new TokenCredentialStub((_, ct) => throw expectedFailedException,
+                        IsAsync);
+
+                var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+                MockTransport transport = CreateMockTransport((_) => new MockResponse(500));
+
+                Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await SendRequestAsync(transport, request => { request.Uri.Scheme = "https"; }, policy));
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+            }
+            finally
+            {
+                TaskScheduler.UnobservedTaskException -= UnobservedTaskExceptionHandler;
+            }
+
+            Assert.False(unobservedTaskExceptionWasRaised, "UnobservedTaskException should not be raised");
+
+            void UnobservedTaskExceptionHandler(object sender, UnobservedTaskExceptionEventArgs args)
+            {
+                if (args.Exception.InnerException == null ||
+                    args.Exception.InnerException.ToString() != expectedFailedException.ToString())
+                    return;
+
+                args.SetObserved();
+                unobservedTaskExceptionWasRaised = true;
+            }
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_BackgroundRefreshCancelledAndLogs()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var currentTime = DateTimeOffset.UtcNow;
+            var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddMinutes(2), currentTime.AddMinutes(30) });
+            var callCount = 0;
+            var logged = false;
+            string msg = "fail to refresh";
+            var credential = new BearerTokenAuthenticationPolicyTests.TokenCredentialStub((r, c) =>
+                {
+                    if (callCount > 0)
+                    {
+                        Task.Delay(100).GetAwaiter().GetResult();
+                        throw new OperationCanceledException(msg);
+                    }
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    requestMre.Reset();
+                    callCount++;
+
+                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
+                },
+                IsAsync);
+
+            AzureEventSourceListener listener = new((args, text) =>
+            {
+                if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))
+                {
+                    logged = true;
+                }
+            }, System.Diagnostics.Tracing.EventLevel.Informational);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromMinutes(5), TimeSpan.FromMilliseconds(10));
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/1/Original"));
+            responseMre.Reset();
+
+            Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/Refresh"));
+            // requestMre.Wait();
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/AlmostExpired"));
+            await requestTask;
+            responseMre.Set();
+            await Task.Delay(1_000);
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
+
+            Assert.IsTrue(logged);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_BackgroundRefreshFailsAndLogs()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var currentTime = DateTimeOffset.UtcNow;
+            var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddMinutes(2), currentTime.AddMinutes(30) });
+            var callCount = 0;
+            var logged = false;
+            string msg = "fail to refresh";
+            var credential = new BearerTokenAuthenticationPolicyTests.TokenCredentialStub((r, c) =>
+                {
+                    if (callCount > 0)
+                    {
+                        throw new Exception(msg);
+                    }
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    requestMre.Reset();
+                    callCount++;
+
+                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
+                },
+                IsAsync);
+
+            AzureEventSourceListener listener = new((args, text) =>
+            {
+                if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))
+                {
+                    logged = true;
+                }
+            }, System.Diagnostics.Tracing.EventLevel.Informational);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/1/Original"));
+            responseMre.Reset();
+
+            Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/Refresh"));
+            // requestMre.Wait();
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/AlmostExpired"));
+            await requestTask;
+            responseMre.Set();
+            await Task.Delay(1_000);
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
+
+            Assert.IsTrue(logged);
         }
 
         private class TokenCredentialStub : TokenCredential

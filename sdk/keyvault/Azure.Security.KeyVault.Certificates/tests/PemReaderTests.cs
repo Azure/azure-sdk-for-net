@@ -103,10 +103,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
 #if NET461
             Assert.Ignore("Loading X509Certificate2 with private EC key not supported on this platform");
-#elif NETCOREAPP2_1
-            Assert.Ignore("Different OIDs in the certificate and private key prevent this from passing currently");
 #endif
-            using X509Certificate2 certificate = PemReader.LoadCertificate(ECDsaPrime256v1Certificate.AsSpan(), keyType: PemReader.KeyType.ECDsa);
+            using X509Certificate2 certificate = PemReader.LoadCertificate(s_ecdsaFullCertificate.AsSpan(), keyType: PemReader.KeyType.ECDsa);
             Assert.AreEqual("CN=Azure SDK", certificate.Subject);
             Assert.IsTrue(certificate.HasPrivateKey);
         }
@@ -179,32 +177,6 @@ rJUjjPW4aQuo0GyzL4v1M1U2pByKsVCYAikuLmQKS2zXLoyW3ana1aQYyh2/3cXm
 lkApwUZg00+9hRWxv0DTh/mRS2zu5i/9W+cZbIcRah0JHgOzAjvsyY9RHjqZ9r7c
 Md7RrFHxnAKJj5TZJJJOf5h3OaaF3A5W8gf9Bc68aGQLFT5Y2afIawkYNSULypc3
 pn29yMivL7r48dlo
------END CERTIFICATE-----";
-
-        private const string ECDsaPrime256v1Certificate = @"
------BEGIN PRIVATE KEY-----
-MIIBMgIBADCBrgYHKoZIzj0CATCBogIBATAsBgcqhkjOPQEBAiEA////////////
-/////////////////////////v///C8wBgQBAAQBBwRBBHm+Zn753LusVaBilc6H
-CwcCm/zbLc4o2VnygVsW+BeYSDradyajxGVdpPv8DhEIqP0XtEimhVQZnEfQj/sQ
-1LgCIQD////////////////////+uq7c5q9IoDu/0l6M0DZBQQIBAQRtMGsCAQEE
-INIX6ZEliNAwvZAq3GkJHNHSvQOlIzFMkifg/C8DfVAhoUQDQgAEnxIn+jXd3Pfw
-IcpGkQx9b1L/BYXHDzNINDOTwmOku3fG+zI6vT3R3VkHfcd7GR9aJxp1tdxMnIkF
-xU2Z1eNVXqANMAsGA1UdDzEEAwIAgA==
------END PRIVATE KEY-----
------BEGIN CERTIFICATE-----
-MIICPzCCAeWgAwIBAgIQdclPKrRQTmCpZ0p2lM2pmDAKBggqhkjOPQQDAjAUMRIw
-EAYDVQQDEwlBenVyZSBTREswHhcNMjEwMzAzMDEwOTIxWhcNMjIwMzAzMDExOTIx
-WjAUMRIwEAYDVQQDEwlBenVyZSBTREswgfUwga4GByqGSM49AgEwgaICAQEwLAYH
-KoZIzj0BAQIhAP////////////////////////////////////7///wvMAYEAQAE
-AQcEQQR5vmZ++dy7rFWgYpXOhwsHApv82y3OKNlZ8oFbFvgXmEg62ncmo8RlXaT7
-/A4RCKj9F7RIpoVUGZxH0I/7ENS4AiEA/////////////////////rqu3OavSKA7
-v9JejNA2QUECAQEDQgAEnxIn+jXd3PfwIcpGkQx9b1L/BYXHDzNINDOTwmOku3fG
-+zI6vT3R3VkHfcd7GR9aJxp1tdxMnIkFxU2Z1eNVXqN8MHowDgYDVR0PAQH/BAQD
-AgeAMAkGA1UdEwQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMB8G
-A1UdIwQYMBaAFAJEtqOacY6KuA8KAyt3dgByxWGlMB0GA1UdDgQWBBQCRLajmnGO
-irgPCgMrd3YAcsVhpTAKBggqhkjOPQQDAgNIADBFAiEAlGVRNxgGsOpmBAGud2v1
-aSnz2Zm8A9EV1a+5EVp8Rz8CIFkJYAXOL/n0xo4fp+7yR+9SwVa3c6wNimYSfhoU
-+YpQ
 -----END CERTIFICATE-----";
 
         private static readonly string s_ecdsaFullCertificate = ECDsaPrivateKey + ECDsaCertificate;

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatchersGetVMSecurityRulesOperation : Operation<SecurityGroupViewResult>, IOperationSource<SecurityGroupViewResult>
     {
         private readonly ArmOperationHelpers<SecurityGroupViewResult> _operation;
+
+        /// <summary> Initializes a new instance of NetworkWatchersGetVMSecurityRulesOperation for mocking. </summary>
+        protected NetworkWatchersGetVMSecurityRulesOperation()
+        {
+        }
+
         internal NetworkWatchersGetVMSecurityRulesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<SecurityGroupViewResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetVMSecurityRulesOperation");

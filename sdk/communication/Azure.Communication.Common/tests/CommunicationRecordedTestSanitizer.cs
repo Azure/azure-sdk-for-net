@@ -26,8 +26,8 @@ namespace Azure.Communication.Pipeline
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
             => variableName switch
             {
-                CommunicationTestEnvironment.ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
-                CommunicationTestEnvironment.LiveTestConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
+                CommunicationTestEnvironment.LiveTestDynamicConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
+                CommunicationTestEnvironment.LiveTestStaticConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
 

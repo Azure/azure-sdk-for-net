@@ -52,6 +52,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
+        /// <param name="compressionCodec">The data compressionCodec. Type:
+        /// string (or Expression with resultType string).</param>
         public ParquetDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object compressionCodec = default(object))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
@@ -72,6 +74,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public DatasetLocation Location { get; set; }
 
         /// <summary>
+        /// Gets or sets the data compressionCodec. Type: string (or Expression
+        /// with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.compressionCodec")]
         public object CompressionCodec { get; set; }

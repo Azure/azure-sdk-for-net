@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.SMSReceived event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSReceived event. </summary>
     public partial class AcsSmsReceivedEventData : AcsSmsEventBaseProperties
     {
         /// <summary> Initializes a new instance of AcsSmsReceivedEventData. </summary>

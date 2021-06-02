@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -38,7 +39,8 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             "859-98-0987",
             "800-102-1100",
-            "Microsoft"
+            "Microsoft",
+            "developer"
         };
 
         private static readonly List<string> s_document2ExpectedOutput = new List<string>
@@ -46,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Tests
             "111000025"
         };
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -55,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -64,7 +66,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -73,7 +75,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithDomainTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -84,7 +86,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com", "Microsoft" });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithCategoriesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -96,21 +98,18 @@ namespace Azure.AI.TextAnalytics.Tests
             entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber, PiiEntityCategory.Organization } });
             ValidateInDocumenResult(entities, new List<string>() { "800-102-1100", "Microsoft" });
 
-            entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber, PiiEntityCategory.Organization, PiiEntityCategory.USSocialSecurityNumber } });
-            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
-
             entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.ABARoutingNumber } });
             Assert.AreEqual(0, entities.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesWithResultCategoriesTest()
         {
             TextAnalyticsClient client = GetClient();
 
             PiiEntityCollection originalEntities = await client.RecognizePiiEntitiesAsync(EnglishDocument1);
 
-            List<PiiEntityCategory> piiCategories = new ();
+            List<PiiEntityCategory> piiCategories = new();
             foreach (var entity in originalEntities)
             {
                 piiCategories.Add(entity.Category);
@@ -120,7 +119,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateInDocumenResult(newEntities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -142,7 +141,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -157,7 +156,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -172,7 +171,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -187,7 +186,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -202,7 +201,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWithDomainTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -211,14 +210,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
-                { "1", s_document1ExpectedOutput },
+                { "1", new List<string>() { "800-102-1100", "800-102-1100", "Microsoft" } },
                 { "2", s_document2ExpectedOutput },
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizePiiEntitiesBatchWitCategoryTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -242,7 +241,6 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (PiiEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.IsTrue(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase));
                 Assert.IsNotNull(entity.Category);
                 Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
                 Assert.GreaterOrEqual(entity.Offset, 0);
@@ -252,6 +250,10 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.IsNotEmpty(entity.SubCategory);
                 }
+            }
+            foreach (var text in minimumExpectedOutput)
+            {
+                Assert.IsTrue(entities.Any(e => e.Text == text));
             }
         }
 

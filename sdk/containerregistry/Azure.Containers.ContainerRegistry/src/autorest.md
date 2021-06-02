@@ -3,16 +3,7 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-tag: package-2019-08
-require:
-    -  https://github.com/Azure/azure-rest-api-specs/tree/255757f41275e8ec474361690ea8886cae8a503b/specification/containerregistry/data-plane/readme.md
+input-file:
+ - https://github.com/Azure/azure-rest-api-specs/blob/7d61610b5b54f21de3c95b64c341c7bde385c994/specification/containerregistry/data-plane/Azure.ContainerRegistry/preview/2019-08-15-preview/containerregistry.json
 model-namespace: false
-```
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.*
-  transform: >
-    $["x-accessibility"] = "internal"
 ```

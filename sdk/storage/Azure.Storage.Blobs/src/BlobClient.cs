@@ -258,6 +258,48 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="BlobClient"/>.
+        /// </remarks>
+        public new BlobClient WithCustomerProvidedKey(CustomerProvidedKey? customerProvidedKey)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new BlobClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration,
+                clientSideEncryption: ClientSideEncryption?.Clone());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="encryptionScope"/>.
+        ///
+        /// </summary>
+        /// <param name="encryptionScope">The encryption scope.</param>
+        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the encryption scope in the returned <see cref="BlobClient"/>.
+        /// </remarks>
+        public new BlobClient WithEncryptionScope(string encryptionScope)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.EncryptionScope = encryptionScope;
+            return new BlobClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration,
+                clientSideEncryption: ClientSideEncryption?.Clone());
+        }
+
+        /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class, maintaining all the same
         /// internals but specifying new <see cref="ClientSideEncryptionOptions"/>.
         /// </summary>
@@ -1587,8 +1629,6 @@ namespace Azure.Storage.Blobs
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
-            var client = new BlockBlobClient(Uri, ClientConfiguration);
-
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
@@ -1668,11 +1708,24 @@ namespace Azure.Storage.Blobs
         }
         #endregion Upload
 
+        private BlockBlobClient _blockBlobClient;
+
+        private BlockBlobClient BlockBlobClient
+        {
+            get
+            {
+                if (_blockBlobClient == null)
+                {
+                    _blockBlobClient = new BlockBlobClient(Uri, ClientConfiguration);
+                }
+                return _blockBlobClient;
+            }
+        }
+
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => new BlockBlobClient(Uri, ClientConfiguration)
-                .GetPartitionedUploader(transferOptions, arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, arrayPool, operationName);
     }
 }

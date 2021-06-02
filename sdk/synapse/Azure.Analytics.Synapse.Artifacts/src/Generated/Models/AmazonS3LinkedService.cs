@@ -25,25 +25,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> . </param>
+        /// <param name="authenticationType"> The authentication type of S3. Allowed value: AccessKey (default) or TemporarySecurityCredentials. Type: string (or Expression with resultType string). </param>
         /// <param name="accessKeyId"> The access key identifier of the Amazon S3 Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </param>
         /// <param name="secretAccessKey"> The secret access key of the Amazon S3 Identity and Access Management (IAM) user. </param>
         /// <param name="serviceUrl"> This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
+        /// <param name="sessionToken"> The session token for the S3 temporary security credential. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AmazonS3LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object accessKeyId, SecretBase secretAccessKey, object serviceUrl, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonS3LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object authenticationType, object accessKeyId, SecretBase secretAccessKey, object serviceUrl, SecretBase sessionToken, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
+            AuthenticationType = authenticationType;
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
             ServiceUrl = serviceUrl;
+            SessionToken = sessionToken;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "AmazonS3";
         }
 
+        /// <summary> The authentication type of S3. Allowed value: AccessKey (default) or TemporarySecurityCredentials. Type: string (or Expression with resultType string). </summary>
+        public object AuthenticationType { get; set; }
         /// <summary> The access key identifier of the Amazon S3 Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </summary>
         public object AccessKeyId { get; set; }
         /// <summary> The secret access key of the Amazon S3 Identity and Access Management (IAM) user. </summary>
         public SecretBase SecretAccessKey { get; set; }
         /// <summary> This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </summary>
         public object ServiceUrl { get; set; }
+        /// <summary> The session token for the S3 temporary security credential. </summary>
+        public SecretBase SessionToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
     }

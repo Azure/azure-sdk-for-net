@@ -1,44 +1,29 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary>
-    /// </summary>
-    [CodeGenModel("RepositoryAttributes")]
+    /// <summary> Repository properties. </summary>
     public partial class RepositoryProperties
     {
         /// <summary>
+        /// Gets an instance of <see cref="RepositoryProperties"/>.
         /// </summary>
-        [CodeGenMember("ImageName")]
-        public string Name { get; }
+        public RepositoryProperties()
+        {
+        }
 
-        /// <summary>
-        /// </summary>
-        [CodeGenMember("ChangeableAttributes")]
-        public ContentProperties ModifiableProperties { get; }
-
-        /// <summary>
-        /// </summary>
-        [CodeGenMember("ManifestCount")]
-        public int RegistryArtifactCount { get; }
-
-        /// <summary>
-        /// </summary>
-        [CodeGenMember("CreatedTime")]
-        public DateTimeOffset CreatedOn { get; }
-
-        /// <summary>
-        /// </summary>
-        [CodeGenMember("LastUpdateTime")]
-        public DateTimeOffset LastUpdatedOn { get; }
-
-        /// <summary>
-        /// </summary>
-        [CodeGenMember("TagCount")]
-        public int TagCount { get; }
+        /// <summary> Delete enabled. </summary>
+        public bool? CanDelete { get; set; }
+        /// <summary> Write enabled. </summary>
+        public bool? CanWrite { get; set; }
+        /// <summary> List enabled. </summary>
+        public bool? CanList { get; set; }
+        /// <summary> Read enabled. </summary>
+        public bool? CanRead { get; set; }
+        /// <summary> Gets or sets whether Teleport functionality is enabled on new images in the repository. Setting this to true can improve Container startup performance. </summary>
+        public bool? TeleportEnabled { get; set; }
     }
 }

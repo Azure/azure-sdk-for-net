@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class FlowLogsCreateOrUpdateOperation : Operation<FlowLog>, IOperationSource<FlowLog>
     {
         private readonly ArmOperationHelpers<FlowLog> _operation;
+
+        /// <summary> Initializes a new instance of FlowLogsCreateOrUpdateOperation for mocking. </summary>
+        protected FlowLogsCreateOrUpdateOperation()
+        {
+        }
+
         internal FlowLogsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<FlowLog>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "FlowLogsCreateOrUpdateOperation");
