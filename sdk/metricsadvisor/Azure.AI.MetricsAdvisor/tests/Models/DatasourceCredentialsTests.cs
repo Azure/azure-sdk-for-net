@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class DatasourceCredentialsTests : MockClientTestBase
     {
-        private static object[] CredentialEntityTestCases =
+        private static object[] DatasourceCredentialTestCases =
         {
             new object[] { new ServicePrincipalDatasourceCredential("mock", "mock", "secret", "mock"), "\"clientSecret\":\"secret\"" }
         };
@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
         }
 
-        private string CredentialEntityResponseContent => @"
+        private string DatasourceCredentialResponseContent => @"
         {
             ""dataSourceCredentialType"": ""ServicePrincipal"",
             ""parameters"": {
@@ -36,19 +36,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
         ";
 
         [Test]
-        [TestCaseSource(nameof(CredentialEntityTestCases))]
-        public async Task DataSourceCredentialEntitySendsSecretDuringCreation(DatasourceCredential credentialEntity, string expectedSubstring)
+        [TestCaseSource(nameof(DatasourceCredentialTestCases))]
+        public async Task DatasourceCredentialSendsSecretDuringCreation(DatasourceCredential credential, string expectedSubstring)
         {
             MockResponse createResponse = new MockResponse(201);
             createResponse.AddHeader(new HttpHeader("Location", $"https://fakeresource.cognitiveservices.azure.com/metricsadvisor/v1.0/credentials/{FakeGuid}"));
 
             MockResponse getResponse = new MockResponse(200);
-            getResponse.SetContent(CredentialEntityResponseContent);
+            getResponse.SetContent(DatasourceCredentialResponseContent);
 
             MockTransport mockTransport = new MockTransport(createResponse, getResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            await adminClient.CreateDatasourceCredentialAsync(credentialEntity);
+            await adminClient.CreateDatasourceCredentialAsync(credential);
 
             MockRequest request = mockTransport.Requests.First();
             string content = ReadContent(request);
