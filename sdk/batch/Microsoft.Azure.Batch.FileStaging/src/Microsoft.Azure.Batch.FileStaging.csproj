@@ -22,6 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.5.1" />
     <PackageReference Include="WindowsAzure.Storage" />
     <PackageReference Include="Microsoft.Azure.Batch" />
   </ItemGroup>

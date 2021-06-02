@@ -10,6 +10,7 @@
     <PackageReference Include="Azure.Storage.Blobs" Version="12.6.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Connected Services\" />
