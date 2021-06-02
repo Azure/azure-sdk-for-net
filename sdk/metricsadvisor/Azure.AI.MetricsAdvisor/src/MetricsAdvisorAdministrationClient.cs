@@ -1973,7 +1973,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         /// <summary>
         /// Updates an existing <see cref="DatasourceCredential"/>. In order to update your credential, you cannot create a <see cref="DatasourceCredential"/>
-        /// directly from its constructor. You need to obtain an instance via <see cref="GetDatasourceCredentialAsync"/> or another CRUD method and update
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDatasourceCredentialAsync"/> or another CRUD operation and update
         /// it before calling this method.
         /// </summary>
         /// <param name="datasourceCredential">The <see cref="DatasourceCredential"/> model containing the updates to be applied.</param>
@@ -2012,7 +2012,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         /// <summary>
         /// Updates an existing <see cref="DatasourceCredential"/>. In order to update your credential, you cannot create a <see cref="DatasourceCredential"/>
-        /// directly from its constructor. You need to obtain an instance via <see cref="GetDatasourceCredentialAsync"/> or another CRUD method and update
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDatasourceCredentialAsync"/> or another CRUD operation and update
         /// it before calling this method.
         /// </summary>
         /// <param name="datasourceCredential">The <see cref="DatasourceCredential"/> model containing the updates to be applied.</param>
