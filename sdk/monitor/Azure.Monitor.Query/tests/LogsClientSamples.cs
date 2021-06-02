@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Tests
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
 
-            LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
             Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
             LogsQueryResultTable table = response.Value.PrimaryTable;
@@ -51,7 +51,7 @@ namespace Azure.Monitor.Query.Tests
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
 
-            LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
             Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
             LogsQueryResultTable table = response.Value.PrimaryTable;
@@ -90,7 +90,7 @@ namespace Azure.Monitor.Query.Tests
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
 
-            LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
             Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(workspaceId,
@@ -110,7 +110,7 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:QueryLogsAsModels
 
-            LogsClient client = new LogsClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
+            LogsQueryClient client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 #if SNIPPET
             string workspaceId = "<workspace_id>";
 #else
@@ -143,7 +143,7 @@ namespace Azure.Monitor.Query.Tests
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
 
-            LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
             // And total event count
@@ -177,7 +177,7 @@ namespace Azure.Monitor.Query.Tests
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
 
-            LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
             Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(workspaceId,
@@ -185,7 +185,7 @@ namespace Azure.Monitor.Query.Tests
                 TimeSpan.FromDays(1),
                 options: new LogsQueryOptions()
                 {
-                    Timeout = TimeSpan.FromMinutes(10)
+                    ServerTimeout = TimeSpan.FromMinutes(10)
                 });
 
             foreach (var resourceGroup in response.Value)
@@ -208,7 +208,7 @@ namespace Azure.Monitor.Query.Tests
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
 
-            LogsClient client = new LogsClient(endpoint, new DefaultAzureCredential());
+            LogsQueryClient client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
 
             try
             {
