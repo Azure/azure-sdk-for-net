@@ -6,15 +6,15 @@ using Azure.AI.MetricsAdvisor.Administration;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorAdministrationClient.GetCredentialEntitiesAsync"/>
-    /// or <see cref="MetricsAdvisorAdministrationClient.GetCredentialEntities"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling <see cref="MetricsAdvisorAdministrationClient.GetDatasourceCredentialsAsync"/>
+    /// or <see cref="MetricsAdvisorAdministrationClient.GetDatasourceCredentials"/> to configure the behavior of the request.
     /// </summary>
-    public class GetCredentialEntitiesOptions
+    public class GetDatasourceCredentialsOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetCredentialEntitiesOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetDatasourceCredentialsOptions"/> class.
         /// </summary>
-        public GetCredentialEntitiesOptions()
+        public GetDatasourceCredentialsOptions()
         {
         }
 

@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DataLakeGen2SharedKeyCredential. </summary>
-    internal partial class DataLakeGen2SharedKeyCredential : DataSourceCredentialEntity
+    internal partial class DataLakeGen2SharedKeyCredential : DatasourceCredential
     {
         /// <summary> Initializes a new instance of DataLakeGen2SharedKeyCredential. </summary>
         /// <param name="name"> Name of data source credential. </param>

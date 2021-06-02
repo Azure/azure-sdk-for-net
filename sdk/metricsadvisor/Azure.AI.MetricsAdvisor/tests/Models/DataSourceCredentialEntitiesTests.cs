@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
     {
         private static object[] CredentialEntityTestCases =
         {
-            new object[] { new ServicePrincipalCredentialEntity("mock", "mock", "secret", "mock"), "\"clientSecret\":\"secret\"" }
+            new object[] { new ServicePrincipalDatasourceCredential("mock", "mock", "secret", "mock"), "\"clientSecret\":\"secret\"" }
         };
 
         public DataSourceCredentialEntitiesTests(bool isAsync) : base(isAsync)
@@ -37,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         [Test]
         [TestCaseSource(nameof(CredentialEntityTestCases))]
-        public async Task DataSourceCredentialEntitySendsSecretDuringCreation(DataSourceCredentialEntity credentialEntity, string expectedSubstring)
+        public async Task DataSourceCredentialEntitySendsSecretDuringCreation(DatasourceCredential credentialEntity, string expectedSubstring)
         {
             MockResponse createResponse = new MockResponse(201);
             createResponse.AddHeader(new HttpHeader("Location", $"https://fakeresource.cognitiveservices.azure.com/metricsadvisor/v1.0/credentials/{FakeGuid}"));
@@ -48,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockTransport mockTransport = new MockTransport(createResponse, getResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            await adminClient.CreateCredentialEntityAsync(credentialEntity);
+            await adminClient.CreateDatasourceCredentialAsync(credentialEntity);
 
             MockRequest request = mockTransport.Requests.First();
             string content = ReadContent(request);

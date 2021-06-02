@@ -9,70 +9,70 @@ using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
-    public class CredentialEntityLiveTests : MetricsAdvisorLiveTestBase
+    public class DatasourceCredentialLiveTests : MetricsAdvisorLiveTestBase
     {
         private const string ClientId = "clientId";
         private const string ClientSecret = "clientSecret";
         private const string TenantId = "tenantId";
 
-        public CredentialEntityLiveTests(bool isAsync) : base(isAsync)
+        public DatasourceCredentialLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
         [RecordedTest]
-        public async Task CreateAndGetServicePrincipalCredentialEntity()
+        public async Task CreateAndGetServicePrincipalDatasourceCredential()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             string credentialName = Recording.GenerateAlphaNumericId("credential");
 
-            var credentialToCreate = new ServicePrincipalCredentialEntity(credentialName, ClientId, ClientSecret, TenantId);
+            var credentialToCreate = new ServicePrincipalDatasourceCredential(credentialName, ClientId, ClientSecret, TenantId);
 
             await using var disposableCredential = await DisposableCredentialEntity.CreateCredentialEntityAsync(adminClient, credentialToCreate);
 
-            DataSourceCredentialEntity createdCredential = await adminClient.GetCredentialEntityAsync(disposableCredential.Id);
+            DatasourceCredential createdCredential = await adminClient.GetDatasourceCredentialAsync(disposableCredential.Id);
 
             Assert.That(createdCredential.Id, Is.EqualTo(disposableCredential.Id));
             Assert.That(createdCredential.Name, Is.EqualTo(credentialName));
             Assert.That(createdCredential.Description, Is.Empty);
 
-            ValidateServicePrincipalCredentialEntity(createdCredential);
+            ValidateServicePrincipalDatasourceCredential(createdCredential);
         }
 
         [RecordedTest]
-        public async Task CreateAndGetCredentialEntityWithDescription()
+        public async Task CreateAndGetDatasourceCredentialWithDescription()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             string credentialName = Recording.GenerateAlphaNumericId("credential");
             string expectedDescription = "This is a description";
 
-            var credentialToCreate = new ServicePrincipalCredentialEntity(credentialName, ClientId, ClientSecret, TenantId)
+            var credentialToCreate = new ServicePrincipalDatasourceCredential(credentialName, ClientId, ClientSecret, TenantId)
             {
                 Description = expectedDescription
             };
 
             await using var disposableCredential = await DisposableCredentialEntity.CreateCredentialEntityAsync(adminClient, credentialToCreate);
 
-            DataSourceCredentialEntity createdCredential = await adminClient.GetCredentialEntityAsync(disposableCredential.Id);
+            DatasourceCredential createdCredential = await adminClient.GetDatasourceCredentialAsync(disposableCredential.Id);
 
             Assert.That(createdCredential.Description, Is.EqualTo(expectedDescription));
         }
 
         [RecordedTest]
-        public async Task GetCredentialEntities()
+        public async Task GetDatasourceCredentials()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var credentialCount = 0;
 
-            await foreach (DataSourceCredentialEntity credential in adminClient.GetCredentialEntitiesAsync())
+            await foreach (DatasourceCredential credential in adminClient.GetDatasourceCredentialsAsync())
             {
                 Assert.That(credential.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(credential.Name, Is.Not.Null.And.Not.Empty);
                 Assert.That(credential.Description, Is.Not.Null);
 
-                ValidateGenericCredentialEntity(credential);
+                ValidateGenericDatasourceCredential(credential);
 
                 if (++credentialCount >= MaximumSamplesCount)
                 {
@@ -84,18 +84,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task DeleteCredentialEntity()
+        public async Task DeleteDatasourceCredential()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var credentialName = Recording.GenerateAlphaNumericId("credential");
-            var credentialToCreate = new ServicePrincipalCredentialEntity(credentialName, "clientId", "clientSecret", "tenantId");
+            var credentialToCreate = new ServicePrincipalDatasourceCredential(credentialName, "clientId", "clientSecret", "tenantId");
 
             string credentialId = null;
 
             try
             {
-                DataSourceCredentialEntity createdCredential = await adminClient.CreateCredentialEntityAsync(credentialToCreate);
+                DatasourceCredential createdCredential = await adminClient.CreateDatasourceCredentialAsync(credentialToCreate);
                 credentialId = createdCredential.Id;
 
                 Assert.That(credentialId, Is.Not.Null.And.Not.Empty);
@@ -104,26 +104,26 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 if (credentialId != null)
                 {
-                    await adminClient.DeleteCredentialEntityAsync(credentialId);
+                    await adminClient.DeleteDatasourceCredentialAsync(credentialId);
 
                     var errorCause = "credentialId is invalid";
-                    Assert.That(async () => await adminClient.GetCredentialEntityAsync(credentialId), Throws.InstanceOf<RequestFailedException>().With.Message.Contains(errorCause));
+                    Assert.That(async () => await adminClient.GetDatasourceCredentialAsync(credentialId), Throws.InstanceOf<RequestFailedException>().With.Message.Contains(errorCause));
                 }
             }
         }
 
-        private void ValidateServicePrincipalCredentialEntity(DataSourceCredentialEntity credentialEntity)
+        private void ValidateServicePrincipalDatasourceCredential(DatasourceCredential credential)
         {
-            var servicePrincipalCredential = credentialEntity as ServicePrincipalCredentialEntity;
+            var servicePrincipalCredential = credential as ServicePrincipalDatasourceCredential;
 
             Assert.That(servicePrincipalCredential, Is.Not.Null);
             Assert.That(servicePrincipalCredential.ClientId, Is.EqualTo(ClientId));
             Assert.That(servicePrincipalCredential.TenantId, Is.EqualTo(TenantId));
         }
 
-        private void ValidateGenericCredentialEntity(DataSourceCredentialEntity credential)
+        private void ValidateGenericDatasourceCredential(DatasourceCredential credential)
         {
-            if (credential is ServicePrincipalCredentialEntity spCredential)
+            if (credential is ServicePrincipalDatasourceCredential spCredential)
             {
                 Assert.That(spCredential.ClientId, Is.Not.Null.And.Not.Empty);
                 Assert.That(spCredential.TenantId, Is.Not.Null.And.Not.Empty);
