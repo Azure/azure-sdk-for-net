@@ -11,5 +11,8 @@ namespace Azure.IoT.TimeSeriesInsights
     [CodeGenModel("Tsx")]
     public partial class TimeSeriesExpression
     {
+        /// <summary> Time series expression (TSX) written as a single string. Examples: &quot;$event.Status.String=&apos;Good&apos;&quot;, &quot;avg($event.Temperature)&quot;. Refer to the documentation on how to write time series expressions. </summary>
+        [CodeGenMember("Tsx")]
+        public string Expression { get; set; }
     }
 }

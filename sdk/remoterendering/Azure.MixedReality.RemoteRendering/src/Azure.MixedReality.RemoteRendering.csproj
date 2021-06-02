@@ -3,14 +3,15 @@
     <AssemblyTitle>Microsoft Azure Mixed Reality ARR Client</AssemblyTitle>
     <Version>1.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageTags>Azure MixedReality</PackageTags>
     <Authors>Microsoft</Authors>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.0" />
+    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.1" />
+    <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
   
   <!-- Shared source from Azure.Core and Azure.MixedReality.Authentication -->

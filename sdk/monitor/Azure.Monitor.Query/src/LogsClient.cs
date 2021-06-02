@@ -40,9 +40,10 @@ namespace Azure.Monitor.Query
         public LogsClient(Uri endpoint, TokenCredential credential, LogsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new LogsClientOptions();
-
+            endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://api.loganalytics.io//.default"));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
@@ -188,7 +189,7 @@ namespace Azure.Monitor.Query
         internal static QueryBody CreateQueryBody(string query, DateTimeRange timeRange, LogsQueryOptions options, out string prefer)
         {
             var queryBody = new QueryBody(query);
-            if (timeRange != DateTimeRange.MaxValue)
+            if (timeRange != DateTimeRange.All)
             {
                 queryBody.Timespan = timeRange.ToString();
             }

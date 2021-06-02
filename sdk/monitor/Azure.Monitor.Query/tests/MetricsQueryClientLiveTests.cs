@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
@@ -59,7 +60,7 @@ namespace Azure.Monitor.Query.Tests
                     TimeSpan = new DateTimeRange(_testData.StartTime, duration)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(duration.Minutes, timeSeriesData.Count);
             // Average is queried by default
             Assert.True(timeSeriesData.All(d=> d.Average != null));
@@ -88,7 +89,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             // Average is queried by default
             Assert.True(timeSeriesData.All(d=>
@@ -113,7 +114,7 @@ namespace Azure.Monitor.Query.Tests
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -133,7 +134,7 @@ namespace Azure.Monitor.Query.Tests
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.Duration)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -153,7 +154,7 @@ namespace Azure.Monitor.Query.Tests
                     TimeSpan = new DateTimeRange(_testData.Duration, _testData.EndTime)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -172,7 +173,7 @@ namespace Azure.Monitor.Query.Tests
                     MetricNamespace = _testData.MetricNamespace
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.Greater(timeSeriesData.Count, 0);
         }
 
@@ -191,7 +192,7 @@ namespace Azure.Monitor.Query.Tests
                     Interval = TimeSpan.FromMinutes(5)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(_testData.Duration.Minutes / 5, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -216,7 +217,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeries = results.Value.Metrics[0].Timeseries[0];
+            var timeSeries = results.Value.Metrics[0].TimeSeries[0];
 
             Assert.AreEqual(_testData.Name1, timeSeries.Metadata["name"]);
         }
@@ -240,7 +241,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            Assert.AreEqual(1, results.Value.Metrics[0].Timeseries.Count);
+            Assert.AreEqual(1, results.Value.Metrics[0].TimeSeries.Count);
         }
 
         [RecordedTest]

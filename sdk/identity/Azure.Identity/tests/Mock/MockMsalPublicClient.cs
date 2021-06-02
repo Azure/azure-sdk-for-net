@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests.Mock
 
         public Func<string[], AuthenticationResult> UserPassAuthFactory { get; set; }
 
-        public Func<string[], AuthenticationResult> InteractiveAuthFactory { get; set; }
+        public Func<string[], string, Prompt, string, bool, CancellationToken, AuthenticationResult> InteractiveAuthFactory { get; set; }
 
         public Func<string[], AuthenticationResult> SilentAuthFactory { get; set; }
 
@@ -45,13 +45,18 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        protected override ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, bool async, CancellationToken cancellationToken)
+        protected override ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, bool async, CancellationToken cancellationToken)
         {
-            Func<string[], AuthenticationResult> factory = InteractiveAuthFactory ?? AuthFactory;
+            var interactiveAuthFactory = InteractiveAuthFactory;
+            var authFactory = AuthFactory;
 
-            if (factory != null)
+            if (interactiveAuthFactory != null)
             {
-                return new ValueTask<AuthenticationResult>(factory(scopes));
+                return new ValueTask<AuthenticationResult>(interactiveAuthFactory(scopes, claims, prompt, loginHint, async, cancellationToken));
+            }
+            if (authFactory != null)
+            {
+                return new ValueTask<AuthenticationResult>(authFactory(scopes));
             }
 
             throw new NotImplementedException();
