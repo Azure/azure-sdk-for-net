@@ -7,7 +7,10 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Health care entity class.
+    /// A model which contains info about the detected health care entity.
+    /// A healthcare entity represented as a node in a directed graph
+    /// where the edges are a particular type of relationship between
+    /// the source and target nodes.
     /// </summary>
     public class HealthcareEntity
     {
