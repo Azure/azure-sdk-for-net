@@ -1,6 +1,6 @@
 # Azure.Search.Documents Samples - List Tags Anonymously (sync)
 
-A common use case for Azure Container Registries is to view the repositories, artifacts, or tags in a public registry that belongs to someone else.  In this case, the user would need to access the registry anonymously.  They wouldn't have permissions to modify or delete any of the images in the registry, but could list all the collections there.  
+A common use case for Azure Container Registries is to view the repositories, artifacts, or tags in a public registry that belongs to someone else.  In this case, the user would need to access the registry anonymously.  Anonymous access allows a user to list all the collections there, but they wouldn't also have permissions to modify or delete any of the images in the registry.
 
 This sample shows how to list the tags for an image with anonymous access.
 

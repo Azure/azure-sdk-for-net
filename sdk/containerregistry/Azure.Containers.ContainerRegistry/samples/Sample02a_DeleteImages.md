@@ -1,6 +1,6 @@
 # Azure.Containers.ContainerRegistry Samples - Delete Images (sync)
 
-A common use case for Azure Container Registries is to scan the repositories in a registry and delete all the images older than a certain date, or to keep the latest n images.  This sample illustrates how to use the .NET ACR SDK to delete all but the latest three images.
+A common use case for Azure Container Registries is to scan the repositories in a registry and delete all but the most recent *n* images, or all images older than a certain date.  This sample illustrates how to use the .NET ACR SDK to delete all but the latest three images.
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImage
 // Get the service endpoint from the environment
