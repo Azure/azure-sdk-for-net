@@ -2,7 +2,7 @@
 
 A common use case for Azure Container Registries is to set an image's properties so it can't be overwritten during a lengthy deployment.
 
-The following sample assumes the registry `myacr.azurecr.io` has a repository `hello-world` where one image has two tags: `v1` and `latest`.
+The following sample assumes the registry `myacr.azurecr.io` has a repository `hello-world` with image tagged `v1`.  It illustrates how to update the properties on the tag so it can't be overwritten or deleted.
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_SetArtifactProperties
 // Get the service endpoint from the environment
@@ -12,15 +12,15 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
-// Set permissions on the v1 image's "latest" tag
-image.UpdateTagProperties("latest", new ArtifactTagProperties()
+// Set permissions on the image's "v1" tag.
+image.UpdateTagProperties("v1", new ArtifactTagProperties()
 {
     CanWrite = false,
     CanDelete = false
 });
 ```
 
-If someone were to push an update to `myacr.azurecr.io\hello-world:v1`, it would fail.
+After this update, if someone were to push an update to `myacr.azurecr.io\hello-world:v1`, it would fail.
 
 ```
 C:\> docker push myacr.azurecr.io/hello-world:v1
@@ -29,7 +29,8 @@ The push refers to repository [myacr.azurecr.io/hello-world]
 unknown: The operation is disallowed on this registry, repository or image. View troubleshooting steps at https://aka.ms/acr/faq/#why-does-my-pull-or-push-request-fail-with-disallowed-operation
 ```
 
-But be cautious!  If the images has other tags, such as `latest`, it could still be overwritten.  If someone were to push an update to `myacr.azurecr.io\hello-world:latest` (which references the same image), it would succeed.
+It's worth noting that if this image also had another tag, such as `latest`, and that tag did not have permissions set to prevent reads or deletes, the image could still be overwritten.  For example, if someone were to push an update to `myacr.azurecr.io\hello-world:latest` (which references the same image), it would succeed.
+
 ```
 C:\> docker push myacr.azurecr.io/hello-world:latest
 The push refers to repository [myacr.azurecr.io/hello-world]
