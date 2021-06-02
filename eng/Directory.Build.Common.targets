@@ -136,7 +136,7 @@
     <!-- Add ProjectReferences -->
     <ProjectReference Include="@(ProjectsToConvert -> '%(ProjectPath)')" />
   </ItemGroup>
-  
+
   <!--TODO: update build targets - ADO 5668-->
   <PropertyGroup>
     <MgmtCoreShared>$(MSBuildThisFileDirectory)/../common/ManagementCoreShared</MgmtCoreShared>
@@ -147,12 +147,13 @@
     <Compile Include="$(MgmtCoreShared)/**/*.cs"
                  Link="Shared/Management/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
-  
+
   <!--TODO: end-->
   <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
     <PackageReference Include="System.Text.Json" />
-    
+    <PackageReference Condition="$(MSBuildProjectName) != 'Azure.ResourceManager.Core' and $(MSBuildProjectName) != 'Azure.ResourceManager.Resources'" Include="Azure.ResourceManager.Core" />
+
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
