@@ -1972,6 +1972,80 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
+        /// Updates an existing <see cref="DatasourceCredential"/>.
+        /// </summary>
+        /// <param name="datasourceCredential">The <see cref="DatasourceCredential"/> model containing the updates to be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
+        /// instance containing information about the updated credential.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredential"/> or <paramref name="datasourceCredential"/>.Id is null.</exception>
+        public virtual async Task<Response<DatasourceCredential>> UpdateDatasourceCredentialAsync(DatasourceCredential datasourceCredential, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(datasourceCredential, nameof(datasourceCredential));
+
+            if (datasourceCredential.Id == null)
+            {
+                throw new ArgumentNullException(nameof(datasourceCredential), $"{nameof(datasourceCredential)}.Id not available. Call {nameof(GetDatasourceCredentialAsync)} and update the returned model before calling this method.");
+            }
+
+            Guid credentialGuid = new Guid(datasourceCredential.Id);
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDatasourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                DataSourceCredentialPatch patch = datasourceCredential.GetPatchModel();
+
+                return await _serviceRestClient.UpdateCredentialAsync(credentialGuid, patch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing <see cref="DatasourceCredential"/>.
+        /// </summary>
+        /// <param name="datasourceCredential">The <see cref="DatasourceCredential"/> model containing the updates to be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
+        /// instance containing information about the updated credential.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredential"/> or <paramref name="datasourceCredential"/>.Id is null.</exception>
+        public virtual Response<DatasourceCredential> UpdateDatasourceCredential(DatasourceCredential datasourceCredential, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(datasourceCredential, nameof(datasourceCredential));
+
+            if (datasourceCredential.Id == null)
+            {
+                throw new ArgumentNullException(nameof(datasourceCredential), $"{nameof(datasourceCredential)}.Id not available. Call {nameof(GetDatasourceCredentialAsync)} and update the returned model before calling this method.");
+            }
+
+            Guid credentialGuid = new Guid(datasourceCredential.Id);
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDatasourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                DataSourceCredentialPatch patch = datasourceCredential.GetPatchModel();
+
+                return _serviceRestClient.UpdateCredential(credentialGuid, patch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets an existing <see cref="DatasourceCredential"/>.
         /// </summary>
         /// <param name="datasourceCredentialId">The unique identifier of the <see cref="DatasourceCredential"/>.</param>
