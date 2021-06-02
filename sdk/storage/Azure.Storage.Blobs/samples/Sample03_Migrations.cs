@@ -926,6 +926,7 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-file");
             var containerClient = new BlobContainerClient(ConnectionString, containerName);
+            await containerClient.CreateAsync();
             await containerClient.GetBlobClient(blobName).UploadAsync(BinaryData.FromString(data));
 
             #region Snippet:SampleSnippetsBlobMigration_RetryPolicy
@@ -953,6 +954,7 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-file");
             var containerClient = new BlobContainerClient(ConnectionString, containerName);
+            await containerClient.CreateAsync();
             await containerClient.GetBlobClient(blobName).UploadAsync(BinaryData.FromString(data));
 
             #region Snippet:SampleSnippetsBlobMigration_MaximumExecutionTime
