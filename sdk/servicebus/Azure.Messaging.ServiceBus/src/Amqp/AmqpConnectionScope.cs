@@ -915,16 +915,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             link.Closed += closeHandler;
         }
 
-        private bool HasTransactionalSender()
-        {
-            if (_useSingleSession)
-            {
-                return ActiveLinks.Keys.OfType<SendingAmqpLink>().Any();
-            }
-
-            return false;
-        }
-
         /// <summary>
         ///   Performs the tasks needed to close a connection.
         /// </summary>
