@@ -186,8 +186,7 @@ namespace Azure.ResourceManager.Core
                 case ProvidersKey:
                     {
                         if (parts.Count > 3)
-                            return CreateSubscriptionIdentifier(new SubscriptionResourceIdentifier(subscription,
-                                parts[1], parts[2], parts[3]), parts.Skip(4).ToList());
+                            return CreateResourceGroupIdentifier(new ResourceGroupResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
                         throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
                     }
                 default:
