@@ -35,9 +35,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="value"> The value we're checking against a Field. Eg, in the above example, 5 is the value. </param>
         public ComparisonCondition(string field, string oper, string value)
         {
-            this.Field = field;
-            this.Operator = oper;
-            this.Value = value;
+            Field = field;
+            Operator = oper;
+            Value = value;
         }
     }
 }

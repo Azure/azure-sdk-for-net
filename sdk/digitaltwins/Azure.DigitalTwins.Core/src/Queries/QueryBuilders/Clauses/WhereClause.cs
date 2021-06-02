@@ -23,8 +23,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="condition"> Condition argument for the WHERE clause. </param>
         public WhereClause(BaseCondition condition)
         {
-            this.Type = "WHERE";
-            this.Condition = condition;
+            Type = "WHERE";
+            Condition = condition;
         }
     }
 }

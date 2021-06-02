@@ -2160,29 +2160,29 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        /// <summary>
-        /// Queries for digital twins by iterating through a collection asynchronously.
-        /// </summary>
-        /// <param name="query"> The fluently built query object. </param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
-        /// <typeparam name="T">The type to deserialize the result to.</typeparam>
-        public virtual AsyncPageable<T> QueryAsync<T>(ADTQuery query, CancellationToken cancellationToken = default)
-        {
-            return QueryAsync<T>(query.ToString(), cancellationToken);
-        }
+        ///// <summary>
+        ///// Queries for digital twins by iterating through a collection asynchronously.
+        ///// </summary>
+        ///// <param name="query"> The fluently built query object. </param>
+        ///// <param name="cancellationToken">The cancellation token.</param>
+        ///// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
+        ///// <typeparam name="T">The type to deserialize the result to.</typeparam>
+        //public virtual AsyncPageable<T> QueryAsync<T>(AdtQuery query, CancellationToken cancellationToken = default)
+        //{
+        //    return QueryAsync<T>(query.ToString(), cancellationToken);
+        //}
 
-        /// <summary>
-        /// Queries for digital twins by iterating through a collection synchronously.
-        /// </summary>
-        /// <param name="query"> The fluently built query object. </param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
-        /// <typeparam name="T">The type to deserialize the result to.</typeparam>
-        public virtual Pageable<T> Query<T>(ADTQuery query, CancellationToken cancellationToken = default)
-        {
-            return Query<T>(query.ToString(), cancellationToken);
-        }
+        ///// <summary>
+        ///// Queries for digital twins by iterating through a collection synchronously.
+        ///// </summary>
+        ///// <param name="query"> The fluently built query object. </param>
+        ///// <param name="cancellationToken">The cancellation token.</param>
+        ///// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
+        ///// <typeparam name="T">The type to deserialize the result to.</typeparam>
+        //public virtual Pageable<T> Query<T>(AdtQuery query, CancellationToken cancellationToken = default)
+        //{
+        //    return Query<T>(query.ToString(), cancellationToken);
+        //}
 
         /// <summary>
         /// Queries for digital twins by iterating through a collection synchronously.

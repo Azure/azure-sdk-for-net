@@ -29,8 +29,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="searched"> The list of objects being searched for a value. </param>
         public ContainsCondition(string value, string[] searched)
         {
-            this.Value = value;
-            this.Searched = searched;
+            Value = value;
+            Searched = searched;
         }
     }
 }
