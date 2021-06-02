@@ -746,6 +746,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartitionId = "partitionId";
             var expectedPosition = EventPosition.FromOffset(55);
             var expectedRetryPolicy = Mock.Of<EventHubsRetryPolicy>();
+            var expectedInvalidateOnSteal = false;
             var expectedOptions = new PartitionReceiverOptions
             {
                 OwnerLevel = 99,
@@ -763,6 +764,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     expectedPosition,
                     expectedRetryPolicy,
                     expectedOptions.TrackLastEnqueuedEventProperties,
+                    expectedInvalidateOnSteal,
                     expectedOptions.OwnerLevel,
                     (uint?)expectedOptions.PrefetchCount,
                     expectedOptions.PrefetchSizeInBytes),
@@ -797,6 +799,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     It.IsAny<uint?>(),
                     It.IsAny<long?>()))
@@ -830,6 +833,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<string>(),
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     It.IsAny<uint?>(),
@@ -1048,6 +1052,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     It.IsAny<uint?>(),
                     It.IsAny<long?>()))
@@ -1094,6 +1099,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     It.IsAny<uint?>(),
                     It.IsAny<long?>()))
@@ -1138,6 +1144,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<string>(),
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     It.IsAny<uint?>(),
@@ -1206,6 +1213,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     It.IsAny<uint?>(),
                     It.IsAny<long?>()))
@@ -1250,6 +1258,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<string>(),
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     It.IsAny<uint?>(),
@@ -1348,6 +1357,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     It.IsAny<uint?>(),
                     It.IsAny<long?>()))
@@ -1405,6 +1415,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<string>(),
                     It.IsAny<EventPosition>(),
                     It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
                     It.IsAny<bool>(),
                     It.IsAny<long?>(),
                     It.IsAny<uint?>(),

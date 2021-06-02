@@ -16,6 +16,10 @@ namespace Azure.Template
             V7_0 = 1,
         }
     }
+    public static partial class TemplateModelFactory
+    {
+        public static Azure.Template.Models.SecretBundle SecretBundle(string value = null, string id = null, string contentType = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string kid = null, bool? managed = default(bool?)) { throw null; }
+    }
 }
 namespace Azure.Template.Models
 {

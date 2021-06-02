@@ -12,7 +12,10 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class ExtractKeyPhrasesTests : TextAnalyticsClientLiveTestBase
     {
-        public ExtractKeyPhrasesTests(bool isAsync) : base(isAsync) { }
+        public ExtractKeyPhrasesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private const string SingleEnglish = "My cat might need to see a veterinarian.";
         private const string SingleSpanish = "Mi perro está en el veterinario";

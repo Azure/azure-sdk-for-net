@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Confluent.Models
         /// 'Started', 'PendingFulfillmentStart', 'InProgress', 'Subscribed',
         /// 'Suspended', 'Reinstated', 'Succeeded', 'Failed', 'Unsubscribed',
         /// 'Updating'</param>
-        public OfferDetail(string publisherId = default(string), string id = default(string), string planId = default(string), string planName = default(string), string termUnit = default(string), string status = default(string))
+        public OfferDetail(string publisherId, string id, string planId, string planName, string termUnit, string status = default(string))
         {
             PublisherId = publisherId;
             Id = id;
@@ -101,6 +101,26 @@ namespace Microsoft.Azure.Management.Confluent.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (PublisherId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PublisherId");
+            }
+            if (Id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+            if (PlanId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PlanId");
+            }
+            if (PlanName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PlanName");
+            }
+            if (TermUnit == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TermUnit");
+            }
             if (PublisherId != null)
             {
                 if (PublisherId.Length > 50)

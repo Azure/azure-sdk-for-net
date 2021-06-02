@@ -13,7 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" />
+    <!-- RESTORE PACKAGE REFERENCE FOR RELEASE -->
+    <!--PackageReference Include="Azure.Messaging.EventHubs" /-->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
+    <!-- END RESTORE -->
+
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />

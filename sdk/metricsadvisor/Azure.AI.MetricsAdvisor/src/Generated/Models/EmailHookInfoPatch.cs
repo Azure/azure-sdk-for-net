@@ -16,6 +16,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             HookType = HookType.Email;
         }
 
-        public EmailHookParameter HookParameter { get; set; }
+        public EmailHookParameterPatch HookParameter { get; set; }
     }
 }
