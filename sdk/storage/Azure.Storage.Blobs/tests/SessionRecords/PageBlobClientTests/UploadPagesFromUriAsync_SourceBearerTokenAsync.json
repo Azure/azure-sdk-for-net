@@ -156,7 +156,7 @@
         ],
         "x-ms-client-request-id": "5dbcad71-59de-8eec-b17c-88741785df3d",
         "x-ms-copy-source": "https://seanstageoauth.blob.core.windows.net/test-container-8827e946-4f36-03ce-fc4a-b1d8d77b96c1/test-blob-bac2c178-d906-3226-0a28-ba0d6aa58d38",
-        "x-ms-copy-source-authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiJodHRwczovL3N0b3JhZ2UuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3LyIsImlhdCI6MTYyMDkxMzkyNywibmJmIjoxNjIwOTEzOTI3LCJleHAiOjE2MjEwMDA2MjcsImFpbyI6IkUyWmdZSENlMDFVaDVKZnJxM3oyUzlQeG14YWJBQT09IiwiYXBwaWQiOiI2ODM5MGExOS1hNjQzLTQ1OGItYjcyNi00MDhhYmY2N2I0ZmMiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwib2lkIjoiYzRmNDgyODktYmI4NC00MDg2LWIyNTAtNmY5NGE4ZjY0Y2VlIiwicmgiOiIwLkFSb0F2NGo1Y3ZHR3IwR1JxeTE4MEJIYlJ4a0tPV2hEcG90RnR5WkFpcjludFB3YUFBQS4iLCJzdWIiOiJjNGY0ODI4OS1iYjg0LTQwODYtYjI1MC02Zjk0YThmNjRjZWUiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1dGkiOiI0ci1QRTNQT1FraUxMQUYwNzRSbkFBIiwidmVyIjoiMS4wIn0.I4mQAaoI2M3KnjT7dHReyUeBC57-Y1DQuk06a8IR3pKX613RFljoM06OTxx6t9bWLrSq3JbGi4soPtqrV1Vlzb5TnAvTGY170_L5csffWaq9ZsxvFseNjP0NOZQhSFigXbyHY2EC1nywtFxH3UiDYmwlET1_tIIgty3JWlOJxLw1PJLwvVB5YxdOUHyUWb6PkGpKAVo1-BPErdQkmW9QsGvDar22UjLXc_6TTtU6rbsx_3CfLaM3IbyUbsGMzgAz2wY-ekHaiYrWx49YFxmnUS8T3k_3GtAFHn89jfuPJXXh6gptZHkzkPSyfm1fCCoHZpMxfl-hB2ahDr8H8JyFwg",
+        "x-ms-copy-source-authorization": "Sanitized",
         "x-ms-page-write": "update",
         "x-ms-range": "bytes=0-1023",
         "x-ms-return-client-request-id": "true",

@@ -539,6 +539,11 @@ namespace Azure.Storage.Test.Shared
 
         public async Task<string> GetAuthToken()
         {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return string.Empty;
+            }
+
             IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(TestConfigOAuth.ActiveDirectoryApplicationId)
                 .WithAuthority(AzureCloudInstance.AzurePublic, TestConfigOAuth.ActiveDirectoryTenantId)
                 .WithClientSecret(TestConfigOAuth.ActiveDirectoryApplicationSecret)

@@ -242,7 +242,7 @@
         ],
         "x-ms-client-request-id": "f407bc61-0602-ae2d-dda5-ca927af582b3",
         "x-ms-copy-source": "https://seanstageoauth.blob.core.windows.net/test-share-5d07b40e-3005-5c97-a2d3-bd7a16af4f68/test-file-c362b67f-c241-5b10-6db1-aae48efc7f02",
-        "x-ms-copy-source-authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiJodHRwczovL3N0b3JhZ2UuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3LyIsImlhdCI6MTYyMDkxMzkzNiwibmJmIjoxNjIwOTEzOTM2LCJleHAiOjE2MjEwMDA2MzYsImFpbyI6IkUyWmdZTWhLRUQxMlNySjlmM3ZFdkVVaVc2d01BQT09IiwiYXBwaWQiOiI2ODM5MGExOS1hNjQzLTQ1OGItYjcyNi00MDhhYmY2N2I0ZmMiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwib2lkIjoiYzRmNDgyODktYmI4NC00MDg2LWIyNTAtNmY5NGE4ZjY0Y2VlIiwicmgiOiIwLkFSb0F2NGo1Y3ZHR3IwR1JxeTE4MEJIYlJ4a0tPV2hEcG90RnR5WkFpcjludFB3YUFBQS4iLCJzdWIiOiJjNGY0ODI4OS1iYjg0LTQwODYtYjI1MC02Zjk0YThmNjRjZWUiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1dGkiOiJsQ3I4NzFqMUkwNmQxWTBydEF5SUFBIiwidmVyIjoiMS4wIn0.G2qNwTcduodlTmBHN4QJPIndkIU3fIPVFLeODkiv65up8ANJaa9Fpqq6vV4Ke3BLY0xt3IjPjfT0mDUdkVvdaLpnTS5CmCS8sprbcxZj1Y-3q2E6IOOWqmez4-zWgTRtI_A-Z6AZ6QjYz8kntSbyINSdfVueZwBdg6_RHIg2Y5Qd6eiv_26_5X_5LM82ZAeEcmYPnjdSTeyDWu18fGMqyZm6dxoArhLIKQz3PrESvUrcQRSattwHoKRs0tXEB8Mm7fw-tfaCCU6wLx4xEgYBIi4tWWjzcEwzNMe0sbbUYzL1vIv4IL1rabmwzatlpEoBZ0652iNk-bvoWJQUTGzxbw",
+        "x-ms-copy-source-authorization": "Sanitized",
         "x-ms-date": "Thu, 13 May 2021 13:57:16 GMT",
         "x-ms-range": "bytes=0-1023",
         "x-ms-return-client-request-id": "true",
