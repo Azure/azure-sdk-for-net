@@ -2085,6 +2085,104 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
         }
 
+        /// <summary>
+        /// Gets a collection of items describing the existing <see cref="DataSourceCredentialEntity"/> instances in this Metrics
+        /// Advisor resource.
+        /// </summary>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataSourceCredentialEntity"/> instances.</returns>
+        public virtual AsyncPageable<DataSourceCredentialEntity> GetCredentialEntitiesAsync(GetAlertConfigurationsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
+
+            async Task<Page<DataSourceCredentialEntity>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetCredentialEntities)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = await _serviceRestClient.ListCredentialsAsync(skip, maxPageSize, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<DataSourceCredentialEntity>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetCredentialEntities)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = await _serviceRestClient.ListCredentialsNextPageAsync(nextLink, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a collection of items describing the existing <see cref="DataSourceCredentialEntity"/> instances in this Metrics
+        /// Advisor resource.
+        /// </summary>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataSourceCredentialEntity"/> instances.</returns>
+        public virtual Pageable<DataSourceCredentialEntity> GetCredentialEntities(GetAlertConfigurationsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
+
+            Page<DataSourceCredentialEntity> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetCredentialEntities)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = _serviceRestClient.ListCredentials(skip, maxPageSize, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<DataSourceCredentialEntity> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetCredentialEntities)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = _serviceRestClient.ListCredentialsNextPage(nextLink, skip, maxPageSize, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
         #endregion Credential
     }
 }
