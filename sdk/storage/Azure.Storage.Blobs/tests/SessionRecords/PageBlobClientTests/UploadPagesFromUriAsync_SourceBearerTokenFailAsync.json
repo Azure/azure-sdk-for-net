@@ -156,7 +156,7 @@
         ],
         "x-ms-client-request-id": "461611f2-7d0e-1936-b85d-a3de36420fe1",
         "x-ms-copy-source": "https://seanstageoauth.blob.core.windows.net/test-container-13e302fc-8de8-0107-613d-61156d57489b/test-blob-dc323417-8a1f-c3d1-eb69-cf1dab3a57b6",
-        "x-ms-copy-source-authorization": "Bearer ",
+        "x-ms-copy-source-authorization": "Sanitized",
         "x-ms-page-write": "update",
         "x-ms-range": "bytes=0-1023",
         "x-ms-return-client-request-id": "true",

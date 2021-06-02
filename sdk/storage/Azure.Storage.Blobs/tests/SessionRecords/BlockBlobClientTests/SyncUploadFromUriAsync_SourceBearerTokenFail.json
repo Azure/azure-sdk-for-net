@@ -84,7 +84,7 @@
         "x-ms-blob-type": "BlockBlob",
         "x-ms-client-request-id": "2bc112be-6276-86b5-f450-5b655dbe16ca",
         "x-ms-copy-source": "https://seanstageoauth.blob.core.windows.net/test-container-861e3b48-8e68-a040-cd04-53075c628f0f/test-blob-32d8f510-8f44-bd7c-6ffd-2587677e2bf0",
-        "x-ms-copy-source-authorization": "Bearer ",
+        "x-ms-copy-source-authorization": "Sanitized",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-10-02"
       },

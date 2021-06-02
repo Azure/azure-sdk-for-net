@@ -83,7 +83,7 @@
         ],
         "x-ms-client-request-id": "ae5e974c-1036-634b-0e33-0a62c84974ac",
         "x-ms-copy-source": "https://seanstageoauth.blob.core.windows.net/test-container-e102d8cf-65be-067a-2bd9-23159dee1e81/test-blob-dc2739e0-4321-d3c3-2c7f-439f371c92f0",
-        "x-ms-copy-source-authorization": "Bearer ",
+        "x-ms-copy-source-authorization": "Sanitized",
         "x-ms-requires-sync": "true",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-10-02"
