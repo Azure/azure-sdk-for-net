@@ -54,7 +54,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
@@ -250,7 +249,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
             uri.AppendQuery("comp", "page", true);
             if (timeout != null)
             {
@@ -419,7 +417,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
             uri.AppendQuery("comp", "page", true);
             if (timeout != null)
             {
@@ -559,7 +556,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
             uri.AppendQuery("comp", "page", true);
             if (timeout != null)
             {
@@ -766,7 +762,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
             uri.AppendQuery("comp", "pagelist", true);
             if (snapshot != null)
             {
@@ -883,7 +878,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
             uri.AppendQuery("comp", "pagelist", true);
             if (snapshot != null)
             {
@@ -1012,7 +1006,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
             uri.AppendQuery("comp", "properties", true);
             if (timeout != null)
             {
@@ -1128,7 +1121,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
             uri.AppendQuery("comp", "properties", true);
             if (timeout != null)
             {
@@ -1226,7 +1218,6 @@ namespace Azure.Storage.Blobs
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
             uri.AppendQuery("comp", "incrementalcopy", true);
             if (timeout != null)
             {
