@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -65,6 +66,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(() => adminClient.GetCredentialEntityAsync(FakeGuid, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
             Assert.That(() => adminClient.GetCredentialEntity(FakeGuid, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+        }
+
+        [Test]
+        public void GetCredentialEntitiesRespectsTheCancellationToken()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            IAsyncEnumerator<DataSourceCredentialEntity> asyncEnumerator = adminClient.GetCredentialEntitiesAsync(cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
+            Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
+
+            IEnumerator<DataSourceCredentialEntity> enumerator = adminClient.GetCredentialEntities(cancellationToken: cancellationSource.Token).GetEnumerator();
+            Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]

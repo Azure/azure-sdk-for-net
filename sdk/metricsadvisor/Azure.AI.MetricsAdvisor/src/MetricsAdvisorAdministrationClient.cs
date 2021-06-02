@@ -2030,62 +2030,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
-        /// </summary>
-        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
-        /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="credentialEntityId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="credentialEntityId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> DeleteCredentialEntityAsync(string credentialEntityId, CancellationToken cancellationToken = default)
-        {
-            Guid credentialGuid = ClientCommon.ValidateGuid(credentialEntityId, nameof(credentialEntityId));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteCredentialEntity)}");
-            scope.Start();
-
-            try
-            {
-                return await _serviceRestClient.DeleteCredentialAsync(credentialGuid, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
-        /// </summary>
-        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
-        /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="credentialEntityId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="credentialEntityId"/> is empty or not a valid GUID.</exception>
-        public virtual Response DeleteCredentialEntity(string credentialEntityId, CancellationToken cancellationToken = default)
-        {
-            Guid credentialGuid = ClientCommon.ValidateGuid(credentialEntityId, nameof(credentialEntityId));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteCredentialEntity)}");
-            scope.Start();
-
-            try
-            {
-                return _serviceRestClient.DeleteCredential(credentialGuid, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets a collection of items describing the existing <see cref="DataSourceCredentialEntity"/> instances in this Metrics
         /// Advisor resource.
         /// </summary>
@@ -2181,6 +2125,62 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
 
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
+        /// </summary>
+        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="credentialEntityId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="credentialEntityId"/> is empty or not a valid GUID.</exception>
+        public virtual async Task<Response> DeleteCredentialEntityAsync(string credentialEntityId, CancellationToken cancellationToken = default)
+        {
+            Guid credentialGuid = ClientCommon.ValidateGuid(credentialEntityId, nameof(credentialEntityId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteCredentialEntity)}");
+            scope.Start();
+
+            try
+            {
+                return await _serviceRestClient.DeleteCredentialAsync(credentialGuid, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
+        /// </summary>
+        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="credentialEntityId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="credentialEntityId"/> is empty or not a valid GUID.</exception>
+        public virtual Response DeleteCredentialEntity(string credentialEntityId, CancellationToken cancellationToken = default)
+        {
+            Guid credentialGuid = ClientCommon.ValidateGuid(credentialEntityId, nameof(credentialEntityId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteCredentialEntity)}");
+            scope.Start();
+
+            try
+            {
+                return _serviceRestClient.DeleteCredential(credentialGuid, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion Credential

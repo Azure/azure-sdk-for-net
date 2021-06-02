@@ -60,6 +60,30 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        public async Task GetCredentialEntities()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credentialCount = 0;
+
+            await foreach (DataSourceCredentialEntity credential in adminClient.GetCredentialEntitiesAsync())
+            {
+                Assert.That(credential.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(credential.Name, Is.Not.Null.And.Not.Empty);
+                Assert.That(credential.Description, Is.Not.Null);
+
+                ValidateGenericCredentialEntity(credential);
+
+                if (++credentialCount >= MaximumSamplesCount)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(credentialCount, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21466")]
         public async Task DeleteCredentialEntity()
         {
@@ -96,6 +120,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(servicePrincipalCredential, Is.Not.Null);
             Assert.That(servicePrincipalCredential.ClientId, Is.EqualTo(ClientId));
             Assert.That(servicePrincipalCredential.TenantId, Is.EqualTo(TenantId));
+        }
+
+        private void ValidateGenericCredentialEntity(DataSourceCredentialEntity credential)
+        {
+            if (credential is ServicePrincipalCredentialEntity spCredential)
+            {
+                Assert.That(spCredential.ClientId, Is.Not.Null.And.Not.Empty);
+                Assert.That(spCredential.TenantId, Is.Not.Null.And.Not.Empty);
+            }
         }
     }
 }
