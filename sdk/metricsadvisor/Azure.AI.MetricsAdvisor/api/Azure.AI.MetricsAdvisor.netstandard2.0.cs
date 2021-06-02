@@ -297,6 +297,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAlertConfigurationAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateDataFeed(string dataFeedId, Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDataFeedAsync(string dataFeedId, Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.DatasourceCredential> UpdateDatasourceCredential(Azure.AI.MetricsAdvisor.Models.DatasourceCredential datasourceCredential, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.DatasourceCredential>> UpdateDatasourceCredentialAsync(Azure.AI.MetricsAdvisor.Models.DatasourceCredential datasourceCredential, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateDetectionConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDetectionConfigurationAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateHook(string hookId, Azure.AI.MetricsAdvisor.Models.NotificationHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1110,8 +1112,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class ServicePrincipalDatasourceCredential : Azure.AI.MetricsAdvisor.Models.DatasourceCredential
     {
         public ServicePrincipalDatasourceCredential(string name, string clientId, string clientSecret, string tenantId) { }
-        public string ClientId { get { throw null; } }
-        public string TenantId { get { throw null; } }
+        public string ClientId { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        public void UpdateClientSecret(string clientSecret) { }
     }
     public partial class SeverityCondition
     {
