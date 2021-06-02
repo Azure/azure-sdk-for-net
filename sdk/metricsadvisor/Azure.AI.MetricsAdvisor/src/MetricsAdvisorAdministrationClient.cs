@@ -1972,7 +1972,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="DatasourceCredential"/>.
+        /// Updates an existing <see cref="DatasourceCredential"/>. In order to use update your credential, you cannot create a <see cref="DatasourceCredential"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDatasourceCredentialAsync"/> or another CRUD method and update
+        /// it before calling this method.
         /// </summary>
         /// <param name="datasourceCredential">The <see cref="DatasourceCredential"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -2009,7 +2011,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="DatasourceCredential"/>.
+        /// Updates an existing <see cref="DatasourceCredential"/>. In order to use update your credential, you cannot create a <see cref="DatasourceCredential"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDatasourceCredentialAsync"/> or another CRUD method and update
+        /// it before calling this method.
         /// </summary>
         /// <param name="datasourceCredential">The <see cref="DatasourceCredential"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -2024,7 +2028,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             if (datasourceCredential.Id == null)
             {
-                throw new ArgumentNullException(nameof(datasourceCredential), $"{nameof(datasourceCredential)}.Id not available. Call {nameof(GetDatasourceCredentialAsync)} and update the returned model before calling this method.");
+                throw new ArgumentNullException(nameof(datasourceCredential), $"{nameof(datasourceCredential)}.Id not available. Call {nameof(GetDatasourceCredential)} and update the returned model before calling this method.");
             }
 
             Guid credentialGuid = new Guid(datasourceCredential.Id);
