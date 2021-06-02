@@ -9,6 +9,7 @@
 - `GetDetectionConfigurations` and `GetAlertConfigurations` in the `MetricsAdvisorAdministrationClient` can now take a set of options with `Skip` and `MaxPageSize` properties to configure paging behavior.
 
 ### Breaking Changes
+- Update methods will now return the updated entity instead of an empty response. For example, `UpdateDataFeed` now returns a `Response<DataFeed>`.
 - `NotificationHook.ExternalLink` and `WebNotificationHook.Endpoint` are now of type `Uri`.
 - Removed setter from `GetIncidentsForDetectionConfigurationOptions.DimensionsToFilter`. Elements can be added directly to it without user instantiation.
 - Renamed all `SkipCount` listing options to `Skip`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
