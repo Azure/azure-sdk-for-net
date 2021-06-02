@@ -133,7 +133,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         ///   The URL of the Azure Authority host to be used for authentication. Recorded.
         /// </summary>
-        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST");
+        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST") ?? AzureAuthorityHosts.AzurePublicCloud.ToString();
 
         /// <summary>
         ///   The suffix for Azure Storage accounts for the active cloud environment, such as "core.windows.net".  Recorded.
@@ -177,7 +177,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Returns whether environment is ready to use. Should be overriden to provide service specific sampling scenario.
+        /// Returns whether environment is ready to use. Should be overridden to provide service specific sampling scenario.
         /// The test framework will wait until this returns true before starting tests.
         /// Use this place to hook up logic that polls if eventual consistency has happened.
         ///

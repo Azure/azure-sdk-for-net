@@ -37,15 +37,25 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// available.</param>
         /// <param name="nodeTypes">The list of node types.</param>
         /// <param name="clusterVersions">The list of cluster versions.</param>
-        /// <param name="vmsizes">The list of virtual machine sizes.</param>
-        public VmSizeCompatibilityFilter(string filterMode = default(string), IList<string> regions = default(IList<string>), IList<string> clusterFlavors = default(IList<string>), IList<string> nodeTypes = default(IList<string>), IList<string> clusterVersions = default(IList<string>), IList<string> vmsizes = default(IList<string>))
+        /// <param name="osType">The list of OS types.</param>
+        /// <param name="vMSizes">The list of virtual machine sizes.</param>
+        /// <param name="eSPApplied">Whether apply for ESP cluster. 'true'
+        /// means only for ESP, 'false' means only for non-ESP, null or empty
+        /// string or others mean for both.</param>
+        /// <param name="computeIsolationSupported">Whether support compute
+        /// isolation. 'true' means only for ComputeIsolationEnabled, 'false'
+        /// means only for regular cluster.</param>
+        public VmSizeCompatibilityFilter(string filterMode = default(string), IList<string> regions = default(IList<string>), IList<string> clusterFlavors = default(IList<string>), IList<string> nodeTypes = default(IList<string>), IList<string> clusterVersions = default(IList<string>), IList<string> osType = default(IList<string>), IList<string> vMSizes = default(IList<string>), string eSPApplied = default(string), string computeIsolationSupported = default(string))
         {
             FilterMode = filterMode;
             Regions = regions;
             ClusterFlavors = clusterFlavors;
             NodeTypes = nodeTypes;
             ClusterVersions = clusterVersions;
-            Vmsizes = vmsizes;
+            OsType = osType;
+            VMSizes = vMSizes;
+            ESPApplied = eSPApplied;
+            ComputeIsolationSupported = computeIsolationSupported;
             CustomInit();
         }
 
@@ -85,10 +95,32 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public IList<string> ClusterVersions { get; set; }
 
         /// <summary>
+        /// Gets or sets the list of OS types.
+        /// </summary>
+        [JsonProperty(PropertyName = "OsType")]
+        public IList<string> OsType { get; set; }
+
+        /// <summary>
         /// Gets or sets the list of virtual machine sizes.
         /// </summary>
-        [JsonProperty(PropertyName = "vmsizes")]
-        public IList<string> Vmsizes { get; set; }
+        [JsonProperty(PropertyName = "VMSizes")]
+        public IList<string> VMSizes { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether apply for ESP cluster. 'true' means only for
+        /// ESP, 'false' means only for non-ESP, null or empty string or others
+        /// mean for both.
+        /// </summary>
+        [JsonProperty(PropertyName = "ESPApplied")]
+        public string ESPApplied { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether support compute isolation. 'true' means only
+        /// for ComputeIsolationEnabled, 'false' means only for regular
+        /// cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "ComputeIsolationSupported")]
+        public string ComputeIsolationSupported { get; set; }
 
     }
 }

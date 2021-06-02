@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using Azure.Core;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,6 +14,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// This class holds BlobModelFactory overloads we need for backwards compatibility.
     /// </summary>
+    [CodeGenType("AzureBlobStorageModelFactory")]
     public static partial class BlobsModelFactory
     {
         #region BlobContentInfo

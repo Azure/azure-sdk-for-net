@@ -222,7 +222,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeAzurePowerShellCredential)
             {
-                chain[i++] = factory.CreateAzurePowerShellCredential(options.UseLegacyPowerShell);
+                chain[i++] = factory.CreateAzurePowerShellCredential();
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)

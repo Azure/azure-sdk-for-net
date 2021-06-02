@@ -6,22 +6,22 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "183",
+        "Content-Length": "182",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210423.1",
-          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210526.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "8f3afe383d4e7413902f365c4adf234c",
+        "x-ms-client-request-id": "95936a34b61c1ef27c74437d92d51961",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "put": [
           {
-            "id": "1637794269",
-            "name": "typeWUmSFLmj",
+            "id": "894429059",
+            "name": "type2yKQHYTq",
             "variables": {
-              "categoricalVariableNameKn6S2LNk": {
+              "categoricalVariableNameeHCZj9FT": {
                 "value": {
                   "tsx": "$event"
                 },
@@ -39,20 +39,20 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 23 Apr 2021 10:40:11 GMT",
+        "Date": "Wed, 26 May 2021 22:44:41 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "21509b42-968c-46a5-8ff9-d1f630c4bf7c"
+        "x-ms-request-id": "3fe7e351-3dfd-42c7-b211-4fa1e17c7ae6"
       },
       "ResponseBody": {
         "put": [
           {
             "error": {
               "code": "InvalidInput",
-              "message": "Unable to parse \u0027value\u0027 time series expression (TSX) in variable \u0027categoricalVariableNameKn6S2LNk\u0027.",
-              "target": "variables.categoricalVariableNameKn6S2LNk.value",
+              "message": "Unable to parse \u0027value\u0027 time series expression (TSX) in variable \u0027categoricalVariableNameeHCZj9FT\u0027.",
+              "target": "variables.categoricalVariableNameeHCZj9FT.value",
               "innerError": {
                 "parseErrorDetails": [
                   {
@@ -83,16 +83,16 @@
         "Content-Length": "34",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210423.1",
-          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210526.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "3a14952ed70b31f183512082306c3f5a",
+        "x-ms-client-request-id": "befaa5ba430e3c79ed1310593c98833b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "get": {
           "names": [
-            "typeWUmSFLmj"
+            "type2yKQHYTq"
           ]
         }
       },
@@ -101,19 +101,19 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 23 Apr 2021 10:40:11 GMT",
+        "Date": "Wed, 26 May 2021 22:44:41 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "122fb6bf-df78-4461-89b2-51a74818d0fd"
+        "x-ms-request-id": "93c4ff34-c1a3-4baa-8db4-97b81e26b49c"
       },
       "ResponseBody": {
         "get": [
           {
             "error": {
               "code": "ResourceNotFound",
-              "message": "Time series type with name \u0027typeWUmSFLmj\u0027 is not found.",
+              "message": "Time series type with name \u0027type2yKQHYTq\u0027 is not found.",
               "innerError": {
                 "code": "TypeNotFound"
               }
@@ -131,16 +131,16 @@
         "Content-Length": "37",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210423.1",
-          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210526.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
         ],
-        "x-ms-client-request-id": "f38e5fdbafbb7bad710f1040835d930b",
+        "x-ms-client-request-id": "d0acebf2a2f4e26b08f45323b1c2f164",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "delete": {
           "names": [
-            "typeWUmSFLmj"
+            "type2yKQHYTq"
           ]
         }
       },
@@ -149,12 +149,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 23 Apr 2021 10:40:11 GMT",
+        "Date": "Wed, 26 May 2021 22:44:41 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "52c87fed-29b5-4e25-9a9c-9e831f5622f1"
+        "x-ms-request-id": "e6d4a026-6941-4983-8eae-b5408cfad1ef"
       },
       "ResponseBody": {
         "delete": [
@@ -164,7 +164,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1293631848",
+    "RandomSeed": "1832575446",
     "TIMESERIESINSIGHTS_URL": "fakeHost.api.wus2.timeseriesinsights.azure.com"
   }
 }

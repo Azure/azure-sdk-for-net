@@ -14,8 +14,11 @@ namespace Azure.Monitor.Query.Models
         private IReadOnlyList<LogsQueryResultRow> _rows;
 
         [CodeGenMember("Rows")]
-        internal JsonElement InternalRows { get; }
+        private JsonElement InternalRows { get; }
 
+        /// <summary>
+        /// Gets the rows of the result table.
+        /// </summary>
         public IReadOnlyList<LogsQueryResultRow> Rows => _rows ??= CreateRows();
 
         private IReadOnlyList<LogsQueryResultRow> CreateRows()
@@ -31,7 +34,7 @@ namespace Azure.Monitor.Query.Models
 
             foreach (var row in InternalRows.EnumerateArray())
             {
-                rows.Add(new LogsQueryResultRow(columnDictionary, row));
+                rows.Add(new LogsQueryResultRow(columnDictionary, Columns, row));
             }
 
             return rows;

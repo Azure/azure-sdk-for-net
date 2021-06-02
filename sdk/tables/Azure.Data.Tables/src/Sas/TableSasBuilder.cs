@@ -41,9 +41,9 @@ namespace Azure.Data.Tables.Sas
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
             Argument.AssertNotNullOrEmpty(rawPermissions, nameof(tableName));
 
-            TableName = tableName;
+            TableName = tableName.ToLowerInvariant();
             ExpiresOn = expiresOn;
-            Permissions = rawPermissions;
+            Permissions = rawPermissions.ToLowerInvariant();
         }
 
         /// <summary>
@@ -210,10 +210,10 @@ namespace Azure.Data.Tables.Sas
                 RowKeyEnd);
             var signature = TableSharedKeyCredential.ComputeSasSignature(sharedKeyCredential, stringToSign);
             var p = new TableSasQueryParameters(
-                version: Version,
-                resourceTypes: default,
-                tableName: TableName,
-                partitionKeyStart: PartitionKeyStart,
+                Version,
+                default,
+                TableName,
+                PartitionKeyStart,
                 partitionKeyEnd: PartitionKeyEnd,
                 rowKeyStart: RowKeyStart,
                 rowKeyEnd: RowKeyEnd,

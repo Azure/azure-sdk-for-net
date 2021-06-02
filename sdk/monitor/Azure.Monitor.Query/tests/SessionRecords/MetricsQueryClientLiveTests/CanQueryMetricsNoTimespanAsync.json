@@ -1,0 +1,277 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon3/providers/Microsoft.OperationalInsights/workspaces/pakrymmon3-logs/providers/microsoft.insights/metrics?metricnames=CowsHappiness\u0026api-version=2018-01-01\u0026metricnamespace=Cows",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e2ebbb1869ac154bac2a2255ed03c908-83dcf888fade164f-00",
+        "User-Agent": [
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "42a622b4f470def4af7f49793cdb7d5a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "3290",
+        "Content-Type": "application/json",
+        "Date": "Thu, 13 May 2021 22:03:16 GMT",
+        "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9d695071-ad0e-4b2c-a40b-a388f7567ef6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "{9d695071-ad0e-4b2c-a40b-a388f7567ef6}",
+        "x-ms-routing-request-id": "WESTUS:20210513T220316Z:9d695071-ad0e-4b2c-a40b-a388f7567ef6",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "cost": 59,
+        "timespan": "2021-05-13T21:03:16Z/2021-05-13T22:03:16Z",
+        "interval": "PT1M",
+        "value": [
+          {
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon3/providers/Microsoft.OperationalInsights/workspaces/pakrymmon3-logs/providers/Microsoft.Insights/metrics/CowsHappiness",
+            "type": "Microsoft.Insights/metrics",
+            "name": {
+              "value": "CowsHappiness",
+              "localizedValue": "CowsHappiness"
+            },
+            "unit": "Unspecified",
+            "timeseries": [
+              {
+                "metadatavalues": [],
+                "data": [
+                  {
+                    "timeStamp": "2021-05-13T21:03:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:04:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:05:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:06:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:07:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:08:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:09:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:10:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:11:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:12:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:13:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:14:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:15:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:16:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:17:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:18:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:19:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:20:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:21:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:22:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:23:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:24:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:25:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:26:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:27:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:28:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:29:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:30:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:31:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:32:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:33:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:34:00Z",
+                    "average": 24.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:35:00Z",
+                    "average": 25.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:36:00Z",
+                    "average": 25.714285714285715
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:37:00Z",
+                    "average": 26.25
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:38:00Z",
+                    "average": 26.666666666666668
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:39:00Z",
+                    "average": 27.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:40:00Z",
+                    "average": 27.272727272727273
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:41:00Z",
+                    "average": 27.5
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:42:00Z",
+                    "average": 27.692307692307693
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:43:00Z",
+                    "average": 27.857142857142858
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:44:00Z",
+                    "average": 28.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:45:00Z",
+                    "average": 0.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:46:00Z",
+                    "average": 15.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:47:00Z",
+                    "average": 20.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:48:00Z",
+                    "average": 22.5
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:49:00Z",
+                    "average": 24.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:50:00Z",
+                    "average": 25.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:51:00Z",
+                    "average": 25.714285714285715
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:52:00Z",
+                    "average": 26.25
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:53:00Z",
+                    "average": 26.666666666666668
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:54:00Z",
+                    "average": 27.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:55:00Z",
+                    "average": 27.272727272727273
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:56:00Z",
+                    "average": 27.5
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:57:00Z",
+                    "average": 27.692307692307693
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:58:00Z",
+                    "average": 27.857142857142858
+                  },
+                  {
+                    "timeStamp": "2021-05-13T21:59:00Z",
+                    "average": 28.0
+                  },
+                  {
+                    "timeStamp": "2021-05-13T22:00:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T22:01:00Z"
+                  },
+                  {
+                    "timeStamp": "2021-05-13T22:02:00Z"
+                  }
+                ]
+              }
+            ],
+            "errorCode": "Success"
+          }
+        ],
+        "namespace": "Cows",
+        "resourceregion": "westus2"
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-05-13T15:03:16.8074749-07:00",
+    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon3/providers/Microsoft.OperationalInsights/workspaces/pakrymmon3-logs",
+    "RandomSeed": "704147427",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/"
+  }
+}

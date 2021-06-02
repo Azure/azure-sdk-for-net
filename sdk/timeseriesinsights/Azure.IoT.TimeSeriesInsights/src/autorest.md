@@ -27,7 +27,6 @@ directive:
           path.includes("Availability") ||
           path.includes("EventSchema") ||
           path.includes("InstanceHit") ||
-          path.includes("InstanceHitHighlights") ||
           path.includes("InstancesSearchStringSuggestion") ||
           path.includes("InstancesSortParameter") ||
           path.includes("InstancesSuggestResponse") ||
@@ -43,7 +42,20 @@ directive:
           path.includes("HierarchiesSortBy") ||
           path.includes("HierarchiesSortParameter") ||
           path.includes("HierarchiesExpandParameter") ||
-          path.includes("HierarchiesSortParameter"))
+          path.includes("HierarchiesSortParameter") ||
+          path.includes("QueryRequest") ||
+          path.includes("InstancesBatchRequest") ||
+          path.includes("GetHierarchiesPage") ||
+          path.includes("GetInstancesPage") ||
+          path.includes("GetTypesPage") ||
+          path.includes("HierarchiesBatchRequest") ||
+          path.includes("HierarchiesRequestBatchGetDelete") ||
+          path.includes("ModelSettingsResponse") ||
+          path.includes("TypesBatchRequest") ||
+          path.includes("TypesRequestBatchGetOrDelete") ||
+          path.includes("DateTimeRange") ||
+          path.includes("PagedResponse") ||
+          path.includes("QueryResultPage"))
       {
         $[path]["x-accessibility"] = "internal"
       }
