@@ -436,6 +436,7 @@ catch (RequestFailedException exception)
 Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
 
 ```C# Snippet:Sample7_AnalyzeHealthcareEntitiesBatchConvenience
+    // get input documents
     string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                         Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                         HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -448,6 +449,7 @@ Text Analytics for health is a containerized service that extracts and labels re
 
     string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
 
+    // prepare analyze operation input
     List<string> batchInput = new List<string>()
     {
         document1,
@@ -456,17 +458,20 @@ Text Analytics for health is a containerized service that extracts and labels re
     };
     var options = new AnalyzeHealthcareEntitiesOptions { };
 
+    // start analysis process
     AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchInput, "en", options);
 
     await healthOperation.WaitForCompletionAsync();
 
     Console.WriteLine($"AnalyzeHealthcareEntities operation was completed");
 
+    // view operation status
     Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
     Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
     Console.WriteLine($"Status       : {healthOperation.Status}");
     Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
 
+    // view operation results
     foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
     {
         Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
@@ -484,6 +489,7 @@ Text Analytics for health is a containerized service that extracts and labels re
             {
                 Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
+                // view recognized healthcare entities
                 foreach (HealthcareEntity entity in result.Entities)
                 {
                     Console.WriteLine($"    Entity: {entity.Text}");
@@ -493,12 +499,14 @@ Text Analytics for health is a containerized service that extracts and labels re
                     Console.WriteLine($"    NormalizedText: {entity.NormalizedText}");
                     Console.WriteLine($"    Links:");
 
+                    // view entity data sources
                     foreach (EntityDataSource entityDataSource in entity.DataSources)
                     {
                         Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
                         Console.WriteLine($"        DataSource: {entityDataSource.Name}");
                     }
 
+                    // view assertion
                     if (entity.Assertion != null)
                     {
                         Console.WriteLine($"    Assertions:");
@@ -521,11 +529,13 @@ Text Analytics for health is a containerized service that extracts and labels re
                     Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
                     Console.WriteLine("");
 
+                    // view recognized healthcare relations
                     foreach (HealthcareEntityRelation relations in result.EntityRelations)
                     {
                         Console.WriteLine($"        Relation: {relations.RelationType}");
                         Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
 
+                        // view relation roles
                         foreach (HealthcareEntityRelationRole role in relations.Roles)
                         {
                             Console.WriteLine($"            Role Name: {role.Name}");
