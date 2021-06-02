@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="childType"></param>
-        internal ResourceType(ResourceType parent, string childType) 
+        internal ResourceType(ResourceType parent, string childType)
             : this(parent.Namespace, $"{parent.Type}/{childType}")
         {
         }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Core
             {
                 compareResult = string.Compare(Type, other.Type, StringComparison.InvariantCultureIgnoreCase);
             }
-            
+
             return compareResult;
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
 
             // if the type is just subscriptions, it is a built-in type in the Microsoft.Resources namespace
-            if (parts.Count == 1)
+            else if (parts.Count == 1)
             {
                 // Simple resource type
                 Type = parts[0];
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Core
             }
 
             // Handle resource identifiers from RPs (they have the /providers path segment)
-            if (parts.Contains(KnownKeys.ProviderNamespace) && !KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
+            else if (parts.Contains(KnownKeys.ProviderNamespace) && !KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
             {
                 // it is a resource id from a provider
                 var index = parts.LastIndexOf(KnownKeys.ProviderNamespace);
