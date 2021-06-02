@@ -18,7 +18,7 @@ namespace CosmosDB.Tests.ScenarioTests
         const string location = "EAST US 2";
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "db001";
+        const string databaseAccountName = "db003";
 
         const string databaseName = "databaseName3668";
         const string databaseName2 = "databaseName23668";
@@ -56,9 +56,12 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.MongoDB,
-                        Locations = new List<Location>
+                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties()
                         {
-                            {new Location(locationName: location) }
+                            Locations = new List<Location>
+                            {
+                                {new Location(locationName: location) }
+                            }
                         }
                     };
 
