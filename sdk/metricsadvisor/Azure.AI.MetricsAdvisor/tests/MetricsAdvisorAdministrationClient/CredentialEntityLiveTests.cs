@@ -84,7 +84,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21466")]
         public async Task DeleteCredentialEntity()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -107,7 +106,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 {
                     await adminClient.DeleteCredentialEntityAsync(credentialId);
 
-                    var errorCause = "credentialUUID is invalid";
+                    var errorCause = "credentialId is invalid";
                     Assert.That(async () => await adminClient.GetCredentialEntityAsync(credentialId), Throws.InstanceOf<RequestFailedException>().With.Message.Contains(errorCause));
                 }
             }
