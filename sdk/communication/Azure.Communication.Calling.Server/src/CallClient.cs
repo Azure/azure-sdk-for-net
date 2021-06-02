@@ -248,15 +248,16 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Cancel all media operations in the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
+        /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<CancelAllMediaOperationsResponse>> CancelAllMediaOperationsAsync(string callLegId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CancelAllMediaOperationsResponse>> CancelAllMediaOperationsAsync(string callLegId, string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(CancelAllMediaOperationsAsync)}");
             scope.Start();
             try
             {
-                return await RestClient.CancelAllMediaOperationsAsync(callLegId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await RestClient.CancelAllMediaOperationsAsync(callLegId, operationContext, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -267,15 +268,16 @@ namespace Azure.Communication.Calling.Server
 
         /// <summary> Cancel all media operations in the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
+        /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<CancelAllMediaOperationsResponse> CancelAllMediaOperations(string callLegId, CancellationToken cancellationToken = default)
+        public virtual Response<CancelAllMediaOperationsResponse> CancelAllMediaOperations(string callLegId, string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(CancelAllMediaOperations)}");
             scope.Start();
             try
             {
-                return RestClient.CancelAllMediaOperations(callLegId, cancellationToken: cancellationToken);
+                return RestClient.CancelAllMediaOperations(callLegId, operationContext, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
