@@ -14,13 +14,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
     {
         private const string ClientId = "clientId";
         private const string TenantId = "tenantId";
+        private const string Endpoint = "https://fakeuri.com/";
+        private const string ClientIdSecretName = "clientIdSecretName";
+        private const string ClientSecretSecretName = "clientSecretSecretName";
 
-        public DatasourceCredentialLiveTests(bool isAsync) : base(isAsync)
+        public DatasourceCredentialLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
         [RecordedTest]
+        [TestCase(nameof(DataLakeGen2SharedKeyDatasourceCredential))]
         [TestCase(nameof(ServicePrincipalDatasourceCredential))]
+        [TestCase(nameof(ServicePrincipalInKeyVaultDatasourceCredential))]
+        [TestCase(nameof(SqlConnectionStringDatasourceCredential))]
         public async Task CreateAndGetDatasourceCredential(string credentialTypeName)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -39,7 +45,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [TestCase(nameof(DataLakeGen2SharedKeyDatasourceCredential))]
         [TestCase(nameof(ServicePrincipalDatasourceCredential))]
+        [TestCase(nameof(ServicePrincipalInKeyVaultDatasourceCredential))]
+        [TestCase(nameof(SqlConnectionStringDatasourceCredential))]
         public async Task CreateAndGetDatasourceCredentialWithDescription(string credentialTypeName)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -58,7 +67,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [TestCase(nameof(DataLakeGen2SharedKeyDatasourceCredential))]
         [TestCase(nameof(ServicePrincipalDatasourceCredential))]
+        [TestCase(nameof(ServicePrincipalInKeyVaultDatasourceCredential))]
+        [TestCase(nameof(SqlConnectionStringDatasourceCredential))]
         public async Task UpdateDatasourceCredentialCommonProperties(string credentialTypeName)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -163,6 +175,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(spCredential.ClientId, Is.Not.Null.And.Not.Empty);
                 Assert.That(spCredential.TenantId, Is.Not.Null.And.Not.Empty);
             }
+            else if (credential is ServicePrincipalInKeyVaultDatasourceCredential kvCredential)
+            {
+                Assert.That(kvCredential.Endpoint.AbsoluteUri, Is.Not.Null.And.Not.Empty);
+                Assert.That(kvCredential.KeyVaultClientId, Is.Not.Null.And.Not.Empty);
+                Assert.That(kvCredential.TenantId, Is.Not.Null.And.Not.Empty);
+                Assert.That(kvCredential.SecretNameForClientId, Is.Not.Null.And.Not.Empty);
+                Assert.That(kvCredential.SecretNameForClientSecret, Is.Not.Null.And.Not.Empty);
+            }
+            else if (credential is DataLakeGen2SharedKeyDatasourceCredential ||
+                     credential is SqlConnectionStringDatasourceCredential)
+            {
+                // There's nothing to validate since these credential types do not have public properties.
+            }
             else
             {
                 throw new Exception($"Unknown credential type: {credential.GetType()}");
@@ -176,6 +201,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(spCredential.ClientId, Is.EqualTo(ClientId));
                 Assert.That(spCredential.TenantId, Is.EqualTo(TenantId));
             }
+            else if (credential is ServicePrincipalInKeyVaultDatasourceCredential kvCredential)
+            {
+                Assert.That(kvCredential.Endpoint.AbsoluteUri, Is.EqualTo(Endpoint));
+                Assert.That(kvCredential.KeyVaultClientId, Is.EqualTo(ClientId));
+                Assert.That(kvCredential.TenantId, Is.EqualTo(TenantId));
+                Assert.That(kvCredential.SecretNameForClientId, Is.EqualTo(ClientIdSecretName));
+                Assert.That(kvCredential.SecretNameForClientSecret, Is.EqualTo(ClientSecretSecretName));
+            }
+            else if (credential is DataLakeGen2SharedKeyDatasourceCredential ||
+                     credential is SqlConnectionStringDatasourceCredential)
+            {
+                // There's nothing to validate since these credential types do not have public properties.
+            }
             else
             {
                 throw new Exception($"Unknown credential type: {credential.GetType()}");
@@ -184,7 +222,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         private static DatasourceCredential GetDatasourceCredentialTestCase(string credentialTypeName, string credentialName) => credentialTypeName switch
         {
+            nameof(DataLakeGen2SharedKeyDatasourceCredential) => new DataLakeGen2SharedKeyDatasourceCredential(credentialName, "accountKey"),
             nameof(ServicePrincipalDatasourceCredential) => new ServicePrincipalDatasourceCredential(credentialName, ClientId, "clientSecret", TenantId),
+            nameof(ServicePrincipalInKeyVaultDatasourceCredential) => new ServicePrincipalInKeyVaultDatasourceCredential(credentialName, new Uri(Endpoint), ClientId, "clientSecret", TenantId, ClientIdSecretName, ClientSecretSecretName),
+            nameof(SqlConnectionStringDatasourceCredential) => new SqlConnectionStringDatasourceCredential(credentialName, "connectionString"),
             _ => throw new ArgumentOutOfRangeException($"Unknown credential type: {credentialTypeName}")
         };
     }
