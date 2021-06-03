@@ -69,6 +69,22 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// </summary>
+        public enum AuthenticationType
+        {
+            /// <summary>
+            /// </summary>
+            Basic,
+            /// <summary>
+            /// </summary>
+            ManagedIdentity
+        };
+
+        /// <summary>
+        /// </summary>
+        public AuthenticationType Authentication { get; set; }
+
+        /// <summary>
         /// The name of the blob container.
         /// </summary>
         public string Container { get; set; }

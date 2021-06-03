@@ -77,6 +77,32 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// </summary>
+        public enum AuthenticationType
+        {
+            /// <summary>
+            /// </summary>
+            Basic,
+            /// <summary>
+            /// </summary>
+            SharedKeyCredential,
+            /// <summary>
+            /// </summary>
+            ServicePrincipal,
+            /// <summary>
+            /// </summary>
+            ServicePrincipalInKeyVault
+        };
+
+        /// <summary>
+        /// </summary>
+        public AuthenticationType Authentication { get; set; }
+
+        /// <summary>
+        /// </summary>
+        public string DatasourceCredentialId { get; set; }
+
+        /// <summary>
         /// The name of the Storage Account.
         /// </summary>
         public string AccountName { get; set; }

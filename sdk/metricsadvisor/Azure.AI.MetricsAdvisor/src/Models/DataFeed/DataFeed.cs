@@ -198,6 +198,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                 detail.Viewers.Add(viewer);
             }
 
+            detail.AuthenticationType = GetAuthenticationType(DataSource);
+            detail.CredentialId = GetCredentialId(DataSource);
+
             return detail;
         }
 
@@ -247,7 +250,77 @@ namespace Azure.AI.MetricsAdvisor.Models
             patch.Admins = AdministratorsEmails;
             patch.Viewers = ViewersEmails;
 
+            patch.AuthenticationType = GetAuthenticationType(DataSource);
+            patch.CredentialId = GetCredentialId(DataSource);
+
             return patch;
+        }
+
+        private static string GetCredentialId(DataFeedSource datasource)
+        {
+            if (datasource is AzureDataExplorerDataFeedSource adeSource)
+            {
+                return adeSource.DatasourceCredentialId;
+            }
+            else if (datasource is AzureDataLakeStorageGen2DataFeedSource adlsSource)
+            {
+                return adlsSource.DatasourceCredentialId;
+            }
+            else if (datasource is SqlServerDataFeedSource ssSource)
+            {
+                return ssSource.DatasourceCredentialId;
+            }
+
+            return null;
+        }
+
+        private static AuthenticationTypeEnum GetAuthenticationType(DataFeedSource datasource)
+        {
+            if (datasource is AzureBlobDataFeedSource abSource)
+            {
+                return abSource.Authentication switch
+                {
+                    AzureBlobDataFeedSource.AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
+                    AzureBlobDataFeedSource.AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
+                    _ => throw new InvalidOperationException($"Invalid authentication type: {abSource.Authentication}")
+                };
+            }
+            else if (datasource is AzureDataExplorerDataFeedSource adeSource)
+            {
+                return adeSource.Authentication switch
+                {
+                    AzureDataExplorerDataFeedSource.AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
+                    AzureDataExplorerDataFeedSource.AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
+                    AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipal => AuthenticationTypeEnum.ServicePrincipal,
+                    AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault => AuthenticationTypeEnum.ServicePrincipalInKV,
+                    _ => throw new InvalidOperationException($"Invalid authentication type: {adeSource.Authentication}")
+                };
+            }
+            else if (datasource is AzureDataLakeStorageGen2DataFeedSource adlsSource)
+            {
+                return adlsSource.Authentication switch
+                {
+                    AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
+                    AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.SharedKeyCredential => AuthenticationTypeEnum.DataLakeGen2SharedKey,
+                    AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipal => AuthenticationTypeEnum.ServicePrincipal,
+                    AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipalInKeyVault => AuthenticationTypeEnum.ServicePrincipalInKV,
+                    _ => throw new InvalidOperationException($"Invalid authentication type: {adlsSource.Authentication}")
+                };
+            }
+            else if (datasource is SqlServerDataFeedSource ssSource)
+            {
+                return ssSource.Authentication switch
+                {
+                    SqlServerDataFeedSource.AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
+                    SqlServerDataFeedSource.AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
+                    SqlServerDataFeedSource.AuthenticationType.SqlConnectionString => AuthenticationTypeEnum.AzureSQLConnectionString,
+                    SqlServerDataFeedSource.AuthenticationType.ServicePrincipal => AuthenticationTypeEnum.ServicePrincipal,
+                    SqlServerDataFeedSource.AuthenticationType.ServicePrincipalInKeyVault => AuthenticationTypeEnum.ServicePrincipalInKV,
+                    _ => throw new InvalidOperationException($"Invalid authentication type: {ssSource.Authentication}")
+                };
+            }
+
+            return AuthenticationTypeEnum.Basic;
         }
     }
 }
