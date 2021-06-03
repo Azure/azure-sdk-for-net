@@ -297,7 +297,16 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, Uri audioFileUri, bool? loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
-            => await PlayAudioAsync(callLegId, new PlayAudioOptions { AudioFileUri = audioFileUri, Loop = loop, AudioFileId = audioFileId, CallbackUri = callbackUri, OperationContext = operationContext }, cancellationToken).ConfigureAwait(false);
+            => await PlayAudioAsync(
+                callLegId,
+                new PlayAudioOptions {
+                    AudioFileUri = audioFileUri,
+                    Loop = loop,
+                    AudioFileId = audioFileId,
+                    CallbackUri = callbackUri,
+                    OperationContext = operationContext
+                },
+                cancellationToken).ConfigureAwait(false);
 
         /// <summary> Play audio in the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>

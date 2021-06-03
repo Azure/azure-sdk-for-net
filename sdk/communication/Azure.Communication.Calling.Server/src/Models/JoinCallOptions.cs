@@ -7,12 +7,9 @@ using System.Linq;
 
 namespace Azure.Communication.Calling.Server
 {
-    /// <summary> The options for creating a call. </summary>
-    public class CreateCallOptions
+    /// <summary> The options for joining a call. </summary>
+    public class JoinCallOptions
     {
-        /// <summary> The alternate caller id of the source. </summary>
-        public PhoneNumberIdentifier AlternateCallerId { get; set; }
-
         /// <summary> The subject. </summary>
         public string Subject { get; set; }
 
@@ -25,12 +22,12 @@ namespace Azure.Communication.Calling.Server
         /// <summary> The requested call events to subscribe to. </summary>
         public IList<EventSubscriptionType> RequestedCallEvents { get; }
 
-        /// <summary> Initializes a new instance of CreateCallOptions. </summary>
+        /// <summary> Initializes a new instance of JoinCallOptions. </summary>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="requestedModalities"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
-        public CreateCallOptions(Uri callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents)
+        public JoinCallOptions(Uri callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents)
         {
             if (callbackUri == null)
             {
