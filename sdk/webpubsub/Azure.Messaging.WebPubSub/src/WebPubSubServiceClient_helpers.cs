@@ -23,11 +23,11 @@ namespace Azure.Messaging.WebPubSub
         /// Creates a URI with authentication token.
         /// </summary>
         /// <returns></returns>
-        public virtual Uri GetClientAccessUri(string userId = default, string[] roles = default, TimeSpan expireAfter = default)
+        public virtual Uri GenerateClientAccessUri(string userId = default, string[] roles = default, TimeSpan expiresAfter = default)
         {
-            if (expireAfter == default)
+            if (expiresAfter == default)
             {
-                expireAfter = TimeSpan.FromHours(1);
+                expiresAfter = TimeSpan.FromHours(1);
             }
 
             List<Claim> claims = new List<Claim>();
@@ -56,7 +56,7 @@ namespace Azure.Messaging.WebPubSub
                 HttpPipeline pipeline = Pipeline;
             }
 
-            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, credential, expireAfter);
+            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, credential, expiresAfter);
 
             var clientEndpoint = new UriBuilder(endpoint);
             clientEndpoint.Scheme = "wss";

@@ -21,7 +21,7 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubSubHelloWorld
-            var serviceClient = new WebPubSubServiceClient("some_hub", new AzureKeyCredential(key), new Uri(endpoint));
+            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
             serviceClient.SendToAll("Hello World!");
             #endregion
@@ -33,7 +33,7 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubSubAuthenticate
-            var serviceClient = new WebPubSubServiceClient("some_hub", new AzureKeyCredential(key), new Uri(endpoint));
+            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
             #endregion
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubSubSendJson
-            var serviceClient = new WebPubSubServiceClient("some_hub", new AzureKeyCredential(key), new Uri(endpoint));
+            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
             serviceClient.SendToAll("application/json",
                 RequestContent.Create(
@@ -72,7 +72,7 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubSubSendBinary
-            var serviceClient = new WebPubSubServiceClient("some_hub", new AzureKeyCredential(key), new Uri(endpoint));
+            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
             Stream stream = BinaryData.FromString("Hello World!").ToStream();
             serviceClient.SendToAll("application/octet-stream", RequestContent.Create(stream));
@@ -85,7 +85,7 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubAddUserToGroup
-            var client = new WebPubSubServiceClient("some_hub", new AzureKeyCredential(key), new Uri(endpoint));
+            var client = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
             client.AddUserToGroup("some_group", "some_user");
 

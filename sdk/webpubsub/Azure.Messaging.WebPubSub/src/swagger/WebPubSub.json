@@ -739,6 +739,7 @@
                 ],
                 "summary": "Grant permission to the connection.",
                 "operationId": "WebPubSubService_GrantPermission",
+                "x-accessibility": "internal",
                 "parameters": [
                     {
                         "in": "path",
@@ -802,6 +803,7 @@
                 ],
                 "summary": "Revoke permission for the connection.",
                 "operationId": "WebPubSubService_RevokePermission",
+                "x-accessibility": "internal",
                 "parameters": [
                     {
                         "in": "path",
@@ -865,6 +867,7 @@
                 ],
                 "summary": "Check if a connection has permission to the specified action.",
                 "operationId": "WebPubSubService_CheckPermission",
+                "x-accessibility": "internal",
                 "parameters": [
                     {
                         "in": "path",

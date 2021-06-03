@@ -19,7 +19,6 @@ namespace Azure.Messaging.WebPubSub
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
-        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private string hub;
         private Uri endpoint;
         private readonly string apiVersion;
@@ -1445,7 +1444,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
@@ -1487,7 +1486,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
@@ -1559,7 +1558,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
@@ -1601,7 +1600,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
@@ -1673,7 +1672,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
@@ -1716,7 +1715,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
+        internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();

@@ -18,7 +18,6 @@ namespace Azure.Messaging.WebPubSub
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
-        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private Uri endpoint;
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -26,6 +25,20 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Initializes a new instance of HealthApiClient for mocking. </summary>
         protected HealthApiClient()
         {
+        }
+
+        /// <summary> Initializes a new instance of HealthApiClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public HealthApiClient(Uri endpoint = null, WebPubSubServiceClientOptions options = null)
+        {
+            endpoint ??= new Uri("");
+
+            options ??= new WebPubSubServiceClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this.endpoint = endpoint;
+            apiVersion = options.Version;
         }
 
         /// <summary> Get service health status. </summary>

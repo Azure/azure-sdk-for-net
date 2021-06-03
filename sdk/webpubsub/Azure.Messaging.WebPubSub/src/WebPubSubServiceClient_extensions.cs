@@ -14,6 +14,7 @@ namespace Azure.Messaging.WebPubSub
     /// <summary>
     /// Azure Web PubSub Service Client.
     /// </summary>
+    [CodeGenSuppress("WebPubSubServiceClient", typeof(string), typeof(Uri), typeof(WebPubSubServiceClientOptions))]
     public partial class WebPubSubServiceClient
     {
         private AzureKeyCredential credential;
@@ -31,14 +32,21 @@ namespace Azure.Messaging.WebPubSub
         public Uri Endpoint => endpoint;
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public WebPubSubServiceClient(string hub, AzureKeyCredential credential, Uri endpoint = null, WebPubSubServiceClientOptions options = null)
+        public WebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential)
+            : this(endpoint, hub, credential, new WebPubSubServiceClientOptions())
         {
-            this.credential = credential;
+        }
 
+        /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public WebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential, WebPubSubServiceClientOptions options)
+        {
             if (hub == null)
             {
                 throw new ArgumentNullException(nameof(hub));
@@ -47,14 +55,25 @@ namespace Azure.Messaging.WebPubSub
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            endpoint ??= new Uri("");
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+
+            this.credential = credential;
+            this.hub = hub;
+            this.endpoint = endpoint;
 
             options ??= new WebPubSubServiceClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = HttpPipelineBuilder.Build(options, new WebPubSubAuthenticationPolicy(credential));
-            this.hub = hub;
-            this.endpoint = endpoint;
             apiVersion = options.Version;
+
+            Pipeline = HttpPipelineBuilder.Build(
+                options,
+                new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
+                new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
+                new ResponseClassifier()
+            );
         }
 
         /// <summary>
@@ -78,12 +97,12 @@ namespace Azure.Messaging.WebPubSub
         }
 
         private WebPubSubServiceClient((Uri Endpoint, AzureKeyCredential Credential) parsedConnectionString, string hub) :
-            this(hub, parsedConnectionString.Credential, parsedConnectionString.Endpoint)
+            this(parsedConnectionString.Endpoint, hub, parsedConnectionString.Credential)
         {
         }
 
         private WebPubSubServiceClient((Uri Endpoint, AzureKeyCredential Credential) parsedConnectionString, string hub, WebPubSubServiceClientOptions options) :
-            this(hub, parsedConnectionString.Credential, parsedConnectionString.Endpoint, options)
+            this(parsedConnectionString.Endpoint, hub, parsedConnectionString.Credential, options)
         {
         }
 
@@ -271,6 +290,78 @@ namespace Azure.Messaging.WebPubSub
             var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
             var response = ConnectionExists(connectionId, options);
             return Response.FromValue(response.Status == 200, response);
+        }
+
+        /// <summary> Grant permission to the connection. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> GrantPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = await GrantPermissionAsync(permission.ToString(), connectionId, targetName, options).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Grant permission to the connection. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response GrantPermission(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = GrantPermission(permission.ToString(), connectionId, targetName, options);
+            return response;
+        }
+
+        /// <summary> Revoke permission for the connection. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> RevokePermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = await RevokePermissionAsync(permission.ToString(), connectionId, targetName, options).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Revoke permission for the connection. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response RevokePermission(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = RevokePermission(permission.ToString(), connectionId, targetName, options);
+            return response;
+        }
+
+        /// <summary> Check if a connection has permission to the specified action. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CheckPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = await CheckPermissionAsync(permission.ToString(), connectionId, targetName, options).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Check if a connection has permission to the specified action. </summary>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response CheckPermission(WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        {
+            var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+            var response = CheckPermission(permission.ToString(), connectionId, targetName, options);
+            return response;
         }
     }
 }
