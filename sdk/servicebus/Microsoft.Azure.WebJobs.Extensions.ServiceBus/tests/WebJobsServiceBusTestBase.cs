@@ -85,9 +85,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [SetUp]
         public async Task FixtureSetUp()
         {
-            _firstQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession);
-            _secondQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession);
-            _thirdQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession);
+            _firstQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
+            _secondQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
+            _thirdQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
             _topicScope = await CreateWithTopic(
                 enablePartitioning: false,
                 enableSession: _isSession,
@@ -95,7 +95,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             _secondaryNamespaceQueueScope = await CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: _isSession,
-                overrideNamespace: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace);
+                overrideNamespace: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace,
+                lockDuration: TimeSpan.FromSeconds(15));
             _topicSubscriptionCalled1 = new ManualResetEvent(initialState: false);
             _topicSubscriptionCalled2 = new ManualResetEvent(initialState: false);
             _waitHandle1 = new ManualResetEvent(initialState: false);
@@ -146,20 +147,25 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 settings.Add("AzureWebJobsServiceBus", ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
             }
+
             var hostBuilder = new HostBuilder()
-               .ConfigureAppConfiguration(builder =>
-               {
-                   builder.AddInMemoryCollection(settings);
-               })
-               .ConfigureDefaultTestHost<TJobClass>(b =>
-               {
-                   b.AddServiceBus(options => options.ClientRetryOptions.TryTimeout = TimeSpan.FromSeconds(10));
-               })
-               .ConfigureServices(s =>
-               {
-                   s.Configure<HostOptions>(opts => opts.ShutdownTimeout = HostShutdownTimeout);
-                   s.AddHostedService<ServiceBusEndToEndTestService>();
-               });
+                .ConfigureServices(s =>
+                {
+                    s.Configure<HostOptions>(opts => opts.ShutdownTimeout = HostShutdownTimeout);
+                    // Configure ServiceBusEndToEndTestService before WebJobs stuff so that the ServiceBusEndToEndTestService.StopAsync will be called after
+                    // the WebJobsHost.StopAsync (service that is started first will be stopped last by the IHost).
+                    // This will allow the logs captured in StopAsync to include everything from WebJobs.
+                    s.AddHostedService<ServiceBusEndToEndTestService>();
+                })
+                .ConfigureAppConfiguration(builder =>
+                {
+                    builder.AddInMemoryCollection(settings);
+                })
+                .ConfigureDefaultTestHost<TJobClass>(b =>
+                {
+                    b.AddServiceBus(options => options.ClientRetryOptions.TryTimeout = TimeSpan.FromSeconds(10));
+                });
+            // do this after the defaults so test-specific values will override the defaults
             configurationDelegate?.Invoke(hostBuilder);
             IHost host = hostBuilder.Build();
             if (startHost)
@@ -216,6 +222,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 messageObj.SessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
+        }
+
+        internal static async Task AssertQueueEmptyAsync(string queueName = default)
+        {
+            // TODO - see if this can be part of Host.StopAsync validation (currently it doesn't apply to all tests and would increase
+            // test durations unnecessarily)
+            var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            var receiver = client.CreateReceiver(queueName ?? _firstQueueScope.QueueName);
+
+            // Poll for longer than lock duration specified when creating the queues (15s) to ensure message
+            // is really gone rather than just locked.
+            Assert.IsNull(await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(20)));
         }
     }
 
