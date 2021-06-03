@@ -4,15 +4,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsClientLiveTests : TextAnalyticsClientLiveTestBase
     {
-        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync) { }
+        public TextAnalyticsClientLiveTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextWithEmoji()
         {
             TextAnalyticsClient client = GetClient();
@@ -26,7 +31,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(9, entities.FirstOrDefault().Length);
         }
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextWithStringIndexType()
         {
             TextAnalyticsClient client = GetClient();
@@ -49,7 +55,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(9, entitiesWithUtf16CodeUnit.FirstOrDefault().Length);
         }
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextWithDiacriticsNFC()
         {
             TextAnalyticsClient client = GetClient();
@@ -63,7 +70,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(9, entities.FirstOrDefault().Length);
         }
 
-        [Test]
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
         public async Task TextInKoreanNFC()
         {
             TextAnalyticsClient client = GetClient();
@@ -77,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(10, entities.FirstOrDefault().Length);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task EntitiesCategories()
         {
             TextAnalyticsClient client = GetClient();
@@ -95,7 +103,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(EntityCategory.Location, entities[2].Category);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RotateApiKey()
         {
             // Instantiate a client that will be used to call the service.

@@ -29,8 +29,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageGen2DataFeedSource(d.DataSourceParameter),
                 AzureEventHubsDataFeed d => new AzureEventHubsDataFeedSource(d.DataSourceParameter),
                 AzureTableDataFeed d => new AzureTableDataFeedSource(d.DataSourceParameter),
-                ElasticsearchDataFeed d => new ElasticsearchDataFeedSource(d.DataSourceParameter),
-                HttpRequestDataFeed d => new HttpRequestDataFeedSource(d.DataSourceParameter),
                 InfluxDBDataFeed d => new InfluxDbDataFeedSource(d.DataSourceParameter),
                 AzureDataExplorerDataFeed d => new AzureDataExplorerDataFeedSource(d.DataSourceParameter),
                 MySqlDataFeed d => new MySqlDataFeedSource(d.DataSourceParameter),
@@ -55,8 +53,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 AzureDataLakeStorageGen2Parameter p => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
                 AzureEventHubsParameter p => new AzureEventHubsDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
                 AzureTableParameter p => new AzureTableDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                ElasticsearchParameter p => new ElasticsearchDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                HttpRequestParameter p => new HttpRequestDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
                 InfluxDBParameter p => new InfluxDBDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
                 SqlSourceParameter p when Type == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
                 SqlSourceParameter p when Type == DataFeedSourceType.MySql => new MySqlDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
@@ -74,20 +70,20 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return Parameter switch
             {
+                /*
                 AzureApplicationInsightsParameter p => new AzureApplicationInsightsDataFeedPatch() { DataSourceParameter = p },
                 AzureBlobParameter p => new AzureBlobDataFeedPatch() { DataSourceParameter = p },
                 AzureCosmosDBParameter p => new AzureCosmosDBDataFeedPatch() { DataSourceParameter = p },
                 AzureDataLakeStorageGen2Parameter p => new AzureDataLakeStorageGen2DataFeedPatch() { DataSourceParameter = p },
                 AzureEventHubsParameter p => new AzureEventHubsDataFeedPatch() { DataSourceParameter = p },
                 AzureTableParameter p => new AzureTableDataFeedPatch() { DataSourceParameter = p },
-                ElasticsearchParameter p => new ElasticsearchDataFeedPatch() { DataSourceParameter = p },
-                HttpRequestParameter p => new HttpRequestDataFeedPatch() { DataSourceParameter = p },
                 InfluxDBParameter p => new InfluxDBDataFeedPatch() { DataSourceParameter = p },
                 SqlSourceParameter p when Type == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeedPatch() { DataSourceParameter = p },
                 SqlSourceParameter p when Type == DataFeedSourceType.MySql => new MySqlDataFeedPatch() { DataSourceParameter = p },
                 SqlSourceParameter p when Type == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeedPatch() { DataSourceParameter = p },
                 SqlSourceParameter p when Type == DataFeedSourceType.SqlServer => new SQLServerDataFeedPatch() { DataSourceParameter = p },
                 MongoDBParameter p => new MongoDBDataFeedPatch() { DataSourceParameter = p },
+                */
                 _ => throw new InvalidOperationException("Invalid DataFeedDetailPatch type")
             };
         }

@@ -39,16 +39,19 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="destinationPort">The destination port to connect
         /// to.</param>
         /// <param name="publicPort">The public port to connect to.</param>
+        /// <param name="privateIPAddress">The private ip address of the
+        /// endpoint.</param>
         /// <param name="subDomainSuffix">The subdomain suffix of the
         /// application.</param>
         /// <param name="disableGatewayAuth">The value indicates whether to
         /// disable GatewayAuth.</param>
-        public ApplicationGetHttpsEndpoint(IList<string> accessModes = default(IList<string>), string location = default(string), int? destinationPort = default(int?), int? publicPort = default(int?), string subDomainSuffix = default(string), bool? disableGatewayAuth = default(bool?))
+        public ApplicationGetHttpsEndpoint(IList<string> accessModes = default(IList<string>), string location = default(string), int? destinationPort = default(int?), int? publicPort = default(int?), string privateIPAddress = default(string), string subDomainSuffix = default(string), bool? disableGatewayAuth = default(bool?))
         {
             AccessModes = accessModes;
             Location = location;
             DestinationPort = destinationPort;
             PublicPort = publicPort;
+            PrivateIPAddress = privateIPAddress;
             SubDomainSuffix = subDomainSuffix;
             DisableGatewayAuth = disableGatewayAuth;
             CustomInit();
@@ -66,10 +69,10 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public IList<string> AccessModes { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the endpoint.
+        /// Gets the location of the endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        public string Location { get; private set; }
 
         /// <summary>
         /// Gets or sets the destination port to connect to.
@@ -78,10 +81,16 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public int? DestinationPort { get; set; }
 
         /// <summary>
-        /// Gets or sets the public port to connect to.
+        /// Gets the public port to connect to.
         /// </summary>
         [JsonProperty(PropertyName = "publicPort")]
-        public int? PublicPort { get; set; }
+        public int? PublicPort { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the private ip address of the endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateIPAddress")]
+        public string PrivateIPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the subdomain suffix of the application.

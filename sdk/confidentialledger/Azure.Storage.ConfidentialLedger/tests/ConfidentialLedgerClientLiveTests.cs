@@ -21,6 +21,7 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         private TokenCredential Credential;
         private ConfidentialLedgerClientOptions Options;
         private ConfidentialLedgerClient Client;
+        private ConfidentialLedgerIdentityServiceClient IdentityClient;
 
         public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync)
         {
@@ -38,6 +39,11 @@ namespace Azure.Storage.ConfidentialLedger.Tests
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
                     TestEnvironment.ConfidentialLedgerUrl,
+                    Credential,
+                    InstrumentClientOptions(Options)));
+
+            IdentityClient = InstrumentClient(
+                new ConfidentialLedgerIdentityServiceClient(
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
                     Credential,
                     InstrumentClientOptions(Options)));
@@ -198,7 +204,7 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         {
             var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;
             ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
-            var result = await Client.GetLedgerIdentityAsync(ledgerId).ConfigureAwait(false);
+            var result = await IdentityClient.GetLedgerIdentityAsync(ledgerId).ConfigureAwait(false);
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }

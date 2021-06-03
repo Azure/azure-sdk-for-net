@@ -260,5 +260,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             Assert.That(async () => await sender.CancelScheduledMessagesAsync(new[] { 12345L, 678910L }),
                 Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
         }
+
+        [Test]
+        public async Task CloseRespectsCancellationToken()
+        {
+            var mockTransportSender = new Mock<TransportSender>();
+            var cts = new CancellationTokenSource();
+
+            // mutate the cancellation token to distinguish it from CancellationToken.None
+            cts.CancelAfter(100);
+
+            var mockConnection = CreateMockConnection();
+            mockConnection.Setup(
+                    connection => connection.CreateTransportSender(
+                        It.IsAny<string>(),
+                        It.IsAny<ServiceBusRetryPolicy>(),
+                        It.IsAny<string>()))
+                .Returns(mockTransportSender.Object);
+
+            var sender = new ServiceBusSender("fake", new ServiceBusSenderOptions(), mockConnection.Object, default);
+            await sender.CloseAsync(cts.Token);
+            mockTransportSender.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
+        }
     }
 }

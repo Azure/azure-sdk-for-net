@@ -3164,6 +3164,59 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task OpenReadAsync_ConcurrentModification_NotAllowed()
+        {
+            int size = Constants.KB;
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            var data2 = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            using Stream stream = new MemoryStream(data);
+            using Stream stream2 = new MemoryStream(data2);
+            await file.UploadAsync(stream);
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync().ConfigureAwait(false);
+            await file.UploadAsync(stream2);
+            byte[] outputBytes = new byte[size];
+
+            await TestHelper.AssertExpectedExceptionAsync<ShareFileModificationException>(
+                outputStream.ReadAsync(outputBytes, 0, size),
+                e => {
+                    Assert.AreEqual(e.ResourceUri, file.Uri);
+                    Assert.AreNotEqual(e.ExpectedETag, e.ActualETag);
+                    Assert.IsNotNull(e.Range);
+                    });
+        }
+
+        [RecordedTest]
+        public async Task OpenReadAsync_ConcurrentModification_Allowed()
+        {
+            int size = Constants.KB;
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(size);
+            var data2 = GetRandomBuffer(size);
+            ShareFileClient file = await test.Directory.CreateFileAsync(GetNewFileName(), size);
+            using Stream stream = new MemoryStream(data);
+            using Stream stream2 = new MemoryStream(data2);
+            await file.UploadAsync(stream);
+
+            // Act
+            Stream outputStream = await file.OpenReadAsync(options: new ShareFileOpenReadOptions(true)).ConfigureAwait(false);
+            await file.UploadAsync(stream2);
+            byte[] outputBytes = new byte[size];
+            await outputStream.ReadAsync(outputBytes, 0, size);
+
+            // Assert
+            Assert.AreEqual(data.Length, outputStream.Length);
+            TestHelper.AssertSequenceEqual(data2, outputBytes);
+        }
+
+        [RecordedTest]
         public async Task OpenReadAsync_BufferSize()
         {
             int size = Constants.KB;

@@ -196,9 +196,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static SubscriptionContract CreateOrUpdate(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string))
+            /// <param name='appType'>
+            /// Determines the type of application which send the create user request.
+            /// Default is legacy publisher portal. Possible values include: 'portal',
+            /// 'developerPortal'
+            /// </param>
+            public static SubscriptionContract CreateOrUpdate(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string), string appType = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, sid, parameters, notify, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, sid, parameters, notify, ifMatch, appType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -231,12 +236,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
+            /// <param name='appType'>
+            /// Determines the type of application which send the create user request.
+            /// Default is legacy publisher portal. Possible values include: 'portal',
+            /// 'developerPortal'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionContract> CreateOrUpdateAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionContract> CreateOrUpdateAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string), string appType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, sid, parameters, notify, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, sid, parameters, notify, ifMatch, appType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -272,9 +282,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// subscription
             /// - If true, send email notification of change of state of subscription
             /// </param>
-            public static void Update(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionUpdateParameters parameters, string ifMatch, bool? notify = default(bool?))
+            /// <param name='appType'>
+            /// Determines the type of application which send the create user request.
+            /// Default is legacy publisher portal. Possible values include: 'portal',
+            /// 'developerPortal'
+            /// </param>
+            public static SubscriptionContract Update(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionUpdateParameters parameters, string ifMatch, bool? notify = default(bool?), string appType = default(string))
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, sid, parameters, ifMatch, notify).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, sid, parameters, ifMatch, notify, appType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -307,12 +322,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// subscription
             /// - If true, send email notification of change of state of subscription
             /// </param>
+            /// <param name='appType'>
+            /// Determines the type of application which send the create user request.
+            /// Default is legacy publisher portal. Possible values include: 'portal',
+            /// 'developerPortal'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionUpdateParameters parameters, string ifMatch, bool? notify = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionContract> UpdateAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionUpdateParameters parameters, string ifMatch, bool? notify = default(bool?), string appType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, sid, parameters, ifMatch, notify, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, sid, parameters, ifMatch, notify, appType, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -465,7 +488,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the subscription keys.
+            /// Gets the specified Subscription keys.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -486,7 +509,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the subscription keys.
+            /// Gets the specified Subscription keys.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task OnlyRetriesRetriebleCodes()
+        public async Task OnlyRetriesRetriableCodes()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);

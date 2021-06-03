@@ -380,6 +380,22 @@ namespace Azure.Storage.Files.DataLake.Tests
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
+        public string BlobEndpointToDfsEndpoint(string blobEndpoint = default)
+        {
+            if (String.IsNullOrEmpty(blobEndpoint))
+            {
+                blobEndpoint = TestConfigDefault.BlobServiceEndpoint;
+            }
+
+            int pos = blobEndpoint.IndexOf(Constants.DataLake.BlobUriSuffix);
+            if (pos < 0)
+            {
+                return blobEndpoint;
+            }
+            return blobEndpoint.Substring(0, pos) + Constants.DataLake.DfsUriSuffix +
+                blobEndpoint.Substring(pos + Constants.DataLake.BlobUriSuffix.Length);
+        }
+
         //TODO consider removing this.
         public async Task<string> SetupPathMatchCondition(DataLakePathClient path, string match)
         {
