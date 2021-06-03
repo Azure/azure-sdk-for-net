@@ -11,15 +11,15 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Custom ADT query builder class that facilitates building queries against an ADT instance.
     /// </summary>
-    public class AdtQuery : QueryBase<SelectClause>
+    public class SelectQuery : QueryBase<SelectClause>
     {
-        private readonly AdtQuerySelect _innerQuery;
+        private readonly FromQuery _innerQuery;
         private readonly AdtQueryBuilder _parent;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AdtQuery"/> class.
+        /// Initializes a new instance of the <see cref="SelectQuery"/> class.
         /// </summary>
-        internal AdtQuery(AdtQueryBuilder parent, AdtQuerySelect select)
+        internal SelectQuery(AdtQueryBuilder parent, FromQuery select)
         {
             _parent = parent;
             _innerQuery = select;
@@ -30,7 +30,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="args"> The arguments that define what we select (eg. *). </param>
         /// <returns> Query that contains a select clause. </returns>
-        public AdtQuerySelect Select(params string[] args)
+        public FromQuery Select(params string[] args)
         {
             Console.WriteLine(args);
             Clauses.Add(new SelectClause(args[0]));
@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="count"> The argument for TOP(), ie the number of instances to return. </param>
         /// <returns> Query that contains a select clause. </returns>
-        public AdtQuerySelect SelectTop(int count)
+        public FromQuery SelectTop(int count)
         {
             Console.WriteLine(count);
             Clauses.Add(new SelectClause(count.ToString(CultureInfo.InvariantCulture)));
@@ -55,7 +55,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="args"> The arguments that we define what we select (eg. a property name, *, collection). </param>
         /// <returns> Query that contains a select clause. </returns>
-        public AdtQuerySelect SelectCount(params string[] args)
+        public FromQuery SelectCount(params string[] args)
         {
             Console.WriteLine(args);
             Clauses.Add(new SelectClause(args[0]));
