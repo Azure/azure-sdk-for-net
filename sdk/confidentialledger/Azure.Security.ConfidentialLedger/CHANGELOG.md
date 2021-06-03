@@ -2,7 +2,7 @@
 
 ## 1.0.0-beta.2 (2021-06-08)
 
-## Breaking Changes
+### Breaking Changes
 
 - The namespace of the client has changed to Azure.Security.ConfidentialLedger
 
