@@ -199,7 +199,7 @@ namespace Azure.Storage.Blobs
                 encryptionScope: options.EncryptionScope);
 
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
-            _containerRestClient = BuildContainerRestClient(_uri.ToString());
+            _containerRestClient = BuildContainerRestClient(_uri);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
@@ -258,7 +258,7 @@ namespace Azure.Storage.Blobs
                 encryptionScope: options.EncryptionScope);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _containerRestClient = BuildContainerRestClient(blobContainerUri.ToString());
+            _containerRestClient = BuildContainerRestClient(blobContainerUri);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
@@ -346,7 +346,7 @@ namespace Azure.Storage.Blobs
                 encryptionScope: options.EncryptionScope);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _containerRestClient = BuildContainerRestClient(blobContainerUri.ToString());
+            _containerRestClient = BuildContainerRestClient(blobContainerUri);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
@@ -376,7 +376,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = clientConfiguration;
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(_clientConfiguration.SharedKeyCredential);
             _clientSideEncryption = clientSideEncryption?.Clone();
-            _containerRestClient = BuildContainerRestClient(containerUri.ToString());
+            _containerRestClient = BuildContainerRestClient(containerUri);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
@@ -416,12 +416,12 @@ namespace Azure.Storage.Blobs
                 clientSideEncryption: null);
         }
 
-        private ContainerRestClient BuildContainerRestClient(string containerUri)
+        private ContainerRestClient BuildContainerRestClient(Uri containerUri)
         {
             return new ContainerRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: containerUri,
+                url: containerUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctor

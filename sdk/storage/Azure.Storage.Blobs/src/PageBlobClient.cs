@@ -86,7 +86,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(string connectionString, string blobContainerName, string blobName)
             : base(connectionString, blobContainerName, blobName)
         {
-            _pageBlobRestClient = BuildPageBlobRestClient(_uri.ToString());
+            _pageBlobRestClient = BuildPageBlobRestClient(_uri);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
-            _pageBlobRestClient = BuildPageBlobRestClient(_uri.ToString());
+            _pageBlobRestClient = BuildPageBlobRestClient(_uri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, BlobClientOptions options = default)
             : base(blobUri, options)
         {
-            _pageBlobRestClient = BuildPageBlobRestClient(blobUri.ToString());
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -161,7 +161,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
-            _pageBlobRestClient = BuildPageBlobRestClient(blobUri.ToString());
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -189,7 +189,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
-            _pageBlobRestClient = BuildPageBlobRestClient(blobUri.ToString());
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -213,7 +213,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
-            _pageBlobRestClient = BuildPageBlobRestClient(blobUri.ToString());
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -237,7 +237,7 @@ namespace Azure.Storage.Blobs.Specialized
                   clientConfiguration,
                   clientSideEncryption: default)
         {
-            _pageBlobRestClient = BuildPageBlobRestClient(blobUri.ToString());
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -248,12 +248,12 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
-        private PageBlobRestClient BuildPageBlobRestClient(string blobUri)
+        private PageBlobRestClient BuildPageBlobRestClient(Uri blobUri)
         {
             return new PageBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: blobUri,
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors

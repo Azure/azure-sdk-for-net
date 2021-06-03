@@ -171,7 +171,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(string connectionString, string containerName, string blobName)
             : base(connectionString, containerName, blobName)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(_uri.ToString());
+            _blockBlobRestClient = BuildBlockBlobRestClient(_uri);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(_uri.ToString());
+            _blockBlobRestClient = BuildBlockBlobRestClient(_uri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -222,7 +222,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(Uri blobUri, BlobClientOptions options = default)
             : base(blobUri, options)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri.ToString());
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -246,7 +246,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri.ToString());
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -274,7 +274,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri.ToString());
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -298,7 +298,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri.ToString());
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs.Specialized
                   clientConfiguration,
                   clientSideEncryption: default)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri.ToString());
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -366,12 +366,12 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
-        private BlockBlobRestClient BuildBlockBlobRestClient(string blobUri)
+        private BlockBlobRestClient BuildBlockBlobRestClient(Uri blobUri)
         {
             return new BlockBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: blobUri,
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors

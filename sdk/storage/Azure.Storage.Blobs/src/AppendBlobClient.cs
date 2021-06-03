@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs.Specialized
         public AppendBlobClient(string connectionString, string blobContainerName, string blobName)
             : base(connectionString, blobContainerName, blobName)
         {
-            _appendBlobRestClient = BuildAppendBlobRestClient(_uri.ToString());
+            _appendBlobRestClient = BuildAppendBlobRestClient(_uri);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.Specialized
         public AppendBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
-            _appendBlobRestClient = BuildAppendBlobRestClient(_uri.ToString());
+            _appendBlobRestClient = BuildAppendBlobRestClient(_uri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -135,7 +135,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, options)
         {
             AssertNoClientSideEncryption(options);
-            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri.ToString());
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, credential, options)
         {
             AssertNoClientSideEncryption(options);
-            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri.ToString());
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, credential, options)
         {
             AssertNoClientSideEncryption(options);
-            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri.ToString());
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, credential, options)
         {
             AssertNoClientSideEncryption(options);
-            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri.ToString());
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.Storage.Blobs.Specialized
                   clientConfiguration,
                   clientSideEncryption: default)
         {
-            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri.ToString());
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -249,12 +249,12 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
-        private AppendBlobRestClient BuildAppendBlobRestClient(string blobUri)
+        private AppendBlobRestClient BuildAppendBlobRestClient(Uri blobUri)
         {
             return new AppendBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: blobUri.ToString(),
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
