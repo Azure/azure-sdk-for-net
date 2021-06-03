@@ -31,7 +31,7 @@ namespace Azure.AI.Translation.Document.Tests
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
-            var client = new DocumentTranslationClient(new System.Uri(Endpoint), new AzureKeyCredential(ApiKey));
+            var client = new DocumentTranslationClient(new System.Uri(Endpoint), Credential);
             try
             {
                 await client.GetDocumentFormatsAsync();
