@@ -57,17 +57,37 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The name of the database.
         /// </summary>
-        public string Database { get; }
+        public string Database { get; set; }
 
         /// <summary>
         /// The access username.
         /// </summary>
-        public string Username { get; }
+        public string Username { get; set; }
 
         /// <summary>
         /// The query to retrieve the data to be ingested.
         /// </summary>
-        public string Query { get; }
+        public string Query { get; set; }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="connectionString"></param>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+
+            ConnectionString = connectionString;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="password"></param>
+        public void UpdatePassword(string password)
+        {
+            Argument.AssertNotNullOrEmpty(password, nameof(password));
+
+            Password = password;
+        }
 
         /// <summary>
         /// The connection string.

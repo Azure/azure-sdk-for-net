@@ -43,7 +43,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The query to retrieve the data to be ingested.
         /// </summary>
-        public string Query { get; }
+        public string Query { get; set; }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="connectionString"></param>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+
+            ConnectionString = connectionString;
+        }
 
         /// <summary>
         /// The connection string.

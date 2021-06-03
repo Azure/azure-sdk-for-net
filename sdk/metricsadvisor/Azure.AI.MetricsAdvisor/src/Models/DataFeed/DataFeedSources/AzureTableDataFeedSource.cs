@@ -47,12 +47,22 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The name of the Table.
         /// </summary>
-        public string Table { get; }
+        public string Table { get; set; }
 
         /// <summary>
         /// The query to retrieve the data to be ingested.
         /// </summary>
-        public string Query { get; }
+        public string Query { get; set; }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="connectionString"></param>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+
+            ConnectionString = connectionString;
+        }
 
         /// <summary>
         /// The connection string for authenticating to the Azure Storage Account.
