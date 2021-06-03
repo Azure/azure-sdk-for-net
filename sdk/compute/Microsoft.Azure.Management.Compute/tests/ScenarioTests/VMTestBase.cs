@@ -606,6 +606,22 @@ namespace Compute.Tests
             var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicname);
             return getNicResponse;
         }
+        
+        protected static VirtualMachineNetworkInterfaceConfiguration CreateNICConfig(Subnet subnetResponse)
+        {
+            List<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigs = new List<VirtualMachineNetworkInterfaceIPConfiguration>()
+                    {
+                        new VirtualMachineNetworkInterfaceIPConfiguration()
+                        {
+                            Name = ComputeManagementTestUtilities.GenerateName("ipConfig"),
+                            Primary = true,
+                            Subnet = new Microsoft.Azure.Management.Compute.Models.SubResource(subnetResponse.Id),
+                            PublicIPAddressConfiguration = new VirtualMachinePublicIPAddressConfiguration(ComputeManagementTestUtilities.GenerateName("ip"), deleteOption: DeleteOptions.Detach.ToString())
+                        }
+                    };
+            VirtualMachineNetworkInterfaceConfiguration vmNicConfig = new VirtualMachineNetworkInterfaceConfiguration(ComputeManagementTestUtilities.GenerateName("nicConfig"), primary: true, deleteOption: DeleteOptions.Delete.ToString(), ipConfigurations: ipConfigs);
+            return vmNicConfig;
+        }
 
         private static string GetChildAppGwResourceId(string subscriptionId,
                                                         string resourceGroupName,
@@ -880,9 +896,9 @@ namespace Compute.Tests
             return CreateProximityPlacementGroup(m_subId, rgName, ppgName, m_CrpClient, m_location);
         }
 
-        protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
+        protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId = null, bool hasManagedDisks = false,
             string vmSize = "Standard_A1_v2", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
-            string diskEncryptionSetId = null)
+            string diskEncryptionSetId = null, VirtualMachineNetworkInterfaceConfiguration vmNicConfig = null, string networkApiVersion = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -900,7 +916,6 @@ namespace Compute.Tests
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                AvailabilitySet = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = asetId },
                 HardwareProfile = new HardwareProfile
                 {
                     VmSize = vmSize
@@ -949,16 +964,6 @@ namespace Compute.Tests
                         }
                     },
                 },
-                NetworkProfile = new CM.NetworkProfile
-                {
-                    NetworkInterfaces = new List<NetworkInterfaceReference>
-                        {
-                            new NetworkInterfaceReference
-                            {
-                                Id = nicId
-                            }
-                        }
-                },
                 OsProfile = new OSProfile
                 {
                     AdminUsername = "Foo12",
@@ -966,6 +971,36 @@ namespace Compute.Tests
                     ComputerName = ComputerName
                 }
             };
+            
+            if (!string.IsNullOrEmpty(asetId))
+            {
+                vm.AvailabilitySet = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = asetId };
+            }
+
+            CM.NetworkProfile vmNetworkProfile = new CM.NetworkProfile();
+            if (!string.IsNullOrEmpty(nicId))
+            {
+                vmNetworkProfile.NetworkInterfaces = new List<NetworkInterfaceReference>
+                        {
+                            new NetworkInterfaceReference
+                            {
+                                Id = nicId
+                            }
+                        };
+            }
+            if (vmNicConfig != null)
+            {
+                vmNetworkProfile.NetworkInterfaceConfigurations = new List<VirtualMachineNetworkInterfaceConfiguration>
+                        {
+                            vmNicConfig
+                        };
+            }
+            if (!string.IsNullOrEmpty(networkApiVersion))
+            {
+                vmNetworkProfile.NetworkApiVersion = networkApiVersion;
+            }
+
+            vm.NetworkProfile = vmNetworkProfile;
 
             if(dataDiskStorageAccountType == StorageAccountTypes.UltraSSDLRS)
             {
