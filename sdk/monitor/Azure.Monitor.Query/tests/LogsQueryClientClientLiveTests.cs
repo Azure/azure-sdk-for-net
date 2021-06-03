@@ -27,12 +27,12 @@ namespace Azure.Monitor.Query.Tests
             await _logsTestData.InitializeAsync();
         }
 
-        private LogsClient CreateClient()
+        private LogsQueryClient CreateClient()
         {
-            return InstrumentClient(new LogsClient(
+            return InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new LogsClientOptions())
+                InstrumentClientOptions(new LogsQueryClientOptions())
             ));
         }
 
@@ -487,16 +487,16 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [RecordedTest]
-        public async Task CanSetServiceTimeout()
+        public void CanSetServiceTimeout()
         {
             var client = CreateClient();
 
-            var response = await client.QueryAsync(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange, options: new LogsQueryOptions()
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.QueryAsync(TestEnvironment.WorkspaceId, "range x from 1 to 100000000000 step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
             {
-                Timeout = TimeSpan.FromMinutes(10)
-            });
+                ServerTimeout = TimeSpan.FromSeconds(1)
+            }));
 
-            CollectionAssert.IsNotEmpty(response.Value.PrimaryTable.Rows);
+            Assert.AreEqual(504, exception.Status);
         }
 
         private record TestModel

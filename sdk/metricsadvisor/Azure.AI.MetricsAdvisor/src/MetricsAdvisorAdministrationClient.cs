@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     {
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        private readonly AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient _serviceRestClient;
+        private readonly MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2RestClient _serviceRestClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class.
@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
 
-            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
 
-            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataFeedDetail, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataFeedDetail, cancellationToken).ConfigureAwait(false);
 
                 string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
 
@@ -328,7 +328,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataFeedDetail, cancellationToken);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataFeedDetail, cancellationToken);
 
                 string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
 
@@ -742,7 +742,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyDetectionConfigurationAsync(detectionConfiguration, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyDetectionConfigurationAsync(detectionConfiguration, cancellationToken).ConfigureAwait(false);
                 string detectionConfigurationId = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
                 try
@@ -783,7 +783,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = _serviceRestClient.CreateAnomalyDetectionConfiguration(detectionConfiguration, cancellationToken);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = _serviceRestClient.CreateAnomalyDetectionConfiguration(detectionConfiguration, cancellationToken);
                 string detectionConfigurationId = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
                 try
@@ -1137,7 +1137,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyAlertingConfigurationAsync(alertConfiguration, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyAlertingConfigurationAsync(alertConfiguration, cancellationToken).ConfigureAwait(false);
                 string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
                 try
@@ -1179,7 +1179,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = _serviceRestClient.CreateAnomalyAlertingConfiguration(alertConfiguration, cancellationToken);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = _serviceRestClient.CreateAnomalyAlertingConfiguration(alertConfiguration, cancellationToken);
                 string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
                 try
@@ -1525,7 +1525,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = await _serviceRestClient.CreateHookAsync(hook, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = await _serviceRestClient.CreateHookAsync(hook, cancellationToken).ConfigureAwait(false);
                 string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
                 try
@@ -1566,7 +1566,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = _serviceRestClient.CreateHook(hook, cancellationToken);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = _serviceRestClient.CreateHook(hook, cancellationToken);
                 string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
                 try
@@ -1888,38 +1888,38 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region Credential
 
         /// <summary>
-        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID. This API provides different ways of
+        /// Creates a <see cref="DatasourceCredential"/> and assigns it a unique ID. This API provides different ways of
         /// authenticating to a <see cref="DataFeedSource"/> for data ingestion when the default authentication method does not suffice.
-        /// Please see <see cref="DataSourceCredentialEntity"/> for a list of supported credentials.
+        /// Please see <see cref="DatasourceCredential"/> for a list of supported credentials.
         /// </summary>
-        /// <param name="credentialEntity">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
+        /// <param name="datasourceCredential">Specifies how the created <see cref="DatasourceCredential"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
-        /// instance containing information about the created credential entity.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
+        /// instance containing information about the created datasource credential.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="credentialEntity"/> is null.</exception>
-        public virtual async Task<Response<DataSourceCredentialEntity>> CreateCredentialEntityAsync(DataSourceCredentialEntity credentialEntity, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredential"/> is null.</exception>
+        public virtual async Task<Response<DatasourceCredential>> CreateDatasourceCredentialAsync(DatasourceCredential datasourceCredential, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(credentialEntity, nameof(credentialEntity));
+            Argument.AssertNotNull(datasourceCredential, nameof(datasourceCredential));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateCredentialEntity)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDatasourceCredential)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> response = await _serviceRestClient.CreateCredentialAsync(credentialEntity, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> response = await _serviceRestClient.CreateCredentialAsync(datasourceCredential, cancellationToken).ConfigureAwait(false);
                 string credentialId = ClientCommon.GetCredentialId(response.Headers.Location);
 
                 try
                 {
-                    var createdCredential = await GetCredentialEntityAsync(credentialId, cancellationToken).ConfigureAwait(false);
+                    var createdCredential = await GetDatasourceCredentialAsync(credentialId, cancellationToken).ConfigureAwait(false);
 
                     return Response.FromValue(createdCredential, response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    throw new RequestFailedException($"The credential entity has been created successfully, but the client failed to fetch its data. Credential Entity ID: {credentialId}", ex);
+                    throw new RequestFailedException($"The datasource credential has been created successfully, but the client failed to fetch its data. Datasource Credential ID: {credentialId}", ex);
                 }
             }
             catch (Exception e)
@@ -1930,38 +1930,38 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID. This API provides different ways of
+        /// Creates a <see cref="DatasourceCredential"/> and assigns it a unique ID. This API provides different ways of
         /// authenticating to a <see cref="DataFeedSource"/> for data ingestion when the default authentication method does not suffice.
-        /// Please see <see cref="DataSourceCredentialEntity"/> for a list of supported credentials.
+        /// Please see <see cref="DatasourceCredential"/> for a list of supported credentials.
         /// </summary>
-        /// <param name="credentialEntity">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
+        /// <param name="datasourceCredential">Specifies how the created <see cref="DatasourceCredential"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
-        /// instance containing information about the created credential entity.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
+        /// instance containing information about the created datasource credential.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="credentialEntity"/> is null.</exception>
-        public virtual Response<DataSourceCredentialEntity> CreateCredentialEntity(DataSourceCredentialEntity credentialEntity, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredential"/> is null.</exception>
+        public virtual Response<DatasourceCredential> CreateDatasourceCredential(DatasourceCredential datasourceCredential, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(credentialEntity, nameof(credentialEntity));
+            Argument.AssertNotNull(datasourceCredential, nameof(datasourceCredential));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateCredentialEntity)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDatasourceCredential)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> response = _serviceRestClient.CreateCredential(credentialEntity, cancellationToken);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> response = _serviceRestClient.CreateCredential(datasourceCredential, cancellationToken);
                 string credentialId = ClientCommon.GetCredentialId(response.Headers.Location);
 
                 try
                 {
-                    var createdCredential = GetCredentialEntity(credentialId, cancellationToken);
+                    var createdCredential = GetDatasourceCredential(credentialId, cancellationToken);
 
                     return Response.FromValue(createdCredential, response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    throw new RequestFailedException($"The credential entity has been created successfully, but the client failed to fetch its data. Credential Entity ID: {credentialId}", ex);
+                    throw new RequestFailedException($"The datasource credential has been created successfully, but the client failed to fetch its data. Datasource Credential ID: {credentialId}", ex);
                 }
             }
             catch (Exception e)
@@ -1972,21 +1972,21 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets an existing <see cref="DataSourceCredentialEntity"/>.
+        /// Gets an existing <see cref="DatasourceCredential"/>.
         /// </summary>
-        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/>.</param>
+        /// <param name="datasourceCredentialId">The unique identifier of the <see cref="DatasourceCredential"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
         /// instance containing the requested information.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="credentialEntityId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="credentialEntityId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<DataSourceCredentialEntity>> GetCredentialEntityAsync(string credentialEntityId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="datasourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual async Task<Response<DatasourceCredential>> GetDatasourceCredentialAsync(string datasourceCredentialId, CancellationToken cancellationToken = default)
         {
-            Guid credentialGuid = ClientCommon.ValidateGuid(credentialEntityId, nameof(credentialEntityId));
+            Guid credentialGuid = ClientCommon.ValidateGuid(datasourceCredentialId, nameof(datasourceCredentialId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetCredentialEntity)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredential)}");
             scope.Start();
 
             try
@@ -2001,21 +2001,21 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets an existing <see cref="DataSourceCredentialEntity"/>.
+        /// Gets an existing <see cref="DatasourceCredential"/>.
         /// </summary>
-        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/>.</param>
+        /// <param name="datasourceCredentialId">The unique identifier of the <see cref="DatasourceCredential"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
         /// instance containing the requested information.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="credentialEntityId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="credentialEntityId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<DataSourceCredentialEntity> GetCredentialEntity(string credentialEntityId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="datasourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual Response<DatasourceCredential> GetDatasourceCredential(string datasourceCredentialId, CancellationToken cancellationToken = default)
         {
-            Guid credentialGuid = ClientCommon.ValidateGuid(credentialEntityId, nameof(credentialEntityId));
+            Guid credentialGuid = ClientCommon.ValidateGuid(datasourceCredentialId, nameof(datasourceCredentialId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetCredentialEntity)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredential)}");
             scope.Start();
 
             try
@@ -2030,20 +2030,118 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
+        /// Gets a collection of items describing the existing <see cref="DatasourceCredential"/> instances in this Metrics
+        /// Advisor resource.
         /// </summary>
-        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DatasourceCredential"/> instances.</returns>
+        public virtual AsyncPageable<DatasourceCredential> GetDatasourceCredentialsAsync(GetDatasourceCredentialsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
+
+            async Task<Page<DatasourceCredential>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredentials)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = await _serviceRestClient.ListCredentialsAsync(skip, maxPageSize, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<DatasourceCredential>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredentials)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = await _serviceRestClient.ListCredentialsNextPageAsync(nextLink, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a collection of items describing the existing <see cref="DatasourceCredential"/> instances in this Metrics
+        /// Advisor resource.
+        /// </summary>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DatasourceCredential"/> instances.</returns>
+        public virtual Pageable<DatasourceCredential> GetDatasourceCredentials(GetDatasourceCredentialsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
+
+            Page<DatasourceCredential> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredentials)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = _serviceRestClient.ListCredentials(skip, maxPageSize, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<DatasourceCredential> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredentials)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = _serviceRestClient.ListCredentialsNextPage(nextLink, skip, maxPageSize, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Deletes an existing <see cref="DatasourceCredential"/>.
+        /// </summary>
+        /// <param name="datasourceCredentialId">The unique identifier of the <see cref="DatasourceCredential"/> to be deleted.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="credentialEntityId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="credentialEntityId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> DeleteCredentialEntityAsync(string credentialEntityId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="datasourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual async Task<Response> DeleteDatasourceCredentialAsync(string datasourceCredentialId, CancellationToken cancellationToken = default)
         {
-            Guid credentialGuid = ClientCommon.ValidateGuid(credentialEntityId, nameof(credentialEntityId));
+            Guid credentialGuid = ClientCommon.ValidateGuid(datasourceCredentialId, nameof(datasourceCredentialId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteCredentialEntity)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDatasourceCredential)}");
             scope.Start();
 
             try
@@ -2058,20 +2156,20 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
+        /// Deletes an existing <see cref="DatasourceCredential"/>.
         /// </summary>
-        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
+        /// <param name="datasourceCredentialId">The unique identifier of the <see cref="DatasourceCredential"/> to be deleted.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="credentialEntityId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="credentialEntityId"/> is empty or not a valid GUID.</exception>
-        public virtual Response DeleteCredentialEntity(string credentialEntityId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="datasourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual Response DeleteDatasourceCredential(string datasourceCredentialId, CancellationToken cancellationToken = default)
         {
-            Guid credentialGuid = ClientCommon.ValidateGuid(credentialEntityId, nameof(credentialEntityId));
+            Guid credentialGuid = ClientCommon.ValidateGuid(datasourceCredentialId, nameof(datasourceCredentialId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteCredentialEntity)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDatasourceCredential)}");
             scope.Start();
 
             try

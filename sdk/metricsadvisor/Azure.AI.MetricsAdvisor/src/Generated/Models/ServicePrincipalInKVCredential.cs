@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ServicePrincipalInKVCredential. </summary>
-    internal partial class ServicePrincipalInKVCredential : DataSourceCredentialEntity
+    internal partial class ServicePrincipalInKVCredential : DatasourceCredential
     {
         /// <summary> Initializes a new instance of ServicePrincipalInKVCredential. </summary>
         /// <param name="name"> Name of data source credential. </param>

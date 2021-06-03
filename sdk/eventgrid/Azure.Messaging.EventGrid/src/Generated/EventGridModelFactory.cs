@@ -164,6 +164,20 @@ namespace Azure.Messaging.EventGrid
             return new StorageAsyncOperationInitiatedEventData(api, clientRequestId, requestId, contentType, contentLength, blobType, url, sequencer, identity, storageDiagnostics);
         }
 
+        /// <summary> Initializes new instance of StorageBlobInventoryPolicyCompletedEventData class. </summary>
+        /// <param name="scheduleDateTime"> The time at which inventory policy was scheduled. </param>
+        /// <param name="accountName"> The account name for which inventory policy is registered. </param>
+        /// <param name="ruleName"> The rule name for inventory policy. </param>
+        /// <param name="policyRunStatus"> The status of inventory run, it can be Succeeded/PartiallySucceeded/Failed. </param>
+        /// <param name="policyRunStatusMessage"> The status message for inventory run. </param>
+        /// <param name="policyRunId"> The policy run id for inventory run. </param>
+        /// <param name="manifestBlobUrl"> The blob URL for manifest file for inventory run. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageBlobInventoryPolicyCompletedEventData"/> instance for mocking. </returns>
+        public static StorageBlobInventoryPolicyCompletedEventData StorageBlobInventoryPolicyCompletedEventData(DateTimeOffset? scheduleDateTime = default, string accountName = default, string ruleName = default, string policyRunStatus = default, string policyRunStatusMessage = default, string policyRunId = default, string manifestBlobUrl = default)
+        {
+            return new StorageBlobInventoryPolicyCompletedEventData(scheduleDateTime, accountName, ruleName, policyRunStatus, policyRunStatusMessage, policyRunId, manifestBlobUrl);
+        }
+
         /// <summary> Initializes new instance of EventHubCaptureFileCreatedEventData class. </summary>
         /// <param name="fileurl"> The path to the capture file. </param>
         /// <param name="fileType"> The file type of the capture file. </param>
@@ -1805,10 +1819,12 @@ namespace Azure.Messaging.EventGrid
         /// <param name="documentId"> The documentId of the recording chunk. </param>
         /// <param name="index"> The index of the recording chunk. </param>
         /// <param name="endReason"> The reason for ending the recording chunk. </param>
+        /// <param name="metadataLocation"> The location of the metadata for this chunk. </param>
+        /// <param name="contentLocation"> The location of the content for this chunk. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingChunkInfoProperties"/> instance for mocking. </returns>
-        public static AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = default, long? index = default, string endReason = default)
+        public static AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = default, long? index = default, string endReason = default, string metadataLocation = default, string contentLocation = default)
         {
-            return new AcsRecordingChunkInfoProperties(documentId, index, endReason);
+            return new AcsRecordingChunkInfoProperties(documentId, index, endReason, metadataLocation, contentLocation);
         }
 
         /// <summary> Initializes new instance of PolicyInsightsPolicyStateCreatedEventData class. </summary>
@@ -1851,6 +1867,344 @@ namespace Azure.Messaging.EventGrid
         public static PolicyInsightsPolicyStateDeletedEventData PolicyInsightsPolicyStateDeletedEventData(DateTimeOffset? timestamp = default, string policyAssignmentId = default, string policyDefinitionId = default, string policyDefinitionReferenceId = default, string complianceState = default, string subscriptionId = default, string complianceReasonCode = default)
         {
             return new PolicyInsightsPolicyStateDeletedEventData(timestamp, policyAssignmentId, policyDefinitionId, policyDefinitionReferenceId, complianceState, subscriptionId, complianceReasonCode);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsBoundaryChangedEventData class. </summary>
+        /// <param name="farmerId"> Id of the farmer it belongs to. </param>
+        /// <param name="parentId"> Id of the parent(field or seasonalField) it belongs to. </param>
+        /// <param name="parentType"> Type of the parent it belongs to. </param>
+        /// <param name="isPrimary"> A boolean flag indicating whether the boundary is primary or not. </param>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsBoundaryChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsBoundaryChangedEventData FarmBeatsBoundaryChangedEventData(string farmerId = default, string parentId = default, string parentType = default, bool? isPrimary = default, FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsBoundaryChangedEventData(farmerId, parentId, parentType, isPrimary, actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsCropChangedEventData class. </summary>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsCropChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsCropChangedEventData FarmBeatsCropChangedEventData(FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsCropChangedEventData(actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsCropVarietyChangedEventData class. </summary>
+        /// <param name="cropId"> Id of the crop it belongs to. </param>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsCropVarietyChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsCropVarietyChangedEventData FarmBeatsCropVarietyChangedEventData(string cropId = default, FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsCropVarietyChangedEventData(cropId, actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsFarmChangedEventData class. </summary>
+        /// <param name="farmerId"> Id of the farmer it belongs to. </param>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsFarmChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsFarmChangedEventData FarmBeatsFarmChangedEventData(string farmerId = default, FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsFarmChangedEventData(farmerId, actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsFarmerChangedEventData class. </summary>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsFarmerChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsFarmerChangedEventData FarmBeatsFarmerChangedEventData(FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsFarmerChangedEventData(actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsFieldChangedEventData class. </summary>
+        /// <param name="farmerId"> Farmer Id. </param>
+        /// <param name="farmId"> Id of the associated Farm. </param>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsFieldChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsFieldChangedEventData FarmBeatsFieldChangedEventData(string farmerId = default, string farmId = default, FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsFieldChangedEventData(farmerId, farmId, actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsSeasonalFieldChangedEventData class. </summary>
+        /// <param name="farmerId"> Id of the farmer it belongs to. </param>
+        /// <param name="seasonId"> Id of the season it belongs to. </param>
+        /// <param name="fieldId"> Id of the field it belongs to. </param>
+        /// <param name="farmId"> Id of the associated Farm. </param>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsSeasonalFieldChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsSeasonalFieldChangedEventData FarmBeatsSeasonalFieldChangedEventData(string farmerId = default, string seasonId = default, string fieldId = default, string farmId = default, FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsSeasonalFieldChangedEventData(farmerId, seasonId, fieldId, farmId, actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsSeasonChangedEventData class. </summary>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsSeasonChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsSeasonChangedEventData FarmBeatsSeasonChangedEventData(FarmBeatsResourceActionType? actionType = default, string status = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsSeasonChangedEventData(actionType, status, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsApplicationDataChangedEventData class. </summary>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="farmerId"> Id of the farmer it belongs to. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="source"> Source of the farm operation data. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsApplicationDataChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsApplicationDataChangedEventData FarmBeatsApplicationDataChangedEventData(FarmBeatsResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsApplicationDataChangedEventData(actionType, farmerId, status, source, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsPlantingDataChangedEventData class. </summary>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="farmerId"> Id of the farmer it belongs to. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="source"> Source of the farm operation data. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsPlantingDataChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsPlantingDataChangedEventData FarmBeatsPlantingDataChangedEventData(FarmBeatsResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsPlantingDataChangedEventData(actionType, farmerId, status, source, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsHarvestDataChangedEventData class. </summary>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="farmerId"> Id of the farmer it belongs to. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="source"> Source of the farm operation data. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsHarvestDataChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsHarvestDataChangedEventData FarmBeatsHarvestDataChangedEventData(FarmBeatsResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsHarvestDataChangedEventData(actionType, farmerId, status, source, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsTillageDataChangedEventData class. </summary>
+        /// <param name="actionType"> Action occurred on a resource. </param>
+        /// <param name="farmerId"> Id of the farmer it belongs to. </param>
+        /// <param name="status"> Status of the resource. </param>
+        /// <param name="source"> Source of the farm operation data. </param>
+        /// <param name="modifiedDateTime"> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsTillageDataChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsTillageDataChangedEventData FarmBeatsTillageDataChangedEventData(FarmBeatsResourceActionType? actionType = default, string farmerId = default, string status = default, string source = default, DateTimeOffset? modifiedDateTime = default, string eTag = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsTillageDataChangedEventData(actionType, farmerId, status, source, modifiedDateTime, eTag, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsSatelliteDataIngestionJobStatusChangedEventData class. </summary>
+        /// <param name="farmerId"> Farmer id for which job was created. </param>
+        /// <param name="message"> Status message to capture more details of the job. </param>
+        /// <param name="status"> Various states a job can be in. </param>
+        /// <param name="lastActionDateTime"> Date-time when last action was taken on job, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="isCancellationRequested"> Flag that gets set when job cancellation is requested. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsSatelliteDataIngestionJobStatusChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsSatelliteDataIngestionJobStatusChangedEventData FarmBeatsSatelliteDataIngestionJobStatusChangedEventData(string farmerId = default, string message = default, FarmBeatsJobStatus? status = default, DateTimeOffset? lastActionDateTime = default, bool? isCancellationRequested = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsSatelliteDataIngestionJobStatusChangedEventData(farmerId, message, status, lastActionDateTime, isCancellationRequested, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsWeatherDataIngestionJobStatusChangedEventData class. </summary>
+        /// <param name="farmerId"> Farmer id for which job was created. </param>
+        /// <param name="message"> Status message to capture more details of the job. </param>
+        /// <param name="status"> Various states a job can be in. </param>
+        /// <param name="lastActionDateTime"> Date-time when last action was taken on job, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="isCancellationRequested"> Flag that gets set when job cancellation is requested. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsWeatherDataIngestionJobStatusChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsWeatherDataIngestionJobStatusChangedEventData FarmBeatsWeatherDataIngestionJobStatusChangedEventData(string farmerId = default, string message = default, FarmBeatsJobStatus? status = default, DateTimeOffset? lastActionDateTime = default, bool? isCancellationRequested = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsWeatherDataIngestionJobStatusChangedEventData(farmerId, message, status, lastActionDateTime, isCancellationRequested, id, name, description, createdDateTime, properties);
+        }
+
+        /// <summary> Initializes new instance of FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData class. </summary>
+        /// <param name="farmerId"> Farmer id for which job was created. </param>
+        /// <param name="message"> Status message to capture more details of the job. </param>
+        /// <param name="status"> Various states a job can be in. </param>
+        /// <param name="lastActionDateTime"> Date-time when last action was taken on job, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="isCancellationRequested"> Flag that gets set when job cancellation is requested. </param>
+        /// <param name="id"> Unique id of resource. </param>
+        /// <param name="name"> Name to identify resource. </param>
+        /// <param name="description"> Textual description of resource. </param>
+        /// <param name="createdDateTime"> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="properties">
+        /// A list of key value pairs that describe the resource.
+        /// 
+        /// Only string and numeral values are supported.
+        /// </param>
+        /// <returns> A new <see cref="SystemEvents.FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData"/> instance for mocking. </returns>
+        public static FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData(string farmerId = default, string message = default, FarmBeatsJobStatus? status = default, DateTimeOffset? lastActionDateTime = default, bool? isCancellationRequested = default, string id = default, string name = default, string description = default, DateTimeOffset? createdDateTime = default, IReadOnlyDictionary<string, object> properties = default)
+        {
+            properties ??= new Dictionary<string, object>();
+            return new FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData(farmerId, message, status, lastActionDateTime, isCancellationRequested, id, name, description, createdDateTime, properties);
         }
     }
 }

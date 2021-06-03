@@ -123,6 +123,15 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual(TableName, client.Name);
         }
 
+        [Test]
+        public void NoCredCtor()
+        {
+            var client = new TableClient(new Uri($"{_url}/{TableName}?{signature}"));
+
+            Assert.AreEqual(AccountName, client.AccountName);
+            Assert.AreEqual(TableName, client.Name);
+        }
+
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>

@@ -174,8 +174,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string hookName0 = Recording.GenerateAlphaNumericId("hook");
             string hookName1 = Recording.GenerateAlphaNumericId("hook");
 
-            var hookToCreate0 = new WebNotificationHook() { Name = hookName0, Endpoint = new Uri("http://contoso.com/") };
-            var hookToCreate1 = new WebNotificationHook() { Name = hookName1, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate0 = new EmailNotificationHook() { Name = hookName0 };
+            var hookToCreate1 = new EmailNotificationHook() { Name = hookName1 };
+
+            hookToCreate0.EmailsToAlert.Add("fake@email.com");
+            hookToCreate1.EmailsToAlert.Add("fake@email.com");
 
             await using var disposableHook0 = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate0);
             await using var disposableHook1 = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate1);
