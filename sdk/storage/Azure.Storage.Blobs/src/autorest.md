@@ -117,6 +117,19 @@ directive:
     }
 ```
 
+### Fix 304s
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}"]
+  transform: >
+    $.get.responses["304"] = {
+      "description": "The condition specified using HTTP conditional header(s) is not met.",
+      "x-az-response-name": "ConditionNotMetError",
+      "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
+```
+
 ### Don't include container or blob in path - we have direct URIs.
 ``` yaml
 directive:
@@ -289,19 +302,6 @@ directive:
       "None",
       "AES256"
     ];
-```
-
-### Fix 304s
-``` yaml
-directive:
-- from: swagger-document
-  where: $["x-ms-paths"]["/{containerName}/{blob}"]
-  transform: >
-    $.get.responses["304"] = {
-      "description": "The condition specified using HTTP conditional header(s) is not met.",
-      "x-az-response-name": "ConditionNotMetError",
-      "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
-    };
 ```
 
 ### Don't buffer downloads and query
