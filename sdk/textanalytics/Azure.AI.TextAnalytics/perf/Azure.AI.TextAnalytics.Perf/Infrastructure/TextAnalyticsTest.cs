@@ -10,11 +10,6 @@ namespace Azure.AI.TextAnalytics.Perf
     {
         public TextAnalyticsTest(TOptions options) : base(options)
         {
-            if (options.Parallel > 1)
-            {
-                throw new InvalidOperationException("Do not stress the service until we can reduce testing costs. Set '--parallel 1'.");
-            }
-
             TestEnvironment = PerfTestEnvironment.Instance;
         }
 

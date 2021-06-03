@@ -9,14 +9,15 @@ using Azure.Test.Perf;
 
 namespace Azure.AI.TextAnalytics.Perf
 {
-    public sealed class DetectLanguagePerfTest
+    public sealed class DetectLanguagePerf
+
         : TextAnalyticsTest<PerfOptions>
     {
         private readonly TextAnalyticsClient _client;
 
         private List<string> _batchDocuments;
 
-        public DetectLanguagePerfTest(PerfOptions options) : base(options)
+        public DetectLanguagePerf(PerfOptions options) : base(options)
         {
             // create client
             _client = new TextAnalyticsClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
