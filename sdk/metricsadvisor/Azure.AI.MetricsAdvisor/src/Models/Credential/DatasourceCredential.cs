@@ -10,7 +10,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Provides different ways of authenticating to a <see cref="DataFeedSource"/> for data ingestion when the
     /// default authentication method does not suffice. The supported credentials are:
     /// <list type="bullet">
+    ///   <item><see cref="DataLakeGen2SharedKeyDatasourceCredential"/></item>
     ///   <item><see cref="ServicePrincipalDatasourceCredential"/></item>
+    ///   <item><see cref="ServicePrincipalInKeyVaultDatasourceCredential"/></item>
+    ///   <item><see cref="SqlConnectionStringDatasourceCredential"/></item>
     /// </list>
     /// </summary>
     [CodeGenModel("DataSourceCredential")]
