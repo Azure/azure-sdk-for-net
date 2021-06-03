@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Net.Http.Headers;
 using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
@@ -35,8 +36,8 @@ namespace Azure.Storage.Blobs.Models
         public PageBlobRequestConditions SourceConditions { get; set; }
 
         /// <summary>
-        /// Optional.  Bearer token used to access the source blob.
+        /// Optional.  Source authentication used to access the source blob.
         /// </summary>
-        public string SourceBearerToken { get; set; }
+        public AuthenticationHeaderValue SourceAuthentication { get; set; }
     }
 }

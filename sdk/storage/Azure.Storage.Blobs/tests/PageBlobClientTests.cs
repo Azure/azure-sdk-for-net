@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -2931,9 +2932,14 @@ namespace Azure.Storage.Blobs.Test
             HttpRange range = new HttpRange(0, Constants.KB);
 
             string sourceBearerToken = await GetAuthToken();
+
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                sourceBearerToken);
+
             PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
             {
-                SourceBearerToken = sourceBearerToken
+                SourceAuthentication = sourceAuth
             };
 
             // Act
@@ -2965,9 +2971,13 @@ namespace Azure.Storage.Blobs.Test
             await destBlob.CreateIfNotExistsAsync(Constants.KB);
             HttpRange range = new HttpRange(0, Constants.KB);
 
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                string.Empty);
+
             PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
             {
-                SourceBearerToken = string.Empty
+                SourceAuthentication = sourceAuth
             };
 
             // Act

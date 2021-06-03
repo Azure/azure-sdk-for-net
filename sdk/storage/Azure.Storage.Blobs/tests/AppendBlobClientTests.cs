@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -1380,9 +1381,14 @@ namespace Azure.Storage.Blobs.Test
             await destBlob.CreateIfNotExistsAsync();
 
             string sourceBearerToken = await GetAuthToken();
+
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                sourceBearerToken);
+
             AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
             {
-                SourceBearerToken = sourceBearerToken
+                SourceAuthentication = sourceAuth
             };
 
             // Act
@@ -1409,9 +1415,13 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             await destBlob.CreateIfNotExistsAsync();
 
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                string.Empty);
+
             AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
             {
-                SourceBearerToken = string.Empty
+                SourceAuthentication = sourceAuth
             };
 
             // Act

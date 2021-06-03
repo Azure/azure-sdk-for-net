@@ -16,6 +16,7 @@ using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Net.Http.Headers;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -3891,7 +3892,7 @@ namespace Azure.Storage.Files.Shares
                 range: range,
                 sourceRange: sourceRange,
                 conditions: options?.Conditions,
-                sourceBearerToken: options?.SourceBearerToken,
+                sourceAuthentication: options?.SourceAuthentication,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3937,7 +3938,7 @@ namespace Azure.Storage.Files.Shares
                 range: range,
                 sourceRange: sourceRange,
                 conditions: options?.Conditions,
-                sourceBearerToken: options?.SourceBearerToken,
+                sourceAuthentication: options?.SourceAuthentication,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3985,7 +3986,7 @@ namespace Azure.Storage.Files.Shares
                 range: range,
                 sourceRange: sourceRange,
                 conditions: conditions,
-                sourceBearerToken: default,
+                sourceAuthentication: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -4031,7 +4032,7 @@ namespace Azure.Storage.Files.Shares
                 range: range,
                 sourceRange: sourceRange,
                 conditions: default,
-                sourceBearerToken: default,
+                sourceAuthentication: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -4080,7 +4081,7 @@ namespace Azure.Storage.Files.Shares
                 range: range,
                 sourceRange: sourceRange,
                 conditions: conditions,
-                sourceBearerToken: default,
+                sourceAuthentication: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4125,7 +4126,7 @@ namespace Azure.Storage.Files.Shares
                 range: range,
                 sourceRange: sourceRange,
                 conditions: default,
-                sourceBearerToken: default,
+                sourceAuthentication: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4149,8 +4150,8 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
-        /// <param name="sourceBearerToken">
-        /// Optional. Source bearer token used to access the source blob.
+        /// <param name="sourceAuthentication">
+        /// Optional. Source authentication used to access the source blob.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -4172,7 +4173,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange range,
             HttpRange sourceRange,
             ShareFileRequestConditions conditions,
-            string sourceBearerToken,
+            AuthenticationHeaderValue sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -4191,9 +4192,10 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     ResponseWithHeaders<FileUploadRangeFromURLHeaders> response;
 
-                    if (sourceBearerToken != null)
+                    string sourceAuthString = null;
+                    if (sourceAuthentication != null)
                     {
-                        sourceBearerToken = $"Bearer {sourceBearerToken}";
+                        sourceAuthString = $"{sourceAuthentication.Scheme} {sourceAuthentication.Parameter}";
                     }
 
                     if (async)
@@ -4203,7 +4205,7 @@ namespace Azure.Storage.Files.Shares
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
-                            copySourceAuthorization: sourceBearerToken,
+                            copySourceAuthorization: sourceAuthString,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4215,7 +4217,7 @@ namespace Azure.Storage.Files.Shares
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
-                            copySourceAuthorization: sourceBearerToken,
+                            copySourceAuthorization: sourceAuthString,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }

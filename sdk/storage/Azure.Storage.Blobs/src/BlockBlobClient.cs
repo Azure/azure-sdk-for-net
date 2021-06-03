@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -1255,7 +1256,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options.SourceContentHash,
                 options.SourceConditions,
                 options.DestinationConditions,
-                options.SourceBearerToken,
+                options.SourceAuthentication,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1311,7 +1312,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options.SourceContentHash,
                 options.SourceConditions,
                 options.DestinationConditions,
-                options.SourceBearerToken,
+                options.SourceAuthentication,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1392,7 +1393,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 sourceConditions,
                 conditions,
-                sourceBearerToken: default,
+                sourceAuthentication: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1473,7 +1474,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 sourceConditions,
                 conditions,
-                sourceBearerToken: default,
+                sourceAuthentication: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1526,7 +1527,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the staging of this block.
         /// </param>
-        /// <param name="sourceBearerToken">
+        /// <param name="sourceAuthentication">
         /// Optional. Source bearer token used to access the source blob.
         /// </param>
         /// <param name="async">
@@ -1551,7 +1552,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             RequestConditions sourceConditions,
             BlobRequestConditions conditions,
-            string sourceBearerToken,
+            AuthenticationHeaderValue sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1572,9 +1573,10 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> response;
 
-                    if (sourceBearerToken != null)
+                    string sourceAuthString = null;
+                    if (sourceAuthentication != null)
                     {
-                        sourceBearerToken = $"Bearer {sourceBearerToken}";
+                        sourceAuthString = $"{sourceAuthentication.Scheme} {sourceAuthentication.Parameter}";
                     }
 
                     if (async)
@@ -1594,7 +1596,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
-                            copySourceAuthorization: sourceBearerToken,
+                            copySourceAuthorization: sourceAuthString,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1615,7 +1617,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
-                            copySourceAuthorization: sourceBearerToken,
+                            copySourceAuthorization: sourceAuthString,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2819,9 +2821,10 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response;
 
-                    if (options?.SourceBearerToken != null)
+                    string sourceAuthString = null;
+                    if (options?.SourceAuthentication != null)
                     {
-                        options.SourceBearerToken = $"Bearer {options.SourceBearerToken}";
+                        sourceAuthString = $"{options.SourceAuthentication.Scheme} {options.SourceAuthentication.Parameter}";
                     }
 
                     if (async)
@@ -2856,7 +2859,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
-                            copySourceAuthorization: options?.SourceBearerToken,
+                            copySourceAuthorization: sourceAuthString,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2892,7 +2895,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
-                            copySourceAuthorization: options?.SourceBearerToken,
+                            copySourceAuthorization: sourceAuthString,
                             cancellationToken: cancellationToken);
                     }
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Http.Headers;
 using System.Threading;
 using Azure.Storage.Blobs.Specialized;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -66,8 +67,8 @@ namespace Azure.Storage.Blobs.Models
         public byte[] ContentHash { get; set; }
 
         /// <summary>
-        /// Optional.  Bearer token used to access the source blob.
+        /// Optional.  Source authentication used to access the source blob.
         /// </summary>
-        public string SourceBearerToken { get; set; }
+        public AuthenticationHeaderValue SourceAuthentication { get; set; }
     }
 }

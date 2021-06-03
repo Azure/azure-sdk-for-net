@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -906,9 +907,14 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
             string sourceBearerToken = await GetAuthToken();
+
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                sourceBearerToken);
+
             BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
             {
-                SourceBearerToken = sourceBearerToken
+                SourceAuthentication = sourceAuth
             };
 
             // Act
@@ -939,9 +945,13 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                string.Empty);
+
             BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
             {
-                SourceBearerToken = string.Empty
+                SourceAuthentication = sourceAuth
             };
 
             // Act
@@ -3523,9 +3533,14 @@ namespace Azure.Storage.Blobs.Test
             await sourceBlob.UploadAsync(stream);
 
             string sourceBearerToken = await GetAuthToken();
+
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                sourceBearerToken);
+
             BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {
-                SourceBearerToken = sourceBearerToken
+                SourceAuthentication = sourceAuth
             };
 
             // Act
@@ -3552,9 +3567,13 @@ namespace Azure.Storage.Blobs.Test
             using Stream stream = new MemoryStream(data);
             await sourceBlob.UploadAsync(stream);
 
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                string.Empty);
+
             BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
             {
-                SourceBearerToken = string.Empty
+                SourceAuthentication = sourceAuth
             };
 
             // Act

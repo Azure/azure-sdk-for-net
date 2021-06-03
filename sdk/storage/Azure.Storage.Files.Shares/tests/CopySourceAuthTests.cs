@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -53,9 +54,13 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 string sourceBearerToken = await GetAuthToken();
 
+                AuthenticationHeaderValue sourceAuthHeader = new AuthenticationHeaderValue(
+                    "Bearer",
+                    sourceBearerToken);
+
                 ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
                 {
-                    SourceBearerToken = sourceBearerToken
+                    SourceAuthentication = sourceAuthHeader
                 };
 
                 HttpRange range = new HttpRange(0, Constants.KB);
@@ -102,9 +107,13 @@ namespace Azure.Storage.Files.Shares.Tests
                 ShareFileClient fileClient = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
                 await fileClient.CreateAsync(Constants.KB);
 
+                AuthenticationHeaderValue sourceAuthHeader = new AuthenticationHeaderValue(
+                    "Bearer",
+                    string.Empty);
+
                 ShareFileUploadRangeFromUriOptions options = new ShareFileUploadRangeFromUriOptions
                 {
-                    SourceBearerToken = string.Empty
+                    SourceAuthentication = sourceAuthHeader
                 };
 
                 HttpRange range = new HttpRange(0, Constants.KB);

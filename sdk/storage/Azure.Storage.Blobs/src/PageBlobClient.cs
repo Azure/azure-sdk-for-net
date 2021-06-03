@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -2975,7 +2976,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options.SourceContentHash,
                 options.DestinationConditions,
                 options.SourceConditions,
-                options.SourceBearerToken,
+                options.SourceAuthentication,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3036,7 +3037,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options.SourceContentHash,
                 options.DestinationConditions,
                 options.SourceConditions,
-                options.SourceBearerToken,
+                options.SourceAuthentication,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3115,7 +3116,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 conditions,
                 sourceConditions,
-                sourceBearerToken: default,
+                sourceAuthentication: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3194,7 +3195,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 conditions,
                 sourceConditions,
-                sourceBearerToken: default,
+                sourceAuthentication: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3245,8 +3246,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobRequestConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
-        /// <param name="sourceBearerToken">
-        /// Optional. Source bearer token used to access the source blob.
+        /// <param name="sourceAuthentication">
+        /// Optional. Source authentication used to access the source blob.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -3270,7 +3271,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             PageBlobRequestConditions conditions,
             PageBlobRequestConditions sourceConditions,
-            string sourceBearerToken,
+            AuthenticationHeaderValue sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3289,9 +3290,10 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> response;
 
-                    if (sourceBearerToken != null)
+                    string sourceAuthString = null;
+                    if (sourceAuthentication != null)
                     {
-                        sourceBearerToken = $"Bearer {sourceBearerToken}";
+                        sourceAuthString = $"{sourceAuthentication.Scheme} {sourceAuthentication.Parameter}";
                     }
 
                     if (async)
@@ -3319,7 +3321,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
-                            copySourceAuthorization: sourceBearerToken,
+                            copySourceAuthorization: sourceAuthString,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3348,7 +3350,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
-                            copySourceAuthorization: sourceBearerToken,
+                            copySourceAuthorization: sourceAuthString,
                             cancellationToken: cancellationToken);
                     }
 

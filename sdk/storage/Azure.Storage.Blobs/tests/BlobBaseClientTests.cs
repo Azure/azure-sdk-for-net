@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -3311,9 +3312,14 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             string sourceBearerToken = await GetAuthToken();
+
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                sourceBearerToken);
+
             BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
             {
-                SourceBearerToken = sourceBearerToken
+                SourceAuthentication = sourceAuth
             };
 
             // Act
@@ -3344,9 +3350,14 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             string sourceTokenCredential = await GetAuthToken();
+
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                string.Empty);
+
             BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
             {
-                SourceBearerToken = string.Empty
+                SourceAuthentication = sourceAuth
             };
 
             // Act
