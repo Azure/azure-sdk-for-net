@@ -4,156 +4,139 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading;
+using System.Net;
 using System.Threading.Tasks;
-using Moq;
+using Azure.Communication.Calling.Server.Tests.ConversationClients;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Calling.Server.Tests
 {
-    public class ConversationClientsTests
+    public class ConversationClientsTests : ConversationClientBaseTests
     {
+        private const string DummyStartRecordingResponse = "{" +
+                                                "\"recordingId\": \"dummyRecordingId\"" +
+                                                "}";
+        private const string DummyRecordingStateResponse = "{" +
+                                                "\"recordingState\": \"active\"" +
+                                                "}";
+
+        private const string DummyPlayAudioResponse = "{" +
+                                                "\"id\": \"dummyId\"," +
+                                                "\"status\": \"running\"," +
+                                                "\"operationContext\": \"dummyOperationContext\"," +
+                                                "\"resultInfo\": {" +
+                                                "\"code\": 200," +
+                                                "\"subcode\": 200," +
+                                                "\"message\": \"dummyMessage\"" +
+                                                  "}" +
+                                                "}";
+
         [TestCaseSource(nameof(TestData_StartRecording))]
-        public async Task StartRecording_Passes(string expectedConversationId, Uri expectedCallbackUri)
+        public void StartRecording_Returns200Ok(string sampleConversationId, Uri sampleCallBackUri)
         {
-            Mock<ConversationClient> mockConversationClient = new Mock<ConversationClient>();
-            Response<StartCallRecordingResponse>? expectedResponse = default;
-            CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.StartRecordingAsync(It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<CancellationToken>()));
+            ConversationClient _convClient = CreateMockConversationClient(200, DummyStartRecordingResponse);
+            StartCallRecordingResponse response = _convClient.StartRecording(sampleConversationId, sampleCallBackUri);
+            Assert.AreEqual("dummyRecordingId", response.RecordingId);
+        }
 
-            mockConversationClient
-                .Setup(callExpression)
-                .ReturnsAsync((string conversationId, Uri callBackUri, CancellationToken token) =>
-                {
-                    Assert.AreEqual(expectedConversationId, conversationId);
-                    Assert.AreEqual(expectedCallbackUri, callBackUri);
-                    Assert.AreEqual(cancellationToken, token);
-                    return expectedResponse = new Mock<Response<StartCallRecordingResponse>>().Object;
-                });
-
-            Response<StartCallRecordingResponse> actualResponse = await mockConversationClient.Object.StartRecordingAsync(expectedConversationId, expectedCallbackUri, cancellationToken);
-
-            mockConversationClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+        [TestCaseSource(nameof(TestData_StartRecording))]
+        public async Task StartRecordingAsync_Returns200Ok(string sampleConversationId, Uri sampleCallBackUri)
+        {
+            ConversationClient _convClient = CreateMockConversationClient(200, DummyStartRecordingResponse);
+            Response<StartCallRecordingResponse> response = await _convClient.StartRecordingAsync(sampleConversationId, sampleCallBackUri);
+            Assert.AreEqual("dummyRecordingId", response.Value.RecordingId);
         }
 
         [TestCaseSource(nameof(TestData_StopRecording))]
-        public async Task StopRecording_Passes(string expectedConversationId, string expectedRecordingId)
+        public void StopRecording_Return200Ok(string sampleConversationId, string sampleRecordingId)
         {
-            Mock<ConversationClient> mockConversationClient = new Mock<ConversationClient>();
-            Response? expectedResponse = default;
-            CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.StopRecordingAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            ConversationClient _convClient = CreateMockConversationClient(200);
+            Response response = _convClient.StopRecording(sampleConversationId, sampleRecordingId);
+            var temp = response.Status;
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+        }
 
-            mockConversationClient
-                .Setup(callExpression)
-                .ReturnsAsync((string conversationId, string recordingId, CancellationToken token) =>
-                {
-                    Assert.AreEqual(expectedConversationId, conversationId);
-                    Assert.AreEqual(expectedRecordingId, recordingId);
-                    return expectedResponse = new Mock<Response>().Object;
-                });
-
-            Response actualResponse = await mockConversationClient.Object.StopRecordingAsync(expectedConversationId, expectedRecordingId, cancellationToken);
-
-            mockConversationClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+        [TestCaseSource(nameof(TestData_StopRecording))]
+        public async Task StopRecordingAsync_Return200Ok(string sampleConversationId, string sampleRecordingId)
+        {
+            ConversationClient _convClient = CreateMockConversationClient(200);
+            Response response = await _convClient.StopRecordingAsync(sampleConversationId, sampleRecordingId);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_PauseRecording))]
-        public async Task PauseRecording_Passes(string expectedConversationId, string expectedRecordingId)
+        public void PauseRecording_Return200Ok(string sampleConversationId, string sampleRecordingId)
         {
-            Mock<ConversationClient> mockConversationClient = new Mock<ConversationClient>();
-            Response? expectedResponse = default;
-            CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.PauseRecordingAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            ConversationClient _convClient = CreateMockConversationClient(200);
+            Response response = _convClient.PauseRecording(sampleConversationId, sampleRecordingId);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+        }
 
-            mockConversationClient
-                .Setup(callExpression)
-                .ReturnsAsync((string conversationId, string recordingId, CancellationToken token) =>
-                {
-                    Assert.AreEqual(expectedConversationId, conversationId);
-                    Assert.AreEqual(expectedRecordingId, recordingId);
-                    return expectedResponse = new Mock<Response>().Object;
-                });
-
-            Response actualResponse = await mockConversationClient.Object.PauseRecordingAsync(expectedConversationId, expectedRecordingId, cancellationToken);
-
-            mockConversationClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+        [TestCaseSource(nameof(TestData_PauseRecording))]
+        public async Task PauseRecordingAsync_Return200Ok(string sampleConversationId, string sampleRecordingId)
+        {
+            ConversationClient _convClient = CreateMockConversationClient(200);
+            Response response = await _convClient.PauseRecordingAsync(sampleConversationId, sampleRecordingId);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_ResumeRecording))]
-        public async Task ResumeRecording_Passes(string expectedConversationId, string expectedRecordingId)
+        public void ResumeRecording_Return200Ok(string sampleConversationId, string sampleRecordingId)
         {
-            Mock<ConversationClient> mockConversationClient = new Mock<ConversationClient>();
-            Response? expectedResponse = default;
-            CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.ResumeRecordingAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            ConversationClient _convClient = CreateMockConversationClient(200);
+            Response response = _convClient.ResumeRecording(sampleConversationId, sampleRecordingId);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+        }
 
-            mockConversationClient
-                .Setup(callExpression)
-                .ReturnsAsync((string conversationId, string recordingId, CancellationToken token) =>
-                {
-                    Assert.AreEqual(expectedConversationId, conversationId);
-                    Assert.AreEqual(expectedRecordingId, recordingId);
-                    return expectedResponse = new Mock<Response>().Object;
-                });
-
-            Response actualResponse = await mockConversationClient.Object.ResumeRecordingAsync(expectedConversationId, expectedRecordingId, cancellationToken);
-
-            mockConversationClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+        [TestCaseSource(nameof(TestData_ResumeRecording))]
+        public async Task ResumeRecordingAsync_Return200Ok(string sampleConversationId, string sampleRecordingId)
+        {
+            ConversationClient _convClient = CreateMockConversationClient(200);
+            Response response = await _convClient.ResumeRecordingAsync(sampleConversationId, sampleRecordingId);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_GetRecordingState))]
-        public async Task GetRecordingState_Passes(string expectedConversationId, string expectedRecordingId)
+        public void GetRecordingState_Return200Ok(string sampleConversationId, string sampleRecordingId)
         {
-            Mock<ConversationClient> mockConversationClient = new Mock<ConversationClient>();
-            Response<GetCallRecordingStateResponse>? expectedResponse = default;
-            CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.GetRecordingStateAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
-
-            mockConversationClient
-                .Setup(callExpression)
-                .ReturnsAsync((string conversationId, string recordingId, CancellationToken token) =>
-                {
-                    Assert.AreEqual(expectedConversationId, conversationId);
-                    Assert.AreEqual(expectedRecordingId, recordingId);
-                    return expectedResponse = new Mock<Response<GetCallRecordingStateResponse>>().Object;
-                });
-
-            Response<GetCallRecordingStateResponse> actualResponse = await mockConversationClient.Object.GetRecordingStateAsync(expectedConversationId, expectedRecordingId, cancellationToken);
-
-            mockConversationClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            ConversationClient _convClient = CreateMockConversationClient(200, DummyRecordingStateResponse);
+            GetCallRecordingStateResponse response = _convClient.GetRecordingState(sampleConversationId, sampleRecordingId);
+            Assert.AreEqual(CallRecordingState.Active, response.RecordingState);
         }
 
-        [TestCaseSource(nameof(TestData_PlayAudioWithoutRequest))]
-        public async Task PlayAudioAsync_Passes(string expectedConversationId, Uri expectedAudioFileUri, string expectedAudioFileId, Uri expectedCallbackUri, string expectedOperationContext)
+        [TestCaseSource(nameof(TestData_GetRecordingState))]
+        public async Task GetRecordingStateAsync_Return200Ok(string sampleConversationId, string sampleRecordingId)
         {
-            Mock<ConversationClient> mockConversationClient = new Mock<ConversationClient>();
-            Response<PlayAudioResponse>? expectedResponse = default;
-            CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            ConversationClient _convClient = CreateMockConversationClient(200, DummyRecordingStateResponse);
+            Response<GetCallRecordingStateResponse> response = await _convClient.GetRecordingStateAsync(sampleConversationId, sampleRecordingId);
+            Assert.AreEqual(CallRecordingState.Active, response.Value.RecordingState);
+        }
 
-            mockConversationClient
-                .Setup(callExpression)
-                .ReturnsAsync((string conversationId, Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext, CancellationToken token) =>
-                {
-                    Assert.AreEqual(expectedConversationId, conversationId);
-                    Assert.AreEqual(expectedAudioFileUri, audioFileUri);
-                    Assert.AreEqual(expectedAudioFileId, audioFileId);
-                    Assert.AreEqual(expectedCallbackUri, callbackUri);
-                    Assert.AreEqual(expectedOperationContext, operationContext);
-                    Assert.AreEqual(cancellationToken, token);
-                    return expectedResponse = new Mock<Response<PlayAudioResponse>>().Object;
-                });
+        [TestCaseSource(nameof(TestData_PlayAudio))]
+        public void PlayAudio_Return202Accepted(string sampleConversationId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            ConversationClient _convClient = CreateMockConversationClient(202, DummyPlayAudioResponse);
+            PlayAudioResponse response = _convClient.PlayAudio(sampleConversationId, sampleAudioFileUri, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
+            VerifyPlayAudioResponse(response);
+        }
 
-            Response<PlayAudioResponse> actualResponse = await mockConversationClient.Object.PlayAudioAsync(expectedConversationId, expectedAudioFileUri, expectedAudioFileId, expectedCallbackUri, expectedOperationContext, cancellationToken);
+        [TestCaseSource(nameof(TestData_PlayAudio))]
+        public async Task PlayAudioAsync_Return202Accepted(string sampleConversationId, Uri sampleAudioFileUri, string sampleAudioFileId, Uri sampleCallbackUri, string sampleOperationContext)
+        {
+            ConversationClient _convClient = CreateMockConversationClient(202, DummyPlayAudioResponse);
+            Response<PlayAudioResponse> response = await _convClient.PlayAudioAsync(sampleConversationId, sampleAudioFileUri, sampleAudioFileId, sampleCallbackUri, sampleOperationContext);
+            VerifyPlayAudioResponse(response);
+        }
 
-            mockConversationClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+        private void VerifyPlayAudioResponse(PlayAudioResponse response)
+        {
+            Assert.AreEqual("dummyId", response.Id);
+            Assert.AreEqual(OperationStatus.Running, response.Status);
+            Assert.AreEqual("dummyOperationContext", response.OperationContext);
+            Assert.AreEqual(200, response.ResultInfo.Code);
+            Assert.AreEqual("dummyMessage", response.ResultInfo.Message);
         }
 
         private static IEnumerable<object?[]> TestData_StartRecording()
@@ -206,7 +189,7 @@ namespace Azure.Communication.Calling.Server.Tests
             };
         }
 
-        private static IEnumerable<object?[]> TestData_PlayAudioWithoutRequest()
+        private static IEnumerable<object?[]> TestData_PlayAudio()
         {
             return new List<object?[]>(){
                 new object?[] {
