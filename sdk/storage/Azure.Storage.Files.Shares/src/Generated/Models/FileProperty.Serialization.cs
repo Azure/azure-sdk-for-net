@@ -28,19 +28,19 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("CreationTime") is XElement creationTimeElement)
             {
-                creationTime = creationTimeElement.GetDateTimeOffsetValue("R");
+                creationTime = creationTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("LastAccessTime") is XElement lastAccessTimeElement)
             {
-                lastAccessTime = lastAccessTimeElement.GetDateTimeOffsetValue("R");
+                lastAccessTime = lastAccessTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("LastWriteTime") is XElement lastWriteTimeElement)
             {
-                lastWriteTime = lastWriteTimeElement.GetDateTimeOffsetValue("R");
+                lastWriteTime = lastWriteTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("ChangeTime") is XElement changeTimeElement)
             {
-                changeTime = changeTimeElement.GetDateTimeOffsetValue("R");
+                changeTime = changeTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Last-Modified") is XElement lastModifiedElement)
             {
