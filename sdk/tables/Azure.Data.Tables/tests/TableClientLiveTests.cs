@@ -238,6 +238,30 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableClient.
         /// </summary>
         [RecordedTest]
+        public async Task CreateEntityWithETagProperty()
+        {
+            List<TableEntity> entityResults;
+            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue,1);
+            entitiesToCreate[0]["ETag"] = "foo";
+
+            // Create the new entities.
+
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
+
+            // Query the entities.
+
+            entityResults = await client.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+            Assert.AreEqual("foo", entityResults[0]["ETag"]);
+            Assert.AreNotEqual(entityResults[0]["ETag"], entityResults[0].ETag);
+            entityResults.Clear();
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
         public async Task CreatedDynamicEntitiesCanBeQueriedWithFilters()
         {
             List<TableEntity> entityResults;

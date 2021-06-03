@@ -10,9 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
     public class AnalyzeOperationTests : TextAnalyticsClientLiveTestBase
     {
-        public AnalyzeOperationTests(bool isAsync) : base(isAsync) { }
+        public AnalyzeOperationTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private static List<string> batchConvenienceDocuments = new List<string>
         {
@@ -39,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
@@ -62,7 +66,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions, "en");
@@ -120,7 +124,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
                 DisplayName = "AnalyzeOperationWithLanguageTest"
             };
 
@@ -173,11 +177,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
-                RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
-                RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
-                RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { new RecognizeLinkedEntitiesOptions() },
-                AnalyzeSentimentOptions = new List<AnalyzeSentimentOptions>() { new AnalyzeSentimentOptions() },
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() },
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
                 DisplayName = "AnalyzeOperationWithMultipleTasks"
             };
 
@@ -300,7 +304,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
                 DisplayName = "AnalyzeOperationWithPagination",
             };
 
@@ -351,10 +355,10 @@ namespace Azure.AI.TextAnalytics.Tests
             };
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>()
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>()
                 {
-                    new ExtractKeyPhrasesOptions(),
-                    new ExtractKeyPhrasesOptions()
+                    new ExtractKeyPhrasesAction(),
+                    new ExtractKeyPhrasesAction()
                     {
                         ModelVersion = "InvalidVersion"
                     }
@@ -364,7 +368,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, ex.ErrorCode);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidParameterValue, ex.ErrorCode);
         }
 
         [RecordedTest]
@@ -379,9 +383,9 @@ namespace Azure.AI.TextAnalytics.Tests
             };
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>()
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>()
                 {
-                    new ExtractKeyPhrasesOptions()
+                    new ExtractKeyPhrasesAction()
                 }
             };
 
@@ -415,7 +419,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } },
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { DomainFilter = PiiEntityDomain.ProtectedHealthInformation } },
                 DisplayName = "AnalyzeOperationWithPHIDomain",
             };
 
@@ -462,7 +466,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
                 DisplayName = "AnalyzeOperationTest",
             };
 
@@ -500,11 +504,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() { DisableServiceLogs = true } },
-                RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() { DisableServiceLogs = true } },
-                RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() { DisableServiceLogs = false } },
-                RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { new RecognizeLinkedEntitiesOptions() { DisableServiceLogs = true } },
-                AnalyzeSentimentOptions = new List<AnalyzeSentimentOptions>() { new AnalyzeSentimentOptions() { DisableServiceLogs = true } },
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() { DisableServiceLogs = true } },
+                RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() { DisableServiceLogs = true } },
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { DisableServiceLogs = false } },
+                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() { DisableServiceLogs = true } },
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() { DisableServiceLogs = true } },
             };
 
             AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);
@@ -548,7 +552,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                AnalyzeSentimentOptions = new List<AnalyzeSentimentOptions>() { new AnalyzeSentimentOptions() { IncludeOpinionMining = true } },
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() { IncludeOpinionMining = true } },
                 DisplayName = "AnalyzeOperationWithOpinionMining",
             };
 

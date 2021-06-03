@@ -330,7 +330,6 @@ namespace Azure.Search.Documents.Tests
         public int? Rating { get; set; }
 
         [JsonPropertyName("geoLocation")]
-        [JsonConverter(typeof(GeoJsonConverter))]
         public GeoPoint GeoLocation { get; set; }
 
         [JsonPropertyName("location")]

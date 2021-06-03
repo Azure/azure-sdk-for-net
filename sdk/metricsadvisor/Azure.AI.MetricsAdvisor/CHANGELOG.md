@@ -6,11 +6,16 @@
 - Added properties `Value` and `ExpectedValue` to `DataPointAnomaly` to provide more information about the anomalous data point.
 - Added properties `ValueOfRootNode` and `ExpectedValueOfRootNode` to `AnomalyIncident` to provide more information about the anomalous data point at the root node of the indicent.
 - Response headers that were marked as `REDACTED` in error messages and logs are now exposed by default.
+- `GetDetectionConfigurations` and `GetAlertConfigurations` in the `MetricsAdvisorAdministrationClient` can now take a set of options with `Skip` and `MaxPageSize` properties to configure paging behavior.
 
 ### Breaking Changes
+- `NotificationHook.ExternalLink` and `WebNotificationHook.Endpoint` are now of type `Uri`.
+- Removed setter from `GetIncidentsForDetectionConfigurationOptions.DimensionsToFilter`. Elements can be added directly to it without user instantiation.
 - Renamed all `SkipCount` listing options to `Skip`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
 - Renamed all `TopCount` listing options to `MaxPageSize`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
 - Removed data feed sources `ElasticsearchDataFeedSource` and `HttpRequestDataFeedSource` as they are not supported by the service anymore. A different type of data feed source must be used for data ingestion instead.
+- Removed getters for secrets in data feed sources, such as `AzureBlobDataFeedSource.ConnectionString` and `InfluxDbDataFeedSource.Password`.
+- Removed granularity type `DataFeedGranularityType.PerSecond` as it's not supported by the service anymore.
 
 ## 1.0.0-beta.3 (2021-02-09)
 

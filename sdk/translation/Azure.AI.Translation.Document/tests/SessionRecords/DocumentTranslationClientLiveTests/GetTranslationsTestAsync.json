@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/source670901805?restype=container",
+      "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/source276808845?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-4e938db4f890524ea8823f6508938911-9e9439a434e0304c-00",
+        "traceparent": "00-135acc28280f8d4f8724d021f4fa3563-fdb41042b7479e45-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "29aceb501ed308338fbd522703debefe",
-        "x-ms-date": "Tue, 18 May 2021 19:02:54 GMT",
+        "x-ms-client-request-id": "bb76e629025a60b1f55c7d0e8913bf7a",
+        "x-ms-date": "Mon, 24 May 2021 21:24:03 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -17,28 +17,28 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 18 May 2021 19:02:55 GMT",
-        "ETag": "\u00220x8D91A2F8B6C449D\u0022",
-        "Last-Modified": "Tue, 18 May 2021 19:02:55 GMT",
+        "Date": "Mon, 24 May 2021 21:24:02 GMT",
+        "ETag": "\u00220x8D91EFA416454F0\u0022",
+        "Last-Modified": "Mon, 24 May 2021 21:24:03 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "29aceb501ed308338fbd522703debefe",
-        "x-ms-request-id": "9c5e2969-d01e-0004-3818-4c6555000000",
+        "x-ms-client-request-id": "bb76e629025a60b1f55c7d0e8913bf7a",
+        "x-ms-request-id": "eb240208-001e-0038-14e3-504c92000000",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/source670901805/Document1.txt",
+      "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/source276808845/Document1.txt",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "27",
         "If-None-Match": "*",
-        "traceparent": "00-4957b3115c038f4cb2bcd9c280d998ef-a4f0fd1546360b40-00",
+        "traceparent": "00-07dacbb761fef04db12b12c4e81f4dff-48a7ebdc52c16041-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "f24a805cd00ffce5f0b72d37cb0a01c1",
-        "x-ms-date": "Tue, 18 May 2021 19:02:54 GMT",
+        "x-ms-client-request-id": "6e14789f1d7220e5f0476a6df4872698",
+        "x-ms-date": "Mon, 24 May 2021 21:24:03 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -47,28 +47,28 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Content-MD5": "zc6asiLoUz/caxlJ6YwKxA==",
-        "Date": "Tue, 18 May 2021 19:02:55 GMT",
-        "ETag": "\u00220x8D91A2F8B75A647\u0022",
-        "Last-Modified": "Tue, 18 May 2021 19:02:55 GMT",
+        "Date": "Mon, 24 May 2021 21:24:02 GMT",
+        "ETag": "\u00220x8D91EFA417106CB\u0022",
+        "Last-Modified": "Mon, 24 May 2021 21:24:03 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "f24a805cd00ffce5f0b72d37cb0a01c1",
+        "x-ms-client-request-id": "6e14789f1d7220e5f0476a6df4872698",
         "x-ms-content-crc64": "V7knc5S52gk=",
-        "x-ms-request-id": "9c5e297b-d01e-0004-4718-4c6555000000",
+        "x-ms-request-id": "eb24021e-001e-0038-24e3-504c92000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/target204277559?restype=container",
+      "RequestUri": "https://mariaridoctrans29prim.blob.core.windows.net/target1066258783?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-e3c93c90cfd1fb49a74f668c0f1e980e-aa0f0b55d145a648-00",
+        "traceparent": "00-7c006b401b9d6b43ad290ccda479009d-55b14e332edb5440-00",
         "User-Agent": "azsdk-net-Storage.Blobs/12.8.0 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "53e95d03b101e81d0d01cb021122ac93",
-        "x-ms-date": "Tue, 18 May 2021 19:02:54 GMT",
+        "x-ms-client-request-id": "a48a8f1635f7a5d3abf29acff4704017",
+        "x-ms-date": "Mon, 24 May 2021 21:24:03 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-04-08"
       },
@@ -76,27 +76,27 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 18 May 2021 19:02:55 GMT",
-        "ETag": "\u00220x8D91A2F8B7A29E0\u0022",
-        "Last-Modified": "Tue, 18 May 2021 19:02:55 GMT",
+        "Date": "Mon, 24 May 2021 21:24:02 GMT",
+        "ETag": "\u00220x8D91EFA41765989\u0022",
+        "Last-Modified": "Mon, 24 May 2021 21:24:03 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
-        "x-ms-client-request-id": "53e95d03b101e81d0d01cb021122ac93",
-        "x-ms-request-id": "9c5e2994-d01e-0004-5e18-4c6555000000",
+        "x-ms-client-request-id": "a48a8f1635f7a5d3abf29acff4704017",
+        "x-ms-request-id": "eb240236-001e-0038-39e3-504c92000000",
         "x-ms-version": "2020-04-08"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/batches",
+      "RequestUri": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0/batches",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "103",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7c937348568b334c89cdaaeb0a205a38-a62d3e2108e5d344-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210518.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "a06bf1381efc0680af381cf1fb3d84bb",
+        "traceparent": "00-6d086da6b9bedf4ab96eff5892eeb386-c7afe9aa4bdd6d4a-00",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210524.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "221b7e941a2f000b56ca1297436c6d36",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -116,75 +116,61 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "94cf0b0b-7b02-445f-b7c9-2dc69136355e",
+        "apim-request-id": "154e2c6d-e4de-44ab-821b-6547b7adf545",
         "Content-Length": "0",
-        "Date": "Tue, 18 May 2021 19:02:56 GMT",
-        "Operation-Location": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/batches/5c703528-b9d5-4ebf-a9ea-a0e62ebef5f4",
+        "Date": "Mon, 24 May 2021 21:24:04 GMT",
+        "Operation-Location": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0/batches/06b617b7-02b6-4210-827c-e6f872088c27",
         "Set-Cookie": [
-          "ARRAffinity=a5ec76bf198951bebbc7170ffee092def36f3cd0a69436d0c55a282d4d28c9e1;Path=/;HttpOnly;Secure;Domain=doctrans.westus.microsofttranslator.com",
-          "ARRAffinitySameSite=a5ec76bf198951bebbc7170ffee092def36f3cd0a69436d0c55a282d4d28c9e1;Path=/;HttpOnly;SameSite=None;Secure;Domain=doctrans.westus.microsofttranslator.com"
+          "ARRAffinity=0ff46fa6d58b00f2d44b7073721903c0eace480139d8ecfc38f61130af5e1587;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=0ff46fa6d58b00f2d44b7073721903c0eace480139d8ecfc38f61130af5e1587;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "94cf0b0b-7b02-445f-b7c9-2dc69136355e"
+        "X-RequestId": "154e2c6d-e4de-44ab-821b-6547b7adf545"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/batches",
+      "RequestUri": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0/batches",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-e8981ed7c9139b4e94e6c3ecbfda3415-6096f84757678649-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210518.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "8100f090abd5ce5a2c0901cf19fade94",
+        "traceparent": "00-328835f6b99e9b4699e91810e365caa2-e31048c677f5cd4b-00",
+        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210524.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "8472afe4d63442a840c9c62b4b50fcd7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "59f6f05e-2df7-4b03-9221-6db37da8169d",
+        "Age": "0",
+        "apim-request-id": "c0b5e2d2-f33a-4132-bf62-8b0f2ade6b12",
         "Cache-Control": [
           "public",
           "max-age=1"
         ],
+        "Content-Length": "6727",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 18 May 2021 19:02:57 GMT",
-        "ETag": "\u00221BD86A0FA5C6AA15594C2FFBDC9E9C49ECC65FAA4B1C2B0B37FBAEE4E5C20E66\u0022",
+        "Date": "Mon, 24 May 2021 21:24:04 GMT",
+        "ETag": "\u00224FDBCC0AF70D03F8E88E28309BA26C1B82F00248628ABBF17C0448F31DEFE170\u0022",
         "Retry-After": "1",
         "Set-Cookie": [
-          "ARRAffinity=20358cd7aa5d6b0695f01ef171fc9a95880154357830e1c6bb513b73834a2e5f;Path=/;HttpOnly;Secure;Domain=doctrans.westus.microsofttranslator.com",
-          "ARRAffinitySameSite=20358cd7aa5d6b0695f01ef171fc9a95880154357830e1c6bb513b73834a2e5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=doctrans.westus.microsofttranslator.com"
+          "ARRAffinity=20358cd7aa5d6b0695f01ef171fc9a95880154357830e1c6bb513b73834a2e5f;Path=/;HttpOnly;Secure;Domain=mtbatch.nam.microsofttranslator.com",
+          "ARRAffinitySameSite=20358cd7aa5d6b0695f01ef171fc9a95880154357830e1c6bb513b73834a2e5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=mtbatch.nam.microsofttranslator.com"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
         "X-Powered-By": "ASP.NET",
-        "X-RequestId": "59f6f05e-2df7-4b03-9221-6db37da8169d"
+        "X-RequestId": "eea13d71-6251-44af-8a89-e75ad00f8c5e"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "5c703528-b9d5-4ebf-a9ea-a0e62ebef5f4",
-            "createdDateTimeUtc": "2021-05-18T19:02:55.7922706Z",
-            "lastActionDateTimeUtc": "2021-05-18T19:02:55.7924645Z",
-            "status": "NotStarted",
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6e4305ac-f1a5-445e-bf6f-e6e012d00b8f",
-            "createdDateTimeUtc": "2021-05-18T19:02:52.2957693Z",
-            "lastActionDateTimeUtc": "2021-05-18T19:02:52.7878012Z",
+            "id": "b8f1c2c1-d4d2-4c84-b1c3-3769b13fda06",
+            "createdDateTimeUtc": "2021-05-24T21:24:02.8533664Z",
+            "lastActionDateTimeUtc": "2021-05-24T21:24:03.067879Z",
             "status": "NotStarted",
             "summary": {
               "total": 1,
@@ -197,253 +183,118 @@
             }
           },
           {
-            "id": "2278ba89-522d-433c-a1e3-c6560cba4449",
-            "createdDateTimeUtc": "2021-04-29T16:46:24.9387175Z",
-            "lastActionDateTimeUtc": "2021-04-29T16:46:25.1923394Z",
-            "status": "Failed",
-            "summary": {
-              "total": 5,
-              "failed": 5,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "42a546b0-7025-448c-8943-16245be2bbff",
-            "createdDateTimeUtc": "2021-04-14T22:02:50.0416269Z",
-            "lastActionDateTimeUtc": "2021-04-14T22:03:07.4045568Z",
+            "id": "4a88cf5a-6c56-4a37-a82f-f50e69aa270e",
+            "createdDateTimeUtc": "2021-05-18T17:16:40.5861751Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:16:41.8157719Z",
             "status": "Succeeded",
             "summary": {
-              "total": 5,
-              "failed": 1,
-              "success": 4,
+              "total": 1,
+              "failed": 0,
+              "success": 1,
               "inProgress": 0,
               "notYetStarted": 0,
               "cancelled": 0,
-              "totalCharacterCharged": 3937
+              "totalCharacterCharged": 27
             }
           },
           {
-            "id": "574da2ed-b64d-46ca-a0a0-8b7d8f244193",
-            "createdDateTimeUtc": "2021-04-14T21:59:55.4362252Z",
-            "lastActionDateTimeUtc": "2021-04-14T22:00:12.7483678Z",
+            "id": "998e924e-7865-4130-b219-10ff047b2618",
+            "createdDateTimeUtc": "2021-05-18T17:16:39.675925Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:16:41.0477773Z",
             "status": "Succeeded",
             "summary": {
-              "total": 5,
-              "failed": 1,
-              "success": 4,
+              "total": 1,
+              "failed": 0,
+              "success": 1,
               "inProgress": 0,
               "notYetStarted": 0,
               "cancelled": 0,
-              "totalCharacterCharged": 3937
+              "totalCharacterCharged": 27
             }
           },
           {
-            "id": "1a7fde33-b185-46cf-924f-7ce4018e55da",
-            "createdDateTimeUtc": "2021-04-14T21:59:07.2837777Z",
-            "lastActionDateTimeUtc": "2021-04-14T21:59:37.4220858Z",
+            "id": "6d6d4baf-c81e-4d8a-9274-b3fd7dd753a0",
+            "createdDateTimeUtc": "2021-05-18T17:05:20.5002265Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:05:21.0522225Z",
+            "status": "Failed",
+            "summary": {
+              "total": 1,
+              "failed": 1,
+              "success": 0,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 0
+            }
+          },
+          {
+            "id": "1d607ede-d0b5-41c7-84e1-7b3d743e2a48",
+            "createdDateTimeUtc": "2021-05-18T17:05:17.0026411Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:05:18.0215402Z",
             "status": "Succeeded",
             "summary": {
-              "total": 5,
-              "failed": 1,
-              "success": 4,
+              "total": 1,
+              "failed": 0,
+              "success": 1,
               "inProgress": 0,
               "notYetStarted": 0,
               "cancelled": 0,
-              "totalCharacterCharged": 3937
+              "totalCharacterCharged": 27
             }
           },
           {
-            "id": "f43ac214-a34c-42e7-8b0c-dd6d5ad6310c",
-            "createdDateTimeUtc": "2021-04-14T21:57:35.336501Z",
-            "lastActionDateTimeUtc": "2021-04-14T21:58:01.8139281Z",
+            "id": "1e9336c2-08f0-4d67-8927-d4ae7b2aa81b",
+            "createdDateTimeUtc": "2021-05-18T17:05:14.4137152Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:05:15.0265757Z",
             "status": "Succeeded",
             "summary": {
-              "total": 5,
-              "failed": 1,
-              "success": 4,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 3937
-            }
-          },
-          {
-            "id": "e2ae766f-cbad-46d3-8da6-656b0242be64",
-            "createdDateTimeUtc": "2021-04-08T15:55:32.9847012Z",
-            "lastActionDateTimeUtc": "2021-04-08T15:55:33.3282171Z",
-            "status": "Failed",
-            "summary": {
-              "total": 3,
-              "failed": 3,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "9960398f-748a-4e8e-98de-08385937e5bf",
-            "createdDateTimeUtc": "2021-04-08T15:48:42.8237262Z",
-            "lastActionDateTimeUtc": "2021-04-08T15:48:42.9669271Z",
-            "status": "Failed",
-            "summary": {
-              "total": 3,
-              "failed": 3,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "9b3dbb38-a5e6-4629-a19b-67cafefb62a4",
-            "createdDateTimeUtc": "2021-04-08T15:48:12.735753Z",
-            "lastActionDateTimeUtc": "2021-04-08T15:48:12.9428171Z",
-            "status": "Failed",
-            "summary": {
-              "total": 3,
-              "failed": 3,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "da9d8015-43f9-433c-927b-9f957f5d5271",
-            "createdDateTimeUtc": "2021-04-07T18:42:10.5745072Z",
-            "lastActionDateTimeUtc": "2021-04-07T18:42:10.7844334Z",
-            "status": "Failed",
-            "summary": {
-              "total": 3,
-              "failed": 3,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "38d17320-4403-40f6-ab62-cdda65432d38",
-            "createdDateTimeUtc": "2021-04-06T14:02:43.3894285Z",
-            "lastActionDateTimeUtc": "2021-04-06T14:02:43.5389262Z",
-            "status": "Failed",
-            "summary": {
               "total": 1,
-              "failed": 1,
-              "success": 0,
+              "failed": 0,
+              "success": 1,
               "inProgress": 0,
               "notYetStarted": 0,
               "cancelled": 0,
-              "totalCharacterCharged": 0
+              "totalCharacterCharged": 24
             }
           },
           {
-            "id": "e56ee497-72bd-4e48-91d1-a062c933273e",
-            "createdDateTimeUtc": "2021-04-06T14:00:43.5206457Z",
-            "lastActionDateTimeUtc": "2021-04-06T14:00:44.6031451Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "9c167e8e-cc78-4406-8b49-03cf163648e7",
-            "createdDateTimeUtc": "2021-04-06T13:58:46.7142245Z",
-            "lastActionDateTimeUtc": "2021-04-06T13:58:46.8825555Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "ee3509e3-cc8e-4b7f-ba2a-238186f6c859",
-            "createdDateTimeUtc": "2021-04-06T13:50:27.8412455Z",
-            "lastActionDateTimeUtc": "2021-04-06T13:50:28.0337157Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6ad097c5-c2df-45b7-8581-a9a9c8126c52",
-            "createdDateTimeUtc": "2021-04-06T13:49:34.492166Z",
-            "lastActionDateTimeUtc": "2021-04-06T13:49:39.0879607Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "1ae0a908-7afe-4429-a9e8-3e68c489f91b",
-            "createdDateTimeUtc": "2021-04-06T13:46:01.9319306Z",
-            "lastActionDateTimeUtc": "2021-04-06T13:46:02.0625986Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "5070144b-8f40-4daf-bf6d-a4c7c24bcba7",
-            "createdDateTimeUtc": "2021-04-06T13:44:43.6287441Z",
-            "lastActionDateTimeUtc": "2021-04-06T13:44:48.554358Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6c9d5b50-bee9-4782-90a1-ae8a38216d29",
-            "createdDateTimeUtc": "2021-04-06T01:13:41.3313865Z",
-            "lastActionDateTimeUtc": "2021-04-06T01:13:54.246261Z",
+            "id": "d3fd0fee-6380-4406-baf1-95d33d22d6e3",
+            "createdDateTimeUtc": "2021-05-18T17:05:07.6301114Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:05:12.0230202Z",
             "status": "Succeeded",
             "summary": {
-              "total": 4,
-              "failed": 2,
+              "total": 1,
+              "failed": 0,
+              "success": 1,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 27
+            }
+          },
+          {
+            "id": "229727c6-c0f0-49d8-9eae-c542b97b1126",
+            "createdDateTimeUtc": "2021-05-18T17:04:59.7894086Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:05:04.9514584Z",
+            "status": "Succeeded",
+            "summary": {
+              "total": 1,
+              "failed": 0,
+              "success": 1,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 27
+            }
+          },
+          {
+            "id": "d7caa4a2-cd6a-4ecf-b688-92bac5bb6af2",
+            "createdDateTimeUtc": "2021-05-18T17:04:47.7973823Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:04:57.8803476Z",
+            "status": "Succeeded",
+            "summary": {
+              "total": 2,
+              "failed": 0,
               "success": 2,
               "inProgress": 0,
               "notYetStarted": 0,
@@ -452,13 +303,133 @@
             }
           },
           {
-            "id": "3b4bf883-291d-4c2e-a973-c6e1f4f58c5b",
-            "createdDateTimeUtc": "2021-04-06T01:10:21.1465097Z",
-            "lastActionDateTimeUtc": "2021-04-06T01:10:29.0437346Z",
+            "id": "97dd054a-db3f-4fae-933b-b3cacd7528c9",
+            "createdDateTimeUtc": "2021-05-18T17:04:36.6390065Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:04:39.9288355Z",
             "status": "Succeeded",
             "summary": {
-              "total": 4,
-              "failed": 2,
+              "total": 1,
+              "failed": 0,
+              "success": 1,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 27
+            }
+          },
+          {
+            "id": "4a6581db-6c91-438b-aec7-844632f12ee2",
+            "createdDateTimeUtc": "2021-05-18T17:04:35.1691359Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:04:35.3207154Z",
+            "status": "Failed",
+            "summary": {
+              "total": 1,
+              "failed": 1,
+              "success": 0,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 0
+            }
+          },
+          {
+            "id": "f2321e9d-6773-4a0f-98e3-8685dcee6872",
+            "createdDateTimeUtc": "2021-05-18T17:04:26.2386509Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:04:27.887757Z",
+            "status": "Succeeded",
+            "summary": {
+              "total": 1,
+              "failed": 0,
+              "success": 1,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 27
+            }
+          },
+          {
+            "id": "9ff2564e-f58e-4941-a6b2-74b014676e8c",
+            "createdDateTimeUtc": "2021-05-18T17:04:21.4974969Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:04:24.8796173Z",
+            "status": "Failed",
+            "summary": {
+              "total": 1,
+              "failed": 1,
+              "success": 0,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 0
+            }
+          },
+          {
+            "id": "0de2f72b-cd84-4101-9928-e7857c0fbd53",
+            "createdDateTimeUtc": "2021-05-18T17:04:14.5028182Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:04:17.7418467Z",
+            "status": "Succeeded",
+            "summary": {
+              "total": 1,
+              "failed": 0,
+              "success": 1,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 27
+            }
+          },
+          {
+            "id": "567f0c80-f355-4ef6-b7ac-b74d63210a94",
+            "createdDateTimeUtc": "2021-05-18T17:04:09.8123313Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:04:10.7428928Z",
+            "status": "Succeeded",
+            "summary": {
+              "total": 1,
+              "failed": 0,
+              "success": 1,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 24
+            }
+          },
+          {
+            "id": "3834bb47-c37d-4d02-ad47-4e75bdb47f87",
+            "createdDateTimeUtc": "2021-05-18T17:03:59.7602966Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:04:03.6054066Z",
+            "status": "Succeeded",
+            "summary": {
+              "total": 1,
+              "failed": 0,
+              "success": 1,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 27
+            }
+          },
+          {
+            "id": "dc89be6e-1cfa-4b4c-9ed1-ecb061ef2c65",
+            "createdDateTimeUtc": "2021-05-18T17:03:45.215021Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:03:48.8885884Z",
+            "status": "Succeeded",
+            "summary": {
+              "total": 1,
+              "failed": 0,
+              "success": 1,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 27
+            }
+          },
+          {
+            "id": "cabba550-35bb-403c-bd68-5d813c2e2d8b",
+            "createdDateTimeUtc": "2021-05-18T17:03:32.4417835Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:03:39.9911996Z",
+            "status": "Succeeded",
+            "summary": {
+              "total": 2,
+              "failed": 0,
               "success": 2,
               "inProgress": 0,
               "notYetStarted": 0,
@@ -467,24 +438,9 @@
             }
           },
           {
-            "id": "72541158-cada-4442-a92c-ca1a8a35926e",
-            "createdDateTimeUtc": "2021-04-06T01:09:06.4793118Z",
-            "lastActionDateTimeUtc": "2021-04-06T01:09:14.009837Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 4,
-              "failed": 2,
-              "success": 2,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 54
-            }
-          },
-          {
-            "id": "5ffb1492-236c-4d09-af30-31fad4860fc5",
-            "createdDateTimeUtc": "2021-04-06T00:22:53.7436621Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:23:05.5883891Z",
+            "id": "4e85f66c-e171-4b28-9ef4-ad5975ed74df",
+            "createdDateTimeUtc": "2021-05-18T17:03:26.6503481Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:03:27.864941Z",
             "status": "Succeeded",
             "summary": {
               "total": 1,
@@ -497,9 +453,24 @@
             }
           },
           {
-            "id": "df994fd6-27f3-478d-9a5a-1b735df425bd",
-            "createdDateTimeUtc": "2021-04-06T00:22:10.5526949Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:22:20.4746284Z",
+            "id": "bfbff018-5abc-4079-ad68-a5eed83add0c",
+            "createdDateTimeUtc": "2021-05-18T17:03:25.0910184Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:03:25.3802838Z",
+            "status": "Failed",
+            "summary": {
+              "total": 1,
+              "failed": 1,
+              "success": 0,
+              "inProgress": 0,
+              "notYetStarted": 0,
+              "cancelled": 0,
+              "totalCharacterCharged": 0
+            }
+          },
+          {
+            "id": "3bc0d235-b128-4e6a-83b6-71dfdc757c85",
+            "createdDateTimeUtc": "2021-05-18T17:03:10.3667712Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:03:13.072347Z",
             "status": "Succeeded",
             "summary": {
               "total": 1,
@@ -512,84 +483,9 @@
             }
           },
           {
-            "id": "c8b83305-c476-428a-ae98-e29c781a94d6",
-            "createdDateTimeUtc": "2021-04-06T00:19:51.1030707Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:19:51.2288098Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "18144468-b580-44a0-8c0c-d3cad6ac89f1",
-            "createdDateTimeUtc": "2021-04-06T00:19:22.5067955Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:19:22.6945942Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "202e7222-5b38-4309-a457-91316dfd5303",
-            "createdDateTimeUtc": "2021-04-06T00:18:56.7697105Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:18:56.9690995Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "376fd8e0-788a-4653-8e9f-359b607653cd",
-            "createdDateTimeUtc": "2021-04-06T00:17:06.3326716Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:17:06.5597035Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "19c5742d-ae0e-474e-bd6f-931be4aeb752",
-            "createdDateTimeUtc": "2021-04-06T00:16:46.4972458Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:16:46.7097412Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "9274fb62-44c8-404b-a891-a04ab36f794c",
-            "createdDateTimeUtc": "2021-04-06T00:15:07.081275Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:15:15.0293418Z",
+            "id": "4afcf6d5-e50e-4892-abce-e305432c9913",
+            "createdDateTimeUtc": "2021-05-18T17:03:09.8243463Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:03:13.0653758Z",
             "status": "Succeeded",
             "summary": {
               "total": 1,
@@ -602,9 +498,9 @@
             }
           },
           {
-            "id": "8876cca1-5956-47b6-8847-e15d88fb1421",
-            "createdDateTimeUtc": "2021-04-06T00:10:59.7561932Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:11:09.7870949Z",
+            "id": "2b900328-62ff-4687-a845-8a60a3f1ae63",
+            "createdDateTimeUtc": "2021-05-18T17:03:07.2518801Z",
+            "lastActionDateTimeUtc": "2021-05-18T17:03:13.073735Z",
             "status": "Succeeded",
             "summary": {
               "total": 1,
@@ -614,2364 +510,6 @@
               "notYetStarted": 0,
               "cancelled": 0,
               "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "018a74b0-7eb1-48a0-bd6c-3dfebf938a8f",
-            "createdDateTimeUtc": "2021-04-06T00:04:41.8791299Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:04:54.5804605Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "87d131be-4603-42fe-849c-00d11cc3c932",
-            "createdDateTimeUtc": "2021-04-06T00:02:06.540255Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:02:06.7310419Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c4995e49-47f7-497e-904a-c17a0ebd7638",
-            "createdDateTimeUtc": "2021-04-06T00:00:42.3238434Z",
-            "lastActionDateTimeUtc": "2021-04-06T00:00:42.5678649Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "fde3bf10-187c-4bf9-873e-93c93fee8846",
-            "createdDateTimeUtc": "2021-04-05T23:56:56.8805493Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:57:00.3607371Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "25c60158-39ed-47bf-ac6b-62ce828981e0",
-            "createdDateTimeUtc": "2021-04-05T23:55:33.9838844Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:55:37.9169986Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "a761d980-5b17-4d6e-8ed2-1cde50c71535",
-            "createdDateTimeUtc": "2021-04-05T23:54:01.8064843Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:54:08.0825705Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "52cfee0a-8339-493a-9a90-36f5b702f83f",
-            "createdDateTimeUtc": "2021-04-05T23:51:25.284487Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:51:52.710543Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "e9bf6bc8-f67e-4410-855e-bc48494bdce9",
-            "createdDateTimeUtc": "2021-04-05T23:49:42.7545129Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:49:58.7470543Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "2b5fbd7e-e61e-41a3-8be5-85687c18e9bd",
-            "createdDateTimeUtc": "2021-04-05T23:48:02.8317016Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:48:04.585424Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "49714c9b-f2d3-4f3c-bc4b-9504fdaff68d",
-            "createdDateTimeUtc": "2021-04-05T23:46:43.0881292Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:46:43.2741618Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6fb75e0a-23a1-4554-adca-af845e644778",
-            "createdDateTimeUtc": "2021-04-05T23:34:29.5232755Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:34:29.7289006Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "264808b2-7419-4ded-bc6d-5c0b13aa9ce0",
-            "createdDateTimeUtc": "2021-04-05T23:33:13.1174898Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:33:13.5025928Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c1c818d1-3a9b-441e-87ff-ec90f5643f4d",
-            "createdDateTimeUtc": "2021-04-05T23:32:50.7636926Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:32:58.8213627Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "1da5fce7-3de3-461f-8fbc-13e36df783cc",
-            "createdDateTimeUtc": "2021-04-05T23:30:53.1940509Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:30:53.3978665Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "50c6772c-fb4b-40e9-9582-afaf300970c1",
-            "createdDateTimeUtc": "2021-04-05T23:24:23.9718761Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:24:24.3433782Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "3a6be499-3133-44db-a5d1-99ea4cba90b1",
-            "createdDateTimeUtc": "2021-04-05T23:18:14.5425026Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:18:16.3277906Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c45ee7da-d56f-449f-ba2a-97f0e18f5e01",
-            "createdDateTimeUtc": "2021-04-05T23:16:20.7242128Z",
-            "lastActionDateTimeUtc": "2021-04-05T23:16:33.2149749Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "2a144add-c4b6-4634-be29-6182495570ab",
-            "createdDateTimeUtc": "2021-04-02T20:40:33.7458676Z",
-            "lastActionDateTimeUtc": "2021-04-02T20:46:00.2626562Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "2c470c57-c025-4b94-9d88-0898b3f9d4b5",
-            "createdDateTimeUtc": "2021-04-01T01:41:46.4904207Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:42:07.4827769Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 2,
-              "failed": 0,
-              "success": 2,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 34
-            }
-          },
-          {
-            "id": "c1b8b701-05d7-4f7d-b20e-ea27a34c9905",
-            "createdDateTimeUtc": "2021-04-01T01:41:37.8207374Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:41:44.9005527Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          }
-        ],
-        "@nextLink": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/batches?$skip=50\u0026$top=115\u0026$maxpagesize=50"
-      }
-    },
-    {
-      "RequestUri": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/batches?$skip=50\u0026$top=115\u0026$maxpagesize=50",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-87d0cfd118a48e468efb31145ff5991e-6fdeb6a17e72ca4c-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210518.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "1893a4812196e43adde3a3c8952cecd0",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "e3653630-609e-405f-9db5-1f0f1bbeff97",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 18 May 2021 19:02:57 GMT",
-        "ETag": "\u0022B97CAAEFAE2E3BC8289FA72660DEE8B5A688C0DB2506176B54BE05E325C83351\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=a5ec76bf198951bebbc7170ffee092def36f3cd0a69436d0c55a282d4d28c9e1;Path=/;HttpOnly;Secure;Domain=doctrans.westus.microsofttranslator.com",
-          "ARRAffinitySameSite=a5ec76bf198951bebbc7170ffee092def36f3cd0a69436d0c55a282d4d28c9e1;Path=/;HttpOnly;SameSite=None;Secure;Domain=doctrans.westus.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "e3653630-609e-405f-9db5-1f0f1bbeff97"
-      },
-      "ResponseBody": {
-        "value": [
-          {
-            "id": "cb0268bb-5387-4e95-8875-c1c0e2603f48",
-            "createdDateTimeUtc": "2021-04-01T01:41:30.3700246Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:41:36.8572488Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "4a3809ab-30c0-455f-847b-841776498130",
-            "createdDateTimeUtc": "2021-04-01T01:41:21.9342782Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:41:29.1002Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "c27f99fd-b7a6-424d-8e5b-86d85d7a26ee",
-            "createdDateTimeUtc": "2021-04-01T01:41:15.6153264Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:41:20.718761Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 2,
-              "failed": 0,
-              "success": 2,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 35
-            }
-          },
-          {
-            "id": "daedfe18-a1f6-447f-814c-6efa563327e7",
-            "createdDateTimeUtc": "2021-04-01T01:41:12.7060918Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:41:12.8091568Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "e336e242-7808-4c05-bb1e-af7e66a47539",
-            "createdDateTimeUtc": "2021-04-01T01:41:10.6620744Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:41:11.1830245Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "3b09f939-dba5-4a41-a651-45ab9ad25742",
-            "createdDateTimeUtc": "2021-04-01T01:41:08.8001951Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:41:08.9148596Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6ada4c72-abcb-4155-b812-e6fd711350bf",
-            "createdDateTimeUtc": "2021-04-01T01:41:07.0506706Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:41:07.1399183Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "727853b7-8e9a-4d6b-a715-826316082e14",
-            "createdDateTimeUtc": "2021-04-01T01:40:59.9920686Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:41:05.6687737Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 2,
-              "failed": 0,
-              "success": 2,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 34
-            }
-          },
-          {
-            "id": "61c986c6-77e8-4988-89d9-fba397ff6662",
-            "createdDateTimeUtc": "2021-04-01T01:40:53.2097866Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:40:58.60166Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "c8fe4647-8ac1-49f5-a2ef-ac64ba211c96",
-            "createdDateTimeUtc": "2021-04-01T01:40:36.6777854Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:40:51.508971Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "c0e81999-1ab3-4a13-a9d9-59176242ec23",
-            "createdDateTimeUtc": "2021-04-01T01:40:18.7412216Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:40:35.4147094Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "b2febc11-ce0e-4897-9fe9-b1203812f28e",
-            "createdDateTimeUtc": "2021-04-01T01:40:08.8626623Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:40:17.7273506Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 2,
-              "failed": 0,
-              "success": 2,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 35
-            }
-          },
-          {
-            "id": "81901a0a-c442-47c4-8582-b3479a50f52a",
-            "createdDateTimeUtc": "2021-04-01T01:40:04.0450974Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:40:08.1722091Z",
-            "status": "Running",
-            "summary": {
-              "total": 2,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 1,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "0ace3664-7243-4f29-8a50-ac5524326b54",
-            "createdDateTimeUtc": "2021-04-01T01:40:01.3993149Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:40:01.5226123Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "8556d8c3-f9a0-48a2-bc8a-c51ca094cf47",
-            "createdDateTimeUtc": "2021-04-01T01:39:38.7051702Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:39:42.0939918Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "0f849100-08b9-4053-95a9-e703a21c9a90",
-            "createdDateTimeUtc": "2021-04-01T01:39:36.5567911Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:39:36.6772375Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "341f0209-1eb5-43b3-9ce6-755c121d8503",
-            "createdDateTimeUtc": "2021-04-01T01:39:34.7171225Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:39:34.949025Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "e24c0a53-07b0-4f8d-a06b-3556655fdeb8",
-            "createdDateTimeUtc": "2021-04-01T01:39:23.9385416Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:39:30.9550725Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "771292ad-d62f-45d8-b7c7-445c73938ecb",
-            "createdDateTimeUtc": "2021-04-01T01:39:10.2392599Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:39:22.817454Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "5661c4b8-ddfa-40e5-9dfc-94a02972878c",
-            "createdDateTimeUtc": "2021-04-01T01:38:51.1891546Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:39:09.3474395Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "6a3832eb-0065-40f6-8f55-d4c3b561c64d",
-            "createdDateTimeUtc": "2021-04-01T01:38:47.241387Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:38:49.1387957Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "12298a8c-88e3-4bbd-b928-e72c17d4f81d",
-            "createdDateTimeUtc": "2021-04-01T01:38:40.8764428Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:38:46.3028376Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "d863ee83-22cf-44ac-90b1-92517709f452",
-            "createdDateTimeUtc": "2021-04-01T01:38:31.2394497Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:38:39.6460816Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "3cdc19c4-7951-4b56-ad98-3a2b33e96828",
-            "createdDateTimeUtc": "2021-04-01T01:38:14.8044247Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:38:29.9052865Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "984bb0d6-f43a-48e2-9384-94ee4b59fdcc",
-            "createdDateTimeUtc": "2021-04-01T01:38:01.5675469Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:38:12.5932865Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "e8087622-f71c-43b5-8143-1dce311e125f",
-            "createdDateTimeUtc": "2021-04-01T01:37:50.3437982Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:37:51.364325Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 1,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "066c7be8-77f7-494e-9bb3-8ce65e51fb47",
-            "createdDateTimeUtc": "2021-04-01T01:37:39.2235877Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:37:43.353325Z",
-            "status": "Cancelled",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 1,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "09ef82fa-e92a-48ae-9f39-6eda6cc4d7b1",
-            "createdDateTimeUtc": "2021-04-01T01:37:25.0124064Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:37:37.4837321Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "07a0f083-d96a-4aba-96bc-166d3620a3cd",
-            "createdDateTimeUtc": "2021-04-01T01:37:03.4502743Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:37:23.3242105Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "ca341a2b-6c78-4229-8ab3-bead61caa2e4",
-            "createdDateTimeUtc": "2021-04-01T01:09:36.2407001Z",
-            "lastActionDateTimeUtc": "2021-04-01T01:09:49.6506599Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "cf582490-2b7f-4ec2-aa7c-caa8772619c7",
-            "createdDateTimeUtc": "2021-04-01T00:32:30.3106356Z",
-            "lastActionDateTimeUtc": "2021-04-01T00:32:49.7719943Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "32372103-e7d2-44e9-9d99-246b09495ba2",
-            "createdDateTimeUtc": "2021-03-31T23:59:35.8560252Z",
-            "lastActionDateTimeUtc": "2021-03-31T23:59:36.1106193Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "e2b7a86a-7998-4cc7-882f-f8f8e918b651",
-            "createdDateTimeUtc": "2021-03-31T23:32:55.3017316Z",
-            "lastActionDateTimeUtc": "2021-03-31T23:32:55.5017332Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c8432278-9b5c-412f-bbcd-f82a7474947a",
-            "createdDateTimeUtc": "2021-03-31T23:31:38.8954798Z",
-            "lastActionDateTimeUtc": "2021-03-31T23:31:39.0656053Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "13d1cd28-5a04-4353-bbe2-bbd4e7837d4a",
-            "createdDateTimeUtc": "2021-03-31T23:30:02.5604059Z",
-            "lastActionDateTimeUtc": "2021-03-31T23:30:02.6921421Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "d692fc54-1518-4c94-ba47-0f74a770f44f",
-            "createdDateTimeUtc": "2021-03-31T22:22:33.1016656Z",
-            "lastActionDateTimeUtc": "2021-03-31T22:22:33.2474281Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "042051dd-1451-4bc5-9bcf-29093e8f5a98",
-            "createdDateTimeUtc": "2021-03-31T22:22:30.5743328Z",
-            "lastActionDateTimeUtc": "2021-03-31T22:22:30.716282Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "3db88561-ad10-4c9c-90cb-2e4e883b12ad",
-            "createdDateTimeUtc": "2021-03-31T21:25:50.5999927Z",
-            "lastActionDateTimeUtc": "2021-03-31T21:25:50.723034Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "bb2f34db-ab1f-4428-be8d-1b7a9be1a061",
-            "createdDateTimeUtc": "2021-03-31T21:24:43.7512639Z",
-            "lastActionDateTimeUtc": "2021-03-31T21:24:56.801361Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 52
-            }
-          },
-          {
-            "id": "bcad54b3-5cd6-4ebb-9ede-f93e7a226825",
-            "createdDateTimeUtc": "2021-03-31T21:24:03.3120592Z",
-            "lastActionDateTimeUtc": "2021-03-31T21:24:23.8614881Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 52
-            }
-          },
-          {
-            "id": "bbbc6020-2877-4bb0-a428-22f2d40dcd44",
-            "createdDateTimeUtc": "2021-03-31T21:22:33.5512976Z",
-            "lastActionDateTimeUtc": "2021-03-31T21:22:33.6773428Z",
-            "status": "Failed",
-            "summary": {
-              "total": 2,
-              "failed": 2,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "595937e7-be13-4f8d-8b6c-56ae97cf55d5",
-            "createdDateTimeUtc": "2021-03-31T21:21:50.9776868Z",
-            "lastActionDateTimeUtc": "2021-03-31T21:21:51.1920608Z",
-            "status": "Failed",
-            "summary": {
-              "total": 2,
-              "failed": 2,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "cbd472c3-e7a8-414f-9ef8-89f254b7c3f7",
-            "createdDateTimeUtc": "2021-03-31T20:53:04.783689Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:53:15.1844974Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "e71c5015-ee7c-40a4-b874-5a67bafc5ff4",
-            "createdDateTimeUtc": "2021-03-31T20:52:16.1751379Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:52:16.3462232Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "3cbe5bd8-0773-4885-b97e-cfde5b53e542",
-            "createdDateTimeUtc": "2021-03-31T20:51:33.9926314Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:51:47.1450102Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "cfe2ab36-9121-41a8-b742-1aede7a837f2",
-            "createdDateTimeUtc": "2021-03-31T20:49:38.7688618Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:49:38.8822017Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "16aec466-00f6-4a91-bd7b-53395c715bf0",
-            "createdDateTimeUtc": "2021-03-31T20:49:09.1671869Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:49:09.2779877Z",
-            "status": "Failed",
-            "summary": {
-              "total": 2,
-              "failed": 2,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "edb5400f-b85e-4c47-884b-054b16cb8e64",
-            "createdDateTimeUtc": "2021-03-31T20:48:52.8539831Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:48:53.0527312Z",
-            "status": "Failed",
-            "summary": {
-              "total": 2,
-              "failed": 2,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "947876dd-c208-4d48-bcfd-0a796e49ebc4",
-            "createdDateTimeUtc": "2021-03-31T20:48:16.7551669Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:48:16.8741732Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "437ec7dd-08c0-4623-8db3-3547556171e8",
-            "createdDateTimeUtc": "2021-03-31T20:47:55.1650629Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:47:55.3073016Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          }
-        ],
-        "@nextLink": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/batches?$skip=100\u0026$top=65\u0026$maxpagesize=50"
-      }
-    },
-    {
-      "RequestUri": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/batches?$skip=100\u0026$top=65\u0026$maxpagesize=50",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-ab74944ba07eb14c80b28176505c1890-b64acd6ac4c2614e-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210518.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "21710f7c2b228cbd979c73f31cb1ecb5",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "9dc90998-c589-44df-a953-9dd4bbd704b6",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 18 May 2021 19:02:58 GMT",
-        "ETag": "\u00226EF6344548E5327BD43250CA68BFBD5E17702AED3AE7A3ACDEC1F42C406853C7\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=20358cd7aa5d6b0695f01ef171fc9a95880154357830e1c6bb513b73834a2e5f;Path=/;HttpOnly;Secure;Domain=doctrans.westus.microsofttranslator.com",
-          "ARRAffinitySameSite=20358cd7aa5d6b0695f01ef171fc9a95880154357830e1c6bb513b73834a2e5f;Path=/;HttpOnly;SameSite=None;Secure;Domain=doctrans.westus.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "9dc90998-c589-44df-a953-9dd4bbd704b6"
-      },
-      "ResponseBody": {
-        "value": [
-          {
-            "id": "ff729a3c-33f7-4a20-bd39-e4a3f8d25792",
-            "createdDateTimeUtc": "2021-03-31T20:47:36.5466433Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:47:36.6502022Z",
-            "status": "Failed",
-            "summary": {
-              "total": 2,
-              "failed": 2,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "af94395d-eb9d-4924-98ae-1352d318b9ee",
-            "createdDateTimeUtc": "2021-03-31T20:47:21.7693867Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:47:21.9388727Z",
-            "status": "Failed",
-            "summary": {
-              "total": 2,
-              "failed": 2,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "4906cf66-838a-43e6-9edf-66bfe93dea1d",
-            "createdDateTimeUtc": "2021-03-31T20:47:15.8687727Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:47:16.0715145Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "92b3c9a1-3d28-4f96-8477-1861c8f7adcf",
-            "createdDateTimeUtc": "2021-03-31T20:46:53.8073864Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:46:53.9152093Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "2d886040-6a7f-4cae-9728-9c897d18f4d7",
-            "createdDateTimeUtc": "2021-03-31T20:46:36.1663354Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:46:36.4196469Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "0e42fe0a-003c-45e7-9e80-6bdb84fe67be",
-            "createdDateTimeUtc": "2021-03-31T20:45:32.7689067Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:45:32.9285728Z",
-            "status": "Failed",
-            "summary": {
-              "total": 2,
-              "failed": 2,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "9f77b25c-993c-47df-8e5a-0bd1772cff7a",
-            "createdDateTimeUtc": "2021-03-31T20:43:39.9052642Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:43:40.0452663Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "e3e84431-0f27-4c4a-93f7-1132bbd836cb",
-            "createdDateTimeUtc": "2021-03-31T20:42:29.4824888Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:42:39.4220834Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 17
-            }
-          },
-          {
-            "id": "26866ce6-3cfb-4d09-82d3-f660a33de2bc",
-            "createdDateTimeUtc": "2021-03-31T20:38:13.5155949Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:38:40.9619107Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 574
-            }
-          },
-          {
-            "id": "187cb1a6-6228-43d2-96a3-df47de0737af",
-            "createdDateTimeUtc": "2021-03-31T20:35:33.0705535Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:35:42.3882269Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 2,
-              "failed": 0,
-              "success": 2,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 79
-            }
-          },
-          {
-            "id": "0293cb4e-06b1-4731-8cb0-595192d40092",
-            "createdDateTimeUtc": "2021-03-31T20:35:01.2413576Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:35:01.4471704Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "5732640b-fcd0-4a34-a0bc-d2f7a61e47e2",
-            "createdDateTimeUtc": "2021-03-31T20:34:16.3352911Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:34:25.4696998Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 2,
-              "failed": 0,
-              "success": 2,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 79
-            }
-          },
-          {
-            "id": "413ef7c6-ce5a-4781-bc33-bd94980e80bb",
-            "createdDateTimeUtc": "2021-03-31T20:33:37.3900324Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:33:57.950083Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 2,
-              "failed": 0,
-              "success": 2,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 79
-            }
-          },
-          {
-            "id": "1eed0ead-3491-4b7d-aaef-5e530ef3134d",
-            "createdDateTimeUtc": "2021-03-31T20:32:14.2634787Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:32:14.5231376Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "cbe19b73-d33d-4adf-bbaf-600a189e0dc4",
-            "createdDateTimeUtc": "2021-03-31T20:29:01.2851644Z",
-            "lastActionDateTimeUtc": "2021-03-31T20:29:09.5552912Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "16d18e49-2e28-49d3-b7df-1bfe64b1fd84",
-            "createdDateTimeUtc": "2021-03-31T18:23:05.6509913Z",
-            "lastActionDateTimeUtc": "2021-03-31T18:23:05.7858259Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c8fc1cb6-6dfb-4b4a-8985-53df08f762bd",
-            "createdDateTimeUtc": "2021-03-31T18:22:12.4012504Z",
-            "lastActionDateTimeUtc": "2021-03-31T18:22:12.6016854Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "1b4499a6-4fdd-495e-83c0-8f8ed41465a7",
-            "createdDateTimeUtc": "2021-03-31T17:52:43.4059591Z",
-            "lastActionDateTimeUtc": "2021-03-31T17:52:56.9106472Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "b97c82b6-cba9-4aa2-860a-caa85bbe2db0",
-            "createdDateTimeUtc": "2021-03-31T17:51:16.6646293Z",
-            "lastActionDateTimeUtc": "2021-03-31T17:51:26.9911403Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "49ed292a-34df-490c-a264-e8e5174d5b07",
-            "createdDateTimeUtc": "2021-03-30T22:10:08.3549317Z",
-            "lastActionDateTimeUtc": "2021-03-30T22:10:23.5619275Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "0ef85b21-d7b2-4daf-80cb-93aac8b5e082",
-            "createdDateTimeUtc": "2021-03-30T22:08:26.2266182Z",
-            "lastActionDateTimeUtc": "2021-03-30T22:08:37.395625Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "fc5ec534-c5c4-4558-9ccd-7ff5594d5a58",
-            "createdDateTimeUtc": "2021-03-30T22:04:02.366891Z",
-            "lastActionDateTimeUtc": "2021-03-30T22:04:21.2826985Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "049e11f9-9d52-4452-9c2b-eb0b94224199",
-            "createdDateTimeUtc": "2021-03-30T22:03:31.3320425Z",
-            "lastActionDateTimeUtc": "2021-03-30T22:03:44.9780426Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "c1f57f3c-3490-43dd-a87a-666ae2bdfb0e",
-            "createdDateTimeUtc": "2021-03-29T22:36:01.369204Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:36:14.5270643Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "1c0b7d71-ba47-47a7-8b23-f45657db175c",
-            "createdDateTimeUtc": "2021-03-29T22:35:27.6002189Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:35:38.5079405Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "f631951a-8e96-4514-bb00-8023ed6583be",
-            "createdDateTimeUtc": "2021-03-29T22:23:47.7348057Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:24:01.6024898Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "a91f4c40-6ed5-4f3d-92ae-682a443bee77",
-            "createdDateTimeUtc": "2021-03-29T22:23:44.2743379Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:24:01.6555892Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "c72e0b77-6fd7-4a61-bde6-73c2d7e04f6b",
-            "createdDateTimeUtc": "2021-03-29T22:05:33.3806701Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:05:37.325113Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "f4bee4d9-1607-4d25-b930-d0cb95c363a6",
-            "createdDateTimeUtc": "2021-03-29T22:05:29.9357334Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:05:30.1071124Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "30e189e4-8a22-43e9-9000-9d6f6b0cab12",
-            "createdDateTimeUtc": "2021-03-29T22:04:57.6051067Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:05:14.369017Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "e23a6b30-7872-4e7d-9375-b925b7f56a93",
-            "createdDateTimeUtc": "2021-03-29T22:04:07.7752119Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:04:08.0995268Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "d05bd3b2-6a68-413d-9080-e816742b245e",
-            "createdDateTimeUtc": "2021-03-29T22:03:37.0197194Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:03:47.160309Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "9bee1b87-044a-4945-a9df-2e875e2e3fe1",
-            "createdDateTimeUtc": "2021-03-29T22:03:33.3975576Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:03:33.5123233Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "936c38bb-edaf-4c73-91d3-15a9e4c80d0c",
-            "createdDateTimeUtc": "2021-03-29T22:03:01.1117088Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:03:08.3435867Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "7d8abf94-738b-4c83-aff1-677ced5876ef",
-            "createdDateTimeUtc": "2021-03-29T22:01:32.4292064Z",
-            "lastActionDateTimeUtc": "2021-03-29T22:01:37.1464746Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "8a09feb5-19fa-4d3c-b8ec-ac201e977688",
-            "createdDateTimeUtc": "2021-03-29T21:57:54.1164391Z",
-            "lastActionDateTimeUtc": "2021-03-29T21:58:01.7654903Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c3721d1e-76ce-4f50-ad14-f4b9d884ea5a",
-            "createdDateTimeUtc": "2021-03-29T21:57:22.9331388Z",
-            "lastActionDateTimeUtc": "2021-03-29T21:57:26.8631687Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "5c8af4dd-ad9d-4d3c-bf42-17add6eeb160",
-            "createdDateTimeUtc": "2021-03-29T21:53:35.1378114Z",
-            "lastActionDateTimeUtc": "2021-03-29T21:53:41.4439672Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "5a2fbc05-f943-4eff-a679-eb06f45f18ce",
-            "createdDateTimeUtc": "2021-03-29T21:52:09.2185226Z",
-            "lastActionDateTimeUtc": "2021-03-29T21:52:21.5729618Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 2,
-              "failed": 0,
-              "success": 2,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 76
-            }
-          },
-          {
-            "id": "80ae70b9-3224-478c-aaac-4e4d59746c1a",
-            "createdDateTimeUtc": "2021-03-29T21:50:08.5743728Z",
-            "lastActionDateTimeUtc": "2021-03-29T21:50:15.3510247Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 2,
-              "failed": 0,
-              "success": 2,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 76
-            }
-          },
-          {
-            "id": "7c4c1bdf-84ca-49d7-bdb7-776655bbe1dc",
-            "createdDateTimeUtc": "2021-03-29T21:02:18.1454802Z",
-            "lastActionDateTimeUtc": "2021-03-29T21:02:30.2684779Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "20d144ec-2de1-4a03-85e5-995b8ff97dfd",
-            "createdDateTimeUtc": "2021-03-29T20:58:47.6084092Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:58:53.9047656Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "a1120b64-1c9c-4810-beca-2e128173ab3c",
-            "createdDateTimeUtc": "2021-03-29T20:58:16.4343021Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:58:37.8096644Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "27f139e6-2f74-4ec9-87c5-b011564a9688",
-            "createdDateTimeUtc": "2021-03-29T20:51:54.9161908Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:52:11.616963Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 52
-            }
-          },
-          {
-            "id": "14835a43-b5a6-4c22-942a-d57f01dec92f",
-            "createdDateTimeUtc": "2021-03-29T20:34:11.9849808Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:34:12.1920158Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "No document found in source with the given path and filters.",
-              "target": "Operation",
-              "innerError": {
-                "code": "NoDocumentsFound",
-                "message": "No document found in source with the given path and filters."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "a9737bc5-3f3f-4d38-b69d-b5e6abf857e1",
-            "createdDateTimeUtc": "2021-03-29T20:28:41.6207053Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:28:41.7732154Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "11f65408-d504-4ca3-a240-085d10733492",
-            "createdDateTimeUtc": "2021-03-29T20:26:00.6489677Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:26:00.8698476Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "2bb5b1db-f66d-406d-9589-f39ced5e38a7",
-            "createdDateTimeUtc": "2021-03-29T20:24:37.3029524Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:24:43.5574069Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "85ace996-d766-4148-ad8b-71f7bfe7c0ce",
-            "createdDateTimeUtc": "2021-03-29T20:23:20.7007953Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:23:22.550379Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "55076867-aefa-4bec-b2a8-e4897b739ca7",
-            "createdDateTimeUtc": "2021-03-29T20:22:49.5866342Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:22:49.8802391Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          }
-        ],
-        "@nextLink": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/batches?$skip=150\u0026$top=15\u0026$maxpagesize=50"
-      }
-    },
-    {
-      "RequestUri": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/batches?$skip=150\u0026$top=15\u0026$maxpagesize=50",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6a0eb5eb0e816a438358906e03ec90dc-71fa5268b7029a4f-00",
-        "User-Agent": "azsdk-net-AI.Translation.Document/1.0.0-alpha.20210518.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "577087596caa6e25b61ca3f1079138ff",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "ecca8419-1f36-4c86-9938-e07ce8a4760a",
-        "Cache-Control": [
-          "public",
-          "max-age=1"
-        ],
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 18 May 2021 19:02:58 GMT",
-        "ETag": "\u0022E887A58153A212F5CA41A1D49AC450AE19711F9CFCA7695E2B9493797C82A42A\u0022",
-        "Retry-After": "1",
-        "Set-Cookie": [
-          "ARRAffinity=a5ec76bf198951bebbc7170ffee092def36f3cd0a69436d0c55a282d4d28c9e1;Path=/;HttpOnly;Secure;Domain=doctrans.westus.microsofttranslator.com",
-          "ARRAffinitySameSite=a5ec76bf198951bebbc7170ffee092def36f3cd0a69436d0c55a282d4d28c9e1;Path=/;HttpOnly;SameSite=None;Secure;Domain=doctrans.westus.microsofttranslator.com"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "X-Powered-By": "ASP.NET",
-        "X-RequestId": "ecca8419-1f36-4c86-9938-e07ce8a4760a"
-      },
-      "ResponseBody": {
-        "value": [
-          {
-            "id": "5fae77cb-59cd-4021-bae7-5fcc4fb6cd2c",
-            "createdDateTimeUtc": "2021-03-29T20:02:38.6637111Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:02:38.8240231Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "bfa38ca8-61d1-4a2c-87a0-8d285684758f",
-            "createdDateTimeUtc": "2021-03-29T20:01:48.1596504Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:01:48.2828643Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "89c1803d-6274-48b4-87c3-f99dbecf3c2b",
-            "createdDateTimeUtc": "2021-03-29T20:00:19.1886869Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:00:19.6372064Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "3e793c05-368b-4007-9acc-391af62957e9",
-            "createdDateTimeUtc": "2021-03-29T20:00:18.4260799Z",
-            "lastActionDateTimeUtc": "2021-03-29T20:00:18.6630857Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "90fa75c9-4905-4047-8da7-236d8630cb94",
-            "createdDateTimeUtc": "2021-03-29T18:44:34.0996631Z",
-            "lastActionDateTimeUtc": "2021-03-29T18:44:53.8584039Z",
-            "status": "Succeeded",
-            "summary": {
-              "total": 1,
-              "failed": 0,
-              "success": 1,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 27
-            }
-          },
-          {
-            "id": "42a5cc4f-dee9-48d9-ba94-0b0d9483cc3e",
-            "createdDateTimeUtc": "2021-03-29T18:14:17.4033363Z",
-            "lastActionDateTimeUtc": "2021-03-29T18:14:17.55851Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "c2cb6d3f-4331-4fae-b76a-a68700f656ab",
-            "createdDateTimeUtc": "2021-03-29T18:10:42.6797286Z",
-            "lastActionDateTimeUtc": "2021-03-29T18:10:42.8723414Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "fc5e9921-3f40-4aac-8368-2365551e3f79",
-            "createdDateTimeUtc": "2021-03-29T18:07:45.461406Z",
-            "lastActionDateTimeUtc": "2021-03-29T18:07:45.6548201Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "3bede426-8d3d-4d9d-a955-8788f85c4ff4",
-            "createdDateTimeUtc": "2021-03-29T18:07:19.3864128Z",
-            "lastActionDateTimeUtc": "2021-03-29T18:07:19.6092195Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "6f1c5401-7a9d-41c7-8b6e-48ea174bd8cd",
-            "createdDateTimeUtc": "2021-03-29T18:05:48.777485Z",
-            "lastActionDateTimeUtc": "2021-03-29T18:05:48.9957575Z",
-            "status": "Failed",
-            "summary": {
-              "total": 1,
-              "failed": 1,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "918e8c77-6587-43d3-93b2-9123b275f480",
-            "createdDateTimeUtc": "2021-03-29T18:05:14.3864321Z",
-            "lastActionDateTimeUtc": "2021-03-29T18:05:16.2607365Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "fb395829-09db-47ad-a266-f46261986db2",
-            "createdDateTimeUtc": "2021-03-29T17:57:25.3470379Z",
-            "lastActionDateTimeUtc": "2021-03-29T17:57:25.5190538Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "No document found in source with the given path and filters.",
-              "target": "Operation",
-              "innerError": {
-                "code": "NoDocumentsFound",
-                "message": "No document found in source with the given path and filters."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "f31e6e2c-9cdd-41f5-8753-ae9b51df8cb0",
-            "createdDateTimeUtc": "2021-03-29T17:55:37.3030169Z",
-            "lastActionDateTimeUtc": "2021-03-29T17:55:37.4754196Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "dec73bf4-f24d-4e04-8eac-4994623da040",
-            "createdDateTimeUtc": "2021-03-29T17:42:17.8887514Z",
-            "lastActionDateTimeUtc": "2021-03-29T17:42:18.0430143Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
-            }
-          },
-          {
-            "id": "53a302fd-e125-4c60-8ba5-7bcc8acf4db3",
-            "createdDateTimeUtc": "2021-03-29T17:38:11.489516Z",
-            "lastActionDateTimeUtc": "2021-03-29T17:38:11.6885392Z",
-            "status": "ValidationFailed",
-            "error": {
-              "code": "InvalidRequest",
-              "message": "Cannot access source document location with the current permissions.",
-              "target": "Operation",
-              "innerError": {
-                "code": "InvalidDocumentAccessLevel",
-                "message": "Cannot access source document location with the current permissions."
-              }
-            },
-            "summary": {
-              "total": 0,
-              "failed": 0,
-              "success": 0,
-              "inProgress": 0,
-              "notYetStarted": 0,
-              "cancelled": 0,
-              "totalCharacterCharged": 0
             }
           }
         ]
@@ -2982,6 +520,6 @@
     "DOCUMENT_TRANSLATION_API_KEY": "Sanitized",
     "DOCUMENT_TRANSLATION_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=mariaridoctrans29prim;AccountKey=Kg==;EndpointSuffix=core.windows.net",
     "DOCUMENT_TRANSLATION_ENDPOINT": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com",
-    "RandomSeed": "1760107406"
+    "RandomSeed": "1583979453"
   }
 }

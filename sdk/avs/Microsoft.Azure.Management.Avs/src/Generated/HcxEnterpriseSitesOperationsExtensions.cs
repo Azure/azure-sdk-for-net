@@ -122,12 +122,9 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='hcxEnterpriseSiteName'>
             /// Name of the HCX Enterprise Site in the private cloud
             /// </param>
-            /// <param name='hcxEnterpriseSite'>
-            /// The HCX Enterprise Site
-            /// </param>
-            public static HcxEnterpriseSite CreateOrUpdate(this IHcxEnterpriseSitesOperations operations, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, object hcxEnterpriseSite)
+            public static HcxEnterpriseSite CreateOrUpdate(this IHcxEnterpriseSitesOperations operations, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, privateCloudName, hcxEnterpriseSiteName, hcxEnterpriseSite).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, privateCloudName, hcxEnterpriseSiteName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -145,15 +142,12 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='hcxEnterpriseSiteName'>
             /// Name of the HCX Enterprise Site in the private cloud
             /// </param>
-            /// <param name='hcxEnterpriseSite'>
-            /// The HCX Enterprise Site
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HcxEnterpriseSite> CreateOrUpdateAsync(this IHcxEnterpriseSitesOperations operations, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, object hcxEnterpriseSite, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HcxEnterpriseSite> CreateOrUpdateAsync(this IHcxEnterpriseSitesOperations operations, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, hcxEnterpriseSiteName, hcxEnterpriseSite, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, hcxEnterpriseSiteName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="Microsoft.CSharp" />
   </ItemGroup>
 
@@ -20,4 +20,5 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>
+
 </Project>

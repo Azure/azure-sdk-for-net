@@ -9,33 +9,33 @@ namespace Azure.AI.TextAnalytics
     public class TextAnalyticsActions
     {
         /// <summary>
-        /// Optional display name for the analysis operation.
+        /// Optional display name for the operation.
         /// </summary>
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Extract KeyPhrases actions configurations.
+        /// Extract KeyPhrases actions.
         /// </summary>
-        public IReadOnlyCollection<ExtractKeyPhrasesOptions> ExtractKeyPhrasesOptions { get; set; }
+        public IReadOnlyCollection<ExtractKeyPhrasesAction> ExtractKeyPhrasesActions { get; set; }
 
         /// <summary>
-        /// Recognize Entities actions configurations.
+        /// Recognize Entities actions.
         /// </summary>
-        public IReadOnlyCollection<RecognizeEntitiesOptions> RecognizeEntitiesOptions { get; set; }
+        public IReadOnlyCollection<RecognizeEntitiesAction> RecognizeEntitiesActions { get; set; }
 
         /// <summary>
-        /// Recognize PII Entities actions configurations.
+        /// Recognize PII Entities actions.
         /// </summary>
-        public IReadOnlyCollection<RecognizePiiEntitiesOptions> RecognizePiiEntitiesOptions { get; set; }
+        public IReadOnlyCollection<RecognizePiiEntitiesAction> RecognizePiiEntitiesActions { get; set; }
 
         /// <summary>
-        /// Recognize Linked Entities actions configurations.
+        /// Recognize Linked Entities actions.
         /// </summary>
-        public IReadOnlyCollection<RecognizeLinkedEntitiesOptions> RecognizeLinkedEntitiesOptions { get; set; }
+        public IReadOnlyCollection<RecognizeLinkedEntitiesAction> RecognizeLinkedEntitiesActions { get; set; }
 
         /// <summary>
-        /// Analyze Sentiment actions configurations.
+        /// Analyze Sentiment actions.
         /// </summary>
-        public IReadOnlyCollection<AnalyzeSentimentOptions> AnalyzeSentimentOptions { get; set; }
+        public IReadOnlyCollection<AnalyzeSentimentAction> AnalyzeSentimentActions { get; set; }
     }
 }

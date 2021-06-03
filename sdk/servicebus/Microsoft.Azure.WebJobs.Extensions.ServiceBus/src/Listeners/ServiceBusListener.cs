@@ -27,9 +27,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly MessagingProvider _messagingProvider;
         private readonly ITriggeredFunctionExecutor _triggerExecutor;
         private readonly string _functionId;
-        private readonly ServiceBusEntityType _serviceBusEntityType;
+        private readonly ServiceBusEntityType _entityType;
         private readonly string _entityPath;
         private readonly bool _isSessionsEnabled;
+        private readonly bool _autoCompleteMessagesOptionEvaluatedValue;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly ServiceBusOptions _serviceBusOptions;
         private readonly ILoggerFactory _loggerFactory;
@@ -49,9 +50,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         public ServiceBusListener(
             string functionId,
-            ServiceBusEntityType serviceBusEntityType,
+            ServiceBusEntityType entityType,
             string entityPath,
             bool isSessionsEnabled,
+            bool autoCompleteMessagesOptionEvaluatedValue,
             ITriggeredFunctionExecutor triggerExecutor,
             ServiceBusOptions options,
             string connection,
@@ -61,21 +63,48 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             ServiceBusClientFactory clientFactory)
         {
             _functionId = functionId;
-            _serviceBusEntityType = serviceBusEntityType;
+            _entityType = entityType;
             _entityPath = entityPath;
             _isSessionsEnabled = isSessionsEnabled;
+            _autoCompleteMessagesOptionEvaluatedValue = autoCompleteMessagesOptionEvaluatedValue;
             _triggerExecutor = triggerExecutor;
             _cancellationTokenSource = new CancellationTokenSource();
             _messagingProvider = messagingProvider;
             _loggerFactory = loggerFactory;
             _logger = loggerFactory.CreateLogger<ServiceBusListener>();
 
-            _client = new Lazy<ServiceBusClient>(() => clientFactory.CreateClientFromSetting(connection));
-            _batchReceiver = new Lazy<ServiceBusReceiver>(() => _messagingProvider.CreateBatchMessageReceiver(_client.Value, _entityPath));
-            _messageProcessor = new Lazy<MessageProcessor>(() => _messagingProvider.CreateMessageProcessor(_client.Value, _entityPath));
-            _sessionMessageProcessor = new Lazy<SessionMessageProcessor>(() => _messagingProvider.CreateSessionMessageProcessor(_client.Value, _entityPath));
+            _client = new Lazy<ServiceBusClient>(
+                () =>
+                    clientFactory.CreateClientFromSetting(connection));
 
-            _scaleMonitor = new Lazy<ServiceBusScaleMonitor>(() => new ServiceBusScaleMonitor(_functionId, _serviceBusEntityType, _entityPath, connection, _batchReceiver, _loggerFactory, clientFactory));
+            _batchReceiver = new Lazy<ServiceBusReceiver>(
+                () => _messagingProvider.CreateBatchMessageReceiver(
+                    _client.Value,
+                    _entityPath,
+                    options.ToReceiverOptions()));
+
+            _messageProcessor = new Lazy<MessageProcessor>(
+                () => _messagingProvider.CreateMessageProcessor(
+                    _client.Value,
+                    _entityPath,
+                    options.ToProcessorOptions(_autoCompleteMessagesOptionEvaluatedValue)));
+
+            _sessionMessageProcessor = new Lazy<SessionMessageProcessor>(
+                () => _messagingProvider.CreateSessionMessageProcessor(
+                    _client.Value,
+                    _entityPath,
+                    options.ToSessionProcessorOptions(_autoCompleteMessagesOptionEvaluatedValue)));
+
+            _scaleMonitor = new Lazy<ServiceBusScaleMonitor>(
+                () => new ServiceBusScaleMonitor(
+                    _functionId,
+                    _entityType,
+                    _entityPath,
+                    connection,
+                    _batchReceiver,
+                    _loggerFactory,
+                    clientFactory));
+
             _singleDispatch = singleDispatch;
             _serviceBusOptions = options;
         }
@@ -252,10 +281,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         {
                             try
                             {
-                                receiver = await sessionClient.AcceptNextSessionAsync(_entityPath, new ServiceBusSessionReceiverOptions
-                                {
-                                    PrefetchCount = _serviceBusOptions.PrefetchCount
-                                }).ConfigureAwait(false);
+                                receiver = await sessionClient.AcceptNextSessionAsync(
+                                    _entityPath,
+                                    new ServiceBusSessionReceiverOptions
+                                    {
+                                        PrefetchCount = _serviceBusOptions.PrefetchCount
+                                    },
+                                    cancellationToken).ConfigureAwait(false);
                             }
                             catch (ServiceBusException ex)
                             when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
@@ -266,9 +298,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
 
                         IReadOnlyList<ServiceBusReceivedMessage> messages =
-                            await receiver.ReceiveMessagesAsync(_serviceBusOptions.MaxMessages).ConfigureAwait(false);
+                            await receiver.ReceiveMessagesAsync(
+                                _serviceBusOptions.MaxBatchSize,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
 
-                        if (messages != null)
+                        if (messages.Count > 0)
                         {
                             ServiceBusReceivedMessage[] messagesArray = messages.ToArray();
                             ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(messagesArray);
@@ -288,14 +323,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             }
 
                             // Complete batch of messages only if the execution was successful
-                            if (_serviceBusOptions.AutoCompleteMessages && _started)
+                            if (_autoCompleteMessagesOptionEvaluatedValue && _started)
                             {
                                 if (result.Succeeded)
                                 {
                                     List<Task> completeTasks = new List<Task>();
                                     foreach (ServiceBusReceivedMessage message in messagesArray)
                                     {
-                                        completeTasks.Add(receiver.CompleteMessageAsync(message));
+                                        completeTasks.Add(receiver.CompleteMessageAsync(message, cancellationToken));
                                     }
                                     await Task.WhenAll(completeTasks).ConfigureAwait(false);
                                 }
@@ -304,7 +339,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                     List<Task> abandonTasks = new List<Task>();
                                     foreach (ServiceBusReceivedMessage message in messagesArray)
                                     {
-                                        abandonTasks.Add(receiver.AbandonMessageAsync(message));
+                                        abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: cancellationToken));
                                     }
                                     await Task.WhenAll(abandonTasks).ConfigureAwait(false);
                                 }
@@ -315,7 +350,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             // Close the session and release the session lock after draining all messages for the accepted session.
                             if (_isSessionsEnabled)
                             {
-                                await receiver.CloseAsync().ConfigureAwait(false);
+                                // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                             }
                         }
                     }
@@ -333,7 +369,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             // Attempt to close the session and release session lock to accept a new session on the next loop iteration
                             try
                             {
-                                await receiver.CloseAsync().ConfigureAwait(false);
+                                // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                             }
                             catch
                             {

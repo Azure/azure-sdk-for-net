@@ -1,6 +1,9 @@
 # Release History
 
-## 3.1.0 (Unreleased)
+## 3.2.0-beta.1 (Unreleased)
+
+
+## 3.1.0 (2021-05-26)
 
 ### New Features
 - This General Availability (GA) release marks the stability of the changes introduced in package versions `3.1.0-beta.1` through `3.1.0-beta.4`.
