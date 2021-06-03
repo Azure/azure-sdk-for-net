@@ -19,24 +19,34 @@ namespace Azure.Communication.Calling.Server
         private readonly ClientDiagnostics _clientDiagnostics;
         internal ConversationRestClient RestClient { get; }
 
+        #region public constructors - all arguments need null check
+
+        /// <summary> Initializes a new instance of <see cref="ConversationClient"/>.</summary>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        public ConversationClient(string connectionString)
+            : this(
+                ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                new CallClientOptions())
+        { }
+
+        /// <summary> Initializes a new instance of <see cref="ConversationClient"/>.</summary>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public ConversationClient(string connectionString, CallClientOptions options)
+            : this(
+                ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                options ?? new CallClientOptions())
+        { }
+
         /// <summary> Initializes a new instance of <see cref="ConversationClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public ConversationClient(Uri endpoint, AzureKeyCredential keyCredential, CallClientOptions options = default)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)),
-                options ?? new CallClientOptions(),
-                AssertNotNull(keyCredential, nameof(keyCredential)))
-        { }
-
-        /// <summary> Initializes a new instance of <see cref="ConversationClient"/>.</summary>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
-        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ConversationClient(string connectionString, CallClientOptions options = default)
-            : this(
-                  options ?? new CallClientOptions(),
-                  ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))))
+                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                AssertNotNull(keyCredential, nameof(keyCredential)),
+                options ?? new CallClientOptions())
         { }
 
         /// <summary> Initializes a new instance of <see cref="ConversationClient"/>.</summary>
@@ -45,50 +55,40 @@ namespace Azure.Communication.Calling.Server
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public ConversationClient(Uri endpoint, TokenCredential tokenCredential, CallClientOptions options = default)
             : this(
-                  endpoint,
-                  options ?? new CallClientOptions(),
-                  tokenCredential)
+                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                AssertNotNull(tokenCredential, nameof(tokenCredential)),
+                options ?? new CallClientOptions())
         { }
+
+        #endregion
+
+        #region private constructors
+
+        private ConversationClient(ConnectionString connectionString, CallClientOptions options)
+            : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+        { }
+
+        private ConversationClient(string endpoint, TokenCredential tokenCredential, CallClientOptions options)
+            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
+        { }
+
+        private ConversationClient(string endpoint, AzureKeyCredential keyCredential, CallClientOptions options)
+            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
+        { }
+
+        private ConversationClient(string endpoint, HttpPipeline httpPipeline, CallClientOptions options)
+        {
+            _clientDiagnostics = new ClientDiagnostics(options);
+            RestClient = new ConversationRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+        }
+
+        #endregion
 
         /// <summary>Initializes a new instance of <see cref="ConversationClient"/> for mocking.</summary>
         protected ConversationClient()
         {
-            _clientDiagnostics = null!;
-            RestClient = null!;
-        }
-
-        private ConversationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
-        {
-            RestClient = new ConversationRestClient(clientDiagnostics, pipeline, endpointUrl);
-            _clientDiagnostics = clientDiagnostics;
-        }
-
-        private ConversationClient(CallClientOptions options, ConnectionString connectionString)
-            : this(
-                  clientDiagnostics: new ClientDiagnostics(options),
-                  pipeline: options.BuildHttpPipeline(connectionString),
-                  endpointUrl: connectionString.GetRequired("endpoint"))
-        { }
-
-        private ConversationClient(Uri endpoint, CallClientOptions options, TokenCredential tokenCredential)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
-
-            _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new ConversationRestClient(
-                _clientDiagnostics,
-                options.BuildHttpPipeline(tokenCredential),
-                endpoint.AbsoluteUri);
-        }
-
-        private ConversationClient(Uri endpoint, CallClientOptions options, AzureKeyCredential credential)
-        {
-            _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new ConversationRestClient(
-                _clientDiagnostics,
-                options.BuildHttpPipeline(credential),
-                endpoint.AbsoluteUri);
+            _clientDiagnostics = null;
+            RestClient = null;
         }
 
         /// Join the call using conversation id.
@@ -207,7 +207,15 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(options, nameof(options));
 
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                return await RestClient.PlayAudioAsync(conversationId, options.AudioFileUri?.AbsoluteUri, false, options.OperationContext, options.AudioFileId, options.CallbackUri?.AbsoluteUri, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PlayAudioAsync(
+                    conversationId,
+                    options.AudioFileUri?.AbsoluteUri,
+                    false,
+                    options.OperationContext,
+                    options.AudioFileId,
+                    options.CallbackUri?.AbsoluteUri,
+                    cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -251,7 +259,15 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(options, nameof(options));
 
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                return RestClient.PlayAudio(conversationId, options.AudioFileUri?.AbsoluteUri, false, options.OperationContext, options.AudioFileId, options.CallbackUri?.AbsoluteUri, cancellationToken);
+                return RestClient.PlayAudio(
+                    conversationId,
+                    options.AudioFileUri?.AbsoluteUri,
+                    false,
+                    options.OperationContext,
+                    options.AudioFileId,
+                    options.CallbackUri?.AbsoluteUri,
+                    cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -279,7 +295,14 @@ namespace Azure.Communication.Calling.Server
 
                 var participantsInternal = new List<CommunicationIdentifierModel> { CommunicationIdentifierSerializer.Serialize(participant) };
                 var alternateCallerIdInternal = string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId);
-                return RestClient.InviteParticipants(conversationId, participantsInternal, alternateCallerIdInternal, operationContext, callbackUri?.AbsoluteUri, cancellationToken);
+                return RestClient.InviteParticipants(
+                    conversationId,
+                    participantsInternal,
+                    alternateCallerIdInternal,
+                    operationContext,
+                    callbackUri?.AbsoluteUri,
+                    cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -307,7 +330,14 @@ namespace Azure.Communication.Calling.Server
 
                 var participantsInternal = new List<CommunicationIdentifierModel> { CommunicationIdentifierSerializer.Serialize(participant) };
                 var alternateCallerIdInternal = string.IsNullOrEmpty(alternateCallerId) ? null : new PhoneNumberIdentifierModel(alternateCallerId);
-                return await RestClient.InviteParticipantsAsync(conversationId, participantsInternal, alternateCallerIdInternal, operationContext, callbackUri?.AbsoluteUri, cancellationToken).ConfigureAwait(false);
+                return await RestClient.InviteParticipantsAsync(
+                    conversationId,
+                    participantsInternal,
+                    alternateCallerIdInternal,
+                    operationContext,
+                    callbackUri?.AbsoluteUri,
+                    cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -349,7 +379,11 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                return await RestClient.RemoveParticipantAsync(conversationId, participantId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RemoveParticipantAsync(
+                    conversationId,
+                    participantId,
+                    cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -370,7 +404,11 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                return await RestClient.StartRecordingAsync(conversationId, recordingStateCallbackUri.AbsoluteUri, cancellationToken).ConfigureAwait(false);
+                return await RestClient.StartRecordingAsync(
+                    conversationId,
+                    recordingStateCallbackUri.AbsoluteUri,
+                    cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

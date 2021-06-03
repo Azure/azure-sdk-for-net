@@ -29,10 +29,10 @@ namespace Azure.Communication.Calling.Server
 
             var participantsUpdatedEventInternal = ParticipantsUpdatedEventInternal.DeserializeParticipantsUpdatedEventInternal(element);
 
-            return new ParticipantsUpdatedEvent()
+            return new ParticipantsUpdatedEvent
             {
                 CallLegId = participantsUpdatedEventInternal.CallLegId,
-                Participants = participantsUpdatedEventInternal.Participants?.Select(x => new CommunicationParticipant() { Identifier = CommunicationIdentifierSerializer.Deserialize(x.Identifier), IsMuted = x.IsMuted, ParticipantId = x.ParticipantId })
+                Participants = participantsUpdatedEventInternal.Participants?.Select(x => new CommunicationParticipant { Identifier = CommunicationIdentifierSerializer.Deserialize(x.Identifier), IsMuted = x.IsMuted, ParticipantId = x.ParticipantId })
             };
         }
 

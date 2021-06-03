@@ -13,7 +13,7 @@ namespace Azure.Communication.Calling.Server
     public class CallClientOptions : ClientOptions
     {
         /// <summary>
-        /// The latest version of the Calling Server service.
+        /// The latest version of the CallingServer service.
         /// </summary>
         public const ServiceVersion LatestVersion = ServiceVersion.V2021_04_15_Preview1;
 
@@ -27,18 +27,17 @@ namespace Azure.Communication.Calling.Server
             ApiVersion = version switch
             {
                 ServiceVersion.V2021_04_15_Preview1 => "2021-04-15-preview1",
-
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
 
         /// <summary>
-        /// The Sms service version.
+        /// The CallingServer service version.
         /// </summary>
         public enum ServiceVersion
         {
             /// <summary>
-            /// The Beta of the Sms service.
+            /// The Beta of the CallingServer service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             V2021_04_15_Preview1 = 0

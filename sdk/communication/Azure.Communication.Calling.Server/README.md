@@ -38,24 +38,26 @@ CallClient client = new CallClient(connectionString);
 ## Examples
 ### Make a call to a phone number recipient
 To make a call, call the `CreateCall` or `CreateCallAsync` function from the `CallClient`.
+```C# Snippet:Azure_Communication_Call_Tests_CreateCallOptions
+var createCallOption = new CreateCallOptions(
+       new Uri(TestEnvironment.AppCallbackUrl),
+       new List<CallModality> { CallModality.Audio },
+       new List<EventSubscriptionType>
+       {
+           EventSubscriptionType.ParticipantsUpdated,
+           EventSubscriptionType.DtmfReceived
+       });
+```
 ```C# Snippet:Azure_Communication_Call_Tests_CreateCallAsync
 CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
     source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-    options: new CreateCallOptions(new Uri("<AppCallbackUrl>"),  new List<CallModality> { CallModality.Audio }, new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived }); / The options for creating a call.
+    options: createCallOption // The options for creating a call.
 Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
 ```
 
 ## Troubleshooting
 A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
-```C# Snippet:Azure_Communication_Call_Tests_CreateCallAsync
-CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
-    source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
-    targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-    options: new CreateCallOptions(new Uri("<AppCallbackUrl>"),  new List<CallModality> { CallModality.Audio }, new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived }); / The options for creating a call.
-Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
-```
-
 
 ## Next steps
 

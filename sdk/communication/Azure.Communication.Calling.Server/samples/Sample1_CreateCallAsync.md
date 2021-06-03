@@ -16,12 +16,21 @@ CallClient client = new CallClient(connectionString);
 ## Make a call to a phone number recipient
 
 To make a Call, call the `CreateCall` or `CreateCallAsync` function from the `CallClient`. The returned value is `CreateCallResponse` objects that contains the created Call's Id if succeed, else throws a RequestFailedException.
-
+```C# Snippet:Azure_Communication_Call_Tests_CreateCallOptions
+var createCallOption = new CreateCallOptions(
+       new Uri(TestEnvironment.AppCallbackUrl),
+       new List<CallModality> { CallModality.Audio },
+       new List<EventSubscriptionType>
+       {
+           EventSubscriptionType.ParticipantsUpdated,
+           EventSubscriptionType.DtmfReceived
+       });
+```
 ```C# Snippet:Azure_Communication_Call_Tests_CreateCallAsync
 CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
     source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-    options: new CreateCallOptions(new Uri("<AppCallbackUrl>"),  new List<CallModality> { CallModality.Audio }, new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived }); / The options for creating a call.
+    options: createCallOption // The options for creating a call.
 Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
 ```
 

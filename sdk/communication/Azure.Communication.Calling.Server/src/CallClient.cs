@@ -88,8 +88,8 @@ namespace Azure.Communication.Calling.Server
         /// <summary>Initializes a new instance of <see cref="CallClient"/> for mocking.</summary>
         protected CallClient()
         {
-            _clientDiagnostics = null!;
-            RestClient = null!;
+            _clientDiagnostics = null;
+            RestClient = null;
         }
 
         /// Create an outgoing call from source to target identities.
@@ -257,7 +257,11 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                return await RestClient.CancelAllMediaOperationsAsync(callLegId, operationContext, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await RestClient.CancelAllMediaOperationsAsync(
+                    callLegId,
+                    operationContext,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -322,7 +326,15 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(options, nameof(options));
 
-                return await RestClient.PlayAudioAsync(callLegId, options.AudioFileUri?.AbsoluteUri, options.Loop, options.AudioFileId, options.CallbackUri?.AbsoluteUri, options.OperationContext, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PlayAudioAsync(
+                    callLegId,
+                    options.AudioFileUri?.AbsoluteUri,
+                    options.Loop,
+                    options.AudioFileId,
+                    options.CallbackUri?.AbsoluteUri,
+                    options.OperationContext,
+                    cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -367,7 +379,15 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(options, nameof(options));
 
-                return RestClient.PlayAudio(callLegId, options.AudioFileUri?.AbsoluteUri, options.Loop, options.OperationContext, options.AudioFileId, options.CallbackUri?.AbsoluteUri, cancellationToken);
+                return RestClient.PlayAudio(
+                    callLegId,
+                    options.AudioFileUri?.AbsoluteUri,
+                    options.Loop,
+                    options.OperationContext,
+                    options.AudioFileId,
+                    options.CallbackUri?.AbsoluteUri,
+                    cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -450,8 +470,6 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(participantId, nameof(participantId));
-
                 return await RestClient.RemoveParticipantAsync(callLegId, participantId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -473,8 +491,6 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(participantId, nameof(participantId));
-
                 return RestClient.RemoveParticipant(callLegId, participantId, cancellationToken);
             }
             catch (Exception ex)
