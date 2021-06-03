@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The LogQueryResponse. </summary>
@@ -13,22 +16,27 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of LogQueryResponse. </summary>
         internal LogQueryResponse()
         {
+            Headers = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of LogQueryResponse. </summary>
         /// <param name="id"> . </param>
         /// <param name="status"> . </param>
-        /// <param name="body"> Contains the tables, columns &amp; rows resulting from a query. </param>
-        internal LogQueryResponse(string id, int? status, LogsQueryResult body)
+        /// <param name="body"> Contains the tables, columns &amp; rows resulting from the query or the error details if the query failed. </param>
+        /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
+        internal LogQueryResponse(string id, int? status, LogsBatchQueryResultInternal body, IReadOnlyDictionary<string, string> headers)
         {
             Id = id;
             Status = status;
             Body = body;
+            Headers = headers;
         }
 
         public string Id { get; }
         public int? Status { get; }
-        /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
-        public LogsQueryResult Body { get; }
+        /// <summary> Contains the tables, columns &amp; rows resulting from the query or the error details if the query failed. </summary>
+        public LogsBatchQueryResultInternal Body { get; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IReadOnlyDictionary<string, string> Headers { get; }
     }
 }

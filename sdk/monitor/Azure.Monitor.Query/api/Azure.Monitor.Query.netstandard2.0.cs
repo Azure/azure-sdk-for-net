@@ -28,10 +28,7 @@ namespace Azure.Monitor.Query
     public partial class LogsQueryOptions
     {
         public LogsQueryOptions() { }
-        public System.Collections.Generic.IList<string> AdditionalResourceIds { get { throw null; } }
-        public System.Collections.Generic.IList<string> AdditionalWorkspaceIds { get { throw null; } }
-        public System.Collections.Generic.IList<string> AdditionalWorkspaceNames { get { throw null; } }
-        public System.Collections.Generic.IList<string> AdditionalWorkspaceQualifiedNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> AdditionalWorkspaces { get { throw null; } }
         public bool IncludeStatistics { get { throw null; } set { } }
         public System.TimeSpan? ServerTimeout { get { throw null; } set { } }
     }
@@ -68,7 +65,8 @@ namespace Azure.Monitor.Query
     }
     public static partial class QueryModelFactory
     {
-        public static Azure.Monitor.Query.Models.LogsQueryResultColumn LogsQueryResultColumn(string name = null, string type = null) { throw null; }
+        public static Azure.Monitor.Query.Models.LogsQueryResult LogsQueryResult(System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultTable> tables = null, System.Text.Json.JsonElement Statistics = default(System.Text.Json.JsonElement)) { throw null; }
+        public static Azure.Monitor.Query.Models.LogsQueryResultColumn LogsQueryResultColumn(string name = null, Azure.Monitor.Query.Models.LogColumnTypes type = default(Azure.Monitor.Query.Models.LogColumnTypes)) { throw null; }
         public static Azure.Monitor.Query.Models.LogsQueryResultTable LogsQueryResultTable(string name = null, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultColumn> columns = null, System.Text.Json.JsonElement internalRows = default(System.Text.Json.JsonElement)) { throw null; }
         public static Azure.Monitor.Query.Models.MetricAvailability MetricAvailability(System.TimeSpan? timeGrain = default(System.TimeSpan?), System.TimeSpan? retention = default(System.TimeSpan?)) { throw null; }
         public static Azure.Monitor.Query.Models.MetricQueryResult MetricQueryResult(int? cost = default(int?), string Timespan = null, System.TimeSpan? interval = default(System.TimeSpan?), string @namespace = null, string resourceRegion = null, System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.Metric> metrics = null) { throw null; }
@@ -77,6 +75,23 @@ namespace Azure.Monitor.Query
 }
 namespace Azure.Monitor.Query.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogColumnTypes : System.IEquatable<Azure.Monitor.Query.Models.LogColumnTypes>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogColumnTypes(string value) { throw null; }
+        public static Azure.Monitor.Query.Models.LogColumnTypes Dynamic { get { throw null; } }
+        public bool Equals(Azure.Monitor.Query.Models.LogColumnTypes other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.Models.LogColumnTypes left, Azure.Monitor.Query.Models.LogColumnTypes right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.Models.LogColumnTypes (string value) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.Models.LogColumnTypes left, Azure.Monitor.Query.Models.LogColumnTypes right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class LogsBatchQueryResult
     {
         internal LogsBatchQueryResult() { }
@@ -94,7 +109,7 @@ namespace Azure.Monitor.Query.Models
     {
         internal LogsQueryResultColumn() { }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public Azure.Monitor.Query.Models.LogColumnTypes Type { get { throw null; } }
     }
     public partial class LogsQueryResultRow
     {

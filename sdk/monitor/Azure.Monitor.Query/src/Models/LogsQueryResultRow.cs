@@ -183,7 +183,7 @@ namespace Azure.Monitor.Query.Models
             }
 
             var element = _row[index];
-            switch (_columns[index].Type)
+            switch (_columns[index].Type.ToString())
             {
                 case LogColumnTypes.Datetime:
                     return GetDateTimeOffset(index);

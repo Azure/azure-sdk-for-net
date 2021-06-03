@@ -11,14 +11,25 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class LogsQueryResult
+    internal partial class LogsBatchQueryResultInternal
     {
-        internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element)
+        internal static LogsBatchQueryResultInternal DeserializeLogsBatchQueryResultInternal(JsonElement element)
         {
+            Optional<ErrorInfo> error = default;
             IReadOnlyList<LogsQueryResultTable> tables = default;
             Optional<JsonElement> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("error"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = ErrorInfo.DeserializeErrorInfo(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("tables"))
                 {
                     List<LogsQueryResultTable> array = new List<LogsQueryResultTable>();
@@ -35,7 +46,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new LogsQueryResult(tables, statistics);
+            return new LogsBatchQueryResultInternal(tables, statistics, error.Value);
         }
     }
 }
