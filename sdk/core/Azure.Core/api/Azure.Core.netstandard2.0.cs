@@ -308,6 +308,7 @@ namespace Azure.Core
         public bool BufferResponse { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
+        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
