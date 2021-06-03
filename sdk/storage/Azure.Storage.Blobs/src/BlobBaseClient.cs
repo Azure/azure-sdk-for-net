@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The blob's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        internal readonly Uri _uri;
+        private protected readonly Uri _uri;
 
         /// <summary>
         /// Gets the blob's primary <see cref="Uri"/> endpoint.
