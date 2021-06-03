@@ -764,6 +764,7 @@ namespace Azure.Storage.Blobs
                 ArchiveStatus = response.Headers.ArchiveStatus,
                 AccessTierChangedOn = response.Headers.AccessTierChangeTime.GetValueOrDefault(),
                 VersionId = response.Headers.VersionId,
+                IsLatestVersion = response.Headers.IsCurrentVersion.GetValueOrDefault(),
                 TagCount = response.Headers.TagCount.GetValueOrDefault(),
                 ExpiresOn = response.Headers.ExpiresOn.GetValueOrDefault(),
                 IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
