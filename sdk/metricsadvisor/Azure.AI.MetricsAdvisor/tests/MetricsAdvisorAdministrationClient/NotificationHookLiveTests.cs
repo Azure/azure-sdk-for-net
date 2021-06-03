@@ -175,7 +175,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateEmailNotificationHookWithMinimumSetupAndGetInstance(bool useTokenCredential)
         {
             // Create a hook.
@@ -255,7 +254,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateEmailNotificationHookWithEveryMemberAndGetInstance()
         {
             // Create a hook.
@@ -343,7 +341,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task UpdateWebNotificationHookWithMinimumSetupAndGetInstance()
         {
             // Create a hook.
@@ -384,7 +382,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task UpdateWebNotificationHookWithMinimumSetupAndNewInstance()
         {
             // Create a hook.
@@ -424,7 +422,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task UpdateWebNotificationHookWithEveryMemberAndGetInstance()
         {
             // Create a hook.
@@ -482,7 +480,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task UpdateWebNotificationHookWithEveryMemberAndNewInstance()
         {
             // Create a hook.
