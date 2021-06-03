@@ -197,7 +197,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Throws if <paramref name="value"/> is null or an empty string, otherwise return <paramref name="value"/>.
+        /// Throws if <paramref name="value"/> is null or an empty string; otherwise, returns <paramref name="value"/>.
         /// </summary>
         /// <param name="value">The value to validate.</param>
         /// <param name="name">The name of the parameter.</param>
