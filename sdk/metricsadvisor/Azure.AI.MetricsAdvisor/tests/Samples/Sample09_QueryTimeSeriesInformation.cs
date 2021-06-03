@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
         [Test]
-        public async Task GetDimensionValuesAsync()
+        public async Task GetMetricDimensionValuesAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [Test]
-        public async Task GetValuesOfDimensionWithAnomaliesAsync()
+        public async Task GetAnomalyDimensionValuesAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
