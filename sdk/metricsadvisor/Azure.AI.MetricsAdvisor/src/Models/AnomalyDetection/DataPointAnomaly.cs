@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress("Dimension")]
     public partial class DataPointAnomaly
     {
-        internal DataPointAnomaly(Guid? dataFeedId, string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
+        internal DataPointAnomaly(string dataFeedId, string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
         {
             DataFeedId = dataFeedId;
             MetricId = metricId;
@@ -100,6 +100,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public double? ExpectedValue { get; }
 
-        internal Guid? DataFeedId { get; }
+        /// <summary>
+        /// </summary>
+        public string DataFeedId { get; }
     }
 }

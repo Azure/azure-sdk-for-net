@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress("Property")]
     public partial class AnomalyIncident
     {
-        internal AnomalyIncident(Guid? dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startTime, DateTimeOffset endTime, SeriesIdentity rootNode, IncidentProperty property)
+        internal AnomalyIncident(string dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startTime, DateTimeOffset endTime, SeriesIdentity rootNode, IncidentProperty property)
         {
             DataFeedId = dataFeedId;
             MetricId = metricId;
@@ -96,6 +96,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public double? ExpectedValueOfRootNode { get; }
 
-        internal Guid? DataFeedId { get; }
+        /// <summary>
+        /// </summary>
+        public string DataFeedId { get; }
     }
 }
