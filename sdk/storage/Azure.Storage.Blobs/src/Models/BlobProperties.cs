@@ -9,7 +9,7 @@ using Azure.Storage.Blobs.Models;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Properties of a Blob
+    /// Properties of a Blob.
     /// </summary>
     public partial class BlobProperties
     {
@@ -266,6 +266,97 @@ namespace Azure.Storage.Blobs.Models
         {
             Metadata = new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             ObjectReplicationSourceProperties = new List<ObjectReplicationPolicy>();
+        }
+
+        /// <summary>
+        /// Internal Constructor.
+        /// </summary>
+        internal BlobProperties(
+            DateTimeOffset lastModified,
+            DateTimeOffset createdOn,
+            IDictionary<string, string> metadata,
+            string objectReplicationDestinationPolicyId,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
+            BlobType blobType,
+            DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            bool isIncrementalCopy,
+            string destinationSnapshot,
+            LeaseDurationType leaseDuration,
+            LeaseState leaseState,
+            LeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            long blobSequenceNumber,
+            string acceptRanges,
+            int blobCommittedBlockCount,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string encryptionScope,
+            string accessTier,
+            bool accessTierInferred,
+            string archiveStatus,
+            DateTimeOffset accessTierChangedOn,
+            string versionId,
+            bool isLatestVersion,
+            long tagCount,
+            DateTimeOffset expiresOn,
+            bool isSealed,
+            string rehydratePriority,
+            DateTimeOffset lastAccessed)
+        {
+            LastModified = lastModified;
+            LeaseStatus = leaseStatus;
+            ContentLength = contentLength;
+            ContentType = contentType;
+            ETag = eTag;
+            LeaseState = leaseState;
+            ContentEncoding = contentEncoding;
+            ContentDisposition = contentDisposition;
+            ContentLanguage = contentLanguage;
+            CacheControl = cacheControl;
+            BlobSequenceNumber = blobSequenceNumber;
+            LeaseDuration = leaseDuration;
+            AcceptRanges = acceptRanges;
+            DestinationSnapshot = destinationSnapshot;
+            BlobCommittedBlockCount = blobCommittedBlockCount;
+            IsIncrementalCopy = isIncrementalCopy;
+            IsServerEncrypted = isServerEncrypted;
+            CopyStatus = copyStatus;
+            EncryptionKeySha256 = encryptionKeySha256;
+            CopySource = copySource;
+            EncryptionScope = encryptionScope;
+            CopyProgress = copyProgress;
+            AccessTier = accessTier;
+            CopyId = copyId;
+            AccessTierInferred = accessTierInferred;
+            CopyStatusDescription = copyStatusDescription;
+            ArchiveStatus = archiveStatus;
+            CopyCompletedOn = copyCompletedOn;
+            AccessTierChangedOn = accessTierChangedOn;
+            BlobType = blobType;
+            VersionId = versionId;
+            ObjectReplicationSourceProperties = objectReplicationSourceProperties;
+            IsLatestVersion = isLatestVersion;
+            ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicyId;
+            TagCount = tagCount;
+            Metadata = metadata;
+            ExpiresOn = expiresOn;
+            CreatedOn = createdOn;
+            IsSealed = isSealed;
+            RehydratePriority = rehydratePriority;
+            ContentHash = contentHash;
+            LastAccessed = lastAccessed;
         }
     }
 }
