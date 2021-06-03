@@ -21,12 +21,14 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task SingleSourceSingleTargetTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SingleSourceSingleTargetTest(bool usetokenCredential)
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = await CreateTargetContainerAsync();
 
-            DocumentTranslationClient client = GetClient();
+            DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);

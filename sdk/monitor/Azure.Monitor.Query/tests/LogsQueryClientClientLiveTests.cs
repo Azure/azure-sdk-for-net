@@ -76,6 +76,21 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [RecordedTest]
+        public async Task CanQueryAdditionalWorkspace()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId,
+                $"{_logsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
+                _logsTestData.DataTimeRange, new LogsQueryOptions()
+                {
+                    AdditionalWorkspaces = { TestEnvironment.SecondaryWorkspaceId }
+                });
+
+            CollectionAssert.AreEqual(new[] {"a", "a", "b", "b", "c", "c"}, results.Value);
+        }
+
+        [RecordedTest]
         public async Task CanQueryIntoPrimitiveInt()
         {
             var client = CreateClient();
