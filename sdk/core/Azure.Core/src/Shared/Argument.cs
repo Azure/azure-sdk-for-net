@@ -181,7 +181,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Throws if <paramref name="value"/> has not been initialized, otherwise return <paramref name="value"/>.
+        /// Throws if <paramref name="value"/> has not been initialized; otherwise, returns <paramref name="value"/>.
         /// </summary>
         /// <param name="value">The value to validate.</param>
         /// <param name="name">The name of the parameter.</param>
