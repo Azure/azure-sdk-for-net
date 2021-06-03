@@ -68,19 +68,50 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return Parameter switch
             {
-                /*
-                AzureApplicationInsightsParameter p => new AzureApplicationInsightsDataFeedPatch() { DataSourceParameter = p },
-                AzureBlobParameter p => new AzureBlobDataFeedPatch() { DataSourceParameter = p },
-                AzureCosmosDBParameter p => new AzureCosmosDBDataFeedPatch() { DataSourceParameter = p },
-                AzureDataLakeStorageGen2Parameter p => new AzureDataLakeStorageGen2DataFeedPatch() { DataSourceParameter = p },
-                AzureTableParameter p => new AzureTableDataFeedPatch() { DataSourceParameter = p },
-                InfluxDBParameter p => new InfluxDBDataFeedPatch() { DataSourceParameter = p },
-                SqlSourceParameter p when Type == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeedPatch() { DataSourceParameter = p },
-                SqlSourceParameter p when Type == DataFeedSourceType.MySql => new MySqlDataFeedPatch() { DataSourceParameter = p },
-                SqlSourceParameter p when Type == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeedPatch() { DataSourceParameter = p },
-                SqlSourceParameter p when Type == DataFeedSourceType.SqlServer => new SQLServerDataFeedPatch() { DataSourceParameter = p },
-                MongoDBParameter p => new MongoDBDataFeedPatch() { DataSourceParameter = p },
-                */
+                AzureApplicationInsightsParameter p => new AzureApplicationInsightsDataFeedPatch()
+                {
+                    DataSourceParameter = new() { ApiKey = p.ApiKey, ApplicationId = p.ApplicationId, AzureCloud = p.AzureCloud, Query = p.Query }
+                },
+                AzureBlobParameter p => new AzureBlobDataFeedPatch()
+                {
+                    DataSourceParameter = new() { BlobTemplate = p.BlobTemplate, ConnectionString = p.ConnectionString, Container = p.Container }
+                },
+                AzureCosmosDBParameter p => new AzureCosmosDBDataFeedPatch()
+                {
+                    DataSourceParameter = new() { SqlQuery = p.SqlQuery, ConnectionString = p.ConnectionString, CollectionId = p.CollectionId, Database = p.Database }
+                },
+                AzureDataLakeStorageGen2Parameter p => new AzureDataLakeStorageGen2DataFeedPatch()
+                {
+                    DataSourceParameter = new() { FileSystemName = p.FileSystemName, AccountKey = p.AccountKey, AccountName = p.AccountName, DirectoryTemplate = p.DirectoryTemplate, FileTemplate = p.FileTemplate }
+                },
+                AzureTableParameter p => new AzureTableDataFeedPatch()
+                {
+                    DataSourceParameter = new() { ConnectionString = p.ConnectionString, Query = p.Query, Table = p.Table }
+                },
+                InfluxDBParameter p => new InfluxDBDataFeedPatch()
+                {
+                    DataSourceParameter = new() { ConnectionString = p.ConnectionString, Database = p.Database, Password = p.Password, Query = p.Query, UserName = p.UserName }
+                },
+                SqlSourceParameter p when Type == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeedPatch()
+                {
+                    DataSourceParameter = new() { ConnectionString = p.ConnectionString, Query = p.Query }
+                },
+                SqlSourceParameter p when Type == DataFeedSourceType.MySql => new MySqlDataFeedPatch()
+                {
+                    DataSourceParameter = new() { ConnectionString = p.ConnectionString, Query = p.Query }
+                },
+                SqlSourceParameter p when Type == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeedPatch()
+                {
+                    DataSourceParameter = new() { ConnectionString = p.ConnectionString, Query = p.Query }
+                },
+                SqlSourceParameter p when Type == DataFeedSourceType.SqlServer => new SQLServerDataFeedPatch()
+                {
+                    DataSourceParameter = new() { ConnectionString = p.ConnectionString, Query = p.Query }
+                },
+                MongoDBParameter p => new MongoDBDataFeedPatch()
+                {
+                    DataSourceParameter = new() { ConnectionString = p.ConnectionString, Command = p.Command, Database = p.Database }
+                },
                 _ => throw new InvalidOperationException("Invalid DataFeedDetailPatch type")
             };
         }
