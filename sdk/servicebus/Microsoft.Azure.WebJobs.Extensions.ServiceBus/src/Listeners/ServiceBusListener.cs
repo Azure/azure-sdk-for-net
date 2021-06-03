@@ -155,15 +155,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     }
                     else
                     {
-                        try
-                        {
-                            await _batchLoop.ConfigureAwait(false);
-                        }
-                        catch (TaskCanceledException)
-                        {
-                            // expected when stopping
-                        }
-
+                        await _batchLoop.ConfigureAwait(false);
                         await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
                     }
 
