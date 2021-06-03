@@ -18,8 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="dimensionDisplayName"> dimension display name. </param>
         internal DataFeedDimension(string dimensionName, string dimensionDisplayName)
         {
-            DimensionName = dimensionName;
-            DimensionDisplayName = dimensionDisplayName;
+            Name = dimensionName;
+            DisplayName = dimensionDisplayName;
         }
     }
 }

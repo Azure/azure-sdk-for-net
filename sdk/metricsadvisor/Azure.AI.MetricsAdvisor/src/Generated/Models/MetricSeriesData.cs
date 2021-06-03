@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Definition = definition;
             Timestamps = timestamps.ToList();
-            Values = values.ToList();
+            MetricValues = values.ToList();
         }
 
         /// <summary> Initializes a new instance of MetricSeriesData. </summary>
@@ -47,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Definition = definition;
             Timestamps = timestamps;
-            Values = values;
+            MetricValues = values;
         }
     }
 }

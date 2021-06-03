@@ -20,10 +20,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="metricDescription"> metric description. </param>
         internal DataFeedMetric(string metricId, string metricName, string metricDisplayName, string metricDescription)
         {
-            MetricId = metricId;
-            MetricName = metricName;
-            MetricDisplayName = metricDisplayName;
-            MetricDescription = metricDescription;
+            Id = metricId;
+            Name = metricName;
+            DisplayName = metricDisplayName;
+            Description = metricDescription;
         }
     }
 }

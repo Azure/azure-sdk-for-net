@@ -126,7 +126,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateSeriesKey(incident.DimensionKey);
+                ValidateSeriesKey(incident.RootDimensionKey);
 
                 if (++incidentCount >= MaximumSamplesCount)
                 {
@@ -168,9 +168,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateSeriesKey(incident.DimensionKey);
+                ValidateSeriesKey(incident.RootDimensionKey);
 
-                Dictionary<string, string> dimensionColumns = incident.DimensionKey.AsDictionary();
+                Dictionary<string, string> dimensionColumns = incident.RootDimensionKey.AsDictionary();
 
                 string city = dimensionColumns["city"];
                 string category = dimensionColumns["category"];
@@ -366,21 +366,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(seriesData, Is.Not.Null);
                 Assert.That(seriesData.SeriesKey, Is.Not.Null);
                 Assert.That(seriesData.Timestamps, Is.Not.Null);
-                Assert.That(seriesData.Values, Is.Not.Null);
-                Assert.That(seriesData.ExpectedValues, Is.Not.Null);
+                Assert.That(seriesData.MetricValues, Is.Not.Null);
+                Assert.That(seriesData.ExpectedMetricValues, Is.Not.Null);
                 Assert.That(seriesData.IsAnomaly, Is.Not.Null);
                 Assert.That(seriesData.Periods, Is.Not.Null);
-                Assert.That(seriesData.LowerBoundaries, Is.Not.Null);
-                Assert.That(seriesData.UpperBoundaries, Is.Not.Null);
+                Assert.That(seriesData.LowerBoundaryValues, Is.Not.Null);
+                Assert.That(seriesData.UpperBoundaryValues, Is.Not.Null);
 
                 int pointsCount = seriesData.Timestamps.Count;
 
-                Assert.That(seriesData.Values.Count, Is.EqualTo(pointsCount));
-                Assert.That(seriesData.ExpectedValues.Count, Is.EqualTo(pointsCount));
+                Assert.That(seriesData.MetricValues.Count, Is.EqualTo(pointsCount));
+                Assert.That(seriesData.ExpectedMetricValues.Count, Is.EqualTo(pointsCount));
                 Assert.That(seriesData.IsAnomaly.Count, Is.EqualTo(pointsCount));
                 Assert.That(seriesData.Periods.Count, Is.EqualTo(pointsCount));
-                Assert.That(seriesData.LowerBoundaries.Count, Is.EqualTo(pointsCount));
-                Assert.That(seriesData.UpperBoundaries.Count, Is.EqualTo(pointsCount));
+                Assert.That(seriesData.LowerBoundaryValues.Count, Is.EqualTo(pointsCount));
+                Assert.That(seriesData.UpperBoundaryValues.Count, Is.EqualTo(pointsCount));
 
                 foreach (DateTimeOffset timestamp in seriesData.Timestamps)
                 {
@@ -400,14 +400,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             Assert.That(rootCause, Is.Not.Null);
             Assert.That(rootCause.Description, Is.Not.Null.And.Not.Empty);
-            Assert.That(rootCause.Score, Is.GreaterThan(0.0).And.LessThanOrEqualTo(1.0));
+            Assert.That(rootCause.ContributionScore, Is.GreaterThan(0.0).And.LessThanOrEqualTo(1.0));
 
             foreach (string path in rootCause.Paths)
             {
                 Assert.That(path, Is.Not.Null.And.Not.Empty);
             }
 
-            ValidateSeriesKey(rootCause.DimensionKey);
+            ValidateSeriesKey(rootCause.SeriesKey);
         }
     }
 }

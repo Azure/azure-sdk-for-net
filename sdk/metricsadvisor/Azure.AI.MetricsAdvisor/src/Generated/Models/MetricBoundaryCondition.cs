@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Direction = direction;
             Type = type;
             CompanionMetricId = companionMetricId;
-            TriggerForMissing = triggerForMissing;
+            ShouldAlertIfDataPointMissing = triggerForMissing;
         }
     }
 }

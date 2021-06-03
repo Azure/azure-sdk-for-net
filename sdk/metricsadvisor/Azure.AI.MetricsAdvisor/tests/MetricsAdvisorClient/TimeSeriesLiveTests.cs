@@ -163,11 +163,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(seriesData.Definition, Is.Not.Null);
                 Assert.That(seriesData.Definition.SeriesKey, Is.Not.Null);
                 Assert.That(seriesData.Timestamps, Is.Not.Null);
-                Assert.That(seriesData.Values, Is.Not.Null);
+                Assert.That(seriesData.MetricValues, Is.Not.Null);
 
                 Assert.That(seriesData.Definition.MetricId, Is.EqualTo(MetricId));
 
-                Assert.That(seriesData.Timestamps.Count, Is.EqualTo(seriesData.Values.Count));
+                Assert.That(seriesData.Timestamps.Count, Is.EqualTo(seriesData.MetricValues.Count));
 
                 foreach (DateTimeOffset timestamp in seriesData.Timestamps)
                 {

@@ -35,9 +35,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                 throw new ArgumentNullException(nameof(description));
             }
 
-            DimensionKey = dimensionKey;
+            SeriesKey = dimensionKey;
             Paths = paths.ToList();
-            Score = score;
+            ContributionScore = score;
             Description = description;
         }
 
@@ -48,9 +48,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="description"> description of the root cause. </param>
         internal IncidentRootCause(DimensionKey dimensionKey, IReadOnlyList<string> paths, double score, string description)
         {
-            DimensionKey = dimensionKey;
+            SeriesKey = dimensionKey;
             Paths = paths;
-            Score = score;
+            ContributionScore = score;
             Description = description;
         }
     }
