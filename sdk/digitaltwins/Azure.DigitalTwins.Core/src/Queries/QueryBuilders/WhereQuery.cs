@@ -2,16 +2,22 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
     /// Query that already contains a SELECT and FROM clause.
     /// </summary>
-    internal class AdtQuerySelectFrom : AdtQuery
+    public class WhereQuery : QueryBase<WhereClause>
     {
+        private AdtQueryBuilder _parent;
+
+        internal WhereQuery(AdtQueryBuilder parent)
+        {
+            _parent = parent;
+        }
+
         /// <summary>
         /// Adds a WHERE and its conditional argument(s) clause to the query object. Meant to be used for simple
         /// conditions involving operators or with basic ADT functions. Multiple WHERE clauses are appended using
@@ -19,7 +25,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="condition"> A custom object that encodes the logical statement nested within the WHERE clause. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public AdtQuerySelectFrom Where(BaseCondition condition)
+        internal WhereQuery Where(BaseCondition condition)
         {
             Console.WriteLine(condition);
             return this;
@@ -28,9 +34,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// An alternative way to add a WHERE clause to the query by directly providing a string that contains the condition.
         /// </summary>
-        /// <param name="condition"> The verbatum condition (SQL-like syntax) in string format. </param>
+        /// <param name="condition"> The verbatim condition (SQL-like syntax) in string format. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-       public AdtQuerySelectFrom Where(string condition)
+        public WhereQuery Where(string condition)
         {
             Console.WriteLine(condition);
             return this;
@@ -41,7 +47,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="property"> The property that the query is looking for as defined. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public AdtQuerySelectFrom WhereIsDefined(string property)
+        public WhereQuery WhereIsDefined(string property)
         {
             Console.WriteLine(property);
             return this;
@@ -52,7 +58,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="expression"> The expression being checked for null. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public AdtQuerySelectFrom WhereIsNull(string expression)
+        public WhereQuery WhereIsNull(string expression)
         {
             Console.WriteLine(expression);
             return this;
@@ -64,7 +70,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="stringToCheck"> String to check the beginning of. </param>
         /// <param name="beginningString"> String representing the beginning to check for. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public AdtQuerySelectFrom WhereStartsWith(string stringToCheck, string beginningString)
+        public WhereQuery WhereStartsWith(string stringToCheck, string beginningString)
         {
             Console.Write(stringToCheck);
             Console.WriteLine(beginningString);
@@ -81,7 +87,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="model"> Model ID to check for. </param>
         /// <param name="exact"> Whether or not an exact match is required. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public AdtQuerySelectFrom WhereIsOfModel(string model, bool exact = false)
+        public WhereQuery WhereIsOfModel(string model, bool exact = false)
         {
             Console.WriteLine(model);
             Console.WriteLine(exact);
@@ -92,11 +98,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Adds the logical operator AND to the query.
         /// </summary>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        public AdtQuerySelectFrom And()
+        public WhereQuery And()
         {
             return this;
         }
 
+        /// <inheritdoc/>
+        public override AdtQueryBuilder Build()
+        {
+            return _parent;
+        }
         /*
          * The rest of the logical operators defined in a similar manner.
          */

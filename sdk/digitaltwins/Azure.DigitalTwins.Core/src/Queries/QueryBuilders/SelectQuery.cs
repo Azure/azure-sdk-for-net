@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Globalization;
+using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
@@ -10,35 +11,19 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Custom ADT query builder class that facilitates building queries against an ADT instance.
     /// </summary>
-    internal class AdtQuery
+    public class AdtQuery : QueryBase<SelectClause>
     {
-        /// <summary>
-        /// Used to prevent needing static.
-        /// </summary>
-        protected string someString { get; set; }
+        private readonly AdtQuerySelect _innerQuery;
+        private readonly AdtQueryBuilder _parent;
 
         /// <summary>
-        /// The substance of the query is broken down into clauses, stored in a list
-        /// for future parsing purposes.
+        /// Initializes a new instance of the <see cref="AdtQuery"/> class.
         /// </summary>
-        protected List<BaseClause> Clauses { get; set; } = new List<BaseClause>();
-
-        /// <summary>
-        /// Adds a new clause to the Clauses component. Internally called within this class by
-        /// public methods that correspond to different clauses themselves (see Select, From, Where).
-        /// </summary>
-        /// <param name="clause"> The new clause object. </param>
-        protected void AddQueryComponent(BaseClause clause)
+        internal AdtQuery(AdtQueryBuilder parent, AdtQuerySelect select)
         {
-            Clauses.Add(clause);
+            _parent = parent;
+            _innerQuery = select;
         }
-
-        ///// <summary>
-        /////  Removes the most recently added component from the Clauses list.
-        ///// </summary>
-        //protected void RemoveQueryComponent()
-        //{
-        //}
 
         /// <summary>
         /// Called to add a select clause (and its corresponding argument) to the query.
@@ -47,9 +32,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public AdtQuerySelect Select(params string[] args)
         {
-            Console.WriteLine(someString);
             Console.WriteLine(args);
-            return new AdtQuerySelect();
+            Clauses.Add(new SelectClause(args[0]));
+            return _innerQuery;
         }
 
         /// <summary>
@@ -60,9 +45,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public AdtQuerySelect SelectTop(int count)
         {
-            Console.WriteLine(someString);
             Console.WriteLine(count);
-            return new AdtQuerySelect();
+            Clauses.Add(new SelectClause(count.ToString(CultureInfo.InvariantCulture)));
+            return _innerQuery;
         }
 
         /// <summary>
@@ -72,9 +57,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public AdtQuerySelect SelectCount(params string[] args)
         {
-            Console.WriteLine(someString);
             Console.WriteLine(args);
-            return new AdtQuerySelect();
+            Clauses.Add(new SelectClause(args[0]));
+            return _innerQuery;
         }
 
         /// <summary>
@@ -84,6 +69,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public override string ToString()
         {
             return "";
+        }
+
+        /// <inheritdoc/>
+        public override AdtQueryBuilder Build()
+        {
+            return _parent;
         }
     }
 }

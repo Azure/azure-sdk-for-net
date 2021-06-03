@@ -18,7 +18,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public string Field { get; set; }
 
         /// <summary>
-        /// The comparision operator being invoked.
+        /// The comparison operator being invoked.
         /// </summary>
         public string Operator { get; set; }
 
@@ -31,8 +31,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Constructor for a comparison condition.
         /// </summary>
         /// <param name="field"> The field that we're checking against a certain value. </param>
-        /// <param name="oper"> The comparision operator being invoked. </param>
-        /// <param name="value"> The value we're checking against a Field. Eg, in the above example, 5 is the value. </param>
+        /// <param name="oper"> The comparison operator being invoked. </param>
+        /// <param name="value"> The value we're checking against a Field. eg, in the above example, 5 is the value. </param>
         public ComparisonCondition(string field, string oper, string value)
         {
             Field = field;

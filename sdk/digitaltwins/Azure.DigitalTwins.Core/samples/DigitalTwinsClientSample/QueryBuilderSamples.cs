@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Azure.DigitalTwins.Core.Queries.QueryBuilders;
+using Azure.DigitalTwins.Core.QueryBuilder;
 
-namespace Azure.DigitalTwins.Core.QueryBuilder
+namespace Azure.DigitalTwins.Core.Samples
 {
     /// <summary>
     /// Samples for QueryBuilder.
@@ -18,7 +17,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public static void main()
         {
             //"SELECT * FROM DIGITALTWINS";
-            AdtQuery query1 = new AdtQuery().Select("*").From(AdtCollection.DigitalTwins);
+            AdtQueryBuilder query1 = new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build();
 
             ////"SELECT * FROM DIGITALTWINS WHERE Temperature <= 50";
             //ADTQuery query2 = new ADTQuery().Select("*").From(ADTCollection.DigitalTwins).Where(new ComparisonCondition("Temperature", "<=", "50"));
@@ -52,10 +51,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             //    .From(ADTCollection.DigitalTwins)
             //    .Where(new ContainsCondition("Location", new string[] { "London", "Madrid", "Singapore" }));
 
-            AdtQuery query8 = new AdtQuery()
+            AdtQueryBuilder query8 = new AdtQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .WhereIsOfModel("Room");
+                .WhereIsOfModel("Room")
+                .Build();
         }
     }
 }

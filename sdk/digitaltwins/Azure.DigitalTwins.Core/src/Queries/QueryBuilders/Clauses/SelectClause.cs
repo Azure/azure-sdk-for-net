@@ -6,7 +6,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Custom object for a SELECT clause. Only meant to be used when adding SELECT to a query. Hidden from user.
     /// </summary>
-    internal class SelectClause : BaseClause
+    public class SelectClause : BaseClause
     {
         /// <summary>
         /// The argument for the SELECT clause (eg. *).
@@ -17,7 +17,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Constructor for SELECT clause.
         /// </summary>
         /// <param name="argument"> Argument for what to select (collection, property, etc.). </param>
-        public SelectClause(string argument)
+        internal SelectClause(string argument)
         {
             // TODO -- select multiple arguments (string[])
             Type = ClauseType.SELECT;

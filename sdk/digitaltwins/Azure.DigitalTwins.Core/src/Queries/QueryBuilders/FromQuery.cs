@@ -2,26 +2,34 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
     /// Query object that already contains a select clause.
     /// </summary>
-    internal class AdtQuerySelect : AdtQuery
+    public class FromQuery : QueryBase<FromClause>
     {
+        private WhereQuery _innerQuery;
+        private AdtQueryBuilder _parent;
+
+        internal FromQuery(AdtQueryBuilder parent, WhereQuery selectPart)
+        {
+            _parent = parent;
+            _innerQuery = selectPart;
+        }
+
         /// <summary>
-        /// Adds the FROM clause and its arugment to the query via the Clauses component.
+        /// Adds the FROM clause and its argument to the query via the Clauses component.
         /// </summary>
         /// <param name="collection"> An enum different collections that users can query from. </param>
         /// <returns> ADT query with select and from clause. </returns>
-        public AdtQuerySelectFrom From(AdtCollection collection)
+        public WhereQuery From(AdtCollection collection)
         {
-            Console.WriteLine(someString);
             Console.WriteLine(collection);
-            return new AdtQuerySelectFrom();
+            Clauses.Add(new FromClause(collection));
+            return _innerQuery;
         }
 
         /// <summary>
@@ -30,11 +38,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection"> The name of the collection. </param>
         /// <returns> ADT query with select and from clause. </returns>
-        public AdtQuerySelectFrom From(string collection)
+        public WhereQuery From(string collection)
         {
             Console.WriteLine(collection);
-            Console.WriteLine(someString);
-            return new AdtQuerySelectFrom();
+            Clauses.Add(new FromClause(collection));
+            return _innerQuery;
+        }
+
+        /// <inheritdoc/>
+        public override AdtQueryBuilder Build()
+        {
+            return _parent;
         }
     }
 }
