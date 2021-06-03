@@ -31,7 +31,7 @@ namespace Azure.Storage.Test.Shared
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
-        LiveServiceVersions = new object[] { StorageVersionExtensions.MaxVersion })]
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public abstract class BlobTestBase : StorageTestBase<BlobTestEnvironment>
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
