@@ -42,13 +42,23 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The connection string for authenticating to the Azure Event Hubs resource.
-        /// </summary>
-        public string ConnectionString { get; }
-
-        /// <summary>
         /// The Azure Event Hubs consumer group to use.
         /// </summary>
-        public string ConsumerGroup { get; }
+        public string ConsumerGroup { get; set; }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="connectionString"></param>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+
+            ConnectionString = connectionString;
+        }
+
+        /// <summary>
+        /// The connection string for authenticating to the Azure Event Hubs resource.
+        /// </summary>
+        internal string ConnectionString { get; set; }
     }
 }
