@@ -1,6 +1,6 @@
 try
 {
-	Start-AutoRestCodeGeneration -ResourceProvider "machinelearningservices/resource-manager" -AutoRestVersion "v2"
+	Start-AutoRestCodeGeneration -ResourceProvider "machinelearningservices/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-2021-03-01-preview
 }
 catch
 {
