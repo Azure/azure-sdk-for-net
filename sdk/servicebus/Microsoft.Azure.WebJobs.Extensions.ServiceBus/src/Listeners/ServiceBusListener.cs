@@ -34,8 +34,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly Lazy<SessionMessageProcessor> _sessionMessageProcessor;
         private readonly Lazy<ServiceBusScaleMonitor> _scaleMonitor;
 
-        private bool _disposed;
-        private bool _started;
+        private volatile bool _disposed;
+        private volatile bool _started;
         // Serialize execution of StopAsync to avoid calling Unregister* concurrently
         private readonly SemaphoreSlim _stopAsyncSemaphore = new SemaphoreSlim(1, 1);
         private CancellationTokenRegistration _batchReceiveRegistration;
