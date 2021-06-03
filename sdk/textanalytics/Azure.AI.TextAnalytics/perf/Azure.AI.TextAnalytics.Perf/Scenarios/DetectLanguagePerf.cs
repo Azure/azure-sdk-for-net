@@ -5,19 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Test.Perf;
 
 namespace Azure.AI.TextAnalytics.Perf
 {
     public sealed class DetectLanguagePerf
 
-        : TextAnalyticsTest<CountOptions>
+        : TextAnalyticsTest<CustomCountOptions>
     {
         private readonly TextAnalyticsClient _client;
 
         private List<string> _batchDocuments;
 
-        public DetectLanguagePerf(CountOptions options) : base(options)
+        public DetectLanguagePerf(CustomCountOptions options) : base(options)
         {
             // create client
             _client = new TextAnalyticsClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
