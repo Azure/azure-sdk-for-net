@@ -64,35 +64,33 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static HookInfoPatch GetPatchModel(NotificationHook hook)
         {
-            if (hook is EmailNotificationHook emailHook)
+            HookInfoPatch patch = hook switch
             {
-                var h = emailHook;
-                var patch = new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink?.AbsoluteUri, HookParameter = new(), Admins = h.Administrators };
-
-                foreach (var item in h.HookParameter.ToList)
+                EmailNotificationHook h => new EmailHookInfoPatch()
                 {
-                    patch.HookParameter.ToList.Add(item);
-                }
-
-                return patch;
-            }
-            else if (hook is WebNotificationHook webHook)
-            {
-                var h = webHook;
-                var patch = new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description,
-                    ExternalLink = h.ExternalLink?.AbsoluteUri, HookParameter = { CertificateKey = h.CertificateKey,
-                        CertificatePassword = h.CertificatePassword, Endpoint = h.Endpoint.AbsoluteUri,
-                        Password = h.Password, Username = h.Username }, Admins = h.Administrators };
-
-                foreach (var item in h.HookParameter.Headers)
+                    HookParameter = new() { ToList = h.EmailsToAlert }
+                },
+                WebNotificationHook h => new WebhookHookInfoPatch()
                 {
-                    patch.HookParameter.Headers.Add(item);
-                }
+                    HookParameter = new()
+                    {
+                        Endpoint = h.Endpoint?.AbsoluteUri,
+                        Username = h.Username,
+                        Password = h.Password,
+                        CertificateKey = h.CertificateKey,
+                        CertificatePassword = h.CertificatePassword,
+                        Headers = h.Headers
+                    }
+                },
+                _ => throw new InvalidOperationException("Unknown hook type.")
+            };
 
-                return patch;
-            }
+            patch.HookName = hook.Name;
+            patch.Description = hook.Description;
+            patch.ExternalLink = hook.ExternalLink?.AbsoluteUri;
+            patch.Admins = hook.Administrators;
 
-            throw new InvalidOperationException("Unknown AlertingHook type.");
+            return patch;
         }
     }
 }

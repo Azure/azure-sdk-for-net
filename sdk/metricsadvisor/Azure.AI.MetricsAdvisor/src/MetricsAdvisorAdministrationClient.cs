@@ -1588,7 +1588,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="NotificationHook"/>.
+        /// Updates an existing <see cref="NotificationHook"/>. In order to update your hook, you cannot create a <see cref="NotificationHook"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetHookAsync"/> or another CRUD operation and update it
+        /// before calling this method.
         /// </summary>
         /// <param name="hook">The <see cref="NotificationHook"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1624,7 +1626,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="NotificationHook"/>.
+        /// Updates an existing <see cref="NotificationHook"/>. In order to update your hook, you cannot create a <see cref="NotificationHook"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetHook"/> or another CRUD operation and update it
+        /// before calling this method.
         /// </summary>
         /// <param name="hook">The <see cref="NotificationHook"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
