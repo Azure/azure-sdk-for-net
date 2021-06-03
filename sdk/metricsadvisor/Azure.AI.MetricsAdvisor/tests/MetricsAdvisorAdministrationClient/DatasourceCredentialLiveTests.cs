@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string ClientIdSecretName = "clientIdSecretName";
         private const string ClientSecretSecretName = "clientSecretSecretName";
 
-        public DatasourceCredentialLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        public DatasourceCredentialLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -113,6 +113,33 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedCredential.ClientId, Is.EqualTo(ClientId));
             Assert.That(updatedCredential.TenantId, Is.EqualTo(TenantId));
+        }
+
+        [RecordedTest]
+        public async Task UpdateServicePrincipalInKeyVaultDatasourceCredential()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            string credentialName = Recording.GenerateAlphaNumericId("credential");
+
+            DatasourceCredential credentialToCreate = new ServicePrincipalInKeyVaultDatasourceCredential(credentialName, new Uri("https://mock.com/"), "mock", "mock", "mock", "mock", "mock");
+
+            await using var disposableCredential = await DisposableDatasourceCredential.CreateDatasourceCredentialAsync(adminClient, credentialToCreate);
+            var credentialToUpdate = disposableCredential.Credential as ServicePrincipalInKeyVaultDatasourceCredential;
+
+            credentialToUpdate.Endpoint = new Uri(Endpoint);
+            credentialToUpdate.KeyVaultClientId = ClientId;
+            credentialToUpdate.TenantId = TenantId;
+            credentialToUpdate.SecretNameForClientId = ClientIdSecretName;
+            credentialToUpdate.SecretNameForClientSecret = ClientSecretSecretName;
+
+            var updatedCredential = (await adminClient.UpdateDatasourceCredentialAsync(credentialToUpdate)).Value as ServicePrincipalInKeyVaultDatasourceCredential;
+
+            Assert.That(updatedCredential.Endpoint.AbsoluteUri, Is.EqualTo(Endpoint));
+            Assert.That(updatedCredential.KeyVaultClientId, Is.EqualTo(ClientId));
+            Assert.That(updatedCredential.TenantId, Is.EqualTo(TenantId));
+            Assert.That(updatedCredential.SecretNameForClientId, Is.EqualTo(ClientIdSecretName));
+            Assert.That(updatedCredential.SecretNameForClientSecret, Is.EqualTo(ClientSecretSecretName));
         }
 
         [RecordedTest]
