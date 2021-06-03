@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
@@ -31,7 +32,8 @@ namespace Azure.AI.Translation.Document.Tests
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
-            var client = new DocumentTranslationClient(new System.Uri(Endpoint), Credential);
+            string endpoint = Environment.GetEnvironmentVariable(EndpointEnvironmentVariableName);
+            var client = new DocumentTranslationClient(new Uri(endpoint), Credential);
             try
             {
                 await client.GetDocumentFormatsAsync();
