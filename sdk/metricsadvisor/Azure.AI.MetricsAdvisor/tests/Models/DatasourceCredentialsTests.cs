@@ -14,18 +14,18 @@ using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
-    public class DataSourceCredentialEntitiesTests : MockClientTestBase
+    public class DatasourceCredentialsTests : MockClientTestBase
     {
-        private static object[] CredentialEntityTestCases =
+        private static object[] DatasourceCredentialTestCases =
         {
-            new object[] { new ServicePrincipalCredentialEntity("mock", "mock", "secret", "mock"), "\"clientSecret\":\"secret\"" }
+            new object[] { new ServicePrincipalDatasourceCredential("mock", "mock", "secret", "mock"), "\"clientSecret\":\"secret\"" }
         };
 
-        public DataSourceCredentialEntitiesTests(bool isAsync) : base(isAsync)
+        public DatasourceCredentialsTests(bool isAsync) : base(isAsync)
         {
         }
 
-        private string CredentialEntityResponseContent => @"
+        private string DatasourceCredentialResponseContent => @"
         {
             ""dataSourceCredentialType"": ""ServicePrincipal"",
             ""parameters"": {
@@ -36,19 +36,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
         ";
 
         [Test]
-        [TestCaseSource(nameof(CredentialEntityTestCases))]
-        public async Task DataSourceCredentialEntitySendsSecretDuringCreation(DataSourceCredentialEntity credentialEntity, string expectedSubstring)
+        [TestCaseSource(nameof(DatasourceCredentialTestCases))]
+        public async Task DatasourceCredentialSendsSecretDuringCreation(DatasourceCredential credential, string expectedSubstring)
         {
             MockResponse createResponse = new MockResponse(201);
             createResponse.AddHeader(new HttpHeader("Location", $"https://fakeresource.cognitiveservices.azure.com/metricsadvisor/v1.0/credentials/{FakeGuid}"));
 
             MockResponse getResponse = new MockResponse(200);
-            getResponse.SetContent(CredentialEntityResponseContent);
+            getResponse.SetContent(DatasourceCredentialResponseContent);
 
             MockTransport mockTransport = new MockTransport(createResponse, getResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            await adminClient.CreateCredentialEntityAsync(credentialEntity);
+            await adminClient.CreateDatasourceCredentialAsync(credential);
 
             MockRequest request = mockTransport.Requests.First();
             string content = ReadContent(request);

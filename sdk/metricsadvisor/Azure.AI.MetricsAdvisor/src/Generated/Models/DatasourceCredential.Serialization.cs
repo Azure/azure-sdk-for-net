@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class DataSourceCredentialEntity : IUtf8JsonSerializable
+    public partial class DatasourceCredential : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static DataSourceCredentialEntity DeserializeDataSourceCredentialEntity(JsonElement element)
+        internal static DatasourceCredential DeserializeDatasourceCredential(JsonElement element)
         {
             if (element.TryGetProperty("dataSourceCredentialType", out JsonElement discriminator))
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     case "AzureSQLConnectionString": return AzureSQLConnectionStringCredential.DeserializeAzureSQLConnectionStringCredential(element);
                     case "DataLakeGen2SharedKey": return DataLakeGen2SharedKeyCredential.DeserializeDataLakeGen2SharedKeyCredential(element);
-                    case "ServicePrincipal": return ServicePrincipalCredentialEntity.DeserializeServicePrincipalCredentialEntity(element);
+                    case "ServicePrincipal": return ServicePrincipalDatasourceCredential.DeserializeServicePrincipalDatasourceCredential(element);
                     case "ServicePrincipalInKV": return ServicePrincipalInKVCredential.DeserializeServicePrincipalInKVCredential(element);
                 }
             }
@@ -66,7 +66,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataSourceCredentialEntity(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value);
+            return new DatasourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value);
         }
     }
 }
