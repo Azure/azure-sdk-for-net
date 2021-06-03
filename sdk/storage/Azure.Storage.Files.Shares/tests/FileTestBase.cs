@@ -114,7 +114,7 @@ namespace Azure.Storage.Files.Shares.Tests
                         TestConfigDefault.AccountKey),
                     GetOptions()));
 
-        public ShareServiceClient GetServiceClient_OAuth()
+        public ShareServiceClient GetServiceClient_OAuth_SharedKey()
             => InstrumentClient(
                 new ShareServiceClient(
                     new Uri(TestConfigOAuth.FileServiceEndpoint),
