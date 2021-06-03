@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Net.Http.Headers;
+using Azure.Core;
+using Azure.Storage.Blobs.Specialized;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -58,5 +61,12 @@ namespace Azure.Storage.Blobs.Models
         /// This parameter is not valid for synchronous copies.
         /// </summary>
         public bool? ShouldSealDestination { get; set; }
+
+        /// <summary>
+        /// Optional.  Source authentication used to access the source blob.
+        /// Note that is parameter does not apply to
+        /// <see cref="BlobBaseClient.StartCopyFromUriAsync(System.Uri, BlobCopyFromUriOptions, System.Threading.CancellationToken)"/>.
+        /// </summary>
+        public AuthenticationHeaderValue SourceAuthentication { get; set; }
     }
 }

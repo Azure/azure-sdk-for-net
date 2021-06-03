@@ -15,7 +15,6 @@ using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using BenchmarkDotNet.Toolchains.Roslyn;
 using Moq;
 using NUnit.Framework;
 

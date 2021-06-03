@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -623,12 +624,17 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                SourceRange = new HttpRange(256, 256)
+            };
+
             // Act
             await RetryAsync(
                 async () => await destBlob.StageBlockFromUriAsync(
-                    sourceBlob.Uri,
-                    ToBase64(GetNewBlockName()),
-                    new HttpRange(256, 256)),
+                    sourceUri: sourceBlob.Uri,
+                    base64BlockId: ToBase64(GetNewBlockName()),
+                    options: options),
                 _retryStageBlockFromUri);
             Response<BlockList> getBlockListResult = await destBlob.GetBlockListAsync(BlockListTypes.All);
 
@@ -653,12 +659,17 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                SourceContentHash = MD5.Create().ComputeHash(data)
+            };
+
             // Act
             await RetryAsync(
                 async () => await destBlob.StageBlockFromUriAsync(
-                    sourceBlob.Uri,
-                    ToBase64(GetNewBlockName()),
-                    sourceContentHash: MD5.Create().ComputeHash(data)),
+                    sourceUri: sourceBlob.Uri,
+                    base64BlockId: ToBase64(GetNewBlockName()),
+                    options: options),
                 _retryStageBlockFromUri);
         }
 
@@ -679,13 +690,18 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                SourceContentHash = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 RetryAsync(
                     async () => await destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         base64BlockId: ToBase64(GetNewBlockName()),
-                        sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
+                        options: options),
                     _retryStageBlockFromUri),
                 actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
             );
@@ -711,9 +727,14 @@ namespace Azure.Storage.Blobs.Test
                 await destBlob.UploadAsync(stream);
             }
 
-            var leaseAccessConditions = new BlobRequestConditions
+            BlobRequestConditions leaseAccessConditions = new BlobRequestConditions
             {
                 LeaseId = await SetupBlobLeaseCondition(destBlob, ReceivedLeaseId, garbageLeaseId)
+            };
+
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                DestinationConditions = leaseAccessConditions
             };
 
             // Act
@@ -721,7 +742,7 @@ namespace Azure.Storage.Blobs.Test
                 async () => await destBlob.StageBlockFromUriAsync(
                     sourceUri: sourceBlob.Uri,
                     base64BlockId: ToBase64(GetNewBlockName()),
-                    conditions: leaseAccessConditions),
+                    options: options),
                 _retryStageBlockFromUri);
         }
 
@@ -745,9 +766,14 @@ namespace Azure.Storage.Blobs.Test
                 await destBlob.UploadAsync(stream);
             }
 
-            var leaseAccessConditions = new BlobRequestConditions
+            BlobRequestConditions leaseAccessConditions = new BlobRequestConditions
             {
                 LeaseId = garbageLeaseId
+            };
+
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                DestinationConditions = leaseAccessConditions
             };
 
             // Act
@@ -756,7 +782,7 @@ namespace Azure.Storage.Blobs.Test
                     async () => await destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         base64BlockId: ToBase64(GetNewBlockName()),
-                        conditions: leaseAccessConditions),
+                        options: options),
                     _retryStageBlockFromUri),
                 actualException => Assert.AreEqual("LeaseNotPresentWithBlobOperation", actualException.ErrorCode)
             );
@@ -784,12 +810,17 @@ namespace Azure.Storage.Blobs.Test
 
                 BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+                BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+                {
+                    SourceConditions = sourceAccessConditions
+                };
+
                 // Act
                 await RetryAsync(
                     async () => await destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         base64BlockId: ToBase64(GetNewBlockName()),
-                        sourceConditions: sourceAccessConditions),
+                        options: options),
                     _retryStageBlockFromUri);
             }
         }
@@ -816,13 +847,18 @@ namespace Azure.Storage.Blobs.Test
 
                 BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+                BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+                {
+                    SourceConditions = sourceAccessConditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     RetryAsync(
                         async () => await destBlob.StageBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
                             base64BlockId: ToBase64(GetNewBlockName()),
-                            sourceConditions: sourceAccessConditions),
+                            options: options),
                         _retryStageBlockFromUri),
                     e => { });
             }
@@ -849,6 +885,82 @@ namespace Azure.Storage.Blobs.Test
             await RetryAsync(
                 async () => await destBlob.StageBlockFromUriAsync(sourceBlob.Uri, ToBase64(GetNewBlockName())),
                 _retryStageBlockFromUri);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task StageBlockFromUriAsync_SourceBearerToken()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            const int blobSize = Constants.KB;
+            byte[] data = GetRandomBuffer(blobSize);
+
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            string sourceBearerToken = await GetAuthToken();
+
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                sourceBearerToken);
+
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                SourceAuthentication = sourceAuth
+            };
+
+            // Act
+            await RetryAsync(
+                async () => await destBlob.StageBlockFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    base64BlockId: ToBase64(GetNewBlockName()),
+                    options: options),
+                _retryStageBlockFromUri);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task StageBlockFromUriAsync_SourceBearerTokenFail()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            const int blobSize = Constants.KB;
+            byte[] data = GetRandomBuffer(blobSize);
+
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                string.Empty);
+
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                SourceAuthentication = sourceAuth
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.StageBlockFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    base64BlockId: ToBase64(GetNewBlockName()),
+                    options: options),
+                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]
@@ -3400,6 +3512,76 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, overwrite: false),
                 e => Assert.AreEqual(BlobErrorCode.BlobAlreadyExists.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task SyncUploadFromUriAsync_SourceBearerToken()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            string sourceBearerToken = await GetAuthToken();
+
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                sourceBearerToken);
+
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+            {
+                SourceAuthentication = sourceAuth
+            };
+
+            // Act
+            await destBlob.SyncUploadFromUriAsync(
+                copySource: sourceBlob.Uri,
+                options: options);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task SyncUploadFromUriAsync_SourceBearerTokenFail()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            AuthenticationHeaderValue sourceAuth = new AuthenticationHeaderValue(
+                "Bearer",
+                string.Empty);
+
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+            {
+                SourceAuthentication = sourceAuth
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.SyncUploadFromUriAsync(
+                    copySource: sourceBlob.Uri,
+                    options: options),
+                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]

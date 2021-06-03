@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared

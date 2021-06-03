@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -111,6 +112,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
+                    GetOptions()));
+
+        public ShareServiceClient GetServiceClient_OAuth_SharedKey()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigOAuth.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigOAuth.AccountName,
+                        TestConfigOAuth.AccountKey),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_Premium()
