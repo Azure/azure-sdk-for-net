@@ -25,13 +25,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
             string metricId = MetricId;
 
             string dimensionName = "city";
-            var options = new GetDimensionValuesOptions() { MaxPageSize = 10 };
+            var options = new GetMetricDimensionValuesOptions() { MaxPageSize = 10 };
 
             Console.WriteLine($"The dimension '{dimensionName}' can assume the following values (limited to 10):");
 
             int dimensionValueCount = 0;
 
-            await foreach (string dimensionValue in client.GetDimensionValuesAsync(metricId, dimensionName, options))
+            await foreach (string dimensionValue in client.GetMetricDimensionValuesAsync(metricId, dimensionName, options))
             {
                 Console.WriteLine($"  {dimensionValue}");
 
@@ -59,7 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;
-            var options = new GetValuesOfDimensionWithAnomaliesOptions(startTime, endTime)
+            var options = new GetAnomalyDimensionValuesOptions(startTime, endTime)
             {
                 MaxPageSize = 10
             };
@@ -68,7 +68,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             int dimensionValueCount = 0;
 
-            await foreach (string dimensionValue in client.GetValuesOfDimensionWithAnomaliesAsync(detectionConfigurationId, dimensionName, options))
+            await foreach (string dimensionValue in client.GetAnomalyDimensionValuesAsync(detectionConfigurationId, dimensionName, options))
             {
                 Console.WriteLine($"  {dimensionValue}");
 

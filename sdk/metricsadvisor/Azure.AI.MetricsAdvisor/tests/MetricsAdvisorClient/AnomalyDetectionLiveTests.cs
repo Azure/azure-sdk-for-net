@@ -300,11 +300,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var options = new GetValuesOfDimensionWithAnomaliesOptions(SamplingStartTime, SamplingEndTime);
+            var options = new GetAnomalyDimensionValuesOptions(SamplingStartTime, SamplingEndTime);
 
             var valueCount = 0;
 
-            await foreach (string value in client.GetValuesOfDimensionWithAnomaliesAsync(DetectionConfigurationId, dimensionName, options))
+            await foreach (string value in client.GetAnomalyDimensionValuesAsync(DetectionConfigurationId, dimensionName, options))
             {
                 Assert.That(value, Is.Not.Null.And.Not.Empty);
 
@@ -324,13 +324,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var options = new GetValuesOfDimensionWithAnomaliesOptions(SamplingStartTime, SamplingEndTime);
+            var options = new GetAnomalyDimensionValuesOptions(SamplingStartTime, SamplingEndTime);
 
             options.DimensionToFilter.AddDimensionColumn("category", "Handmade");
 
             var valueCount = 0;
 
-            await foreach (string value in client.GetValuesOfDimensionWithAnomaliesAsync(DetectionConfigurationId, dimensionName, options))
+            await foreach (string value in client.GetAnomalyDimensionValuesAsync(DetectionConfigurationId, dimensionName, options))
             {
                 Assert.That(value, Is.Not.Null.And.Not.Empty);
 

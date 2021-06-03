@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var valueCount = 0;
 
-            await foreach (string value in client.GetDimensionValuesAsync(MetricId, dimensionName))
+            await foreach (string value in client.GetMetricDimensionValuesAsync(MetricId, dimensionName))
             {
                 Assert.That(value, Is.Not.Null.And.Not.Empty);
 
@@ -48,14 +48,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var options = new GetDimensionValuesOptions()
+            var options = new GetMetricDimensionValuesOptions()
             {
                 DimensionValueToFilter = filter
             };
 
             var valueCount = 0;
 
-            await foreach (string value in client.GetDimensionValuesAsync(MetricId, dimensionName, options))
+            await foreach (string value in client.GetMetricDimensionValuesAsync(MetricId, dimensionName, options))
             {
                 Assert.That(value, Is.Not.Null.And.Not.Empty);
                 Assert.That(value.ToLowerInvariant().Contains(filter));
