@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry
         /// This defaults to the Azure Resource Manager "Azure Global" scope.  To
         /// connect to a different cloud, set this value to "&lt;resource-id&gt;/.default",
         /// where &lt;resource-id&gt; is one of the Resource IDs listed at
-        /// https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities#azure-resource-manager.
+        /// https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities#azure-resource-manager.
         /// For example, to connect to the Azure Germany cloud, create a client with
         /// <see cref="AuthenticationScope"/> set to "https://management.microsoftazure.de/.default".
         /// </summary>
