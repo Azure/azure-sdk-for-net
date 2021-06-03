@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
 
@@ -151,6 +152,16 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient(anonymousAccess: true);
 
             Assert.ThrowsAsync<RequestFailedException>(() => client.DeleteRepositoryAsync(repository));
+        }
+
+        [RecordedTest]
+        public void InvalidAuthenticationScope_FailsToAuthenticate()
+        {
+            // Arrange
+            string repository = $"library/hello-world";
+            var client = CreateClient(false, "https://management.azure.other-cloud/.default");
+
+            Assert.ThrowsAsync<AuthenticationFailedException>(() => client.DeleteRepositoryAsync(repository));
         }
     }
 }
