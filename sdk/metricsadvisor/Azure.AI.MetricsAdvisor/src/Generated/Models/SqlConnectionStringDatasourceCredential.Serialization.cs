@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ServicePrincipalInKVCredential : IUtf8JsonSerializable
+    public partial class SqlConnectionStringDatasourceCredential : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,9 +29,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalInKVCredential DeserializeServicePrincipalInKVCredential(JsonElement element)
+        internal static SqlConnectionStringDatasourceCredential DeserializeSqlConnectionStringDatasourceCredential(JsonElement element)
         {
-            ServicePrincipalInKVParam parameters = default;
+            AzureSQLConnectionStringParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = ServicePrincipalInKVParam.DeserializeServicePrincipalInKVParam(property.Value);
+                    parameters = AzureSQLConnectionStringParam.DeserializeAzureSQLConnectionStringParam(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"))
@@ -64,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new ServicePrincipalInKVCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new SqlConnectionStringDatasourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
         }
     }
 }

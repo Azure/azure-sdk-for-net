@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DataLakeGen2SharedKeyCredential : IUtf8JsonSerializable
+    public partial class ServicePrincipalInKeyVaultDatasourceCredential : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,9 +29,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static DataLakeGen2SharedKeyCredential DeserializeDataLakeGen2SharedKeyCredential(JsonElement element)
+        internal static ServicePrincipalInKeyVaultDatasourceCredential DeserializeServicePrincipalInKeyVaultDatasourceCredential(JsonElement element)
         {
-            DataLakeGen2SharedKeyParam parameters = default;
+            ServicePrincipalInKVParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = DataLakeGen2SharedKeyParam.DeserializeDataLakeGen2SharedKeyParam(property.Value);
+                    parameters = ServicePrincipalInKVParam.DeserializeServicePrincipalInKVParam(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"))
@@ -64,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataLakeGen2SharedKeyCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new ServicePrincipalInKeyVaultDatasourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
         }
     }
 }

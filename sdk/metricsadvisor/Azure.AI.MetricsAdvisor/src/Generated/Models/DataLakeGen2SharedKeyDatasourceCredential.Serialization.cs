@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureSQLConnectionStringCredential : IUtf8JsonSerializable
+    public partial class DataLakeGen2SharedKeyDatasourceCredential : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,9 +29,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSQLConnectionStringCredential DeserializeAzureSQLConnectionStringCredential(JsonElement element)
+        internal static DataLakeGen2SharedKeyDatasourceCredential DeserializeDataLakeGen2SharedKeyDatasourceCredential(JsonElement element)
         {
-            AzureSQLConnectionStringParam parameters = default;
+            DataLakeGen2SharedKeyParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = AzureSQLConnectionStringParam.DeserializeAzureSQLConnectionStringParam(property.Value);
+                    parameters = DataLakeGen2SharedKeyParam.DeserializeDataLakeGen2SharedKeyParam(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialType"))
@@ -64,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureSQLConnectionStringCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new DataLakeGen2SharedKeyDatasourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
         }
     }
 }

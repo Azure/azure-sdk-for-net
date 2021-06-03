@@ -48,9 +48,23 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             DataSourceCredentialPatch patch = this switch
             {
+                DataLakeGen2SharedKeyDatasourceCredential c => new DataLakeGen2SharedKeyCredentialPatch()
+                {
+                    Parameters = new() { AccountKey = c.AccountKey }
+                },
                 ServicePrincipalDatasourceCredential c => new ServicePrincipalCredentialPatch()
                 {
                     Parameters = new() { ClientId = c.ClientId, ClientSecret = c.ClientSecret, TenantId = c.TenantId }
+                },
+                ServicePrincipalInKeyVaultDatasourceCredential c => new ServicePrincipalInKVCredentialPatch()
+                {
+                    Parameters = new() { KeyVaultEndpoint = c.Endpoint.AbsoluteUri, KeyVaultClientId = c.KeyVaultClientId,
+                    KeyVaultClientSecret = c.KeyVaultClientSecret, TenantId = c.TenantId, ServicePrincipalIdNameInKV = c.SecretNameForClientId,
+                    ServicePrincipalSecretNameInKV = c.SecretNameForClientSecret }
+                },
+                SqlConnectionStringDatasourceCredential c => new AzureSQLConnectionStringCredentialPatch()
+                {
+                    Parameters = new() { ConnectionString = c.ConnectionString }
                 },
                 _ => throw new InvalidOperationException("Invalid datasource credential type")
             };
