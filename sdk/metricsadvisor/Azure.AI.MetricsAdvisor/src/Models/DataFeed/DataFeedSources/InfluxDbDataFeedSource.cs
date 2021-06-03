@@ -35,8 +35,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(password, nameof(password));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
-            Parameter = new InfluxDBParameter(connectionString, database, username, password, query);
-
             ConnectionString = connectionString;
             Database = database;
             Username = username;
@@ -48,8 +46,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(DataFeedSourceType.InfluxDb)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             ConnectionString = parameter.ConnectionString;
             Database = parameter.Database;

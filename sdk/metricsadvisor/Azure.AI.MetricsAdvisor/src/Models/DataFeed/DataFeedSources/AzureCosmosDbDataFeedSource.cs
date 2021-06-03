@@ -31,8 +31,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(database, nameof(database));
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Parameter = new AzureCosmosDBParameter(connectionString, sqlQuery, database, collectionId);
-
             ConnectionString = connectionString;
             SqlQuery = sqlQuery;
             Database = database;
@@ -43,8 +41,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(DataFeedSourceType.AzureCosmosDb)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             ConnectionString = parameter.ConnectionString;
             SqlQuery = parameter.SqlQuery;

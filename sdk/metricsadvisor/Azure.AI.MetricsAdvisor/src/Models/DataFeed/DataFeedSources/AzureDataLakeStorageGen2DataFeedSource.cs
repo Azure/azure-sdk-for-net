@@ -57,8 +57,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(directoryTemplate, nameof(directoryTemplate));
             Argument.AssertNotNullOrEmpty(fileTemplate, nameof(fileTemplate));
 
-            Parameter = new AzureDataLakeStorageGen2Parameter(accountName, accountKey, fileSystemName, directoryTemplate, fileTemplate);
-
             AccountName = accountName;
             AccountKey = accountKey;
             FileSystemName = fileSystemName;
@@ -70,8 +68,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(DataFeedSourceType.AzureDataLakeStorageGen2)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             AccountName = parameter.AccountName;
             AccountKey = parameter.AccountKey;

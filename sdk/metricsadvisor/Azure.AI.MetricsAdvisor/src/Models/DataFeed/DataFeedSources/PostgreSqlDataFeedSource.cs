@@ -27,8 +27,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
-            Parameter = new SqlSourceParameter(connectionString, query);
-
             ConnectionString = connectionString;
             Query = query;
         }
@@ -37,8 +35,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(DataFeedSourceType.PostgreSql)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             ConnectionString = parameter.ConnectionString;
             Query = parameter.Query;
