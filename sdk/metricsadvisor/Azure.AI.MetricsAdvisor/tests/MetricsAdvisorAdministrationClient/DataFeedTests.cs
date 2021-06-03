@@ -96,25 +96,25 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateDataFeedValidatesArguments()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataFeed = new DataFeed();
-
             Assert.That(() => adminClient.UpdateDataFeedAsync(null), Throws.InstanceOf<ArgumentNullException>());
-
             Assert.That(() => adminClient.UpdateDataFeed(null), Throws.InstanceOf<ArgumentNullException>());
+
+            var dataFeedWithNullId = new DataFeed();
+
+            Assert.That(() => adminClient.UpdateDataFeedAsync(dataFeedWithNullId), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDataFeed(dataFeedWithNullId), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateDataFeedRespectsTheCancellationToken()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataFeed = new DataFeed();
+            var dataFeed = new DataFeed() { Id = FakeGuid };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
