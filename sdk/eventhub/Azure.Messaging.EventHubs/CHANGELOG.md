@@ -18,6 +18,10 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - The `EventProcessor<TPartition>` now exposes the `ListPartitionIdsAsync` method, allowing custom processors to control the set of partitions known to the processor.  This can be used to reduce complexity when a custom processor is directly assigned a set of partitions to process rather than using load balancing to control ownership.
 
+- The `ConnectionOptions` available when creating client types now support registering a callback delegate for participating in the validation of SSL certificates when connections are established.  This delegate may override the built-in validation and allow or deny certificates based on application-specific logic.
+
+- The `ConnectionOptions` available when creating client types now support setting a custom size for the send and receive buffers of the transport.
+
 - Additional verbose logging has been added to allow monitoring of lower-level AMQP operations such as creating links, terminal exceptions that fault a link without an active operation, and when the service force-closes links.
 
 #### Key Bug Fixes
