@@ -64,12 +64,35 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static HookInfoPatch GetPatchModel(NotificationHook hook)
         {
-            return hook switch
+            if (hook is EmailNotificationHook emailHook)
             {
-                EmailNotificationHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink?.AbsoluteUri, /*HookParameter = h.HookParameter,*/ Admins = h.Administrators },
-                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink?.AbsoluteUri, /*HookParameter = h.HookParameter,*/ Admins = h.Administrators },
-                _ => throw new InvalidOperationException("Unknown AlertingHook type.")
-            };
+                var h = emailHook;
+                var patch = new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink?.AbsoluteUri, HookParameter = new(), Admins = h.Administrators };
+
+                foreach (var item in h.HookParameter.ToList)
+                {
+                    patch.HookParameter.ToList.Add(item);
+                }
+
+                return patch;
+            }
+            else if (hook is WebNotificationHook webHook)
+            {
+                var h = webHook;
+                var patch = new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description,
+                    ExternalLink = h.ExternalLink?.AbsoluteUri, HookParameter = { CertificateKey = h.CertificateKey,
+                        CertificatePassword = h.CertificatePassword, Endpoint = h.Endpoint.AbsoluteUri,
+                        Password = h.Password, Username = h.Username }, Admins = h.Administrators };
+
+                foreach (var item in h.HookParameter.Headers)
+                {
+                    patch.HookParameter.Headers.Add(item);
+                }
+
+                return patch;
+            }
+
+            throw new InvalidOperationException("Unknown AlertingHook type.");
         }
     }
 }
