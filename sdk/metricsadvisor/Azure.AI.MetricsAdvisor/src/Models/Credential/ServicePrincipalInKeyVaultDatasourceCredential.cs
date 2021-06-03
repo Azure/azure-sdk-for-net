@@ -8,6 +8,9 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
+    /// Authenticates to an Azure service via service principal. The client ID and the client secret used for datasource
+    /// authentication must be stored as secrets in a Key Vault resource, so credentials to access this Key Vault instance
+    /// must also be provided.
     /// </summary>
     [CodeGenModel("ServicePrincipalInKVCredential")]
     [CodeGenSuppress(nameof(ServicePrincipalInKeyVaultDatasourceCredential), typeof(string), typeof(ServicePrincipalInKVParam))]
@@ -16,14 +19,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         private string _keyVaultClientSecret;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ServicePrincipalInKeyVaultDatasourceCredential"/> class.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="endpoint"></param>
-        /// <param name="keyVaultClientId"></param>
-        /// <param name="keyVaultClientSecret"></param>
-        /// <param name="tenantId"></param>
-        /// <param name="secretNameForClientId"></param>
-        /// <param name="secretNameForClientSecret"></param>
+        /// <param name="name">A custom unique name for this <see cref="ServicePrincipalInKeyVaultDatasourceCredential"/> to be displayed on the web portal.</param>
+        /// <param name="endpoint">The endpoint to connect to the Key Vault resource where the secrets are stored.</param>
+        /// <param name="keyVaultClientId">The client ID to authenticate to the Key Vault resource.</param>
+        /// <param name="keyVaultClientSecret">The client secret to authenticate to the Key Vault resource.</param>
+        /// <param name="tenantId">The tenant ID of the service principals used for authentication.</param>
+        /// <param name="secretNameForClientId">The name of the Key Vault secret storing the client ID used for datasource authentication.</param>
+        /// <param name="secretNameForClientSecret">The name of the Key Vault secret storing the client secret used for datasource authentication.</param>
         public ServicePrincipalInKeyVaultDatasourceCredential(string name, Uri endpoint, string keyVaultClientId, string keyVaultClientSecret, string tenantId, string secretNameForClientId, string secretNameForClientSecret) : base(name)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -54,33 +58,29 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// The endpoint to connect to the Key Vault resource where the secrets are stored.
         /// </summary>
         public Uri Endpoint { get; set; }
 
         /// <summary>
+        /// The client ID to authenticate to the Key Vault resource.
         /// </summary>
         public string KeyVaultClientId { get; set; }
 
         /// <summary>
+        /// The tenant ID of the service principals used for authentication.
         /// </summary>
         public string TenantId { get; set; }
 
         /// <summary>
+        /// The name of the Key Vault secret storing the client ID used for datasource authentication.
         /// </summary>
         public string SecretNameForClientId { get; set; }
 
         /// <summary>
+        /// The name of the Key Vault secret storing the client secret used for datasource authentication.
         /// </summary>
         public string SecretNameForClientSecret { get; set; }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="keyVaultClientSecret"></param>
-        public void UpdateKeyVaultClientSecret(string keyVaultClientSecret)
-        {
-            Argument.AssertNotNullOrEmpty(keyVaultClientSecret, nameof(keyVaultClientSecret));
-            KeyVaultClientSecret = keyVaultClientSecret;
-        }
 
         internal string KeyVaultClientSecret
         {
@@ -92,5 +92,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Used by CodeGen during serialization.
         /// </summary>
         internal ServicePrincipalInKVParam Parameters => new ServicePrincipalInKVParam(Endpoint.AbsoluteUri, KeyVaultClientId, SecretNameForClientId, SecretNameForClientSecret, TenantId);
+
+        /// <summary>
+        /// Updates the client secret used to access the key vault resource.
+        /// </summary>
+        /// <param name="keyVaultClientSecret">The new client secret.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="keyVaultClientSecret"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="keyVaultClientSecret"/> is empty.</exception>
+        public void UpdateKeyVaultClientSecret(string keyVaultClientSecret)
+        {
+            Argument.AssertNotNullOrEmpty(keyVaultClientSecret, nameof(keyVaultClientSecret));
+            KeyVaultClientSecret = keyVaultClientSecret;
+        }
     }
 }
