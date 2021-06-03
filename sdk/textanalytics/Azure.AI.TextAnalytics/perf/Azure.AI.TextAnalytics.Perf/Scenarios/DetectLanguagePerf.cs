@@ -11,21 +11,21 @@ namespace Azure.AI.TextAnalytics.Perf
 {
     public sealed class DetectLanguagePerf
 
-        : TextAnalyticsTest<PerfOptions>
+        : TextAnalyticsTest<CountOptions>
     {
         private readonly TextAnalyticsClient _client;
 
         private List<string> _batchDocuments;
 
-        public DetectLanguagePerf(PerfOptions options) : base(options)
+        public DetectLanguagePerf(CountOptions options) : base(options)
         {
             // create client
             _client = new TextAnalyticsClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
 
             // create input docs
-            var documentSize = 1000; // PR comment -> should be  'options.something()'
+            var documentCount = options.Count;
             _batchDocuments = new List<string> { };
-            for (int i = 1; i <= documentSize; i++)
+            for (int i = 1; i <= documentCount; i++)
             {
                 _batchDocuments.Add("Detta är ett dokument skrivet på engelska.");
             }
