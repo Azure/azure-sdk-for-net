@@ -10,9 +10,4 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\src\Azure.AI.TextAnalytics.csproj" />
   </ItemGroup>
 
-  <!-- Shared source from Azure.AI.TextAnalytics.Tests -->
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\tests\Infrastructure\TestFile.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-  </ItemGroup>
-
 </Project>
