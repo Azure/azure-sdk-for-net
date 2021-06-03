@@ -29,8 +29,21 @@ namespace Azure.Monitor.Query.Models
         private const string LongValue = "long";
         private const string RealValue = "real";
         private const string StringValue = "string";
+
+        /// <summary> bool. </summary>
+        public static LogColumnTypes Bool { get; } = new LogColumnTypes(BoolValue);
+        /// <summary> datetime. </summary>
+        public static LogColumnTypes Datetime { get; } = new LogColumnTypes(DatetimeValue);
         /// <summary> dynamic. </summary>
         public static LogColumnTypes Dynamic { get; } = new LogColumnTypes(DynamicValue);
+        /// <summary> int. </summary>
+        public static LogColumnTypes Int { get; } = new LogColumnTypes(IntValue);
+        /// <summary> long. </summary>
+        public static LogColumnTypes Long { get; } = new LogColumnTypes(LongValue);
+        /// <summary> real. </summary>
+        public static LogColumnTypes Real { get; } = new LogColumnTypes(RealValue);
+        /// <summary> string. </summary>
+        public static LogColumnTypes String { get; } = new LogColumnTypes(StringValue);
         /// <summary> Determines if two <see cref="LogColumnTypes"/> values are the same. </summary>
         public static bool operator ==(LogColumnTypes left, LogColumnTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogColumnTypes"/> values are not the same. </summary>

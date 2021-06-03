@@ -185,23 +185,23 @@ namespace Azure.Monitor.Query.Models
             var element = _row[index];
             switch (_columns[index].Type.ToString())
             {
-                case LogColumnTypes.Datetime:
+                case LogColumnTypes.DatetimeTypeValue:
                     return GetDateTimeOffset(index);
-                case LogColumnTypes.Bool:
+                case LogColumnTypes.BoolTypeValue:
                     return GetBoolean(index);
-                case LogColumnTypes.Guid:
+                case LogColumnTypes.GuidTypeValue:
                     return GetGuid(index);
-                case LogColumnTypes.Int:
+                case LogColumnTypes.IntTypeValue:
                     return GetInt32(index);
-                case LogColumnTypes.Long:
+                case LogColumnTypes.LongTypeValue:
                     return GetInt64(index);
-                case LogColumnTypes.Real:
+                case LogColumnTypes.RealTypeValue:
                     return GetDouble(index);
-                case LogColumnTypes.String:
+                case LogColumnTypes.StringTypeValue:
                     return GetString(index);
-                case LogColumnTypes.Timespan:
+                case LogColumnTypes.TimespanTypeValue:
                     return GetTimeSpan(index);
-                case LogColumnTypes.Decimal:
+                case LogColumnTypes.DecimalTypeValue:
                     return GetDecimal(index);
             }
 
