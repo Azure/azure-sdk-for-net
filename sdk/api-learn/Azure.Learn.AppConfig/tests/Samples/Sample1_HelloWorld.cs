@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Learn.AppConfig.Tests;
 using NUnit.Framework;
 

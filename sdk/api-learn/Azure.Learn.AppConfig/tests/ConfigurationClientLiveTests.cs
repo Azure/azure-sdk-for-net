@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -49,7 +47,7 @@ namespace Azure.Learn.AppConfig.Tests
             TokenCredential credential = TestEnvironment.Credential;
 
             // instrumenting the client options will allow the recording to work
-            var options = InstrumentClientOptions<ConfigurationClientOptions>(new ConfigurationClientOptions());
+            var options = InstrumentClientOptions(new ConfigurationClientOptions());
 
             // instrumenting the client will add the sync tests as well as adding the diagnostic tracing validation
             return InstrumentClient(
