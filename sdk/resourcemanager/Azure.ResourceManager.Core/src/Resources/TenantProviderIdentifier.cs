@@ -8,15 +8,17 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// The identifier of a Provider from Tenant.
     /// </summary>
-    public class TenantProviderIdentifier : ResourceIdentifier
+    public class TenantProviderIdentifier : TenantResourceIdentifier
     {
-        internal TenantProviderIdentifier(string provider)
+        internal TenantProviderIdentifier(TenantResourceIdentifier parent, string providerNamespace)
         {
-            Provider = provider;
+            Parent = parent;
+            Provider = providerNamespace;
+            IsChild = true;
         }
 
-        internal TenantProviderIdentifier(TenantProviderIdentifier parent, string providerNamespace, ResourceType resourceType, string resourceName)
-            : base(new ResourceType(providerNamespace, resourceType), resourceName)
+        internal TenantProviderIdentifier(TenantProviderIdentifier parent, string providerNamespace, string typeName, string resourceName)
+            : base(new ResourceType(providerNamespace, typeName), resourceName)
         {
             Parent = parent;
             IsChild = true;
@@ -27,11 +29,11 @@ namespace Azure.ResourceManager.Core
         /// for resources in the sanem namespace as their parent resource.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
-        /// <param name="childResourceType"> The simple type of this resource, for example 'subnets'. </param>
-        /// <param name="childResourceName"> The name of this resource. </param>
+        /// <param name="typeName"> The simple type of this resource, for example 'subnets'. </param>
+        /// <param name="resourceName"> The name of this resource. </param>
         /// <returns> The resource identifier for the given child resource. </returns>
-        internal TenantProviderIdentifier(TenantProviderIdentifier parent, string childResourceType, string childResourceName)
-            : base(childResourceType, childResourceName)
+        internal TenantProviderIdentifier(TenantProviderIdentifier parent, string typeName, string resourceName)
+            : base(typeName, resourceName)
         {
             Parent = parent;
             IsChild = true;

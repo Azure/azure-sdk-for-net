@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Core
                     {
                         if (parts.Count == 2 || parts[2] == ProvidersKey)
                         {
-                            ResourceIdentifier id = CreateTenantProviderIdentifier(new TenantProviderIdentifier(parts[1]), parts.Trim(2));
+                            ResourceIdentifier id = CreateTenantProviderIdentifier(new TenantProviderIdentifier(new TenantResourceIdentifier(), parts[1]), parts.Trim(2));
                             id.StringValue = resourceId;
                             return id;
                         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Core
                         {
                             if (parts.Count == 2 || parts[2] == ProvidersKey)
                             {
-                                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(parts[1]), parts.Trim(2));
+                                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(new SubscriptionResourceIdentifier(), parts[1]), parts.Trim(2));
                             }
                             else if (parts.Count > 3)
                                 return CreateSubscriptionIdentifier(new SubscriptionResourceIdentifier(subscription,
@@ -274,29 +274,29 @@ namespace Azure.ResourceManager.Core
             throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
         }
 
-        private static ResourceIdentifier CreateTenantProviderIdentifier(TenantProviderIdentifier id, List<string> parts)
+        private static ResourceIdentifier CreateTenantProviderIdentifier(TenantProviderIdentifier parent, List<string> parts)
         {
             if (parts.Count == 0)
-                return id;
+                return parent;
             if (parts.Count == 1)
-                return new TenantProviderIdentifier(id);
+                return new TenantProviderIdentifier(parent, parts[0], string.Empty);
             if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateTenantProviderIdentifier(new TenantProviderIdentifier(id, parts[1], parts[2], parts[3]), parts.Trim(4));
+                return CreateTenantProviderIdentifier(new TenantProviderIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
             if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateTenantProviderIdentifier(new TenantProviderIdentifier(id, parts[0], parts[1]), parts.Trim(2));
+                return CreateTenantProviderIdentifier(new TenantProviderIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
             throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
         }
 
-        private static ResourceIdentifier CreateSubscriptionProviderIdentifier(SubscriptionProviderIdentifier id, List<string> parts)
+        private static ResourceIdentifier CreateSubscriptionProviderIdentifier(SubscriptionProviderIdentifier parent, List<string> parts)
         {
             if (parts.Count == 0)
-                return id;
+                return parent;
             if (parts.Count == 1)
-                return new SubscriptionProviderIdentifier(id);
+                return new SubscriptionProviderIdentifier(parent, parts[0], string.Empty);
             if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(id, parts[1], parts[2], parts[3]), parts.Trim(4));
+                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
             if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(id, parts[0], parts[1]), parts.Trim(2));
+                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
             throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
         }
 

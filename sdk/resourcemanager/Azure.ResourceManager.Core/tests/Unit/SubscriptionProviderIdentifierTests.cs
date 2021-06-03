@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Core.Tests
             else
             {
                 Assert.AreEqual(resourceProviderID, y);
+                Assert.AreEqual(resourceProviderID, y);
             }
         }
     }
