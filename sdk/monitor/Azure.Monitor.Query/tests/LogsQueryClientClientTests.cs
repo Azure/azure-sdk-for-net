@@ -25,14 +25,14 @@ namespace Azure.Monitor.Query.Tests
                 return new MockResponse(500);
             });
 
-            var client = new LogsClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsClientOptions()
+            var client = new LogsQueryClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsQueryClientOptions()
             {
                 Transport = mockTransport
             });
 
             Assert.ThrowsAsync<RequestFailedException>(() => client.QueryAsync("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
             {
-                Timeout = TimeSpan.FromMinutes(10)
+                ServerTimeout = TimeSpan.FromMinutes(10)
             }));
 
             Assert.AreEqual("wait=600", preferHeader);
