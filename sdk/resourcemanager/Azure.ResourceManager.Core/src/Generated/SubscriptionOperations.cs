@@ -49,23 +49,23 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// ListResources of type T
+        /// ListResources of type T.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="func"></param>
-        /// <returns></returns>
+        /// <typeparam name="T"> The type of resource being returned in the list. </typeparam>
+        /// <param name="func"> The method to pass the internal properties to. </param>
+        /// <returns>  A collection of resources. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual T ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
+        public virtual Pageable<T> ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, Pageable<T>> func)
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
         /// <summary>
-        /// ListResourcesAsync of type T
+        /// ListResources of type T.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="func"></param>
-        /// <returns></returns>
+        /// <typeparam name="T"> The type of resource being returned in the list. </typeparam>
+        /// <param name="func"> The method to pass the internal properties to. </param>
+        /// <returns>  A collection of resources. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, AsyncPageable<T>> func)
         {
