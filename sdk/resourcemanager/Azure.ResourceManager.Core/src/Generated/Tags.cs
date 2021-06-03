@@ -19,16 +19,17 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="Tags"/> class.
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
-        /// <param name="tagsData"> The data model representing the generic azure resource. </param>
-        internal Tags(OperationsBase operations, TagsData tagsData)
-            : base(operations, new SubscriptionResourceIdentifier())
+        /// <param name="tagDetails
+        /// "> The data model representing the generic azure resource. </param>
+        internal Tags(OperationsBase operations, TagDetails tagDetails)
+            : base(new ClientContext(operations.ClientOptions,operations.Credential, operations.BaseUri, operations.Pipeline), new SubscriptionResourceIdentifier())
         {
-            Data = tagsData;
+            Details = tagDetails;
         }
 
         /// <summary>
         /// Gets the Tags data model.
         /// </summary>
-        public virtual TagsData Data { get; }
+        public virtual TagDetails Details { get; }
     }
 }
