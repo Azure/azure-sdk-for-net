@@ -1508,12 +1508,6 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> response;
 
-                    string sourceAuthString = null;
-                    if (sourceAuthentication != null)
-                    {
-                        sourceAuthString = $"{sourceAuthentication.Scheme} {sourceAuthentication.Parameter}";
-                    }
-
                     if (async)
                     {
                         response = await AppendBlobRestClient.AppendBlockFromUrlAsync(
@@ -1537,7 +1531,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
-                            copySourceAuthorization: sourceAuthString,
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1564,7 +1558,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
-                            copySourceAuthorization: sourceAuthString,
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 

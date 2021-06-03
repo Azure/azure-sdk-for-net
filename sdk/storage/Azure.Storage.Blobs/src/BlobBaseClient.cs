@@ -2962,12 +2962,6 @@ namespace Azure.Storage.Blobs.Specialized
 
                     ResponseWithHeaders<BlobCopyFromURLHeaders> response;
 
-                    string sourceAuthString = null;
-                    if (sourceAuthentication != null)
-                    {
-                        sourceAuthString = $"{sourceAuthentication.Scheme} {sourceAuthentication.Parameter}";
-                    }
-
                     if (async)
                     {
                         response = await BlobRestClient.CopyFromURLAsync(
@@ -2985,7 +2979,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
-                            copySourceAuthorization: sourceAuthString,
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3006,7 +3000,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
-                            copySourceAuthorization: sourceAuthString,
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 

@@ -4192,12 +4192,6 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     ResponseWithHeaders<FileUploadRangeFromURLHeaders> response;
 
-                    string sourceAuthString = null;
-                    if (sourceAuthentication != null)
-                    {
-                        sourceAuthString = $"{sourceAuthentication.Scheme} {sourceAuthentication.Parameter}";
-                    }
-
                     if (async)
                     {
                         response = await FileRestClient.UploadRangeFromURLAsync(
@@ -4205,7 +4199,7 @@ namespace Azure.Storage.Files.Shares
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
-                            copySourceAuthorization: sourceAuthString,
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4217,7 +4211,7 @@ namespace Azure.Storage.Files.Shares
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
-                            copySourceAuthorization: sourceAuthString,
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
