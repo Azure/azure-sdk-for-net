@@ -8,7 +8,7 @@
 namespace Azure.Communication.Calling.Server
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class AzureCommunicationServerCallingAPIsModelFactory
+    public static partial class AzureCommunicationCallingServerServiceModelFactory
     {
         /// <summary> Initializes new instance of CreateCallResponse class. </summary>
         /// <param name="callLegId"> Call leg id of the call. </param>
