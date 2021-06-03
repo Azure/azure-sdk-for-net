@@ -57,7 +57,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                     Console.WriteLine($"Expected value of root node anomaly: {incident.ExpectedValueOfRootNode}");
                 }
 
-                Console.WriteLine("Series key:");
+                Console.WriteLine("Series key of root node:");
 
                 foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey.AsDictionary())
                 {
@@ -107,7 +107,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                     Console.WriteLine($"Expected value of root node anomaly: {incident.ExpectedValueOfRootNode}");
                 }
 
-                Console.WriteLine("Series key:");
+                Console.WriteLine("Series key of root node:");
 
                 foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey.AsDictionary())
                 {
