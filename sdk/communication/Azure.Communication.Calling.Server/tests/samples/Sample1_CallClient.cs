@@ -38,7 +38,7 @@ namespace Azure.Communication.Calling.Server.Tests
             CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-                //@@ options: <callOptions-object>, // The request payload for creating a call.
+                //@@ options: new CreateCallOptions(new Uri("<AppCallbackUrl>"),  new List<CallModality> { CallModality.Audio }, new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived }); / The options for creating a call.
                 /*@@*/ source: source,
                 /*@@*/ targets: targets,
                 /*@@*/ options: createCallOption);
@@ -65,7 +65,7 @@ namespace Azure.Communication.Calling.Server.Tests
             CreateCallResponse createCallResponse = callClient.CreateCall(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-                //@@ options: <callOptions-object>, // The request payload for creating a call.
+                //@@ options: new CreateCallOptions(new Uri("<AppCallbackUrl>"),  new List<CallModality> { CallModality.Audio }, new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived }); / The options for creating a call.
                 /*@@*/ source: source,
                 /*@@*/ targets: targets,
                 /*@@*/ options: createCallOption);
