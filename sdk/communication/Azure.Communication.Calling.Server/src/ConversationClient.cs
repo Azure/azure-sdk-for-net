@@ -100,7 +100,7 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="conversationId"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual async Task<Response<JoinCallResponse>> JoinCallAsync(string conversationId, CommunicationIdentifier source, CreateCallOptions callOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JoinCallResponse>> JoinCallAsync(string conversationId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(JoinCallAsync)}");
             scope.Start();
@@ -140,7 +140,7 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="conversationId"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual Response<JoinCallResponse> JoinCall(string conversationId, CommunicationIdentifier source, CreateCallOptions callOptions, CancellationToken cancellationToken = default)
+        public virtual Response<JoinCallResponse> JoinCall(string conversationId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(JoinCall)}");
             scope.Start();
@@ -178,16 +178,36 @@ namespace Azure.Communication.Calling.Server
         /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string audioFileId = null, Uri callbackUri = null , string operationContext = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
+        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
+            => await PlayAudioAsync(
+                conversationId,
+                new PlayAudioOptions
+                {
+                    AudioFileUri = audioFileUri,
+                    AudioFileId = audioFileId,
+                    CallbackUri = callbackUri,
+                    OperationContext = operationContext
+                },
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Play audio in the call. </summary>
+        /// <param name="conversationId"> The call leg id. </param>
+        /// <param name="options"> Play audio request. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudioAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+                Argument.AssertNotNull(options, nameof(options));
 
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                return await RestClient.PlayAudioAsync(conversationId, audioFileUri.AbsoluteUri, false, operationContext, audioFileId, callbackUri?.AbsoluteUri, cancellationToken).ConfigureAwait(false);
+                return await RestClient.PlayAudioAsync(conversationId, options.AudioFileUri?.AbsoluteUri, false, options.OperationContext, options.AudioFileId, options.CallbackUri?.AbsoluteUri, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -204,16 +224,34 @@ namespace Azure.Communication.Calling.Server
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string audioFileId = null , Uri callbackUri = null, string operationContext = null, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
+            => PlayAudio(
+                conversationId,
+                new PlayAudioOptions
+                {
+                    AudioFileUri = audioFileUri,
+                    AudioFileId = audioFileId,
+                    CallbackUri = callbackUri,
+                    OperationContext = operationContext
+                },
+                cancellationToken);
+
+        /// <summary> Play audio in the call. </summary>
+        /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
+        /// <param name="options"> Play audio request. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(audioFileUri, nameof(audioFileUri));
+                Argument.AssertNotNull(options, nameof(options));
 
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
-                return RestClient.PlayAudio(conversationId, audioFileUri.AbsoluteUri, false, operationContext, audioFileId, callbackUri?.AbsoluteUri, cancellationToken);
+                return RestClient.PlayAudio(conversationId, options.AudioFileUri?.AbsoluteUri, false, options.OperationContext, options.AudioFileId, options.CallbackUri?.AbsoluteUri, cancellationToken);
             }
             catch (Exception ex)
             {
