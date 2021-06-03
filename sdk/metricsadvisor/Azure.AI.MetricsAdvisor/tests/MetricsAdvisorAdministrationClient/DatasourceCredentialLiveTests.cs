@@ -163,6 +163,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(spCredential.ClientId, Is.Not.Null.And.Not.Empty);
                 Assert.That(spCredential.TenantId, Is.Not.Null.And.Not.Empty);
             }
+            else
+            {
+                throw new Exception($"Unknown credential type: {credential.GetType()}");
+            }
         }
 
         private void ValidateTestCaseDatasourceCredential(DatasourceCredential credential)
@@ -172,12 +176,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(spCredential.ClientId, Is.EqualTo(ClientId));
                 Assert.That(spCredential.TenantId, Is.EqualTo(TenantId));
             }
+            else
+            {
+                throw new Exception($"Unknown credential type: {credential.GetType()}");
+            }
         }
 
         private static DatasourceCredential GetDatasourceCredentialTestCase(string credentialTypeName, string credentialName) => credentialTypeName switch
         {
             nameof(ServicePrincipalDatasourceCredential) => new ServicePrincipalDatasourceCredential(credentialName, ClientId, "clientSecret", TenantId),
-            _ => throw new ArgumentOutOfRangeException($"Unknown typeName: {credentialTypeName}")
+            _ => throw new ArgumentOutOfRangeException($"Unknown credential type: {credentialTypeName}")
         };
     }
 }
