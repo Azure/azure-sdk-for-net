@@ -195,7 +195,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 {
                     Console.WriteLine($"  Point {pointIndex}:");
                     Console.WriteLine($"   - Timestamp: {seriesData.Timestamps[pointIndex]}");
-                    Console.WriteLine($"   - Value: {seriesData.MetricValues[pointIndex]}");
+                    Console.WriteLine($"   - Metric value: {seriesData.MetricValues[pointIndex]}");
                 }
 
                 Console.WriteLine();
@@ -245,8 +245,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 {
                     Console.WriteLine($"  Point {pointIndex}:");
                     Console.WriteLine($"   - Timestamp: {seriesData.Timestamps[pointIndex]}");
-                    Console.WriteLine($"   - Value: {seriesData.MetricValues[pointIndex]}");
-                    Console.WriteLine($"   - Expected value: {seriesData.ExpectedMetricValues[pointIndex]}");
+                    Console.WriteLine($"   - Metric value: {seriesData.MetricValues[pointIndex]}");
+                    Console.WriteLine($"   - Expected metric value: {seriesData.ExpectedMetricValues[pointIndex]}");
                     Console.WriteLine($"   - Lower boundary: {seriesData.LowerBoundaryValues[pointIndex]}");
                     Console.WriteLine($"   - Upper boundary: {seriesData.UpperBoundaryValues[pointIndex]}");
                     Console.WriteLine($"   - Is this point an anomaly: {seriesData.IsAnomaly[pointIndex]}");
