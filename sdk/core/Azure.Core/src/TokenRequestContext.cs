@@ -18,7 +18,7 @@ namespace Azure.Core
             Scopes = scopes;
             ParentRequestId = parentRequestId;
             Claims = default;
-            TenantIdHint = default;
+            TenantId = default;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Azure.Core
             Scopes = scopes;
             ParentRequestId = parentRequestId;
             Claims = claims;
-            TenantIdHint = default;
+            TenantId = default;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Azure.Core
             Scopes = options.Scopes;
             ParentRequestId = options.ParentRequestId;
             Claims = options.Claims;
-            TenantIdHint = options.TenantIdHint;
+            TenantId = options.TenantId;
         }
 
         /// <summary>
@@ -65,6 +65,6 @@ namespace Azure.Core
         /// <summary>
         /// A hint to indicate which tenantId is preferred.
         /// </summary>
-        public string? TenantIdHint { get; }
+        public string? TenantId { get; }
     }
 }

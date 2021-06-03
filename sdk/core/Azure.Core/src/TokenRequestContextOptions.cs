@@ -26,6 +26,6 @@ namespace Azure.Core
         /// <summary>
         /// A hint to indicate which tenantId is preferred.
         /// </summary>
-        public string? TenantIdHint { get; set; }
+        public string? TenantId { get; set; }
     }
 }

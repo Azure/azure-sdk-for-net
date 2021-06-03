@@ -18,8 +18,8 @@ namespace Azure.Identity
         {
             return options?.PreferClientConfiguredTenantId switch
             {
-                true => explicitTenantId ?? context.TenantIdHint,
-                _ => context.TenantIdHint ?? explicitTenantId
+                true => explicitTenantId ?? context.TenantId,
+                _ => context.TenantId ?? explicitTenantId
             };
         }
     }

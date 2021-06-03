@@ -22,7 +22,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithCliCredential([Values(null, TenantIdHint)] string tenantId)
         {
-            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
+            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantId = tenantId });
             string expectedTenantId = TenantIdResolver.Resolve(null, context, null) ;
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 

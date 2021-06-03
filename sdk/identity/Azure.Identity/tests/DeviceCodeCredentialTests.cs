@@ -107,7 +107,7 @@ namespace Azure.Identity.Tests
         public async Task AuthenticateWithDeviceCodeMockAsync([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
         {
             options = new TokenCredentialOptions { PreferClientConfiguredTenantId = preferHint };
-            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
+            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantId = tenantId });
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options) ;
             var cred = InstrumentClient(
                 new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), TenantId, ClientId, options, null, mockMsalClient));

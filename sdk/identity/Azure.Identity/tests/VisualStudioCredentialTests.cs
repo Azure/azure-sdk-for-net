@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Output = processOutput };
             var options = new VisualStudioCredentialOptions { PreferClientConfiguredTenantId = preferHint };
             var credential = InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), options));
-            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
+            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantId = tenantId });
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options);
 
             var token = await credential.GetTokenAsync(context, default);

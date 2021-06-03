@@ -10,7 +10,7 @@ namespace Azure.Identity.Tests
     public class TenantIdResolverTests
     {
         private const string TenantId = "clientTenant";
-        private static TokenRequestContext Context_Hint = new(new TokenRequestContextOptions { TenantIdHint = "hint" });
+        private static TokenRequestContext Context_Hint = new(new TokenRequestContextOptions { TenantId = "hint" });
         private static TokenRequestContext Context_NoHint = new(new TokenRequestContextOptions());
         private static TokenCredentialOptions Options_True = new() { PreferClientConfiguredTenantId = true };
         private static TokenCredentialOptions Options_False = new() { PreferClientConfiguredTenantId = false };
@@ -19,11 +19,11 @@ namespace Azure.Identity.Tests
         {
             yield return new object[] { TenantId, Context_Hint, Options_True, TenantId };
             yield return new object[] { TenantId, Context_NoHint, Options_True, TenantId };
-            yield return new object[] { TenantId, Context_Hint, Options_False, Context_Hint.TenantIdHint };
-            yield return new object[] { TenantId, Context_Hint, Options_False, Context_Hint.TenantIdHint };
-            yield return new object[] { null, Context_Hint, Options_True, Context_Hint.TenantIdHint };
+            yield return new object[] { TenantId, Context_Hint, Options_False, Context_Hint.TenantId };
+            yield return new object[] { TenantId, Context_Hint, Options_False, Context_Hint.TenantId };
+            yield return new object[] { null, Context_Hint, Options_True, Context_Hint.TenantId };
             yield return new object[] { null, Context_NoHint, Options_True, null };
-            yield return new object[] { null, Context_Hint, Options_False, Context_Hint.TenantIdHint };
+            yield return new object[] { null, Context_Hint, Options_False, Context_Hint.TenantId };
             yield return new object[] { null, Context_NoHint, Options_False, null };
         }
 

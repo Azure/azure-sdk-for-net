@@ -65,7 +65,7 @@ namespace Azure.Identity.Tests
             using var env = new TestEnvVar(new Dictionary<string, string> {{"TENANT_ID", TenantId}});
             var environment = new IdentityTestEnvironment();
             var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, Transport = new MockTransport(), PreferClientConfiguredTenantId = preferHint };
-            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantIdHint = tenantId });
+            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantId = tenantId });
             expectedTenantId = TenantIdResolver.Resolve(environment.TenantId, context, options);
 
             VisualStudioCodeCredential credential = InstrumentClient(
