@@ -60,7 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// </summary>
-        public AuthenticationType Authentication { get; set; }
+        public AuthenticationType? Authentication { get; set; }
 
         /// <summary>
         /// </summary>

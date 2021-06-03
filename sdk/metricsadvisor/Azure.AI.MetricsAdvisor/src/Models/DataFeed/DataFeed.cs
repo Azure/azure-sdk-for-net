@@ -274,12 +274,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             return null;
         }
 
-        private static AuthenticationTypeEnum GetAuthenticationType(DataFeedSource datasource)
+        private static AuthenticationTypeEnum? GetAuthenticationType(DataFeedSource datasource)
         {
             if (datasource is AzureBlobDataFeedSource abSource)
             {
                 return abSource.Authentication switch
                 {
+                    null => default(AuthenticationTypeEnum?),
                     AzureBlobDataFeedSource.AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
                     AzureBlobDataFeedSource.AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
                     _ => throw new InvalidOperationException($"Invalid authentication type: {abSource.Authentication}")
@@ -289,6 +290,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return adeSource.Authentication switch
                 {
+                    null => default(AuthenticationTypeEnum?),
                     AzureDataExplorerDataFeedSource.AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
                     AzureDataExplorerDataFeedSource.AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
                     AzureDataExplorerDataFeedSource.AuthenticationType.ServicePrincipal => AuthenticationTypeEnum.ServicePrincipal,
@@ -300,6 +302,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return adlsSource.Authentication switch
                 {
+                    null => default(AuthenticationTypeEnum?),
                     AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
                     AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.SharedKeyCredential => AuthenticationTypeEnum.DataLakeGen2SharedKey,
                     AzureDataLakeStorageGen2DataFeedSource.AuthenticationType.ServicePrincipal => AuthenticationTypeEnum.ServicePrincipal,
@@ -311,6 +314,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return ssSource.Authentication switch
                 {
+                    null => default(AuthenticationTypeEnum?),
                     SqlServerDataFeedSource.AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
                     SqlServerDataFeedSource.AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
                     SqlServerDataFeedSource.AuthenticationType.SqlConnectionString => AuthenticationTypeEnum.AzureSQLConnectionString,
@@ -320,7 +324,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 };
             }
 
-            return AuthenticationTypeEnum.Basic;
+            return null;
         }
     }
 }
