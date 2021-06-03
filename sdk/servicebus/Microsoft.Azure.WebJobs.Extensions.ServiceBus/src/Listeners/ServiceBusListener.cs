@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -37,7 +38,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private bool _started;
         // Serialize execution of StopAsync to avoid calling Unregister* concurrently
         private readonly SemaphoreSlim _stopAsyncSemaphore = new SemaphoreSlim(1, 1);
-        private readonly TaskCompletionSource<IReadOnlyList<ServiceBusReceivedMessage>> _batchReceiveCompletionSource;
         private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
 
@@ -61,13 +61,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _triggerExecutor = triggerExecutor;
             _cancellationTokenSource = new CancellationTokenSource();
             _logger = loggerFactory.CreateLogger<ServiceBusListener>();
-            _batchReceiveCompletionSource = new TaskCompletionSource<IReadOnlyList<ServiceBusReceivedMessage>>(TaskCreationOptions
-                .RunContinuationsAsynchronously);
-            _batchReceiveRegistration = _cancellationTokenSource.Token.Register(static state =>
-            {
-                var tcs = (TaskCompletionSource<IReadOnlyList<ServiceBusReceivedMessage>>)state;
-                tcs.TrySetCanceled();
-            }, _batchReceiveCompletionSource, useSynchronizationContext: false);
+
             _client = new Lazy<ServiceBusClient>(
                 () =>
                     clientFactory.CreateClientFromSetting(connection));
@@ -311,8 +305,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
                     }
 
-                    _ = ReceiveBatchAsync(receiver, cancellationToken);
-                    IReadOnlyList<ServiceBusReceivedMessage> messages = await _batchReceiveCompletionSource.Task.ConfigureAwait(false);
+                    IReadOnlyList<ServiceBusReceivedMessage> messages =
+                        await receiver.ReceiveMessagesAsync(
+                            _serviceBusOptions.MaxBatchSize,
+                            cancellationToken: cancellationToken).AwaitWithCancellation(cancellationToken);
 
                     if (messages.Count > 0)
                     {
@@ -381,7 +377,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 {
                     // Ignore as we are stopping the host
                 }
-                catch (TaskCanceledException)
+                catch (OperationCanceledException)
                     when(cancellationToken.IsCancellationRequested)
                 {
                     // Ignore as we are stopping the host
@@ -408,15 +404,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     }
                 }
             }
-        }
-
-        private async Task ReceiveBatchAsync(ServiceBusReceiver receiver, CancellationToken cancellationToken)
-        {
-            IReadOnlyList<ServiceBusReceivedMessage> messages = await receiver.ReceiveMessagesAsync(
-                    _serviceBusOptions.MaxBatchSize,
-                    cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-            _batchReceiveCompletionSource.TrySetResult(messages);
         }
 
         private void ThrowIfDisposed()
