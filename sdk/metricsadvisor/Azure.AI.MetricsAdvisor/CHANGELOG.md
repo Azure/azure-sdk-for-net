@@ -16,6 +16,18 @@
 - Removed data feed sources `ElasticsearchDataFeedSource` and `HttpRequestDataFeedSource` as they are not supported by the service anymore. A different type of data feed source must be used for data ingestion instead.
 - Removed getters for secrets in data feed sources, such as `AzureBlobDataFeedSource.ConnectionString` and `InfluxDbDataFeedSource.Password`.
 - Removed granularity type `DataFeedGranularityType.PerSecond` as it's not supported by the service anymore.
+- Renamed method `GetDimensionValues` to `GetMetricDimensionValues` in `MetricsAdvisorClient`. The associated options type `GetDimensionValuesOptions` has been renamed as well.
+- Renamed method `GetValuesOfDimensionWithAnomalies` to `GetAnomalyDimensionValues` in `MetricsAdvisorClient`. The associated options type `GetValuesOfDimensionWithAnomaliesOptions` has been renamed as well.
+- In `AnomalyIncident`, renamed `DimensionKey` to `RootDimensionKey`.
+- In `DataFeed`, renamed `Administrators` to `AdministratorsEmails`, `Creator` to `CreatorEmail`, and `Viewers` to `ViewersEmails`.
+- In `DataFeedDimension`, renamed `DimensionName` to `Name`, and `DimensionDisplayName` to `DisplayName`.
+- In `DataFeedMetric`, renamed `MetricId` to `Id`, `MetricName` to `Name`, `MetricDisplayName` to `DisplayName`, and `MetricDescription` to `Description`.
+- In `DataFeedAutoRollupMethod`, renamed `RollupMethod` to `DataFeedAutoRollupMethod`.
+- In `IncidentRootCause`, renamed `DimensionKey` to `SeriesKey`, and `Score` to `ContributionScore`.
+- In `MetricBoundaryCondition`, renamed `TriggerForMissing` to `ShouldAlertIfDataPointMissing`.
+- In `MetricEnrichedSeriesData`, renamed `Values` to `MetricValues`, `ExpectedValues` to `ExpectedMetricValues`, `LowerBoundaries` to `LowerBoundaryValues`, and `UpperBoundaries` to `UpperBoundaryValues`.
+- In `MetricSeriesData`, renamed `Values` to `MetricValues`.
+- In `NotificationHook`, renamed `Administrators` to `AdministratorsEmails`.
 
 ## 1.0.0-beta.3 (2021-02-09)
 
