@@ -86,10 +86,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(string connectionString, string blobContainerName, string blobName)
             : base(connectionString, blobContainerName, blobName)
         {
-            _pageBlobRestClient = BuildPageBlobRestClient(
-                connectionString,
-                blobContainerName,
-                blobName);
+            _pageBlobRestClient = BuildPageBlobRestClient(_uri.ToString());
         }
 
         /// <summary>
@@ -119,6 +116,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
+            _pageBlobRestClient = BuildPageBlobRestClient(_uri.ToString());
             AssertNoClientSideEncryption(options);
         }
 
@@ -248,20 +246,6 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
             }
-        }
-
-        private PageBlobRestClient BuildPageBlobRestClient(
-            string connectionString,
-            string blobContainerName,
-            string blobName)
-        {
-            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return BuildPageBlobRestClient(uriBuilder.ToString());
         }
 
         private PageBlobRestClient BuildPageBlobRestClient(string blobUri)

@@ -171,7 +171,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(string connectionString, string containerName, string blobName)
             : base(connectionString, containerName, blobName)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(Uri.ToString());
+            _blockBlobRestClient = BuildBlockBlobRestClient(_uri.ToString());
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(Uri.ToString());
+            _blockBlobRestClient = BuildBlockBlobRestClient(_uri.ToString());
             AssertNoClientSideEncryption(options);
         }
 
