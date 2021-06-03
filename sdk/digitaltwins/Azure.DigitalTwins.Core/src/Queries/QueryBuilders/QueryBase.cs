@@ -22,5 +22,11 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// </summary>
         /// <returns></returns>
         public abstract AdtQueryBuilder Build();
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public abstract string Stringify();
     }
 }

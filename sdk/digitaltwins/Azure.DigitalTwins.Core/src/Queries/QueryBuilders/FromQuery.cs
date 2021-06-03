@@ -50,5 +50,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             return _parent;
         }
+
+        /// <inheritdoc/>
+        public override string Stringify()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

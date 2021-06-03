@@ -58,6 +58,10 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// <inheritdoc/>
         public override string ToString()
         {
+            // build the select string
+
+            // build the from string
+            // build the where string
             return base.ToString();
         }
     }

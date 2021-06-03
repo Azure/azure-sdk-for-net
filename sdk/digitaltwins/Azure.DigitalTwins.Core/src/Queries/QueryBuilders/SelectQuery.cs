@@ -74,7 +74,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override AdtQueryBuilder Build()
         {
-            return _parent;
+            throw new InvalidOperationException("You can't just have a select statement");
+        }
+
+        /// <inheritdoc/>
+        public override string Stringify()
+        {
+            throw new NotImplementedException();
         }
     }
 }
