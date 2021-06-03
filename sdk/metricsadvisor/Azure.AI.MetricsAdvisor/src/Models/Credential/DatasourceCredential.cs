@@ -61,9 +61,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                 },
                 ServicePrincipalInKeyVaultDatasourceCredential c => new ServicePrincipalInKVCredentialPatch()
                 {
-                    Parameters = new() { KeyVaultEndpoint = c.Endpoint.AbsoluteUri, KeyVaultClientId = c.KeyVaultClientId,
-                    KeyVaultClientSecret = c.KeyVaultClientSecret, TenantId = c.TenantId, ServicePrincipalIdNameInKV = c.SecretNameForClientId,
-                    ServicePrincipalSecretNameInKV = c.SecretNameForClientSecret }
+                    Parameters = new()
+                    {
+                        KeyVaultEndpoint = c.Endpoint.AbsoluteUri,
+                        KeyVaultClientId = c.KeyVaultClientId,
+                        KeyVaultClientSecret = c.KeyVaultClientSecret,
+                        TenantId = c.TenantId,
+                        ServicePrincipalIdNameInKV = c.SecretNameForClientId,
+                        ServicePrincipalSecretNameInKV = c.SecretNameForClientSecret
+                    }
                 },
                 SqlConnectionStringDatasourceCredential c => new AzureSQLConnectionStringCredentialPatch()
                 {

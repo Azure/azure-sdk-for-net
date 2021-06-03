@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class DatasourceCredentialsTests : MockClientTestBase
     {
+        private static Uri FakeUri = new Uri("https://fakeuri.com");
+
         private static object[] DatasourceCredentialTestCases =
         {
-            new object[] { new ServicePrincipalDatasourceCredential("mock", "mock", "secret", "mock"), "\"clientSecret\":\"secret\"" }
+            new object[] { new DataLakeGen2SharedKeyDatasourceCredential("mock", "secret"), "\"accountKey\":\"secret\"" },
+            new object[] { new ServicePrincipalDatasourceCredential("mock", "mock", "secret", "mock"), "\"clientSecret\":\"secret\"" },
+            new object[] { new ServicePrincipalInKeyVaultDatasourceCredential("mock", FakeUri, "mock", "secret", "mock", "mock", "mock"), "\"keyVaultClientSecret\":\"secret\"" },
+            new object[] { new SqlConnectionStringDatasourceCredential("mock", "secret"), "\"connectionString\":\"secret\"" },
         };
 
         public DatasourceCredentialsTests(bool isAsync) : base(isAsync)
@@ -57,6 +63,28 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        public async Task DataLakeGen2SharedKeyDatasourceCredentialSendsSecretDuringUpdate()
+        {
+            MockResponse updateResponse = new MockResponse(200);
+            updateResponse.SetContent(DatasourceCredentialResponseContent);
+
+            MockTransport mockTransport = new MockTransport(updateResponse);
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
+
+            var credential = new DataLakeGen2SharedKeyDatasourceCredential(DataSourceCredentialType.DataLakeGen2SharedKey, FakeGuid,
+                default, default, new DataLakeGen2SharedKeyParam());
+
+            credential.UpdateAccountKey("secret");
+
+            await adminClient.UpdateDatasourceCredentialAsync(credential);
+
+            MockRequest request = mockTransport.Requests.First();
+            string content = ReadContent(request);
+
+            Assert.That(content, Contains.Substring("\"accountKey\":\"secret\""));
+        }
+
+        [Test]
         public async Task ServicePrincipalDatasourceCredentialSendsSecretDuringUpdate()
         {
             MockResponse updateResponse = new MockResponse(200);
@@ -78,6 +106,50 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string content = ReadContent(request);
 
             Assert.That(content, Contains.Substring("\"clientSecret\":\"secret\""));
+        }
+
+        [Test]
+        public async Task ServicePrincipalInKeyVaultDatasourceCredentialSendsSecretDuringUpdate()
+        {
+            MockResponse updateResponse = new MockResponse(200);
+            updateResponse.SetContent(DatasourceCredentialResponseContent);
+
+            MockTransport mockTransport = new MockTransport(updateResponse);
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
+
+            var credential = new ServicePrincipalInKeyVaultDatasourceCredential(DataSourceCredentialType.ServicePrincipal, FakeGuid,
+                default, default, new ServicePrincipalInKVParam(FakeUri.AbsoluteUri, "mock", "mock", "mock", "mock"));
+
+            credential.UpdateKeyVaultClientSecret("secret");
+
+            await adminClient.UpdateDatasourceCredentialAsync(credential);
+
+            MockRequest request = mockTransport.Requests.First();
+            string content = ReadContent(request);
+
+            Assert.That(content, Contains.Substring("\"keyVaultClientSecret\":\"secret\""));
+        }
+
+        [Test]
+        public async Task SqlConnectionStringDatasourceCredentialSendsSecretDuringUpdate()
+        {
+            MockResponse updateResponse = new MockResponse(200);
+            updateResponse.SetContent(DatasourceCredentialResponseContent);
+
+            MockTransport mockTransport = new MockTransport(updateResponse);
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
+
+            var credential = new SqlConnectionStringDatasourceCredential(DataSourceCredentialType.AzureSQLConnectionString, FakeGuid,
+                default, default, new AzureSQLConnectionStringParam());
+
+            credential.UpdateConnectionString("secret");
+
+            await adminClient.UpdateDatasourceCredentialAsync(credential);
+
+            MockRequest request = mockTransport.Requests.First();
+            string content = ReadContent(request);
+
+            Assert.That(content, Contains.Substring("\"connectionString\":\"secret\""));
         }
 
         private string ReadContent(Request request)

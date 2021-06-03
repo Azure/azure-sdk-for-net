@@ -91,7 +91,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Used by CodeGen during serialization.
         /// </summary>
-        internal ServicePrincipalInKVParam Parameters => new ServicePrincipalInKVParam(Endpoint.AbsoluteUri, KeyVaultClientId, SecretNameForClientId, SecretNameForClientSecret, TenantId);
+        internal ServicePrincipalInKVParam Parameters => new ServicePrincipalInKVParam(Endpoint.AbsoluteUri, KeyVaultClientId, KeyVaultClientSecret, SecretNameForClientId, SecretNameForClientSecret, TenantId);
 
         /// <summary>
         /// Updates the client secret used to access the key vault resource.
