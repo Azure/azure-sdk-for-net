@@ -19,18 +19,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
     {
         private static object[] DataSourceTestCases =
         {
-            new object[] { new AzureApplicationInsightsDataFeedSource("mock", "secret", "mock", "mock"), "\"apiKey\":\"secret\"" },
-            new object[] { new AzureBlobDataFeedSource("secret", "mock", "mock"), "\"connectionString\":\"secret\"" },
-            new object[] { new AzureCosmosDbDataFeedSource("secret", "mock", "mock", "mock"), "\"connectionString\":\"secret\"" },
-            new object[] { new AzureDataExplorerDataFeedSource("secret", "mock"), "\"connectionString\":\"secret\"" },
-            new object[] { new AzureDataLakeStorageGen2DataFeedSource("mock", "secret", "mock", "mock", "mock"), "\"accountKey\":\"secret\"" },
-            new object[] { new AzureTableDataFeedSource("secret", "mock", "mock"), "\"connectionString\":\"secret\"" },
-            new object[] { new InfluxDbDataFeedSource("secret", "mock", "mock", "mock", "mock"), "\"connectionString\":\"secret\"" },
-            new object[] { new InfluxDbDataFeedSource("mock", "mock", "mock", "secret", "mock"), "\"password\":\"secret\"" },
-            new object[] { new MongoDbDataFeedSource("secret", "mock", "mock"), "\"connectionString\":\"secret\"" },
-            new object[] { new MySqlDataFeedSource("secret", "mock"), "\"connectionString\":\"secret\"" },
-            new object[] { new PostgreSqlDataFeedSource("secret", "mock"), "\"connectionString\":\"secret\"" },
-            new object[] { new SqlServerDataFeedSource("secret", "mock"), "\"connectionString\":\"secret\"" }
+            new object[] { new AzureApplicationInsightsDataFeedSource("mock", "secret", "mock", "mock"), "apiKey" },
+            new object[] { new AzureBlobDataFeedSource("secret", "mock", "mock"), "connectionString" },
+            new object[] { new AzureCosmosDbDataFeedSource("secret", "mock", "mock", "mock"), "connectionString" },
+            new object[] { new AzureDataExplorerDataFeedSource("secret", "mock"), "connectionString" },
+            new object[] { new AzureDataLakeStorageGen2DataFeedSource("mock", "secret", "mock", "mock", "mock"), "accountKey" },
+            new object[] { new AzureTableDataFeedSource("secret", "mock", "mock"), "connectionString" },
+            new object[] { new InfluxDbDataFeedSource("secret", "mock", "mock", "mock", "mock"), "connectionString" },
+            new object[] { new InfluxDbDataFeedSource("mock", "mock", "mock", "secret", "mock"), "password" },
+            new object[] { new MongoDbDataFeedSource("secret", "mock", "mock"), "connectionString" },
+            new object[] { new MySqlDataFeedSource("secret", "mock"), "connectionString" },
+            new object[] { new PostgreSqlDataFeedSource("secret", "mock"), "connectionString" },
+            new object[] { new SqlServerDataFeedSource("secret", "mock"), "connectionString" }
         };
 
         public DataFeedSourcesTests(bool isAsync) : base(isAsync)
@@ -47,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         [Test]
         [TestCaseSource(nameof(DataSourceTestCases))]
-        public async Task DataFeedSourceSendsSecretDuringCreation(DataFeedSource dataSource, string expectedSubstring)
+        public async Task DataFeedSourceSendsSecretDuringCreation(DataFeedSource dataSource, string secretPropertyName)
         {
             MockResponse createResponse = new MockResponse(201);
             createResponse.AddHeader(new HttpHeader("Location", $"https://fakeresource.cognitiveservices.azure.com/metricsadvisor/v1.0/dataFeeds/{FakeGuid}"));
@@ -72,6 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MockRequest request = mockTransport.Requests.First();
             string content = ReadContent(request);
+            string expectedSubstring = $"\"{secretPropertyName}\":\"secret\"";
 
             Assert.That(content, Contains.Substring(expectedSubstring));
         }
