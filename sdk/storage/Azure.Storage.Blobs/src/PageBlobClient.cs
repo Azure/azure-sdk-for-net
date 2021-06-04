@@ -825,12 +825,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="immutabilityPolicy">
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
-        /// has version level worm enabled.
+        /// has immutable storage with versioning enabled.
         /// </param>
         /// <param name="legalHold">
         /// Optional.  Indicates if a legal hold should be placed on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
-        /// has version level worm enabled.
+        /// has immutable storage with versioning enabled.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -943,12 +943,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="immutabilityPolicy">
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
-        /// has version level worm enabled.
+        /// has immutable storage with versioning enabled.
         /// </param>
         /// <param name="legalHold">
         /// Optional.  Indicates if a legal hold should be placed on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
-        /// has version level worm enabled.
+        /// has immutable storage with versioning enabled.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.

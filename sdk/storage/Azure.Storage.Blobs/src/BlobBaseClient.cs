@@ -2514,12 +2514,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="destinationImmutabilityPolicy">
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
-        /// has version level worm enabled.
+        /// has immutable storage with versioning enabled.
         /// </param>
         /// <param name="legalHold">
         /// Optional.  Indicates if a legal hold should be placed on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
-        /// has version level worm enabled.
+        /// has immutable storage with versioning enabled.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2948,12 +2948,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="destinationImmutabilityPolicy">
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
-        /// has version level worm enabled.
+        /// hasimmutable storage with versioning enabled.
         /// </param>
         /// <param name="legalHold">
         /// Optional.  Indicates if a legal hold should be placed on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
-        /// has version level worm enabled.
+        /// has immutable storage with versioning enabled.
         /// </param>
         /// <param name="sourceAuthentication">
         /// Optional. Source authentication used to access the source blob.
@@ -4915,7 +4915,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
         /// Note that Blob Versioning must be enabled on your storage account, and the blob
-        /// must be in a Container with Version Level Worm enabled to call
+        /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
         /// <param name="immutabilityPolicy">
@@ -4950,7 +4950,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
         /// Note that Blob Versioning must be enabled on your storage account, and the blob
-        /// must be in a Container with Version Level Worm enabled to call
+        /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
         /// <param name="immutabilityPolicy">
@@ -4985,7 +4985,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
         /// Note that Blob Versioning must be enabled on your storage account, and the blob
-        /// must be in a Container with Version Level Worm enabled to call
+        /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
         /// <param name="immutabilityPolicy">
@@ -5078,7 +5078,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Deletes the Immutability Policy associated with the Blob.
         /// Note that Blob Versioning must be enabled on your storage account, and the blob
-        /// must be in a Container with Version Level Worm enabled to call
+        /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
         /// <param name="cancellationToken">
@@ -5102,7 +5102,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Deletes the Immutability Policy associated with the Blob.
         /// Note that Blob Versioning must be enabled on your storage account, and the blob
-        /// must be in a Container with Version Level Worm enabled to call
+        /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
         /// <param name="cancellationToken">
@@ -5126,7 +5126,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Deletes the Immutability Policy associated with the Blob.
         /// Note that Blob Versioning must be enabled on your storage account, and the blob
-        /// must be in a Container with Version Level Worm enabled to call
+        /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
         /// <param name="async">
@@ -5194,7 +5194,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Sets a legal hold on the blob.
         /// Note that Blob Versioning must be enabled on your storage account, and the blob
-        /// must be in a Container with Version Level Worm enabled to call
+        /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
         /// <param name="legalHoldEnabled">
@@ -5224,7 +5224,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Sets a legal hold on the blob.
         /// Note that Blob Versioning must be enabled on your storage account, and the blob
-        /// must be in a Container with Version Level Worm enabled to call
+        /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
         /// <param name="legalHoldEnabled">
@@ -5254,7 +5254,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Sets a legal hold on the blob.
         /// Note that Blob Versioning must be enabled on your storage account, and the blob
-        /// must be in a Container with Version Level Worm enabled to call
+        /// must be in a Container with immutable storage with versioning enabled to call
         /// this API.
         /// </summary>
         /// <param name="legalHoldEnabled">

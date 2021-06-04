@@ -47,14 +47,14 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
-        /// has version level worm enabled.
+        /// has immutable storage with versioning enabled.
         /// </summary>
         public BlobImmutabilityPolicy ImmutabilityPolicy { get; set; }
 
         /// <summary>
         /// Optional.  Indicates if a legal hold should be placed on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
-        /// has version level worm enabled.
+        /// has immutable storage with versioning enabled.
         /// </summary>
         public bool? LegalHold { get; set; }
     }
