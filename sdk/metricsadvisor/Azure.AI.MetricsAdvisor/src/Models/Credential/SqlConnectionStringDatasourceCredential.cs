@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Authenticates to a SQL server via connection string.
+    /// Authenticates to an SQL server via connection string.
     /// </summary>
     [CodeGenModel("AzureSQLConnectionStringCredential")]
     [CodeGenSuppress(nameof(SqlConnectionStringDatasourceCredential), typeof(string), typeof(AzureSQLConnectionStringParam))]
