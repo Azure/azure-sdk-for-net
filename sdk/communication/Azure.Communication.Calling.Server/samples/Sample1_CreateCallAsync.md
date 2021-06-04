@@ -31,6 +31,7 @@ CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
     source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
     options: createCallOption // The options for creating a call.
+    );
 Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
 ```
 

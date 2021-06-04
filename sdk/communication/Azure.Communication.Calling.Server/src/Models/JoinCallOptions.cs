@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.Calling.Server
 {
@@ -29,18 +30,9 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"> <paramref name="callbackUri"/>, <paramref name="requestedModalities"/>, or <paramref name="requestedCallEvents"/> is null. </exception>
         public JoinCallOptions(Uri callbackUri, IEnumerable<CallModality> requestedModalities, IEnumerable<EventSubscriptionType> requestedCallEvents)
         {
-            if (callbackUri == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUri));
-            }
-            if (requestedModalities == null)
-            {
-                throw new ArgumentNullException(nameof(requestedModalities));
-            }
-            if (requestedCallEvents == null)
-            {
-                throw new ArgumentNullException(nameof(requestedCallEvents));
-            }
+            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
+            Argument.AssertNotNull(requestedModalities, nameof(requestedModalities));
+            Argument.AssertNotNull(requestedCallEvents, nameof(requestedCallEvents));
 
             CallbackUri = callbackUri;
             RequestedModalities = requestedModalities.ToList();

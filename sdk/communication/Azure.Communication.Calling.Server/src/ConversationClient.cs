@@ -108,12 +108,6 @@ namespace Azure.Communication.Calling.Server
             {
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
-                JoinCallRequestInternal request = new JoinCallRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(source),
-                    callOptions.CallbackUri.AbsoluteUri,
-                    callOptions.RequestedModalities,
-                    callOptions.RequestedCallEvents);
-
                 return await RestClient.JoinCallAsync(
                     conversationId,
                     CommunicationIdentifierSerializer.Serialize(source),
@@ -147,12 +141,6 @@ namespace Azure.Communication.Calling.Server
             try
             {
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
-
-                JoinCallRequestInternal request = new JoinCallRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(source),
-                    callOptions.CallbackUri.AbsoluteUri,
-                    callOptions.RequestedModalities,
-                    callOptions.RequestedCallEvents);
 
                 return RestClient.JoinCall(
                     conversationId,

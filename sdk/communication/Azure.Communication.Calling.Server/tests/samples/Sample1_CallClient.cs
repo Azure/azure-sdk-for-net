@@ -46,7 +46,8 @@ namespace Azure.Communication.Calling.Server.Tests
                 //@@ options: createCallOption // The options for creating a call.
                 /*@@*/ source: source,
                 /*@@*/ targets: targets,
-                /*@@*/ options: createCallOption);
+                /*@@*/ options: createCallOption
+                );
             Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallAsync
         }
@@ -62,25 +63,21 @@ namespace Azure.Communication.Calling.Server.Tests
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
                    new List<CallModality> { CallModality.Audio },
-                   new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived });
-
+                   new List<EventSubscriptionType> {
+                       EventSubscriptionType.ParticipantsUpdated,
+                       EventSubscriptionType.DtmfReceived
+                   });
             CallClient callClient = CreateInstrumentedCallingServerClient();
             Console.WriteLine("Performing CreateCall operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCall
             CreateCallResponse createCallResponse = callClient.CreateCall(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-                //@@ options: new CreateCallOptions(  // The options for creating a call.
-                //@@    new Uri("<AppCallbackUrl>"),
-                //@@    new List<CallModality> { CallModality.Audio },
-                //@@    new List<EventSubscriptionType>
-                //@@    {
-                //@@        EventSubscriptionType.ParticipantsUpdated,
-                //@@        EventSubscriptionType.DtmfReceived
-                //@@    });
+                //@@ options: createCallOption // The options for creating a call.
                 /*@@*/ source: source,
                 /*@@*/ targets: targets,
-                /*@@*/ options: createCallOption);
+                /*@@*/ options: createCallOption
+                );
             Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCall
         }

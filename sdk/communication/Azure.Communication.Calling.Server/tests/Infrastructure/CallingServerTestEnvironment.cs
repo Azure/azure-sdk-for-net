@@ -11,10 +11,9 @@ namespace Azure.Communication.Calling.Server.Tests
     /// </summary>
     public class CallingServerTestEnvironment : CommunicationTestEnvironment
     {
-        public string ToPhoneNumber => GetRecordedVariable(AzurePhoneNumber);
+        public string ToPhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret());
 
-        public string FromPhoneNumber => GetRecordedVariable(AzurePhoneNumber);
-
+        public string FromPhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret());
         /// <summary>
         /// The source identity.
         /// </summary>
@@ -23,7 +22,7 @@ namespace Azure.Communication.Calling.Server.Tests
         /// <summary>
         /// The phone number associated with the source.
         /// </summary>
-        public string SourcePhoneNumber => GetRecordedVariable(AzurePhoneNumber);
+        public string SourcePhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret());
 
         /// <summary>
         /// The audio file name of the play prompt.

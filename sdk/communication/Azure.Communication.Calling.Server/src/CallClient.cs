@@ -26,7 +26,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         public CallClient(string connectionString)
             : this(
-                  ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                  ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                   new CallClientOptions())
         { }
 
@@ -35,7 +35,7 @@ namespace Azure.Communication.Calling.Server
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CallClient(string connectionString, CallClientOptions options = default)
             : this(
-                  ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                  ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                   options ?? new CallClientOptions())
         { }
 
@@ -45,8 +45,8 @@ namespace Azure.Communication.Calling.Server
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CallClient(Uri endpoint, AzureKeyCredential keyCredential, CallClientOptions options = default)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                AssertNotNull(keyCredential, nameof(keyCredential)),
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
                 options ?? new CallClientOptions())
         { }
 
@@ -56,8 +56,8 @@ namespace Azure.Communication.Calling.Server
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CallClient(Uri endpoint, TokenCredential tokenCredential, CallClientOptions options = default)
             : this(
-                  AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                  AssertNotNull(tokenCredential, nameof(tokenCredential)),
+                  Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                  Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
                   options ?? new CallClientOptions())
         { }
 
@@ -498,19 +498,6 @@ namespace Azure.Communication.Calling.Server
                 scope.Failed(ex);
                 throw;
             }
-        }
-
-        private static T AssertNotNull<T>(T argument, string argumentName)
-            where T : class
-        {
-            Argument.AssertNotNull(argument, argumentName);
-            return argument;
-        }
-
-        private static string AssertNotNullOrEmpty(string argument, string argumentName)
-        {
-            Argument.AssertNotNullOrEmpty(argument, argumentName);
-            return argument;
         }
     }
 }
