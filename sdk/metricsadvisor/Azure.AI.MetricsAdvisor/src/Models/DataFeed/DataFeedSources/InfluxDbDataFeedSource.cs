@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class InfluxDbDataFeedSource : DataFeedSource
     {
+        private string _connectionString;
+
+        private string _password;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InfluxDbDataFeedSource"/> class.
         /// </summary>
@@ -30,8 +35,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(password, nameof(password));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
-            Parameter = new InfluxDBParameter(connectionString, database, username, password, query);
-
             ConnectionString = connectionString;
             Database = database;
             Username = username;
@@ -44,19 +47,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
-            Parameter = parameter;
-
             ConnectionString = parameter.ConnectionString;
             Database = parameter.Database;
             Username = parameter.UserName;
             Password = parameter.Password;
             Query = parameter.Query;
         }
-
-        /// <summary>
-        /// The connection string.
-        /// </summary>
-        public string ConnectionString { get; }
 
         /// <summary>
         /// The name of the database.
@@ -69,13 +65,26 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Username { get; }
 
         /// <summary>
-        /// The access password.
-        /// </summary>
-        public string Password { get; }
-
-        /// <summary>
         /// The query to retrieve the data to be ingested.
         /// </summary>
         public string Query { get; }
+
+        /// <summary>
+        /// The connection string.
+        /// </summary>
+        internal string ConnectionString
+        {
+            get => Volatile.Read(ref _connectionString);
+            private set => Volatile.Write(ref _connectionString, value);
+        }
+
+        /// <summary>
+        /// The access password.
+        /// </summary>
+        internal string Password
+        {
+            get => Volatile.Read(ref _password);
+            private set => Volatile.Write(ref _password, value);
+        }
     }
 }

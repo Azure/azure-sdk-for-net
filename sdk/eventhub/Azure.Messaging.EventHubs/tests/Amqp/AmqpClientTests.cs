@@ -732,7 +732,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(() => client.CreateConsumer("group", "0", EventPosition.Earliest, Mock.Of<EventHubsRetryPolicy>(), false, null, null, null), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+            Assert.That(() => client.CreateConsumer("group", "0", EventPosition.Earliest, Mock.Of<EventHubsRetryPolicy>(), false, false, null, null, null), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>

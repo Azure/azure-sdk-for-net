@@ -62,12 +62,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// availability set that the virtual machine should be assigned to.
         /// Virtual machines specified in the same availability set are
         /// allocated to different nodes to maximize availability. For more
-        /// information about availability sets, see [Manage the availability
-        /// of virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+        /// information about availability sets, see [Availability sets
+        /// overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview).
         /// &lt;br&gt;&lt;br&gt; For more information on Azure planned
-        /// maintenance, see [Planned maintenance for virtual machines in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// maintenance, see [Maintenance and updates for Virtual Machines in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates)
         /// &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to
         /// availability set at creation time. The availability set to which
         /// the VM is being added should be under the same resource group as
@@ -147,10 +146,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// created.&lt;li&gt;Fault domain assignment can be viewed in the
         /// Virtual Machine Instance View.&lt;br&gt;&lt;br&gt;Minimum
         /// api‐version: 2020‐12‐01</param>
+        /// <param name="scheduledEventsProfile">Specifies Scheduled Event
+        /// related configurations.</param>
+        /// <param name="userData">UserData for the VM, which must be base-64
+        /// encoded. Customer should not pass any secrets in here.
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01</param>
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), int? platformFaultDomain = default(int?), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), int? platformFaultDomain = default(int?), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(tags)
         {
             Plan = plan;
@@ -175,6 +179,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             VmId = vmId;
             ExtensionsTimeBudget = extensionsTimeBudget;
             PlatformFaultDomain = platformFaultDomain;
+            ScheduledEventsProfile = scheduledEventsProfile;
+            UserData = userData;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -253,12 +259,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the virtual machine should be assigned to. Virtual machines
         /// specified in the same availability set are allocated to different
         /// nodes to maximize availability. For more information about
-        /// availability sets, see [Manage the availability of virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+        /// availability sets, see [Availability sets
+        /// overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview).
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more information on Azure
-        /// planned maintenance, see [Planned maintenance for virtual machines
-        /// in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// planned maintenance, see [Maintenance and updates for Virtual
+        /// Machines in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Currently, a VM can only be
         /// added to availability set at creation time. The availability set to
         /// which the VM is being added should be under the same resource group
@@ -411,6 +417,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.platformFaultDomain")]
         public int? PlatformFaultDomain { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies Scheduled Event related configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scheduledEventsProfile")]
+        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets userData for the VM, which must be base-64 encoded.
+        /// Customer should not pass any secrets in here.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version: 2021-03-01
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userData")]
+        public string UserData { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine, if configured.

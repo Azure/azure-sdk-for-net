@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class MongoDbDataFeedSource : DataFeedSource
     {
+        private string _connectionString;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MongoDbDataFeedSource"/> class.
         /// </summary>
@@ -26,8 +29,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(database, nameof(database));
             Argument.AssertNotNullOrEmpty(command, nameof(command));
 
-            Parameter = new MongoDBParameter(connectionString, database, command);
-
             ConnectionString = connectionString;
             Database = database;
             Command = command;
@@ -37,17 +38,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
-            Parameter = parameter;
-
             ConnectionString = parameter.ConnectionString;
             Database = parameter.Database;
             Command = parameter.Command;
         }
-
-        /// <summary>
-        /// The connection string.
-        /// </summary>
-        public string ConnectionString { get; }
 
         /// <summary>
         /// The name of the database.
@@ -58,5 +52,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The query to retrieve the data to be ingested.
         /// </summary>
         public string Command { get; }
+
+        /// <summary>
+        /// The connection string.
+        /// </summary>
+        internal string ConnectionString
+        {
+            get => Volatile.Read(ref _connectionString);
+            private set => Volatile.Write(ref _connectionString, value);
+        }
     }
 }

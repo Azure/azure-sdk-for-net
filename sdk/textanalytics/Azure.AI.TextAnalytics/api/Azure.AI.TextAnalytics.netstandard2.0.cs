@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics
     public partial class AnalyzeActionsOptions
     {
         public AnalyzeActionsOptions() { }
-        public bool IncludeStatistics { get { throw null; } set { } }
+        public bool? IncludeStatistics { get { throw null; } set { } }
     }
     public partial class AnalyzeActionsResult
     {
@@ -39,7 +39,6 @@ namespace Azure.AI.TextAnalytics
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.RecognizeEntitiesActionResult> RecognizeEntitiesActionsResults { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults { get { throw null; } }
-        public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
     public partial class AnalyzeHealthcareEntitiesOperation : Azure.PageableOperation<Azure.AI.TextAnalytics.AnalyzeHealthcareEntitiesResultCollection>
     {
@@ -267,6 +266,7 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.EntityAssociation? Association { get { throw null; } }
         public Azure.AI.TextAnalytics.EntityCertainty? Certainty { get { throw null; } }
         public Azure.AI.TextAnalytics.EntityConditionality? Conditionality { get { throw null; } }
+        public override string ToString() { throw null; }
     }
     public partial class HealthcareEntityRelation
     {
@@ -557,9 +557,10 @@ namespace Azure.AI.TextAnalytics
         public string RedactedText { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
-    public enum PiiEntityDomainType
+    public enum PiiEntityDomain
     {
-        ProtectedHealthInformation = 0,
+        None = 0,
+        ProtectedHealthInformation = 1,
     }
     public partial class RecognizeEntitiesAction : Azure.AI.TextAnalytics.RecognizeEntitiesOptions
     {
@@ -622,7 +623,7 @@ namespace Azure.AI.TextAnalytics
     {
         public RecognizePiiEntitiesOptions() { }
         public System.Collections.Generic.IList<Azure.AI.TextAnalytics.PiiEntityCategory> CategoriesFilter { get { throw null; } }
-        public Azure.AI.TextAnalytics.PiiEntityDomainType? DomainFilter { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.PiiEntityDomain DomainFilter { get { throw null; } set { } }
     }
     public partial class RecognizePiiEntitiesResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {

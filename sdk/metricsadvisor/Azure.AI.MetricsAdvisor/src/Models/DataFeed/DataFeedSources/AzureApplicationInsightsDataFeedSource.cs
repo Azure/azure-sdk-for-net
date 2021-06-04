@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class AzureApplicationInsightsDataFeedSource : DataFeedSource
     {
+        private string _apiKey;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureApplicationInsightsDataFeedSource"/> class.
         /// </summary>
@@ -28,8 +31,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(apiKey, nameof(apiKey));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
-            Parameter = new AzureApplicationInsightsParameter(azureCloud, applicationId, apiKey, query);
-
             ApplicationId = applicationId;
             ApiKey = apiKey;
             AzureCloud = azureCloud;
@@ -40,8 +41,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(DataFeedSourceType.AzureApplicationInsights)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             ApplicationId = parameter.ApplicationId;
             ApiKey = parameter.ApiKey;
@@ -55,11 +54,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string ApplicationId { get; }
 
         /// <summary>
-        /// The API key.
-        /// </summary>
-        public string ApiKey { get; }
-
-        /// <summary>
         /// The Azure cloud environment.
         /// </summary>
         public string AzureCloud { get; }
@@ -68,5 +62,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The query used to filter the data to be ingested.
         /// </summary>
         public string Query { get; }
+
+        /// <summary>
+        /// The API key.
+        /// </summary>
+        internal string ApiKey
+        {
+            get => Volatile.Read(ref _apiKey);
+            private set => Volatile.Write(ref _apiKey, value);
+        }
     }
 }

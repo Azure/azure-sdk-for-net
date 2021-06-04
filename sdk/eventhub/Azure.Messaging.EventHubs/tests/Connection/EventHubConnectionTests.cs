@@ -753,11 +753,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedConsumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
             var expectedRetryPolicy = new EventHubsRetryOptions { MaximumRetries = 67 }.ToRetryPolicy();
             var expectedTrackLastEnqueued = false;
+            var expectedInvalidateConsumerWhenPartitionIsStolen = true;
             var expectedPrefetch = 99U;
             var expectedOwnerLevel = 123L;
 
-            connection.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedRetryPolicy, expectedTrackLastEnqueued, expectedOwnerLevel, expectedPrefetch);
-            (var actualConsumerGroup, var actualPartition, EventPosition actualPosition, var actualRetry, var actualTrackLastEnqueued, var actualOwnerLevel, var actualPrefetch) = transportClient.CreateConsumerCalledWith;
+            connection.CreateTransportConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedRetryPolicy, expectedTrackLastEnqueued, expectedInvalidateConsumerWhenPartitionIsStolen, expectedOwnerLevel, expectedPrefetch);
+            (var actualConsumerGroup, var actualPartition, EventPosition actualPosition, var actualRetry, var actualTrackLastEnqueued, var actualInvalidateConsumerWhenPartitionIsStolen, var actualOwnerLevel, var actualPrefetch) = transportClient.CreateConsumerCalledWith;
 
             Assert.That(actualPartition, Is.EqualTo(expectedPartition), "The partition should have been passed.");
             Assert.That(actualConsumerGroup, Is.EqualTo(expectedConsumerGroup), "The consumer groups should match.");
@@ -766,6 +767,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOwnerLevel, Is.EqualTo(expectedOwnerLevel), "The owner levels should match.");
             Assert.That(actualPrefetch, Is.EqualTo(expectedPrefetch), "The prefetch counts should match.");
             Assert.That(actualTrackLastEnqueued, Is.EqualTo(expectedTrackLastEnqueued), "The flag for tracking the last enqueued event should match.");
+            Assert.That(actualInvalidateConsumerWhenPartitionIsStolen, Is.EqualTo(expectedInvalidateConsumerWhenPartitionIsStolen), "The flag for invalidating the consumer on a stolen partition should match.");
         }
 
         /// <summary>
@@ -1031,7 +1033,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ObservableTransportClientMock : TransportClient
         {
-            public (string ConsumerGroup, string Partition, EventPosition Position, EventHubsRetryPolicy RetryPolicy, bool TrackLastEnqueued, long? OwnerLevel, uint? Prefetch) CreateConsumerCalledWith;
+            public (string ConsumerGroup, string Partition, EventPosition Position, EventHubsRetryPolicy RetryPolicy, bool TrackLastEnqueued, bool InvalidateOnSteal, long? OwnerLevel, uint? Prefetch) CreateConsumerCalledWith;
             public (string PartitionId, TransportProducerFeatures Features, PartitionPublishingOptions PartitionOptions, EventHubsRetryPolicy RetryPolicy) CreateProducerCalledWith;
             public string GetPartitionPropertiesCalledForId;
             public bool WasGetPropertiesCalled;
@@ -1066,11 +1068,12 @@ namespace Azure.Messaging.EventHubs.Tests
                                                              EventPosition eventPosition,
                                                              EventHubsRetryPolicy retryPolicy,
                                                              bool trackLastEnqueuedEventProperties = true,
+                                                             bool invalidateConsumerWhenPartitionIsStolen = false,
                                                              long? ownerLevel = default,
                                                              uint? prefetchCount = default,
                                                              long? prefechSize = default)
             {
-                CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
+                CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, invalidateConsumerWhenPartitionIsStolen, ownerLevel, prefetchCount);
                 return default;
             }
 

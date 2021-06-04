@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class AzureCosmosDbDataFeedSource : DataFeedSource
     {
+        private string _connectionString;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureCosmosDbDataFeedSource"/> class.
         /// </summary>
@@ -28,8 +31,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(database, nameof(database));
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Parameter = new AzureCosmosDBParameter(connectionString, sqlQuery, database, collectionId);
-
             ConnectionString = connectionString;
             SqlQuery = sqlQuery;
             Database = database;
@@ -41,18 +42,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
-            Parameter = parameter;
-
             ConnectionString = parameter.ConnectionString;
             SqlQuery = parameter.SqlQuery;
             Database = parameter.Database;
             CollectionId = parameter.CollectionId;
         }
-
-        /// <summary>
-        /// The connection string.
-        /// </summary>
-        public string ConnectionString { get; }
 
         /// <summary>
         /// The SQL query to retrieve the data to be ingested.
@@ -68,5 +62,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The collection ID.
         /// </summary>
         public string CollectionId { get; }
+
+        /// <summary>
+        /// The connection string.
+        /// </summary>
+        internal string ConnectionString
+        {
+            get => Volatile.Read(ref _connectionString);
+            private set => Volatile.Write(ref _connectionString, value);
+        }
     }
 }

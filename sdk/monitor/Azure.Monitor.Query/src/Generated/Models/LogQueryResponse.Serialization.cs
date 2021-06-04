@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,8 @@ namespace Azure.Monitor.Query.Models
         {
             Optional<string> id = default;
             Optional<int> status = default;
-            Optional<LogsQueryResult> body = default;
+            Optional<LogsBatchQueryResultInternal> body = default;
+            Optional<IReadOnlyDictionary<string, string>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -41,11 +43,26 @@ namespace Azure.Monitor.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    body = LogsQueryResult.DeserializeLogsQueryResult(property.Value);
+                    body = LogsBatchQueryResultInternal.DeserializeLogsBatchQueryResultInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("headers"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    headers = dictionary;
                     continue;
                 }
             }
-            return new LogQueryResponse(id.Value, Optional.ToNullable(status), body.Value);
+            return new LogQueryResponse(id.Value, Optional.ToNullable(status), body.Value, Optional.ToDictionary(headers));
         }
     }
 }
