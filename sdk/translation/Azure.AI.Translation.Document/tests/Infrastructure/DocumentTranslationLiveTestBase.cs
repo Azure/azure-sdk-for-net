@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Document.Tests
 {
     public abstract class DocumentTranslationLiveTestBase : RecordedTestBase<DocumentTranslationTestEnvironment>
     {
-        protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 5);
+        protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 30);
 
         public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
             : base(isAsync, mode)
