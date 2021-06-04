@@ -2082,6 +2082,32 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task ListBlobsFlatSegmentAsync_DeletedWithVersions()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            await blob.DeleteAsync();
+
+            // Act
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync(states: BlobStates.DeletedWithVersions))
+            {
+                blobItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobItems.Count);
+            Assert.AreEqual(blob.Name, blobItems[0].Name);
+            Assert.IsTrue(blobItems[0].HasVersionsOnly);
+        }
+
+        [RecordedTest]
         [PlaybackOnly("Service bug - https://github.com/Azure/azure-sdk-for-net/issues/16516")]
         public async Task ListBlobsHierarchySegmentAsync()
         {
@@ -2410,6 +2436,32 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task ListBlobsHierarchySegmentAsync_DeletedWithVersions()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            await blob.DeleteAsync();
+
+            // Act
+            List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
+            await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(states: BlobStates.DeletedWithVersions))
+            {
+                blobHierarchyItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobHierarchyItems.Count);
+            Assert.AreEqual(blob.Name, blobHierarchyItems[0].Blob.Name);
+            Assert.IsTrue(blobHierarchyItems[0].Blob.HasVersionsOnly);
+        }
+
+        [RecordedTest]
         public async Task UploadBlobAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2536,7 +2588,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.blob.core.windows.net/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
+            Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
 
             BlobClient initalBlob = new BlobClient(
                 TestConfigDefault.ConnectionString,
@@ -2585,7 +2637,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
-            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.blob.core.windows.net/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
+            Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
 
             BlobClient blobClientFromContainer = InstrumentClient(test.Container.GetBlobClient(blobName));
             BlobClient blobClientFromConnectionString = new BlobClient(

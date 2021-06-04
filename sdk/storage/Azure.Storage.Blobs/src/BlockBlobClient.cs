@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -1205,8 +1206,120 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region StageBlockFromUri
         /// <summary>
-        /// The <see cref="StageBlockFromUri"/> operation creates a new
-        /// block to be committed as part of a blob where the contents are
+        /// The <see cref="StageBlockFromUri(Uri, string, BlockBlobStageBlockFromUriOptions, CancellationToken)"/>
+        /// operation creates a new block to be committed as part of a blob where the contents are
+        /// read from the <paramref name="sourceUri" />.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-from-url">
+        /// Put Block From URL</see>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Specifies the <see cref="Uri"/> of the source blob.  The value may
+        /// be a URL of up to 2 KB in length that specifies a blob.  The
+        /// source blob must either be public or must be authenticated via a
+        /// shared access signature. If the source blob is public, no
+        /// authentication is required to perform the operation.
+        /// </param>
+        /// <param name="base64BlockId">
+        /// A valid Base64 string value that identifies the block. Prior to
+        /// encoding, the string must be less than or equal to 64 bytes in
+        /// size.  For a given blob, the length of the value specified for
+        /// the <paramref name="base64BlockId"/> parameter must be the same
+        /// size for each block.  Note that the Base64 string must be
+        /// URL-encoded.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters. <see cref="BlockBlobStageBlockFromUriOptions"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlockInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlockInfo> StageBlockFromUri(
+            Uri sourceUri,
+            string base64BlockId,
+            BlockBlobStageBlockFromUriOptions options,
+            CancellationToken cancellationToken = default) =>
+            StageBlockFromUriInternal(
+                sourceUri,
+                base64BlockId,
+                options.SourceRange,
+                options.SourceContentHash,
+                options.SourceConditions,
+                options.DestinationConditions,
+                options.SourceAuthentication,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="StageBlockFromUriAsync(Uri, string, BlockBlobStageBlockFromUriOptions, CancellationToken)"/>
+        /// operation creates a new block to be committed as part of a blob where the contents are
+        /// read from the <paramref name="sourceUri" />.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-from-url">
+        /// Put Block From URL</see>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Specifies the <see cref="Uri"/> of the source blob.  The value may
+        /// be a URL of up to 2 KB in length that specifies a blob.  The
+        /// source blob must either be public or must be authenticated via a
+        /// shared access signature. If the source blob is public, no
+        /// authentication is required to perform the operation.
+        /// </param>
+        /// <param name="base64BlockId">
+        /// A valid Base64 string value that identifies the block. Prior to
+        /// encoding, the string must be less than or equal to 64 bytes in
+        /// size.  For a given blob, the length of the value specified for
+        /// the <paramref name="base64BlockId"/> parameter must be the same
+        /// size for each block.  Note that the Base64 string must be
+        /// URL-encoded.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters. <see cref="BlockBlobStageBlockFromUriOptions"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlockInfo}"/> describing the
+        /// state of the updated block.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
+            Uri sourceUri,
+            string base64BlockId,
+            BlockBlobStageBlockFromUriOptions options,
+            CancellationToken cancellationToken = default) =>
+            await StageBlockFromUriInternal(
+                sourceUri,
+                base64BlockId,
+                options.SourceRange,
+                options.SourceContentHash,
+                options.SourceConditions,
+                options.DestinationConditions,
+                options.SourceAuthentication,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="StageBlockFromUri(Uri, string, HttpRange, byte[], RequestConditions, BlobRequestConditions, CancellationToken)"/>
+        /// operation creates a new block to be committed as part of a blob where the contents are
         /// read from the <paramref name="sourceUri" />.
         ///
         /// For more information, see
@@ -1264,6 +1377,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlockInfo> StageBlockFromUri(
             Uri sourceUri,
             string base64BlockId,
@@ -1279,13 +1393,14 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 sourceConditions,
                 conditions,
-                false, // async
+                sourceAuthentication: default,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="StageBlockFromUriAsync"/> operation creates a new
-        /// block to be committed as part of a blob where the contents are
+        /// The <see cref="StageBlockFromUriAsync(Uri, string, HttpRange, byte[], RequestConditions, BlobRequestConditions, CancellationToken)"/>
+        /// operation creates a new block to be committed as part of a blob where the contents are
         /// read from the <paramref name="sourceUri" />.
         ///
         /// For more information, see
@@ -1343,6 +1458,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
             Uri sourceUri,
             string base64BlockId,
@@ -1358,7 +1474,8 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 sourceConditions,
                 conditions,
-                true, // async
+                sourceAuthentication: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1410,6 +1527,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the staging of this block.
         /// </param>
+        /// <param name="sourceAuthentication">
+        /// Optional. Source bearer token used to access the source blob.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1432,6 +1552,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             RequestConditions sourceConditions,
             BlobRequestConditions conditions,
+            AuthenticationHeaderValue sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1469,6 +1590,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1489,6 +1611,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -2692,6 +2815,12 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response;
 
+                    string sourceAuthString = null;
+                    if (options?.SourceAuthentication != null)
+                    {
+                        sourceAuthString = $"{options.SourceAuthentication.Scheme} {options.SourceAuthentication.Parameter}";
+                    }
+
                     if (async)
                     {
                         response = await BlockBlobRestClient.PutBlobFromUrlAsync(
@@ -2724,6 +2853,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
+                            copySourceAuthorization: sourceAuthString,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2759,6 +2889,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
+                            copySourceAuthorization: sourceAuthString,
                             cancellationToken: cancellationToken);
                     }
 

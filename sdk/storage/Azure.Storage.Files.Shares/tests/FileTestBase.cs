@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -111,6 +112,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
+                    GetOptions()));
+
+        public ShareServiceClient GetServiceClient_OAuth_SharedKey()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigOAuth.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigOAuth.AccountName,
+                        TestConfigOAuth.AccountKey),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_Premium()
@@ -232,16 +242,15 @@ namespace Azure.Storage.Files.Shares.Tests
             credentials ??= GetAccountSasCredentials();
             if (!includeEndpoint)
             {
-                return TestExtensions.CreateStorageConnectionString(
+                return new StorageConnectionString(
                     credentials,
-                    TestConfigDefault.AccountName);
+                    (new Uri(TestConfigDefault.BlobServiceEndpoint), new Uri(TestConfigDefault.BlobServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.QueueServiceEndpoint), new Uri(TestConfigDefault.QueueServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.TableServiceEndpoint), new Uri(TestConfigDefault.TableServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.FileServiceEndpoint), new Uri(TestConfigDefault.FileServiceSecondaryEndpoint)));
             }
 
-            (Uri, Uri) fileUri = StorageConnectionString.ConstructFileEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
+            (Uri, Uri) fileUri = (new Uri(TestConfigDefault.FileServiceEndpoint), new Uri(TestConfigDefault.FileServiceSecondaryEndpoint));
 
             return new StorageConnectionString(
                     credentials,

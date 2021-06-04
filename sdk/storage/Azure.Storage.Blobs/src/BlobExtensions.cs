@@ -1152,7 +1152,8 @@ namespace Azure.Storage.Blobs
                 Tags = blobItemInternal.BlobTags.ToTagDictionary(),
                 ObjectReplicationSourceProperties = blobItemInternal.ObjectReplicationMetadata?.Count > 0
                     ? ParseObjectReplicationMetadata(blobItemInternal.ObjectReplicationMetadata)
-                    : null
+                    : null,
+                HasVersionsOnly = blobItemInternal.HasVersionsOnly
             };
         }
 
@@ -1321,5 +1322,6 @@ namespace Azure.Storage.Blobs
             return metadata;
         }
         #endregion
+
     }
 }

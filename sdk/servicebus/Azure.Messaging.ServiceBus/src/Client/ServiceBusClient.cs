@@ -80,6 +80,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                GC.SuppressFinalize(this);
             }
             catch (Exception ex)
             {

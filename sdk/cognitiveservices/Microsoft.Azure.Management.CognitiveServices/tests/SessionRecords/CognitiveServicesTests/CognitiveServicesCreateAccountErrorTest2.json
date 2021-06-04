@@ -1,0 +1,225 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/a9216f37-b90e-4db2-b844-b171e5394fc1/resourcegroups/res1322?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTkyMTZmMzctYjkwZS00ZGIyLWI4NDQtYjE3MWU1Mzk0ZmMxL3Jlc291cmNlZ3JvdXBzL3JlczEzMjI/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"CENTRALUSEUAP\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "71e8cda9-6ac8-4664-b9d5-b3cffde84670"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "35"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "f8c62b39-a800-467c-836f-c5762155c1ce"
+        ],
+        "x-ms-correlation-request-id": [
+          "f8c62b39-a800-467c-836f-c5762155c1ce"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210513T003812Z:f8c62b39-a800-467c-836f-c5762155c1ce"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 13 May 2021 00:38:11 GMT"
+        ],
+        "Content-Length": [
+          "174"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a9216f37-b90e-4db2-b844-b171e5394fc1/resourceGroups/res1322\",\r\n  \"name\": \"res1322\",\r\n  \"location\": \"centraluseuap\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/a9216f37-b90e-4db2-b844-b171e5394fc1/resourceGroups/res1322/providers/Microsoft.CognitiveServices/accounts/csa4679?api-version=2021-04-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTkyMTZmMzctYjkwZS00ZGIyLWI4NDQtYjE3MWU1Mzk0ZmMxL3Jlc291cmNlR3JvdXBzL3JlczEzMjIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E0Njc5P2FwaS12ZXJzaW9uPTIwMjEtMDQtMzA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"kind\": \"NonExistAPI\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"location\": \"CENTRALUSEUAP\",\r\n  \"properties\": {}\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fbdcfa8c-ef52-473c-b694-e5ab387da3cc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "118"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "063abb5a-ac24-4659-9d99-41e1dc5281be"
+        ],
+        "x-envoy-upstream-service-time": [
+          "16"
+        ],
+        "Server": [
+          "istio-envoy"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "4551d291-c23b-4625-b0c5-ee9711b46182"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210513T003814Z:4551d291-c23b-4625-b0c5-ee9711b46182"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 13 May 2021 00:38:13 GMT"
+        ],
+        "Content-Length": [
+          "129"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidApiSetId\",\r\n    \"message\": \"The account type 'NonExistAPI' is either invalid or unavailable in given region.\"\r\n  }\r\n}",
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "/subscriptions/a9216f37-b90e-4db2-b844-b171e5394fc1/resourceGroups/res1322/providers/Microsoft.CognitiveServices/accounts/csa4679?api-version=2021-04-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTkyMTZmMzctYjkwZS00ZGIyLWI4NDQtYjE3MWU1Mzk0ZmMxL3Jlc291cmNlR3JvdXBzL3JlczEzMjIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E0Njc5P2FwaS12ZXJzaW9uPTIwMjEtMDQtMzA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"kind\": \"Face\",\r\n  \"sku\": {\r\n    \"name\": \"N0\"\r\n  },\r\n  \"location\": \"CENTRALUSEUAP\",\r\n  \"properties\": {}\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5f5095e5-2e90-4ed1-8276-7f103ac45c09"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "111"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dd8b5a4e-7ffe-43e5-bff1-bbf1cf24eac9"
+        ],
+        "x-envoy-upstream-service-time": [
+          "17"
+        ],
+        "Server": [
+          "istio-envoy"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "aa514733-3a95-4ff0-87bb-3f094246be48"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210513T003815Z:aa514733-3a95-4ff0-87bb-3f094246be48"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 13 May 2021 00:38:14 GMT"
+        ],
+        "Content-Length": [
+          "98"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidSkuId\",\r\n    \"message\": \"The SKU name 'N0' in account type 'Face' is invalid.\"\r\n  }\r\n}",
+      "StatusCode": 400
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "res1322"
+    ],
+    "CognitiveServicesCreateAccountErrorTest2": [
+      "csa4679"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "a9216f37-b90e-4db2-b844-b171e5394fc1"
+  }
+}

@@ -984,7 +984,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateUploadRangeFromURLRequest(string range, string copySource, long contentLength, int? timeout, string sourceRange, byte[] sourceContentCrc64, SourceModifiedAccessConditions sourceModifiedAccessConditions, ShareFileRequestConditions leaseAccessConditions)
+        internal HttpMessage CreateUploadRangeFromURLRequest(string range, string copySource, long contentLength, int? timeout, string sourceRange, byte[] sourceContentCrc64, string copySourceAuthorization, SourceModifiedAccessConditions sourceModifiedAccessConditions, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1023,6 +1023,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
+            if (copySourceAuthorization != null)
+            {
+                request.Headers.Add("x-ms-copy-source-authorization", copySourceAuthorization);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1034,11 +1038,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
         /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="range"/> or <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileUploadRangeFromURLHeaders>> UploadRangeFromURLAsync(string range, string copySource, long contentLength, int? timeout = null, string sourceRange = null, byte[] sourceContentCrc64 = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileUploadRangeFromURLHeaders>> UploadRangeFromURLAsync(string range, string copySource, long contentLength, int? timeout = null, string sourceRange = null, byte[] sourceContentCrc64 = null, string copySourceAuthorization = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (range == null)
             {
@@ -1049,7 +1054,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateUploadRangeFromURLRequest(range, copySource, contentLength, timeout, sourceRange, sourceContentCrc64, sourceModifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateUploadRangeFromURLRequest(range, copySource, contentLength, timeout, sourceRange, sourceContentCrc64, copySourceAuthorization, sourceModifiedAccessConditions, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileUploadRangeFromURLHeaders(message.Response);
             switch (message.Response.Status)
@@ -1068,11 +1073,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
         /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="range"/> or <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<FileUploadRangeFromURLHeaders> UploadRangeFromURL(string range, string copySource, long contentLength, int? timeout = null, string sourceRange = null, byte[] sourceContentCrc64 = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileUploadRangeFromURLHeaders> UploadRangeFromURL(string range, string copySource, long contentLength, int? timeout = null, string sourceRange = null, byte[] sourceContentCrc64 = null, string copySourceAuthorization = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
             if (range == null)
             {
@@ -1083,7 +1089,7 @@ namespace Azure.Storage.Files.Shares
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateUploadRangeFromURLRequest(range, copySource, contentLength, timeout, sourceRange, sourceContentCrc64, sourceModifiedAccessConditions, leaseAccessConditions);
+            using var message = CreateUploadRangeFromURLRequest(range, copySource, contentLength, timeout, sourceRange, sourceContentCrc64, copySourceAuthorization, sourceModifiedAccessConditions, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileUploadRangeFromURLHeaders(message.Response);
             switch (message.Response.Status)

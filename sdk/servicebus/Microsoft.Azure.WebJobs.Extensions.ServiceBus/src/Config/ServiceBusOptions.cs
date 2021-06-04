@@ -129,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
         /// a batch of messages. The default value is 1000.
         /// </summary>
-        public int MaxMessages { get; set; } = 1000;
+        public int MaxBatchSize { get; set; } = 1000;
 
         /// <summary>
         /// Gets or sets the maximum amount of time to wait for a message to be received for the
@@ -138,6 +138,20 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
         public TimeSpan? SessionIdleTimeout { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON serialization settings to use when binding to POCOs.
+        /// </summary>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public JsonSerializerSettings JsonSerializerSettings { get; set; } = new()
+        {
+            // The default value, DateParseHandling.DateTime, drops time zone information from DateTimeOffets.
+            // This value appears to work well with both DateTimes (without time zone information) and DateTimeOffsets.
+            DateParseHandling = DateParseHandling.DateTimeOffset,
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented
+        };
+#pragma warning restore AZC0014 // Avoid using banned types in public API
 
         /// <summary>
         /// Formats the options as JSON objects for display.
@@ -165,7 +179,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxAutoLockRenewalDuration), MaxAutoLockRenewalDuration },
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
-                { nameof(MaxMessages), MaxMessages },
+                { nameof(MaxBatchSize), MaxBatchSize },
                 { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty }
             };
 
@@ -179,23 +193,29 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             return Task.CompletedTask;
         }
 
-        internal ServiceBusProcessorOptions ToProcessorOptions() =>
+        internal ServiceBusProcessorOptions ToProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue) =>
             new ServiceBusProcessorOptions
             {
-                AutoCompleteMessages = AutoCompleteMessages,
+                AutoCompleteMessages = autoCompleteMessagesOptionEvaluatedValue,
                 PrefetchCount = PrefetchCount,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxConcurrentCalls = MaxConcurrentCalls
             };
 
-        internal ServiceBusSessionProcessorOptions ToSessionProcessorOptions() =>
+        internal ServiceBusSessionProcessorOptions ToSessionProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue) =>
             new ServiceBusSessionProcessorOptions
             {
-                AutoCompleteMessages = AutoCompleteMessages,
+                AutoCompleteMessages = autoCompleteMessagesOptionEvaluatedValue,
                 PrefetchCount = PrefetchCount,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxConcurrentSessions = MaxConcurrentSessions,
                 SessionIdleTimeout = SessionIdleTimeout
+            };
+
+        internal ServiceBusReceiverOptions ToReceiverOptions() =>
+            new ServiceBusReceiverOptions
+            {
+                PrefetchCount = PrefetchCount
             };
 
         internal ServiceBusClientOptions ToClientOptions() =>

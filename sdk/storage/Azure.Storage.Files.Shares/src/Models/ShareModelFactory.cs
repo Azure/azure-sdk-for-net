@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
+    [CodeGenType("AzureFileStorageModelFactory")]
     public static partial class ShareModelFactory
     {
         /// <summary>

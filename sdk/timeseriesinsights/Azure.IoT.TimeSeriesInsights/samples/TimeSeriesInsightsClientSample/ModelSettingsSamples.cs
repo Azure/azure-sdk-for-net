@@ -19,13 +19,15 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS MODEL SETTINGS SAMPLE");
 
             #region Snippet:TimeSeriesInsightsSampleGetModelSettings
-            Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
+            TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+            TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
+            Response<TimeSeriesModelSettings> getModelSettingsResponse = await modelSettingsClient.GetAsync();
             Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{getModelSettingsResponse.Value.Name}', " +
                 $"default type Id: {getModelSettingsResponse.Value.DefaultTypeId}'");
             IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
             foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
             {
-                Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.Type}'.");
+                Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.PropertyType}'.");
             }
             #endregion Snippet:TimeSeriesInsightsSampleGetModelSettings
 
@@ -33,7 +35,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             string defaultTypeId = getModelSettingsResponse.Value.DefaultTypeId;
 
             #region Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
-            Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync("NewModelSettingsName");
+            Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await modelSettingsClient.UpdateNameAsync("NewModelSettingsName");
             Console.WriteLine($"Updated Time Series Insights model settings name: " +
                 $"{updateModelSettingsNameResponse.Value.Name}");
             #endregion Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
@@ -50,7 +52,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             var type = new TimeSeriesType("tsiTypeName", variables);
             var timeSeriesTypes = new List<TimeSeriesType> { type };
             string tsiTypeId = null;
-            Response<TimeSeriesTypeOperationResult[]> createTsiTypeResponse = await client.Types.CreateOrReplaceAsync(timeSeriesTypes);
+            Response<TimeSeriesTypeOperationResult[]> createTsiTypeResponse = await typesClient
+                .CreateOrReplaceAsync(timeSeriesTypes);
 
             // Ensure no error was reported as part of the response
             if (createTsiTypeResponse.Value[0].Error == null)
@@ -59,7 +62,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 tsiTypeId = createTsiTypeResponse.Value[0].TimeSeriesType.Id;
 
                 #region Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
-                Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
+                Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await modelSettingsClient
+                    .UpdateDefaultTypeIdAsync(tsiTypeId);
                 Console.WriteLine($"Updated Time Series Insights model settings default type Id: " +
                     $"{updateDefaultTypeIdResponse.Value.Name}");
                 #endregion Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
@@ -68,12 +72,14 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             try
             {
                 // Revert back to the original default type Id
-                await client.ModelSettings.UpdateDefaultTypeIdAsync(defaultTypeId);
+                await modelSettingsClient
+                    .UpdateDefaultTypeIdAsync(defaultTypeId);
 
                 // Delete the type created
                 if (tsiTypeId != null)
                 {
-                    await client.Types.DeleteByIdAsync(new List<string> { tsiTypeId });
+                    await typesClient
+                        .DeleteByIdAsync(new List<string> { tsiTypeId });
                 }
             }
             catch (Exception ex)

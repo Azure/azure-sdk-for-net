@@ -31,9 +31,14 @@ parameters:
 - name: OsVmImage
   type: string
   default: MMSUbuntu18.04
+# This parameter is only necessary if there are multiple invocations of this template within the SAME STAGE.
+# When that occurs, provide a name other than the default value.
+- name: GenerateJobName
+  type: string
+  default: 'generate_matrix'
 
 jobs:
-- job: generate_matrix
+- job: ${{ parameters.GenerateJobName }}
   variables:
     displayNameFilter: $[ coalesce(variables.jobMatrixFilter, '.*') ]
   pool:
@@ -89,8 +94,8 @@ jobs:
     - template: ${{ parameters.JobTemplatePath }}
       parameters:
         UsePlatformContainer: false
-        Matrix: dependencies.generate_matrix.outputs['generate_vm_job_matrix_${{ config.Name }}.matrix']
-        DependsOn: generate_matrix
+        Matrix: dependencies.${{ parameters.GenerateJobName }}.outputs['generate_vm_job_matrix_${{ config.Name }}.matrix']
+        DependsOn: ${{ parameters.GenerateJobName }}
         CloudConfig: ${{ parameters.CloudConfig }}
         ${{ each param in parameters.AdditionalParameters }}:
           ${{ param.key }}: ${{ param.value }}
@@ -99,8 +104,8 @@ jobs:
     - template: ${{ parameters.JobTemplatePath }}
       parameters:
         UsePlatformContainer: true
-        Matrix: dependencies.generate_matrix.outputs['generate_container_job_matrix_${{ config.Name }}.matrix']
-        DependsOn: generate_matrix
+        Matrix: dependencies.${{ parameters.GenerateJobName }}.outputs['generate_container_job_matrix_${{ config.Name }}.matrix']
+        DependsOn: ${{ parameters.GenerateJobName }}
         CloudConfig: ${{ parameters.CloudConfig }}
         ${{ each param in parameters.AdditionalParameters }}:
           ${{ param.key }}: ${{ param.value }}

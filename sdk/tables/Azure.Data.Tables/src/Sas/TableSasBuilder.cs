@@ -41,9 +41,9 @@ namespace Azure.Data.Tables.Sas
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
             Argument.AssertNotNullOrEmpty(rawPermissions, nameof(tableName));
 
-            TableName = tableName;
+            TableName = tableName.ToLowerInvariant();
             ExpiresOn = expiresOn;
-            Permissions = rawPermissions;
+            Permissions = rawPermissions.ToLowerInvariant();
         }
 
         /// <summary>

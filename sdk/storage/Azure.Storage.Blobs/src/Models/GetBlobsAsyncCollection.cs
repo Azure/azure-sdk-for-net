@@ -116,6 +116,10 @@ namespace Azure.Storage.Blobs
             {
                 items.Add(ListBlobsIncludeItem.Versions);
             }
+            if ((states & BlobStates.DeletedWithVersions) == BlobStates.DeletedWithVersions)
+            {
+                items.Add(ListBlobsIncludeItem.DeletedWithVersions);
+            }
             return items.Count > 0 ? items : null;
         }
     }
