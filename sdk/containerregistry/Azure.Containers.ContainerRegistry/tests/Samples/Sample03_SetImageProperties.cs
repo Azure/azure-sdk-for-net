@@ -82,5 +82,26 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 CanDelete = true
             });
         }
+
+        //public async Task NationalCloudAuth()
+        //{
+        //    Identity.DefaultAzureCredential credential = new Identity.DefaultAzureCredential(
+        //        new DefaultAzureCredentialOptions()
+        //        {
+        //            AuthorityHost = AzureAuthorityHosts.AzureChina
+        //        });
+
+        //    ContainerRegistryClient client = new ContainerRegistryClient(new Uri("https://myreg.azurecr.us"),
+        //        new Identity.DefaultAzureCredential(
+        //            new DefaultAzureCredentialOptions()
+        //            {
+        //                AuthorityHost = AzureAuthorityHosts.AzureChina
+        //            }),
+        //        new ContainerRegistryClientOptions()
+        //        {
+        //            AuthenticationScope = "https://management.chinacloudapi.cn/.default"
+        //        });
+
+        //}
     }
 }

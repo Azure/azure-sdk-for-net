@@ -5,8 +5,8 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
-        "traceparent": "00-bcf74cd10e7fdb4dac3117c64e4752bc-0b9c8c1369669b4d-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210603.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-5eb49b3193468d43887efe9b95548dd6-44204cec22ab7f43-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210604.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "3274e0a58dfa49652c651f79db3a371c",
         "x-ms-return-client-request-id": "true"
       },
@@ -22,7 +22,7 @@
         "Connection": "keep-alive",
         "Content-Length": "214",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 03 Jun 2021 22:23:12 GMT",
+        "Date": "Fri, 04 Jun 2021 18:07:00 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -31,7 +31,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:library/hello-world:delete\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "621b5cfe-db59-4ea4-b6b3-cff45584253a"
+        "X-Ms-Correlation-Request-Id": "7b7ece24-d7b2-44cf-81bd-4bbff02bb46a"
       },
       "ResponseBody": {
         "errors": [
