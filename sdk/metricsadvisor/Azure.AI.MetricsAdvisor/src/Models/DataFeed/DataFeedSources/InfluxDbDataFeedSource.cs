@@ -57,17 +57,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The name of the database.
         /// </summary>
-        public string Database { get; }
+        public string Database { get; set; }
 
         /// <summary>
         /// The access username.
         /// </summary>
-        public string Username { get; }
+        public string Username { get; set; }
 
         /// <summary>
         /// The query to retrieve the data to be ingested.
         /// </summary>
-        public string Query { get; }
+        public string Query { get; set; }
 
         /// <summary>
         /// The connection string.
@@ -85,6 +85,30 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             get => Volatile.Read(ref _password);
             private set => Volatile.Write(ref _password, value);
+        }
+
+        /// <summary>
+        /// Updates the connection string.
+        /// </summary>
+        /// <param name="connectionString">The new connection string to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/> is empty.</exception>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+            ConnectionString = connectionString;
+        }
+
+        /// <summary>
+        /// Updates the password.
+        /// </summary>
+        /// <param name="password">The new password to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="password"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="password"/> is empty.</exception>
+        public void UpdatePassword(string password)
+        {
+            Argument.AssertNotNullOrEmpty(password, nameof(password));
+            Password = password;
         }
     }
 }

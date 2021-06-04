@@ -447,41 +447,47 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class AzureApplicationInsightsDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureApplicationInsightsDataFeedSource(string applicationId, string apiKey, string azureCloud, string query) { }
-        public string ApplicationId { get { throw null; } }
-        public string AzureCloud { get { throw null; } }
-        public string Query { get { throw null; } }
+        public string ApplicationId { get { throw null; } set { } }
+        public string AzureCloud { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public void UpdateApiKey(string apiKey) { }
     }
     public partial class AzureBlobDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureBlobDataFeedSource(string connectionString, string container, string blobTemplate) { }
-        public string BlobTemplate { get { throw null; } }
-        public string Container { get { throw null; } }
+        public string BlobTemplate { get { throw null; } set { } }
+        public string Container { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
     }
     public partial class AzureCosmosDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureCosmosDbDataFeedSource(string connectionString, string sqlQuery, string database, string collectionId) { }
-        public string CollectionId { get { throw null; } }
-        public string Database { get { throw null; } }
-        public string SqlQuery { get { throw null; } }
+        public string CollectionId { get { throw null; } set { } }
+        public string Database { get { throw null; } set { } }
+        public string SqlQuery { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
     }
     public partial class AzureDataExplorerDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureDataExplorerDataFeedSource(string connectionString, string query) { }
-        public string Query { get { throw null; } }
+        public string Query { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
     }
     public partial class AzureDataLakeStorageGen2DataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureDataLakeStorageGen2DataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate) { }
-        public string AccountName { get { throw null; } }
-        public string DirectoryTemplate { get { throw null; } }
-        public string FileSystemName { get { throw null; } }
-        public string FileTemplate { get { throw null; } }
+        public string AccountName { get { throw null; } set { } }
+        public string DirectoryTemplate { get { throw null; } set { } }
+        public string FileSystemName { get { throw null; } set { } }
+        public string FileTemplate { get { throw null; } set { } }
+        public void UpdateAccountKey(string accountKey) { }
     }
     public partial class AzureTableDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureTableDataFeedSource(string connectionString, string table, string query) { }
-        public string Query { get { throw null; } }
-        public string Table { get { throw null; } }
+        public string Query { get { throw null; } set { } }
+        public string Table { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BoundaryDirection : System.IEquatable<Azure.AI.MetricsAdvisor.Models.BoundaryDirection>
@@ -884,9 +890,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class InfluxDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public InfluxDbDataFeedSource(string connectionString, string database, string username, string password, string query) { }
-        public string Database { get { throw null; } }
-        public string Query { get { throw null; } }
-        public string Username { get { throw null; } }
+        public string Database { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public string Username { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
+        public void UpdatePassword(string password) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IngestionStatusType : System.IEquatable<Azure.AI.MetricsAdvisor.Models.IngestionStatusType>
@@ -1076,13 +1084,15 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MongoDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public MongoDbDataFeedSource(string connectionString, string database, string command) { }
-        public string Command { get { throw null; } }
-        public string Database { get { throw null; } }
+        public string Command { get { throw null; } set { } }
+        public string Database { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
     }
     public partial class MySqlDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public MySqlDataFeedSource(string connectionString, string query) { }
-        public string Query { get { throw null; } }
+        public string Query { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
     }
     public partial class NotificationHook
     {
@@ -1114,7 +1124,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class PostgreSqlDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public PostgreSqlDataFeedSource(string connectionString, string query) { }
-        public string Query { get { throw null; } }
+        public string Query { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
     }
     public partial class ServicePrincipalDatasourceCredential : Azure.AI.MetricsAdvisor.Models.DatasourceCredential
     {
@@ -1172,7 +1183,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class SqlServerDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public SqlServerDataFeedSource(string connectionString, string query) { }
-        public string Query { get { throw null; } }
+        public string Query { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
     }
     public partial class SuppressCondition
     {
