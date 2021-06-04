@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Data.Tables
+namespace Azure.Data.Tables.Models
 {
     [CodeGenModel("AzureDataTablesModelFactory")]
     public partial class TableModelFactory

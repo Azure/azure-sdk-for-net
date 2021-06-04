@@ -6,9 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.Data.Tables.Models;
 
-namespace Azure.Data.Tables
+namespace Azure.Data.Tables.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class TableModelFactory
