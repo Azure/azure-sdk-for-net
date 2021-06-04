@@ -119,5 +119,16 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             ConnectionString = connectionString;
         }
+
+        internal AuthenticationTypeEnum? GetAuthenticationTypeEnum() => Authentication switch
+        {
+            null => default(AuthenticationTypeEnum?),
+            AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
+            AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
+            AuthenticationType.SqlConnectionString => AuthenticationTypeEnum.AzureSQLConnectionString,
+            AuthenticationType.ServicePrincipal => AuthenticationTypeEnum.ServicePrincipal,
+            AuthenticationType.ServicePrincipalInKeyVault => AuthenticationTypeEnum.ServicePrincipalInKV,
+            _ => throw new InvalidOperationException($"Unknown authentication type: {Authentication}")
+        };
     }
 }

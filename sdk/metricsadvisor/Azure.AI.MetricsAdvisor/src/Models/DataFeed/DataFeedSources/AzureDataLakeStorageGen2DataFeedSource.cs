@@ -94,7 +94,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             /// Uses a Data Lake Storage Gen 2 shared key for authentication. You need to have a
             /// <see cref="DataLakeGen2SharedKeyDatasourceCredential"/> in the server in order to use this type of authentication.
             /// </summary>
-            SharedKeyCredential,
+            SharedKey,
 
             /// <summary>
             /// Uses Service Principal authentication. You need to have a <see cref="ServicePrincipalDatasourceCredential"/>
@@ -186,5 +186,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
             AccountKey = accountKey;
         }
+
+        internal AuthenticationTypeEnum? GetAuthenticationTypeEnum() => Authentication switch
+        {
+            null => default(AuthenticationTypeEnum?),
+            AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
+            AuthenticationType.SharedKey => AuthenticationTypeEnum.DataLakeGen2SharedKey,
+            AuthenticationType.ServicePrincipal => AuthenticationTypeEnum.ServicePrincipal,
+            AuthenticationType.ServicePrincipalInKeyVault => AuthenticationTypeEnum.ServicePrincipalInKV,
+            _ => throw new InvalidOperationException($"Unknown authentication type: {Authentication}")
+        };
     }
 }
