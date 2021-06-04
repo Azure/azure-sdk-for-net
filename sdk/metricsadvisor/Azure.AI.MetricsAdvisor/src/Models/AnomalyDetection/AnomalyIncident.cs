@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress("Property")]
     public partial class AnomalyIncident
     {
-        internal AnomalyIncident(Guid? dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startTime, DateTimeOffset endTime, SeriesIdentity rootNode, IncidentProperty property)
+        internal AnomalyIncident(string dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startTime, DateTimeOffset endTime, SeriesIdentity rootNode, IncidentProperty property)
         {
             DataFeedId = dataFeedId;
             MetricId = metricId;
@@ -39,6 +39,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Id { get; }
 
         /// <summary>
+        /// The unique identifier of the <see cref="DataFeed"/> in which this incident was detected. This
+        /// property is only populated when calling
+        /// <see cref="MetricsAdvisorClient.GetIncidents(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetIncidentsAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
+        /// For other overloads, this property will be <c>null</c>.
+        /// </summary>
+        public string DataFeedId { get; }
+
+        /// <summary>
         /// The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> that detected
         /// this <see cref="AnomalyIncident"/>.
         /// </summary>
@@ -50,6 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <see cref="AnomalyIncident"/> has been detected. This property is only populated when calling
         /// <see cref="MetricsAdvisorClient.GetIncidents(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
         /// <see cref="MetricsAdvisorClient.GetIncidentsAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
+        /// For other overloads, this property will be <c>null</c>.
         /// </summary>
         public string MetricId { get; }
 
@@ -95,7 +105,5 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// enough to make a prediction, or if the anomaly was not detected by a <see cref="SmartDetectionCondition"/>.
         /// </summary>
         public double? ExpectedValueOfRootNode { get; }
-
-        internal Guid? DataFeedId { get; }
     }
 }

@@ -406,6 +406,7 @@ int anomalyCount = 0;
 await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(alertConfigurationId, alertId, options))
 {
     Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
+    Console.WriteLine($"Data feed ID: {anomaly.DataFeedId}");
     Console.WriteLine($"Metric ID: {anomaly.MetricId}");
     Console.WriteLine($"Anomaly value: {anomaly.Value}");
 
