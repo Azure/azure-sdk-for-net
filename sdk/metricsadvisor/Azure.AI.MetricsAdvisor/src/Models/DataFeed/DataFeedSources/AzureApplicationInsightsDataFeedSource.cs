@@ -31,8 +31,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(apiKey, nameof(apiKey));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
-            Parameter = new AzureApplicationInsightsParameter(azureCloud, applicationId, apiKey, query);
-
             ApplicationId = applicationId;
             ApiKey = apiKey;
             AzureCloud = azureCloud;
@@ -43,8 +41,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(DataFeedSourceType.AzureApplicationInsights)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             ApplicationId = parameter.ApplicationId;
             ApiKey = parameter.ApiKey;

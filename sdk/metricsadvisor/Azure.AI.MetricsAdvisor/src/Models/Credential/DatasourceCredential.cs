@@ -10,7 +10,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Provides different ways of authenticating to a <see cref="DataFeedSource"/> for data ingestion when the
     /// default authentication method does not suffice. The supported credentials are:
     /// <list type="bullet">
+    ///   <item><see cref="DataLakeGen2SharedKeyDatasourceCredential"/></item>
     ///   <item><see cref="ServicePrincipalDatasourceCredential"/></item>
+    ///   <item><see cref="ServicePrincipalInKeyVaultDatasourceCredential"/></item>
+    ///   <item><see cref="SqlConnectionStringDatasourceCredential"/></item>
     /// </list>
     /// </summary>
     [CodeGenModel("DataSourceCredential")]
@@ -48,9 +51,29 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             DataSourceCredentialPatch patch = this switch
             {
+                DataLakeGen2SharedKeyDatasourceCredential c => new DataLakeGen2SharedKeyCredentialPatch()
+                {
+                    Parameters = new() { AccountKey = c.AccountKey }
+                },
                 ServicePrincipalDatasourceCredential c => new ServicePrincipalCredentialPatch()
                 {
                     Parameters = new() { ClientId = c.ClientId, ClientSecret = c.ClientSecret, TenantId = c.TenantId }
+                },
+                ServicePrincipalInKeyVaultDatasourceCredential c => new ServicePrincipalInKVCredentialPatch()
+                {
+                    Parameters = new()
+                    {
+                        KeyVaultEndpoint = c.Endpoint.AbsoluteUri,
+                        KeyVaultClientId = c.KeyVaultClientId,
+                        KeyVaultClientSecret = c.KeyVaultClientSecret,
+                        TenantId = c.TenantId,
+                        ServicePrincipalIdNameInKV = c.SecretNameForClientId,
+                        ServicePrincipalSecretNameInKV = c.SecretNameForClientSecret
+                    }
+                },
+                SqlConnectionStringDatasourceCredential c => new AzureSQLConnectionStringCredentialPatch()
+                {
+                    Parameters = new() { ConnectionString = c.ConnectionString }
                 },
                 _ => throw new InvalidOperationException("Invalid datasource credential type")
             };

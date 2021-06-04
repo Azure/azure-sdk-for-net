@@ -53,8 +53,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(container, nameof(container));
             Argument.AssertNotNullOrEmpty(blobTemplate, nameof(blobTemplate));
 
-            Parameter = new AzureBlobParameter(connectionString, container, blobTemplate);
-
             ConnectionString = connectionString;
             Container = container;
             BlobTemplate = blobTemplate;
@@ -64,8 +62,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(DataFeedSourceType.AzureBlob)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             ConnectionString = parameter.ConnectionString;
             Container = parameter.Container;

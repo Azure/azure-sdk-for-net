@@ -23,7 +23,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="clientId">The client ID of the service principal used for authentication.</param>
         /// <param name="clientSecret">The client secret of the service principal used for authentication.</param>
         /// <param name="tenantId">The tenant ID of the service principal used for authentication.</param>
-        public ServicePrincipalDatasourceCredential(string name, string clientId, string clientSecret, string tenantId) : base(name)
+        public ServicePrincipalDatasourceCredential(string name, string clientId, string clientSecret, string tenantId)
+            : base(name)
         {
             Argument.AssertNotNullOrEmpty(clientId, nameof(clientId));
             Argument.AssertNotNullOrEmpty(clientSecret, nameof(clientSecret));
@@ -35,7 +36,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             TenantId = tenantId;
         }
 
-        internal ServicePrincipalDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters) : base(dataSourceCredentialType, id, name, description)
+        internal ServicePrincipalDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters)
+            : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;
             ClientId = parameters.ClientId;
@@ -54,18 +56,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string TenantId { get; set; }
 
         /// <summary>
-        /// Updates the client secret.
-        /// </summary>
-        /// <param name="clientSecret">The client secret of the service principal used for authentication.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="clientSecret"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="clientSecret"/> is empty.</exception>
-        public void UpdateClientSecret(string clientSecret)
-        {
-            Argument.AssertNotNullOrEmpty(clientSecret, nameof(clientSecret));
-            ClientSecret = clientSecret;
-        }
-
-        /// <summary>
         /// The client Secret of the service principal used for authentication.
         /// </summary>
         internal string ClientSecret
@@ -78,5 +68,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Used by CodeGen during serialization.
         /// </summary>
         internal ServicePrincipalParam Parameters => new ServicePrincipalParam(ClientId, ClientSecret, TenantId);
+
+        /// <summary>
+        /// Updates the client secret.
+        /// </summary>
+        /// <param name="clientSecret">The client secret of the service principal used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="clientSecret"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="clientSecret"/> is empty.</exception>
+        public void UpdateClientSecret(string clientSecret)
+        {
+            Argument.AssertNotNullOrEmpty(clientSecret, nameof(clientSecret));
+            ClientSecret = clientSecret;
+        }
     }
 }
