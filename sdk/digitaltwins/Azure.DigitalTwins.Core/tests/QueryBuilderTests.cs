@@ -22,5 +22,11 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             new AdtQueryBuilder().Select("Room", "Factory").From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT Room, Factory FROM DIGITALTWINS");
         }
+
+        [Test]
+        public void SelectAggregateTests()
+        {
+            new AdtQueryBuilder().SelectTop(5).From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT TOP(5) FROM DIGITALTWINS");
+        }
     }
 }

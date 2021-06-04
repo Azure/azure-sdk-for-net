@@ -48,9 +48,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectTop(int count)
         {
-            // TODO -- FIXME
-            Console.WriteLine(count);
-            //_clause = new SelectClause(count.ToString(CultureInfo.InvariantCulture));
+            // TODO -- can we also have arguments? like property names?
+            // turn into correct format -- eg. SELECT TOP(3)
+            string countArg = new StringBuilder().Append("TOP").Append('(').Append(count).Append(')').ToString();
+
+            _clause = new SelectClause(new string[] { countArg });
             return _innerQuery;
         }
 
