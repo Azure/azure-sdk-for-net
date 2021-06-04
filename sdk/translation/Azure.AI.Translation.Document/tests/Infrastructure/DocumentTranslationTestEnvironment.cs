@@ -32,11 +32,11 @@ namespace Azure.AI.Translation.Document.Tests
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
-            string endpoint = Environment.GetEnvironmentVariable(EndpointEnvironmentVariableName);
+            string endpoint = GetVariable(EndpointEnvironmentVariableName);
             var client = new DocumentTranslationClient(new Uri(endpoint), Credential);
             try
             {
-                await client.GetDocumentFormatsAsync();
+                await client.GetAllTranslationStatusesAsync().ToEnumerableAsync();
             }
             catch (RequestFailedException e) when (e.Status == 401)
             {
