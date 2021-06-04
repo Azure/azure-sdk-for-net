@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeGen2SharedKeyDatasourceCredential"/> class.
         /// </summary>
-        /// <param name="name">A custom unique name for this <see cref="SqlConnectionStringDatasourceCredential"/> to be displayed on the web portal.</param>
+        /// <param name="name">A custom unique name for this <see cref="DataLakeGen2SharedKeyDatasourceCredential"/> to be displayed on the web portal.</param>
         /// <param name="accountKey">The account key to be used for authentication.</param>
         public DataLakeGen2SharedKeyDatasourceCredential(string name, string accountKey) : base(name)
         {
