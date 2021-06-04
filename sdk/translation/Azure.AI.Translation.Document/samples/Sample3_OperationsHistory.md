@@ -26,7 +26,7 @@ int docsCancelled = 0;
 int docsSucceeded = 0;
 int docsFailed = 0;
 
-await foreach (TranslationStatusResult translationStatus in client.GetTranslationsStatusesAsync())
+await foreach (TranslationStatusResult translationStatus in client.GetAllTranslationStatusesAsync())
 {
     if (!translationStatus.HasCompleted)
     {

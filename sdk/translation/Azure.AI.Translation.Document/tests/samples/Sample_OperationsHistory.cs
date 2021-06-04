@@ -31,7 +31,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             TimeSpan pollingInterval = new(1000);
 
-            foreach (TranslationStatusResult translationStatus in client.GetTranslationsStatuses())
+            foreach (TranslationStatusResult translationStatus in client.GetAllTranslationStatuses())
             {
                 if (!translationStatus.HasCompleted)
                 {
