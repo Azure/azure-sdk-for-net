@@ -3,6 +3,7 @@
 ## 1.0.0-beta.4 (Unreleased)
 
 ### New Features
+- Added `DatasourceCredential` CRUD operations to the `MetricsAdvisorAdministrationClient`. This API provides new ways of authenticating to a `DataFeedSource`.
 - Added properties `Value` and `ExpectedValue` to `DataPointAnomaly` to provide more information about the anomalous data point.
 - Added properties `ValueOfRootNode` and `ExpectedValueOfRootNode` to `AnomalyIncident` to provide more information about the anomalous data point at the root node of the indicent.
 - Response headers that were marked as `REDACTED` in error messages and logs are now exposed by default.
