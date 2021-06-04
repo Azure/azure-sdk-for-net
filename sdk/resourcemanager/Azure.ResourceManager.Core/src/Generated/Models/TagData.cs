@@ -7,10 +7,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Tag details. </summary>
-    public partial class TagDetails
+    public partial class TagData
     {
         /// <summary> Initializes a new instance of TagDetails. </summary>
-        internal TagDetails()
+        internal TagData()
         {
             Values = new ChangeTrackingList<TagValue>();
         }
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagName"> The tag name. </param>
         /// <param name="count"> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </param>
         /// <param name="values"> The list of tag values. </param>
-        internal TagDetails(string id, string tagName, TagCount count, IReadOnlyList<TagValue> values)
+        internal TagData(string id, string tagName, TagCount count, IReadOnlyList<TagValue> values)
         {
             Id = id;
             TagName = tagName;

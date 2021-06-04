@@ -97,6 +97,15 @@ namespace Azure.ResourceManager.Core
             return new LocationContainer(this);
         }
 
+        /// <summary>
+        /// Gets the tags container under this subscription.
+        /// </summary>
+        /// <returns> The tags container. </returns>
+        public virtual TagsContainer GetTags()
+        {
+            return new TagsContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id.SubscriptionId);
+        }
+
         /// <inheritdoc/>
         public override Response<Subscription> Get(CancellationToken cancellationToken = default)
         {

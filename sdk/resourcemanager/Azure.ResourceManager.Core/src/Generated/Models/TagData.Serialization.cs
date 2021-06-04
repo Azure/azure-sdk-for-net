@@ -7,9 +7,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class TagDetails
+    public partial class TagData
     {
-        internal static TagDetails DeserializeTagDetails(JsonElement element)
+        internal static TagData DeserializeTagDetails(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> tagName = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new TagDetails(id.Value, tagName.Value, count.Value, Optional.ToList(values));
+            return new TagData(id.Value, tagName.Value, count.Value, Optional.ToList(values));
         }
     }
 }

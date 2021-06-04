@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Core.Tests
         [OneTimeTearDown]
         protected void GlobalTagCleanup()
         {
-            var container = GetTagsContainer();
-            var operation = GetTagsOperations();
-            var listResult = container.List().Where(x => x.TagName.StartsWith("tagName"));
+            var container = Client.DefaultSubscription.GetTags();
+            var operation = Client.GetTagOperations();
+            var listResult = container.List().Where(x => x.Details.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
-                operation.Delete(item.TagName);
+                operation.Delete(item.Details.TagName);
             };
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void GetTagsOperation()
         {
-            var operation = GetTagsOperations();
+            var operation = Client.GetTagOperations();
             string subscriptionId;
             Assert.IsTrue(operation.Id.TryGetSubscriptionId(out subscriptionId));
             Assert.AreEqual(subscriptionId, TestEnvironment.SubscriptionId);
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task ValueTest()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var operation = GetTagsOperations();
-            var container = GetTagsContainer();
+            var operation = Client.GetTagOperations();
+            var container = Client.DefaultSubscription.GetTags();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             // Assert create tag value
             var createValue = await operation.CreateOrUpdateValueAsync(tagName, "testValue").ConfigureAwait(false);
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Core.Tests
             // Assert delete tag value
             await operation.DeleteValueAsync(tagName, "testValue").ConfigureAwait(false);
             var listResult = await container.ListAsync().ToEnumerableAsync();
-            var expectTag = listResult.Where(x => x.TagName == tagName).FirstOrDefault();
-            var expectValue = expectTag.Values.Where(x => x.TagValueValue == "testValue").FirstOrDefault();
+            var expectTag = listResult.Where(x => x.Details.TagName == tagName).FirstOrDefault();
+            var expectValue = expectTag.Details.Values.Where(x => x.TagValueValue == "testValue").FirstOrDefault();
             Assert.IsNull(expectValue);
         }
 
@@ -62,23 +62,13 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task DeleteTag()
         {
             var tagName = Recording.GenerateAssetName("tagName");
-            var operation = GetTagsOperations();
-            var container = GetTagsContainer();
+            var operation = Client.GetTagOperations();
+            var container = Client.DefaultSubscription.GetTags();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             await operation.DeleteAsync(tagName).ConfigureAwait(false);
             var listResult = await container.ListAsync().ToEnumerableAsync();
-            var expectTag = listResult.Where(x => x.TagName.Equals(tagName)).FirstOrDefault();
+            var expectTag = listResult.Where(x => x.Details.TagName.Equals(tagName)).FirstOrDefault();
             Assert.IsNull(expectTag);
-        }
-
-        protected TagsContainer GetTagsContainer()
-        {
-            return new TagsContainer(new ClientContext(Client.DefaultSubscription.ClientOptions, Client.DefaultSubscription.Credential, Client.DefaultSubscription.BaseUri, Client.DefaultSubscription.Pipeline), Client.DefaultSubscription.Id.SubscriptionId);
-        }
-
-        protected TagsOperations GetTagsOperations()
-        {
-            return new TagsOperations(new ClientContext(Client.DefaultSubscription.ClientOptions, Client.DefaultSubscription.Credential, Client.DefaultSubscription.BaseUri, Client.DefaultSubscription.Pipeline), Client.DefaultSubscription.Id.SubscriptionId);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     {
         internal static TagsListResult DeserializeTagsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<TagDetails>> value = default;
+            Optional<IReadOnlyList<TagData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TagDetails> array = new List<TagDetails>();
+                    List<TagData> array = new List<TagData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagDetails.DeserializeTagDetails(item));
+                        array.Add(TagData.DeserializeTagDetails(item));
                     }
                     value = array;
                     continue;

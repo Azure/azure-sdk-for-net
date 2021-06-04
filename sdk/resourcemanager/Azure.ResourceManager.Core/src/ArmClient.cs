@@ -145,6 +145,15 @@ namespace Azure.ResourceManager.Core
             return new ResourceGroupOperations(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id.SubscriptionId), id.ResourceGroupName);
         }
 
+        /// <summary>
+        /// Gets the tags operations under this subscription.
+        /// </summary>
+        /// <returns> The tags operations. </returns>
+        public virtual TagsOperations GetTagOperations()
+        {
+            return new TagsOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), DefaultSubscription.Id.SubscriptionId);
+        }
+
         private Subscription GetDefaultSubscription()
         {
             var sub = GetSubscriptions().List().FirstOrDefault();

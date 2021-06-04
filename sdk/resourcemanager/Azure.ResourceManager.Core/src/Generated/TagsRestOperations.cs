@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        public async Task<Response<TagDetails>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
+        public async Task<Response<TagData>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.Core
                 case 200:
                 case 201:
                     {
-                        TagDetails value = default;
+                        TagData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagDetails.DeserializeTagDetails(document.RootElement);
+                        value = TagData.DeserializeTagDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        public Response<TagDetails> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
+        public Response<TagData> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -260,9 +260,9 @@ namespace Azure.ResourceManager.Core
                 case 200:
                 case 201:
                     {
-                        TagDetails value = default;
+                        TagData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagDetails.DeserializeTagDetails(document.RootElement);
+                        value = TagData.DeserializeTagDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

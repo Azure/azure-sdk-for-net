@@ -45,13 +45,14 @@ namespace Azure.ResourceManager.Core
         /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TagDetails>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Tag>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsOperations.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("TagsContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                return await RestClient.CreateOrUpdateAsync(tagName, cancellationToken).ConfigureAwait(false);
+                var response =  await RestClient.CreateOrUpdateAsync(tagName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Tag(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -63,13 +64,14 @@ namespace Azure.ResourceManager.Core
         /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TagDetails> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
+        public virtual Response<Tag> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagsOperations.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("TagsContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                return RestClient.CreateOrUpdate(tagName, cancellationToken);
+                var response = RestClient.CreateOrUpdate(tagName, cancellationToken);
+                return Response.FromValue(new Tag(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -80,16 +82,16 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<TagDetails> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Tag> ListAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TagDetails>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Tag>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("TagsOperations.List");
+                using var scope0 = Diagnostics.CreateScope("TagsContainer.List");
                 scope0.Start();
                 try
                 {
                     var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Tag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -97,14 +99,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            async Task<Page<TagDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Tag>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("TagsOperations.List");
+                using var scope0 = Diagnostics.CreateScope("TagsContainer.List");
                 scope0.Start();
                 try
                 {
                     var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Tag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -117,16 +119,16 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<TagDetails> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<Tag> List(CancellationToken cancellationToken = default)
         {
-            Page<TagDetails> FirstPageFunc(int? pageSizeHint)
+            Page<Tag> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("TagsOperations.List");
+                using var scope0 = Diagnostics.CreateScope("TagsContainer.List");
                 scope0.Start();
                 try
                 {
                     var response = RestClient.List(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Tag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -134,14 +136,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            Page<TagDetails> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Tag> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("TagsOperations.List");
+                using var scope0 = Diagnostics.CreateScope("TagsContainer.List");
                 scope0.Start();
                 try
                 {
                     var response = RestClient.ListNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Tag(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
