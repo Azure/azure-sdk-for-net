@@ -12,8 +12,8 @@ namespace Azure.Messaging.WebPubSub
         public WebPubSubServiceClient(string connectionString, string hub, Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions options) { }
         public WebPubSubServiceClient(System.Uri endpoint, string hub, Azure.AzureKeyCredential credential) { }
         public WebPubSubServiceClient(System.Uri endpoint, string hub, Azure.AzureKeyCredential credential, Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions options) { }
-        public System.Uri Endpoint { get { throw null; } }
-        public string Hub { get { throw null; } }
+        public virtual System.Uri Endpoint { get { throw null; } }
+        public virtual string Hub { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AddConnectionToGroup(string group, string connectionId, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddConnectionToGroupAsync(string group, string connectionId, Azure.RequestOptions requestOptions = null) { throw null; }
