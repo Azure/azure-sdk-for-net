@@ -10,13 +10,15 @@ portfolio, Azure Confidential Ledger runs in SGX enclaves. It is built on Micros
 This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
 
 ### Install the package
+
 Install the Confidential Ledger client library for .NET with [NuGet][client_nuget_package]:
 
-```
+```bash
 dotnet add package Azure.Security.ConfidentialLedger --prerelease
 ```
 
 ### Prerequisites
+
 * An [Azure subscription][azure_sub].
 * A running instance of Azure Confidential Ledger.
 * A registered user in the Confidential Ledger with `Administrator` privileges.
@@ -32,6 +34,7 @@ This document demonstrates using [DefaultAzureCredential][default_cred_ref] to a
 As an alternative to Azure Active Directory, clients may choose to use a client certificate to authenticate via mutual TLS.
 
 ### Create a client
+
 `DefaultAzureCredential` will automatically handle most Azure SDK client scenarios. To get started, set environment variables for the AAD identity registered with your Confidential Ledger.
 ```bash
 export AZURE_CLIENT_ID="generated app id"
@@ -95,7 +98,9 @@ var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedg
 ```
 
 ## Key concepts
+
 ### Ledger entries
+
 Every write to Confidential Ledger generates an immutable ledger entry in the service. Writes are uniquely identified by transaction ids that increment with each write.
 
 ```C# Snippet:AppendToLedger
@@ -121,6 +126,7 @@ Console.WriteLine($"Transaction status: {status}");
 ```
 
 #### Receipts
+
 State changes to the Confidential Ledger are saved in a data structure called a Merkle tree. To cryptographically verify that writes were correctly saved, a Merkle proof, or receipt, can be retrieved for any transaction id.
 
 ```C# Snippet:GetReceipt
@@ -131,6 +137,7 @@ Console.WriteLine(receiptJson);
 ```
 
 #### Sub-ledgers
+
 While most use cases will involve one ledger, we provide the sub-ledger feature in case different logical groups of data need to be stored in the same Confidential Ledger.
 
 ```C# Snippet:SubLedger
@@ -231,6 +238,7 @@ Console.WriteLine($"The latest ledger entry from the sub-ledger is {latestSubLed
 ```
 
 ##### Ranged queries
+
 Ledger entries in a sub-ledger may be retrieved over a range of transaction ids.
 
 ```C# Snippet:RangedQuery
@@ -238,6 +246,7 @@ ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: "4.5");
 ```
 
 ### User management
+
 Users are managed directly with the Confidential Ledger instead of through Azure. New users may be AAD-based or certificate-based.
 
 ```C# Snippet:NewUser
@@ -249,6 +258,7 @@ ledgerClient.CreateOrUpdateUser(
 
 
 ### Confidential consortium and enclave verifications
+
 One may want to validate details about the Confidential Ledger for a variety of reasons. For example, you may want to view details about how Microsoft may manage your Confidential Ledger as part of [Confidential Consortium Framework governance](https://microsoft.github.io/CCF/main/governance/index.html), or verify that your Confidential Ledger is indeed running in SGX enclaves. A number of client methods are provided for these use cases.
 
 ```C# Snippet:Consortium
@@ -273,7 +283,6 @@ Console.WriteLine(enclavesJson);
 ```
 
 [Microsoft Azure Attestation Service](https://azure.microsoft.com/services/azure-attestation/) is one provider of SGX enclave quotes.
-
 
 ### Thread safety
 
@@ -311,7 +320,6 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 To learn more about other logging mechanisms see [here][logging].
 
-
 ## Next steps
 
 For more extensive documentation on Azure Confidential Ledger, see the API [reference documentation](https://azure.github.io/azure-sdk-for-net/).
@@ -331,14 +339,19 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-[client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/confidentialledger
-[client_nuget_package]: https://www.nuget.org/packages?q=Azure.Data.ConfidentialLedger
+[client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/confidentialledger/Azure.Security.ConfidentialLedger
+[client_nuget_package]: https://www.nuget.org/packages?q=Azure.Security.ConfidentialLedger
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_cloud_shell]: https://shell.azure.com/bash
 [azure_confidential_computing]: https://azure.microsoft.com/solutions/confidential-compute
 [azure_sub]: https://azure.microsoft.com/free
 [ccf]: https://github.com/Microsoft/CCF
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct
-[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq
+[default_cred_ref]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+[logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq
+[cla]: https://cla.microsoft.com
+[coc_contact]: mailto:opencode@microsoft.com
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fconfidentialledger%2FAzure.Template%2FREADME.png)

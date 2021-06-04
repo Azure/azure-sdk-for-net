@@ -43,6 +43,34 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        public void UpdateDatasourceCredentialValidatesArguments()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            Assert.That(() => adminClient.UpdateDatasourceCredentialAsync(null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDatasourceCredential(null), Throws.InstanceOf<ArgumentNullException>());
+
+            var credentialWithNullId = new ServicePrincipalDatasourceCredential("name", "clientId", "clientSecret", "tenantId");
+
+            Assert.That(() => adminClient.UpdateDatasourceCredentialAsync(credentialWithNullId), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDatasourceCredential(credentialWithNullId), Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void UpdateDatasourceCredentialRespectsTheCancellationToken()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var credential = new ServicePrincipalDatasourceCredential(default, FakeGuid, default, default, new ServicePrincipalParam("clientId", "clientSecret"));
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(() => adminClient.UpdateDatasourceCredentialAsync(credential, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateDatasourceCredential(credential, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+        }
+
+        [Test]
         public void GetDatasourceCredentialValidatesArguments()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();

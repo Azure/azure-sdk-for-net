@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using Azure.Core;
 
@@ -20,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <param name="name">A custom unique name for this <see cref="ServicePrincipalDatasourceCredential"/> to be displayed on the web portal.</param>
         /// <param name="clientId">The client ID of the service principal used for authentication.</param>
-        /// <param name="clientSecret">The client Secret of the service principal used for authentication.</param>
+        /// <param name="clientSecret">The client secret of the service principal used for authentication.</param>
         /// <param name="tenantId">The tenant ID of the service principal used for authentication.</param>
         public ServicePrincipalDatasourceCredential(string name, string clientId, string clientSecret, string tenantId) : base(name)
         {
@@ -45,12 +46,24 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The client ID of the service principal used for authentication.
         /// </summary>
-        public string ClientId { get; }
+        public string ClientId { get; set; }
 
         /// <summary>
         /// The tenant ID of the service principal used for authentication.
         /// </summary>
-        public string TenantId { get; }
+        public string TenantId { get; set; }
+
+        /// <summary>
+        /// Updates the client secret.
+        /// </summary>
+        /// <param name="clientSecret">The client secret of the service principal used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="clientSecret"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="clientSecret"/> is empty.</exception>
+        public void UpdateClientSecret(string clientSecret)
+        {
+            Argument.AssertNotNullOrEmpty(clientSecret, nameof(clientSecret));
+            ClientSecret = clientSecret;
+        }
 
         /// <summary>
         /// The client Secret of the service principal used for authentication.
