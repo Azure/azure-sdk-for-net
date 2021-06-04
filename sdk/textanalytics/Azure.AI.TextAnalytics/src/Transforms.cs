@@ -328,7 +328,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     Domain = action.DomainFilter.GetString() ?? (PiiTaskParametersDomain?)null,
                     ModelVersion = action.ModelVersion,
-                    StringIndexType = action.StringIndexType,
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
                     LoggingOptOut = action.DisableServiceLogs
                     // Categories are not enabled because of https://github.com/Azure/azure-sdk-for-net/issues/19237
                 }
@@ -342,7 +342,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new EntityLinkingTaskParameters()
                 {
                     ModelVersion = action.ModelVersion,
-                    StringIndexType = action.StringIndexType,
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
                     LoggingOptOut = action.DisableServiceLogs
                 }
             };
@@ -355,7 +355,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new EntitiesTaskParameters()
                 {
                     ModelVersion = action.ModelVersion,
-                    StringIndexType = action.StringIndexType,
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
                     LoggingOptOut = action.DisableServiceLogs
                 }
             };
@@ -380,7 +380,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new SentimentAnalysisTaskParameters()
                 {
                     ModelVersion = action.ModelVersion,
-                    StringIndexType = action.StringIndexType,
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
                     LoggingOptOut = action.DisableServiceLogs,
                     OpinionMining = action.IncludeOpinionMining
                 }
