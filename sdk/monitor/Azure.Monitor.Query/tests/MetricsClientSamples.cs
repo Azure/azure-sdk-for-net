@@ -11,7 +11,6 @@ namespace Azure.Monitor.Query.Tests
 {
     public class MetricsClientSamples: SamplesBase<MonitorQueryClientTestEnvironment>
     {
-        [Test]
         public async Task QueryMetrics()
         {
             #region Snippet:QueryMetrics

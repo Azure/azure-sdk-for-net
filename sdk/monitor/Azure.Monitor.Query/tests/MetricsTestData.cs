@@ -54,7 +54,15 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task SendData()
         {
-            var senderClient = new MetricsSenderClient(_testEnvironment.Location, _testEnvironment.MetricsIngestionEndpoint, _testEnvironment.MetricsResource, _testEnvironment.Credential, new SenderClientOptions());
+            var senderClient = new MetricsSenderClient(
+                _testEnvironment.Location,
+                _testEnvironment.MetricsIngestionEndpoint,
+                _testEnvironment.MetricsResource,
+                _testEnvironment.Credential,
+                new SenderClientOptions()
+                {
+                    Diagnostics = { IsLoggingContentEnabled = true }
+                });
 
             var names = new[] {Name1, Name2};
 

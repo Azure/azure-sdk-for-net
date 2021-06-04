@@ -17,6 +17,7 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class LogsQueryClient
     {
+        private static readonly TimeSpan _networkTimeoutOffset = TimeSpan.FromSeconds(15);
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
@@ -226,7 +227,8 @@ namespace Azure.Monitor.Query
 
             if (options?.ServerTimeout != null)
             {
-                message.NetworkTimeout = options.ServerTimeout;
+                // Offset the service timeout a bit to make sure we have time to receive the response.
+                message.NetworkTimeout = options.ServerTimeout.Value.Add(_networkTimeoutOffset);
             }
 
             if (async)

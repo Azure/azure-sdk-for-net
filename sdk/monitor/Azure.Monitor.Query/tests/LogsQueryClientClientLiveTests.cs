@@ -32,7 +32,10 @@ namespace Azure.Monitor.Query.Tests
             return InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new LogsQueryClientOptions())
+                InstrumentClientOptions(new LogsQueryClientOptions()
+                {
+                    Diagnostics = { IsLoggingContentEnabled = true }
+                })
             ));
         }
 
@@ -444,12 +447,21 @@ namespace Azure.Monitor.Query.Tests
 
             LogsBatchQuery batch = new LogsBatchQuery();
             batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange);
-            var batchResult = await client.QueryBatchAsync(batch);
+            List<Task> tasks = new();
+            for (int i = 0; i < 30; i++)
+            {
+                tasks.Add(Task.Run(async () =>
+                {
+                    var batchResult = await client.QueryBatchAsync(batch);
 
-            var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
+                    var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
 
-            Assert.AreEqual("queryId", exception.ParamName);
-            StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of the LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
+                    Assert.AreEqual("queryId", exception.ParamName);
+                    StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of the LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
+                }));
+            }
+
+            await Task.WhenAll(tasks);
         }
 
         [RecordedTest]
@@ -506,7 +518,9 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.QueryAsync(TestEnvironment.WorkspaceId, "range x from 1 to 100000000000 step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
+            // Punch through caching
+            var cnt = 100000000000 + Recording.Random.Next(10000);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.QueryAsync(TestEnvironment.WorkspaceId, $"range x from 1 to {cnt} step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
             {
                 ServerTimeout = TimeSpan.FromSeconds(1)
             }));

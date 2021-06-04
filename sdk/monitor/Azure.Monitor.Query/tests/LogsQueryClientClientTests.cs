@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query.Tests
                 Assert.True(message.Request.Headers.TryGetValue("prefer", out preferHeader));
                 networkOverride = message.NetworkTimeout;
 
-                return new MockResponse(500);
+                return new MockResponse(200);
             });
 
             var client = new LogsQueryClient(new Uri("https://api.loganalytics.io"), new MockCredential(), new LogsQueryClientOptions()
