@@ -6,7 +6,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Custom object for a SELECT clause. Only meant to be used when adding SELECT to a query. Hidden from user.
     /// </summary>
-    public class SelectClause : BaseClause
+    internal class SelectClause : BaseClause
     {
         /// <summary>
         /// The argument for the SELECT clause (eg. *).

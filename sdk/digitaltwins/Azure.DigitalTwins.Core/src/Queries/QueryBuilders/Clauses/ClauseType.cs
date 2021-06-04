@@ -6,7 +6,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Types of clauses that can be added to a query.
     /// </summary>
-    public enum ClauseType
+    internal enum ClauseType
     {
         /// <summary>
         /// Select clause.

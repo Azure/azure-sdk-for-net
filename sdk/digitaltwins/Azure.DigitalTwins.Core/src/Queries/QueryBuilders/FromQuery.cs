@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
@@ -9,14 +10,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Query object that already contains a select clause.
     /// </summary>
-    public class FromQuery : QueryBase<FromClause>
+    public class FromQuery : QueryBase
     {
         private WhereQuery _innerQuery;
         private AdtQueryBuilder _parent;
+        private IList<FromClause> _clauses;
 
         internal FromQuery(AdtQueryBuilder parent, WhereQuery selectPart)
         {
             _parent = parent;
+            _clauses = new List<FromClause>();
             _innerQuery = selectPart;
         }
 
@@ -28,7 +31,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public WhereQuery From(AdtCollection collection)
         {
             Console.WriteLine(collection);
-            Clauses.Add(new FromClause(collection));
+            _clauses.Add(new FromClause(collection));
             return _innerQuery;
         }
 
@@ -41,7 +44,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public WhereQuery From(string collection)
         {
             Console.WriteLine(collection);
-            Clauses.Add(new FromClause(collection));
+            _clauses.Add(new FromClause(collection));
             return _innerQuery;
         }
 

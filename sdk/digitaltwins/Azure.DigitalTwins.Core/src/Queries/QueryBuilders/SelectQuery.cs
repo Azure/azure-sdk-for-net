@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using Azure.DigitalTwins.Core.Queries.QueryBuilders;
+using System.Collections.Generic;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
@@ -11,10 +12,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Custom ADT query builder class that facilitates building queries against an ADT instance.
     /// </summary>
-    public class SelectQuery : QueryBase<SelectClause>
+    public sealed class SelectQuery : QueryBase
     {
         private readonly FromQuery _innerQuery;
         private readonly AdtQueryBuilder _parent;
+        private IList<SelectClause> _clauses;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectQuery"/> class.
@@ -23,6 +25,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             _parent = parent;
             _innerQuery = select;
+            _clauses = new List<SelectClause>();
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public FromQuery Select(params string[] args)
         {
             Console.WriteLine(args);
-            Clauses.Add(new SelectClause(args[0]));
+            _clauses.Add(new SelectClause(args[0]));
             return _innerQuery;
         }
 
@@ -46,7 +49,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public FromQuery SelectTop(int count)
         {
             Console.WriteLine(count);
-            Clauses.Add(new SelectClause(count.ToString(CultureInfo.InvariantCulture)));
+            _clauses.Add(new SelectClause(count.ToString(CultureInfo.InvariantCulture)));
             return _innerQuery;
         }
 
@@ -58,7 +61,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public FromQuery SelectCount(params string[] args)
         {
             Console.WriteLine(args);
-            Clauses.Add(new SelectClause(args[0]));
+            _clauses.Add(new SelectClause(args[0]));
             return _innerQuery;
         }
 

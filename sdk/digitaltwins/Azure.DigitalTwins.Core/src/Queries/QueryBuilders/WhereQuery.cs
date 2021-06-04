@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
@@ -9,13 +10,15 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Query that already contains a SELECT and FROM clause.
     /// </summary>
-    public class WhereQuery : QueryBase<WhereClause>
+    public class WhereQuery : QueryBase
     {
         private AdtQueryBuilder _parent;
+        private IList<WhereClause> _clauses;
 
         internal WhereQuery(AdtQueryBuilder parent)
         {
             _parent = parent;
+            _clauses = new List<WhereClause>();
         }
 
         /// <summary>

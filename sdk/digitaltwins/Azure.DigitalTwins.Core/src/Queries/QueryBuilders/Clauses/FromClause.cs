@@ -6,7 +6,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Custom object for a FROM clause. Only meant to be used when adding FROM to a query. Hidden from user.
     /// </summary>
-    public class FromClause : BaseClause
+    internal class FromClause : BaseClause
     {
         private string _collection;
 

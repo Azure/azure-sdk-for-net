@@ -6,7 +6,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Custom object for a WHERE clause. Only meant to be used when adding WHERE to a query. Hidden from user.
     /// </summary>
-    public class WhereClause : BaseClause
+    internal class WhereClause : BaseClause
     {
         /// <summary>
         /// Condition object that encodes the logical condition behind the WHERE clause.

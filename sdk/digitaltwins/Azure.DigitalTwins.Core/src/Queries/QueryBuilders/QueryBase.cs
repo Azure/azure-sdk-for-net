@@ -9,14 +9,8 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
     /// <summary>
     ///
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public abstract class QueryBase<T> where T : BaseClause
+    public abstract class QueryBase
     {
-        /// <summary>
-        ///
-        /// </summary>
-        public IList<T> Clauses => new List<T>();
-
         /// <summary>
         ///
         /// </summary>
