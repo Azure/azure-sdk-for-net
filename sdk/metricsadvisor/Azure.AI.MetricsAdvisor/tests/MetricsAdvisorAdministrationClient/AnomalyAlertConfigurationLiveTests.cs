@@ -194,7 +194,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         UpperBound = 20.0,
                         LowerBound = 10.0,
                         CompanionMetricId = MetricId,
-                        TriggerForMissing = true
+                        ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
@@ -239,7 +239,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
             Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(MetricId));
-            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.True);
+            Assert.That(createdMetricAlertConfig.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
             Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
             Assert.That(createdMetricAlertConfig.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
@@ -318,7 +318,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.Null);
             Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.False);
+            Assert.That(createdMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
             Assert.That(createdMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Null);
 
             Assert.That(createdMetricAlertConfig0.AlertSnoozeCondition, Is.Null);
@@ -341,7 +341,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.UpperBound, Is.Null);
             Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
             Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.False);
+            Assert.That(createdMetricAlertConfig1.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
             Assert.That(createdMetricAlertConfig1.AlertConditions.SeverityCondition, Is.Null);
 
             Assert.That(createdMetricAlertConfig1.AlertSnoozeCondition, Is.Null);
@@ -373,7 +373,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         UpperBound = 20.0,
                         LowerBound = 10.0,
                         CompanionMetricId = MetricId,
-                        TriggerForMissing = true
+                        ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
@@ -435,7 +435,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(MetricId));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.True);
+            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
@@ -488,7 +488,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         UpperBound = 20.0,
                         LowerBound = 10.0,
                         CompanionMetricId = MetricId,
-                        TriggerForMissing = true
+                        ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
@@ -550,7 +550,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(20.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(10.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.EqualTo(MetricId));
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.True);
+            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.True);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Low));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
@@ -603,7 +603,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         UpperBound = 20.0,
                         LowerBound = 10.0,
                         CompanionMetricId = MetricId,
-                        TriggerForMissing = true
+                        ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
@@ -652,7 +652,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.UpperBound = 15.0;
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.LowerBound = 5.0;
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.CompanionMetricId = null;
-            metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.TriggerForMissing = false;
+            metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing = false;
 
             metricAlertConfigToUpdate.AlertConditions.SeverityCondition = new SeverityCondition(AnomalySeverity.Medium, AnomalySeverity.High);
 
@@ -688,7 +688,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(15.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(5.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.False);
+            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.High));
@@ -745,7 +745,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         UpperBound = 20.0,
                         LowerBound = 10.0,
                         CompanionMetricId = MetricId,
-                        TriggerForMissing = true
+                        ShouldAlertIfDataPointMissing = true
                     },
                     SeverityCondition = new SeverityCondition(AnomalySeverity.Low, AnomalySeverity.Medium)
                 }
@@ -794,7 +794,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.UpperBound = 15.0;
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.LowerBound = 5.0;
             metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.CompanionMetricId = null;
-            metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.TriggerForMissing = false;
+            metricAlertConfigToUpdate.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing = false;
 
             metricAlertConfigToUpdate.AlertConditions.SeverityCondition = new SeverityCondition(AnomalySeverity.Medium, AnomalySeverity.High);
 
@@ -830,7 +830,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.UpperBound, Is.EqualTo(15.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.LowerBound, Is.EqualTo(5.0));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.CompanionMetricId, Is.Null);
-            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.TriggerForMissing, Is.False);
+            Assert.That(updatedMetricAlertConfig0.AlertConditions.MetricBoundaryCondition.ShouldAlertIfDataPointMissing, Is.False);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition, Is.Not.Null);
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MinimumAlertSeverity, Is.EqualTo(AnomalySeverity.Medium));
             Assert.That(updatedMetricAlertConfig0.AlertConditions.SeverityCondition.MaximumAlertSeverity, Is.EqualTo(AnomalySeverity.High));
@@ -1010,7 +1010,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(boundaryCondition.CompanionMetricId, Is.Not.Empty);
                 }
 
-                Assert.That(boundaryCondition.TriggerForMissing, Is.Not.Null);
+                Assert.That(boundaryCondition.ShouldAlertIfDataPointMissing, Is.Not.Null);
             }
 
             if (severityCondition != null)
