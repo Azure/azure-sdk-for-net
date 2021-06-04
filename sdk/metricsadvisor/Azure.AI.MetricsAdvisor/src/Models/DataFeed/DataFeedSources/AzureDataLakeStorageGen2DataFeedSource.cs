@@ -77,28 +77,50 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// The different ways of authenticating to an <see cref="AzureDataLakeStorageGen2DataFeedSource"/>. Be aware that
+        /// some authentication types require you to have a <see cref="DatasourceCredential"/> in the service. In this
+        /// case, you also need to set the property <see cref="DatasourceCredentialId"/> to specify which credential
+        /// to use. Defaults to <see cref="Basic"/>.
         /// </summary>
         public enum AuthenticationType
         {
             /// <summary>
+            /// Only uses the <see cref="AccountKey"/> present in this <see cref="AzureDataLakeStorageGen2DataFeedSource"/>
+            /// instance for authentication.
             /// </summary>
             Basic,
+
             /// <summary>
+            /// Uses a Data Lake Storage Gen 2 shared key for authentication. You need to have a
+            /// <see cref="DataLakeGen2SharedKeyDatasourceCredential"/> in the server in order to use this type of authentication.
             /// </summary>
             SharedKeyCredential,
+
             /// <summary>
+            /// Uses Service Principal authentication. You need to have a <see cref="ServicePrincipalDatasourceCredential"/>
+            /// in the server in order to use this type of authentication.
             /// </summary>
             ServicePrincipal,
+
             /// <summary>
+            /// Uses Service Principal authentication, but the client ID and the client secret must be
+            /// stored in a Key Vault resource. You need to have a <see cref="ServicePrincipalInKeyVaultDatasourceCredential"/>
+            /// in the server in order to use this type of authentication.
             /// </summary>
             ServicePrincipalInKeyVault
         };
 
         /// <summary>
+        /// The method used to authenticate to this <see cref="AzureDataLakeStorageGen2DataFeedSource"/>. Be aware that some
+        /// authentication types require you to have a <see cref="DatasourceCredential"/> in the service. In this
+        /// case, you also need to set the property <see cref="DatasourceCredentialId"/> to specify which credential
+        /// to use. Defaults to <see cref="AuthenticationType.Basic"/>.
         /// </summary>
         public AuthenticationType? Authentication { get; set; }
 
         /// <summary>
+        /// The ID of the <see cref="DatasourceCredential"/> to use for authentication. The type of authentication to use
+        /// must also be specified in the property <see cref="Authentication"/>.
         /// </summary>
         public string DatasourceCredentialId { get; set; }
 

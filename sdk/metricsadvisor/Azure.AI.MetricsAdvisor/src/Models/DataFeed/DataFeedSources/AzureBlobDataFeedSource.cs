@@ -69,18 +69,26 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// The different ways of authenticating to an <see cref="AzureBlobDataFeedSource"/>.
+        /// Defaults to <see cref="Basic"/>.
         /// </summary>
         public enum AuthenticationType
         {
             /// <summary>
+            /// Only uses the <see cref="ConnectionString"/> present in this <see cref="AzureBlobDataFeedSource"/>
+            /// instance for authentication.
             /// </summary>
             Basic,
+
             /// <summary>
+            /// Uses Managed Identity authentication.
             /// </summary>
             ManagedIdentity
         };
 
         /// <summary>
+        /// The method used to authenticate to this <see cref="AzureDataExplorerDataFeedSource"/>. Defaults to
+        /// <see cref="AuthenticationType.Basic"/>.
         /// </summary>
         public AuthenticationType? Authentication { get; set; }
 
