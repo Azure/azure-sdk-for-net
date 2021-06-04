@@ -208,7 +208,7 @@ await foreach (DocumentStatusResult document in operation.Value)
     if (document.Status == TranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-        Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
+        Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else
@@ -229,7 +229,7 @@ int docsCancelled = 0;
 int docsSucceeded = 0;
 int docsFailed = 0;
 
-await foreach (TranslationStatusResult translationStatus in client.GetTranslationsAsync())
+await foreach (TranslationStatusResult translationStatus in client.GetAllTranslationStatusesAsync())
 {
     if (!translationStatus.HasCompleted)
     {
@@ -287,7 +287,7 @@ await foreach (DocumentStatusResult document in operation.GetValuesAsync())
     if (document.Status == TranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-        Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
+        Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else
@@ -346,7 +346,7 @@ foreach (DocumentStatusResult document in operation.GetValues())
     if (document.Status == TranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-        Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
+        Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else

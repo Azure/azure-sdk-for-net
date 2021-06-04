@@ -26,23 +26,8 @@ namespace Azure.Monitor.Query
         public bool IncludeStatistics { get; set; }
 
         /// <summary>
-        /// Gets a list of additional workspaces ids to include in the query.
-        /// </summary>
-        public IList<string> AdditionalWorkspaceIds { get; } = new ChangeTrackingList<string>();
-
-        /// <summary>
         /// Gets a list of additional workspaces names to include in the query.
         /// </summary>
-        public IList<string> AdditionalWorkspaceNames { get; } = new ChangeTrackingList<string>();
-
-        /// <summary>
-        /// Gets a list of additional workspaces names to include in the query.
-        /// </summary>
-        public IList<string> AdditionalWorkspaceQualifiedNames { get; } = new ChangeTrackingList<string>();
-
-        /// <summary>
-        /// Gets a list of additional resource to include in the query.
-        /// </summary>
-        public IList<string> AdditionalResourceIds { get; } = new ChangeTrackingList<string>();
+        public IList<string> AdditionalWorkspaces { get; } = new ChangeTrackingList<string>();
     }
 }

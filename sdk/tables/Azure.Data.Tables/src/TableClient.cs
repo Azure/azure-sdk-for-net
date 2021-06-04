@@ -81,7 +81,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
         public TableClient(Uri endpoint, TablesClientOptions options = null)
-            : this(endpoint, null, default, options)
+            : this(endpoint, null, default, default, options)
         {
             if (endpoint.Scheme != Uri.UriSchemeHttps)
             {

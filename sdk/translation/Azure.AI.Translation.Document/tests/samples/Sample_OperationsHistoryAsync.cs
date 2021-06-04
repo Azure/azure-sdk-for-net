@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Document.Samples
             int docsSucceeded = 0;
             int docsFailed = 0;
 
-            await foreach (TranslationStatusResult translationStatus in client.GetTranslationsAsync())
+            await foreach (TranslationStatusResult translationStatus in client.GetAllTranslationStatusesAsync())
             {
                 if (!translationStatus.HasCompleted)
                 {

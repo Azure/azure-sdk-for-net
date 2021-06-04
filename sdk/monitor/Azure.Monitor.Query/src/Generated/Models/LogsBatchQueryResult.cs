@@ -21,11 +21,9 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
         /// <param name="responses"> An array of responses corresponding to each individual request in a batch. </param>
-        /// <param name="error"> Error response for a batch request. </param>
-        internal LogsBatchQueryResult(IReadOnlyList<LogQueryResponse> responses, BatchResponseError error)
+        internal LogsBatchQueryResult(IReadOnlyList<LogQueryResponse> responses)
         {
             Responses = responses;
-            Error = error;
         }
     }
 }

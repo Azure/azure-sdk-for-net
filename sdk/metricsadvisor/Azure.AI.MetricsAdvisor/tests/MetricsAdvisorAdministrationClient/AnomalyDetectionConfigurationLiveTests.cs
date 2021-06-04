@@ -334,7 +334,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateDetectionConfigurationWithMinimumSetupAndGetInstance(bool useTokenCredential)
         {
             // Set required parameters of the configuration to be created.
@@ -391,7 +390,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
@@ -513,7 +512,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
@@ -578,7 +577,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21509")]
         public async Task UpdateDetectionConfigurationWithEveryMemberAndGetInstance()
         {
             // Set parameters of the configuration to be created.
@@ -653,7 +652,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.SeriesDetectionConditions.Clear();
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
@@ -799,7 +798,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.SeriesDetectionConditions.Clear();
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
