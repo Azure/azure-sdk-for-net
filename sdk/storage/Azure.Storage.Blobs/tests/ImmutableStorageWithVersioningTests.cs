@@ -161,6 +161,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20501")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(BlobContainerSasPermissions.All)]
         [TestCase(BlobContainerSasPermissions.SetImmutabilityPolicy)]
@@ -201,6 +202,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20501")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(BlobSasPermissions.All)]
         [TestCase(BlobSasPermissions.SetImmutabilityPolicy)]
@@ -243,6 +245,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20501")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(SnapshotSasPermissions.All)]
         [TestCase(SnapshotSasPermissions.SetImmutabilityPolicy)]
@@ -302,6 +305,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20501")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(BlobVersionSasPermissions.All)]
         [TestCase(BlobVersionSasPermissions.SetImmutabilityPolicy)]
