@@ -21,7 +21,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <param name="name">A custom unique name for this <see cref="DataLakeGen2SharedKeyDatasourceCredential"/> to be displayed on the web portal.</param>
         /// <param name="accountKey">The account key to be used for authentication.</param>
-        public DataLakeGen2SharedKeyDatasourceCredential(string name, string accountKey) : base(name)
+        public DataLakeGen2SharedKeyDatasourceCredential(string name, string accountKey)
+            : base(name)
         {
             Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
 
@@ -29,7 +30,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             AccountKey = accountKey;
         }
 
-        internal DataLakeGen2SharedKeyDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, DataLakeGen2SharedKeyParam parameters) : base(dataSourceCredentialType, id, name, description)
+        internal DataLakeGen2SharedKeyDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, DataLakeGen2SharedKeyParam parameters)
+            : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;
             AccountKey = parameters.AccountKey;

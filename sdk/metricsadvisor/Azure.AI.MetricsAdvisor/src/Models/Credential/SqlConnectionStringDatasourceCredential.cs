@@ -21,7 +21,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <param name="name">A custom unique name for this <see cref="SqlConnectionStringDatasourceCredential"/> to be displayed on the web portal.</param>
         /// <param name="connectionString">The connection string to be used for authentication.</param>
-        public SqlConnectionStringDatasourceCredential(string name, string connectionString) : base(name)
+        public SqlConnectionStringDatasourceCredential(string name, string connectionString)
+            : base(name)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
@@ -29,7 +30,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             ConnectionString = connectionString;
         }
 
-        internal SqlConnectionStringDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, AzureSQLConnectionStringParam parameters) : base(dataSourceCredentialType, id, name, description)
+        internal SqlConnectionStringDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, AzureSQLConnectionStringParam parameters)
+            : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;
             ConnectionString = parameters.ConnectionString;

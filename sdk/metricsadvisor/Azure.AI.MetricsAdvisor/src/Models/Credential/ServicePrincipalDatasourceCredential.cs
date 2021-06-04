@@ -23,7 +23,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="clientId">The client ID of the service principal used for authentication.</param>
         /// <param name="clientSecret">The client secret of the service principal used for authentication.</param>
         /// <param name="tenantId">The tenant ID of the service principal used for authentication.</param>
-        public ServicePrincipalDatasourceCredential(string name, string clientId, string clientSecret, string tenantId) : base(name)
+        public ServicePrincipalDatasourceCredential(string name, string clientId, string clientSecret, string tenantId)
+            : base(name)
         {
             Argument.AssertNotNullOrEmpty(clientId, nameof(clientId));
             Argument.AssertNotNullOrEmpty(clientSecret, nameof(clientSecret));
@@ -35,7 +36,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             TenantId = tenantId;
         }
 
-        internal ServicePrincipalDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters) : base(dataSourceCredentialType, id, name, description)
+        internal ServicePrincipalDatasourceCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters)
+            : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;
             ClientId = parameters.ClientId;
