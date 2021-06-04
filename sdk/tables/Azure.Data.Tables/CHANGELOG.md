@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-beta.9 (Unreleased)
+## 12.0.0 (2021-06-08)
 
 - Added `GenerateSasUri` methods to both `TableClient` and `TableServiceClient`.
 

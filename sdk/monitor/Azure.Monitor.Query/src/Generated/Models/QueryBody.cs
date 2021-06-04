@@ -26,9 +26,6 @@ namespace Azure.Monitor.Query.Models
 
             Query = query;
             Workspaces = new ChangeTrackingList<string>();
-            QualifiedNames = new ChangeTrackingList<string>();
-            WorkspaceIds = new ChangeTrackingList<string>();
-            AzureResourceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> The query to execute. </summary>
