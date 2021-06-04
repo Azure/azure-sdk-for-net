@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
         [Test]
-        public async Task GetDimensionValuesAsync()
+        public async Task GetMetricDimensionValuesAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
@@ -25,13 +25,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
             string metricId = MetricId;
 
             string dimensionName = "city";
-            var options = new GetDimensionValuesOptions() { MaxPageSize = 10 };
+            var options = new GetMetricDimensionValuesOptions() { MaxPageSize = 10 };
 
             Console.WriteLine($"The dimension '{dimensionName}' can assume the following values (limited to 10):");
 
             int dimensionValueCount = 0;
 
-            await foreach (string dimensionValue in client.GetDimensionValuesAsync(metricId, dimensionName, options))
+            await foreach (string dimensionValue in client.GetMetricDimensionValuesAsync(metricId, dimensionName, options))
             {
                 Console.WriteLine($"  {dimensionValue}");
 
@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [Test]
-        public async Task GetValuesOfDimensionWithAnomaliesAsync()
+        public async Task GetAnomalyDimensionValuesAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
@@ -59,7 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;
-            var options = new GetValuesOfDimensionWithAnomaliesOptions(startTime, endTime)
+            var options = new GetAnomalyDimensionValuesOptions(startTime, endTime)
             {
                 MaxPageSize = 10
             };
@@ -68,7 +68,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             int dimensionValueCount = 0;
 
-            await foreach (string dimensionValue in client.GetValuesOfDimensionWithAnomaliesAsync(detectionConfigurationId, dimensionName, options))
+            await foreach (string dimensionValue in client.GetAnomalyDimensionValuesAsync(detectionConfigurationId, dimensionName, options))
             {
                 Console.WriteLine($"  {dimensionValue}");
 
@@ -195,7 +195,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 {
                     Console.WriteLine($"  Point {pointIndex}:");
                     Console.WriteLine($"   - Timestamp: {seriesData.Timestamps[pointIndex]}");
-                    Console.WriteLine($"   - Value: {seriesData.Values[pointIndex]}");
+                    Console.WriteLine($"   - Metric value: {seriesData.MetricValues[pointIndex]}");
                 }
 
                 Console.WriteLine();
@@ -245,10 +245,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 {
                     Console.WriteLine($"  Point {pointIndex}:");
                     Console.WriteLine($"   - Timestamp: {seriesData.Timestamps[pointIndex]}");
-                    Console.WriteLine($"   - Value: {seriesData.Values[pointIndex]}");
-                    Console.WriteLine($"   - Expected value: {seriesData.ExpectedValues[pointIndex]}");
-                    Console.WriteLine($"   - Lower boundary: {seriesData.LowerBoundaries[pointIndex]}");
-                    Console.WriteLine($"   - Upper boundary: {seriesData.UpperBoundaries[pointIndex]}");
+                    Console.WriteLine($"   - Metric value: {seriesData.MetricValues[pointIndex]}");
+                    Console.WriteLine($"   - Expected metric value: {seriesData.ExpectedMetricValues[pointIndex]}");
+                    Console.WriteLine($"   - Lower boundary: {seriesData.LowerBoundaryValues[pointIndex]}");
+                    Console.WriteLine($"   - Upper boundary: {seriesData.UpperBoundaryValues[pointIndex]}");
                     Console.WriteLine($"   - Is this point an anomaly: {seriesData.IsAnomaly[pointIndex]}");
                     Console.WriteLine($"   - Period: {seriesData.Periods[pointIndex]}");
                 }

@@ -1711,9 +1711,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(dataFeed.AccessMode, Is.Not.Null);
                 Assert.That(dataFeed.AccessMode, Is.Not.EqualTo(default(DataFeedAccessMode)));
                 Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null);
-                Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
-                Assert.That(dataFeed.Administrators, Is.Not.Null);
-                Assert.That(dataFeed.Viewers, Is.Not.Null);
+                Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
+                Assert.That(dataFeed.AdministratorsEmails, Is.Not.Null);
+                Assert.That(dataFeed.ViewersEmails, Is.Not.Null);
                 Assert.That(dataFeed.IsAdministrator, Is.Not.Null);
                 Assert.That(dataFeed.CreatedTime, Is.Not.Null);
                 Assert.That(dataFeed.CreatedTime, Is.Not.EqualTo(default(DateTimeOffset)));
@@ -1749,10 +1749,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
                 {
                     Assert.That(metric, Is.Not.Null);
-                    Assert.That(metric.MetricId, Is.Not.Null.And.Not.Empty);
-                    Assert.That(metric.MetricName, Is.Not.Null.And.Not.Empty);
-                    Assert.That(metric.MetricDisplayName, Is.Not.Null.And.Not.Empty);
-                    Assert.That(metric.MetricDescription, Is.Not.Null);
+                    Assert.That(metric.Id, Is.Not.Null.And.Not.Empty);
+                    Assert.That(metric.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(metric.DisplayName, Is.Not.Null.And.Not.Empty);
+                    Assert.That(metric.Description, Is.Not.Null);
                 }
 
                 Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null);
@@ -1760,8 +1760,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 foreach (DataFeedDimension dimensionColumn in dataFeed.Schema.DimensionColumns)
                 {
                     Assert.That(dimensionColumn, Is.Not.Null);
-                    Assert.That(dimensionColumn.DimensionName, Is.Not.Null.And.Not.Empty);
-                    Assert.That(dimensionColumn.DimensionDisplayName, Is.Not.Null.And.Not.Empty);
+                    Assert.That(dimensionColumn.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(dimensionColumn.DisplayName, Is.Not.Null.And.Not.Empty);
                 }
 
                 Assert.That(dataFeed.Schema.TimestampColumn, Is.Not.Null);
@@ -1856,14 +1856,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 MissingDataPointFillSettings = new() { FillType = DataFeedMissingDataPointFillType.CustomValue, CustomFillValue = 45.0 }
             };
 
-            dataFeed.Administrators.Add("fake@admin.com");
-            dataFeed.Viewers.Add("fake@viewer.com");
+            dataFeed.AdministratorsEmails.Add("fake@admin.com");
+            dataFeed.ViewersEmails.Add("fake@viewer.com");
 
-            dataFeed.Schema.MetricColumns.Add(new("cost") { MetricDisplayName = "costDisplayName", MetricDescription = "costDescription" });
-            dataFeed.Schema.MetricColumns.Add(new("revenue") { MetricDisplayName = "revenueDisplayName", MetricDescription = "revenueDescription" });
+            dataFeed.Schema.MetricColumns.Add(new("cost") { DisplayName = "costDisplayName", Description = "costDescription" });
+            dataFeed.Schema.MetricColumns.Add(new("revenue") { DisplayName = "revenueDisplayName", Description = "revenueDescription" });
 
             dataFeed.Schema.DimensionColumns.Add(new("city"));
-            dataFeed.Schema.DimensionColumns.Add(new("category") { DimensionDisplayName = "categoryDisplayName" });
+            dataFeed.Schema.DimensionColumns.Add(new("category") { DisplayName = "categoryDisplayName" });
 
             return dataFeed;
         }
@@ -1885,12 +1885,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // For this reason, we do a conditional validation in the ValidateUpdatedDataFeedWithOptionalMembersSet
             // method.
 
-            if (dataFeed.Administrators.Count > 0)
+            if (dataFeed.AdministratorsEmails.Count > 0)
             {
-                dataFeed.Administrators.Add("fake@admin.com");
+                dataFeed.AdministratorsEmails.Add("fake@admin.com");
             }
 
-            dataFeed.Viewers.Add("fake@viewer.com");
+            dataFeed.ViewersEmails.Add("fake@viewer.com");
 
             dataFeed.Schema = new DataFeedSchema();
             dataFeed.Schema.TimestampColumn = "updatedTimestampColumn";
@@ -1918,10 +1918,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
             Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Private));
             Assert.That(dataFeed.ActionLinkTemplate, Is.Not.Null.And.Empty);
-            Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
-            Assert.That(dataFeed.Administrators, Is.Not.Null);
-            Assert.That(dataFeed.Administrators.Single(), Is.EqualTo(dataFeed.Creator));
-            Assert.That(dataFeed.Viewers, Is.Not.Null.And.Empty);
+            Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
+            Assert.That(dataFeed.AdministratorsEmails, Is.Not.Null);
+            Assert.That(dataFeed.AdministratorsEmails.Single(), Is.EqualTo(dataFeed.CreatorEmail));
+            Assert.That(dataFeed.ViewersEmails, Is.Not.Null.And.Empty);
             Assert.That(dataFeed.IsAdministrator, Is.True);
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
@@ -1941,10 +1941,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeedMetric metric = dataFeed.Schema.MetricColumns.Single();
 
             Assert.That(metric, Is.Not.Null);
-            Assert.That(metric.MetricId, Is.Not.Null.And.Not.Empty);
-            Assert.That(metric.MetricName, Is.EqualTo("cost"));
-            Assert.That(metric.MetricDisplayName, Is.EqualTo("cost"));
-            Assert.That(metric.MetricDescription, Is.Empty);
+            Assert.That(metric.Id, Is.Not.Null.And.Not.Empty);
+            Assert.That(metric.Name, Is.EqualTo("cost"));
+            Assert.That(metric.DisplayName, Is.EqualTo("cost"));
+            Assert.That(metric.Description, Is.Empty);
 
             Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null.And.Empty);
             Assert.That(dataFeed.Schema.TimestampColumn, Is.Empty);
@@ -1967,15 +1967,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
             Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Public));
             Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%metric/%datafeed"));
-            Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+            Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
 
-            Assert.That(dataFeed.Administrators, Is.Not.Null);
-            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(2));
-            Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
-            Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
-            Assert.That(dataFeed.Viewers, Is.Not.Null);
-            Assert.That(dataFeed.Viewers.Count, Is.EqualTo(1));
-            Assert.That(dataFeed.Viewers, Contains.Item("fake@viewer.com"));
+            Assert.That(dataFeed.AdministratorsEmails, Is.Not.Null);
+            Assert.That(dataFeed.AdministratorsEmails.Count, Is.EqualTo(2));
+            Assert.That(dataFeed.AdministratorsEmails, Contains.Item(dataFeed.CreatorEmail));
+            Assert.That(dataFeed.AdministratorsEmails, Contains.Item("fake@admin.com"));
+            Assert.That(dataFeed.ViewersEmails, Is.Not.Null);
+            Assert.That(dataFeed.ViewersEmails.Count, Is.EqualTo(1));
+            Assert.That(dataFeed.ViewersEmails, Contains.Item("fake@viewer.com"));
             Assert.That(dataFeed.IsAdministrator, Is.True);
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
@@ -1997,26 +1997,26 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeedMetric metric1 = dataFeed.Schema.MetricColumns[1];
 
             Assert.That(metric0, Is.Not.Null);
-            Assert.That(metric0.MetricId, Is.Not.Null.And.Not.Empty);
-            Assert.That(metric0.MetricName, Is.EqualTo("cost"));
-            Assert.That(metric0.MetricDisplayName, Is.EqualTo("costDisplayName"));
-            Assert.That(metric0.MetricDescription, Is.EqualTo("costDescription"));
+            Assert.That(metric0.Id, Is.Not.Null.And.Not.Empty);
+            Assert.That(metric0.Name, Is.EqualTo("cost"));
+            Assert.That(metric0.DisplayName, Is.EqualTo("costDisplayName"));
+            Assert.That(metric0.Description, Is.EqualTo("costDescription"));
 
             Assert.That(metric1, Is.Not.Null);
-            Assert.That(metric1.MetricId, Is.Not.Null.And.Not.Empty);
-            Assert.That(metric1.MetricName, Is.EqualTo("revenue"));
-            Assert.That(metric1.MetricDisplayName, Is.EqualTo("revenueDisplayName"));
-            Assert.That(metric1.MetricDescription, Is.EqualTo("revenueDescription"));
+            Assert.That(metric1.Id, Is.Not.Null.And.Not.Empty);
+            Assert.That(metric1.Name, Is.EqualTo("revenue"));
+            Assert.That(metric1.DisplayName, Is.EqualTo("revenueDisplayName"));
+            Assert.That(metric1.Description, Is.EqualTo("revenueDescription"));
 
             Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null);
             Assert.That(dataFeed.Schema.DimensionColumns.Count, Is.EqualTo(2));
 
-            var sortedDimensionColumns = dataFeed.Schema.DimensionColumns.OrderBy(column => column.DimensionName).ToList();
+            var sortedDimensionColumns = dataFeed.Schema.DimensionColumns.OrderBy(column => column.Name).ToList();
 
-            Assert.That(sortedDimensionColumns[0].DimensionName, Is.EqualTo("category"));
-            Assert.That(sortedDimensionColumns[0].DimensionDisplayName, Is.EqualTo("categoryDisplayName"));
-            Assert.That(sortedDimensionColumns[1].DimensionName, Is.EqualTo("city"));
-            Assert.That(sortedDimensionColumns[1].DimensionDisplayName, Is.EqualTo("city"));
+            Assert.That(sortedDimensionColumns[0].Name, Is.EqualTo("category"));
+            Assert.That(sortedDimensionColumns[0].DisplayName, Is.EqualTo("categoryDisplayName"));
+            Assert.That(sortedDimensionColumns[1].Name, Is.EqualTo("city"));
+            Assert.That(sortedDimensionColumns[1].DisplayName, Is.EqualTo("city"));
             Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("timestamp"));
 
             Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
@@ -2037,25 +2037,25 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Status, Is.EqualTo(DataFeedStatus.Active));
             Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Public));
             Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%datafeed/%metric"));
-            Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+            Assert.That(dataFeed.CreatorEmail, Is.Not.Null.And.Not.Empty);
 
             // In the SetOptionalMembers method, we may or may not add a new admin (fake@admin.com) depending on whether
             // the data feed instance used for the Update call was created from scratch or from a GetDataFeed operation:
             // - If the data feed to update was created from scratch, we didn't update the admins list (count = 1).
             // - If the data feed to update was created from a GetDataFeed operation, we added a new fake admin (count = 2).
 
-            Assert.That(dataFeed.Administrators, Is.Not.Null);
-            Assert.That(dataFeed.Administrators.Count, Is.EqualTo(1).Or.EqualTo(2));
-            Assert.That(dataFeed.Administrators, Contains.Item(dataFeed.Creator));
+            Assert.That(dataFeed.AdministratorsEmails, Is.Not.Null);
+            Assert.That(dataFeed.AdministratorsEmails.Count, Is.EqualTo(1).Or.EqualTo(2));
+            Assert.That(dataFeed.AdministratorsEmails, Contains.Item(dataFeed.CreatorEmail));
 
-            if (dataFeed.Administrators.Count == 2)
+            if (dataFeed.AdministratorsEmails.Count == 2)
             {
-                Assert.That(dataFeed.Administrators, Contains.Item("fake@admin.com"));
+                Assert.That(dataFeed.AdministratorsEmails, Contains.Item("fake@admin.com"));
             }
 
-            Assert.That(dataFeed.Viewers, Is.Not.Null);
-            Assert.That(dataFeed.Viewers.Count, Is.EqualTo(1));
-            Assert.That(dataFeed.Viewers, Contains.Item("fake@viewer.com"));
+            Assert.That(dataFeed.ViewersEmails, Is.Not.Null);
+            Assert.That(dataFeed.ViewersEmails.Count, Is.EqualTo(1));
+            Assert.That(dataFeed.ViewersEmails, Contains.Item("fake@viewer.com"));
 
             DateTimeOffset justNow = Recording.UtcNow.Subtract(TimeSpan.FromMinutes(5));
             Assert.That(dataFeed.CreatedTime, Is.GreaterThan(justNow));
@@ -2074,10 +2074,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeedMetric metric = dataFeed.Schema.MetricColumns.Single();
 
             Assert.That(metric, Is.Not.Null);
-            Assert.That(metric.MetricId, Is.Not.Null.And.Not.Empty);
-            Assert.That(metric.MetricName, Is.EqualTo("cost"));
-            Assert.That(metric.MetricDisplayName, Is.EqualTo("cost"));
-            Assert.That(metric.MetricDescription, Is.Empty);
+            Assert.That(metric.Id, Is.Not.Null.And.Not.Empty);
+            Assert.That(metric.Name, Is.EqualTo("cost"));
+            Assert.That(metric.DisplayName, Is.EqualTo("cost"));
+            Assert.That(metric.Description, Is.Empty);
 
             Assert.That(dataFeed.Schema.DimensionColumns, Is.Not.Null.And.Empty);
             Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("updatedTimestampColumn"));
