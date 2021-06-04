@@ -47,37 +47,33 @@ function Get-ChangeLogEntriesFromContent {
           ReleaseStatus  =  $matches["releaseStatus"]
           ReleaseTitle   = "## {0} {1}" -f $matches["version"], $matches["releaseStatus"]
           ReleaseContent = @()
-          FeaturesAdded = @()
-          BreakingChanges = @()
-          KeyBugsFixed = @()
-          Fixed = @()
+          Sections = @{}
         }
         $changeLogEntries[$changeLogEntry.ReleaseVersion] = $changeLogEntry
       }
       else {
         if ($changeLogEntry) {
-          if ($line.Trim() -match "###\s(?<sectionName>.*)")
+          if ($line.Trim() -match "^###\s(?<sectionName>.*)")
           {
-            $sectionName = $matches["sectionName"]
+            $sectionName = $matches["sectionName"].Trim()
+            $changeLogEntry.Sections[$sectionName] = @()
             $changeLogEntry.ReleaseContent += $line
             continue
           }
 
-          if (-not [System.String]::IsNullOrEmpty($line))
+          if ($sectionName)
           {
-            switch ($sectionName)
-            {
-              "Features Added" { $changeLogEntry.FeaturesAdded += $line }
-              "Breaking Changes" { $changeLogEntry.BreakingChanges += $line }
-              "Key Bugs Fixed" { $changeLogEntry.KeyBugsFixed += $line }
-              "Fixed" { $changeLogEntry.Fixed += $line }
-            }
+            $changeLogEntry.Sections[$sectionName] += $line
           }
 
           $changeLogEntry.ReleaseContent += $line
         }
       }
     }
+  }
+  catch {
+    Write-Host "Error parsing Changelog."
+    Write-Host $_.Exception.Message
   }
   return $changeLogEntries
 }
