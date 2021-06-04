@@ -28,12 +28,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         public ContainerRegistryClient CreateClient(bool anonymousAccess = false, string authenticationScope = null)
         {
-            ContainerRegistryClientOptions options = new ContainerRegistryClientOptions();
-            if (authenticationScope != null)
-            {
-                options.AuthenticationScope = authenticationScope;
-            }
-
             return anonymousAccess ?
 
                 InstrumentClient(new ContainerRegistryClient(
@@ -44,7 +38,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 InstrumentClient(new ContainerRegistryClient(
                     new Uri(TestEnvironment.Endpoint),
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(options)
+                    InstrumentClientOptions(new ContainerRegistryClientOptions())
                 ));
         }
 
