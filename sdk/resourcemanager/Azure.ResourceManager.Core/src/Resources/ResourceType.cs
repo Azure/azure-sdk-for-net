@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
 
             // if the type is just subscriptions, it is a built-in type in the Microsoft.Resources namespace
-            else if (parts.Count == 1)
+            if (parts.Count == 1)
             {
                 // Simple resource type
                 Type = parts[0];

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Core
                         {
                             if (parts.Count == 2 || parts[2] == ProvidersKey)
                             {
-                                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(new SubscriptionResourceIdentifier(), parts[1]), parts.Trim(2));
+                                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(new SubscriptionResourceIdentifier(subscription), parts[1]), parts.Trim(2));
                             }
                             else if (parts.Count > 3)
                                 return CreateSubscriptionIdentifier(new SubscriptionResourceIdentifier(subscription,
