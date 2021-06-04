@@ -64,12 +64,33 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static HookInfoPatch GetPatchModel(NotificationHook hook)
         {
-            return hook switch
+            HookInfoPatch patch = hook switch
             {
-                EmailNotificationHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink?.AbsoluteUri, /*HookParameter = h.HookParameter,*/ Admins = h.AdministratorsEmails },
-                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink?.AbsoluteUri, /*HookParameter = h.HookParameter,*/ Admins = h.AdministratorsEmails },
-                _ => throw new InvalidOperationException("Unknown AlertingHook type.")
+                EmailNotificationHook h => new EmailHookInfoPatch()
+                {
+                    HookParameter = new() { ToList = h.EmailsToAlert }
+                },
+                WebNotificationHook h => new WebhookHookInfoPatch()
+                {
+                    HookParameter = new()
+                    {
+                        Endpoint = h.Endpoint?.AbsoluteUri,
+                        Username = h.Username,
+                        Password = h.Password,
+                        CertificateKey = h.CertificateKey,
+                        CertificatePassword = h.CertificatePassword,
+                        Headers = h.Headers
+                    }
+                },
+                _ => throw new InvalidOperationException("Unknown hook type.")
             };
+
+            patch.HookName = hook.Name;
+            patch.Description = hook.Description;
+            patch.ExternalLink = hook.ExternalLink?.AbsoluteUri;
+            patch.Admins = hook.AdministratorsEmails;
+
+            return patch;
         }
     }
 }
