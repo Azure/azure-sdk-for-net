@@ -30,6 +30,19 @@ namespace Azure.ResourceManager.Core
         /// for resources in the same namespace as their parent.
         /// </summary>
         /// <param name="parent"> The parent resource id. </param>
+        /// <param name="resourceType"> The simple type name of the resource without slashes (/), for example 'virtualMachines'.</param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        internal TenantResourceIdentifier(TenantResourceIdentifier parent, ResourceType resourceType, string resourceName)
+            : base(resourceType, resourceName)
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TenantResourceIdentifier"/> class 
+        /// for resources in the same namespace as their parent.
+        /// </summary>
+        /// <param name="parent"> The parent resource id. </param>
         /// <param name="typeName"> The simple type name of the resource without slashes (/), for example 'virtualMachines'.</param>
         /// <param name="resourceName"> The name of the resource. </param>
         internal TenantResourceIdentifier(TenantResourceIdentifier parent, string typeName, string resourceName)
