@@ -358,6 +358,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class AnomalyIncident
     {
         internal AnomalyIncident() { }
+        public string DataFeedId { get { throw null; } }
         public string DetectionConfigurationId { get { throw null; } }
         public double? ExpectedValueOfRootNode { get { throw null; } }
         public string Id { get { throw null; } }
@@ -773,6 +774,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal DataPointAnomaly() { }
         public string AnomalyDetectionConfigurationId { get { throw null; } }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
+        public string DataFeedId { get { throw null; } }
         public double? ExpectedValue { get { throw null; } }
         public string MetricId { get { throw null; } }
         public System.DateTimeOffset? ModifiedTime { get { throw null; } }

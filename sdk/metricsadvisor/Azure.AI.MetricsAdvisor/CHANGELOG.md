@@ -8,6 +8,7 @@
 - Response headers that were marked as `REDACTED` in error messages and logs are now exposed by default.
 - `GetDetectionConfigurations` and `GetAlertConfigurations` in the `MetricsAdvisorAdministrationClient` can now take a set of options with `Skip` and `MaxPageSize` properties to configure paging behavior.
 - Added setters to models that use the Update APIs to make updating easier.
+- Added property `DataFeedId` to `DataPointAnomaly` and `AnomalyIncident`.
 
 ### Breaking Changes
 - Update methods will now return the updated entity instead of an empty response. For example, `UpdateDataFeed` now returns a `Response<DataFeed>`.
