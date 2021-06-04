@@ -29,7 +29,7 @@ extends:
     ArtifactName: packages
     Artifacts:
     - name: Azure.Communication.CallingServer
-      safeName: Azure.Communication.CallingServer
+      safeName: AzureCommunicationCallingServer
     - name: Azure.Communication.Chat
       safeName: AzureCommunicationChat
     - name: Azure.Communication.Common
