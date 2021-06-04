@@ -30,15 +30,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private const string DrainingQueueMessageBody = "queue-message-draining-no-sessions-1";
         private const string DrainingTopicMessageBody = "topic-message-draining-no-sessions-1";
 
-        private static EventWaitHandle _eventWait;
-
         // These two variables will be checked at the end of the test
         private static string _resultMessage1;
         private static string _resultMessage2;
 
         public ServiceBusEndToEndTests() : base(isSession: false)
         {
-            _eventWait = new ManualResetEvent(initialState: false);
         }
 
         [Test]
@@ -218,10 +215,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 BuildHostWithAutoCompleteDisabled<TestSingleAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction>());
             using (host)
             {
-                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await host.StopAsync();
-                await AssertQueueEmptyAsync();
             }
         }
 
@@ -238,7 +234,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 await WriteQueueMessage(JsonConvert.SerializeObject(new {Date = DateTimeOffset.Now}));
-                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await host.StopAsync();
             }
@@ -261,7 +257,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             });
             using (host)
             {
-                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 var start = DateTimeOffset.Now;
                 await host.StopAsync();
@@ -289,7 +285,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (host)
             {
                 await WriteQueueMessage(JsonConvert.SerializeObject(new {Date = DateTimeOffset.Now}));
-                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await host.StopAsync();
             }
@@ -303,7 +299,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var jobHost = host.GetJobHost();
                 await jobHost.CallAsync(nameof(ServiceBusOutputPocoTest.OutputPoco));
-                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await host.StopAsync();
             }
@@ -323,7 +319,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await WriteQueueMessage("{ Name: 'foo', Value: 'bar' }");
 
-                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
@@ -342,7 +338,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var jobHost = host.GetJobHost();
                 await jobHost.CallAsync(method, new { input = "foobar" });
 
-                bool result = _eventWait.WaitOne(SBTimeoutMills);
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
@@ -457,8 +453,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(result);
                 await host.StopAsync();
             }
-
-            await AssertQueueEmptyAsync();
         }
 
         private async Task TestMultipleDrainMode<T>(bool sendToQueue)
@@ -719,7 +713,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 Assert.AreEqual("value", received.Value);
                 Assert.AreEqual("name", received.Name);
-                _eventWait.Set();
+                _waitHandle1.Set();
             }
         }
 
@@ -840,7 +834,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void Run([ServiceBusTrigger(FirstQueueNameKey)] JObject input)
             {
                 Assert.AreEqual(JTokenType.Date, input["Date"].Type);
-                _eventWait.Set();
+                _waitHandle1.Set();
             }
         }
 
@@ -849,7 +843,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void BindToJObject([ServiceBusTrigger(FirstQueueNameKey)] JObject input)
             {
                 Assert.AreEqual(JTokenType.String, input["Date"].Type);
-                _eventWait.Set();
+                _waitHandle1.Set();
             }
         }
 
@@ -864,7 +858,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             // 20 seconds should give enough time for the receive call to complete as the TryTimeout being used is 10 seconds.
             public static void Run([TimerTrigger("*/20 * * * * *")] TimerInfo timer)
             {
-                _eventWait.Set();
+                _waitHandle1.Set();
             }
         }
 
@@ -878,7 +872,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual(input.Name, name);
                 Assert.AreEqual(input.Value, value);
                 logger.LogInformation($"PocoValues({name},{value})");
-                _eventWait.Set();
+                _waitHandle1.Set();
             }
 
             [NoAutomaticTrigger]
@@ -888,7 +882,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ILogger logger)
             {
                 logger.LogInformation($"Input({input})");
-                _eventWait.Set();
+                _waitHandle1.Set();
             }
         }
 
@@ -945,7 +939,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 // we want to validate that this doesn't trigger an exception in the SDK since AutoComplete = true
                 await messageActions.CompleteMessageAsync(message);
-                _eventWait.Set();
+                _waitHandle1.Set();
             }
         }
 

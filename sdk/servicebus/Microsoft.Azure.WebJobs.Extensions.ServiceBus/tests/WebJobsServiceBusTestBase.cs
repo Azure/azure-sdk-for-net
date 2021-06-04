@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         internal const int MaxAutoRenewDurationMin = 5;
         internal static TimeSpan HostShutdownTimeout = TimeSpan.FromSeconds(120);
 
-        protected static QueueScope _firstQueueScope;
+        internal static QueueScope _firstQueueScope;
         protected static QueueScope _secondaryNamespaceQueueScope;
         private QueueScope _secondQueueScope;
         private QueueScope _thirdQueueScope;
@@ -78,8 +79,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
+        ///   Performs the tasks needed to initialize the test.  This
+        ///   method runs once for for each test.
         /// </summary>
         ///
         [SetUp]
@@ -106,8 +107,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
+        ///   Performs the tasks needed to cleanup the test after each
+        ///   test has run.
         /// </summary>
         ///
         [TearDown]
@@ -223,18 +224,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
             await sender.SendMessageAsync(messageObj);
         }
-
-        internal static async Task AssertQueueEmptyAsync(string queueName = default)
-        {
-            // TODO - see if this can be part of Host.StopAsync validation (currently it doesn't apply to all tests and would increase
-            // test durations unnecessarily)
-            var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-            var receiver = client.CreateReceiver(queueName ?? _firstQueueScope.QueueName);
-
-            // Poll for longer than lock duration specified when creating the queues (15s) to ensure message
-            // is really gone rather than just locked.
-            Assert.IsNull(await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(20)));
-        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -253,12 +242,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             return Task.CompletedTask;
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public async Task StopAsync(CancellationToken cancellationToken)
         {
             var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
             var errors = logs.Where(p => p.Level == LogLevel.Error);
             Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.FormattedMessage)));
-            return Task.CompletedTask;
+
+            var client = new ServiceBusAdministrationClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(WebJobsServiceBusTestBase._firstQueueScope.QueueName, CancellationToken.None);
+            Assert.AreEqual(0, properties.TotalMessageCount);
         }
     }
 }
