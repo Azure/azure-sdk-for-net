@@ -154,7 +154,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetValuesOfDimensionsWithAnomaliesValidatesArguments()
+        public void GetAnomalyDimensionValuesValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -176,7 +176,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetValuesOfDimensionWithAnomaliesRespectsTheCancellationToken()
+        public void GetAnomalyDimensionValuesRespectsTheCancellationToken()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 

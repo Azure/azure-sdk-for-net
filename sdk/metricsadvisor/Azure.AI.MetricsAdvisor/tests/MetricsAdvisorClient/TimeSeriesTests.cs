@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private string FakeGuid => "00000000-0000-0000-0000-000000000000";
 
         [Test]
-        public void GetDimensionValuesValidatesArguments()
+        public void GetMetricDimensionValuesValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -37,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetDimensionValuesRespectsTheCancellationToken()
+        public void GetMetricDimensionValuesRespectsTheCancellationToken()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 

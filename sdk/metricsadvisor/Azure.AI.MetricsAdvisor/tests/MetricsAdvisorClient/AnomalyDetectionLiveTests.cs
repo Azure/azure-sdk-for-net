@@ -294,7 +294,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetValuesOfDimensionWithAnomaliesWithMinimumSetup(bool useTokenCredential)
+        public async Task GetAnomalyDimensionValuesWithMinimumSetup(bool useTokenCredential)
         {
             const string dimensionName = "city";
 
@@ -318,7 +318,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetValuesOfDimensionWithAnomaliesWithOptionalDimensionFilter()
+        public async Task GetAnomalyDimensionValuesWithOptionalDimensionFilter()
         {
             const string dimensionName = "city";
 
