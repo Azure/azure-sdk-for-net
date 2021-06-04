@@ -14,6 +14,7 @@
       AZC0100;
     </NoWarn>
     <IncludeAzureCoreSharedCode>true</IncludeAzureCoreSharedCode>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
 
   <ItemGroup>
