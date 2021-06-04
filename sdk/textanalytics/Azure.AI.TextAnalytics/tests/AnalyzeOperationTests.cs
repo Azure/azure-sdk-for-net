@@ -10,9 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
     public class AnalyzeOperationTests : TextAnalyticsClientLiveTestBase
     {
-        public AnalyzeOperationTests(bool isAsync) : base(isAsync) { }
+        public AnalyzeOperationTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private static List<string> batchConvenienceDocuments = new List<string>
         {
@@ -84,8 +88,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(entityLinkingActionsResults);
             Assert.IsNotNull(analyzeSentimentActionsResults);
 
-            var keyPhrasesListId1 = new List<string> { "CEO of SpaceX", "Elon Musk", "Tesla" };
-            var keyPhrasesListId2 = new List<string> { "Tesla stock", "year" };
+            var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
+            var keyPhrasesListId2 = new List<string> { "Tesla stock" };
 
             ExtractKeyPhrasesResultCollection keyPhrasesResult = keyPhrasesActionsResults.FirstOrDefault().Result;
             Assert.AreEqual(2, keyPhrasesResult.Count);
@@ -141,7 +145,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("AnalyzeOperationWithLanguageTest", operation.DisplayName);
 
             var keyPhrasesListId1 = new List<string> { "Bill Gates", "Paul Allen", "Microsoft" };
-            var keyPhrasesListId2 = new List<string> { "gato", "perro", "veterinario" };
+            var keyPhrasesListId2 = new List<string> { "Mi", "gato", "perro", "veterinario" };
 
             foreach (string keyphrase in keyPhrasesResult[0].KeyPhrases)
             {
@@ -218,7 +222,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, keyPhrasesResults.Count);
 
             var keyPhrasesListId1 = new List<string> { "Bill Gates", "Paul Allen", "Microsoft" };
-            var keyPhrasesListId2 = new List<string> { "gato", "perro", "veterinario" };
+            var keyPhrasesListId2 = new List<string> { "Mi", "gato", "perro", "veterinario" };
 
             foreach (string keyphrase in keyPhrasesResults[0].KeyPhrases)
             {
@@ -364,7 +368,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidRequest, ex.ErrorCode);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidParameterValue, ex.ErrorCode);
         }
 
         [RecordedTest]
@@ -415,7 +419,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } },
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { DomainFilter = PiiEntityDomain.ProtectedHealthInformation } },
                 DisplayName = "AnalyzeOperationWithPHIDomain",
             };
 

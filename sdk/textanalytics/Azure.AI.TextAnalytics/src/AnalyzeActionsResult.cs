@@ -15,15 +15,13 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
-            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults,
-            TextDocumentBatchStatistics statistics)
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults)
         {
             ExtractKeyPhrasesActionsResults = extractKeyPhrasesActionResult;
             RecognizeEntitiesActionsResults = recognizeEntitiesActionResults;
             RecognizePiiEntitiesActionsResults = recognizePiiEntitiesActionResults;
             RecognizeLinkedEntitiesActionsResults = recognizeLinkedEntitiesActionsResults;
             AnalyzeSentimentActionsResults = analyzeSentimentActionsResults;
-            Statistics = statistics;
         }
 
         /// <summary>
@@ -50,11 +48,5 @@ namespace Azure.AI.TextAnalytics
         /// Determines the collection of AnalyzeSentimentActionsResults.
         /// </summary>
         public IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentActionsResults { get; }
-
-        /// <summary>
-        /// Gets statistics about the operation executed and how it was processed
-        /// by the service.
-        /// </summary>
-        public TextDocumentBatchStatistics Statistics { get; }
     }
 }

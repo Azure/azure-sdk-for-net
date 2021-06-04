@@ -96,13 +96,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   The cancellation token to use with operations initiated by the scope.
         /// </summary>
-        private CancellationTokenSource OperationCancellationSource { get; } = new CancellationTokenSource();
+        private CancellationTokenSource OperationCancellationSource { get; } = new();
 
         /// <summary>
         ///   The set of active AMQP links associated with the connection scope.  These are considered children
         ///   of the active connection and should be managed as such.
         /// </summary>
-        private ConcurrentDictionary<AmqpObject, Timer> ActiveLinks { get; } = new ConcurrentDictionary<AmqpObject, Timer>();
+        private ConcurrentDictionary<AmqpObject, Timer> ActiveLinks { get; } = new();
 
         /// <summary>
         ///   The unique identifier of the scope.
@@ -142,6 +142,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly bool _useSingleSession;
 
         private readonly FaultTolerantAmqpObject<AmqpSession> _singletonSession;
+
+        private string _sendViaReceiverEntityPath;
+
+        private readonly object _syncLock = new();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
@@ -393,6 +397,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ActiveConnection?.Dispose();
             OperationCancellationSource.Cancel();
             OperationCancellationSource.Dispose();
+
+            _singletonSession?.Dispose();
+            TransactionController?.Dispose();
 
             IsDisposed = true;
         }
@@ -732,6 +739,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var session = default(AmqpSession);
             var stopWatch = ValueStopwatch.StartNew();
 
+            ValidateCanCreateSenderLink(entityPath);
+
             try
             {
                 string[] audience;
@@ -819,6 +828,33 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
+        private void ValidateCanCreateSenderLink(string entityPath)
+        {
+            if (_useSingleSession)
+            {
+                lock (_syncLock)
+                {
+                    // The send-via entity is a receiver and there are no active links. We are reconnecting the connection.
+                    if (_sendViaReceiverEntityPath != null && ActiveLinks.IsEmpty)
+                    {
+                        // The sender is not going to the send-via entity path, so we need to ensure the receiver is reconnected first.
+                        if (entityPath != _sendViaReceiverEntityPath)
+                        {
+                            // User code will already need to handle InvalidOperationExceptions for transactions where the connection drops.
+                            // There is no point in attempting to reconnect the receiver here on the user's behalf, as the transaction will
+                            // still fail since the connection dropped.
+                            throw new InvalidOperationException(
+                                string.Format(
+                                    CultureInfo.InvariantCulture,
+                                    Resources.TransactionReconnectionError,
+                                    entityPath,
+                                    _sendViaReceiverEntityPath));
+                        }
+                    }
+                }
+            }
+        }
+
         /// <summary>
         ///   Performs the actions needed to configure and begin tracking the specified AMQP
         ///   link as an active link bound to this scope.
@@ -837,6 +873,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
             AmqpObject link,
             Timer authorizationRefreshTimer = null)
         {
+            if (_useSingleSession)
+            {
+                lock (_syncLock)
+                {
+                    if (link is ReceivingAmqpLink)
+                    {
+                        // Track the send-via receiver in order to handle reconnecting in the proper order (sender first).
+                        if (_sendViaReceiverEntityPath == null)
+                        {
+                            _sendViaReceiverEntityPath = entityPath;
+                        }
+                    }
+                }
+            }
+
             // Register the link as active and having authorization automatically refreshed, so that it can be
             // managed with the scope.
 

@@ -14,24 +14,29 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         /// <summary> Initializes a new instance of ServicePrincipalParam. </summary>
         /// <param name="clientId"> The client id of the service principal. </param>
-        /// <param name="clientSecret"> The client secret of the service principal. </param>
         /// <param name="tenantId"> The tenant id of the service principal. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/>, <paramref name="clientSecret"/>, or <paramref name="tenantId"/> is null. </exception>
-        public ServicePrincipalParam(string clientId, string clientSecret, string tenantId)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="tenantId"/> is null. </exception>
+        public ServicePrincipalParam(string clientId, string tenantId)
         {
             if (clientId == null)
             {
                 throw new ArgumentNullException(nameof(clientId));
-            }
-            if (clientSecret == null)
-            {
-                throw new ArgumentNullException(nameof(clientSecret));
             }
             if (tenantId == null)
             {
                 throw new ArgumentNullException(nameof(tenantId));
             }
 
+            ClientId = clientId;
+            TenantId = tenantId;
+        }
+
+        /// <summary> Initializes a new instance of ServicePrincipalParam. </summary>
+        /// <param name="clientId"> The client id of the service principal. </param>
+        /// <param name="clientSecret"> The client secret of the service principal. </param>
+        /// <param name="tenantId"> The tenant id of the service principal. </param>
+        internal ServicePrincipalParam(string clientId, string clientSecret, string tenantId)
+        {
             ClientId = clientId;
             ClientSecret = clientSecret;
             TenantId = tenantId;

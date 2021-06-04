@@ -26,6 +26,7 @@ namespace Microsoft.Azure.WebJobs
     {
         public ServiceBusTriggerAttribute(string queueName) { }
         public ServiceBusTriggerAttribute(string topicName, string subscriptionName) { }
+        public bool AutoCompleteMessages { get { throw null; } set { } }
         public string Connection { get { throw null; } set { } }
         public bool IsSessionsEnabled { get { throw null; } set { } }
         public string QueueName { get { throw null; } }

@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal NotificationHook()
         {
+            AdministratorsEmails = new ChangeTrackingList<string>();
         }
 
         internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)
@@ -25,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Name = name;
             Description = description;
             ExternalLink = string.IsNullOrEmpty(internalExternalLink) ? null : new Uri(internalExternalLink);
-            Administrators = administrators;
+            AdministratorsEmails = administrators;
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The list of user e-mails with administrative rights to manage this hook.
         /// </summary>
         [CodeGenMember("Admins")]
-        public IReadOnlyList<string> Administrators { get; }
+        public IReadOnlyList<string> AdministratorsEmails { get; }
 
         /// <summary> The hook type. </summary>
         internal HookType HookType { get; set; }
@@ -65,8 +66,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return hook switch
             {
-                EmailNotificationHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink?.AbsoluteUri, /*HookParameter = h.HookParameter,*/ Admins = h.Administrators },
-                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink?.AbsoluteUri, /*HookParameter = h.HookParameter,*/ Admins = h.Administrators },
+                EmailNotificationHook h => new EmailHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink?.AbsoluteUri, /*HookParameter = h.HookParameter,*/ Admins = h.AdministratorsEmails },
+                WebNotificationHook h => new WebhookHookInfoPatch() { HookName = h.Name, Description = h.Description, ExternalLink = h.ExternalLink?.AbsoluteUri, /*HookParameter = h.HookParameter,*/ Admins = h.AdministratorsEmails },
                 _ => throw new InvalidOperationException("Unknown AlertingHook type.")
             };
         }

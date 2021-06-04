@@ -12,7 +12,10 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class ExtractKeyPhrasesTests : TextAnalyticsClientLiveTestBase
     {
-        public ExtractKeyPhrasesTests(bool isAsync) : base(isAsync) { }
+        public ExtractKeyPhrasesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private const string SingleEnglish = "My cat might need to see a veterinarian.";
         private const string SingleSpanish = "Mi perro está en el veterinario";
@@ -83,7 +86,8 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
 
-            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document, "es");
+            ExtractKeyPhrasesResultCollection keyPhrasesCollection = await client.ExtractKeyPhrasesBatchAsync(new List<string> { document }, "es", new ExtractKeyPhrasesOptions() { ModelVersion = "2020-07-01" });
+            KeyPhraseCollection keyPhrases = keyPhrasesCollection.FirstOrDefault().KeyPhrases;
 
             ValidateInDocumenResult(keyPhrases, 1);
 

@@ -168,6 +168,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     link.Session?.SafeClose();
                     link.SafeClose();
+                    EventHubsEventSource.Log.FaultTolerantAmqpObjectClose(nameof(SendingAmqpLink), "", EventHubName, "", PartitionId, link.TerminalException?.Message);
                 });
         }
 

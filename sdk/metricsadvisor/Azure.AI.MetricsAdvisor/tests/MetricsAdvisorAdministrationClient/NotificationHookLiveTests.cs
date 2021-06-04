@@ -41,8 +41,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdHook.Name, Is.EqualTo(hookName));
             Assert.That(createdHook.Description, Is.Empty);
             Assert.That(createdHook.ExternalLink, Is.Null);
-            Assert.That(createdHook.Administrators, Is.Not.Null);
-            Assert.That(createdHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(createdHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(createdHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
 
             var createdEmailHook = createdHook as EmailNotificationHook;
 
@@ -76,8 +76,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdHook.Name, Is.EqualTo(hookName));
             Assert.That(createdHook.Description, Is.EqualTo(description));
             Assert.That(createdHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
-            Assert.That(createdHook.Administrators, Is.Not.Null);
-            Assert.That(createdHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(createdHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(createdHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
 
             var createdEmailHook = createdHook as EmailNotificationHook;
 
@@ -88,6 +88,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task CreateAndGetWebNotificationHookWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -104,8 +105,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdHook.Name, Is.EqualTo(hookName));
             Assert.That(createdHook.Description, Is.Empty);
             Assert.That(createdHook.ExternalLink, Is.Null);
-            Assert.That(createdHook.Administrators, Is.Not.Null);
-            Assert.That(createdHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(createdHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(createdHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
 
             var createdWebHook = createdHook as WebNotificationHook;
 
@@ -119,6 +120,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task CreateAndGetWebNotificationHookWithOptionalMembers()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -157,8 +159,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdHook.Name, Is.EqualTo(hookName));
             Assert.That(createdHook.Description, Is.EqualTo(description));
             Assert.That(createdHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
-            Assert.That(createdHook.Administrators, Is.Not.Null);
-            Assert.That(createdHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(createdHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(createdHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
 
             var createdWebHook = createdHook as WebNotificationHook;
 
@@ -207,8 +209,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedEmailHook.Description, Is.Empty);
             Assert.That(updatedEmailHook.ExternalLink, Is.Null);
-            Assert.That(updatedEmailHook.Administrators, Is.Not.Null);
-            Assert.That(updatedEmailHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(updatedEmailHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(updatedEmailHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
 
             var expectedEmailsToAlert = new List<string>() { "fake1@email.com", "fake2@email.com", "fake3@email.com" };
             Assert.That(updatedEmailHook.EmailsToAlert, Is.EquivalentTo(expectedEmailsToAlert));
@@ -248,8 +250,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedEmailHook.Description, Is.Empty);
             Assert.That(updatedEmailHook.ExternalLink, Is.Null);
-            Assert.That(updatedEmailHook.Administrators, Is.Not.Null);
-            Assert.That(updatedEmailHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(updatedEmailHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(updatedEmailHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
             Assert.That(updatedEmailHook.EmailsToAlert.Single(), Is.EqualTo("fake3@email.com"));
         }
 
@@ -290,8 +292,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedEmailHook.Description, Is.EqualTo(description));
             Assert.That(updatedEmailHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
-            Assert.That(updatedEmailHook.Administrators, Is.Not.Null);
-            Assert.That(updatedEmailHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(updatedEmailHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(updatedEmailHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
 
             var expectedEmailsToAlert = new List<string>() { "fake1@email.com", "fake2@email.com", "fake3@email.com" };
             Assert.That(updatedEmailHook.EmailsToAlert, Is.EquivalentTo(expectedEmailsToAlert));
@@ -336,8 +338,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedEmailHook.Description, Is.EqualTo(description));
             Assert.That(updatedEmailHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
-            Assert.That(updatedEmailHook.Administrators, Is.Not.Null);
-            Assert.That(updatedEmailHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(updatedEmailHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(updatedEmailHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
             Assert.That(updatedEmailHook.EmailsToAlert.Single(), Is.EqualTo("fake3@email.com"));
         }
 
@@ -371,8 +373,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedWebHook.Description, Is.Empty);
             Assert.That(updatedWebHook.ExternalLink, Is.Null);
-            Assert.That(updatedWebHook.Administrators, Is.Not.Null);
-            Assert.That(updatedWebHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(updatedWebHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(updatedWebHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
 
             Assert.That(updatedWebHook.Endpoint.AbsoluteUri, Is.EqualTo("http://contoso.com/"));
             Assert.That(updatedWebHook.CertificateKey, Is.Empty);
@@ -411,8 +413,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedWebHook.Description, Is.Empty);
             Assert.That(updatedWebHook.ExternalLink, Is.Null);
-            Assert.That(updatedWebHook.Administrators, Is.Not.Null);
-            Assert.That(updatedWebHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(updatedWebHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(updatedWebHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
 
             Assert.That(updatedWebHook.Endpoint, Is.EqualTo(endpoint));
             Assert.That(updatedWebHook.CertificateKey, Is.Empty);
@@ -469,8 +471,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedWebHook.Description, Is.EqualTo(description));
             Assert.That(updatedWebHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
-            Assert.That(updatedWebHook.Administrators, Is.Not.Null);
-            Assert.That(updatedWebHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(updatedWebHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(updatedWebHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
 
             Assert.That(updatedWebHook.Endpoint, Is.EqualTo(endpoint));
             // TODO: add certificate key validation (https://github.com/Azure/azure-sdk-for-net/issues/17485)
@@ -529,8 +531,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
             Assert.That(updatedWebHook.Description, Is.EqualTo(description));
             Assert.That(updatedWebHook.ExternalLink.AbsoluteUri, Is.EqualTo("http://fake.endpoint.com/"));
-            Assert.That(updatedWebHook.Administrators, Is.Not.Null);
-            Assert.That(updatedWebHook.Administrators.Single(), Is.Not.Null.And.Not.Empty);
+            Assert.That(updatedWebHook.AdministratorsEmails, Is.Not.Null);
+            Assert.That(updatedWebHook.AdministratorsEmails.Single(), Is.Not.Null.And.Not.Empty);
 
             Assert.That(updatedWebHook.Endpoint, Is.EqualTo(endpoint));
             // TODO: add certificate key validation (https://github.com/Azure/azure-sdk-for-net/issues/17485)
@@ -559,8 +561,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 Assert.That(hook.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(hook.Name, Is.Not.Null.And.Not.Empty);
-                Assert.That(hook.Administrators, Is.Not.Null.And.Not.Empty);
-                Assert.That(hook.Administrators.Any(admin => admin == null || admin == string.Empty), Is.False);
+                Assert.That(hook.AdministratorsEmails, Is.Not.Null.And.Not.Empty);
+                Assert.That(hook.AdministratorsEmails.Any(admin => admin == null || admin == string.Empty), Is.False);
                 Assert.That(hook.Description, Is.Not.Null);
 
                 if (hook is EmailNotificationHook)
@@ -598,7 +600,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             string hookNameFilter = hookName.Substring(1, hookName.Length - 3);
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
@@ -614,8 +616,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(hook.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(hook.Name, Is.Not.Null.And.Not.Empty);
                 Assert.That(hook.Name.Contains(hookNameFilter));
-                Assert.That(hook.Administrators, Is.Not.Null.And.Not.Empty);
-                Assert.That(hook.Administrators.Any(admin => admin == null || admin == string.Empty), Is.False);
+                Assert.That(hook.AdministratorsEmails, Is.Not.Null.And.Not.Empty);
+                Assert.That(hook.AdministratorsEmails.Any(admin => admin == null || admin == string.Empty), Is.False);
                 Assert.That(hook.Description, Is.Not.Null);
 
                 if (hook is EmailNotificationHook)
@@ -654,7 +656,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
 
             string hookId = null;
 

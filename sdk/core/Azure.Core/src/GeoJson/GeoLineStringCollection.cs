@@ -4,12 +4,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Azure.Core.GeoJson
 {
     /// <summary>
     /// Represents a geometry that is composed of multiple <see cref="GeoLineString"/>.
     /// </summary>
+    [JsonConverter(typeof(GeoJsonConverter))]
     public sealed class GeoLineStringCollection : GeoObject, IReadOnlyList<GeoLineString>
     {
         /// <summary>

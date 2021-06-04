@@ -15,7 +15,6 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class SampleSnippets : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        [Ignore("Samples not working yet")]
         public void CreateDocumentTranslationClient()
         {
             #region Snippet:CreateDocumentTranslationClient
@@ -27,6 +26,19 @@ namespace Azure.AI.Translation.Document.Samples
             string apiKey = TestEnvironment.ApiKey;
 #endif
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            #endregion
+        }
+
+        [Test]
+        public void CreateDocumentTranslationClientTokenCredential()
+        {
+            #region Snippet:CreateDocumentTranslationClientTokenCredential
+#if SNIPPET
+            string endpoint = "<endpoint>";
+#else
+            string endpoint = TestEnvironment.Endpoint;
+#endif
+            var client = new DocumentTranslationClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
 

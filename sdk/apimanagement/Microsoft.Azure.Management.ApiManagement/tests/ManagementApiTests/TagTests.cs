@@ -17,7 +17,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class TagTest : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDeleteApiTags()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -163,7 +163,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDeleteProductTags()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -297,7 +297,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDeleteOperationTags()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

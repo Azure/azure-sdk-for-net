@@ -434,11 +434,7 @@ namespace Azure.Search.Documents.Tests
                     Serializer = new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                            Converters =
-                            {
-                                new GeoJsonConverter()
-                            }
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                         })
                 });
             UncasedHotel expected = new UncasedHotel
