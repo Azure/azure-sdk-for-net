@@ -29,8 +29,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(table, nameof(table));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
-            Parameter = new AzureTableParameter(connectionString, table, query);
-
             ConnectionString = connectionString;
             Table = table;
             Query = query;
@@ -40,8 +38,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(DataFeedSourceType.AzureTable)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             ConnectionString = parameter.ConnectionString;
             Table = parameter.Table;

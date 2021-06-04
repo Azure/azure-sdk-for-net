@@ -29,8 +29,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(database, nameof(database));
             Argument.AssertNotNullOrEmpty(command, nameof(command));
 
-            Parameter = new MongoDBParameter(connectionString, database, command);
-
             ConnectionString = connectionString;
             Database = database;
             Command = command;
@@ -39,8 +37,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(DataFeedSourceType.MongoDb)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             ConnectionString = parameter.ConnectionString;
             Database = parameter.Database;
