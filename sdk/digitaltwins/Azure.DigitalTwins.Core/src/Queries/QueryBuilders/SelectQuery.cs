@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
@@ -16,7 +17,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     {
         private readonly FromQuery _innerQuery;
         private readonly AdtQueryBuilder _parent;
-        private IList<SelectClause> _clauses;
+        private SelectClause _clause;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectQuery"/> class.
@@ -25,7 +26,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             _parent = parent;
             _innerQuery = select;
-            _clauses = new List<SelectClause>();
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public FromQuery Select(params string[] args)
         {
             Console.WriteLine(args);
-            _clauses.Add(new SelectClause(args[0]));
+            _clause = new SelectClause(args);
             return _innerQuery;
         }
 
@@ -48,8 +48,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectTop(int count)
         {
+            // TODO -- FIXME
             Console.WriteLine(count);
-            _clauses.Add(new SelectClause(count.ToString(CultureInfo.InvariantCulture)));
+            //_clause = new SelectClause(count.ToString(CultureInfo.InvariantCulture));
             return _innerQuery;
         }
 
@@ -61,7 +62,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public FromQuery SelectCount(params string[] args)
         {
             Console.WriteLine(args);
-            _clauses.Add(new SelectClause(args[0]));
+            _clause = new SelectClause(args);
             return _innerQuery;
         }
 
@@ -83,7 +84,30 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override string Stringify()
         {
-            throw new NotImplementedException();
+            StringBuilder selectComponents = new StringBuilder();
+            selectComponents.Append("SELECT ");
+
+            // one argument
+            if (_clause.ClauseArgs.Length == 1)
+            {
+                selectComponents.Append(_clause.ClauseArgs[0]);
+            }
+            // multiple arguments
+            else
+            {
+                // instantiate i outside loop to access later
+                int i;
+                for (i = 0; i < _clause.ClauseArgs.Length - 1; i++)
+                {
+                    selectComponents.Append(_clause.ClauseArgs[i]);
+                    selectComponents.Append(", ");
+                }
+
+                // don't put a comma after the last argument
+                selectComponents.Append(_clause.ClauseArgs[i]);
+            }
+
+            return selectComponents.ToString().Trim();
         }
     }
 }

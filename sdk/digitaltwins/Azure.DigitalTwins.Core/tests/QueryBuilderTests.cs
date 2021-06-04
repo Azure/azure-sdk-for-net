@@ -11,9 +11,16 @@ namespace Azure.DigitalTwins.Core.Tests
     public class QueryBuilderTests
     {
         [Test]
-        public void SimpleTests()
+        public void SelectSinglePropertyTests()
         {
-            new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).ToString().Should().Be("SELECT * FROM DIGITALTWINS");
+            new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT * FROM DIGITALTWINS");
+            new AdtQueryBuilder().Select("Room").From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT Room FROM DIGITALTWINS");
+        }
+
+        [Test]
+        public void SelectMultiplePropertyTests()
+        {
+            new AdtQueryBuilder().Select("Room", "Factory").From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT Room, Factory FROM DIGITALTWINS");
         }
     }
 }

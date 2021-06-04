@@ -32,22 +32,5 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             _collection = collection;
         }
-
-        public override string Stringify()
-        {
-            StringBuilder fromComponents = new StringBuilder();
-            fromComponents.Append("FROM");
-
-            if (Collection == AdtCollection.DigitalTwins)
-            {
-                fromComponents.Append("DIGITALTWINS");
-            }
-            else
-            {
-                fromComponents.Append("RELATIONSHIPS");
-            }
-
-            return fromComponents.ToString();
-        }
     }
 }

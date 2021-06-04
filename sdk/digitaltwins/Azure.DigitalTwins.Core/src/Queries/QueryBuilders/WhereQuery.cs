@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
@@ -115,10 +116,23 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override string Stringify()
         {
-            throw new NotImplementedException();
+            // TODO -- make this cleaner? design problem?
+            if (_clauses.Count > 0)
+            {
+                StringBuilder whereComponents = new StringBuilder();
+                whereComponents.Append("WHERE ");
+
+                // TODO -- turn condition into a string
+                // add where arguments (conditions)
+
+                return whereComponents.ToString();
+            }
+
+            return "";
         }
+
         /*
-* The rest of the logical operators defined in a similar manner.
-*/
+        * The rest of the logical operators defined in a similar manner.
+        */
     }
 }

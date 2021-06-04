@@ -70,10 +70,11 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
             finalQuery.Append(fromString);
 
             // build the where string
+            // TODO -- how to see if we need a where clause?
             string whereString = _whereQuery.Stringify();
             finalQuery.Append(whereString);
 
-            return finalQuery.ToString();
+            return finalQuery.ToString().Trim();
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
@@ -19,6 +20,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         internal FromQuery(AdtQueryBuilder parent, WhereQuery selectPart)
         {
             _parent = parent;
+
+            // TODO -- change to just a singular from clause
             _clauses = new List<FromClause>();
             _innerQuery = selectPart;
         }
@@ -57,7 +60,19 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override string Stringify()
         {
-            throw new NotImplementedException();
+            StringBuilder fromComponents = new StringBuilder();
+            fromComponents.Append(" FROM ");
+
+            if (_clauses[0].Collection == AdtCollection.DigitalTwins)
+            {
+                fromComponents.Append("DIGITALTWINS ");
+            }
+            else
+            {
+                fromComponents.Append("RELATIONSHIPS ");
+            }
+
+            return fromComponents.ToString();
         }
     }
 }

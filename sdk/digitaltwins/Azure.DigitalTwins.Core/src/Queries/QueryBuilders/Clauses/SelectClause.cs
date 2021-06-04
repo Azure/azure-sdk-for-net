@@ -13,29 +13,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// The argument for the SELECT clause (eg. *).
         /// </summary>
-        public string ClauseArg { get; set; }
+        public string[] ClauseArgs { get; set; }
 
         /// <summary>
         /// Constructor for SELECT clause.
         /// </summary>
-        /// <param name="argument"> Argument for what to select (collection, property, etc.). </param>
-        internal SelectClause(string argument)
+        /// <param name="arguments"> Arguments for what to select (collection, property, etc.). </param>
+        internal SelectClause(string[] arguments)
         {
-            // TODO -- select multiple arguments (string[])
             Type = ClauseType.SELECT;
-            ClauseArg = argument;
-        }
-
-        public override string Stringify()
-        {
-            StringBuilder selectComponents = new StringBuilder();
-            selectComponents.Append("SELECT");
-
-            // TODO -- support multiple select arguments
-            // TODO -- spaces?
-            selectComponents.Append(ClauseArg);
-
-            return selectComponents.ToString();
+            ClauseArgs = arguments;
         }
     }
 }

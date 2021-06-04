@@ -13,7 +13,5 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// The type of the given clause (out of SELECT, FROM, JOIN and WHERE).
         /// </summary>
         public ClauseType Type { get; set; }
-
-        public abstract string Stringify();
     }
 }

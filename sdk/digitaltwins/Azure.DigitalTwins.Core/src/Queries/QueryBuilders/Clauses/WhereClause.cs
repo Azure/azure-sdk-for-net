@@ -24,16 +24,5 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             Type = ClauseType.WHERE;
             Condition = condition;
         }
-
-        public override string Stringify()
-        {
-            StringBuilder whereComponents = new StringBuilder();
-            whereComponents.Append("WHERE");
-
-            // TODO -- turn condition into a string
-            // add where arguments (conditions)
-
-            return whereComponents.ToString();
-        }
     }
 }
