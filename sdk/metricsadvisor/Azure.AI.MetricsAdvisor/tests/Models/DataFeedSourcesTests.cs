@@ -77,6 +77,76 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(content, Contains.Substring(expectedSubstring));
         }
 
+        [Test]
+        [TestCaseSource(nameof(DataSourceTestCases))]
+        public async Task DataFeedSourceSendsSecretDuringUpdate(DataFeedSource dataSource, string secretPropertyName)
+        {
+            MockResponse updateResponse = new MockResponse(200);
+            updateResponse.SetContent(DataFeedResponseContent);
+
+            MockTransport mockTransport = new MockTransport(updateResponse);
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
+
+            UpdateSecret(dataSource, secretPropertyName);
+
+            DataFeed dataFeed = new DataFeed()
+            {
+                Id = FakeGuid,
+                Name = "name",
+                DataSource = dataSource,
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
+                Schema = new DataFeedSchema(),
+                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = DateTimeOffset.UtcNow }
+            };
+
+            await adminClient.UpdateDataFeedAsync(dataFeed);
+
+            MockRequest request = mockTransport.Requests.First();
+            string content = ReadContent(request);
+
+            Assert.That(content, Contains.Substring($"\"{secretPropertyName}\":\"new_secret\""));
+        }
+
+        private void UpdateSecret(DataFeedSource dataSource, string secretPropertyName)
+        {
+            switch (dataSource)
+            {
+                case AzureApplicationInsightsDataFeedSource d:
+                    d.UpdateApiKey("new_secret");
+                    break;
+                case AzureCosmosDbDataFeedSource d:
+                    d.UpdateConnectionString("new_secret");
+                    break;
+                case AzureDataExplorerDataFeedSource d:
+                    d.UpdateConnectionString("new_secret");
+                    break;
+                case AzureDataLakeStorageGen2DataFeedSource d:
+                    d.UpdateAccountKey("new_secret");
+                    break;
+                case AzureTableDataFeedSource d:
+                    d.UpdateConnectionString("new_secret");
+                    break;
+                case InfluxDbDataFeedSource d:
+                    if (secretPropertyName == "connectionString") d.UpdateConnectionString("new_secret");
+                    else d.UpdatePassword("new_secret");
+                    break;
+                case MongoDbDataFeedSource d:
+                    d.UpdateConnectionString("new_secret");
+                    break;
+                case MySqlDataFeedSource d:
+                    d.UpdateConnectionString("new_secret");
+                    break;
+                case PostgreSqlDataFeedSource d:
+                    d.UpdateConnectionString("new_secret");
+                    break;
+                case SqlServerDataFeedSource d:
+                    d.UpdateConnectionString("new_secret");
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"Unknown data source type: {dataSource.GetType()}");
+            };
+        }
+
         private string ReadContent(Request request)
         {
             using MemoryStream stream = new MemoryStream();
