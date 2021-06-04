@@ -73,12 +73,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// Updates the API key.
         /// </summary>
-        /// <param name="apiKey"></param>
+        /// <param name="apiKey">The new API key to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="apiKey"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="apiKey"/> is empty.</exception>
         public void UpdateApiKey(string apiKey)
         {
             Argument.AssertNotNullOrEmpty(apiKey, nameof(apiKey));
-
             ApiKey = apiKey;
         }
     }

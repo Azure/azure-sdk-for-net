@@ -119,22 +119,24 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string FileTemplate { get; set; }
 
         /// <summary>
-        /// </summary>
-        /// <param name="accountKey"></param>
-        public void UpdateAccountKey(string accountKey)
-        {
-            Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
-
-            AccountKey = accountKey;
-        }
-
-        /// <summary>
         /// The Storage Account key.
         /// </summary>
         internal string AccountKey
         {
             get => Volatile.Read(ref _accountKey);
             private set => Volatile.Write(ref _accountKey, value);
+        }
+
+        /// <summary>
+        /// Updates the account key.
+        /// </summary>
+        /// <param name="accountKey">The new account key to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="accountKey"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="accountKey"/> is empty.</exception>
+        public void UpdateAccountKey(string accountKey)
+        {
+            Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
+            AccountKey = accountKey;
         }
     }
 }

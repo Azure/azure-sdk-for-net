@@ -54,22 +54,24 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Command { get; set; }
 
         /// <summary>
-        /// </summary>
-        /// <param name="connectionString"></param>
-        public void UpdateConnectionString(string connectionString)
-        {
-            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-
-            ConnectionString = connectionString;
-        }
-
-        /// <summary>
         /// The connection string.
         /// </summary>
         internal string ConnectionString
         {
             get => Volatile.Read(ref _connectionString);
             private set => Volatile.Write(ref _connectionString, value);
+        }
+
+        /// <summary>
+        /// Updates the connection string.
+        /// </summary>
+        /// <param name="connectionString">The new connection string to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/> is empty.</exception>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+            ConnectionString = connectionString;
         }
     }
 }

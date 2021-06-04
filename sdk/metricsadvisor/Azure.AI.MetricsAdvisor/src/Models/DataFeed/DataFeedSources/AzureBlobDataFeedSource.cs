@@ -110,12 +110,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
+        /// Updates the connection string.
         /// </summary>
-        /// <param name="connectionString"></param>
+        /// <param name="connectionString">The new connection string to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/> is empty.</exception>
         public void UpdateConnectionString(string connectionString)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-
             ConnectionString = connectionString;
         }
     }
