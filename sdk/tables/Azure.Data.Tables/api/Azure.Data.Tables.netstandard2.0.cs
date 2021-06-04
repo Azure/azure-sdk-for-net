@@ -353,7 +353,7 @@ namespace Azure.Data.Tables.Sas
     {
         public TableAccountSasBuilder(Azure.Data.Tables.Sas.TableAccountSasPermissions permissions, Azure.Data.Tables.Sas.TableAccountSasResourceTypes resourceTypes, System.DateTimeOffset expiresOn) { }
         public TableAccountSasBuilder(string rawPermissions, Azure.Data.Tables.Sas.TableAccountSasResourceTypes resourceTypes, System.DateTimeOffset expiresOn) { }
-        public TableAccountSasBuilder(System.Uri uri) { }
+        public TableAccountSasBuilder(System.Uri sasUri) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Data.Tables.Sas.TableSasIPRange IPRange { get { throw null; } set { } }
@@ -410,7 +410,7 @@ namespace Azure.Data.Tables.Sas
     {
         public TableSasBuilder(string tableName, Azure.Data.Tables.Sas.TableSasPermissions permissions, System.DateTimeOffset expiresOn) { }
         public TableSasBuilder(string tableName, string rawPermissions, System.DateTimeOffset expiresOn) { }
-        public TableSasBuilder(System.Uri uri) { }
+        public TableSasBuilder(System.Uri sasUri) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Data.Tables.Sas.TableSasIPRange IPRange { get { throw null; } set { } }
