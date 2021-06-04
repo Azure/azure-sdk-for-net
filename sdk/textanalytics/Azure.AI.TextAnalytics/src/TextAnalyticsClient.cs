@@ -22,9 +22,6 @@ namespace Azure.AI.TextAnalytics
         internal readonly TextAnalyticsRestClient _serviceRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
         private readonly TextAnalyticsClientOptions _options;
-        private readonly StringIndexType _stringIndexType = StringIndexType.Utf16CodeUnit;
-        private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
-        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -66,7 +63,7 @@ namespace Azure.AI.TextAnalytics
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
 
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, DefaultCognitiveScope));
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 
@@ -105,7 +102,7 @@ namespace Azure.AI.TextAnalytics
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
 
-            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
+            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 
@@ -434,7 +431,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: _stringIndexType,
+                    stringIndexType: Constants.DefaultStringIndexType,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -492,7 +489,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: _stringIndexType,
+                    stringIndexType: Constants.DefaultStringIndexType,
                     cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -820,7 +817,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -847,7 +844,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -915,7 +912,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.DomainFilter.GetString(),
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
@@ -985,7 +982,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.DomainFilter.GetString(),
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
@@ -1165,7 +1162,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.DomainFilter.GetString(),
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
@@ -1194,7 +1191,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.DomainFilter.GetString(),
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken);
                 var response = result.GetRawResponse();
@@ -1310,7 +1307,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.IncludeOpinionMining,
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -1371,7 +1368,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.IncludeOpinionMining,
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -1648,7 +1645,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.IncludeOpinionMining,
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -1676,7 +1673,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.IncludeOpinionMining,
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -2179,7 +2176,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: _stringIndexType,
+                    stringIndexType: Constants.DefaultStringIndexType,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -2235,7 +2232,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: _stringIndexType,
+                    stringIndexType: Constants.DefaultStringIndexType,
                     cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -2543,7 +2540,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -2569,7 +2566,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -2739,7 +2736,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(
                     batchInput,
                     options.ModelVersion,
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     options.DisableServiceLogs,
                     cancellationToken);
                 string location = response.Headers.OperationLocation;
@@ -2767,7 +2764,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(
                     batchInput,
                     options.ModelVersion,
-                    _stringIndexType,
+                    Constants.DefaultStringIndexType,
                     options.DisableServiceLogs,
                     cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
