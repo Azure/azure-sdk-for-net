@@ -23,7 +23,10 @@ namespace Azure.Messaging.EventHubs.Core
             {
                 TransportType = instance.TransportType,
                 Proxy = instance.Proxy,
-                CustomEndpointAddress = instance.CustomEndpointAddress
+                CustomEndpointAddress = instance.CustomEndpointAddress,
+                SendBufferSizeInBytes = instance.SendBufferSizeInBytes,
+                ReceiveBufferSizeInBytes = instance.ReceiveBufferSizeInBytes,
+                CertificateValidationCallback = instance.CertificateValidationCallback
             };
     }
 }
