@@ -101,6 +101,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(AlertConfigurationId, AlertId))
             {
                 Assert.That(anomaly, Is.Not.Null);
+                Assert.That(anomaly.DataFeedId, Is.Not.Null.And.Not.Empty);
                 Assert.That(anomaly.MetricId, Is.Not.Null.And.Not.Empty);
                 Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Not.Null.And.Not.Empty);
                 Assert.That(anomaly.Timestamp, Is.Not.EqualTo(default(DateTimeOffset)));
@@ -134,6 +135,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(incident, Is.Not.Null);
 
                 Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(incident.DataFeedId, Is.Not.Null.And.Not.Empty);
                 Assert.That(incident.MetricId, Is.Not.Null.And.Not.Empty);
                 Assert.That(incident.DetectionConfigurationId, Is.Not.Null.And.Not.Empty);
                 Assert.That(incident.StartTime, Is.Not.EqualTo(default(DateTimeOffset)));
@@ -142,7 +144,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 // Service bug: https://github.com/Azure/azure-sdk-for-net/issues/16581
                 //Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
 
-                ValidateSeriesKey(incident.DimensionKey);
+                ValidateSeriesKey(incident.RootDimensionKey);
 
                 if (++incidentCount >= MaximumSamplesCount)
                 {

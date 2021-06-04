@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://identity.accledger.azure.com/ledgerIdentity/chriss-cl2?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.ConfidentialLedger/1.0.0-alpha.20210603.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "8fc9923ff7c000f0e37be8e6d3f0b453",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 03 Jun 2021 18:33:21 GMT",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "8fc9923ff7c000f0e37be8e6d3f0b453",
+        "x-ms-correlation-request-id": "355f070e-0a66-4c9a-8a6c-49dd25e67bd5",
+        "x-ms-image-digest": "sha256:9bf270bdf27a6290e633cb74337aabb4be99ef21a73a153fe78440cc4f2f4744",
+        "x-ms-image-tag": "latest-2021052601105644-ec9d5188",
+        "x-ms-machineName": "identityservice-6df687574c-xqhpz"
+      },
+      "ResponseBody": {
+        "ledgerTlsCertificate": "-----BEGIN CERTIFICATE-----\nMIIBeTCCASCgAwIBAgIQIvlAqchn0JKYFaA5ziNO0TAKBggqhkjOPQQDAjAWMRQw\nEgYDVQQDDAtDQ0YgTmV0d29yazAeFw0yMTAzMTEwMDAwMDBaFw0yMzA2MTEyMzU5\nNTlaMBYxFDASBgNVBAMMC0NDRiBOZXR3b3JrMFkwEwYHKoZIzj0CAQYIKoZIzj0D\nAQcDQgAE5\u002BwbbIf5ogJHlqgqGMzauakvbeTcQUiBrj8wLFjsAHYVLWdGbw82r5eP\nJlssJ6n3zB6DL3i3r5fo/a7vcUuIDaNQME4wDAYDVR0TBAUwAwEB/zAdBgNVHQ4E\nFgQU792RyUln/YSosFovrawLG9ldXcswHwYDVR0jBBgwFoAU792RyUln/YSosFov\nrawLG9ldXcswCgYIKoZIzj0EAwIDRwAwRAIgW00glKAaU2/bmGIFrfNcQxv2vgIg\niFrFnN8LMWHFjpUCIFf5XP2GfLC125n7zXZFs/VVDDb0t6TKR80c/pTy99Kg\n-----END CERTIFICATE-----\n\u0000",
+        "ledgerId": "chriss-cl2"
+      }
+    },
+    {
+      "RequestUri": "https://identity.accledger.azure.com/ledgerIdentity/chriss-cl2?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.ConfidentialLedger/1.0.0-alpha.20210603.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "8fc9923ff7c000f0e37be8e6d3f0b453",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 03 Jun 2021 18:33:21 GMT",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "8fc9923ff7c000f0e37be8e6d3f0b453",
+        "x-ms-correlation-request-id": "355f070e-0a66-4c9a-8a6c-49dd25e67bd5",
+        "x-ms-image-digest": "sha256:9bf270bdf27a6290e633cb74337aabb4be99ef21a73a153fe78440cc4f2f4744",
+        "x-ms-image-tag": "latest-2021052601105644-ec9d5188",
+        "x-ms-machineName": "identityservice-6df687574c-xqhpz"
+      },
+      "ResponseBody": {
+        "ledgerTlsCertificate": "-----BEGIN CERTIFICATE-----\nMIIBeTCCASCgAwIBAgIQIvlAqchn0JKYFaA5ziNO0TAKBggqhkjOPQQDAjAWMRQw\nEgYDVQQDDAtDQ0YgTmV0d29yazAeFw0yMTAzMTEwMDAwMDBaFw0yMzA2MTEyMzU5\nNTlaMBYxFDASBgNVBAMMC0NDRiBOZXR3b3JrMFkwEwYHKoZIzj0CAQYIKoZIzj0D\nAQcDQgAE5\u002BwbbIf5ogJHlqgqGMzauakvbeTcQUiBrj8wLFjsAHYVLWdGbw82r5eP\nJlssJ6n3zB6DL3i3r5fo/a7vcUuIDaNQME4wDAYDVR0TBAUwAwEB/zAdBgNVHQ4E\nFgQU792RyUln/YSosFovrawLG9ldXcswHwYDVR0jBBgwFoAU792RyUln/YSosFov\nrawLG9ldXcswCgYIKoZIzj0EAwIDRwAwRAIgW00glKAaU2/bmGIFrfNcQxv2vgIg\niFrFnN8LMWHFjpUCIFf5XP2GfLC125n7zXZFs/VVDDb0t6TKR80c/pTy99Kg\n-----END CERTIFICATE-----\n\u0000",
+        "ledgerId": "chriss-cl2"
+      }
+    }
+  ],
+  "Variables": {
+    "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.accledger.azure.com/",
+    "CONFIDENTIALLEDGER_URL": "https://chriss-CL2.confidential-ledger.azure.com",
+    "RandomSeed": "6545049"
+  }
+}

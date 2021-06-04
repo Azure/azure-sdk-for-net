@@ -10,8 +10,9 @@ If any of the new objects needs to be overwritten, add the required changes to t
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/08ef4099dff05de3ce1682d58cd4e0e2b1565905/specification/communication/data-plane/Microsoft.CommunicationServicesChat/preview/2021-04-05-preview6/communicationserviceschat.json
+tag: package-chat-2021-04-05-preview6
+require:
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/896d05e37dbb00712726620b8d679cc3c3be09fb/specification/communication/data-plane/Chat/readme.md
 payload-flattening-threshold: 10
 directive:
   from: swagger-document
