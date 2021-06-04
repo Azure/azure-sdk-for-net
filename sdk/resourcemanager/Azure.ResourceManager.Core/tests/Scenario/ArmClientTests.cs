@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core.Tests.Scenario
     {
         private string _rgName;
         private readonly string _location = "southcentralus";
-        
+
         public ArmClientTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -40,11 +40,18 @@ namespace Azure.ResourceManager.Core.Tests.Scenario
 
             var genericResourceOperationsList = Client.GetGenericResourceOperations(ids);
 
-            foreach(GenericResourceOperations operations in genericResourceOperationsList)
+            foreach (GenericResourceOperations operations in genericResourceOperationsList)
             {
                 Assert.AreEqual(operations.Id, ids[0]);
                 ids.RemoveAt(0);
             }
+        }
+
+        [TestCase]
+        public void GetGenericResourcesOperationsTests()
+        {
+            string id = $"/providers/Microsoft.Compute/virtualMachines/myVm";
+            Assert.AreEqual(Client.GetGenericResourcesOperations(new TenantResourceIdentifier(id)).Id, id);
         }
 
         [TestCase]
@@ -120,8 +127,8 @@ namespace Azure.ResourceManager.Core.Tests.Scenario
         [TestCase]
         public void GetGenericResourceOperationWithNullId()
         {
-                string x = null;
-                Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResourceOperations(x); });
+            string x = null;
+            Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResourceOperations(x); });
         }
 
         [TestCase]
