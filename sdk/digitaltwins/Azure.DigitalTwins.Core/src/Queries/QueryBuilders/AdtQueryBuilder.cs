@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using Azure.DigitalTwins.Core.QueryBuilder;
 
 namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
@@ -58,11 +59,21 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// <inheritdoc/>
         public override string ToString()
         {
+            StringBuilder finalQuery = new StringBuilder();
+
             // build the select string
+            string selectString = _selectQuery.Stringify();
+            finalQuery.Append(selectString);
 
             // build the from string
+            string fromString = _fromQuery.Stringify();
+            finalQuery.Append(fromString);
+
             // build the where string
-            return base.ToString();
+            string whereString = _whereQuery.Stringify();
+            finalQuery.Append(whereString);
+
+            return finalQuery.ToString();
         }
     }
 }

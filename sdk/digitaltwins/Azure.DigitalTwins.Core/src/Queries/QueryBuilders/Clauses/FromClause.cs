@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
+
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
@@ -29,6 +31,23 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         internal FromClause(string collection)
         {
             _collection = collection;
+        }
+
+        public override string Stringify()
+        {
+            StringBuilder fromComponents = new StringBuilder();
+            fromComponents.Append("FROM");
+
+            if (Collection == AdtCollection.DigitalTwins)
+            {
+                fromComponents.Append("DIGITALTWINS");
+            }
+            else
+            {
+                fromComponents.Append("RELATIONSHIPS");
+            }
+
+            return fromComponents.ToString();
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
+
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
@@ -22,6 +24,18 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             // TODO -- select multiple arguments (string[])
             Type = ClauseType.SELECT;
             ClauseArg = argument;
+        }
+
+        public override string Stringify()
+        {
+            StringBuilder selectComponents = new StringBuilder();
+            selectComponents.Append("SELECT");
+
+            // TODO -- support multiple select arguments
+            // TODO -- spaces?
+            selectComponents.Append(ClauseArg);
+
+            return selectComponents.ToString();
         }
     }
 }

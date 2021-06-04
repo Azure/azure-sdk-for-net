@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
+
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
@@ -21,6 +23,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             Type = ClauseType.WHERE;
             Condition = condition;
+        }
+
+        public override string Stringify()
+        {
+            StringBuilder whereComponents = new StringBuilder();
+            whereComponents.Append("WHERE");
+
+            // TODO -- turn condition into a string
+            // add where arguments (conditions)
+
+            return whereComponents.ToString();
         }
     }
 }
