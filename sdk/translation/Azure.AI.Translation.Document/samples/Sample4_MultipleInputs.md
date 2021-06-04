@@ -57,7 +57,7 @@ await foreach (DocumentStatusResult document in operation.GetValuesAsync())
     if (document.Status == TranslationStatus.Succeeded)
     {
         Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-        Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
+        Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
         Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else
