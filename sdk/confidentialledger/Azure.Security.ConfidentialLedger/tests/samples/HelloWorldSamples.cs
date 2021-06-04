@@ -28,7 +28,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #else
             Uri identityServiceUri = TestEnvironment.ConfidentialLedgerIdentityUrl;
 #endif
-            var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri, new Identity.DefaultAzureCredential());
+            var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri);
 
             // Get the ledger's  TLS certificate for our ledger.
 #if SNIPPET

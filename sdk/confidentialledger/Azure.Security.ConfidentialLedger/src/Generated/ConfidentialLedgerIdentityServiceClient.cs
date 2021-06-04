@@ -29,30 +29,6 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerIdentityServiceClient. </summary>
-        /// <param name="identityServiceUri"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public ConfidentialLedgerIdentityServiceClient(Uri identityServiceUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
-        {
-            if (identityServiceUri == null)
-            {
-                throw new ArgumentNullException(nameof(identityServiceUri));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new ConfidentialLedgerClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.identityServiceUri = identityServiceUri;
-            apiVersion = options.Version;
-        }
-
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="requestOptions"> The request options. </param>

@@ -49,7 +49,7 @@ Because Confidential Ledgers use self-signed certificates securely generated and
 
 ```C# Snippet:GetIdentity
 Uri identityServiceUri = "<the identity service uri>";
-var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri, new Identity.DefaultAzureCredential());
+var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri);
 
 // Get the ledger's  TLS certificate for our ledger.
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
