@@ -249,6 +249,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.FormattedMessage)));
 
             var client = new ServiceBusAdministrationClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+
+            // wait for a few seconds to allow updated counts to propagate
+            await Task.Delay(TimeSpan.FromSeconds(2));
+
             QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(WebJobsServiceBusTestBase._firstQueueScope.QueueName, CancellationToken.None);
             Assert.AreEqual(0, properties.TotalMessageCount);
         }
