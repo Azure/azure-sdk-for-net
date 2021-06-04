@@ -25,14 +25,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 
         internal async Task<HttpResponseMessage> ProcessAsync(HttpRequestMessage req, string functionName, Func<JArray, string, CancellationToken, Task<HttpResponseMessage>> eventsFunc, CancellationToken cancellationToken)
         {
+            // CloudEvent Schema handshake
+            if (req.Method == HttpMethod.Options)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Headers.Add("Webhook-Allowed-Origin", "eventgrid.azure.net");
+
+                return response;
+            }
+
             IEnumerable<string> eventTypeHeaders = null;
             string eventTypeHeader = null;
             if (req.Headers.TryGetValues("aeg-event-type", out eventTypeHeaders))
             {
                 eventTypeHeader = eventTypeHeaders.First();
             }
+            _logger.LogInformation($"Event type header: {eventTypeHeader}");
 
-            if (String.Equals(eventTypeHeader, "SubscriptionValidation", StringComparison.OrdinalIgnoreCase))
+            // EventGridEvent schema handshake
+            if (string.Equals(eventTypeHeader, "SubscriptionValidation", StringComparison.OrdinalIgnoreCase))
             {
                 string jsonArray = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                 SubscriptionValidationEvent validationEvent = null;
@@ -45,19 +56,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 _logger.LogInformation($"perform handshake with eventGrid for function: {functionName}");
                 return returnMessage;
             }
-            else if (String.Equals(eventTypeHeader, "Notification", StringComparison.OrdinalIgnoreCase))
+
+            // Regular event processing
+            if (string.Equals(eventTypeHeader, "Notification", StringComparison.OrdinalIgnoreCase))
             {
                 JArray events = null;
                 string requestContent = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var token = JToken.Parse(requestContent);
                 if (token.Type == JTokenType.Array)
                 {
-                    // eventgrid schema
+                    // EventGridEvent schema
                     events = (JArray)token;
                 }
                 else if (token.Type == JTokenType.Object)
                 {
-                    // cloudevent schema
+                    // CloudEventSchema schema
                     events = new JArray
                     {
                         token
