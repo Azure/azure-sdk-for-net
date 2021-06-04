@@ -852,15 +852,14 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            return new ShareFileItem
-            {
-                IsDirectory = true,
-                Name = directoryItem.Name,
-                Id = directoryItem.FileId,
-                Properties = directoryItem.Properties.ToShareFileItemProperties(),
-                FileAttributes = ToFileAttributes(directoryItem.Attributes),
-                PermissionKey = directoryItem.PermissionKey,
-            };
+            return new ShareFileItem(
+                isDirectory: true,
+                name: directoryItem.Name,
+                id: directoryItem.FileId,
+                properties: directoryItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: ToFileAttributes(directoryItem.Attributes),
+                permissionKey: directoryItem.PermissionKey,
+                fileSize: null);
         }
 
         internal static ShareFileItem ToShareFileItem(this FileItem fileItem)
@@ -870,16 +869,14 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            return new ShareFileItem
-            {
-                IsDirectory = false,
-                Name = fileItem.Name,
-                Id = fileItem.FileId,
-                Properties = fileItem.Properties.ToShareFileItemProperties(),
-                FileAttributes = ToFileAttributes(fileItem.Attributes),
-                PermissionKey = fileItem.PermissionKey,
-                FileSize = fileItem.Properties.ContentLength
-            };
+            return new ShareFileItem(
+                isDirectory: false,
+                name: fileItem.Name,
+                id: fileItem.FileId,
+                properties: fileItem.Properties.ToShareFileItemProperties(),
+                fileAttributes: ToFileAttributes(fileItem.Attributes),
+                permissionKey: fileItem.PermissionKey,
+                fileSize: fileItem.Properties.ContentLength);
         }
 
         internal static ShareFileItemProperties ToShareFileItemProperties(this FileProperty fileProperty)

@@ -13,8 +13,6 @@ namespace Azure.Storage.Files.Shares.Models
     /// </summary>
     public class ShareFileItem
     {
-        internal ShareFileItem() { }
-
         /// <summary>
         /// Gets a value indicating whether this item is a directory.
         /// </summary>
@@ -50,6 +48,24 @@ namespace Azure.Storage.Files.Shares.Models
         /// a file.
         /// </summary>
         public long? FileSize { get; internal set; }
+
+        internal ShareFileItem(
+            bool isDirectory,
+            string name,
+            string id,
+            ShareFileItemProperties properties,
+            NtfsFileAttributes? fileAttributes,
+            string permissionKey,
+            long? fileSize)
+        {
+            IsDirectory = isDirectory;
+            Name = name;
+            Id = id;
+            Properties = properties;
+            FileAttributes = fileAttributes;
+            PermissionKey = permissionKey;
+            FileSize = fileSize;
+        }
     }
 
     /// <summary>
@@ -68,16 +84,14 @@ namespace Azure.Storage.Files.Shares.Models
             ShareFileItemProperties properties = default,
             NtfsFileAttributes? fileAttributes = default,
             string permissionKey = default) =>
-            new ShareFileItem
-            {
-                IsDirectory = isDirectory,
-                Name = name,
-                FileSize = fileSize,
-                Id = id,
-                Properties = properties,
-                FileAttributes = fileAttributes,
-                PermissionKey = permissionKey
-            };
+            new ShareFileItem(
+                isDirectory: isDirectory,
+                name: name,
+                id: id,
+                properties: properties,
+                fileAttributes: fileAttributes,
+                permissionKey: permissionKey,
+                fileSize: fileSize);
 
         /// <summary>
         /// Creates a new StorageFileItem instance for mocking.
@@ -87,11 +101,13 @@ namespace Azure.Storage.Files.Shares.Models
             bool isDirectory,
             string name,
             long? fileSize) =>
-            new ShareFileItem
-            {
-                IsDirectory = isDirectory,
-                Name = name,
-                FileSize = fileSize
-            };
+            new ShareFileItem(
+                isDirectory: isDirectory,
+                name: name,
+                id: null,
+                properties: null,
+                fileAttributes: null,
+                permissionKey: null,
+                fileSize: fileSize);
     }
 }
