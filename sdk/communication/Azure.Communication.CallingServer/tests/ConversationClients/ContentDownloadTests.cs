@@ -6,11 +6,9 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Linq;
 using Azure.Core.Pipeline;
-using Azure.Communication.CallingServer.Models;
 using Azure.Communication.CallingServer.Tests.ConversationClients;
 
 namespace Azure.Communication.CallingServer.Tests.ContentDownloadTests
@@ -123,7 +121,7 @@ namespace Azure.Communication.CallingServer.Tests.ContentDownloadTests
             ConversationClient _convClient = CreateMockConversationClient(206, _dummyRecordingStream, rangeHeaderResponse);
 
             Stream destination = new MemoryStream();
-            _convClient.DownloadTo(destination, _dummyRecordingLocation, options);
+            _convClient.DownloadTo(_dummyRecordingLocation, destination, options);
 
             Assert.AreEqual(10, destination.Length);
         }

@@ -10,7 +10,6 @@ using Azure.Communication.Pipeline;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using Azure.Communication.CallingServer.Models;
 
 namespace Azure.Communication.CallingServer
 {
@@ -656,7 +655,7 @@ namespace Azure.Communication.CallingServer
         /// operation downloads the recording's content.
         ///
         /// </summary>
-        /// <param name="endpoint">
+        /// <param name="sourceEndpoint">
         /// Recording's content's url location.
         /// </param>
         /// <param name="range">
@@ -676,11 +675,11 @@ namespace Azure.Communication.CallingServer
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<Stream>> DownloadStreamingAsync(
-            Uri endpoint,
+            Uri sourceEndpoint,
             HttpRange range = default,
             CancellationToken cancellationToken = default) =>
             await _contentDownloader.DownloadStreamingInternal(
-                endpoint,
+                sourceEndpoint,
                 range,
                 async: true,
                 cancellationToken)
@@ -691,7 +690,7 @@ namespace Azure.Communication.CallingServer
         /// operation downloads the recording's content.
         ///
         /// </summary>
-        /// <param name="endpoint">
+        /// <param name="sourceEndpoint">
         /// Recording's content's url location.
         /// </param>
         /// <param name="range">
@@ -711,26 +710,26 @@ namespace Azure.Communication.CallingServer
         /// a failure occurs.
         /// </remarks>
         public virtual Response<Stream> DownloadStreaming(
-        Uri endpoint,
-        HttpRange range = default,
-        CancellationToken cancellationToken = default) =>
-        _contentDownloader.DownloadStreamingInternal(
-            endpoint,
-            range,
-            async: false,
-            cancellationToken)
-        .EnsureCompleted();
+            Uri sourceEndpoint,
+            HttpRange range = default,
+            CancellationToken cancellationToken = default) =>
+            _contentDownloader.DownloadStreamingInternal(
+                sourceEndpoint,
+                range,
+                async: false,
+                cancellationToken)
+            .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DownloadTo(Stream, Uri, ContentTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadTo(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
         /// operation downloads the specified content using parallel requests,
-        /// and writes the content to <paramref name="destination"/>.
+        /// and writes the content to <paramref name="destinationStream"/>.
         /// </summary>
-        /// <param name="destination">
-        /// A <see cref="Stream"/> to write the downloaded content to.
-        /// </param>
-        /// <param name="endpoint">
+        /// <param name="sourceEndpoint">
         /// A <see cref="Uri"/> with the Recording's content's url location.
+        /// </param>
+        /// <param name="destinationStream">
+        /// A <see cref="Stream"/> to write the downloaded content to.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="ContentTransferOptions"/> to configure
@@ -747,20 +746,20 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response DownloadTo(Stream destination, Uri endpoint,
+        public virtual Response DownloadTo(Uri sourceEndpoint, Stream destinationStream,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            _contentDownloader.StagedDownloadAsync(destination, endpoint, transferOptions, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+            _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: false, cancellationToken: cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DownloadToAsync(Stream, Uri, ContentTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadToAsync(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
         /// operation downloads the specified content using parallel requests,
-        /// and writes the content to <paramref name="destination"/>.
+        /// and writes the content to <paramref name="destinationStream"/>.
         /// </summary>
-        /// <param name="destination">
-        /// A <see cref="Stream"/> to write the downloaded content to.
-        /// </param>
-        /// <param name="endpoint">
+        /// <param name="sourceEndpoint">
         /// A <see cref="Uri"/> with the Recording's content's url location.
+        /// </param>
+        /// <param name="destinationStream">
+        /// A <see cref="Stream"/> to write the downloaded content to.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="ContentTransferOptions"/> to configure
@@ -777,20 +776,20 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(Stream destination, Uri endpoint, ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            await _contentDownloader.StagedDownloadAsync(destination, endpoint, transferOptions, async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, Stream destinationStream, ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
+            await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="DownloadTo(string, Uri, ContentTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadTo(Uri, string, ContentTransferOptions, CancellationToken)"/>
         /// operation downloads the specified content using parallel requests,
-        /// and writes the content to <paramref name="path"/>.
+        /// and writes the content to <paramref name="destinationPath"/>.
         /// </summary>
-        /// <param name="path">
+        /// <param name="sourceEndpoint">
+        /// A <see cref="Uri"/> with the Recording's content's url location.
+        /// </param>
+        /// <param name="destinationPath">
         /// A file path to write the downloaded content to.
         /// </param>
-        /// <param name="endpoint">
-        /// A <see cref="Uri"/> with the Recording's content's url location.
-        /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="ContentTransferOptions"/> to configure
         /// parallel transfer behavior.
@@ -806,24 +805,24 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response DownloadTo(string path, Uri endpoint,
+        public virtual Response DownloadTo(Uri sourceEndpoint, string destinationPath,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
         {
-            using Stream destination = File.Create(path);
-            return _contentDownloader.StagedDownloadAsync(destination, endpoint, transferOptions,
+            using Stream destination = File.Create(destinationPath);
+            return _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
                 async: false, cancellationToken: cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="DownloadToAsync(string, Uri, ContentTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadToAsync(Uri, string, ContentTransferOptions, CancellationToken)"/>
         /// operation downloads the specified content using parallel requests,
-        /// and writes the content to <paramref name="path"/>.
+        /// and writes the content to <paramref name="destinationPath"/>.
         /// </summary>
-        /// <param name="path">
-        /// A file path to write the downloaded content to.
-        /// </param>
-        /// <param name="endpoint">
+        /// <param name="sourceEndpoint">
         /// A <see cref="Uri"/> with the Recording's content's url location.
+        /// </param>
+        /// <param name="destinationPath">
+        /// A file path to write the downloaded content to.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="ContentTransferOptions"/> to configure
@@ -840,11 +839,11 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(string path, Uri endpoint,
+        public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, string destinationPath,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
         {
-            using Stream destination = File.Create(path);
-            return await _contentDownloader.StagedDownloadAsync(destination, endpoint, transferOptions,
+            using Stream destination = File.Create(destinationPath);
+            return await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
                 async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 

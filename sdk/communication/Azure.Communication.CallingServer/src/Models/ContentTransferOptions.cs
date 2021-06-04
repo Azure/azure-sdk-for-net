@@ -4,29 +4,45 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary>
     /// <see cref="ContentTransferOptions"/> is used to provide options for parallel transfers.
     /// </summary>
     public struct ContentTransferOptions : IEquatable<ContentTransferOptions>
     {
+        private long? _maximumTransferSize;
+        private int? _maximumConcurrency;
+        private long? _initialTransferSize;
+
         /// <summary>
-        /// The maximum length of an transfer in bytes.
+        /// The maximum length of a transfer in bytes.
         /// </summary>
-        public long? MaximumTransferSize { get; set; }
+        public long MaximumTransferSize
+        {
+            get { return _maximumTransferSize ?? Constants.ContentDownloader.Partition.MaxDownloadBytes; }
+            set { _maximumTransferSize = value; }
+        }
 
         /// <summary>
         /// The maximum number of workers that may be used in a parallel transfer.
         /// </summary>
-        public int? MaximumConcurrency { get; set; }
+        public int MaximumConcurrency
+        {
+            get { return _maximumConcurrency ?? Constants.ContentDownloader.Partition.DefaultConcurrentTransfersCount; }
+            set { _maximumConcurrency = value; }
+        }
 
         /// <summary>
         /// The size of the first range request in bytes. Blobs smaller than this limit will
         /// be downloaded in a single request. Blobs larger than this limit will continue being
         /// downloaded in chunks of size <see cref="MaximumTransferSize"/>.
         /// </summary>
-        public long? InitialTransferSize { get; set; }
+        public long InitialTransferSize
+        {
+            get { return _initialTransferSize ?? Constants.ContentDownloader.Partition.DefaultInitalDownloadRangeSize; }
+            set { _initialTransferSize = value; }
+        }
 
         /// <summary>
         /// Check if two ContentTransferOptions instances are equal.

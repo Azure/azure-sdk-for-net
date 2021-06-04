@@ -19,7 +19,6 @@ namespace Azure.Communication.CallingServer
             {
                 public const int DefaultConcurrentTransfersCount = 5;
                 public const int MaxDownloadBytes = 256 * MB;
-                public const int DefaultBufferSize = 4 * MB;
                 public const int DefaultInitalDownloadRangeSize = 256 * MB;
             }
         }
