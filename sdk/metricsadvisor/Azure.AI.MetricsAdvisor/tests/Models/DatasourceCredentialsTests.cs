@@ -68,6 +68,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var credential = new ServicePrincipalDatasourceCredential(DataSourceCredentialType.ServicePrincipal, FakeGuid,
                 default, default, new ServicePrincipalParam("mock", "mock"));
 
+            Assert.That(credential.ClientSecret, Is.Null);
+
             credential.UpdateClientSecret("secret");
 
             await adminClient.UpdateDatasourceCredentialAsync(credential);
