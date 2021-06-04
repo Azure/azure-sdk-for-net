@@ -121,7 +121,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/farmbeats/Azure.Verticals.AgriFood.Farming
+[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/agrifood/Azure.Verticals.AgriFood.Farming
 [client_nuget_package]: https://www.nuget.org/packages?q=Azure.Verticals.AgriFood.Farming
 [product_documentation]: https://aka.ms/FarmBeatsProductDocumentationPaaS
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
@@ -138,4 +138,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ffarmbeats%2FAzure.Verticals.AgriFood.Farming%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fagrifood%2FAzure.Verticals.AgriFood.Farming%2FREADME.png)
