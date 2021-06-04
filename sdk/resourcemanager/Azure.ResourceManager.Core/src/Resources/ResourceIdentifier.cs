@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Core
         internal static ResourceType LocationsType =>
             new ResourceType(BuiltInResourceNamespace, $"{SubscriptionsKey}/{LocationsKey}");
         internal static ResourceType ResourceGroupsType =>
-            new ResourceType(BuiltInResourceNamespace, $"{SubscriptionsKey}/{ResourceGroupsKey}");
+            new ResourceType(BuiltInResourceNamespace, $"{ResourceGroupsKey}");
 
         /// <summary>
         /// The root of the resource hierarchy
