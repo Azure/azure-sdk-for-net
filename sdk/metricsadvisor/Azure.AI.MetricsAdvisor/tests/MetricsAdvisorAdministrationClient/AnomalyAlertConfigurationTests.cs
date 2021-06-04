@@ -52,7 +52,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateAlertConfigurationValidatesArguments()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -60,17 +59,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var config = new AnomalyAlertConfiguration();
 
             Assert.That(() => adminClient.UpdateAlertConfigurationAsync(null), Throws.InstanceOf<ArgumentNullException>());
-
             Assert.That(() => adminClient.UpdateAlertConfiguration(null), Throws.InstanceOf<ArgumentNullException>());
+
+            var configurationWithNullId = new AnomalyAlertConfiguration();
+
+            Assert.That(() => adminClient.UpdateAlertConfigurationAsync(configurationWithNullId), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateAlertConfiguration(configurationWithNullId), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateAlertConfigurationRespectsTheCancellationToken()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var config = new AnomalyAlertConfiguration();
+            var config = new AnomalyAlertConfiguration(FakeGuid, default, default, default, new List<string>(), new List<string>(), new List<MetricAnomalyAlertConfiguration>());
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
