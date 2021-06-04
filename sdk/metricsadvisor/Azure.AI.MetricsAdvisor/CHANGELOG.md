@@ -9,6 +9,7 @@
 - Response headers that were marked as `REDACTED` in error messages and logs are now exposed by default.
 - `GetDetectionConfigurations` and `GetAlertConfigurations` in the `MetricsAdvisorAdministrationClient` can now take a set of options with `Skip` and `MaxPageSize` properties to configure paging behavior.
 - Added setters to models that use the Update APIs to make updating easier.
+- Added property `DataFeedId` to `DataPointAnomaly` and `AnomalyIncident`.
 
 ### Breaking Changes
 - Update methods will now return the updated entity instead of an empty response. For example, `UpdateDataFeed` now returns a `Response<DataFeed>`.
@@ -21,6 +22,7 @@
 - Removed granularity type `DataFeedGranularityType.PerSecond` as it's not supported by the service anymore.
 - Renamed method `GetDimensionValues` to `GetMetricDimensionValues` in `MetricsAdvisorClient`. The associated options type `GetDimensionValuesOptions` has been renamed as well.
 - Renamed method `GetValuesOfDimensionWithAnomalies` to `GetAnomalyDimensionValues` in `MetricsAdvisorClient`. The associated options type `GetValuesOfDimensionWithAnomaliesOptions` has been renamed as well.
+- In `MetricsAdvisorAdministrationClient`, Update operations such as `UpdateDataFeed` don't take the ID as a method parameter anymore. You now need to pass an instance that has been returned from another CRUD operation and has its `Id` property populated.
 - In `AnomalyIncident`, renamed `DimensionKey` to `RootDimensionKey`.
 - In `DataFeed`, renamed `Administrators` to `AdministratorsEmails`, `Creator` to `CreatorEmail`, and `Viewers` to `ViewersEmails`.
 - In `DataFeedDimension`, renamed `DimensionName` to `Name`, and `DimensionDisplayName` to `DisplayName`.

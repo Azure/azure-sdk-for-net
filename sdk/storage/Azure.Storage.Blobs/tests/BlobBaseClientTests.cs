@@ -4308,11 +4308,14 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient versionBlob = blob.WithVersion(createResponse.Value.VersionId);
 
             // Act
-            Response<BlobProperties> response = await versionBlob.GetPropertiesAsync();
+            Response<BlobProperties> oldVersionResponse = await versionBlob.GetPropertiesAsync();
+            Response<BlobProperties> latestVersionResponse = await blob.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(response.Value.VersionId);
-            Assert.IsFalse(response.Value.IsLatestVersion);
+            Assert.IsNotNull(oldVersionResponse.Value.VersionId);
+            Assert.IsFalse(oldVersionResponse.Value.IsLatestVersion);
+            Assert.IsNotNull(oldVersionResponse.Value.VersionId);
+            Assert.IsTrue(latestVersionResponse.Value.IsLatestVersion);
         }
 
         private void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
