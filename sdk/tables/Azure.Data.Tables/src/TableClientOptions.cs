@@ -9,24 +9,24 @@ namespace Azure.Data.Tables
     /// <summary>
     /// Options to configure the requests to the Table service.
     /// </summary>
-    public class TablesClientOptions : ClientOptions
+    public class TableClientOptions : ClientOptions
     {
         /// <summary>
         /// The versions of Azure Tables supported by this client
         /// library.
         /// </summary>
         private const ServiceVersion Latest = ServiceVersion.V2019_02_02;
-        internal static TablesClientOptions Default { get; } = new TablesClientOptions();
+        internal static TableClientOptions Default { get; } = new TableClientOptions();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TablesClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="TableClientOptions"/> class.
         /// class.
         /// </summary>
         /// <param name="serviceVersion">
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public TablesClientOptions(ServiceVersion serviceVersion = Latest)
+        public TableClientOptions(ServiceVersion serviceVersion = Latest)
         {
             VersionString = serviceVersion switch
             {
@@ -50,7 +50,7 @@ namespace Azure.Data.Tables
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
-        internal static TablesClientOptions DefaultOptions => new()
+        internal static TableClientOptions DefaultOptions => new()
         {
             Diagnostics =
             {

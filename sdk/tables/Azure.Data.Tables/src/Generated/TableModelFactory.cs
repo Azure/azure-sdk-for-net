@@ -11,7 +11,7 @@ using Azure.Data.Tables.Models;
 namespace Azure.Data.Tables
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class AzureDataTablesModelFactory
+    public static partial class TableModelFactory
     {
         /// <summary> Initializes new instance of TableItem class. </summary>
         /// <param name="name"> The name of the table. </param>

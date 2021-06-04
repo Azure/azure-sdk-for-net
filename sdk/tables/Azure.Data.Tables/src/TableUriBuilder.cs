@@ -4,8 +4,9 @@
 using System;
 using System.Text;
 using Azure.Core;
+using Azure.Data.Tables.Sas;
 
-namespace Azure.Data.Tables.Sas
+namespace Azure.Data.Tables
 {
     /// <summary>
     /// <see cref="TableUriBuilder"/> is used to generate a Shared Access

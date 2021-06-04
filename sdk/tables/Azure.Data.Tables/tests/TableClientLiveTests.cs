@@ -98,7 +98,7 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClient using the SAS URI.
             TableClient sasTableclient =
-                InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
+                InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
 
@@ -138,7 +138,7 @@ namespace Azure.Data.Tables.Tests
             // Create the TableServiceClient using the SAS URI.
             // Intentionally add the SAS to the endpoint arg as well as the credential to validate de-duping
             TableClient sasTableclient =
-                InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
+                InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
 
@@ -186,7 +186,7 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClient using the SAS URI.
             var sasAuthedService =
-                InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
+                InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
             var sasTableclient = sasAuthedService.GetTableClient(tableName);
 
             // Insert the entities

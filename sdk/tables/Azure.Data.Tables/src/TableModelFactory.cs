@@ -3,9 +3,9 @@
 
 using Azure.Core;
 
-namespace Azure.Data.Tables.Models
+namespace Azure.Data.Tables
 {
-    [CodeGenModel("SignedIdentifier")]
-    public partial class TableSignedIdentifier
+    [CodeGenModel("AzureDataTablesModelFactory")]
+    public partial class TableModelFactory
     { }
 }
