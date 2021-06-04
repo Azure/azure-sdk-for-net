@@ -9,6 +9,8 @@
 ### Breaking changes
 
 - This version of the SDK defaults to the latest supported service version, which currently is `v1.0`.
+- Renamed method `GetTranslations` to `GetTranslationsStatuses` and same for the async equivalent method.
+- Renamed property `TranslateTo` to `TranslatedTo` in type `DocumentStatusResult`.
 
 ## 1.0.0-beta.1 (2021-04-06)
 

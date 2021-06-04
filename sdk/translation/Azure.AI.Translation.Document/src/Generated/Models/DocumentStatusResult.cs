@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Document
             CreatedOn = createdOn;
             LastModified = lastModified;
             Status = status;
-            TranslateTo = translateTo;
+            TranslatedTo = translateTo;
             Progress = progress;
             DocumentId = documentId;
         }
@@ -63,7 +63,7 @@ namespace Azure.AI.Translation.Document
             CreatedOn = createdOn;
             LastModified = lastModified;
             Status = status;
-            TranslateTo = translateTo;
+            TranslatedTo = translateTo;
             Error = error;
             Progress = progress;
             DocumentId = documentId;
