@@ -17,19 +17,19 @@ namespace Azure.Messaging.WebPubSub
     [CodeGenSuppress("WebPubSubServiceClient", typeof(string), typeof(Uri), typeof(WebPubSubServiceClientOptions))]
     public partial class WebPubSubServiceClient
     {
-        private AzureKeyCredential credential;
+        private AzureKeyCredential _credential;
 
         private const string JsonContent = "application/json";
 
         /// <summary>
         /// The hub.
         /// </summary>
-        public string Hub => hub;
+        public virtual string Hub => hub;
 
         /// <summary>
         /// The service endpoint.
         /// </summary>
-        public Uri Endpoint => endpoint;
+        public virtual Uri Endpoint => endpoint;
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
@@ -47,20 +47,11 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="options"> The options for configuring the client. </param>
         public WebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential, WebPubSubServiceClientOptions options)
         {
-            if (hub == null)
-            {
-                throw new ArgumentNullException(nameof(hub));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(hub, nameof(hub));
+            Argument.AssertNotNull(credential, nameof(credential));
 
-            this.credential = credential;
+            this._credential = credential;
             this.hub = hub;
             this.endpoint = endpoint;
 
@@ -70,8 +61,8 @@ namespace Azure.Messaging.WebPubSub
 
             Pipeline = HttpPipelineBuilder.Build(
                 options,
-                new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
-                new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
+                perCallPolicies: new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
+                perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
                 new ResponseClassifier()
             );
         }

@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<WebPubSubServiceClient, WebPubSubServiceClientOptions> AddWebPubSubServiceClient<TBuilder>(this TBuilder builder, string connectionString, string hub)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>(options => new WebPubSubServiceClient(hub, connectionString, options));
+            return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>(options => new WebPubSubServiceClient(connectionString, hub, options));
         }
 
         /// <summary>

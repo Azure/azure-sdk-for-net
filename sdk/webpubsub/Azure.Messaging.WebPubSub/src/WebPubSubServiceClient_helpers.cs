@@ -22,6 +22,9 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>
         /// Creates a URI with authentication token.
         /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="roles"></param>
+        /// <param name="expiresAfter">Defaults to one hour, if not specified.</param>
         /// <returns></returns>
         public virtual Uri GenerateClientAccessUri(string userId = default, string[] roles = default, TimeSpan expiresAfter = default)
         {
@@ -50,13 +53,7 @@ namespace Azure.Messaging.WebPubSub
             }
             var audience = $"{endpoint}client/hubs/{hub}";
 
-            // this is a hack. The generator needs to store the credential in a field.
-            if (credential == null)
-            {
-                HttpPipeline pipeline = Pipeline;
-            }
-
-            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, credential, expiresAfter);
+            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expiresAfter);
 
             var clientEndpoint = new UriBuilder(endpoint);
             clientEndpoint.Scheme = "wss";
