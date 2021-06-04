@@ -869,13 +869,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="detectionConfiguration">The <see cref="AnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyDetectionConfiguration"/>
+        /// instance containing information about the updated configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateDetectionConfigurationAsync(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnomalyDetectionConfiguration>> UpdateDetectionConfigurationAsync(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
-            /*
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
             if (!string.IsNullOrEmpty(detectionConfiguration.Id) && !detectionConfigurationId.Equals(detectionConfiguration.Id, StringComparison.OrdinalIgnoreCase))
@@ -896,10 +896,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
-            */
-
-            await Task.CompletedTask.ConfigureAwait(false);
-            return default;
         }
 
         /// <summary>
@@ -909,13 +905,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="detectionConfiguration">The <see cref="AnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyDetectionConfiguration"/>
+        /// instance containing information about the updated configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateDetectionConfiguration(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<AnomalyDetectionConfiguration> UpdateDetectionConfiguration(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
-            /*
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
             if (!string.IsNullOrEmpty(detectionConfiguration.Id) && !detectionConfigurationId.Equals(detectionConfiguration.Id, StringComparison.OrdinalIgnoreCase))
@@ -936,8 +932,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
-            */
-            return default;
         }
 
         /// <summary>
@@ -1207,13 +1201,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="alertConfiguration">The <see cref="AnomalyAlertConfiguration"/> containing the updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/>
+        /// instance containing information about the updated configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateAlertConfigurationAsync(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnomalyAlertConfiguration>> UpdateAlertConfigurationAsync(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
-            /*
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             if (!string.IsNullOrEmpty(alertConfiguration.Id) && !alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
@@ -1234,10 +1228,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
-            */
-
-            await Task.CompletedTask.ConfigureAwait(false);
-            return default;
         }
 
         /// <summary>
@@ -1247,13 +1237,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="alertConfiguration">The <see cref="AnomalyAlertConfiguration"/> containing the updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/>
+        /// instance containing information about the updated configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateAlertConfiguration(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<AnomalyAlertConfiguration> UpdateAlertConfiguration(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
-            /*
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             if (!string.IsNullOrEmpty(alertConfiguration.Id) && !alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
@@ -1274,9 +1264,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
-            */
-
-            return default;
         }
 
         /// <summary>

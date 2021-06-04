@@ -7,8 +7,10 @@
 - Added properties `ValueOfRootNode` and `ExpectedValueOfRootNode` to `AnomalyIncident` to provide more information about the anomalous data point at the root node of the indicent.
 - Response headers that were marked as `REDACTED` in error messages and logs are now exposed by default.
 - `GetDetectionConfigurations` and `GetAlertConfigurations` in the `MetricsAdvisorAdministrationClient` can now take a set of options with `Skip` and `MaxPageSize` properties to configure paging behavior.
+- Added setters to models that use the Update APIs to make updating easier.
 
 ### Breaking Changes
+- Update methods will now return the updated entity instead of an empty response. For example, `UpdateDataFeed` now returns a `Response<DataFeed>`.
 - `NotificationHook.ExternalLink` and `WebNotificationHook.Endpoint` are now of type `Uri`.
 - Removed setter from `GetIncidentsForDetectionConfigurationOptions.DimensionsToFilter`. Elements can be added directly to it without user instantiation.
 - Renamed all `SkipCount` listing options to `Skip`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.

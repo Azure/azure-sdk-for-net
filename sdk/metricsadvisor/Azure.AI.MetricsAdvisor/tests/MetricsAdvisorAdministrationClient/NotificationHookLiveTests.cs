@@ -88,6 +88,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task CreateAndGetWebNotificationHookWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -599,7 +600,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
             string hookNameFilter = hookName.Substring(1, hookName.Length - 3);
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
 
             await using var disposableHook = await DisposableNotificationHook.CreateHookAsync(adminClient, hookToCreate);
 
@@ -655,7 +656,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string hookName = Recording.GenerateAlphaNumericId("hook");
-            var hookToCreate = new WebNotificationHook() { Name = hookName, Endpoint = new Uri("http://contoso.com/") };
+            var hookToCreate = new EmailNotificationHook() { Name = hookName, EmailsToAlert = { "fake@email.com" } };
 
             string hookId = null;
 
