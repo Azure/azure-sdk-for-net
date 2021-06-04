@@ -108,7 +108,7 @@ namespace Azure.Messaging.WebPubSub
             if (cancellationToken != default)
                 options = new RequestOptions() { CancellationToken = cancellationToken };
 
-            return await SendToAllAsync(JsonContent, RequestContent.Create(message), excluded, options).ConfigureAwait(false);
+            return await SendToAllAsync(JsonContent, RequestContent.Create((object)message), excluded, options).ConfigureAwait(false);
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
@@ -122,7 +122,7 @@ namespace Azure.Messaging.WebPubSub
             if (cancellationToken != default)
                 options = new RequestOptions() { CancellationToken = cancellationToken };
 
-            return SendToAll(JsonContent, RequestContent.Create(message), excluded, options);
+            return SendToAll(JsonContent, RequestContent.Create((object)message), excluded, options);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.Messaging.WebPubSub
             if (cancellationToken != default)
                 options = new RequestOptions() { CancellationToken = cancellationToken };
 
-            return await SendToUserAsync(userId, JsonContent, RequestContent.Create(message), options).ConfigureAwait(false);
+            return await SendToUserAsync(userId, JsonContent, RequestContent.Create((object)message), options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Azure.Messaging.WebPubSub
             if (cancellationToken != default)
                 options = new RequestOptions() { CancellationToken = cancellationToken };
 
-            return SendToUser(userId, JsonContent, RequestContent.Create(message), options);
+            return SendToUser(userId, JsonContent, RequestContent.Create((object)message), options);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.Messaging.WebPubSub
             if (cancellationToken != default)
                 options = new RequestOptions() { CancellationToken = cancellationToken };
 
-            return await SendToConnectionAsync(connectionId, JsonContent, RequestContent.Create(message), options).ConfigureAwait(false);
+            return await SendToConnectionAsync(connectionId, JsonContent, RequestContent.Create((object)message), options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.Messaging.WebPubSub
             if (cancellationToken != default)
                 options = new RequestOptions() { CancellationToken = cancellationToken };
 
-            return SendToConnection(connectionId, JsonContent, RequestContent.Create(message), options);
+            return SendToConnection(connectionId, JsonContent, RequestContent.Create((object)message), options);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.Messaging.WebPubSub
             if (cancellationToken != default)
                 options = new RequestOptions() { CancellationToken = cancellationToken };
 
-            return await SendToGroupAsync(group, JsonContent, RequestContent.Create(message), excluded, options).ConfigureAwait(false);
+            return await SendToGroupAsync(group, JsonContent, RequestContent.Create((object)message), excluded, options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.Messaging.WebPubSub
             if (cancellationToken != default)
                 options = new RequestOptions() { CancellationToken = cancellationToken };
 
-            return SendToGroup(group, JsonContent, RequestContent.Create(message), excluded, options);
+            return SendToGroup(group, JsonContent, RequestContent.Create((object)message), excluded, options);
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
