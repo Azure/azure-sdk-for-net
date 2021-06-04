@@ -123,5 +123,27 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
         }
+
+        private static IEnumerable<TestCaseData> RegionalAuthorityTestData()
+        {
+            yield return new TestCaseData(null);
+            yield return new TestCaseData(RegionalAuthority.AutoDiscoverRegion);
+            yield return new TestCaseData(RegionalAuthority.USWest);
+        }
+
+        [Test]
+        [TestCaseSource("RegionalAuthorityTestData")]
+        public void VerifyMsalClientRegionalAuthority(RegionalAuthority? regionalAuthority)
+        {
+            var expectedTenantId = Guid.NewGuid().ToString();
+
+            var expectedClientId = Guid.NewGuid().ToString();
+
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+            var cred =  new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePath, new ClientCertificateCredentialOptions { RegionalAuthority = regionalAuthority });
+
+            Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+        }
     }
 }

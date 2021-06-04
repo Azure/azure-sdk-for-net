@@ -32,7 +32,8 @@ namespace Azure.Identity
 
         internal IX509Certificate2Provider ClientCertificateProvider { get; }
 
-        private readonly MsalConfidentialClient _client;
+        internal MsalConfidentialClient Client { get; }
+
         private readonly CredentialPipeline _pipeline;
 
         /// <summary>
@@ -129,7 +130,9 @@ namespace Azure.Identity
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, (options as ClientCertificateCredentialOptions)?.SendCertificateChain ?? false, options as ITokenCacheOptions);
+            ClientCertificateCredentialOptions certCredOptions = (options as ClientCertificateCredentialOptions);
+
+            Client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, certCredOptions?.SendCertificateChain ?? false, options as ITokenCacheOptions, certCredOptions?.RegionalAuthority);
         }
 
         /// <summary>
@@ -144,7 +147,7 @@ namespace Azure.Identity
 
             try
             {
-                AuthenticationResult result = _client.AcquireTokenForClientAsync(requestContext.Scopes, false, cancellationToken).EnsureCompleted();
+                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -166,7 +169,7 @@ namespace Azure.Identity
 
             try
             {
-                AuthenticationResult result = await _client.AcquireTokenForClientAsync(requestContext.Scopes, true, cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, true, cancellationToken).ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
