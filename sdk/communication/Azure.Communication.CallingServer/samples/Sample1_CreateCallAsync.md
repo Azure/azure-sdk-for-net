@@ -37,6 +37,6 @@ Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
 
 To see the full example source files, see:
 
-* [Make a call to a phone number recipient](https://github.com/Azure/azure-sdk-for-net/blob/e1f7d444ebca820f460255a2af00f67f72d8b2aa/sdk/communication/Azure.Communication.CallingServer/tests/samples/Sample1_CallClient.cs)
+* [Make a call to a phone number recipient](https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/tests/samples/Sample1_CallClient.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/11ca9dd3ae95611e965b7cc000e74eb689f0b819/sdk/communication/Azure.Communication.CallingServer/README.md#getting-started
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/README.md#getting-started

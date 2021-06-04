@@ -22,5 +22,5 @@ This client library allows to do following operations:
  - CreateCall [synchronously][sample_servercalling] or [asynchronously][sample_servercalling_async]
 
 <!-- LINKS -->
-[sample_servercalling]: https://github.com/Azure/azure-sdk-for-net/blob/9e82a99869d0f47c73b66191e04530537259db60/sdk/communication/Azure.Communication.CallingServer/tests/samples/Sample1_CreateCall.md
-[sample_servercalling_async]: https://github.com/Azure/azure-sdk-for-net/blob/9e82a99869d0f47c73b66191e04530537259db60/sdk/communication/Azure.Communication.CallingServer/tests/samples/Sample1_CreateCallAsync.md
+[sample_servercalling]: https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/samples/Sample1_CreateCall.md
+[sample_servercalling_async]: https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/samples/Sample1_CreateCallAsync.md

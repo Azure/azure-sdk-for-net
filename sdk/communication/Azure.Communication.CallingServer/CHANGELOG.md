@@ -14,6 +14,6 @@ This is a Public Preview version, so breaking changes are possible in subsequent
 - Invite and remove participants from the call.
 
 <!-- LINKS -->
-[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.CallingServer/README.md
+[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/README.md
 [DTMF]: https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling
 
