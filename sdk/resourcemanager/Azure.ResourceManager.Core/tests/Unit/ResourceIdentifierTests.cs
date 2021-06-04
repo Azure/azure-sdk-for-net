@@ -153,11 +153,12 @@ namespace Azure.ResourceManager.Core.Tests
         public void CanParseResourceGroups()
         {
             ResourceGroupResourceIdentifier subject = "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg";
-            Assert.AreEqual(subject.ToString(), "/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg");
-            Assert.AreEqual(subject.SubscriptionId, "0c2f6471-1bf0-4dda-aec3-cb9272f09575");
-            Assert.AreEqual(subject.ResourceGroupName, "myRg");
-            Assert.AreEqual(subject.ResourceType.Namespace, "Microsoft.Resources");
-            Assert.AreEqual(subject.ResourceType.Type, "subscriptions/resourceGroups");
+            Assert.AreEqual("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg", subject.ToString());
+            Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.SubscriptionId);
+            Assert.AreEqual("myRg", subject.ResourceGroupName);
+            Assert.AreEqual("Microsoft.Resources", subject.ResourceType.Namespace);
+            Assert.AreEqual("resourceGroups", subject.ResourceType.Type);
+            //Assert.AreEqual(subject.ResourceType.Type, "subscriptions/resourceGroups"); TODO
         }
 
         [TestCase("MyVnet", "MySubnet")]

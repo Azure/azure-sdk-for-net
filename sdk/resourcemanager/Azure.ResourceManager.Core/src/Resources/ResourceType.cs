@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Core
             }
 
             // Handle resource identifiers from RPs (they have the /providers path segment)
-            else if (parts.Contains(KnownKeys.ProviderNamespace) && !KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
+            if (parts.Contains(KnownKeys.ProviderNamespace) && !KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
             {
                 // it is a resource id from a provider
                 var index = parts.LastIndexOf(KnownKeys.ProviderNamespace);
@@ -265,9 +265,15 @@ namespace Azure.ResourceManager.Core
                 {
                     throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
                 }
-                Namespace = parts[1];
 
-                Type = string.Join("/", parts.Skip(2).Take(parts.Count - 3));
+                var index = 1;
+                if (parts.Count > 2 && KnownKeys.ProviderNamespace.Equals(parts[2], StringComparison.InvariantCultureIgnoreCase))
+                {
+                    index = 3;
+                }
+                Namespace = parts[index];
+
+                Type = string.Join("/", parts.Skip(index + 1).Take(parts.Count - 3));
             }
             // Handle resource types (Micsrsoft.Compute/virtualMachines, Microsoft.Network/virtualNetworks/subnets)
             else if (parts[0].Contains('.'))
