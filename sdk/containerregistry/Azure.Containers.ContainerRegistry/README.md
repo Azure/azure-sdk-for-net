@@ -35,7 +35,7 @@ az acr create --name MyContainerRegistry --resource-group MyResourceGroup --loca
 
 ### Authenticate the client
 
-The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.  The `DefaultAzureCredential` assumes the `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_CLIENT_SECRET` environment variables are set.For more information refer to [Azure Identity environment variables](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#environment-variables).
+The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.  You can set the environment variables `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_CLIENT_SECRET` to configure `DefaultAzureCredential` to authenticate with AAD. For more information refer to [Azure Identity environment variables](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#environment-variables) or [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential).
 
 ```C#
 // Create a ContainerRegistryClient that will authenticate through Azure Active Directory
@@ -47,7 +47,7 @@ Note that this samples assume you have a `REGISTRY_ENDPOINT` environment variabl
 
 #### National Clouds
 
-To authenticate with a registry in a [National Cloud](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your configuration:
+To authenticate with a registry in a [National Cloud](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
 
 - Set the `AuthorityHost` in the credential options or via the `AZURE_AUTHORITY_HOST` environment variable
 - Set the `AuthenticationScope` in `ContainerRegistryClientOptions`
