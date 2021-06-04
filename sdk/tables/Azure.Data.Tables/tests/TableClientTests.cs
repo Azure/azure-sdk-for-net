@@ -41,7 +41,7 @@ namespace Azure.Data.Tables.Tests
                 new TableServiceClient(
                     new Uri($"https://example.com?{signature}"),
                     new AzureSasCredential("sig"),
-                    new TablesClientOptions { Transport = _transport }));
+                    new TableClientOptions { Transport = _transport }));
             client = service_Instrumented.GetTableClient(TableName);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.Data.Tables.Tests
                 "The constructor should validate the url.");
 
             Assert.That(
-                () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TablesClientOptions()),
+                () => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions()),
                 Throws.Nothing,
                 "The constructor should accept valid arguments.");
 
@@ -108,7 +108,7 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(ValidConnStrings))]
         public void AccountNameAndNameForConnStringCtor(string connString)
         {
-            var client = new TableClient(connString, TableName, new TablesClientOptions());
+            var client = new TableClient(connString, TableName, new TableClientOptions());
 
             Assert.AreEqual(AccountName, client.AccountName);
             Assert.AreEqual(TableName, client.Name);
@@ -117,7 +117,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void AccountNameAndNameForUriCtor()
         {
-            var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TablesClientOptions());
+            var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions());
 
             Assert.AreEqual(AccountName, client.AccountName);
             Assert.AreEqual(TableName, client.Name);
