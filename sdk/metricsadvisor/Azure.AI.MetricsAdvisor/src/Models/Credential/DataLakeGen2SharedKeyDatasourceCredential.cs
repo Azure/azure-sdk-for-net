@@ -35,9 +35,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             AccountKey = parameters.AccountKey;
         }
 
-        /// <summary>
-        /// The client Secret of the service principal used for authentication.
-        /// </summary>
         internal string AccountKey
         {
             get => Volatile.Read(ref _accountKey);
