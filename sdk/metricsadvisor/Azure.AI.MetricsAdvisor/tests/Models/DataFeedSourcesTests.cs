@@ -114,6 +114,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 case AzureApplicationInsightsDataFeedSource d:
                     d.UpdateApiKey("new_secret");
                     break;
+                case AzureBlobDataFeedSource d:
+                    d.UpdateConnectionString("new_secret");
+                    break;
                 case AzureCosmosDbDataFeedSource d:
                     d.UpdateConnectionString("new_secret");
                     break;
