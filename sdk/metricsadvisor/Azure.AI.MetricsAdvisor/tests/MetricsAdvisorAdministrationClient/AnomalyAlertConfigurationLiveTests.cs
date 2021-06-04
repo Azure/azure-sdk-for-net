@@ -404,7 +404,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Or;
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
@@ -519,7 +519,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Or
             };
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
@@ -658,7 +658,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             metricAlertConfigToUpdate.AlertSnoozeCondition = null;
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
@@ -800,7 +800,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             metricAlertConfigToUpdate.AlertSnoozeCondition = null;
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 

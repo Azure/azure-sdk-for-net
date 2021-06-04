@@ -390,7 +390,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
@@ -512,7 +512,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
@@ -652,7 +652,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.SeriesDetectionConditions.Clear();
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
@@ -798,7 +798,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.SeriesDetectionConditions.Clear();
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
             // Get the updated configuration and validate top-level members.
 
