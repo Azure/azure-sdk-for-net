@@ -74,6 +74,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var credential = new DataLakeGen2SharedKeyDatasourceCredential(DataSourceCredentialType.DataLakeGen2SharedKey, FakeGuid,
                 default, default, new DataLakeGen2SharedKeyParam());
 
+            Assert.That(credential.AccountKey, Is.Null);
+
             credential.UpdateAccountKey("secret");
 
             await adminClient.UpdateDatasourceCredentialAsync(credential);
@@ -120,6 +122,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var credential = new ServicePrincipalInKeyVaultDatasourceCredential(DataSourceCredentialType.ServicePrincipal, FakeGuid,
                 default, default, new ServicePrincipalInKVParam(FakeUri.AbsoluteUri, "mock", "mock", "mock", "mock"));
 
+            Assert.That(credential.KeyVaultClientSecret, Is.Null);
+
             credential.UpdateKeyVaultClientSecret("secret");
 
             await adminClient.UpdateDatasourceCredentialAsync(credential);
@@ -141,6 +145,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var credential = new SqlConnectionStringDatasourceCredential(DataSourceCredentialType.AzureSQLConnectionString, FakeGuid,
                 default, default, new AzureSQLConnectionStringParam());
+
+            Assert.That(credential.ConnectionString, Is.Null);
 
             credential.UpdateConnectionString("secret");
 
