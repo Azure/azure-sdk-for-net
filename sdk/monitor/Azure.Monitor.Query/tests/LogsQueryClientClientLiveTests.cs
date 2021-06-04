@@ -447,21 +447,13 @@ namespace Azure.Monitor.Query.Tests
 
             LogsBatchQuery batch = new LogsBatchQuery();
             batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange);
-            List<Task> tasks = new();
-            for (int i = 0; i < 30; i++)
-            {
-                tasks.Add(Task.Run(async () =>
-                {
-                    var batchResult = await client.QueryBatchAsync(batch);
 
-                    var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
+            var batchResult = await client.QueryBatchAsync(batch);
 
-                    Assert.AreEqual("queryId", exception.ParamName);
-                    StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of the LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
-                }));
-            }
+            var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
 
-            await Task.WhenAll(tasks);
+            Assert.AreEqual("queryId", exception.ParamName);
+            StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of the LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
         }
 
         [RecordedTest]
