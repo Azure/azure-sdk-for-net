@@ -114,14 +114,14 @@ namespace Azure.Communication.Calling.Server
                 var sourceAlternateIdentity = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
 
                 return await RestClient.CreateCallAsync(
-                    targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                    CommunicationIdentifierSerializer.Serialize(source),
-                    options.CallbackUri?.AbsoluteUri,
-                    options.RequestedModalities,
-                    options.RequestedCallEvents,
-                    sourceAlternateIdentity,
-                    options.Subject,
-                    cancellationToken
+                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                    source: CommunicationIdentifierSerializer.Serialize(source),
+                    callbackUri: options.CallbackUri?.AbsoluteUri,
+                    requestedModalities: options.RequestedModalities,
+                    requestedCallEvents: options.RequestedCallEvents,
+                    sourceAlternateIdentity: sourceAlternateIdentity,
+                    subject: options.Subject,
+                    cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -153,14 +153,14 @@ namespace Azure.Communication.Calling.Server
                 var sourceAlternateIdentity = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
 
                 return  RestClient.CreateCall(
-                    targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                    CommunicationIdentifierSerializer.Serialize(source),
-                    options.CallbackUri?.AbsoluteUri,
-                    options.RequestedModalities,
-                    options.RequestedCallEvents,
-                    sourceAlternateIdentity,
-                    options.Subject,
-                    cancellationToken
+                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                    source: CommunicationIdentifierSerializer.Serialize(source),
+                    callbackUri: options.CallbackUri?.AbsoluteUri,
+                    requestedModalities: options.RequestedModalities,
+                    requestedCallEvents: options.RequestedCallEvents,
+                    sourceAlternateIdentity: sourceAlternateIdentity,
+                    subject: options.Subject,
+                    cancellationToken: cancellationToken
                     );
             }
             catch (Exception ex)
@@ -180,7 +180,10 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                return await RestClient.DeleteCallAsync(callLegId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteCallAsync(
+                    callId: callLegId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -199,7 +202,10 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                return RestClient.DeleteCall(callLegId, cancellationToken);
+                return RestClient.DeleteCall(
+                    callId: callLegId,
+                    cancellationToken: cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -218,7 +224,10 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                return await RestClient.HangupCallAsync(callLegId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.HangupCallAsync(
+                    callId: callLegId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -237,7 +246,10 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                return RestClient.HangupCall(callLegId, cancellationToken);
+                return RestClient.HangupCall(
+                    callId: callLegId,
+                    cancellationToken: cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -258,8 +270,8 @@ namespace Azure.Communication.Calling.Server
             try
             {
                 return await RestClient.CancelAllMediaOperationsAsync(
-                    callLegId,
-                    operationContext,
+                    callId: callLegId,
+                    operationContext: operationContext,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -281,7 +293,11 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                return RestClient.CancelAllMediaOperations(callLegId, operationContext, cancellationToken: cancellationToken);
+                return RestClient.CancelAllMediaOperations(
+                    callId: callLegId,
+                    operationContext: operationContext,
+                    cancellationToken: cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -302,15 +318,16 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, Uri audioFileUri, bool? loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
             => await PlayAudioAsync(
-                callLegId,
-                new PlayAudioOptions {
+                callLegId: callLegId,
+                options: new PlayAudioOptions {
                     AudioFileUri = audioFileUri,
                     Loop = loop,
                     AudioFileId = audioFileId,
                     CallbackUri = callbackUri,
                     OperationContext = operationContext
                 },
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken: cancellationToken
+                ).ConfigureAwait(false);
 
         /// <summary> Play audio in the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
@@ -327,13 +344,13 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(options, nameof(options));
 
                 return await RestClient.PlayAudioAsync(
-                    callLegId,
-                    options.AudioFileUri?.AbsoluteUri,
-                    options.Loop,
-                    options.AudioFileId,
-                    options.CallbackUri?.AbsoluteUri,
-                    options.OperationContext,
-                    cancellationToken
+                    callId: callLegId,
+                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
+                    loop: options.Loop,
+                    audioFileId: options.AudioFileId,
+                    callbackUri: options.CallbackUri?.AbsoluteUri,
+                    operationContext: options.OperationContext,
+                    cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -355,15 +372,16 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
         public virtual Response<PlayAudioResponse> PlayAudio(string callLegId, Uri audioFileUri, bool? loop, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
             => PlayAudio(
-                callLegId,
-                new PlayAudioOptions {
+                callLegId: callLegId,
+                options: new PlayAudioOptions {
                     AudioFileUri = audioFileUri,
                     Loop = loop,
                     AudioFileId = audioFileId,
                     CallbackUri = callbackUri,
                     OperationContext = operationContext
                 },
-                cancellationToken);
+                cancellationToken: cancellationToken
+                );
 
         /// <summary> Play audio in the call. </summary>
         /// <param name="callLegId"> The call leg id. </param>
@@ -380,13 +398,13 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(options, nameof(options));
 
                 return RestClient.PlayAudio(
-                    callLegId,
-                    options.AudioFileUri?.AbsoluteUri,
-                    options.Loop,
-                    options.OperationContext,
-                    options.AudioFileId,
-                    options.CallbackUri?.AbsoluteUri,
-                    cancellationToken
+                    callId: callLegId,
+                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
+                    loop: options.Loop,
+                    audioFileId: options.AudioFileId,
+                    callbackUri: options.CallbackUri?.AbsoluteUri,
+                    operationContext: options.OperationContext,
+                    cancellationToken: cancellationToken
                     );
             }
             catch (Exception ex)
@@ -413,12 +431,14 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(participant, nameof(participant));
                 Argument.AssertNotNullOrEmpty(alternateCallerId, nameof(alternateCallerId));
 
-                return await RestClient.InviteParticipantsAsync(callLegId,
-                    new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(participant) },
-                    new PhoneNumberIdentifierModel(alternateCallerId),
-                    operationContext,
-                    null,
-                    cancellationToken).ConfigureAwait(false);
+                return await RestClient.InviteParticipantsAsync(
+                    callId: callLegId,
+                    participants: new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(participant) },
+                    alternateCallerId: new PhoneNumberIdentifierModel(alternateCallerId),
+                    operationContext: operationContext,
+                    callbackUri: null,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -444,12 +464,14 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(participant, nameof(participant));
                 Argument.AssertNotNullOrEmpty(alternateCallerId, nameof(alternateCallerId));
 
-                return RestClient.InviteParticipants(callLegId,
-                    new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(participant) },
-                    new PhoneNumberIdentifierModel(alternateCallerId),
-                    operationContext,
-                    null,
-                    cancellationToken);
+                return RestClient.InviteParticipants(
+                    callId: callLegId,
+                    participants: new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(participant) },
+                    alternateCallerId: new PhoneNumberIdentifierModel(alternateCallerId),
+                    operationContext: operationContext,
+                    callbackUri: null,
+                    cancellationToken: cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -470,7 +492,11 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                return await RestClient.RemoveParticipantAsync(callLegId, participantId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RemoveParticipantAsync(
+                    callId: callLegId,
+                    participantId: participantId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -491,7 +517,11 @@ namespace Azure.Communication.Calling.Server
             scope.Start();
             try
             {
-                return RestClient.RemoveParticipant(callLegId, participantId, cancellationToken);
+                return RestClient.RemoveParticipant(
+                    callId: callLegId,
+                    participantId: participantId,
+                    cancellationToken: cancellationToken
+                    );
             }
             catch (Exception ex)
             {
