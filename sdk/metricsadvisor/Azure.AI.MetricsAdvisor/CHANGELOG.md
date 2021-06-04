@@ -22,7 +22,7 @@
 - In `DataFeed`, renamed `Administrators` to `AdministratorsEmails`, `Creator` to `CreatorEmail`, and `Viewers` to `ViewersEmails`.
 - In `DataFeedDimension`, renamed `DimensionName` to `Name`, and `DimensionDisplayName` to `DisplayName`.
 - In `DataFeedMetric`, renamed `MetricId` to `Id`, `MetricName` to `Name`, `MetricDisplayName` to `DisplayName`, and `MetricDescription` to `Description`.
-- In `DataFeedAutoRollupMethod`, renamed `RollupMethod` to `DataFeedAutoRollupMethod`.
+- In `DataFeedAutoRollupMethod`, renamed `RollupMethod` to `AutoRollupMethod`.
 - In `IncidentRootCause`, renamed `DimensionKey` to `SeriesKey`, and `Score` to `ContributionScore`.
 - In `MetricBoundaryCondition`, renamed `TriggerForMissing` to `ShouldAlertIfDataPointMissing`.
 - In `MetricEnrichedSeriesData`, renamed `Values` to `MetricValues`, `ExpectedValues` to `ExpectedMetricValues`, `LowerBoundaries` to `LowerBoundaryValues`, and `UpperBoundaries` to `UpperBoundaryValues`.
