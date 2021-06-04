@@ -35,7 +35,7 @@ az acr create --name MyContainerRegistry --resource-group MyResourceGroup --loca
 
 ### Authenticate the client
 
-The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.  You can set the environment variables `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_CLIENT_SECRET` to configure `DefaultAzureCredential` to authenticate with AAD. For more information refer to [Azure Identity environment variables](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#environment-variables) or [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential).
+The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.  You can [authenticate with the Azure CLI](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#authenticating-via-the-azure-cli)when developing and debugging locally.  Please see the [Azure Identity README][identity] for more approaches to authenticating with `DefaultAzureCredential`.
 
 ```C#
 // Create a ContainerRegistryClient that will authenticate through Azure Active Directory
