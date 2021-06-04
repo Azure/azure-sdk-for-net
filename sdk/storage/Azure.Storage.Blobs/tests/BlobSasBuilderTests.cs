@@ -455,7 +455,8 @@ namespace Azure.Storage.Blobs.Test
                 ContentDisposition = constants.Sas.ContentDisposition,
                 ContentEncoding = constants.Sas.ContentEncoding,
                 ContentLanguage = constants.Sas.ContentLanguage,
-                ContentType = constants.Sas.ContentType
+                ContentType = constants.Sas.ContentType,
+                EncryptionScope = constants.Sas.EncryptionScope
             };
             builder.SetPermissions(BlobAccountSasPermissions.Read | BlobAccountSasPermissions.Write | BlobAccountSasPermissions.Delete);
             return builder;
@@ -569,7 +570,8 @@ namespace Azure.Storage.Blobs.Test
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,
                 constants.Sas.ContentLanguage,
-                constants.Sas.ContentType);
+                constants.Sas.ContentType,
+                constants.Sas.EncryptionScope);
 
             return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
@@ -613,7 +615,8 @@ namespace Azure.Storage.Blobs.Test
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,
                 constants.Sas.ContentLanguage,
-                constants.Sas.ContentType);
+                constants.Sas.ContentType,
+                constants.Sas.EncryptionScope);
 
             return ComputeHMACSHA256(constants.Sas.KeyValue, stringToSign);
         }

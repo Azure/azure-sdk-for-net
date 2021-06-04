@@ -51,6 +51,11 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Legal hold.
         /// </summary>
-        Legalhold
+        Legalhold,
+
+        /// <summary>
+        /// deleted with versions.
+        /// </summary>
+        DeletedWithVersions,
     }
 }

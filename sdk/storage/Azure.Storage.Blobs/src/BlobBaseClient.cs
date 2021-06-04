@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -2848,6 +2849,7 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationConditions: options?.DestinationConditions,
                 destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
                 legalHold: options?.LegalHold,
+                sourceAuthentication: options?.SourceAuthentication,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -2900,6 +2902,7 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationConditions: options?.DestinationConditions,
                 destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
                 legalHold: options?.LegalHold,
+                sourceAuthentication: options?.SourceAuthentication,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -2952,6 +2955,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Note that is parameter is only applicable to a blob within a container that
         /// has version level worm enabled.
         /// </param>
+        /// <param name="sourceAuthentication">
+        /// Optional. Source authentication used to access the source blob.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2976,6 +2982,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions destinationConditions,
             BlobImmutabilityPolicy destinationImmutabilityPolicy,
             bool? legalHold,
+            AuthenticationHeaderValue sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3017,6 +3024,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3040,6 +3048,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 

@@ -16,6 +16,7 @@ using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Net.Http.Headers;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -3851,6 +3852,98 @@ namespace Azure.Storage.Files.Shares
 
         #region UploadRangeFromUrl
         /// <summary>
+        /// The <see cref="UploadRangeFromUri(Uri, HttpRange, HttpRange, ShareFileUploadRangeFromUriOptions, CancellationToken)"/>
+        /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file, up to 2 KB in length.
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
+        /// shared access signature. If the source is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="sourceRange">
+        /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.  <see cref="ShareFileUploadRangeFromUriOptions"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileUploadInfo> UploadRangeFromUri(
+            Uri sourceUri,
+            HttpRange range,
+            HttpRange sourceRange,
+            ShareFileUploadRangeFromUriOptions options,
+            CancellationToken cancellationToken = default) =>
+            UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
+                conditions: options?.Conditions,
+                sourceAuthentication: options?.SourceAuthentication,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadRangeFromUriAsync(Uri, HttpRange, HttpRange, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file, up to 2 KB in length.
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
+        /// shared access signature. If the source is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="sourceRange">
+        /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.  <see cref="ShareFileUploadRangeFromUriOptions"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeFromUriAsync(
+            Uri sourceUri,
+            HttpRange range,
+            HttpRange sourceRange,
+            ShareFileUploadRangeFromUriOptions options,
+            CancellationToken cancellationToken = default) =>
+            await UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
+                conditions: options?.Conditions,
+                sourceAuthentication: options?.SourceAuthentication,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
         /// The <see cref="UploadRangeFromUri(Uri, HttpRange, HttpRange, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
         /// </summary>
@@ -3881,17 +3974,19 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileUploadInfo> UploadRangeFromUri(
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadRangeFromUriInternal(
-                sourceUri,
-                range,
-                sourceRange,
-                conditions,
+            UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
+                conditions: conditions,
+                sourceAuthentication: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3932,11 +4027,12 @@ namespace Azure.Storage.Files.Shares
             HttpRange range,
             HttpRange sourceRange,
             CancellationToken cancellationToken) =>
-            this.UploadRangeFromUriInternal(
-                sourceUri,
-                range,
-                sourceRange,
+            UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
                 conditions: default,
+                sourceAuthentication: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3972,6 +4068,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeFromUriAsync(
             Uri sourceUri,
@@ -3979,11 +4076,12 @@ namespace Azure.Storage.Files.Shares
             HttpRange sourceRange,
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadRangeFromUriInternal(
-                sourceUri,
-                range,
-                sourceRange,
-                conditions,
+            await UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
+                conditions: conditions,
+                sourceAuthentication: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4023,11 +4121,12 @@ namespace Azure.Storage.Files.Shares
             HttpRange range,
             HttpRange sourceRange,
             CancellationToken cancellationToken) =>
-            await this.UploadRangeFromUriInternal(
-                sourceUri,
-                range,
-                sourceRange,
+            await UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
                 conditions: default,
+                sourceAuthentication: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4051,6 +4150,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
+        /// <param name="sourceAuthentication">
+        /// Optional. Source authentication used to access the source blob.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -4071,6 +4173,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange range,
             HttpRange sourceRange,
             ShareFileRequestConditions conditions,
+            AuthenticationHeaderValue sourceAuthentication,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -4081,8 +4184,12 @@ namespace Azure.Storage.Files.Shares
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(UploadRangeFromUri)}");
+
                 try
                 {
+                    scope.Start();
                     ResponseWithHeaders<FileUploadRangeFromURLHeaders> response;
 
                     if (async)
@@ -4092,6 +4199,7 @@ namespace Azure.Storage.Files.Shares
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4103,6 +4211,7 @@ namespace Azure.Storage.Files.Shares
                             copySource: sourceUri.ToString(),
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -4114,11 +4223,13 @@ namespace Azure.Storage.Files.Shares
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }

@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -1228,11 +1229,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region AppendBlockFromUri
         /// <summary>
-        /// The <see cref="AppendBlockFromUri"/> operation commits a new
-        /// block of data, represented by the <paramref name="sourceUri"/>,
+        /// The <see cref="AppendBlockFromUri(Uri, AppendBlobAppendBlockFromUriOptions, CancellationToken)"/>
+        /// operation commits a new block of data, represented by the <paramref name="sourceUri"/>,
         /// to the end of the existing append blob.  The
-        /// <see cref="AppendBlockFromUri"/> operation is only permitted
-        /// if the blob was created as an append blob.
+        /// <see cref="AppendBlockFromUri(Uri, AppendBlobAppendBlockFromUriOptions, CancellationToken)"/>
+        /// operation is only permitted if the blob was created as an append blob.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url">
@@ -1245,29 +1246,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// authenticated via a shared access signature.  If the source blob
         /// is public, no authentication is required to perform the operation.
         /// </param>
-        /// <param name="sourceRange">
-        /// Optionally only upload the bytes of the blob in the
-        /// <paramref name="sourceUri"/> in the specified range.  If this is
-        /// not specified, the entire source blob contents are uploaded as a
-        /// single append block.
-        /// </param>
-        /// <param name="sourceContentHash">
-        /// Optional MD5 hash of the append block content from the
-        /// <paramref name="sourceUri"/>.  This hash is used to verify the
-        /// integrity of the block during transport of the data from the Uri.
-        /// When this hash is specified, the storage service compares the hash
-        /// of the content that has arrived from the <paramref name="sourceUri"/>
-        /// with this value.  Note that this md5 hash is not stored with the
-        /// blob.  If the two hashes do not match, the operation will fail
-        /// with a <see cref="RequestFailedException"/>.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
-        /// conditions on the copying of data to this append blob.
-        /// </param>
-        /// <param name="sourceConditions">
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
-        /// conditions on the copying of data from this source blob.
+        /// <param name="options">
+        /// Optional parameters.  <see cref="AppendBlobAppendBlockFromUriOptions"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1283,27 +1263,73 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobAppendInfo> AppendBlockFromUri(
             Uri sourceUri,
-            HttpRange sourceRange = default,
-            byte[] sourceContentHash = default,
-            AppendBlobRequestConditions conditions = default,
-            AppendBlobRequestConditions sourceConditions = default,
+            AppendBlobAppendBlockFromUriOptions options,
             CancellationToken cancellationToken = default) =>
             AppendBlockFromUriInternal(
                 sourceUri,
-                sourceRange,
-                sourceContentHash,
-                conditions,
-                sourceConditions,
-                false, // async
+                options.SourceRange,
+                options.SourceContentHash,
+                options.DestinationConditions,
+                options.SourceConditions,
+                options.SourceAuthentication,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="AppendBlockFromUriAsync"/> operation commits a new
-        /// block of data, represented by the <paramref name="sourceUri"/>,
+        /// The <see cref="AppendBlockFromUriAsync(Uri, AppendBlobAppendBlockFromUriOptions, CancellationToken)"/>
+        /// operation commits a new block of data, represented by the <paramref name="sourceUri"/>,
         /// to the end of the existing append blob.  The
-        /// <see cref="AppendBlockFromUriAsync"/> operation is only permitted
-        /// if the blob was created as an append blob.
+        /// <see cref="AppendBlockFromUriAsync(Uri, AppendBlobAppendBlockFromUriOptions, CancellationToken)"/>
+        /// operation is only permitted if the blob was created as an append blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url">
+        /// Append Block From URL</see>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Specifies the <see cref="Uri"/> of the source blob.  The value may
+        /// be a <see cref="Uri"/> of up to 2 KB in length that specifies a
+        /// blob.  The source blob must either be public or must be
+        /// authenticated via a shared access signature.  If the source blob
+        /// is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.  <see cref="AppendBlobAppendBlockFromUriOptions"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobAppendInfo}"/> describing the
+        /// state of the updated append blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
+            Uri sourceUri,
+            AppendBlobAppendBlockFromUriOptions options,
+            CancellationToken cancellationToken = default) =>
+            await AppendBlockFromUriInternal(
+                sourceUri,
+                options.SourceRange,
+                options.SourceContentHash,
+                options.DestinationConditions,
+                options.SourceConditions,
+                options.SourceAuthentication,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="AppendBlockFromUriAsync(Uri, HttpRange, byte[], AppendBlobRequestConditions, AppendBlobRequestConditions, CancellationToken)"/>
+        /// operation commits a new block of data, represented by the <paramref name="sourceUri"/>,
+        /// to the end of the existing append blob.  The
+        /// <see cref="AppendBlockFromUriAsync(Uri, HttpRange, byte[], AppendBlobRequestConditions, AppendBlobRequestConditions, CancellationToken)"/>
+        /// operation is only permitted if the blob was created as an append blob.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url">
@@ -1352,6 +1378,80 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<BlobAppendInfo> AppendBlockFromUri(
+            Uri sourceUri,
+            HttpRange sourceRange = default,
+            byte[] sourceContentHash = default,
+            AppendBlobRequestConditions conditions = default,
+            AppendBlobRequestConditions sourceConditions = default,
+            CancellationToken cancellationToken = default) =>
+            AppendBlockFromUriInternal(
+                sourceUri,
+                sourceRange,
+                sourceContentHash,
+                conditions,
+                sourceConditions,
+                sourceAuthentication: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="AppendBlockFromUriAsync(Uri, HttpRange, byte[], AppendBlobRequestConditions, AppendBlobRequestConditions, CancellationToken)"/>
+        /// operation commits a new block of data, represented by the <paramref name="sourceUri"/>,
+        /// to the end of the existing append blob.  The
+        /// <see cref="AppendBlockFromUriAsync(Uri, HttpRange, byte[], AppendBlobRequestConditions, AppendBlobRequestConditions, CancellationToken)"/>
+        /// operation is only permitted if the blob was created as an append blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url">
+        /// Append Block From URL</see>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Specifies the <see cref="Uri"/> of the source blob.  The value may
+        /// be a <see cref="Uri"/> of up to 2 KB in length that specifies a
+        /// blob.  The source blob must either be public or must be
+        /// authenticated via a shared access signature.  If the source blob
+        /// is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="sourceRange">
+        /// Optionally only upload the bytes of the blob in the
+        /// <paramref name="sourceUri"/> in the specified range.  If this is
+        /// not specified, the entire source blob contents are uploaded as a
+        /// single append block.
+        /// </param>
+        /// <param name="sourceContentHash">
+        /// Optional MD5 hash of the append block content from the
+        /// <paramref name="sourceUri"/>.  This hash is used to verify the
+        /// integrity of the block during transport of the data from the Uri.
+        /// When this hash is specified, the storage service compares the hash
+        /// of the content that has arrived from the <paramref name="sourceUri"/>
+        /// with this value.  Note that this md5 hash is not stored with the
+        /// blob.  If the two hashes do not match, the operation will fail
+        /// with a <see cref="RequestFailedException"/>.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// conditions on the copying of data to this append blob.
+        /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// conditions on the copying of data from this source blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobAppendInfo}"/> describing the
+        /// state of the updated append blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
             Uri sourceUri,
             HttpRange sourceRange = default,
@@ -1365,7 +1465,8 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 conditions,
                 sourceConditions,
-                true,  // async
+                sourceAuthentication: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1411,6 +1512,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobRequestConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
+        /// <param name="sourceAuthentication">
+        /// Optional. Source authentication used to access the source blob.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1432,6 +1536,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash,
             AppendBlobRequestConditions conditions,
             AppendBlobRequestConditions sourceConditions,
+            AuthenticationHeaderValue sourceAuthentication,
             bool async,
             CancellationToken cancellationToken = default)
         {
@@ -1474,6 +1579,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1500,6 +1606,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 
