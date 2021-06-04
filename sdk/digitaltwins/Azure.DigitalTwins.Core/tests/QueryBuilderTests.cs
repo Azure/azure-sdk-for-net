@@ -26,7 +26,9 @@ namespace Azure.DigitalTwins.Core.Tests
         [Test]
         public void SelectAggregateTests()
         {
+            // TODO -- look into if we can pass parameters into TOP and COUNT like property names
             new AdtQueryBuilder().SelectTop(5).From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT TOP(5) FROM DIGITALTWINS");
+            new AdtQueryBuilder().SelectCount("*").From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT COUNT() FROM DIGITALTWINS");
         }
     }
 }

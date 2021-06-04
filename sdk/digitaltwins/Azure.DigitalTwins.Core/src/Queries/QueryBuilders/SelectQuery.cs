@@ -50,9 +50,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             // TODO -- can we also have arguments? like property names?
             // turn into correct format -- eg. SELECT TOP(3)
-            string countArg = new StringBuilder().Append("TOP").Append('(').Append(count).Append(')').ToString();
+            string topArg = new StringBuilder().Append("TOP").Append('(').Append(count).Append(')').ToString();
 
-            _clause = new SelectClause(new string[] { countArg });
+            _clause = new SelectClause(new string[] { topArg });
             return _innerQuery;
         }
 
@@ -63,8 +63,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectCount(params string[] args)
         {
+            // TODO -- can we take in arguments? like a property name?
             Console.WriteLine(args);
-            _clause = new SelectClause(args);
+            string countArg = new StringBuilder().Append("COUNT").Append('(').Append(')').ToString();
+
+            _clause = new SelectClause(new string[] { countArg });
             return _innerQuery;
         }
 
