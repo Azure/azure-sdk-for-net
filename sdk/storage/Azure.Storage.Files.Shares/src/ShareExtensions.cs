@@ -886,15 +886,13 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            return new ShareFileItemProperties
-            {
-                CreatedOn = fileProperty.CreationTime,
-                LastAccessedOn = fileProperty.LastAccessTime,
-                LastWrittenOn = fileProperty.LastWriteTime,
-                ChangedOn = fileProperty.ChangeTime,
-                LastModified = fileProperty.LastModified,
-                ETag = fileProperty.Etag == null ? null : new ETag(fileProperty.Etag)
-            };
+            return new ShareFileItemProperties(
+                createdOn: fileProperty.CreationTime,
+                lastAccessedOn: fileProperty.LastAccessTime,
+                lastWrittenOn: fileProperty.LastWriteTime,
+                changedOn: fileProperty.ChangeTime,
+                lastModified: fileProperty.LastModified,
+                eTag: fileProperty.Etag == null ? null : new ETag(fileProperty.Etag));
         }
     }
 }

@@ -16,38 +16,38 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Gets a value indicating whether this item is a directory.
         /// </summary>
-        public bool IsDirectory { get; internal set; }
+        public bool IsDirectory { get; }
 
         /// <summary>
         /// Gets the name of this item.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets the ID.
         /// </summary>
-        public string Id { get; internal set; }
+        public string Id { get; }
 
         /// <summary>
         /// Gets the properties of this item.
         /// </summary>
-        public ShareFileItemProperties Properties { get; internal set; }
+        public ShareFileItemProperties Properties { get; }
 
         /// <summary>
         /// Gets the file attributes.
         /// </summary>
-        public NtfsFileAttributes? FileAttributes { get; internal set; }
+        public NtfsFileAttributes? FileAttributes { get; }
 
         /// <summary>
         /// Gets the permission key.
         /// </summary>
-        public string PermissionKey { get; internal set; }
+        public string PermissionKey { get; }
 
         /// <summary>
         /// Gets an optional value indicating the file size, if this item is
         /// a file.
         /// </summary>
-        public long? FileSize { get; internal set; }
+        public long? FileSize { get; }
 
         internal ShareFileItem(
             bool isDirectory,

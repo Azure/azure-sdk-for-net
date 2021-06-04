@@ -383,14 +383,12 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset? changedOn = default,
             DateTimeOffset? lastModified = default,
             ETag? etag = default)
-            => new ShareFileItemProperties
-            {
-                CreatedOn = createdOn,
-                LastAccessedOn = lastAccessedOn,
-                LastWrittenOn = lastWrittenOn,
-                ChangedOn = changedOn,
-                LastModified = lastModified,
-                ETag = etag
-            };
+            => new ShareFileItemProperties(
+                createdOn: createdOn,
+                lastAccessedOn: lastAccessedOn,
+                lastWrittenOn: lastWrittenOn,
+                changedOn: changedOn,
+                lastModified: lastModified,
+                eTag: etag);
     }
 }

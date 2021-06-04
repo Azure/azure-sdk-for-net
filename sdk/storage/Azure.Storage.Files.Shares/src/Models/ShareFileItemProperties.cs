@@ -10,36 +10,50 @@ namespace Azure.Storage.Files.Shares.Models
     /// </summary>
     public class ShareFileItemProperties
     {
-        internal ShareFileItemProperties() { }
-
         /// <summary>
         /// The time this item was created.
         /// </summary>
-        public DateTimeOffset? CreatedOn { get; internal set; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary>
         /// The time this item was last accessed.
         /// </summary>
-        public DateTimeOffset? LastAccessedOn { get; internal set; }
+        public DateTimeOffset? LastAccessedOn { get; }
 
         /// <summary>
         /// The time this item was last written on.
         /// </summary>
-        public DateTimeOffset? LastWrittenOn { get; internal set; }
+        public DateTimeOffset? LastWrittenOn { get; }
 
         /// <summary>
         /// The time this time was changed.
         /// </summary>
-        public DateTimeOffset? ChangedOn { get; internal set; }
+        public DateTimeOffset? ChangedOn { get; }
 
         /// <summary>
         /// The time the item as last last modified.
         /// </summary>
-        public DateTimeOffset? LastModified { get; internal set; }
+        public DateTimeOffset? LastModified { get; }
 
         /// <summary>
         /// The ETag of the item.
         /// </summary>
-        public ETag? ETag { get; internal set; }
+        public ETag? ETag { get; }
+
+        internal ShareFileItemProperties(
+            DateTimeOffset? createdOn,
+            DateTimeOffset? lastAccessedOn,
+            DateTimeOffset? lastWrittenOn,
+            DateTimeOffset? changedOn,
+            DateTimeOffset? lastModified,
+            ETag? eTag)
+        {
+            CreatedOn = createdOn;
+            LastAccessedOn = lastAccessedOn;
+            LastWrittenOn = lastWrittenOn;
+            ChangedOn = changedOn;
+            LastModified = lastModified;
+            ETag = eTag;
+        }
     }
 }
