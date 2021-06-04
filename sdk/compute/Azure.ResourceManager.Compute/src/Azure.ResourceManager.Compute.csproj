@@ -12,7 +12,7 @@
 
   <PropertyGroup>
     <!-- TODO: Temp workaround. Should be fixed prior to release  -->
-    <NoWarn>$(NoWarn);AZC0001;AZC0008</NoWarn>
+    <NoWarn>$(NoWarn);AZC0008</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -85,6 +86,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override AsyncPageable<AnalyzeActionsResult> Value => _operationInternal.Value;
 
         private int _actionsTotal;
@@ -227,7 +229,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override AsyncPageable<AnalyzeActionsResult> GetValuesAsync() => _operationInternal.Value;
+        public override AsyncPageable<AnalyzeActionsResult> GetValuesAsync(CancellationToken cancellationToken = default) => CreateOperationValueAsync(cancellationToken);
 
         /// <summary>
         /// Gets the final result of the long-running operation synchronously.
@@ -235,7 +237,7 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// Operation must complete successfully (HasValue is true) for it to provide values.
         /// </remarks>
-        public override Pageable<AnalyzeActionsResult> GetValues()
+        public override Pageable<AnalyzeActionsResult> GetValues(CancellationToken cancellationToken = default)
         {
             // Validates that the operation has completed successfully.
             _ = _operationInternal.Value;
@@ -245,7 +247,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(nextLink);
+                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(nextLink, cancellationToken);
 
                     AnalyzeActionsResult result = Transforms.ConvertToAnalyzeActionsResult(jobState.Value, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -259,14 +261,14 @@ namespace Azure.AI.TextAnalytics
             return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
         }
 
-        private AsyncPageable<AnalyzeActionsResult> CreateOperationValueAsync()
+        private AsyncPageable<AnalyzeActionsResult> CreateOperationValueAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AnalyzeActionsResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(nextLink).ConfigureAwait(false);
+                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
 
                     AnalyzeActionsResult result = Transforms.ConvertToAnalyzeActionsResult(jobState.Value, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -309,7 +311,7 @@ namespace Azure.AI.TextAnalytics
                 AnalyzeActionsResult value = Transforms.ConvertToAnalyzeActionsResult(response.Value, _idToIndexMap);
                 _firstPage = Page.FromValues(new List<AnalyzeActionsResult>() { value }, nextLink, rawResponse);
 
-                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync());
+                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
 
             return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);

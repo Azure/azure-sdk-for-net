@@ -92,12 +92,14 @@ var serviceClient = new TableServiceClient(
 
 // Build a shared access signature with the Write and Delete permissions and access to all service resource types.
 
-TableAccountSasBuilder sasWriteDelete = serviceClient.GetSasBuilder(TableAccountSasPermissions.Write | TableAccountSasPermissions.Delete, TableAccountSasResourceTypes.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
-string tokenWriteDelete = sasWriteDelete.Sign(credential);
+var sasUri = serviceClient.GenerateSasUri(
+    TableAccountSasPermissions.Write | TableAccountSasPermissions.Delete,
+    TableAccountSasResourceTypes.All,
+    new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
 
-// Create the TableServiceClients using the SAS URIs.
+// Create the TableServiceClients using the SAS URI.
 
-var serviceClientWithSas = new TableServiceClient(new Uri(storageUri), new AzureSasCredential(tokenWriteDelete));
+var serviceClientWithSas = new TableServiceClient(sasUri);
 
 // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
 

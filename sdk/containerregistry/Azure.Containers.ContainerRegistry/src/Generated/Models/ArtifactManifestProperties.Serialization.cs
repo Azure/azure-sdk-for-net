@@ -24,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry
             DateTimeOffset lastUpdateTime = default;
             Optional<ArtifactArchitecture?> architecture = default;
             Optional<ArtifactOperatingSystem?> os = default;
-            Optional<IReadOnlyList<ArtifactManifestReference>> references = default;
+            Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<bool> deleteEnabled = default;
             Optional<bool> writeEnabled = default;
@@ -105,10 +105,10 @@ namespace Azure.Containers.ContainerRegistry
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ArtifactManifestReference> array = new List<ArtifactManifestReference>();
+                            List<ArtifactManifestPlatform> array = new List<ArtifactManifestPlatform>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArtifactManifestReference.DeserializeArtifactManifestReference(item));
+                                array.Add(ArtifactManifestPlatform.DeserializeArtifactManifestPlatform(item));
                             }
                             references = array;
                             continue;

@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// `header`.</param>
         /// <param name="displayName">Name of API Version Set</param>
         /// <param name="versioningScheme">An value that determines where the
-        /// API Version identifer will be located in a HTTP request. Possible
+        /// API Version identifier will be located in a HTTP request. Possible
         /// values include: 'Segment', 'Query', 'Header'</param>
         public ApiVersionSetUpdateParameters(string description = default(string), string versionQueryName = default(string), string versionHeaderName = default(string), string displayName = default(string), string versioningScheme = default(string))
         {
@@ -88,11 +88,53 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets an value that determines where the API Version
-        /// identifer will be located in a HTTP request. Possible values
+        /// identifier will be located in a HTTP request. Possible values
         /// include: 'Segment', 'Query', 'Header'
         /// </summary>
         [JsonProperty(PropertyName = "properties.versioningScheme")]
         public string VersioningScheme { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (VersionQueryName != null)
+            {
+                if (VersionQueryName.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "VersionQueryName", 100);
+                }
+                if (VersionQueryName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "VersionQueryName", 1);
+                }
+            }
+            if (VersionHeaderName != null)
+            {
+                if (VersionHeaderName.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "VersionHeaderName", 100);
+                }
+                if (VersionHeaderName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "VersionHeaderName", 1);
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 100);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+            }
+        }
     }
 }

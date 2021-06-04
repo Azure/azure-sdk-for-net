@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class AzureTableDataFeedSource : DataFeedSource
     {
+        private string _connectionString;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureTableDataFeedSource"/> class.
         /// </summary>
@@ -46,11 +49,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The connection string for authenticating to the Azure Storage Account.
-        /// </summary>
-        public string ConnectionString { get; }
-
-        /// <summary>
         /// The name of the Table.
         /// </summary>
         public string Table { get; }
@@ -59,5 +57,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The query to retrieve the data to be ingested.
         /// </summary>
         public string Query { get; }
+
+        /// <summary>
+        /// The connection string for authenticating to the Azure Storage Account.
+        /// </summary>
+        internal string ConnectionString
+        {
+            get => Volatile.Read(ref _connectionString);
+            private set => Volatile.Write(ref _connectionString, value);
+        }
     }
 }

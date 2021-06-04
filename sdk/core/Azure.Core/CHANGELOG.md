@@ -6,6 +6,10 @@
 
 - Types to represent `GeoJson` primitives.
 
+### Changed
+
+- `Response.Content` no longer throws `InvalidOperationException` when the response is backed by a `MemoryStream` with a non publicly visible buffer.
+
 ## 1.14.0 (2021-05-11)
 
 ### Features Added

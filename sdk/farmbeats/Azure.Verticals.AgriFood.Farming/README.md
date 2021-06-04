@@ -1,7 +1,8 @@
 # Azure FarmBeats client library for .NET
 
-Azure FarmBeats is a business-to-business offering available in Azure Marketplace. It enables aggregation of agriculture data sets across providers. Azure FarmBeats enables you to build artificial intelligence (AI) or machine learning (ML) models based on fused data sets. By using Azure FarmBeats, agriculture businesses can focus on core value-adds instead of the undifferentiated heavy lifting of data engineering.
-**Please rely heavily on the [service's documentation][catalog_product_documentation] and our [protocol client docs][protocol_client_quickstart] to use this library**
+FarmBeats is a B2B PaaS offering from Microsoft that makes it easy for AgriFood companies to build intelligent digital agriculture solutions on Azure. FarmBeats allows users to acquire, aggregate, and process agricultural data from various sources (farm equipment, weather, satellite) without the need to invest in deep data engineering resources.  Customers can build SaaS solutions on top of FarmBeats and leverage first class support for model building to generate insights at scale.
+
+**Please rely heavily on the [service's documentation][product_documentation] and our [protocol client docs][protocol_client_quickstart] to use this library**
 
 [Source code][source_code] | [Package (NuGet)][client_nuget_package] | [Product documentation][product_documentation]
 
@@ -17,7 +18,10 @@ dotnet add package Azure.Verticals.AgriFood.Farming --prerelease
 
 ### Prerequisites
 
-- You must have an [Azure subscription][azure_subscription] and a Farmbeats resource to use this package.
+To use this package, you must have:
+
+- An [Azure subscription][azure_subscription] 
+- An [AgriFood (FarmBeats) resource][install_farmbeats]
 
 ### Authenticate the client
 
@@ -33,6 +37,23 @@ var client = new FarmClient(new Url("https://<my-account-name>.farmbeats.azure.n
 ```
 
 ## Key concepts
+
+Basic understanding of below terms will help to get started with FarmBeats client library.
+
+### [Farm Hierarchy][farm_hierarchy]
+Farm hierarchy is a collection of below entities.
+- Farmer - is the custodian of all the agronomic data.
+- Farm - is a logical collection of fields and/or seasonal fields. They do not have any area associated with them.
+- Field - is a multi-polygon area. This is expected to be stable across seasons.
+- Seasonal field - is a multi-polygon area. To define a seasonal boundary we need the details of area (boundary), time (season) and crop. New seasonal fields are expected to be created for every growing season.
+- Boundary - is the actual multi-polygon area expressed as a geometry (in geojson). It is normally associated with a field or a seasonal field. Satellite, weather and farm operations data is linked to a boundary.
+- Cascade delete - Agronomic data is stored hierarchically with farmer as the root. The hierarchy includes Farmer -> Farms -> Fields -> Seasonal Fields -> Boundaries -> Associated data (satellite, weather, farm operations). Cascade delete refers to the process of deleting any node and its subtree. 
+
+### [Scenes][scenes]
+Scenes refers to images normally ingested using satellite APIs. This includes raw bands and derived bands (Ex: NDVI). Scenes may also include spatial outputs of an inference or AI/ML model (Ex: LAI).
+
+### [Farm Operations][farm_operations_docs]
+Fam operations includes details pertaining to tilling, planting, application of pesticides & nutrients, and harvesting. This can either be manually pushed into FarmBeats using APIs or the same information can be pulled from farm equipment service providers like John Deere. 
 
 ### Protocol Methods
 
@@ -83,6 +104,10 @@ To learn more about other logging mechanisms see [here][azure_core_diagnostics].
 
 ## Next steps
 
+### Additional documentation
+
+For more extensive documentation on the FarmBeats, see the [FarmBeats documentation][product_docs] on docs.microsoft.com.
+
 This client SDK exposes operations using *protocol methods*, you can learn more about how to use SDK Clients which use protocol methods in our [documentation][protocol_client_quickstart].
 
 ## Contributing
@@ -98,12 +123,16 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/farmbeats/Azure.Verticals.AgriFood.Farming
 [client_nuget_package]: https://www.nuget.org/packages?q=Azure.Verticals.AgriFood.Farming
-[product_documentation]: https://docs.microsoft.com/azure/industry/agriculture/overview-azure-farmbeats
+[product_documentation]: https://aka.ms/FarmBeatsProductDocumentationPaaS
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [protocol_client_quickstart]: https://aka.ms/azsdk/net/protocol/quickstart
 [default_cred_ref]: https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [azure_subscription]: https://azure.microsoft.com/free/
 [azure_core_diagnostics]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
+[scenes]: https://aka.ms/FarmBeatsSatellitePaaSDocumentation
+[farm_operations_docs]: https://aka.ms/FarmBeatsFarmOperationsDocumentation
+[farm_hierarchy]: https://aka.ms/FarmBeatsFarmHierarchyDocs
+[install_farmbeats]: https://aka.ms/FarmBeatsInstallDocumentationPaaS
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

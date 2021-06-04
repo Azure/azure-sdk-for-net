@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -33,15 +34,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='top'>
-            /// Number of records to return.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
-            /// <param name='skip'>
-            /// Number of records to skip.
-            /// </param>
-            public static IPage<GatewayContract> ListByService(this IGatewayOperations operations, string resourceGroupName, string serviceName, int? top = default(int?), int? skip = default(int?))
+            public static IPage<GatewayContract> ListByService(this IGatewayOperations operations, string resourceGroupName, string serviceName, ODataQuery<GatewayContract> odataQuery = default(ODataQuery<GatewayContract>))
             {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, top, skip).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,18 +54,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='top'>
-            /// Number of records to return.
-            /// </param>
-            /// <param name='skip'>
-            /// Number of records to skip.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<GatewayContract>> ListByServiceAsync(this IGatewayOperations operations, string resourceGroupName, string serviceName, int? top = default(int?), int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GatewayContract>> ListByServiceAsync(this IGatewayOperations operations, string resourceGroupName, string serviceName, ODataQuery<GatewayContract> odataQuery = default(ODataQuery<GatewayContract>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, top, skip, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -254,9 +249,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IGatewayOperations operations, string resourceGroupName, string serviceName, string gatewayId, GatewayContract parameters, string ifMatch)
+            public static GatewayContract Update(this IGatewayOperations operations, string resourceGroupName, string serviceName, string gatewayId, GatewayContract parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, gatewayId, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, gatewayId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -285,9 +280,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IGatewayOperations operations, string resourceGroupName, string serviceName, string gatewayId, GatewayContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GatewayContract> UpdateAsync(this IGatewayOperations operations, string resourceGroupName, string serviceName, string gatewayId, GatewayContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, gatewayId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, gatewayId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
