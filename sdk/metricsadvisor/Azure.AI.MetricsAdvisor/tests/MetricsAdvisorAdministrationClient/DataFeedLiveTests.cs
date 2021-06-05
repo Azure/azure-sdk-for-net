@@ -245,7 +245,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("TODO")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21623")]
         public async Task CreateAndGetAzureEventHubsDataFeedWithMinimumSetup()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -266,7 +266,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("TODO")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21623")]
         public async Task CreateAndGetAzureEventHubsDataFeedWithOptionalMembers()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -1069,7 +1069,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21623")]
         public async Task UpdateAzureEventHubsDataFeedWithMinimumSetupAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -1095,7 +1095,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21623")]
         public async Task UpdateAzureEventHubsDataFeedWithEveryMemberAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();

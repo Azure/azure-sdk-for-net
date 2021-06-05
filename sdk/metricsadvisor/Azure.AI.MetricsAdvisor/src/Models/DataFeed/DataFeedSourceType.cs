@@ -57,7 +57,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Log Analytics.
         /// </summary>
         [CodeGenMember("AzureLogAnalytics")]
-        public static DataFeedSourceType LogAnalytics { get; } = new DataFeedSourceType(InfluxDbValue);
+        public static DataFeedSourceType LogAnalytics { get; } = new DataFeedSourceType(LogAnalyticsValue);
 
         /// <summary>
         /// MongoDB.
