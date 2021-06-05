@@ -381,7 +381,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
 
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureLogAnalytics));
+            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.LogAnalytics));
 
             ValidateLogAnalyticsDataSource(createdDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
@@ -401,7 +401,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
 
-            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureLogAnalytics));
+            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.LogAnalytics));
 
             ValidateLogAnalyticsDataSource(createdDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
@@ -1340,7 +1340,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
 
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureLogAnalytics));
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.LogAnalytics));
 
             ValidateLogAnalyticsDataSource(updatedDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
@@ -1365,7 +1365,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
 
-            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureLogAnalytics));
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.LogAnalytics));
 
             ValidateLogAnalyticsDataSource(updatedDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
@@ -2405,7 +2405,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.Query, Is.Null);
                 }
             }
-            else if (sourceType == DataFeedSourceType.AzureLogAnalytics)
+            else if (sourceType == DataFeedSourceType.LogAnalytics)
             {
                 var specificDataSource = dataSource as LogAnalyticsDataFeedSource;
 
