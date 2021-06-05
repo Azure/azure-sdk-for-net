@@ -15,6 +15,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
     {
         private const string DataSourceAccount = "account";
         private const string DataSourceAppId = "appId";
+        private const string DataSourceClientId = "clientId";
+        private const string DataSourceClientSecret = "clientSecret";
         private const string DataSourceCloud = "cloud";
         private const string DataSourceCollectionId = "collectId";
         private const string DataSourceCommand = "command";
@@ -30,9 +32,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string DataSourceQuery = "query";
         private const string DataSourceTable = "table";
         private const string DataSourceTemplate = "template";
+        private const string DataSourceTenantId = "tenantId";
         private const string DataSourceUsername = "username";
+        private const string DataSourceWorkspaceId = "workspaceId";
 
-        public DataFeedLiveTests(bool isAsync) : base(isAsync)
+        public DataFeedLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -360,6 +364,46 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
 
             ValidateInfluxDbDataSource(createdDataFeed.DataSource as InfluxDbDataFeedSource);
+        }
+
+        [RecordedTest]
+        public async Task CreateAndGetLogAnalyticsDataFeedWithMinimumSetup()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new LogAnalyticsDataFeedSource(DataSourceWorkspaceId, DataSourceQuery, DataSourceClientId, DataSourceClientSecret, DataSourceTenantId);
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
+
+            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureLogAnalytics));
+
+            ValidateLogAnalyticsDataSource(createdDataFeed.DataSource as LogAnalyticsDataFeedSource);
+        }
+
+        [RecordedTest]
+        public async Task CreateAndGetLogAnalyticsDataFeedWithOptionalMembers()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new LogAnalyticsDataFeedSource(DataSourceWorkspaceId, DataSourceQuery, DataSourceClientId, DataSourceClientSecret, DataSourceTenantId);
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
+
+            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureLogAnalytics));
+
+            ValidateLogAnalyticsDataSource(createdDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
 
         [RecordedTest]
@@ -2133,6 +2177,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
         }
 
+        private void ValidateLogAnalyticsDataSource(LogAnalyticsDataFeedSource dataSource)
+        {
+            Assert.That(dataSource, Is.Not.Null);
+            Assert.That(dataSource.WorkspaceId, Is.EqualTo(DataSourceWorkspaceId));
+            Assert.That(dataSource.Query, Is.EqualTo(DataSourceQuery));
+            Assert.That(dataSource.ClientId, Is.EqualTo(DataSourceClientId));
+            Assert.That(dataSource.TenantId, Is.EqualTo(DataSourceTenantId));
+        }
+
         private void ValidateMongoDbDataSource(MongoDbDataFeedSource dataSource)
         {
             Assert.That(dataSource, Is.Not.Null);
@@ -2300,6 +2353,27 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.Database, Is.Null);
                     Assert.That(specificDataSource.Username, Is.Null);
                     Assert.That(specificDataSource.Query, Is.Null);
+                }
+            }
+            else if (sourceType == DataFeedSourceType.AzureLogAnalytics)
+            {
+                var specificDataSource = dataSource as LogAnalyticsDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.WorkspaceId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.Query, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.ClientId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.TenantId, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.WorkspaceId, Is.Null);
+                    Assert.That(specificDataSource.Query, Is.Null);
+                    Assert.That(specificDataSource.ClientId, Is.Null);
+                    Assert.That(specificDataSource.TenantId, Is.Null);
                 }
             }
             else if (sourceType == DataFeedSourceType.MongoDb)
