@@ -58,7 +58,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             BlobTemplate = blobTemplate;
         }
 
-        internal AzureBlobDataFeedSource(AzureBlobParameter parameter)
+        internal AzureBlobDataFeedSource(AzureBlobParameter parameter, AuthenticationTypeEnum? authentication)
             : base(DataFeedSourceType.AzureBlob)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
@@ -66,6 +66,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             ConnectionString = parameter.ConnectionString;
             Container = parameter.Container;
             BlobTemplate = parameter.BlobTemplate;
+
+            SetAuthentication(authentication);
         }
 
         /// <summary>
@@ -152,5 +154,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
             _ => throw new InvalidOperationException($"Unknown authentication type: {Authentication}")
         };
+
+        internal void SetAuthentication(AuthenticationTypeEnum? authentication)
+        {
+            if (authentication == AuthenticationTypeEnum.Basic)
+            {
+                Authentication = AuthenticationType.Basic;
+            }
+            else if (authentication == AuthenticationTypeEnum.ManagedIdentity)
+            {
+                Authentication = AuthenticationType.ManagedIdentity;
+            }
+        }
     }
 }

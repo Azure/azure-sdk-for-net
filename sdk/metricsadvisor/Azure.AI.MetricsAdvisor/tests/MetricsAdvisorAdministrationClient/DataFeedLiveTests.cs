@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string DataSourceTemplate = "template";
         private const string DataSourceUsername = "username";
 
-        public DataFeedLiveTests(bool isAsync) : base(isAsync)
+        public DataFeedLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -477,6 +477,28 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.SqlServer));
 
             ValidateSqlServerDataSource(createdDataFeed.DataSource as SqlServerDataFeedSource);
+        }
+
+        [RecordedTest]
+        [TestCase(AzureBlobDataFeedSource.AuthenticationType.Basic)]
+        [TestCase(AzureBlobDataFeedSource.AuthenticationType.ManagedIdentity)]
+        public async Task CreateAndGetAzureBlobDataFeedWithAuthentication(AzureBlobDataFeedSource.AuthenticationType authentication)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureBlobDataFeedSource("mock", "mock", "mock")
+            {
+                Authentication = authentication
+            };
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+            AzureBlobDataFeedSource createdDataSource = createdDataFeed.DataSource as AzureBlobDataFeedSource;
+
+            Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
         }
 
         [RecordedTest]

@@ -22,15 +22,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             dataFeedDetail switch
             {
                 AzureApplicationInsightsDataFeed d => new AzureApplicationInsightsDataFeedSource(d.DataSourceParameter),
-                AzureBlobDataFeed d => new AzureBlobDataFeedSource(d.DataSourceParameter),
+                AzureBlobDataFeed d => new AzureBlobDataFeedSource(d.DataSourceParameter, d.AuthenticationType),
                 AzureCosmosDBDataFeed d => new AzureCosmosDbDataFeedSource(d.DataSourceParameter),
-                AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageGen2DataFeedSource(d.DataSourceParameter),
+                AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageGen2DataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
                 AzureTableDataFeed d => new AzureTableDataFeedSource(d.DataSourceParameter),
                 InfluxDBDataFeed d => new InfluxDbDataFeedSource(d.DataSourceParameter),
-                AzureDataExplorerDataFeed d => new AzureDataExplorerDataFeedSource(d.DataSourceParameter),
+                AzureDataExplorerDataFeed d => new AzureDataExplorerDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
                 MySqlDataFeed d => new MySqlDataFeedSource(d.DataSourceParameter),
                 PostgreSqlDataFeed d => new PostgreSqlDataFeedSource(d.DataSourceParameter),
-                SQLServerDataFeed d => new SqlServerDataFeedSource(d.DataSourceParameter),
+                SQLServerDataFeed d => new SqlServerDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
                 MongoDBDataFeed d => new MongoDbDataFeedSource(d.DataSourceParameter),
                 _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
             };

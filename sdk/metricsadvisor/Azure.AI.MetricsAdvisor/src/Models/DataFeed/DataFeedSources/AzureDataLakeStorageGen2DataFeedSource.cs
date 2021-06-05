@@ -64,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             FileTemplate = fileTemplate;
         }
 
-        internal AzureDataLakeStorageGen2DataFeedSource(AzureDataLakeStorageGen2Parameter parameter)
+        internal AzureDataLakeStorageGen2DataFeedSource(AzureDataLakeStorageGen2Parameter parameter, AuthenticationTypeEnum? authentication, string credentialId)
             : base(DataFeedSourceType.AzureDataLakeStorageGen2)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
@@ -74,6 +74,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             FileSystemName = parameter.FileSystemName;
             DirectoryTemplate = parameter.DirectoryTemplate;
             FileTemplate = parameter.FileTemplate;
+
+            SetAuthentication(authentication);
+            DatasourceCredentialId = credentialId;
         }
 
         /// <summary>
@@ -196,5 +199,25 @@ namespace Azure.AI.MetricsAdvisor.Models
             AuthenticationType.ServicePrincipalInKeyVault => AuthenticationTypeEnum.ServicePrincipalInKV,
             _ => throw new InvalidOperationException($"Unknown authentication type: {Authentication}")
         };
+
+        internal void SetAuthentication(AuthenticationTypeEnum? authentication)
+        {
+            if (authentication == AuthenticationTypeEnum.Basic)
+            {
+                Authentication = AuthenticationType.Basic;
+            }
+            else if (authentication == AuthenticationTypeEnum.DataLakeGen2SharedKey)
+            {
+                Authentication = AuthenticationType.SharedKey;
+            }
+            else if (authentication == AuthenticationTypeEnum.ServicePrincipal)
+            {
+                Authentication = AuthenticationType.ServicePrincipal;
+            }
+            else if (authentication == AuthenticationTypeEnum.ServicePrincipalInKV)
+            {
+                Authentication = AuthenticationType.ServicePrincipalInKeyVault;
+            }
+        }
     }
 }

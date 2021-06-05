@@ -31,13 +31,16 @@ namespace Azure.AI.MetricsAdvisor.Models
             Query = query;
         }
 
-        internal SqlServerDataFeedSource(SqlSourceParameter parameter)
+        internal SqlServerDataFeedSource(SqlSourceParameter parameter, AuthenticationTypeEnum? authentication, string credentialId)
             : base(DataFeedSourceType.SqlServer)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
             ConnectionString = parameter.ConnectionString;
             Query = parameter.Query;
+
+            SetAuthentication(authentication);
+            DatasourceCredentialId = credentialId;
         }
 
         /// <summary>
@@ -130,5 +133,29 @@ namespace Azure.AI.MetricsAdvisor.Models
             AuthenticationType.ServicePrincipalInKeyVault => AuthenticationTypeEnum.ServicePrincipalInKV,
             _ => throw new InvalidOperationException($"Unknown authentication type: {Authentication}")
         };
+
+        internal void SetAuthentication(AuthenticationTypeEnum? authentication)
+        {
+            if (authentication == AuthenticationTypeEnum.Basic)
+            {
+                Authentication = AuthenticationType.Basic;
+            }
+            else if (authentication == AuthenticationTypeEnum.ManagedIdentity)
+            {
+                Authentication = AuthenticationType.ManagedIdentity;
+            }
+            else if (authentication == AuthenticationTypeEnum.AzureSQLConnectionString)
+            {
+                Authentication = AuthenticationType.SqlConnectionString;
+            }
+            else if (authentication == AuthenticationTypeEnum.ServicePrincipal)
+            {
+                Authentication = AuthenticationType.ServicePrincipal;
+            }
+            else if (authentication == AuthenticationTypeEnum.ServicePrincipalInKV)
+            {
+                Authentication = AuthenticationType.ServicePrincipalInKeyVault;
+            }
+        }
     }
 }
