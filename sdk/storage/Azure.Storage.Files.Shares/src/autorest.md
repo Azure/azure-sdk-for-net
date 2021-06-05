@@ -81,17 +81,6 @@ directive:
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.parameters
-  transform: >
-    $.Path = {
-      "name": "path",
-      "in": "path",
-      "required": true,
-      "type": "string",
-      "description": "path.",
-      "x-ms-skip-url-encoding": true
-    };
-- from: swagger-document
   where: $["x-ms-paths"]
   transform: >
    Object.keys($).map(id => {
