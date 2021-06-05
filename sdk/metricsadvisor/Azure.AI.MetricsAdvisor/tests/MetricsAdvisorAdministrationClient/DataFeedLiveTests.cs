@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string DataSourceUsername = "username";
         private const string DataSourceWorkspaceId = "workspaceId";
 
-        public DataFeedLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public DataFeedLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -1318,6 +1318,56 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.InfluxDb));
 
             ValidateInfluxDbDataSource(updatedDataFeed.DataSource as InfluxDbDataFeedSource);
+        }
+
+        [RecordedTest]
+        public async Task UpdateLogAnalyticsDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new LogAnalyticsDataFeedSource(DataSourceWorkspaceId, DataSourceQuery, DataSourceClientId, DataSourceClientSecret, DataSourceTenantId);
+            const string description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureLogAnalytics));
+
+            ValidateLogAnalyticsDataSource(updatedDataFeed.DataSource as LogAnalyticsDataFeedSource);
+        }
+
+        [RecordedTest]
+        public async Task UpdateLogAnalyticsDataFeedWithEveryMemberAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new LogAnalyticsDataFeedSource(DataSourceWorkspaceId, DataSourceQuery, DataSourceClientId, DataSourceClientSecret, DataSourceTenantId);
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureLogAnalytics));
+
+            ValidateLogAnalyticsDataSource(updatedDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
 
         [RecordedTest]
