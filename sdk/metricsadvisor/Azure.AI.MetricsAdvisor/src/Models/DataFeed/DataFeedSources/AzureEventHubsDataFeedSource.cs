@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class AzureEventHubsDataFeedSource : DataFeedSource
     {
+        private string _connectionString;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureEventHubsDataFeedSource"/> class.
         /// </summary>
@@ -24,8 +27,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
 
-            Parameter = new AzureEventHubsParameter(connectionString, consumerGroup);
-
             ConnectionString = connectionString;
             ConsumerGroup = consumerGroup;
         }
@@ -34,8 +35,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             : base(DataFeedSourceType.AzureEventHubs)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
-
-            Parameter = parameter;
 
             ConnectionString = parameter.ConnectionString;
             ConsumerGroup = parameter.ConsumerGroup;
@@ -47,18 +46,24 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string ConsumerGroup { get; set; }
 
         /// <summary>
+        /// The connection string for authenticating to the Azure Event Hubs resource.
         /// </summary>
-        /// <param name="connectionString"></param>
-        public void UpdateConnectionString(string connectionString)
+        internal string ConnectionString
         {
-            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-
-            ConnectionString = connectionString;
+            get => Volatile.Read(ref _connectionString);
+            private set => Volatile.Write(ref _connectionString, value);
         }
 
         /// <summary>
-        /// The connection string for authenticating to the Azure Event Hubs resource.
+        /// Updates the connection string.
         /// </summary>
-        internal string ConnectionString { get; set; }
+        /// <param name="connectionString">The new connection string to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/> is empty.</exception>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+            ConnectionString = connectionString;
+        }
     }
 }
