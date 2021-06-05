@@ -9,7 +9,7 @@ using System.Text;
 namespace Azure.Storage.Common.DataMovement
 {
     /// <summary>
-    /// FilesystemScanner class
+    /// FilesystemScanner class.
     /// </summary>
     public static class FilesystemScanner
     {
@@ -25,7 +25,7 @@ namespace Azure.Storage.Common.DataMovement
 
             try
             {
-                // Make sure we're dealing with absolute path
+                // Make sure we're dealing with absolute, well-formatted path
                 path = Path.GetFullPath(path);
 
                 // Check if path points to a directory
@@ -34,19 +34,20 @@ namespace Azure.Storage.Common.DataMovement
                     isDirectory = true;
                 }
             }
-            catch
+            catch (Exception)
             {
-                // If there's an error here, there aren't any valid entries to scan at the
-                // given path; either the path is invalid/nonexistant, or it isn't accessible by the user. In this case,
-                // don't return anything.
-                yield break;
+                // If there's an error here, there aren't any valid entries to scan at the given path;
+                // the path is either invalid or nonexistant. In this case, throw the resulting exception.
+                //
+                // TODO: Logging for invalid path exceptions
+                throw;
             }
 
             // If we're given a directory, parse its children recursively
             if (isDirectory)
             {
                 // Create a queue of folders to enumerate files from, starting with provided path
-                Queue<string> folders = new Queue<string>();
+                Queue<string> folders = new();
                 folders.Enqueue(path);
 
                 while (folders.Count > 0)
@@ -62,30 +63,27 @@ namespace Azure.Storage.Common.DataMovement
                             folders.Enqueue(subdir);
                         }
                     }
-                    // If we lack permissions to enumerate, skip this folder
-                    catch
+                    // If we lack permissions to enumerate, skip the folder and continue processing
+                    // the rest of the queue
+                    catch (Exception)
                     {
+                        // TODO: Logging for missing permissions to enumerate folder
+                        if (dir == path)
+                        {
+                            // If we can't even enumerate the path supplied by the user, throw
+                            // the error
+                            throw;
+                        }
+
+                        // Otherwise, just log the failed subdirectory and continue to list as many
+                        // files as accessible. Maybe let users decide whether to always throw here?
                         continue;
                     }
 
+                    // Add all files in the directory to be returned
                     foreach (string file in Directory.EnumerateFiles(dir))
                     {
-                        // Try to open a stream to the file to test read permissions
-                        try
-                        {
-                            using (FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read))
-                            {
-                                goto readSuccess;
-                            }
-                        }
-                        // Skip the file if opening stream fails
-                        catch
-                        {
-                            continue;
-                        }
-
-                        readSuccess:
-                            yield return file;
+                        yield return file;
                     }
                 }
             }
