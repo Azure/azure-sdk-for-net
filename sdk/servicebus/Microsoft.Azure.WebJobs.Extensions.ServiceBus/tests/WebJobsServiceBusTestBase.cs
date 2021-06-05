@@ -245,7 +245,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
-            var errors = logs.Where(p => p.Level == LogLevel.Error);
+            var errors = logs.Where(
+                p => p.Level == LogLevel.Error &&
+                // Ignore this error that the SDK logs when cancelling batch receive
+                !p.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"));
             Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.FormattedMessage)));
 
             var client = new ServiceBusAdministrationClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
