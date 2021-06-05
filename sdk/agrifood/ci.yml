@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/farmbeats/
+    - sdk/agrifood/
 
 pr:
   branches:
@@ -20,12 +20,12 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/farmbeats/
+    - sdk/agrifood/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: farmbeats
+    ServiceDirectory: agrifood
     ArtifactName: packages
     Artifacts:
     - name: Azure.Verticals.AgriFood.Farming
