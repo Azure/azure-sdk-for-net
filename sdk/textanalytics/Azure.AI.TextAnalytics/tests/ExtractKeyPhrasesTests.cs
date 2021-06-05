@@ -86,7 +86,8 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
 
-            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document, "es");
+            ExtractKeyPhrasesResultCollection keyPhrasesCollection = await client.ExtractKeyPhrasesBatchAsync(new List<string> { document }, "es", new ExtractKeyPhrasesOptions() { ModelVersion = "2020-07-01" });
+            KeyPhraseCollection keyPhrases = keyPhrasesCollection.FirstOrDefault().KeyPhrases;
 
             ValidateInDocumenResult(keyPhrases, 1);
 

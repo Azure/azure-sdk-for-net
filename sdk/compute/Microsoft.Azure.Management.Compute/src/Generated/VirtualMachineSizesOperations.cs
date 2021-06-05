@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Compute
 
         /// <summary>
         /// This API is deprecated. Use [Resources
-        /// Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
+        /// Skus](https://docs.microsoft.com/rest/api/compute/resourceskus/list)
         /// </summary>
         /// <param name='location'>
         /// The location upon which virtual-machine-sizes is queried.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-12-01";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

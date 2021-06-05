@@ -57,8 +57,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(directoryTemplate, nameof(directoryTemplate));
             Argument.AssertNotNullOrEmpty(fileTemplate, nameof(fileTemplate));
 
-            Parameter = new AzureDataLakeStorageGen2Parameter(accountName, accountKey, fileSystemName, directoryTemplate, fileTemplate);
-
             AccountName = accountName;
             AccountKey = accountKey;
             FileSystemName = fileSystemName;
@@ -71,8 +69,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
-            Parameter = parameter;
-
             AccountName = parameter.AccountName;
             AccountKey = parameter.AccountKey;
             FileSystemName = parameter.FileSystemName;
@@ -83,17 +79,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The name of the Storage Account.
         /// </summary>
-        public string AccountName { get; }
+        public string AccountName { get; set; }
 
         /// <summary>
         /// The name of the file system.
         /// </summary>
-        public string FileSystemName { get; }
+        public string FileSystemName { get; set; }
 
         /// <summary>
         /// The directory template.
         /// </summary>
-        public string DirectoryTemplate { get; }
+        public string DirectoryTemplate { get; set; }
 
         /// <summary>
         /// This is the file template of the Blob file. For example: X_%Y-%m-%d-%h-%M.json. The following parameters are supported:
@@ -120,7 +116,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </item>
         /// </list>
         /// </summary>
-        public string FileTemplate { get; }
+        public string FileTemplate { get; set; }
 
         /// <summary>
         /// The Storage Account key.
@@ -129,6 +125,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             get => Volatile.Read(ref _accountKey);
             private set => Volatile.Write(ref _accountKey, value);
+        }
+
+        /// <summary>
+        /// Updates the account key.
+        /// </summary>
+        /// <param name="accountKey">The new account key to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="accountKey"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="accountKey"/> is empty.</exception>
+        public void UpdateAccountKey(string accountKey)
+        {
+            Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
+            AccountKey = accountKey;
         }
     }
 }

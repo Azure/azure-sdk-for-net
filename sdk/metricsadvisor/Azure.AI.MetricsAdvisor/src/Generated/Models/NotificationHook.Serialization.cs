@@ -30,11 +30,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("externalLink");
                 writer.WriteStringValue(InternalExternalLink);
             }
-            if (Optional.IsCollectionDefined(Administrators))
+            if (Optional.IsCollectionDefined(AdministratorsEmails))
             {
                 writer.WritePropertyName("admins");
                 writer.WriteStartArray();
-                foreach (var item in Administrators)
+                foreach (var item in AdministratorsEmails)
                 {
                     writer.WriteStringValue(item);
                 }

@@ -18,8 +18,5 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             ToList = new ChangeTrackingList<string>();
         }
-
-        /// <summary> Email TO: list. </summary>
-        public IList<string> ToList { get; }
     }
 }

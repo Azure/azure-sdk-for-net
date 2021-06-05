@@ -25,8 +25,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Username { get; set; }
         /// <summary> (Deprecated) The password, if using basic authentication. </summary>
         public string Password { get; set; }
-        /// <summary> custom headers in api call. </summary>
-        public IDictionary<string, string> Headers { get; }
         /// <summary> The certificate key, if using client certificate. </summary>
         public string CertificateKey { get; set; }
         /// <summary> The certificate password, if using client certificate. </summary>
