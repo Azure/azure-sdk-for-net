@@ -19,7 +19,6 @@ namespace Azure.Storage.Queues
     internal partial class MessagesRestClient
     {
         private string url;
-        private string queueName;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -28,18 +27,13 @@ namespace Azure.Storage.Queues
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, queue or message that is the targe of the desired operation. </param>
-        /// <param name="queueName"> The queue name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="queueName"/>, or <paramref name="version"/> is null. </exception>
-        public MessagesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string queueName, string version = "2018-03-28")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        public MessagesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-03-28")
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
-            }
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
             }
             if (version == null)
             {
@@ -47,7 +41,6 @@ namespace Azure.Storage.Queues
             }
 
             this.url = url;
-            this.queueName = queueName;
             this.version = version;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -60,8 +53,6 @@ namespace Azure.Storage.Queues
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(queueName, true);
             uri.AppendPath("/messages", false);
             if (numberOfMessages != null)
             {
@@ -152,8 +143,6 @@ namespace Azure.Storage.Queues
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(queueName, true);
             uri.AppendPath("/messages", false);
             if (timeout != null)
             {
@@ -206,8 +195,6 @@ namespace Azure.Storage.Queues
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(queueName, true);
             uri.AppendPath("/messages", false);
             if (visibilitytimeout != null)
             {
@@ -316,8 +303,6 @@ namespace Azure.Storage.Queues
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(queueName, true);
             uri.AppendPath("/messages", false);
             uri.AppendQuery("peekonly", "true", true);
             if (numberOfMessages != null)
