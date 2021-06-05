@@ -1588,7 +1588,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<ShareFileItem> GetFilesAndDirectories(
-            ShareDirectoryGetFilesAndDirectoriesOptions options,
+            ShareDirectoryGetFilesAndDirectoriesOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetFilesAndDirectoriesAsyncCollection(
                 client: this,
@@ -1623,7 +1623,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<ShareFileItem> GetFilesAndDirectoriesAsync(
-            ShareDirectoryGetFilesAndDirectoriesOptions options,
+            ShareDirectoryGetFilesAndDirectoriesOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetFilesAndDirectoriesAsyncCollection(
                 client: this,
@@ -1660,7 +1660,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ShareFileItem> GetFilesAndDirectories(
-            string prefix = default,
+            string prefix,
             CancellationToken cancellationToken = default) =>
             new GetFilesAndDirectoriesAsyncCollection(
                 client: this,
