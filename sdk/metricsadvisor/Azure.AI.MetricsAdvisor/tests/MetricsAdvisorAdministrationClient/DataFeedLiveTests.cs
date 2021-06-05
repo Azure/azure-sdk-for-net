@@ -1077,7 +1077,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateAzureTableDataFeedWithMinimumSetupAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -2116,9 +2115,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         private void ValidateAzureEventHubsDataSource(AzureEventHubsDataFeedSource dataSource)
         {
-            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : DataSourceConnectionString;
-
-            Assert.That(dataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
             Assert.That(dataSource.ConsumerGroup, Is.EqualTo(DataSourceConsumerGroup));
         }
 
@@ -2263,12 +2259,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 if (isAdmin)
                 {
-                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
                     Assert.That(specificDataSource.ConsumerGroup, Is.Not.Null.And.Not.Empty);
                 }
                 else
                 {
-                    Assert.That(specificDataSource.ConnectionString, Is.Null);
                     Assert.That(specificDataSource.ConsumerGroup, Is.Null);
                 }
             }
