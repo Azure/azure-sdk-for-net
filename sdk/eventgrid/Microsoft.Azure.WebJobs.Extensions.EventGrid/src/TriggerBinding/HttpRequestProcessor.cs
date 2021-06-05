@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                             $"The request content should be parseable into a JSON object or array, but was {events.Type}.");
                 }
 
-                SubscriptionValidationResponse validationResponse = new SubscriptionValidationResponse { ValidationResponse = validationCode };
+                SubscriptionValidationResponse validationResponse = new(){ ValidationResponse = validationCode };
                 var returnMessage = new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(JsonConvert.SerializeObject(validationResponse))
