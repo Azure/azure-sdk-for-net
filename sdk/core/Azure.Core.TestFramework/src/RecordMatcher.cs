@@ -267,6 +267,10 @@ namespace Azure.Core.TestFramework
                     {
                         difference++;
                         descriptionBuilder?.AppendLine($"    <{headerName}> values differ, request <{JoinHeaderValues(requestHeaderValues)}>, record <{JoinHeaderValues(entryHeaderValues)}>");
+                        if (headerName.Contains("Content-Length"))
+                        {
+                            _compareBodies = true;
+                        }
                     }
                 }
                 else

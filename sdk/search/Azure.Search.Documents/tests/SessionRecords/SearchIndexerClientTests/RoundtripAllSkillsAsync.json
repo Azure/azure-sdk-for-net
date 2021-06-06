@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30-Preview",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "3714",
         "Content-Type": "application/json",
-        "traceparent": "00-653b3a56014e4e44b72cd5817943e476-e22011a2c2372344-00",
+        "traceparent": "00-04c31bc6d2f5064f974223654f36e6f3-0373637652c6784f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210514.1",
-          "(.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210604.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "8e39ba448961d14a4b538fa82f0f897a",
         "x-ms-return-client-request-id": "true"
@@ -316,11 +316,11 @@
         "client-request-id": "8e39ba44-8961-d14a-4b53-8fa82f0f897a",
         "Content-Length": "6254",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 14 May 2021 20:47:28 GMT",
-        "elapsed-time": "66",
-        "ETag": "W/\u00220x8D917197CCF60DE\u0022",
+        "Date": "Sat, 05 Jun 2021 01:51:10 GMT",
+        "elapsed-time": "64",
+        "ETag": "W/\u00220x8D927C464B2DFDB\u0022",
         "Expires": "-1",
-        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027lefvvewn\u0027)?api-version=2020-06-30-Preview",
+        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027lefvvewn\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -330,7 +330,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D917197CCF60DE\u0022",
+        "@odata.etag": "\u00220x8D927C464B2DFDB\u0022",
         "name": "lefvvewn",
         "description": null,
         "skills": [
