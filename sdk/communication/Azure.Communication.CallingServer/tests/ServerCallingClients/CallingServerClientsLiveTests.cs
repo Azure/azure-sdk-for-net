@@ -32,7 +32,6 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
-        [Ignore("Ignore for now as we get build errors that block checkingin.")]
         public async Task CreateCallTest()
         {
             CallClient client = CreateInstrumentedCallingServerClient();

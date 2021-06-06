@@ -332,16 +332,10 @@ namespace Azure.Storage.Files.Shares
 
         private FileRestClient BuildFileRestClient(Uri uri)
         {
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
-            {
-                ShareName = null,
-                DirectoryOrFilePath = null
-            };
             return new FileRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                uriBuilder.ToUri().ToString(),
-                path: $"{ShareName}/{Path.EscapePath()}",
+                uri.AbsoluteUri,
                 _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors

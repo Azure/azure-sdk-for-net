@@ -3,6 +3,7 @@
 
 using System.Net;
 using Azure.Communication.Tests;
+using Azure.Core.TestFramework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
@@ -11,9 +12,9 @@ namespace Azure.Communication.CallingServer.Tests
     /// </summary>
     public class CallingServerTestEnvironment : CommunicationTestEnvironment
     {
-        public string ToPhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret());
+        public string ToPhoneNumber => GetRecordedVariable(AzurePhoneNumber);
 
-        public string FromPhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret());
+        public string FromPhoneNumber => GetRecordedVariable(AzurePhoneNumber);
         /// <summary>
         /// The source identity.
         /// </summary>
@@ -22,7 +23,7 @@ namespace Azure.Communication.CallingServer.Tests
         /// <summary>
         /// The phone number associated with the source.
         /// </summary>
-        public string SourcePhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret());
+        public string SourcePhoneNumber => GetRecordedVariable(AzurePhoneNumber);
 
         /// <summary>
         /// The audio file name of the play prompt.
