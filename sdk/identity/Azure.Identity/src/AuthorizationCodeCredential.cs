@@ -18,12 +18,13 @@ namespace Azure.Identity
     /// </summary>
     public class AuthorizationCodeCredential : TokenCredential
     {
-        private readonly IConfidentialClientApplication _confidentialClient;
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly MsalConfidentialClient _client;
         private readonly string _authCode;
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private AuthenticationRecord _record;
+        private readonly string _redirectUri;
+        private readonly string _tenantId;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -54,23 +55,45 @@ namespace Azure.Identity
         /// <param name="authorizationCode">The authorization code obtained from a call to authorize. The code should be obtained with all required scopes.
         /// See https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public AuthorizationCodeCredential(
+            string tenantId,
+            string clientId,
+            string clientSecret,
+            string authorizationCode,
+            AuthorizationCodeCredentialOptions options) : this(tenantId, clientId, clientSecret, authorizationCode, options, null)
+        { }
+
+        /// <summary>
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a prefetched authorization code.
+        /// </summary>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
+        /// <param name="authorizationCode">The authorization code obtained from a call to authorize. The code should be obtained with all required scopes.
+        /// See https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options)
+            : this(tenantId, clientId, clientSecret, authorizationCode, options, null)
+        { }
+
+        internal AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options, MsalConfidentialClient client)
         {
             Validations.ValidateTenantId(tenantId, nameof(tenantId));
-
-            if (clientSecret is null) throw new ArgumentNullException(nameof(clientSecret));
-
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
-
-            _authCode = authorizationCode ?? throw new ArgumentNullException(nameof(authorizationCode));
-
+            _tenantId = tenantId;
+            Argument.AssertNotNull(clientSecret, nameof(clientSecret));
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(authorizationCode, nameof(authorizationCode));
+            _clientId = clientId;
+            _authCode = authorizationCode ;
             options ??= new TokenCredentialOptions();
-
             _pipeline = CredentialPipeline.GetInstance(options);
+            _redirectUri = options switch
+            {
+                AuthorizationCodeCredentialOptions o => o.RedirectUri?.ToString(),
+                _ => null
+            };
 
-            _confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
-
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions);
         }
 
         /// <summary>
@@ -101,20 +124,22 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken token = default;
+                AccessToken token;
 
                 if (_record is null)
                 {
-                    AuthenticationResult result = await _confidentialClient.AcquireTokenByAuthorizationCode(requestContext.Scopes, _authCode).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
-
+                    AuthenticationResult result = await _client
+                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, _tenantId, _redirectUri, async, cancellationToken)
+                        .ConfigureAwait(false);
                     _record = new AuthenticationRecord(result, _clientId);
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
                 else
                 {
-                    AuthenticationResult result = await _confidentialClient.AcquireTokenSilent(requestContext.Scopes, (AuthenticationAccount)_record).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
-
+                    AuthenticationResult result = await _client
+                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, _tenantId, _redirectUri, async, cancellationToken)
+                        .ConfigureAwait(false);
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
 

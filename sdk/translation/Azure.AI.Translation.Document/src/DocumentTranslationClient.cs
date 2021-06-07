@@ -28,6 +28,42 @@ namespace Azure.AI.Translation.Document
         { }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DocumentTranslationClient"/>
+        /// class for the specified service instance.
+        /// </summary>
+        /// <param name="endpoint">A <see cref="Uri"/> to the service the client
+        /// sends requests to.  Endpoint can be found in the Azure portal.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to
+        /// authenticate requests to the service, such as DefaultAzureCredential.</param>
+        public DocumentTranslationClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, new DocumentTranslationClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DocumentTranslationClient"/>
+        /// class for the specified service instance.
+        /// </summary>
+        /// <param name="endpoint">A <see cref="Uri"/> to the service the client
+        /// sends requests to.  Endpoint can be found in the Azure portal.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to
+        /// authenticate requests to the service, such as DefaultAzureCredential.</param>
+        /// <param name="options"><see cref="DocumentTranslationClientOptions"/> that allow
+        /// callers to configure how requests are sent to the service.</param>
+        public DocumentTranslationClient(Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
+            _options = options;
+            _clientDiagnostics = new ClientDiagnostics(options);
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+            _serviceRestClient = new DocumentTranslationRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+        }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="DocumentTranslationClient"/> class for the specified service instance.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
@@ -181,11 +217,11 @@ namespace Azure.AI.Translation.Document
         /// Get the status results for all submitted translation operations.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Pageable<TranslationStatusResult> GetTranslations(CancellationToken cancellationToken = default)
+        public virtual Pageable<TranslationStatusResult> GetAllTranslationStatuses(CancellationToken cancellationToken = default)
         {
             Page<TranslationStatusResult> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslations)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetAllTranslationStatuses)}");
                 scope.Start();
 
                 try
@@ -202,7 +238,7 @@ namespace Azure.AI.Translation.Document
 
             Page<TranslationStatusResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslations)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetAllTranslationStatuses)}");
                 scope.Start();
 
                 try
@@ -224,11 +260,11 @@ namespace Azure.AI.Translation.Document
         /// Get the status results for all submitted translation operations.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncPageable<TranslationStatusResult> GetTranslationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TranslationStatusResult> GetAllTranslationStatusesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<TranslationStatusResult>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslations)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetAllTranslationStatuses)}");
                 scope.Start();
 
                 try
@@ -245,7 +281,7 @@ namespace Azure.AI.Translation.Document
 
             async Task<Page<TranslationStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslations)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetAllTranslationStatuses)}");
                 scope.Start();
 
                 try

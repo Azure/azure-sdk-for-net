@@ -9,7 +9,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
     /// Contains details about the data ingested by a time series. To make plotting easier, this data is
-    /// scattered across different lists, such as <see cref="Timestamps"/> and <see cref="Values"/>. A
+    /// scattered across different lists, such as <see cref="Timestamps"/> and <see cref="MetricValues"/>. A
     /// data point is represented by the same index across these lists.
     /// </summary>
     [CodeGenModel("MetricDataItem")]
@@ -31,6 +31,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The values of the data points present in this time series.
         /// </summary>
         [CodeGenMember("ValueList")]
-        public IReadOnlyList<double> Values { get; }
+        public IReadOnlyList<double> MetricValues { get; }
     }
 }
