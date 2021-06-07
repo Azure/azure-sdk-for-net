@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Communication.Identity;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
-using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
 {
@@ -33,7 +31,7 @@ namespace Azure.Communication.CallingServer.Tests
         protected CallClient CreateInstrumentedCallingServerClient()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
-            CallClient client = new CallClient(connectionString, CreateServerCallingClientOptions());
+            CallClient client = new CallClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
 
             #region Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
             //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
@@ -42,11 +40,16 @@ namespace Azure.Communication.CallingServer.Tests
 
             return InstrumentClient(client);
         }
+        protected async Task SleepIfNotInPlaybackModeAsync()
+        {
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                await Task.Delay(10000);
+        }
 
-        // Todo: add CorrelationVectorLogs
-        private CallClientOptions CreateServerCallingClientOptions()
+        private CallClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs()
         {
             CallClientOptions callClientOptions = new CallClientOptions();
+            callClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(callClientOptions);
         }
     }

@@ -32,7 +32,6 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
-        [Ignore("Ignore for now as we get build errors that block checkingin.")]
         public async Task CreateCallTest()
         {
             CallClient client = CreateInstrumentedCallingServerClient();
@@ -52,7 +51,6 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
-        [Ignore("Ignore for now as we get build errors that block checkingin.")]
         public async Task DeteleCallTest()
         {
             CallClient client = CreateInstrumentedCallingServerClient();
@@ -75,7 +73,6 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
-        [Ignore("PlayAudio Operation required the call is under established state which is not doable for now.")]
         public async Task PlayAudioTest()
         {
             CallClient client = CreateInstrumentedCallingServerClient();
@@ -84,7 +81,9 @@ namespace Azure.Communication.CallingServer.Tests
                 var createCallResponse = await CreateCallOperation(client).ConfigureAwait(false);
                 var callLegId = createCallResponse.Value.CallLegId;
 
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
                 await PlayAudioOperation(client, callLegId).ConfigureAwait(false);
+
                 await DeteleCallOperation(client, callLegId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -99,7 +98,6 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
-        [Ignore("Ignore for now as we get build errors that block checkingin.")]
         public async Task HangupCallTest()
         {
             CallClient client = CreateInstrumentedCallingServerClient();
@@ -108,8 +106,8 @@ namespace Azure.Communication.CallingServer.Tests
                 var createCallResponse = await CreateCallOperation(client).ConfigureAwait(false);
                 var callLegId = createCallResponse.Value.CallLegId;
 
+                // There is one call leg in this test case, hangup the call will also delete the call as the result.
                 await HangupOperation(client, callLegId).ConfigureAwait(false);
-                await DeteleCallOperation(client, callLegId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -123,8 +121,7 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
-        [Ignore("CancelMediaOperations Operation required the call is under established state which is not doable for now.")]
-        public async Task CancelMediaOperationsTest()
+        public async Task CancelAllMediaOperationsTest()
         {
             CallClient client = CreateInstrumentedCallingServerClient();
             try
@@ -132,7 +129,12 @@ namespace Azure.Communication.CallingServer.Tests
                 var createCallResponse = await CreateCallOperation(client).ConfigureAwait(false);
                 var callLegId = createCallResponse.Value.CallLegId;
 
-                await CancelMediaOperationsOperation(client, callLegId).ConfigureAwait(false);
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await PlayAudioOperation(client, callLegId).ConfigureAwait(false);
+
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await CancelAllMediaOperationsOperation(client, callLegId).ConfigureAwait(false);
+
                 await DeteleCallOperation(client, callLegId).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
@@ -153,7 +155,7 @@ namespace Azure.Communication.CallingServer.Tests
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var source = await CreateUserAsync(communicationIdentityClient).ConfigureAwait(false);
 
-            var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
+            var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
                    new List<CallModality> { CallModality.Audio },
@@ -189,9 +191,9 @@ namespace Azure.Communication.CallingServer.Tests
             var playAudioOptions = new PlayAudioOptions()
             {
                 AudioFileUri = new Uri(TestEnvironment.AudioFileUrl),
-                OperationContext = Guid.NewGuid().ToString(),
+                OperationContext = "de346f03-7f8d-41ab-a232-cc5e14990769",
                 Loop = true,
-                AudioFileId = Guid.NewGuid().ToString()
+                AudioFileId = "ebb1d98d-fd86-4204-800c-f7bdfc2e515c"
             };
 
             Console.WriteLine("Performing PlayAudio operation");
@@ -214,13 +216,13 @@ namespace Azure.Communication.CallingServer.Tests
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_HangupCallOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaOperationsOperation
-        private async Task CancelMediaOperationsOperation(CallClient client, string callLegId)
+        private async Task CancelAllMediaOperationsOperation(CallClient client, string callLegId)
         {
             Console.WriteLine("Performing cancel media processing operation to stop playing audio");
 
             var response = await client.CancelAllMediaOperationsAsync(callLegId).ConfigureAwait(false);
 
-            Assert.AreEqual(response.Value.Status, OperationStatus.Running);
+            Assert.AreEqual(OperationStatus.Completed, response.Value.Status);
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaOperationsOperation
 
