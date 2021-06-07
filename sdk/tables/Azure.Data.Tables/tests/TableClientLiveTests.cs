@@ -31,8 +31,8 @@ namespace Azure.Data.Tables.Tests
         public async Task UpsertAndQueryWithSingleQuoteNames([Values(true, false)] bool expressionQuery)
         {
             List<TableEntity> entityResults;
-            string partitionKeyValue = "PartitionWith'singleQuote";
-            string rowKeyValue = "01'";
+            string partitionKeyValue = "PartitionWithi''singleQuote";
+            string rowKeyValue = "01''";
             TableEntity entityToCreate = CreateTableEntities(partitionKeyValue, 1).First();
             entityToCreate.RowKey = rowKeyValue;
 
