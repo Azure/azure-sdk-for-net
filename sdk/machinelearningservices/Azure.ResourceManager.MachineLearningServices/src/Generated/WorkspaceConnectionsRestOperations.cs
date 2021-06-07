@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string workspaceName, string connectionName, WorkspaceConnectionDto parameters)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string workspaceName, string connectionName, WorkspaceConnectionData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="parameters"> The object for creating or updating a new workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="connectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<WorkspaceConnectionData>> CreateAsync(string resourceGroupName, string workspaceName, string connectionName, WorkspaceConnectionDto parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceConnectionData>> CreateAsync(string resourceGroupName, string workspaceName, string connectionName, WorkspaceConnectionData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="parameters"> The object for creating or updating a new workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="connectionName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<WorkspaceConnectionData> Create(string resourceGroupName, string workspaceName, string connectionName, WorkspaceConnectionDto parameters, CancellationToken cancellationToken = default)
+        public Response<WorkspaceConnectionData> Create(string resourceGroupName, string workspaceName, string connectionName, WorkspaceConnectionData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

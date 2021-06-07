@@ -36,8 +36,6 @@ operation-group-to-resource:
   WorkspaceSkus: NonResource # no PUT, Sub level
   PrivateLinkResources: NonResource # no PUT
   StorageAccount: NonResource
-  MachineLearningServices: ServiceResource # PUT req/res mismatch
-  WorkspaceConnections: WorkspaceConnection # PUT req/res mismatch
 operation-group-to-parent:
   Usages: Locations
   VirtualMachineSizes: Locations
@@ -60,4 +58,13 @@ directive:
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/listNotebookKeys'].post.operationId
     transform: return "Workspaces_ListNotebookKeys";
+# Following two transform are temporary, waiting on ML team to fix swagger.
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}'].put.parameters[5].schema
+    transform: >
+        $["$ref"] = "#/definitions/WorkspaceConnection";
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/services/{serviceName}'].put.parameters[5].schema
+    transform: >
+        $["$ref"] = "#/definitions/ServiceResource";
 ```

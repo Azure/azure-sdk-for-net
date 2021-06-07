@@ -8,35 +8,35 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The ACIServiceCreateRequest. </summary>
-    public partial class ACIServiceCreateRequest : CreateServiceRequest
+    internal partial class ACIServiceCreateRequest : CreateServiceRequest
     {
         /// <summary> Initializes a new instance of ACIServiceCreateRequest. </summary>
-        public ACIServiceCreateRequest()
+        internal ACIServiceCreateRequest()
         {
             ComputeType = ComputeEnvironmentType.ACI;
         }
 
         /// <summary> The container resource requirements. </summary>
-        public ContainerResourceRequirements ContainerResourceRequirements { get; set; }
+        public ContainerResourceRequirements ContainerResourceRequirements { get; }
         /// <summary> Whether or not authentication is enabled on the service. </summary>
-        public bool? AuthEnabled { get; set; }
+        public bool? AuthEnabled { get; }
         /// <summary> Whether or not SSL is enabled. </summary>
-        public bool? SslEnabled { get; set; }
+        public bool? SslEnabled { get; }
         /// <summary> Whether or not Application Insights is enabled. </summary>
-        public bool? AppInsightsEnabled { get; set; }
+        public bool? AppInsightsEnabled { get; }
         /// <summary> Details of the data collection options specified. </summary>
-        public ACIServiceCreateRequestDataCollection DataCollection { get; set; }
+        public ACIServiceCreateRequestDataCollection DataCollection { get; }
         /// <summary> The public SSL certificate in PEM format to use if SSL is enabled. </summary>
-        public string SslCertificate { get; set; }
+        public string SslCertificate { get; }
         /// <summary> The public SSL key in PEM format for the certificate. </summary>
-        public string SslKey { get; set; }
+        public string SslKey { get; }
         /// <summary> The CName for the service. </summary>
-        public string Cname { get; set; }
+        public string Cname { get; }
         /// <summary> The Dns label for the service. </summary>
-        public string DnsNameLabel { get; set; }
+        public string DnsNameLabel { get; }
         /// <summary> The virtual network configuration. </summary>
-        public ACIServiceCreateRequestVnetConfiguration VnetConfiguration { get; set; }
+        public ACIServiceCreateRequestVnetConfiguration VnetConfiguration { get; }
         /// <summary> The encryption properties. </summary>
-        public ACIServiceCreateRequestEncryptionProperties EncryptionProperties { get; set; }
+        public ACIServiceCreateRequestEncryptionProperties EncryptionProperties { get; }
     }
 }

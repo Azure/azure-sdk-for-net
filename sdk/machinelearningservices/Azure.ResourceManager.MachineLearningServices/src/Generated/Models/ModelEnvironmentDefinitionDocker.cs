@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The definition of a Docker container. </summary>
-    public partial class ModelEnvironmentDefinitionDocker : ModelDockerSection
+    internal partial class ModelEnvironmentDefinitionDocker : ModelDockerSection
     {
         /// <summary> Initializes a new instance of ModelEnvironmentDefinitionDocker. </summary>
-        public ModelEnvironmentDefinitionDocker()
+        internal ModelEnvironmentDefinitionDocker()
         {
         }
     }

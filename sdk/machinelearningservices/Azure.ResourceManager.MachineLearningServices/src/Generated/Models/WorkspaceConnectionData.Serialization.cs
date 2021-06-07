@@ -11,8 +11,42 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    public partial class WorkspaceConnectionData
+    public partial class WorkspaceConnectionData : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category");
+                writer.WriteStringValue(Category);
+            }
+            if (Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target");
+                writer.WriteStringValue(Target);
+            }
+            if (Optional.IsDefined(AuthType))
+            {
+                writer.WritePropertyName("authType");
+                writer.WriteStringValue(AuthType);
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value");
+                writer.WriteStringValue(Value);
+            }
+            if (Optional.IsDefined(ValueFormat))
+            {
+                writer.WritePropertyName("valueFormat");
+                writer.WriteStringValue(ValueFormat.Value.ToString());
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
         internal static WorkspaceConnectionData DeserializeWorkspaceConnectionData(JsonElement element)
         {
             ResourceGroupResourceIdentifier id = default;

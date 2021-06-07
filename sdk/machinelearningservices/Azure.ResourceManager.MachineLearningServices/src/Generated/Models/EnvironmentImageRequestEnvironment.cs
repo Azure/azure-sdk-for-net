@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The details of the AZURE ML environment. </summary>
-    public partial class EnvironmentImageRequestEnvironment : ModelEnvironmentDefinition
+    internal partial class EnvironmentImageRequestEnvironment : ModelEnvironmentDefinition
     {
         /// <summary> Initializes a new instance of EnvironmentImageRequestEnvironment. </summary>
-        public EnvironmentImageRequestEnvironment()
+        internal EnvironmentImageRequestEnvironment()
         {
         }
     }

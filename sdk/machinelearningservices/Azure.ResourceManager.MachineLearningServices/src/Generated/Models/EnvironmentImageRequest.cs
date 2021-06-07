@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Request to create a Docker image based on Environment. </summary>
-    public partial class EnvironmentImageRequest
+    internal partial class EnvironmentImageRequest
     {
         /// <summary> Initializes a new instance of EnvironmentImageRequest. </summary>
-        public EnvironmentImageRequest()
+        internal EnvironmentImageRequest()
         {
             Assets = new ChangeTrackingList<ImageAsset>();
             ModelIds = new ChangeTrackingList<string>();
@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> The name of the driver file. </summary>
-        public string DriverProgram { get; set; }
+        public string DriverProgram { get; }
         /// <summary> The list of assets. </summary>
-        public IList<ImageAsset> Assets { get; }
+        public IReadOnlyList<ImageAsset> Assets { get; }
         /// <summary> The list of model Ids. </summary>
-        public IList<string> ModelIds { get; }
+        public IReadOnlyList<string> ModelIds { get; }
         /// <summary> The list of models. </summary>
-        public IList<Model> Models { get; }
+        public IReadOnlyList<Model> Models { get; }
         /// <summary> The details of the AZURE ML environment. </summary>
-        public EnvironmentImageRequestEnvironment Environment { get; set; }
+        public EnvironmentImageRequestEnvironment Environment { get; }
         /// <summary> The unique identifying details of the AZURE ML environment. </summary>
-        public EnvironmentImageRequestEnvironmentReference EnvironmentReference { get; set; }
+        public EnvironmentImageRequestEnvironmentReference EnvironmentReference { get; }
     }
 }

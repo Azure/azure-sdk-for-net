@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string workspaceName, string serviceName, CreateServiceRequest properties)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string workspaceName, string serviceName, ServiceResourceData properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="properties"> The payload that is used to create or update the Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="serviceName"/>, or <paramref name="properties"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string workspaceName, string serviceName, CreateServiceRequest properties, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string workspaceName, string serviceName, ServiceResourceData properties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="properties"> The payload that is used to create or update the Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="serviceName"/>, or <paramref name="properties"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string workspaceName, string serviceName, CreateServiceRequest properties, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string workspaceName, string serviceName, ServiceResourceData properties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

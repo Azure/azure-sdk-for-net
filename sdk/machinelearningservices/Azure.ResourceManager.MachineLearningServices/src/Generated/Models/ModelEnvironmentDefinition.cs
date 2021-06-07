@@ -11,29 +11,29 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The ModelEnvironmentDefinition. </summary>
-    public partial class ModelEnvironmentDefinition
+    internal partial class ModelEnvironmentDefinition
     {
         /// <summary> Initializes a new instance of ModelEnvironmentDefinition. </summary>
-        public ModelEnvironmentDefinition()
+        internal ModelEnvironmentDefinition()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The name of the environment. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The environment version. </summary>
-        public string Version { get; set; }
+        public string Version { get; }
         /// <summary> Settings for a Python environment. </summary>
-        public ModelEnvironmentDefinitionPython Python { get; set; }
+        public ModelEnvironmentDefinitionPython Python { get; }
         /// <summary> Definition of environment variables to be defined in the environment. </summary>
-        public IDictionary<string, string> EnvironmentVariables { get; }
+        public IReadOnlyDictionary<string, string> EnvironmentVariables { get; }
         /// <summary> The definition of a Docker container. </summary>
-        public ModelEnvironmentDefinitionDocker Docker { get; set; }
+        public ModelEnvironmentDefinitionDocker Docker { get; }
         /// <summary> The configuration for a Spark environment. </summary>
-        public ModelEnvironmentDefinitionSpark Spark { get; set; }
+        public ModelEnvironmentDefinitionSpark Spark { get; }
         /// <summary> Settings for a R environment. </summary>
-        public ModelEnvironmentDefinitionR R { get; set; }
+        public ModelEnvironmentDefinitionR R { get; }
         /// <summary> The inferencing stack version added to the image. To avoid adding an inferencing stack, do not set this value. Valid values: &quot;latest&quot;. </summary>
-        public string InferencingStackVersion { get; set; }
+        public string InferencingStackVersion { get; }
     }
 }

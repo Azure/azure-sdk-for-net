@@ -11,28 +11,28 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The base class for creating a service. </summary>
-    public partial class CreateServiceRequest
+    internal partial class CreateServiceRequest
     {
         /// <summary> Initializes a new instance of CreateServiceRequest. </summary>
-        public CreateServiceRequest()
+        internal CreateServiceRequest()
         {
             KvTags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The description of the service. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
         /// <summary> The service tag dictionary. Tags are mutable. </summary>
-        public IDictionary<string, string> KvTags { get; }
+        public IReadOnlyDictionary<string, string> KvTags { get; }
         /// <summary> The service properties dictionary. Properties are immutable. </summary>
-        public IDictionary<string, string> Properties { get; }
+        public IReadOnlyDictionary<string, string> Properties { get; }
         /// <summary> The authentication keys. </summary>
-        public CreateServiceRequestKeys Keys { get; set; }
+        public CreateServiceRequestKeys Keys { get; }
         /// <summary> The compute environment type for the service. </summary>
         internal ComputeEnvironmentType ComputeType { get; set; }
         /// <summary> The Environment, models and assets needed for inferencing. </summary>
-        public CreateServiceRequestEnvironmentImageRequest EnvironmentImageRequest { get; set; }
+        public CreateServiceRequestEnvironmentImageRequest EnvironmentImageRequest { get; }
         /// <summary> The name of the Azure location/region. </summary>
-        public string Location { get; set; }
+        public string Location { get; }
     }
 }

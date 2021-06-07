@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="parameters"> The object for creating or updating a new workspace connection. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        public Response<WorkspaceConnection> CreateOrUpdate(string connectionName, WorkspaceConnectionDto parameters, CancellationToken cancellationToken = default)
+        public Response<WorkspaceConnection> CreateOrUpdate(string connectionName, WorkspaceConnectionData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.CreateOrUpdate");
             scope.Start();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="parameters"> The object for creating or updating a new workspace connection. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        public async Task<Response<WorkspaceConnection>> CreateOrUpdateAsync(string connectionName, WorkspaceConnectionDto parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceConnection>> CreateOrUpdateAsync(string connectionName, WorkspaceConnectionData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.CreateOrUpdate");
             scope.Start();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="parameters"> The object for creating or updating a new workspace connection. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        public WorkspaceConnectionsCreateOperation StartCreateOrUpdate(string connectionName, WorkspaceConnectionDto parameters, CancellationToken cancellationToken = default)
+        public WorkspaceConnectionsCreateOperation StartCreateOrUpdate(string connectionName, WorkspaceConnectionData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.StartCreateOrUpdate");
             scope.Start();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="parameters"> The object for creating or updating a new workspace connection. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        public async Task<WorkspaceConnectionsCreateOperation> StartCreateOrUpdateAsync(string connectionName, WorkspaceConnectionDto parameters, CancellationToken cancellationToken = default)
+        public async Task<WorkspaceConnectionsCreateOperation> StartCreateOrUpdateAsync(string connectionName, WorkspaceConnectionData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WorkspaceConnectionContainer.StartCreateOrUpdate");
             scope.Start();

@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The ModelDockerSection. </summary>
-    public partial class ModelDockerSection
+    internal partial class ModelDockerSection
     {
         /// <summary> Initializes a new instance of ModelDockerSection. </summary>
-        public ModelDockerSection()
+        internal ModelDockerSection()
         {
         }
 
         /// <summary> Base image used for Docker-based runs. Mutually exclusive with BaseDockerfile. </summary>
-        public string BaseImage { get; set; }
+        public string BaseImage { get; }
         /// <summary> Base Dockerfile used for Docker-based runs. Mutually exclusive with BaseImage. </summary>
-        public string BaseDockerfile { get; set; }
+        public string BaseDockerfile { get; }
         /// <summary> Image registry that contains the base image. </summary>
-        public ModelDockerSectionBaseImageRegistry BaseImageRegistry { get; set; }
+        public ModelDockerSectionBaseImageRegistry BaseImageRegistry { get; }
     }
 }

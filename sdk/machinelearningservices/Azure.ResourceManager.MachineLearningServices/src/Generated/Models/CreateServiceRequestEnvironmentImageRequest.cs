@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The Environment, models and assets needed for inferencing. </summary>
-    public partial class CreateServiceRequestEnvironmentImageRequest : EnvironmentImageRequest
+    internal partial class CreateServiceRequestEnvironmentImageRequest : EnvironmentImageRequest
     {
         /// <summary> Initializes a new instance of CreateServiceRequestEnvironmentImageRequest. </summary>
-        public CreateServiceRequestEnvironmentImageRequest()
+        internal CreateServiceRequestEnvironmentImageRequest()
         {
         }
     }

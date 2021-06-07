@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="serviceName"> Name of the Azure Machine Learning service. </param>
         /// <param name="properties"> The payload that is used to create or update the Service. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        public Response<ServiceResource> CreateOrUpdate(string serviceName, CreateServiceRequest properties, CancellationToken cancellationToken = default)
+        public Response<ServiceResource> CreateOrUpdate(string serviceName, ServiceResourceData properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceResourceContainer.CreateOrUpdate");
             scope.Start();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="serviceName"> Name of the Azure Machine Learning service. </param>
         /// <param name="properties"> The payload that is used to create or update the Service. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        public async Task<Response<ServiceResource>> CreateOrUpdateAsync(string serviceName, CreateServiceRequest properties, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceResource>> CreateOrUpdateAsync(string serviceName, ServiceResourceData properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceResourceContainer.CreateOrUpdate");
             scope.Start();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="serviceName"> Name of the Azure Machine Learning service. </param>
         /// <param name="properties"> The payload that is used to create or update the Service. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        public MachineLearningServicesCreateOrUpdateOperation StartCreateOrUpdate(string serviceName, CreateServiceRequest properties, CancellationToken cancellationToken = default)
+        public MachineLearningServicesCreateOrUpdateOperation StartCreateOrUpdate(string serviceName, ServiceResourceData properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceResourceContainer.StartCreateOrUpdate");
             scope.Start();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="serviceName"> Name of the Azure Machine Learning service. </param>
         /// <param name="properties"> The payload that is used to create or update the Service. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        public async Task<MachineLearningServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string serviceName, CreateServiceRequest properties, CancellationToken cancellationToken = default)
+        public async Task<MachineLearningServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string serviceName, ServiceResourceData properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceResourceContainer.StartCreateOrUpdate");
             scope.Start();

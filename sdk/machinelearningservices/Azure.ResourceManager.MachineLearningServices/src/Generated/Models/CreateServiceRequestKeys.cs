@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The authentication keys. </summary>
-    public partial class CreateServiceRequestKeys : AuthKeys
+    internal partial class CreateServiceRequestKeys : AuthKeys
     {
         /// <summary> Initializes a new instance of CreateServiceRequestKeys. </summary>
-        public CreateServiceRequestKeys()
+        internal CreateServiceRequestKeys()
         {
         }
     }

@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The AuthKeys. </summary>
-    public partial class AuthKeys
+    internal partial class AuthKeys
     {
         /// <summary> Initializes a new instance of AuthKeys. </summary>
-        public AuthKeys()
+        internal AuthKeys()
         {
         }
 
         /// <summary> The primary key. </summary>
-        public string PrimaryKey { get; set; }
+        public string PrimaryKey { get; }
         /// <summary> The secondary key. </summary>
-        public string SecondaryKey { get; set; }
+        public string SecondaryKey { get; }
     }
 }

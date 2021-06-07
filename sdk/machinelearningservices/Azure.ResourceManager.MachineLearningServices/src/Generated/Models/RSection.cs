@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The RSection. </summary>
-    public partial class RSection
+    internal partial class RSection
     {
         /// <summary> Initializes a new instance of RSection. </summary>
-        public RSection()
+        internal RSection()
         {
             CranPackages = new ChangeTrackingList<RCranPackage>();
             GitHubPackages = new ChangeTrackingList<RGitHubPackage>();
@@ -23,24 +23,24 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> The version of R to be installed. </summary>
-        public string RVersion { get; set; }
+        public string RVersion { get; }
         /// <summary> Indicates whether the environment is managed by user or by AzureML. </summary>
-        public bool? UserManaged { get; set; }
+        public bool? UserManaged { get; }
         /// <summary>
         /// The Rscript path to use if an environment build is not required.
         /// 
         /// The path specified gets used to call the user script.
         /// </summary>
-        public string RscriptPath { get; set; }
+        public string RscriptPath { get; }
         /// <summary> Date of MRAN snapshot to use in YYYY-MM-DD format, e.g. &quot;2019-04-17&quot;. </summary>
-        public string SnapshotDate { get; set; }
+        public string SnapshotDate { get; }
         /// <summary> The CRAN packages to use. </summary>
-        public IList<RCranPackage> CranPackages { get; }
+        public IReadOnlyList<RCranPackage> CranPackages { get; }
         /// <summary> The packages directly from GitHub. </summary>
-        public IList<RGitHubPackage> GitHubPackages { get; }
+        public IReadOnlyList<RGitHubPackage> GitHubPackages { get; }
         /// <summary> The packages from custom urls. </summary>
-        public IList<string> CustomUrlPackages { get; }
+        public IReadOnlyList<string> CustomUrlPackages { get; }
         /// <summary> The packages from Bioconductor. </summary>
-        public IList<string> BioConductorPackages { get; }
+        public IReadOnlyList<string> BioConductorPackages { get; }
     }
 }

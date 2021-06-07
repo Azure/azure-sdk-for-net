@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class WorkspaceConnectionData : Resource<ResourceGroupResourceIdentifier>
     {
         /// <summary> Initializes a new instance of WorkspaceConnectionData. </summary>
-        internal WorkspaceConnectionData()
+        public WorkspaceConnectionData()
         {
         }
 
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Category of the workspace connection. </summary>
-        public string Category { get; }
+        public string Category { get; set; }
         /// <summary> Target of the workspace connection. </summary>
-        public string Target { get; }
+        public string Target { get; set; }
         /// <summary> Authorization type of the workspace connection. </summary>
-        public string AuthType { get; }
+        public string AuthType { get; set; }
         /// <summary> Value details of the workspace connection. </summary>
-        public string Value { get; }
+        public string Value { get; set; }
         /// <summary> format for the workspace connection value. </summary>
-        public ValueFormat? ValueFormat { get; }
+        public ValueFormat? ValueFormat { get; set; }
     }
 }

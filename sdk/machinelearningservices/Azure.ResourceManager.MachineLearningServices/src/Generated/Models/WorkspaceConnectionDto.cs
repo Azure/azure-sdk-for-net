@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> object used for creating workspace connection. </summary>
-    public partial class WorkspaceConnectionDto
+    internal partial class WorkspaceConnectionDto
     {
         /// <summary> Initializes a new instance of WorkspaceConnectionDto. </summary>
-        public WorkspaceConnectionDto()
+        internal WorkspaceConnectionDto()
         {
         }
 
         /// <summary> Friendly name of the workspace connection. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Category of the workspace connection. </summary>
-        public string Category { get; set; }
+        public string Category { get; }
         /// <summary> Target of the workspace connection. </summary>
-        public string Target { get; set; }
+        public string Target { get; }
         /// <summary> Authorization type of the workspace connection. </summary>
-        public string AuthType { get; set; }
+        public string AuthType { get; }
         /// <summary> Value details of the workspace connection. </summary>
-        public string Value { get; set; }
+        public string Value { get; }
         /// <summary> format for the workspace connection value. </summary>
-        public ValueFormat? ValueFormat { get; set; }
+        public ValueFormat? ValueFormat { get; }
     }
 }

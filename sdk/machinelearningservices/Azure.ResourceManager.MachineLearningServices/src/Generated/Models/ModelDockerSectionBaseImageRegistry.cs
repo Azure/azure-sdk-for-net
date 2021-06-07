@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Image registry that contains the base image. </summary>
-    public partial class ModelDockerSectionBaseImageRegistry : ContainerRegistry
+    internal partial class ModelDockerSectionBaseImageRegistry : ContainerRegistry
     {
         /// <summary> Initializes a new instance of ModelDockerSectionBaseImageRegistry. </summary>
-        public ModelDockerSectionBaseImageRegistry()
+        internal ModelDockerSectionBaseImageRegistry()
         {
         }
     }

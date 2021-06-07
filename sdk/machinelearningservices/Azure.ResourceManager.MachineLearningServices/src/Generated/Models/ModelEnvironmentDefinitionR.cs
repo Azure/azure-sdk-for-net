@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Settings for a R environment. </summary>
-    public partial class ModelEnvironmentDefinitionR : RSection
+    internal partial class ModelEnvironmentDefinitionR : RSection
     {
         /// <summary> Initializes a new instance of ModelEnvironmentDefinitionR. </summary>
-        public ModelEnvironmentDefinitionR()
+        internal ModelEnvironmentDefinitionR()
         {
         }
     }

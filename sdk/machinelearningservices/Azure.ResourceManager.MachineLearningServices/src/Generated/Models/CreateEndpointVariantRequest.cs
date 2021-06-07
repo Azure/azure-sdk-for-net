@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The Variant properties. </summary>
-    public partial class CreateEndpointVariantRequest : CreateServiceRequest
+    internal partial class CreateEndpointVariantRequest : CreateServiceRequest
     {
         /// <summary> Initializes a new instance of CreateEndpointVariantRequest. </summary>
-        public CreateEndpointVariantRequest()
+        internal CreateEndpointVariantRequest()
         {
             ComputeType = new ComputeEnvironmentType("Custom");
         }
 
         /// <summary> Is this the default variant. </summary>
-        public bool? IsDefault { get; set; }
+        public bool? IsDefault { get; }
         /// <summary> The amount of traffic variant receives. </summary>
-        public float? TrafficPercentile { get; set; }
+        public float? TrafficPercentile { get; }
         /// <summary> The type of the variant. </summary>
-        public VariantType? Type { get; set; }
+        public VariantType? Type { get; }
     }
 }

@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The RGitHubPackage. </summary>
-    public partial class RGitHubPackage
+    internal partial class RGitHubPackage
     {
         /// <summary> Initializes a new instance of RGitHubPackage. </summary>
-        public RGitHubPackage()
+        internal RGitHubPackage()
         {
         }
 
         /// <summary> Repository address in the format username/repo[/subdir][@ref|#pull]. </summary>
-        public string Repository { get; set; }
+        public string Repository { get; }
         /// <summary> Personal access token to install from a private repo. </summary>
-        public string AuthToken { get; set; }
+        public string AuthToken { get; }
     }
 }
