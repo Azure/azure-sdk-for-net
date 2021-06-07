@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -11,6 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class LogAnalyticsDataFeedSource : DataFeedSource
     {
+        private string _clientSecret;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LogAnalyticsDataFeedSource"/> class.
         /// </summary>
@@ -89,7 +92,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The client secret used for AAD authentication.
         /// </summary>
-        internal string ClientSecret { get; set; }
+        internal string ClientSecret
+        {
+            get => Volatile.Read(ref _clientSecret);
+            private set => Volatile.Write(ref _clientSecret, value);
+        }
 
         /// <summary>
         /// Updates the client secret.
