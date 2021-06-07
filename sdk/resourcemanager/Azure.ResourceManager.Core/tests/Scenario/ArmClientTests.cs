@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests.Scenario
 {
@@ -42,7 +40,7 @@ namespace Azure.ResourceManager.Core.Tests.Scenario
 
             foreach (GenericResourceOperations operations in genericResourceOperationsList)
             {
-                Assert.AreEqual(operations.Id, ids[0]);
+                Assert.AreEqual(ids[0], operations.Id.StringValue);
                 ids.RemoveAt(0);
             }
         }
@@ -51,14 +49,14 @@ namespace Azure.ResourceManager.Core.Tests.Scenario
         public void GetGenericResourcesOperationsTests()
         {
             string id = $"/providers/Microsoft.Compute/virtualMachines/myVm";
-            Assert.AreEqual(id, Client.GetGenericResourcesOperations(new TenantResourceIdentifier(id)).Id);
+            Assert.AreEqual(id, Client.GetGenericResourcesOperations(new TenantResourceIdentifier(id)).Id.StringValue);
         }
 
         [TestCase]
         public void GetGenericResourceOperationsSingleIDTests()
         {
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1/";
-            Assert.AreEqual(Client.GetGenericResourceOperations(id).Id, id);
+            Assert.AreEqual(id, Client.GetGenericResourceOperations(id).Id.StringValue);
         }
 
         [TestCase]
