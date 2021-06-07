@@ -1,18 +1,25 @@
 # Release History
 
-## 12.0.0-beta.9 (Unreleased)
+## 12.0.0 (2021-06-08)
 
+- Added `GenerateSasUri` methods to both `TableClient` and `TableServiceClient`.
 
 ## 12.0.0-beta.8 (2021-05-11)
 
 ### Breaking Changes
 
 - Eliminated the `TableTransactionalBatch` type and added the `TableTransactionAction` type.
-  - Submitting a batch transaction is now accomplished via the `TableClient.SubmitTransaction` or `TableClient.SubmitTransactionAsync` methods which accepts
+   - Submitting a batch transaction is now accomplished via the `TableClient.SubmitTransaction` or `TableClient.SubmitTransactionAsync` methods which accepts
     an `IEnumerable<TableTransactionAction>`.
 - `TableClient.SubmitTransaction` and `TableClient.SubmitTransactionAsync` now return `Response<IReadOnlyList<Response>>` rather than `TableBatchResponse`.
-  - `TableBatchResponse.GetResponseForEntity` is no longer necessary as the responses can now be correlated directly between the `Response<IReadOnlyList<Response>>`
+    - `TableBatchResponse.GetResponseForEntity` is no longer necessary as the responses can now be correlated directly between the `Response<IReadOnlyList<Response>>`
     and the list of `TableTransactionAction`s provided to the submit method.
+ - The following renames have occurred: 
+    - `TableServiceClient` methods `GetTables` and `GetTablesAsync` have been renamed to `Query` and `QueryAsync`
+    - `TableServiceClient` methods `GetAccessPolicy` and `GetAccessPolicyAsync` have been renamed to `GetAccessPolicies` and `GetAccessPoliciesAsync`
+    - `TableClientOptions` has been renamed to `TablesClientOptions`
+    - `RetentionPolicy` has been renamed to `TableRetentionPolicy`
+    - `SignedIdentifier` has been renamed to `TableSignedIdentifier`
     
 ### Changed
 - Failed batch transaction operations now throw `TableTransactionFailedException` which contains a `FailedTransactionActionIndex` property to indicate which 

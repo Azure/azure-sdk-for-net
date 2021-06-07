@@ -44,12 +44,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// will be used for TLS connection establishment</param>
         /// <param name="negotiateClientCertificate">Determines whether gateway
         /// requests client certificate</param>
-        public GatewayHostnameConfigurationContract(string id = default(string), string name = default(string), string type = default(string), string hostname = default(string), string certificateId = default(string), bool? negotiateClientCertificate = default(bool?))
+        /// <param name="tls10Enabled">Specifies if TLS 1.0 is
+        /// supported</param>
+        /// <param name="tls11Enabled">Specifies if TLS 1.1 is
+        /// supported</param>
+        /// <param name="http2Enabled">Specifies if HTTP/2.0 is
+        /// supported</param>
+        public GatewayHostnameConfigurationContract(string id = default(string), string name = default(string), string type = default(string), string hostname = default(string), string certificateId = default(string), bool? negotiateClientCertificate = default(bool?), bool? tls10Enabled = default(bool?), bool? tls11Enabled = default(bool?), bool? http2Enabled = default(bool?))
             : base(id, name, type)
         {
             Hostname = hostname;
             CertificateId = certificateId;
             NegotiateClientCertificate = negotiateClientCertificate;
+            Tls10Enabled = tls10Enabled;
+            Tls11Enabled = tls11Enabled;
+            Http2Enabled = http2Enabled;
             CustomInit();
         }
 
@@ -77,6 +86,24 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.negotiateClientCertificate")]
         public bool? NegotiateClientCertificate { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies if TLS 1.0 is supported
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tls10Enabled")]
+        public bool? Tls10Enabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies if TLS 1.1 is supported
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tls11Enabled")]
+        public bool? Tls11Enabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies if HTTP/2.0 is supported
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.http2Enabled")]
+        public bool? Http2Enabled { get; set; }
 
     }
 }

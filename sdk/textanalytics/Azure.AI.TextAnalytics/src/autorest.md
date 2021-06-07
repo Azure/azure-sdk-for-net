@@ -6,8 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-    -  .\swagger\ta3.1p5.json
+tag: release_3_1_preview.5
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/5e1ad2fb49b88b1a17a941228f5238aba74992a6/specification/cognitiveservices/data-plane/TextAnalytics/readme.md
 ```
 
 ### Make generated models internal by default
@@ -18,6 +19,29 @@ directive:
   where: $.definitions.*
   transform: >
     $["x-accessibility"] = "internal"
+```
+
+### Make the API version parameterized so we generate a multi-versioned API
+
+This should be fixed in the swagger, but we're working around it locally for now.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-parameterized-host"]
+  transform: >
+    $.hostTemplate = "{Endpoint}/text/analytics/{apiVersion}";
+    $.parameters.push({
+      "name": "apiVersion",
+      "description": "Text Analytics API version (for example: v3.0).",
+      "x-ms-parameter-location": "client",
+      "required": true,
+      "type": "string",
+      "enum": [
+        "v3.1"
+      ],
+      "in": "path",
+      "x-ms-skip-url-encoding": true
+    });
 ```
 
 ### Add nullable annotations

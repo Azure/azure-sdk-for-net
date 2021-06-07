@@ -77,11 +77,6 @@ namespace Azure.Storage.Blobs.Test
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
-            BlobProperties smallLengthProperties = new BlobProperties()
-            {
-                ContentLength = 100
-            };
-
             SetupDownload(blockClient, dataSource);
 
             PartitionedDownloader downloader = new PartitionedDownloader(
@@ -106,10 +101,6 @@ namespace Azure.Storage.Blobs.Test
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
-            BlobProperties smallLengthProperties = new BlobProperties()
-            {
-                ContentLength = 100
-            };
 
             SetupDownload(blockClient, dataSource);
 
@@ -135,11 +126,6 @@ namespace Azure.Storage.Blobs.Test
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
-            BlobProperties properties = new BlobProperties()
-            {
-                ContentLength = 100,
-                ETag = s_etag
-            };
 
             SetupDownload(blockClient, dataSource);
 
@@ -183,10 +169,6 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
-            BlobProperties smallLengthProperties = new BlobProperties()
-            {
-                ContentLength = 100
-            };
 
             if (_async)
             {

@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.3 (2021-05-14)
+
+### Changes
+
+- Dependency versions updated.
+
 ## 1.1.0-beta.3 (2021-05-11)
 
 ### Key Bug Fixes

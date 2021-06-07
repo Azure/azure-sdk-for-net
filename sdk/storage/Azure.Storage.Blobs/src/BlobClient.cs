@@ -1629,8 +1629,6 @@ namespace Azure.Storage.Blobs
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
-            var client = new BlockBlobClient(Uri, ClientConfiguration);
-
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
@@ -1710,11 +1708,24 @@ namespace Azure.Storage.Blobs
         }
         #endregion Upload
 
+        private BlockBlobClient _blockBlobClient;
+
+        private BlockBlobClient BlockBlobClient
+        {
+            get
+            {
+                if (_blockBlobClient == null)
+                {
+                    _blockBlobClient = new BlockBlobClient(Uri, ClientConfiguration);
+                }
+                return _blockBlobClient;
+            }
+        }
+
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => new BlockBlobClient(Uri, ClientConfiguration)
-                .GetPartitionedUploader(transferOptions, arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, arrayPool, operationName);
     }
 }

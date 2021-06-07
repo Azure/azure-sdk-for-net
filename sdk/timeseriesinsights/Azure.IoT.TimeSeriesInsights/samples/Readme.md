@@ -1,25 +1,5 @@
 # Introduction
 
-Azure Time Series Insights provides data exploration and telemetry tools to help you improve operational analysis. It's a fully managed analytics, storage, and visualization service where you can explore and analyze billions of Internet of Things (IoT) events simultaneously.
-
-Azure Time Series Insights gives you a global view of your data, so you can quickly validate your IoT solution and avoid costly downtime to mission-critical devices. It can help you discover hidden trends, spot anomalies, and conduct root-cause analysis in near real time.
-
-If you are new to Azure Time Series Insights and would like to learn more about the platform, please make sure you check out the Azure Time Series Insights official [documentation page][tsi_product_documentation].
-
-# Time Series Insights client library for .NET
-The Time Series Insights client library for .NET provides the following functionality:
-- Retrieving and being able to make changes to the Time Series Insights environment model settings, such as changing the model name or default type ID.
-- Retrieving and being able to add, update and remove Time Series instances.
-- Retrieving and being able to make changes to the Time Series Insights environment types, such as creating, updating and deleting Time Series types.
-- Retrieving and being able to make changes to the Time Series Insights hierarchies, such as creating, updating and deleting Time Series hierarchies.
-- Querying raw events, computed series and aggregate series
-
-[Source Code][tsi_client_src] | [Package (NuGet)][tsi_nuget_package] | [Product documentation][tsi_product_documentation] | [Samples][tsi_samples]
-
-# Key concepts
-
-## TimeSeriesInsightsClient
-
 A `TimeSeriesInsightsClient` is the primary interface for developers using the Time Series Insights client library. It provides both synchronous and asynchronous operations to perform operations on a Time Series Insights environment. The `TimeSeriesInsightsClient` exposes several properties that a developer will use to perform specific operations on a Time Series Insights environment. For example, `ModelSettings` is the property that a developer can use to perform operations on the model settings of the TSI environment. `Instances` can be used to perform operations on TSI instances. Other properties include `Types`, `Hierarchies` and `Query`.
 
 ## Creating TimeSeriesInsightsClient
@@ -62,6 +42,8 @@ A single Time Series ID value is composed of up to 3 string values that uniquely
 var instanceId =  new TimeSeriesId("Millennium", "Floor2", "2A01");
 ```
 
+> **Please note that this sample is set up to work best when the Time Series Insights ID key that is configured with your environment is not one of the default telemetry system properties, such as iothub-connection-device-id. The reason being is that this sample will generate random unique strings for each TSI ID key that you have set up for your TSI environment, and use these randomly generated strings when sending telemetry to IoT Hub. But since the iothub-connection-device-id is already a random identifier for a device, setting up your TSI environment with ID key as iothub-connection-device-id will not make the sample run as expected since TSI will create an instance per device. For this sample to mimic a more realistic TSI environment, use Building, Floor and Room as properties for your Time Series Insights IDs.**
+
 ## Time Series Insights Model Settings
 
 Use `ModelSettings` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to learn more about the environment model settings, such as name, default type ID, and the properties that define the Time Series ID during environment creation.
@@ -75,7 +57,7 @@ Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{get
 IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
 foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
 {
-    Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.Type}'.");
+    Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.PropertyType}'.");
 }
 ```
 
@@ -194,7 +176,7 @@ var timeSeriesIds = new List<TimeSeriesId>
     tsId,
 };
 
-Response<InstancesOperationResult[]> getByIdsResult = await instancesClient.GetAsync(timeSeriesIds);
+Response<InstancesOperationResult[]> getByIdsResult = await instancesClient.GetByIdAsync(timeSeriesIds);
 
 // The response of calling the API contains a list of instance or error objects corresponding by position to the array in the request.
 // Instance object is set when operation is successful and error object is set when operation is unsuccessful.
@@ -223,7 +205,7 @@ var instancesToDelete = new List<TimeSeriesId>
 };
 
 Response<TimeSeriesOperationError[]> deleteInstanceErrors = await instancesClient
-    .DeleteAsync(instancesToDelete);
+    .DeleteByIdAsync(instancesToDelete);
 
 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
 // array in the request. If the error object is set to null, this means the operation was a success.
@@ -251,7 +233,7 @@ var instanceIdsToGet = new List<TimeSeriesId>
     tsId,
 };
 
-Response<InstancesOperationResult[]> getInstancesByIdResult = await instancesClient.GetAsync(instanceIdsToGet);
+Response<InstancesOperationResult[]> getInstancesByIdResult = await instancesClient.GetByIdAsync(instanceIdsToGet);
 
 TimeSeriesInstance instanceResult = getInstancesByIdResult.Value[0].Instance;
 Console.WriteLine($"Retrieved Time Series Insights instance with Id '{instanceResult.TimeSeriesId}' and name '{instanceResult.Name}'.");
@@ -559,7 +541,7 @@ This code snippet demonstrates querying for raw events with using a time span in
 ```C# Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
 Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
 
-QueryAnalyzer humidityEventsQuery = queriesClient.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
+TimeSeriesQueryAnalyzer humidityEventsQuery = queriesClient.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
 await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
 {
     TimeSeriesValue humidityValue = point.GetValue("Humidity");
@@ -592,7 +574,7 @@ Console.WriteLine("\n\nQuery for raw temperature events over the past 10 minutes
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
 
-QueryAnalyzer temperatureEventsQuery = queriesClient.CreateEventsQuery(tsId, startTime, endTime);
+TimeSeriesQueryAnalyzer temperatureEventsQuery = queriesClient.CreateEventsQuery(tsId, startTime, endTime);
 await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync())
 {
     TimeSeriesValue temperatureValue = point.GetValue("Temperature");
@@ -625,7 +607,7 @@ Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit o
 
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
-QueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
+TimeSeriesQueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
     tsId,
     startTime,
     endTime);
@@ -656,7 +638,7 @@ var querySeriesRequestOptions = new QuerySeriesRequestOptions();
 querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
 querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
 
-QueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
+TimeSeriesQueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
     tsId,
     TimeSpan.FromMinutes(10),
     null,
@@ -689,7 +671,7 @@ var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
 aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
 aggregateSeriesRequestOptions.ProjectedVariableNames.Add(countVariableName);
 
-QueryAnalyzer query = queriesClient.CreateAggregateSeriesQuery(
+TimeSeriesQueryAnalyzer query = queriesClient.CreateAggregateSeriesQuery(
     tsId,
     startTime,
     endTime,
@@ -704,10 +686,6 @@ await foreach (TimeSeriesPoint point in query.GetResultsAsync())
 ```
 
 <!-- LINKS -->
-[tsi_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src
-[tsi_nuget_package]: https://www.bing.com
-[tsi_product_documentation]: https://docs.microsoft.com/azure/time-series-insights/
-[tsi_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples/Readme.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
 [tsi_instances_learn_more]: https://docs.microsoft.com/azure/time-series-insights/concepts-model-overview#time-series-model-instances
 [tsi_id_learn_more]: https://docs.microsoft.com/azure/time-series-insights/how-to-select-tsid

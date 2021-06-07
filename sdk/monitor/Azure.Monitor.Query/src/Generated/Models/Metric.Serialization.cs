@@ -39,7 +39,7 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("unit"))
                 {
-                    unit = property.Value.GetString().ToMetricUnit();
+                    unit = new MetricUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("timeseries"))

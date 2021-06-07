@@ -390,11 +390,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
-
-            AnomalyDetectionConfiguration updatedConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+            // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
             Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
@@ -455,6 +453,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateDetectionConfigurationWithMinimumSetupAndNewInstance()
         {
             // Set required parameters of the configuration to be created.
@@ -511,11 +510,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
-
-            AnomalyDetectionConfiguration updatedConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+            // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
             Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
@@ -576,6 +573,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21509")]
         public async Task UpdateDetectionConfigurationWithEveryMemberAndGetInstance()
         {
             // Set parameters of the configuration to be created.
@@ -650,11 +648,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.SeriesDetectionConditions.Clear();
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
-
-            AnomalyDetectionConfiguration updatedConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+            // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
             Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
@@ -718,6 +714,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateDetectionConfigurationWithEveryMemberAndNewInstance()
         {
             // Set parameters of the configuration to be created.
@@ -795,11 +792,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.SeriesDetectionConditions.Clear();
 
-            await adminClient.UpdateDetectionConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
-
-            AnomalyDetectionConfiguration updatedConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
+            // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
             Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));

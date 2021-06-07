@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
@@ -18,18 +19,19 @@ namespace Azure.Monitor.Query.Tests
         {
         }
 
-        private MetricsClient CreateClient()
+        private MetricsQueryClient CreateClient()
         {
-            return InstrumentClient(new MetricsClient(
+            return InstrumentClient(new MetricsQueryClient(
+                TestEnvironment.MetricsEndpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MetricsClientOptions())
+                InstrumentClientOptions(new MetricsQueryClientOptions())
             ));
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            _testData = new MetricsTestData(this);
+            _testData = new MetricsTestData(TestEnvironment, Recording.UtcNow);
             await _testData.InitializeAsync();
         }
 
@@ -52,16 +54,17 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions()
+                new MetricsQueryOptions()
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, duration)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(duration.Minutes, timeSeriesData.Count);
             // Average is queried by default
             Assert.True(timeSeriesData.All(d=> d.Average != null));
+            Assert.AreEqual(new DateTimeRange(_testData.StartTime, _testData.StartTime + duration), results.Value.TimeSpan);
         }
 
         [RecordedTest]
@@ -72,7 +75,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)),
@@ -86,7 +89,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             // Average is queried by default
             Assert.True(timeSeriesData.All(d=>
@@ -105,13 +108,13 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -125,13 +128,13 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.Duration)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -145,13 +148,13 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.Duration, _testData.EndTime)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(_testData.Duration.Minutes, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -165,12 +168,12 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.Greater(timeSeriesData.Count, 0);
         }
 
@@ -182,14 +185,14 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[]{ _testData.MetricName },
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
                     Interval = TimeSpan.FromMinutes(5)
                 });
 
-            var timeSeriesData = results.Value.Metrics[0].Timeseries[0].Data;
+            var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
             Assert.AreEqual(_testData.Duration.Minutes / 5, timeSeriesData.Count);
             Assert.True(timeSeriesData.All(d=>
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
@@ -203,7 +206,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[] {_testData.MetricName},
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
@@ -214,7 +217,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeries = results.Value.Metrics[0].Timeseries[0];
+            var timeSeries = results.Value.Metrics[0].TimeSeries[0];
 
             Assert.AreEqual(_testData.Name1, timeSeries.Metadata["name"]);
         }
@@ -226,7 +229,7 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.QueryAsync(
                 TestEnvironment.MetricsResource,
                 new[] {_testData.MetricName},
-                new MetricQueryOptions
+                new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
                     TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
@@ -238,7 +241,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            Assert.AreEqual(1, results.Value.Metrics[0].Timeseries.Count);
+            Assert.AreEqual(1, results.Value.Metrics[0].TimeSeries.Count);
         }
 
         [RecordedTest]

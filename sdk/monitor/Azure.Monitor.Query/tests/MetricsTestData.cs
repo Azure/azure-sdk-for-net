@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 
@@ -21,13 +22,13 @@ namespace Azure.Monitor.Query.Tests
         public string MetricNamespace { get; }
         public DateTimeOffset EndTime => StartTime.Add(Duration);
 
-        public MetricsTestData(RecordedTestBase<MonitorQueryClientTestEnvironment> test)
+        public MetricsTestData(MonitorQueryClientTestEnvironment environment, DateTimeOffset dateTimeOffset)
         {
-            _testEnvironment = test.TestEnvironment;
+            _testEnvironment = environment;
 
-            var recordingUtcNow = test.Recording.UtcNow;
+            var recordingUtcNow = dateTimeOffset;
             // Snap to 15 minute intervals
-            StartTime = recordingUtcNow.AddTicks(- Duration.Ticks - recordingUtcNow.Ticks % Duration.Ticks);
+            StartTime = recordingUtcNow.AddTicks(- (Duration.Ticks + recordingUtcNow.Ticks % Duration.Ticks));
 
             MetricName = "CowsHappiness";
             MetricNamespace = "Cows";
@@ -41,19 +42,27 @@ namespace Azure.Monitor.Query.Tests
             }
 
             _initialized = true;
-            var metricClient = new MetricsClient(_testEnvironment.Credential);
+            var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
+
+            await SendData();
 
             while (!await MetricsPropagated(metricClient))
             {
-                await SendData();
-
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
         }
 
         private async Task SendData()
         {
-            var senderClient = new MetricsSenderClient(_testEnvironment.Location, _testEnvironment.MetricsIngestionEndpoint, _testEnvironment.MetricsResource, _testEnvironment.Credential, new SenderClientOptions());
+            var senderClient = new MetricsSenderClient(
+                _testEnvironment.Location,
+                _testEnvironment.MetricsIngestionEndpoint,
+                _testEnvironment.MetricsResource,
+                _testEnvironment.Credential,
+                new SenderClientOptions()
+                {
+                    Diagnostics = { IsLoggingContentEnabled = true }
+                });
 
             var names = new[] {Name1, Name2};
 
@@ -73,17 +82,17 @@ namespace Azure.Monitor.Query.Tests
             }
         }
 
-        private async Task<bool> MetricsPropagated(MetricsClient metricClient)
+        private async Task<bool> MetricsPropagated(MetricsQueryClient metricQueryClient)
         {
-            var nsExists =  (await metricClient.GetMetricNamespacesAsync(_testEnvironment.MetricsResource)).Value.Any(ns => ns.Name == MetricNamespace);
+            var nsExists =  (await metricQueryClient.GetMetricNamespacesAsync(_testEnvironment.MetricsResource)).Value.Any(ns => ns.Name == MetricNamespace);
 
             if (!nsExists)
             {
                 return false;
             }
 
-            var metrics = await metricClient.QueryAsync(_testEnvironment.MetricsResource, new[] {MetricName},
-                new MetricQueryOptions()
+            var metrics = await metricQueryClient.QueryAsync(_testEnvironment.MetricsResource, new[] {MetricName},
+                new MetricsQueryOptions()
                 {
                     TimeSpan = new DateTimeRange(StartTime, Duration),
                     MetricNamespace = MetricNamespace,
@@ -94,7 +103,7 @@ namespace Azure.Monitor.Query.Tests
                     }
                 });
 
-            var timeSeries = metrics.Value.Metrics[0].Timeseries.FirstOrDefault();
+            var timeSeries = metrics.Value.Metrics[0].TimeSeries.FirstOrDefault();
             if (timeSeries == null)
             {
                 return false;

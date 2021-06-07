@@ -10,9 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
     public class RecognizePiiEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizePiiEntitiesTests(bool isAsync) : base(isAsync) { }
+        public RecognizePiiEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private const string EnglishDocument1 = "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft";
         private const string EnglishDocument2 = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check";
@@ -39,7 +43,8 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             "859-98-0987",
             "800-102-1100",
-            "Microsoft"
+            "Microsoft",
+            "developer"
         };
 
         private static readonly List<string> s_document2ExpectedOutput = new List<string>
@@ -80,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "I work at Microsoft and my email is atest@microsoft.com";
 
-            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation } );
+            PiiEntityCollection entities = await client.RecognizePiiEntitiesAsync(document, "en", new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomain.ProtectedHealthInformation } );
 
             ValidateInDocumenResult(entities, new List<string>() { "atest@microsoft.com", "Microsoft" });
         }
@@ -96,9 +101,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber, PiiEntityCategory.Organization } });
             ValidateInDocumenResult(entities, new List<string>() { "800-102-1100", "Microsoft" });
-
-            entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.PhoneNumber, PiiEntityCategory.Organization, PiiEntityCategory.USSocialSecurityNumber } });
-            ValidateInDocumenResult(entities, s_document1ExpectedOutput);
 
             entities = await client.RecognizePiiEntitiesAsync(EnglishDocument1, "en", new RecognizePiiEntitiesOptions() { CategoriesFilter = { PiiEntityCategory.ABARoutingNumber } });
             Assert.AreEqual(0, entities.Count);
@@ -208,11 +210,11 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchDocuments, new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomainType.ProtectedHealthInformation });
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchDocuments, new RecognizePiiEntitiesOptions() { DomainFilter = PiiEntityDomain.ProtectedHealthInformation });
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
-                { "1", s_document1ExpectedOutput },
+                { "1", new List<string>() { "800-102-1100", "800-102-1100", "Microsoft" } },
                 { "2", s_document2ExpectedOutput },
             };
 
@@ -243,7 +245,6 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (PiiEntity entity in entities)
             {
                 Assert.That(entity.Text, Is.Not.Null.And.Not.Empty);
-                Assert.IsTrue(minimumExpectedOutput.Contains(entity.Text, StringComparer.OrdinalIgnoreCase));
                 Assert.IsNotNull(entity.Category);
                 Assert.GreaterOrEqual(entity.ConfidenceScore, 0.0);
                 Assert.GreaterOrEqual(entity.Offset, 0);
@@ -253,6 +254,10 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.IsNotEmpty(entity.SubCategory);
                 }
+            }
+            foreach (var text in minimumExpectedOutput)
+            {
+                Assert.IsTrue(entities.Any(e => e.Text == text));
             }
         }
 
