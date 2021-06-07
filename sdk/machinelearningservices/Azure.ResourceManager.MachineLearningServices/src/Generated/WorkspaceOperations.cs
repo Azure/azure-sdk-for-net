@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal WorkspacesRestOperations RestClient { get; }
+        internal PrivateLinkResourcesRestOperations PrivateLinkResourcesRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="WorkspaceOperations"/> class for mocking. </summary>
         protected WorkspaceOperations()
@@ -341,13 +342,13 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Gets the private link resources that need to be created for a workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkResourceListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResourceListResult>> ListPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.List");
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListPrivateLinkResources");
             scope.Start();
             try
             {
-                return await RestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return await PrivateLinkResourcesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -358,13 +359,13 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Gets the private link resources that need to be created for a workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkResourceListResult> List(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkResourceListResult> ListPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.List");
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListPrivateLinkResources");
             scope.Start();
             try
             {
-                return RestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return PrivateLinkResourcesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken);
             }
             catch (Exception e)
             {
