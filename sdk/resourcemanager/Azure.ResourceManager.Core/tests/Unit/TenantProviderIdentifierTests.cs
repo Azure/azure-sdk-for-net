@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Core.Tests
             y = z;
 
             Assert.IsNotNull(z.Parent);
-            Assert.AreEqual(null, z.Parent.Name);
+            Assert.AreEqual(z.Parent.Name, null);
 
             if (resourceProviderID is null)
             {

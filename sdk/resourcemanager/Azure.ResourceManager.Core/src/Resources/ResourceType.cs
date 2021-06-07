@@ -233,6 +233,23 @@ namespace Azure.ResourceManager.Core
                 Namespace = "Microsoft.Resources";
             }
 
+            //// Handle resource types (Micsrsoft.Compute/virtualMachines, Microsoft.Network/virtualNetworks/subnets)
+            //// Type
+            //if (parts[0].Contains('.'))
+            //{
+            //    // it is a full type name
+            //    Namespace = parts[0];
+            //    Type = string.Join("/", parts.Skip(1).Take(parts.Count - 1));
+            //}
+
+            //// Check if ResourceIdentifier
+            //else
+            //{
+            //    ResourceIdentifier id = resourceIdOrType;
+            //    Type = id.ResourceType;
+            //    Namespace = ;
+            //}
+
             // Handle resource identifiers from RPs (they have the /providers path segment)
             if (parts.Contains(KnownKeys.ProviderNamespace) && !KnownKeys.ProviderNamespace.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase))
             {
