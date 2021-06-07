@@ -14,38 +14,38 @@ namespace Azure.Communication.CallingServer.Tests
 {
     public class CallingServerClientsTests
     {
-        [TestCaseSource(nameof(TestData_CreateCall))]
-        public async Task CreateCallAsyncOverload_Passes(CommunicationIdentifier expectedSource, IEnumerable<CommunicationIdentifier> expectedTargets, CreateCallOptions expectedOptions)
-        {
-            Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
-            Response<CreateCallResponse>? expectedResponse = default;
-            CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.CreateCallAsync(It.IsAny<CommunicationIdentifier>(), It.IsAny<IEnumerable<CommunicationIdentifier>>(), It.IsAny<CreateCallOptions>(), It.IsAny<CancellationToken>()));
+        //[TestCaseSource(nameof(TestData_CreateCall))]
+        //public async Task CreateCallAsyncOverload_Passes(CommunicationIdentifier expectedSource, IEnumerable<CommunicationIdentifier> expectedTargets, CreateCallOptions expectedOptions)
+        //{
+        //    Mock<CallConnection> mockClient= new() { CallBase = true };
+        //    Response<CreateCallResponse>? expectedResponse = default;
+        //    CancellationToken cancellationToken = new CancellationTokenSource().Token;
+        //    var callExpression = BuildExpression(x => x.CreateCallAsync(It.IsAny<CommunicationIdentifier>(), It.IsAny<IEnumerable<CommunicationIdentifier>>(), It.IsAny<CreateCallOptions>(), It.IsAny<CancellationToken>()));
 
-            mockClient
-                .Setup(callExpression)
-                .ReturnsAsync((CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions options, CancellationToken token) =>
-                {
-                    Assert.AreEqual(expectedSource, source);
-                    Assert.AreEqual(expectedTargets, targets);
-                    Assert.AreEqual(expectedOptions, options);
-                    Assert.AreEqual(cancellationToken, token);
-                    return expectedResponse = new Mock<Response<CreateCallResponse>>().Object;
-                });
+        //    mockClient
+        //        .Setup(callExpression)
+        //        .ReturnsAsync((CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, CreateCallOptions options, CancellationToken token) =>
+        //        {
+        //            Assert.AreEqual(expectedSource, source);
+        //            Assert.AreEqual(expectedTargets, targets);
+        //            Assert.AreEqual(expectedOptions, options);
+        //            Assert.AreEqual(cancellationToken, token);
+        //            return expectedResponse = new Mock<Response<CreateCallResponse>>().Object;
+        //        });
 
-            Response<CreateCallResponse> actualResponse = await mockClient.Object.CreateCallAsync(expectedSource, expectedTargets, expectedOptions, cancellationToken);
+        //    Response<CreateCallResponse> actualResponse = await mockClient.Object.CreateCallAsync(expectedSource, expectedTargets, expectedOptions, cancellationToken);
 
-            mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
-        }
+        //    mockClient.Verify(callExpression, Times.Once());
+        //    Assert.AreEqual(expectedResponse, actualResponse);
+        //}
 
         [TestCaseSource(nameof(TestData_CommonOperationWithCallId))]
         public async Task DeleteCallAsyncOverload_Passes(string expectedCallLegId)
         {
-            Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
+            Mock<CallConnection> mockClient = new Mock<CallConnection>() { CallBase = true };
             Response? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.DeleteCallAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.DeleteAsync(It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallingServer.Tests
                     return expectedResponse = new Mock<Response>().Object;
                 });
 
-            Response actualResponse = await mockClient.Object.DeleteCallAsync(expectedCallLegId, cancellationToken);
+            Response actualResponse = await mockClient.Object.DeleteAsync(cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -65,10 +65,10 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_CommonOperationWithCallId))]
         public async Task HangupCallAsyncOverload_Passes(string expectedCallLegId)
         {
-            Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
+            Mock<CallConnection> mockClient = new Mock<CallConnection>() { CallBase = true };
             Response? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.HangupCallAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.HangupAsync(It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
@@ -79,31 +79,30 @@ namespace Azure.Communication.CallingServer.Tests
                     return expectedResponse = new Mock<Response>().Object;
                 });
 
-            Response actualResponse = await mockClient.Object.HangupCallAsync(expectedCallLegId, cancellationToken);
+            Response actualResponse = await mockClient.Object.HangupAsync(cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
         }
 
         [TestCaseSource(nameof(TestData_CancelAllMediaOperations))]
-        public async Task CancelMediaOperationsAsyncOverload_Passes(string expectedCallLegId, string expectedOperationContext)
+        public async Task CancelMediaOperationsAsyncOverload_Passes(string expectedOperationContext)
         {
-            Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
+            Mock<CallConnection> mockClient = new Mock<CallConnection>() { CallBase = true };
             Response<CancelAllMediaOperationsResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.CancelAllMediaOperationsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.CancelAllMediaOperationsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
-                .ReturnsAsync((string callLegId, string operationContext, CancellationToken token) =>
+                .ReturnsAsync((string operationContext, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedCallLegId, callLegId);
                     Assert.AreEqual(expectedOperationContext, operationContext);
                     Assert.AreEqual(cancellationToken, token);
                     return expectedResponse = new Mock<Response<CancelAllMediaOperationsResponse>>().Object;
                 });
 
-            Response<CancelAllMediaOperationsResponse> actualResponse = await mockClient.Object.CancelAllMediaOperationsAsync(expectedCallLegId, expectedOperationContext, cancellationToken);
+            Response<CancelAllMediaOperationsResponse> actualResponse = await mockClient.Object.CancelAllMediaOperationsAsync(expectedOperationContext, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -112,10 +111,10 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_PlayAudioWithRequest))]
         public async Task PlayAudioAsyncOverload_Passes(string expectedCallLegId, PlayAudioOptions expectedRequest)
         {
-            Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
+            Mock<CallConnection> mockClient = new Mock<CallConnection>() { CallBase = true };
             Response<PlayAudioResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<string>(), It.IsAny<PlayAudioOptions>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<PlayAudioOptions>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
@@ -127,7 +126,7 @@ namespace Azure.Communication.CallingServer.Tests
                     return expectedResponse = new Mock<Response<PlayAudioResponse>>().Object;
                 });
 
-            Response<PlayAudioResponse> actualResponse = await mockClient.Object.PlayAudioAsync(expectedCallLegId, expectedRequest, cancellationToken);
+            Response<PlayAudioResponse> actualResponse = await mockClient.Object.PlayAudioAsync(expectedRequest, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -136,10 +135,10 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_PlayAudioWithoutRequest))]
         public async Task PlayAudioAsyncOverload_Passes(string expectedCallLegId, Uri expectedAudioFileUri, bool expectedLoop, string expectedAudioFileId, Uri expectedCallbackUri, string expectedOperationContext)
         {
-            Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
+            Mock<CallConnection> mockClient = new Mock<CallConnection>() { CallBase = true };
             Response<PlayAudioResponse>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.PlayAudioAsync(It.IsAny<Uri>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
@@ -155,7 +154,7 @@ namespace Azure.Communication.CallingServer.Tests
                     return expectedResponse = new Mock<Response<PlayAudioResponse>>().Object;
                 });
 
-            Response<PlayAudioResponse> actualResponse = await mockClient.Object.PlayAudioAsync(expectedCallLegId, expectedAudioFileUri, expectedLoop, expectedAudioFileId, expectedCallbackUri, expectedOperationContext, cancellationToken);
+            Response<PlayAudioResponse> actualResponse = await mockClient.Object.PlayAudioAsync(expectedAudioFileUri, expectedLoop, expectedAudioFileId, expectedCallbackUri, expectedOperationContext, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -164,10 +163,10 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_InviteParticipants))]
         public async Task InviteParticipantsAsyncOverload_Passes(string expectedCallLegId, CommunicationIdentifier expectedParticipant, string expectedAlternateCallerId, string expectedOperationContext)
         {
-            Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
+            Mock<CallConnection> mockClient = new Mock<CallConnection>() { CallBase = true };
             Response? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.AddParticipantAsync(It.IsAny<string>(), It.IsAny<CommunicationIdentifier>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.AddParticipantAsync(It.IsAny<CommunicationIdentifier>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
@@ -181,7 +180,7 @@ namespace Azure.Communication.CallingServer.Tests
                     return expectedResponse = new Mock<Response>().Object;
                 });
 
-            Response actualResponse = await mockClient.Object.AddParticipantAsync(expectedCallLegId, expectedParticipant, expectedOperationContext, expectedAlternateCallerId, cancellationToken);
+            Response actualResponse = await mockClient.Object.AddParticipantAsync(expectedParticipant, expectedOperationContext, expectedAlternateCallerId, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -190,10 +189,10 @@ namespace Azure.Communication.CallingServer.Tests
         [TestCaseSource(nameof(TestData_RemoveParticipant))]
         public async Task RemoveParticipantAsyncOverload_Passes(string expectedCallLegId, string expectedParticipantId)
         {
-            Mock<CallClient> mockClient = new Mock<CallClient>() { CallBase = true };
+            var mockClient = new Mock<CallConnection>() { CallBase = true };
             Response? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            var callExpression = BuildExpression(x => x.RemoveParticipantAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
+            var callExpression = BuildExpression(x => x.RemoveParticipantAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
             mockClient
                 .Setup(callExpression)
@@ -205,7 +204,7 @@ namespace Azure.Communication.CallingServer.Tests
                     return expectedResponse = new Mock<Response>().Object;
                 });
 
-            Response actualResponse = await mockClient.Object.RemoveParticipantAsync(expectedCallLegId, expectedParticipantId, cancellationToken);
+            Response actualResponse = await mockClient.Object.RemoveParticipantAsync(expectedParticipantId, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -300,7 +299,7 @@ namespace Azure.Communication.CallingServer.Tests
             };
         }
 
-        private static Expression<Func<CallClient, TResult>> BuildExpression<TResult>(Expression<Func<CallClient, TResult>> expression)
+        private static Expression<Func<CallConnection, TResult>> BuildExpression<TResult>(Expression<Func<CallConnection, TResult>> expression)
             => expression;
     }
 }

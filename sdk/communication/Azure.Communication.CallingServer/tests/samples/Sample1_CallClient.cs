@@ -37,10 +37,10 @@ namespace Azure.Communication.CallingServer.Tests
                        EventSubscriptionType.DtmfReceived
                    });
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallOptions
-            CallClient callClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient client = CreateInstrumentedCallingServerClient();
             Console.WriteLine("Performing CreateCall operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCallAsync
-            CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
+            CallConnection createCallResponse = await client.CreateCallConnectionAsync(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
                 //@@ options: createCallOption // The options for creating a call.
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer.Tests
                 /*@@*/ targets: targets,
                 /*@@*/ options: createCallOption
                 );
-            Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
+            Console.WriteLine($"Call Leg id: {createCallResponse.CallConnectionId}");
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallAsync
         }
 
@@ -67,10 +67,10 @@ namespace Azure.Communication.CallingServer.Tests
                        EventSubscriptionType.ParticipantsUpdated,
                        EventSubscriptionType.DtmfReceived
                    });
-            CallClient callClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient callClient = CreateInstrumentedCallingServerClient();
             Console.WriteLine("Performing CreateCall operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCall
-            CreateCallResponse createCallResponse = callClient.CreateCall(
+            CallConnection callConnection = callClient.CreateCallConnection(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
                 //@@ options: createCallOption // The options for creating a call.
@@ -78,7 +78,7 @@ namespace Azure.Communication.CallingServer.Tests
                 /*@@*/ targets: targets,
                 /*@@*/ options: createCallOption
                 );
-            Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
+            Console.WriteLine($"Call Leg id: {callConnection.CallConnectionId}");
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCall
         }
     }

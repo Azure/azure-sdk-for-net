@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of CallLegStateChangedEvent. </summary>
         /// <param name="conversationId"> The conversation.id. </param>
         /// <param name="callLegId"> The call leg.id. </param>
-        /// <param name="callState"> The call state. </param>
+        /// <param name="callState"> The state of the call. </param>
         internal CallLegStateChangedEvent(string conversationId, string callLegId, CallState? callState)
         {
             ConversationId = conversationId;
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
         public string ConversationId { get; set; }
         /// <summary> The call leg.id. </summary>
         public string CallLegId { get; set; }
-        /// <summary> The call state. </summary>
+        /// <summary> The state of the call. </summary>
         public CallState? CallState { get; set; }
     }
 }

@@ -27,13 +27,13 @@ namespace Azure.Communication.CallingServer.Tests
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         /// <summary>
-        /// Creates a <see cref="CallClient" />
+        /// Creates a <see cref="CallConnection" />
         /// </summary>
-        /// <returns>The instrumented <see cref="CallClient" />.</returns>
-        protected CallClient CreateInstrumentedCallingServerClient()
+        /// <returns>The instrumented <see cref="CallConnection" />.</returns>
+        protected CallingServerClient CreateInstrumentedCallingServerClient()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
-            CallClient client = new CallClient(connectionString, CreateServerCallingClientOptions());
+            CallingServerClient client = new CallingServerClient(connectionString, CreateServerCallingClientOptions());
 
             #region Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
             //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
@@ -44,10 +44,10 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         // Todo: add CorrelationVectorLogs
-        private CallClientOptions CreateServerCallingClientOptions()
+        private CallingServerClientOptions CreateServerCallingClientOptions()
         {
-            CallClientOptions callClientOptions = new CallClientOptions();
-            return InstrumentClientOptions(callClientOptions);
+            var callingServerClientOptions = new CallingServerClientOptions();
+            return InstrumentClientOptions(callingServerClientOptions);
         }
     }
 }

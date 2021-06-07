@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The call state. </summary>
+    /// <summary> The state of the call. </summary>
     public readonly partial struct CallState : IEquatable<CallState>
     {
         private readonly string _value;

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Class to represent roster update. </summary>
+    /// <summary> The participant update event. </summary>
     internal partial class ParticipantsUpdatedEventInternal
     {
         /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>

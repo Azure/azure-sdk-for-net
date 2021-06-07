@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Communication.Chat;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> Model factory for read-only models. </summary>
@@ -16,6 +19,19 @@ namespace Azure.Communication.CallingServer
         public static CreateCallResponse CreateCallResponse(string callLegId = default)
         {
             return new CreateCallResponse(callLegId);
+        }
+
+        /// <summary> Initializes new instance of CallingServerError class. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> Further details about specific errors that led to this error. </param>
+        /// <param name="innerError"> The inner error if any. </param>
+        /// <returns> A new <see cref="Chat.CallingServerError"/> instance for mocking. </returns>
+        public static CallingServerError CallingServerError(string code = default, string message = default, string target = default, IReadOnlyList<CallingServerError> details = default, CallingServerError innerError = default)
+        {
+            details ??= new List<CallingServerError>();
+            return new CallingServerError(code, message, target, details, innerError);
         }
 
         /// <summary> Initializes new instance of PlayAudioResponse class. </summary>
@@ -62,14 +78,6 @@ namespace Azure.Communication.CallingServer
             return new CancelAllMediaOperationsResponse(id, status, operationContext, resultInfo);
         }
 
-        /// <summary> Initializes new instance of JoinCallResponse class. </summary>
-        /// <param name="callLegId"> Call leg id of the call. </param>
-        /// <returns> A new <see cref="CallingServer.JoinCallResponse"/> instance for mocking. </returns>
-        public static JoinCallResponse JoinCallResponse(string callLegId = default)
-        {
-            return new JoinCallResponse(callLegId);
-        }
-
         /// <summary> Initializes new instance of StartCallRecordingResponse class. </summary>
         /// <param name="recordingId"> The recording id of the started recording. </param>
         /// <returns> A new <see cref="CallingServer.StartCallRecordingResponse"/> instance for mocking. </returns>
@@ -84,6 +92,14 @@ namespace Azure.Communication.CallingServer
         public static GetCallRecordingStateResponse GetCallRecordingStateResponse(CallRecordingState? recordingState = default)
         {
             return new GetCallRecordingStateResponse(recordingState);
+        }
+
+        /// <summary> Initializes new instance of JoinCallResponse class. </summary>
+        /// <param name="callLegId"> Call leg id of the call. </param>
+        /// <returns> A new <see cref="CallingServer.JoinCallResponse"/> instance for mocking. </returns>
+        public static JoinCallResponse JoinCallResponse(string callLegId = default)
+        {
+            return new JoinCallResponse(callLegId);
         }
     }
 }
