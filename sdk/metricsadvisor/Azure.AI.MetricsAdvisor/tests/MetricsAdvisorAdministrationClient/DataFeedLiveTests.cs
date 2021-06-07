@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string DataSourceTemplate = "template";
         private const string DataSourceUsername = "username";
 
-        public DataFeedLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public DataFeedLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
