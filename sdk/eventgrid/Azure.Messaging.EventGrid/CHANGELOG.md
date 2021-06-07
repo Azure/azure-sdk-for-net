@@ -4,21 +4,21 @@
 
 ### New Features
 * Added the following new system events:
-  - FarmBeatsApplicationDataChangedEventData
-  - FarmBeatsBoundaryChangedEventData
-  - FarmBeatsCropChangedEventData
-  - FarmBeatsCropVarietyChangedEventData
-  - FarmBeatsFarmChangedEventData
-  - FarmBeatsFarmerChangedEventData
-  - FarmBeatsFarmOperationDataIngestionJobStatusChangedEventData 
-  - FarmBeatsFieldChangedEventData
-  - FarmBeatsHarvestDataChangedEventData
-  - FarmBeatsPlantingDataChangedEventData
-  - FarmBeatsSatelliteDataIngestionJobStatusChangedEventData
-  - FarmBeatsSeasonalFieldChangedEventData
-  - FarmBeatsSeasonChangedEventData
-  - FarmBeatsTillageDataChangedEventData
-  - FarmBeatsWeatherDataIngestionJobStatusChangedEventData
+  - AgriFoodFarmingApplicationDataChangedEventData
+  - AgriFoodFarmingBoundaryChangedEventData
+  - AgriFoodFarmingCropChangedEventData
+  - AgriFoodFarmingCropVarietyChangedEventData
+  - AgriFoodFarmingFarmChangedEventData
+  - AgriFoodFarmingFarmerChangedEventData
+  - AgriFoodFarmingFarmOperationDataIngestionJobStatusChangedEventData 
+  - AgriFoodFarmingFieldChangedEventData
+  - AgriFoodFarmingHarvestDataChangedEventData
+  - AgriFoodFarmingPlantingDataChangedEventData
+  - AgriFoodFarmingSatelliteDataIngestionJobStatusChangedEventData
+  - AgriFoodFarmingSeasonalFieldChangedEventData
+  - AgriFoodFarmingSeasonChangedEventData
+  - AgriFoodFarmingTillageDataChangedEventData
+  - AgriFoodFarmingWeatherDataIngestionJobStatusChangedEventData
   - StorageBlobInventoryPolicyCompletedEventData
     
 * Updated existing system events:
