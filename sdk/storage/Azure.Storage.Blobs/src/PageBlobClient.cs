@@ -87,10 +87,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(string connectionString, string blobContainerName, string blobName)
             : base(connectionString, blobContainerName, blobName)
         {
-            _pageBlobRestClient = BuildPageBlobRestClient(
-                connectionString,
-                blobContainerName,
-                blobName);
+            _pageBlobRestClient = BuildPageBlobRestClient(_uri);
         }
 
         /// <summary>
@@ -120,6 +117,7 @@ namespace Azure.Storage.Blobs.Specialized
         public PageBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
+            _pageBlobRestClient = BuildPageBlobRestClient(_uri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -251,35 +249,12 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
-        private PageBlobRestClient BuildPageBlobRestClient(
-            string connectionString,
-            string blobContainerName,
-            string blobName)
+        private PageBlobRestClient BuildPageBlobRestClient(Uri blobUri)
         {
-            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return BuildPageBlobRestClient(uriBuilder);
-        }
-
-        private PageBlobRestClient BuildPageBlobRestClient(Uri uri)
-            => BuildPageBlobRestClient(new BlobUriBuilder(uri));
-
-        private PageBlobRestClient BuildPageBlobRestClient(BlobUriBuilder uriBuilder)
-        {
-            string containerName = uriBuilder.BlobContainerName;
-            string blobName = uriBuilder.BlobName;
-            uriBuilder.BlobContainerName = null;
-            uriBuilder.BlobName = null;
             return new PageBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToUri().ToString(),
-                containerName: containerName,
-                blob: blobName.EscapePath(),
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors

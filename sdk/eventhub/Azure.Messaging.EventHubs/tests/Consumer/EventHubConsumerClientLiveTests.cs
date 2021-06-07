@@ -106,6 +106,40 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [TestCase(EventHubsTransportType.AmqpTcp)]
+        [TestCase(EventHubsTransportType.AmqpWebSockets)]
+        public async Task ConsumerWithCustomBufferSizesCanRead(EventHubsTransportType transportType)
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                using var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var options = new EventHubConsumerClientOptions
+                {
+                    ConnectionOptions = new EventHubConnectionOptions
+                    {
+                       SendBufferSizeInBytes = 2048,
+                       ReceiveBufferSizeInBytes = 12288
+                    }
+                };
+
+                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName, options))
+                {
+                    var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
+                    Assert.That(async () => await ReadNothingAsync(consumer, partition, cancellationSource.Token, EventPosition.Latest), Throws.Nothing);
+                }
+
+                cancellationSource.Cancel();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         public async Task ConsumerCanReadSingleZeroLengthEvent()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))

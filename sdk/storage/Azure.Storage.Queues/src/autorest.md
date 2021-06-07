@@ -28,7 +28,8 @@ directive:
     delete $.QueueName["x-ms-parameter-location"];
 ```
 
-### Add queueName as a parameter
+
+### Add messageId as a parameter
 ``` yaml
 directive:
 - from: swagger-document
@@ -36,17 +37,29 @@ directive:
   transform: >
     for (const property in $)
     {
-        if (property.includes('{queueName}'))
-        {
-            $[property].parameters.push({
-                "$ref": "#/parameters/QueueName"
-            });
-        };
         if (property.includes('{messageid}'))
         {
             $[property].parameters.push({
                 "$ref": "#/parameters/MessageId"
             });
+        }
+    }
+```
+
+### Remove queueName as a parameter - we have direct URIs
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
+        if (property.includes('/{queueName}'))
+        {
+            var oldName = property;
+            var newName = property.replace('/{queueName}', '');
+            $[newName] = $[oldName];
+            delete $[oldName];
         }
     }
 ```

@@ -14,6 +14,7 @@ using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
@@ -2588,7 +2589,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
+            Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{blobName.EscapePath()}");
 
             BlobClient initalBlob = new BlobClient(
                 TestConfigDefault.ConnectionString,
@@ -2637,7 +2638,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
-            Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
+            Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{blobName.EscapePath()}");
 
             BlobClient blobClientFromContainer = InstrumentClient(test.Container.GetBlobClient(blobName));
             BlobClient blobClientFromConnectionString = new BlobClient(

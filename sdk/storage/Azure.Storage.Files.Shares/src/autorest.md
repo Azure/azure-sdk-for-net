@@ -77,49 +77,26 @@ directive:
     }
 ```
 
-### Replace ShareName, Directory, and FileName with path
+### Remove ShareName, Directory, and FileName - we have direct URIs
 ``` yaml
 directive:
-- from: swagger-document
-  where: $.parameters
-  transform: >
-    $.Path = {
-      "name": "path",
-      "in": "path",
-      "required": true,
-      "type": "string",
-      "description": "path.",
-      "x-ms-skip-url-encoding": true
-    };
-- from: swagger-document
-  where: $["x-ms-paths"]
-  transform: >
-    for (const property in $)
-    {
-        if (property.includes('{shareName}'))
-        {
-            $[property].parameters.push({
-                "$ref": "#/parameters/Path"
-            });
-        };
-    }
 - from: swagger-document
   where: $["x-ms-paths"]
   transform: >
    Object.keys($).map(id => {
-     if (id.includes('{shareName}/{directory}/{fileName}'))
+     if (id.includes('/{shareName}/{directory}/{fileName}'))
      {
-       $[id.replace('{shareName}/{directory}/{fileName}', '{path}?restype=file')] = $[id];
+       $[id.replace('/{shareName}/{directory}/{fileName}', '?shareName_dir_file')] = $[id];
        delete $[id];
      }
-     if (id.includes('{shareName}/{directory}'))
+     else if (id.includes('/{shareName}/{directory}'))
      {
-       $[id.replace('{shareName}/{directory}', '{path}?restype=directory')] = $[id];
+       $[id.replace('/{shareName}/{directory}', '?shareName_dir')] = $[id];
        delete $[id];
      }
-     if (id.includes('{shareName}'))
+     else if (id.includes('/{shareName}'))
      {
-       $[id.replace('{shareName}', '{path}')] = $[id];
+       $[id.replace('/{shareName}', '?shareName')] = $[id];
        delete $[id];
      }
    });

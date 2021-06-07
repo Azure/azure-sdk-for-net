@@ -80,8 +80,8 @@ namespace Azure.Data.Tables
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(Uri endpoint, TablesClientOptions options = null)
-            : this(endpoint, null, default, options)
+        public TableClient(Uri endpoint, TableClientOptions options = null)
+            : this(endpoint, null, default, default, options)
         {
             if (endpoint.Scheme != Uri.UriSchemeHttps)
             {
@@ -103,7 +103,7 @@ namespace Azure.Data.Tables
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(Uri endpoint, AzureSasCredential credential, TablesClientOptions options = null)
+        public TableClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
             : this(endpoint, null, default, credential, options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -144,7 +144,7 @@ namespace Azure.Data.Tables
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
-        public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential, TablesClientOptions options = null)
+        public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential, TableClientOptions options = null)
             : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -185,7 +185,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableClient(string connectionString, string tableName, TablesClientOptions options = null)
+        public TableClient(string connectionString, string tableName, TableClientOptions options = null)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
@@ -194,7 +194,7 @@ namespace Azure.Data.Tables
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
-            options ??= TablesClientOptions.DefaultOptions;
+            options ??= TableClientOptions.DefaultOptions;
             var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
 
             TableSharedKeyPipelinePolicy policy = connString.Credentials switch
@@ -212,7 +212,7 @@ namespace Azure.Data.Tables
             Name = tableName;
         }
 
-        internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TablesClientOptions options)
+        internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
@@ -234,7 +234,7 @@ namespace Azure.Data.Tables
 
             _endpoint = endpoint;
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
-            options ??= TablesClientOptions.DefaultOptions;
+            options ??= TableClientOptions.DefaultOptions;
 
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             HttpPipelinePolicy authPolicy = sasCredential switch
@@ -1477,7 +1477,7 @@ namespace Azure.Data.Tables
         private static HttpPipeline CreateBatchPipeline()
         {
             // Configure the options to use minimal policies
-            var options = new TablesClientOptions();
+            var options = new TableClientOptions();
             options.Diagnostics.IsLoggingEnabled = false;
             options.Diagnostics.IsTelemetryEnabled = false;
             options.Diagnostics.IsDistributedTracingEnabled = false;
