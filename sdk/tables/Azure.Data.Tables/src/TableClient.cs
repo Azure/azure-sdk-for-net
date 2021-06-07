@@ -35,6 +35,16 @@ namespace Azure.Data.Tables
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
+        /// The <see cref="TableSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private TableSharedKeyCredential _tableSharedKeyCredential;
+
+        /// <summary>
+        /// Gets the The <see cref="TableSharedKeyCredential"/> used to authenticate and generate SAS.
+        /// </summary>
+        internal virtual TableSharedKeyCredential SharedKeyCredential => _tableSharedKeyCredential;
+
+        /// <summary>
         /// The name of the table with which this client instance will interact.
         /// </summary>
         public virtual string Name { get; }
@@ -118,6 +128,7 @@ namespace Azure.Data.Tables
             : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
+            _tableSharedKeyCredential = credential;
         }
 
         /// <summary>
@@ -137,6 +148,7 @@ namespace Azure.Data.Tables
             : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
+            _tableSharedKeyCredential = credential;
         }
 
         /// <summary>
@@ -182,7 +194,7 @@ namespace Azure.Data.Tables
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
-            options ??= new TablesClientOptions();
+            options ??= TablesClientOptions.DefaultOptions;
             var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
 
             TableSharedKeyPipelinePolicy policy = connString.Credentials switch
@@ -222,7 +234,7 @@ namespace Azure.Data.Tables
 
             _endpoint = endpoint;
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
-            options ??= new TablesClientOptions();
+            options ??= TablesClientOptions.DefaultOptions;
 
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             HttpPipelinePolicy authPolicy = sasCredential switch
@@ -276,7 +288,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(TableSasPermissions permissions, DateTimeOffset expiresOn)
         {
-            return new TableSasBuilder(Name, permissions, expiresOn) { Version = _version };
+            return new(Name, permissions, expiresOn) { Version = _version };
         }
 
         /// <summary>
@@ -293,7 +305,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(string rawPermissions, DateTimeOffset expiresOn)
         {
-            return new TableSasBuilder(Name, rawPermissions, expiresOn) { Version = _version };
+            return new(Name, rawPermissions, expiresOn) { Version = _version };
         }
 
         /// <summary>
@@ -1302,6 +1314,53 @@ namespace Azure.Data.Tables
             CancellationToken cancellationToken = default) =>
             SubmitTransactionInternalAsync(transactionActions, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), false, cancellationToken)
                 .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(TableSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Table Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and parameters passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="permissions"> Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="TableSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns> A <see cref="TableSasBuilder"/> on successfully deleting. </returns>
+        /// <remarks> An <see cref="Exception"/> will be thrown if a failure occurs. </remarks>
+        public virtual Uri GenerateSasUri(TableSasPermissions permissions, DateTimeOffset expiresOn)
+            => GenerateSasUri(new TableSasBuilder(Name, permissions, expiresOn) { TableName = Name });
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(TableSasBuilder)"/> returns a
+        /// <see cref="Uri"/> that generates a Table Service SAS Uri based
+        /// on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>
+        /// </summary>
+        /// <param name="builder"> Used to generate a Shared Access Signature (SAS). </param>
+        /// <returns> A <see cref="TableSasBuilder"/> on successfully deleting. </returns>
+        /// <remarks> An <see cref="Exception"/> will be thrown if a failure occurs. </remarks>
+        public virtual Uri GenerateSasUri(
+            TableSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.TableName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                throw new ArgumentException($"The {nameof(builder.TableName)} must match the table name used to initialize this instance of the client");
+            }
+            TableUriBuilder sasUri = new(_endpoint);
+            sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
+            return sasUri.ToUri();
+        }
 
         internal virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionInternalAsync(
             IEnumerable<TableTransactionAction> transactionalBatch,

@@ -1,6 +1,10 @@
 # Release History
 
-## 1.0.1 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+
+## 1.0.1 (2021-05-25)
+- Dependency versions updated.
 
 ## 1.0.0 (2021-04-26)
 Updated `Azure.Communication.PhoneNumbers` version.

@@ -128,6 +128,14 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public abstract partial class PageableOperation<T> : Azure.Operation<Azure.AsyncPageable<T>> where T : notnull
+    {
+        protected PageableOperation() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.AsyncPageable<T> Value { get { throw null; } }
+        public abstract Azure.Pageable<T> GetValues(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract Azure.AsyncPageable<T> GetValuesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public abstract partial class Pageable<T> : System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable where T : notnull
     {
         protected Pageable() { }
@@ -510,7 +518,7 @@ namespace Azure.Core.Extensions
 namespace Azure.Core.GeoJson
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct GeoArray<T> : System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
+    public readonly partial struct GeoArray<T> : System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.IReadOnlyCollection<T>, System.Collections.Generic.IReadOnlyList<T>, System.Collections.IEnumerable
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
@@ -557,13 +565,6 @@ namespace Azure.Core.GeoJson
         public System.Collections.Generic.IEnumerator<Azure.Core.GeoJson.GeoObject> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public sealed partial class GeoJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.GeoJson.GeoObject>
-    {
-        public GeoJsonConverter() { }
-        public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override Azure.Core.GeoJson.GeoObject Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.GeoJson.GeoObject value, System.Text.Json.JsonSerializerOptions options) { }
-    }
     public sealed partial class GeoLinearRing
     {
         public GeoLinearRing(System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPosition> coordinates) { }
@@ -595,7 +596,6 @@ namespace Azure.Core.GeoJson
         public static Azure.Core.GeoJson.GeoObject Parse(string json) { throw null; }
         public override string ToString() { throw null; }
         public bool TryGetCustomProperty(string name, out object? value) { throw null; }
-        public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
     }
     public enum GeoObjectType
     {
@@ -690,7 +690,7 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
         public override void Process(Azure.Core.HttpMessage message) { }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
     public partial class HttpPipeline
     {

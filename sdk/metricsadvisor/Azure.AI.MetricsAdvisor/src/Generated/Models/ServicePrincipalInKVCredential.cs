@@ -10,17 +10,17 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ServicePrincipalInKVCredential. </summary>
-    internal partial class ServicePrincipalInKVCredential : DataSourceCredential
+    internal partial class ServicePrincipalInKVCredential : DataSourceCredentialEntity
     {
         /// <summary> Initializes a new instance of ServicePrincipalInKVCredential. </summary>
-        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
+        /// <param name="name"> Name of data source credential. </param>
         /// <param name="parameters"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceCredentialName"/> or <paramref name="parameters"/> is null. </exception>
-        public ServicePrincipalInKVCredential(string dataSourceCredentialName, ServicePrincipalInKVParam parameters) : base(dataSourceCredentialName)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
+        public ServicePrincipalInKVCredential(string name, ServicePrincipalInKVParam parameters) : base(name)
         {
-            if (dataSourceCredentialName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(dataSourceCredentialName));
+                throw new ArgumentNullException(nameof(name));
             }
             if (parameters == null)
             {
@@ -33,11 +33,11 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> Initializes a new instance of ServicePrincipalInKVCredential. </summary>
         /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
-        /// <param name="dataSourceCredentialId"> Unique id of data source credential. </param>
-        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
-        /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        /// <param name="id"> Unique id of data source credential. </param>
+        /// <param name="name"> Name of data source credential. </param>
+        /// <param name="description"> Description of data source credential. </param>
         /// <param name="parameters"> . </param>
-        internal ServicePrincipalInKVCredential(DataSourceCredentialType dataSourceCredentialType, Guid? dataSourceCredentialId, string dataSourceCredentialName, string dataSourceCredentialDescription, ServicePrincipalInKVParam parameters) : base(dataSourceCredentialType, dataSourceCredentialId, dataSourceCredentialName, dataSourceCredentialDescription)
+        internal ServicePrincipalInKVCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalInKVParam parameters) : base(dataSourceCredentialType, id, name, description)
         {
             Parameters = parameters;
             DataSourceCredentialType = dataSourceCredentialType;
