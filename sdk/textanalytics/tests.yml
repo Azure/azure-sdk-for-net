@@ -10,3 +10,9 @@ extends:
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'centraluseuap'
+    # resource creation is disabled because we are trying to test the private endpoint.
+    # Will enable it when service rolls out the changes to all region.
+    DisableAzureResourceCreation: true
+  EnvVars:
+    AZURE_TEXT_ANALYTICS_API_KEY: $(net-textanalytics-test-api-key)
+    AZURE_TEXT_ANALYTICS_ENDPOINT: $(net-textanalytics-test-ppe-endpoint-string)

@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics
         /// Setting this property to 'false', enables logging your input text for 48 hours, solely to allow for troubleshooting issues.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
 
