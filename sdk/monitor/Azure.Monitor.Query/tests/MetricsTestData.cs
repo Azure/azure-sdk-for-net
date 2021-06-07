@@ -22,13 +22,13 @@ namespace Azure.Monitor.Query.Tests
         public string MetricNamespace { get; }
         public DateTimeOffset EndTime => StartTime.Add(Duration);
 
-        public MetricsTestData(RecordedTestBase<MonitorQueryClientTestEnvironment> test)
+        public MetricsTestData(MonitorQueryClientTestEnvironment environment, DateTimeOffset dateTimeOffset)
         {
-            _testEnvironment = test.TestEnvironment;
+            _testEnvironment = environment;
 
-            var recordingUtcNow = test.Recording.UtcNow;
+            var recordingUtcNow = dateTimeOffset;
             // Snap to 15 minute intervals
-            StartTime = recordingUtcNow.AddTicks(- recordingUtcNow.Ticks % Duration.Ticks);
+            StartTime = recordingUtcNow.AddTicks(- (recordingUtcNow.Ticks % Duration.Ticks));
 
             MetricName = "CowsHappiness";
             MetricNamespace = "Cows";
