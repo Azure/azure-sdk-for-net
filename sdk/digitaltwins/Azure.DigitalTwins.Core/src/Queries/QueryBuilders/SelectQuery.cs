@@ -55,6 +55,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             // account for optional arguments
             if (args.Length != 0)
             {
+                // TODO -- topargs.append.string.format.... (way around loop)
                 // append first argument manually since no comma needed
                 topArg.Append(' ').Append(args[0]);
 
@@ -72,11 +73,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used when applying the COUNT() aggregate from the ADT query language. Similar to SelectTop().
         /// </summary>
-        /// <param name="args"> The arguments that we define what we select (eg. a property name, *, collection). </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectCount(params string[] args)
+        public FromQuery SelectCount()
         {
-            Console.WriteLine(args);
             string countArg = new StringBuilder().Append("COUNT").Append('(').Append(')').ToString();
 
             _clause = new SelectClause(new string[] { countArg });
@@ -90,8 +89,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectOverride(string literalQuery)
         {
-            // TODO
-            Console.WriteLine(literalQuery);
+            // TODO -- just use select?
+            // approach 1 - method overload
+            // approach 2 - seperate method
+            _clause = new SelectClause(new string[] { literalQuery });
+
             return _innerQuery;
         }
 

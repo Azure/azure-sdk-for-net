@@ -50,11 +50,20 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// <summary>
         /// Used when applying the COUNT() aggregate from the ADT query language. Similar to SelectTop().
         /// </summary>
-        /// <param name="args"> The arguments that we define what we select (eg. a property name, *, collection). </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectCount(params string[] args)
+        public FromQuery SelectCount()
         {
-            return _selectQuery.SelectCount(args);
+            return _selectQuery.SelectCount();
+        }
+
+        /// <summary>
+        /// Called when overriding the query builder with the literal query string.
+        /// </summary>
+        /// <param name="literalQuery"> Query in string format. </param>
+        /// <returns> Query that contains a select clause. </returns>
+        public FromQuery SelectOverride(string literalQuery)
+        {
+            return _selectQuery.SelectOverride(literalQuery);
         }
 
         /// <inheritdoc/>
