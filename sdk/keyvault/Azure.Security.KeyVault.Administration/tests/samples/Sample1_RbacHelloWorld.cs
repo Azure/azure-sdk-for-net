@@ -118,7 +118,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
 
             #region Snippet:DeleteRoleAssignment
-            KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
+            client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
             #endregion
         }
 
@@ -154,7 +154,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             #endregion
 
             #region Snippet:DeleteRoleAssignmentAsync
-            KeyVaultRoleAssignment deletedAssignment = await client.DeleteRoleAssignmentAsync(KeyVaultRoleScope.Global, createdAssignment.Name);
+            await client.DeleteRoleAssignmentAsync(KeyVaultRoleScope.Global, createdAssignment.Name);
             #endregion
         }
     }

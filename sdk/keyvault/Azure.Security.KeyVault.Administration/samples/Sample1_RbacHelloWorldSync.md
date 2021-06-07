@@ -61,7 +61,7 @@ KeyVaultRoleAssignment fetchedAssignment = client.GetRoleAssignment(KeyVaultRole
 To remove a role assignment from a service principal, the role assignment must be deleted. Let's delete the `createdAssignment` from the previous example.
 
 ```C# Snippet:DeleteRoleAssignment
-KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
+client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
 ```
 
 <!-- LINKS -->
