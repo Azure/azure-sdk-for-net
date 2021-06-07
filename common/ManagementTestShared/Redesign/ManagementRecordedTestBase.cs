@@ -62,7 +62,8 @@ namespace Azure.ResourceManager.TestFramework
             return CreateClient<ArmClient>(
                 TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                options);
+                options,
+                null);
         }
 
         [SetUp]
@@ -130,7 +131,8 @@ namespace Azure.ResourceManager.TestFramework
             GlobalClient = CreateClient<ArmClient>(
                 SessionEnvironment.SubscriptionId,
                 SessionEnvironment.Credential,
-                options);
+                options,
+                null);
         }
 
         private bool HasOneTimeSetup()

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Core
 
                 return new ResourcesRestOperations(
                     new Azure.Core.Pipeline.ClientDiagnostics(ClientOptions),
-                    ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions),
+                    Pipeline,
                     subscription,
                     BaseUri);
             }

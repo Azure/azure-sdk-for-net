@@ -37,10 +37,12 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="scope"> The scope to be included in acquired tokens. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, ArmClientOptions options = default)
-            : this(null, new Uri(DefaultUri), credential, options)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
+        public ArmClient(TokenCredential credential, ArmClientOptions options = default, string scope = default)
+            : this(null, new Uri(DefaultUri), credential, options, scope)
         {
         }
 
@@ -49,13 +51,16 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="scope"> The scope to be included in acquired tokens. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception> 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
         public ArmClient(
             string defaultSubscriptionId,
             TokenCredential credential,
-            ArmClientOptions options = default)
-            : this(defaultSubscriptionId, new Uri(DefaultUri), credential, options)
+            ArmClientOptions options = default,
+            string scope = default)
+            : this(defaultSubscriptionId, new Uri(DefaultUri), credential, options, scope)
         {
         }
 
@@ -64,13 +69,16 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="baseUri"> The base URI of the Azure management endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="scope"> The scope to be included in acquired tokens. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
         public ArmClient(
             Uri baseUri,
             TokenCredential credential,
-            ArmClientOptions options = default)
-            : this(null, baseUri, credential, options)
+            ArmClientOptions options = default,
+            string scope = default)
+            : this(null, baseUri, credential, options, scope)
         {
         }
 
@@ -81,11 +89,13 @@ namespace Azure.ResourceManager.Core
         /// <param name="baseUri"> The base URI of the service. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="scope"> The scope to be included in acquired tokens. </param>
         private ArmClient(
             string defaultSubscriptionId,
             Uri baseUri,
             TokenCredential credential,
-            ArmClientOptions options)
+            ArmClientOptions options,
+            string scope)
         {
             if (credential is null)
                 throw new ArgumentNullException(nameof(credential));
@@ -93,7 +103,7 @@ namespace Azure.ResourceManager.Core
             Credential = credential;
             BaseUri = baseUri ?? new Uri(DefaultUri);
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
-            Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
+            Pipeline = ManagementPipelineBuilder.Build(Credential, scope, ClientOptions);
 
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
