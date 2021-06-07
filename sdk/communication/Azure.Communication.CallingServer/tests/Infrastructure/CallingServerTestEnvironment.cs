@@ -13,14 +13,14 @@ namespace Azure.Communication.CallingServer.Tests
     public class CallingServerTestEnvironment : CommunicationTestEnvironment
     {
         /// <summary>
-        /// The source identity.
+        /// The phone number associated with the source.
         /// </summary>
-        public string SourceIdentity => GetRecordedVariable(SourceIdentity);
+        public string SourcePhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret());
 
         /// <summary>
         /// The phone number associated with the source.
         /// </summary>
-        public string SourcePhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret());
+        public string TargetPhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret());
 
         /// <summary>
         /// The audio file name of the play prompt.
