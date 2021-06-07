@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class ModelContainerResourceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, ModelContainerResource>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
         internal ModelContainersRestOperations RestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="ModelContainerResourceOperations"/> class for mocking. </summary>
@@ -33,8 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         protected internal ModelContainerResourceOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _pipeline = Pipeline;
-            RestClient = new ModelContainersRestOperations(_clientDiagnostics, _pipeline, Id.SubscriptionId, BaseUri);
+            RestClient = new ModelContainersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/models";

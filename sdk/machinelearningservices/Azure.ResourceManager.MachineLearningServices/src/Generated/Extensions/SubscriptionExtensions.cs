@@ -20,10 +20,9 @@ namespace Azure.ResourceManager.MachineLearningServices
     public static partial class SubscriptionExtensions
     {
         #region Workspace
-        private static WorkspacesRestOperations GetWorkspacesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, string subscriptionId, Uri endpoint = null)
+        private static WorkspacesRestOperations GetWorkspacesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            var httpPipeline = ManagementPipelineBuilder.Build(credential, endpoint, clientOptions);
-            return new WorkspacesRestOperations(clientDiagnostics, httpPipeline, subscriptionId, endpoint);
+            return new WorkspacesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the Workspaces for this Azure.ResourceManager.Core.SubscriptionOperations. </summary>
@@ -32,10 +31,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static AsyncPageable<Workspace> ListWorkspaceAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResources((baseUri, credential, options) =>
+            return subscription.ListResources((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWorkspacesRestOperations(clientDiagnostics, credential, options, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetWorkspacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 var result = ListBySubscriptionAsync(clientDiagnostics, restOperations);
                 return new PhWrappingAsyncPageable<WorkspaceData, Workspace>(
                 result,
@@ -90,10 +89,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <return> A collection of resource operations that may take multiple service requests to iterate over. </return>
         public static Pageable<Workspace> ListWorkspace(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
-            return subscription.ListResources((baseUri, credential, options) =>
+            return subscription.ListResources((baseUri, credential, options, pipeline) =>
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetWorkspacesRestOperations(clientDiagnostics, credential, options, subscription.Id.SubscriptionId, baseUri);
+                var restOperations = GetWorkspacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 var result = ListBySubscription(clientDiagnostics, restOperations);
                 return new PhWrappingPageable<WorkspaceData, Workspace>(
                 result,

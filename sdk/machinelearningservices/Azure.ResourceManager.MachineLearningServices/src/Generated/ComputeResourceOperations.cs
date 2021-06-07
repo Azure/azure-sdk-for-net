@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class ComputeResourceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, ComputeResource>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
         internal ComputeRestOperations RestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="ComputeResourceOperations"/> class for mocking. </summary>
@@ -33,8 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         protected internal ComputeResourceOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _pipeline = Pipeline;
-            RestClient = new ComputeRestOperations(_clientDiagnostics, _pipeline, Id.SubscriptionId, BaseUri);
+            RestClient = new ComputeRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/computes";
@@ -138,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await RestClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction, cancellationToken).ConfigureAwait(false);
-                return new ComputeDeleteOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction).Request, response);
+                return new ComputeDeleteOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction).Request, response);
             }
             catch (Exception e)
             {
@@ -157,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = RestClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction, cancellationToken);
-                return new ComputeDeleteOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction).Request, response);
+                return new ComputeDeleteOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction).Request, response);
             }
             catch (Exception e)
             {
@@ -281,7 +279,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await RestClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, scaleSettings, cancellationToken).ConfigureAwait(false);
-                return new ComputeUpdateOperation(this, _clientDiagnostics, _pipeline, RestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, scaleSettings).Request, response);
+                return new ComputeUpdateOperation(this, _clientDiagnostics, Pipeline, RestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, scaleSettings).Request, response);
             }
             catch (Exception e)
             {
@@ -300,7 +298,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = RestClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, scaleSettings, cancellationToken);
-                return new ComputeUpdateOperation(this, _clientDiagnostics, _pipeline, RestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, scaleSettings).Request, response);
+                return new ComputeUpdateOperation(this, _clientDiagnostics, Pipeline, RestClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, scaleSettings).Request, response);
             }
             catch (Exception e)
             {
@@ -354,7 +352,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await RestClient.StartAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ComputeStartOperation(_clientDiagnostics, _pipeline, RestClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ComputeStartOperation(_clientDiagnostics, Pipeline, RestClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -372,7 +370,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = RestClient.Start(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ComputeStartOperation(_clientDiagnostics, _pipeline, RestClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ComputeStartOperation(_clientDiagnostics, Pipeline, RestClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -426,7 +424,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await RestClient.StopAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ComputeStopOperation(_clientDiagnostics, _pipeline, RestClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ComputeStopOperation(_clientDiagnostics, Pipeline, RestClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -444,7 +442,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = RestClient.Stop(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ComputeStopOperation(_clientDiagnostics, _pipeline, RestClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ComputeStopOperation(_clientDiagnostics, Pipeline, RestClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {

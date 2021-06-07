@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class WorkspaceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, Workspace>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
         internal WorkspacesRestOperations RestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="WorkspaceOperations"/> class for mocking. </summary>
@@ -33,8 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         protected internal WorkspaceOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _pipeline = Pipeline;
-            RestClient = new WorkspacesRestOperations(_clientDiagnostics, _pipeline, Id.SubscriptionId, BaseUri);
+            RestClient = new WorkspacesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces";
@@ -135,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await RestClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new WorkspacesDeleteOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new WorkspacesDeleteOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -153,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = RestClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new WorkspacesDeleteOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new WorkspacesDeleteOperation(_clientDiagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -386,7 +384,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await RestClient.ResyncKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new WorkspacesResyncKeysOperation(_clientDiagnostics, _pipeline, RestClient.CreateResyncKeysRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new WorkspacesResyncKeysOperation(_clientDiagnostics, Pipeline, RestClient.CreateResyncKeysRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -404,7 +402,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = RestClient.ResyncKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new WorkspacesResyncKeysOperation(_clientDiagnostics, _pipeline, RestClient.CreateResyncKeysRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new WorkspacesResyncKeysOperation(_clientDiagnostics, Pipeline, RestClient.CreateResyncKeysRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -455,7 +453,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await RestClient.PrepareNotebookAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new WorkspacesPrepareNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreatePrepareNotebookRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new WorkspacesPrepareNotebookOperation(_clientDiagnostics, Pipeline, RestClient.CreatePrepareNotebookRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -472,7 +470,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = RestClient.PrepareNotebook(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new WorkspacesPrepareNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreatePrepareNotebookRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new WorkspacesPrepareNotebookOperation(_clientDiagnostics, Pipeline, RestClient.CreatePrepareNotebookRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {

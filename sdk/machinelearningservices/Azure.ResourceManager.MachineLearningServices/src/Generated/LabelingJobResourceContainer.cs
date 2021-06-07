@@ -30,14 +30,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         internal LabelingJobResourceContainer(ResourceOperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
         }
 
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
 
         /// <summary> Represents the REST operations. </summary>
-        private LabelingJobsRestOperations _restClient => new LabelingJobsRestOperations(_clientDiagnostics, _pipeline, Id.SubscriptionId);
+        private LabelingJobsRestOperations _restClient => new LabelingJobsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId);
 
         /// <summary> Typed Resource Identifier for the container. </summary>
         public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a LabelingJobResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public Response<LabelingJobResource> CreateOrUpdate(string workspaceName, LabelingJob properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.CreateOrUpdate");
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(properties));
                 }
 
-                return StartCreateOrUpdate(workspaceName, properties, cancellationToken: cancellationToken).WaitForCompletion();
+                return StartCreateOrUpdate(workspaceName, properties, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -78,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a LabelingJobResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<Response<LabelingJobResource>> CreateOrUpdateAsync(string workspaceName, LabelingJob properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.CreateOrUpdate");
@@ -95,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
 
                 var operation = await StartCreateOrUpdateAsync(workspaceName, properties, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -107,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a LabelingJobResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public LabelingJobsCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, LabelingJob properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.StartCreateOrUpdate");
@@ -124,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
 
                 var originalResponse = _restClient.CreateOrUpdate(Id.Name, Id.ResourceGroupName, workspaceName, properties, cancellationToken: cancellationToken);
-                return new LabelingJobsCreateOrUpdateOperation(Parent, _clientDiagnostics, _pipeline, _restClient.CreateCreateOrUpdateRequest(Id.Name, Id.ResourceGroupName, workspaceName, properties).Request, originalResponse);
+                return new LabelingJobsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.Name, Id.ResourceGroupName, workspaceName, properties).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -136,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a LabelingJobResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<LabelingJobsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, LabelingJob properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.StartCreateOrUpdate");
@@ -153,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
 
                 var originalResponse = await _restClient.CreateOrUpdateAsync(Id.Name, Id.ResourceGroupName, workspaceName, properties, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new LabelingJobsCreateOrUpdateOperation(Parent, _clientDiagnostics, _pipeline, _restClient.CreateCreateOrUpdateRequest(Id.Name, Id.ResourceGroupName, workspaceName, properties).Request, originalResponse);
+                return new LabelingJobsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.Name, Id.ResourceGroupName, workspaceName, properties).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -164,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <inheritdoc />
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public override Response<LabelingJobResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.Get");
@@ -188,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <inheritdoc />
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async override Task<Response<LabelingJobResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.Get");
@@ -210,11 +208,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Filters the list of <see cref="LabelingJobResource" /> for this resource group. </summary>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <summary> Lists labeling jobs in the workspace. </summary>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="count"> Number of labeling jobs to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LabelingJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<LabelingJobResource> List(int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<LabelingJobResource> List(string skip = null, int? count = null, CancellationToken cancellationToken = default)
         {
             Page<LabelingJobResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -249,22 +248,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="LabelingJobResource" /> for this resource group. Makes an additional network call to retrieve the full data model for each resource group. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of <see cref="LabelingJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<LabelingJobResource> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(null, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, LabelingJobResource>(results, genericResource => new LabelingJobResourceOperations(genericResource, genericResource.Id as ResourceGroupResourceIdentifier).Get().Value);
-        }
-
-        /// <summary> Filters the list of <see cref="LabelingJobResource" /> for this resource group. </summary>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <summary> Lists labeling jobs in the workspace. </summary>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="count"> Number of labeling jobs to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LabelingJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<LabelingJobResource> ListAsync(int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<LabelingJobResource> ListAsync(string skip = null, int? count = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<LabelingJobResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -299,21 +288,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="LabelingJobResource" /> for this resource group. Makes an additional network call to retrieve the full data model for each resource group. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of <see cref="LabelingJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<LabelingJobResource> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(null, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, LabelingJobResource>(results, genericResource => new LabelingJobResourceOperations(genericResource, genericResource.Id as ResourceGroupResourceIdentifier).Get().Value);
-        }
-
         /// <summary> Filters the list of LabelingJobResource for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public Pageable<GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -335,7 +313,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Filters the list of LabelingJobResource for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {

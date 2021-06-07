@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class BatchEndpointTrackedResourceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, BatchEndpointTrackedResource>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
         internal BatchEndpointsRestOperations RestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="BatchEndpointTrackedResourceOperations"/> class for mocking. </summary>
@@ -33,8 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         protected internal BatchEndpointTrackedResourceOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _pipeline = Pipeline;
-            RestClient = new BatchEndpointsRestOperations(_clientDiagnostics, _pipeline, Id.SubscriptionId, BaseUri);
+            RestClient = new BatchEndpointsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/batchEndpoints";
@@ -162,7 +160,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
         public async Task<Response<BatchEndpointTrackedResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.AddTag");
@@ -179,7 +181,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
         public Response<BatchEndpointTrackedResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.AddTag");
@@ -196,7 +202,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
+        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
         public async Task<BatchEndpointsUpdateOperation> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             if (key == null)
@@ -222,7 +233,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
+        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
         public BatchEndpointsUpdateOperation StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (key == null)
@@ -248,7 +264,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tags replaced. </returns>
         public async Task<Response<BatchEndpointTrackedResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.SetTags");
@@ -265,7 +284,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tags replaced. </returns>
         public Response<BatchEndpointTrackedResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.SetTags");
@@ -282,7 +304,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tags replaced. </returns>
+        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
         public async Task<BatchEndpointsUpdateOperation> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
@@ -306,7 +332,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tags replaced. </returns>
+        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
         public BatchEndpointsUpdateOperation StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
@@ -330,7 +360,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key of the tag to remove. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag removed. </returns>
         public async Task<Response<BatchEndpointTrackedResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.RemoveTag");
@@ -347,7 +380,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key of the tag to remove. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag removed. </returns>
         public Response<BatchEndpointTrackedResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.RemoveTag");
@@ -364,7 +400,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key of the tag to remove. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag removed. </returns>
+        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
         public async Task<BatchEndpointsUpdateOperation> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             if (key == null)
@@ -390,7 +430,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key of the tag to remove. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag removed. </returns>
+        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
         public BatchEndpointsUpdateOperation StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (key == null)

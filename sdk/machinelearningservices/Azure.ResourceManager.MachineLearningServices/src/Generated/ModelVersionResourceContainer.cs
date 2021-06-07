@@ -30,14 +30,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         internal ModelVersionResourceContainer(ResourceOperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
         }
 
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
 
         /// <summary> Represents the REST operations. </summary>
-        private ModelVersionsRestOperations _restClient => new ModelVersionsRestOperations(_clientDiagnostics, _pipeline, Id.SubscriptionId);
+        private ModelVersionsRestOperations _restClient => new ModelVersionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId);
 
         /// <summary> Typed Resource Identifier for the container. </summary>
         public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a ModelVersionResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public Response<ModelVersionResource> CreateOrUpdate(string workspaceName, ModelVersion properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceContainer.CreateOrUpdate");
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(properties));
                 }
 
-                return StartCreateOrUpdate(workspaceName, properties, cancellationToken: cancellationToken).WaitForCompletion();
+                return StartCreateOrUpdate(workspaceName, properties, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -78,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a ModelVersionResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<Response<ModelVersionResource>> CreateOrUpdateAsync(string workspaceName, ModelVersion properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceContainer.CreateOrUpdate");
@@ -95,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
 
                 var operation = await StartCreateOrUpdateAsync(workspaceName, properties, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -107,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a ModelVersionResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public ModelVersionsCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, ModelVersion properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceContainer.StartCreateOrUpdate");
@@ -136,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a ModelVersionResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<ModelVersionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, ModelVersion properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceContainer.StartCreateOrUpdate");
@@ -164,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <inheritdoc />
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public override Response<ModelVersionResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceContainer.Get");
@@ -188,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <inheritdoc />
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async override Task<Response<ModelVersionResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceContainer.Get");
@@ -210,11 +208,18 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Filters the list of <see cref="ModelVersionResource" /> for this resource group. </summary>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <summary> List model versions. </summary>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="orderBy"> Ordering of list. </param>
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="version"> Model version. </param>
+        /// <param name="description"> Model description. </param>
+        /// <param name="offset"> Number of initial results to skip. </param>
+        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
+        /// <param name="properties"> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<ModelVersionResource> List(int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<ModelVersionResource> List(string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
         {
             Page<ModelVersionResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -249,22 +254,18 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="ModelVersionResource" /> for this resource group. Makes an additional network call to retrieve the full data model for each resource group. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of <see cref="ModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<ModelVersionResource> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(null, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, ModelVersionResource>(results, genericResource => new ModelVersionResourceOperations(genericResource, genericResource.Id as ResourceGroupResourceIdentifier).Get().Value);
-        }
-
-        /// <summary> Filters the list of <see cref="ModelVersionResource" /> for this resource group. </summary>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <summary> List model versions. </summary>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="orderBy"> Ordering of list. </param>
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="version"> Model version. </param>
+        /// <param name="description"> Model description. </param>
+        /// <param name="offset"> Number of initial results to skip. </param>
+        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
+        /// <param name="properties"> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ModelVersionResource> ListAsync(int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<ModelVersionResource> ListAsync(string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ModelVersionResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -299,21 +300,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="ModelVersionResource" /> for this resource group. Makes an additional network call to retrieve the full data model for each resource group. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of <see cref="ModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ModelVersionResource> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(null, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, ModelVersionResource>(results, genericResource => new ModelVersionResourceOperations(genericResource, genericResource.Id as ResourceGroupResourceIdentifier).Get().Value);
-        }
-
         /// <summary> Filters the list of ModelVersionResource for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public Pageable<GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -335,7 +325,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Filters the list of ModelVersionResource for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {

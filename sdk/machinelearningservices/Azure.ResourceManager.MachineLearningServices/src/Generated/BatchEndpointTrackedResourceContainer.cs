@@ -30,14 +30,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         internal BatchEndpointTrackedResourceContainer(ResourceOperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
         }
 
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
 
         /// <summary> Represents the REST operations. </summary>
-        private BatchEndpointsRestOperations _restClient => new BatchEndpointsRestOperations(_clientDiagnostics, _pipeline, Id.SubscriptionId);
+        private BatchEndpointsRestOperations _restClient => new BatchEndpointsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId);
 
         /// <summary> Typed Resource Identifier for the container. </summary>
         public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a BatchEndpointTrackedResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="body"> Batch inference endpoint definition object. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public Response<BatchEndpointTrackedResource> CreateOrUpdate(string workspaceName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.CreateOrUpdate");
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(body));
                 }
 
-                return StartCreateOrUpdate(workspaceName, body, cancellationToken: cancellationToken).WaitForCompletion();
+                return StartCreateOrUpdate(workspaceName, body, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -78,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a BatchEndpointTrackedResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="body"> Batch inference endpoint definition object. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<Response<BatchEndpointTrackedResource>> CreateOrUpdateAsync(string workspaceName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.CreateOrUpdate");
@@ -95,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
 
                 var operation = await StartCreateOrUpdateAsync(workspaceName, body, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -107,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a BatchEndpointTrackedResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="body"> Batch inference endpoint definition object. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public BatchEndpointsCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.StartCreateOrUpdate");
@@ -136,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The operation to create or update a BatchEndpointTrackedResource. Please note some properties can be set only during creation. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="body"> Batch inference endpoint definition object. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<BatchEndpointsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.StartCreateOrUpdate");
@@ -164,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <inheritdoc />
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public override Response<BatchEndpointTrackedResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.Get");
@@ -188,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <inheritdoc />
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async override Task<Response<BatchEndpointTrackedResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.Get");
@@ -210,11 +208,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Filters the list of <see cref="BatchEndpointTrackedResource" /> for this resource group. </summary>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <summary> Lists Batch inference endpoint in the workspace. </summary>
+        /// <param name="count"> Number of endpoints to be retrieved in a page of results. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchEndpointTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<BatchEndpointTrackedResource> List(int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<BatchEndpointTrackedResource> List(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             Page<BatchEndpointTrackedResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -249,22 +248,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="BatchEndpointTrackedResource" /> for this resource group. Makes an additional network call to retrieve the full data model for each resource group. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of <see cref="BatchEndpointTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<BatchEndpointTrackedResource> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(null, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, BatchEndpointTrackedResource>(results, genericResource => new BatchEndpointTrackedResourceOperations(genericResource, genericResource.Id as ResourceGroupResourceIdentifier).Get().Value);
-        }
-
-        /// <summary> Filters the list of <see cref="BatchEndpointTrackedResource" /> for this resource group. </summary>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <summary> Lists Batch inference endpoint in the workspace. </summary>
+        /// <param name="count"> Number of endpoints to be retrieved in a page of results. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchEndpointTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<BatchEndpointTrackedResource> ListAsync(int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<BatchEndpointTrackedResource> ListAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<BatchEndpointTrackedResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -299,21 +288,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="BatchEndpointTrackedResource" /> for this resource group. Makes an additional network call to retrieve the full data model for each resource group. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of <see cref="BatchEndpointTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<BatchEndpointTrackedResource> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(null, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, BatchEndpointTrackedResource>(results, genericResource => new BatchEndpointTrackedResourceOperations(genericResource, genericResource.Id as ResourceGroupResourceIdentifier).Get().Value);
-        }
-
         /// <summary> Filters the list of BatchEndpointTrackedResource for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public Pageable<GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -335,7 +313,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Filters the list of BatchEndpointTrackedResource for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {

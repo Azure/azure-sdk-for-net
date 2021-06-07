@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,14 +31,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         internal DatastorePropertiesResourceContainer(ResourceOperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
         }
 
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
 
         /// <summary> Represents the REST operations. </summary>
-        private DatastoresRestOperations _restClient => new DatastoresRestOperations(_clientDiagnostics, _pipeline, Id.SubscriptionId);
+        private DatastoresRestOperations _restClient => new DatastoresRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId);
 
         /// <summary> Typed Resource Identifier for the container. </summary>
         public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public Response<DatastorePropertiesResource> CreateOrUpdate(string workspaceName, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.CreateOrUpdate");
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(properties));
                 }
 
-                return StartCreateOrUpdate(workspaceName, properties, skipValidation, cancellationToken: cancellationToken).WaitForCompletion();
+                return StartCreateOrUpdate(workspaceName, properties, skipValidation, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<Response<DatastorePropertiesResource>> CreateOrUpdateAsync(string workspaceName, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.CreateOrUpdate");
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
 
                 var operation = await StartCreateOrUpdateAsync(workspaceName, properties, skipValidation, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public DatastoresCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.StartCreateOrUpdate");
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<DatastoresCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.StartCreateOrUpdate");
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <inheritdoc />
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public override Response<DatastorePropertiesResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.Get");
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <inheritdoc />
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async override Task<Response<DatastorePropertiesResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.Get");
@@ -214,11 +213,17 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Filters the list of <see cref="DatastorePropertiesResource" /> for this resource group. </summary>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <summary> List datastores. </summary>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="count"> Maximum number of results to return. </param>
+        /// <param name="isDefault"> Filter down to the workspace default datastore. </param>
+        /// <param name="names"> Names of datastores to return. </param>
+        /// <param name="searchText"> Text to search for in the datastore names. </param>
+        /// <param name="orderBy"> Order by property (createdtime | modifiedtime | name). </param>
+        /// <param name="orderByAsc"> Order by property in ascending order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatastorePropertiesResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<DatastorePropertiesResource> List(int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<DatastorePropertiesResource> List(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
         {
             Page<DatastorePropertiesResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -253,22 +258,17 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="DatastorePropertiesResource" /> for this resource group. Makes an additional network call to retrieve the full data model for each resource group. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A collection of <see cref="DatastorePropertiesResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<DatastorePropertiesResource> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResource(null, top, cancellationToken);
-            return new PhWrappingPageable<GenericResource, DatastorePropertiesResource>(results, genericResource => new DatastorePropertiesResourceOperations(genericResource, genericResource.Id as ResourceGroupResourceIdentifier).Get().Value);
-        }
-
-        /// <summary> Filters the list of <see cref="DatastorePropertiesResource" /> for this resource group. </summary>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <summary> List datastores. </summary>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="count"> Maximum number of results to return. </param>
+        /// <param name="isDefault"> Filter down to the workspace default datastore. </param>
+        /// <param name="names"> Names of datastores to return. </param>
+        /// <param name="searchText"> Text to search for in the datastore names. </param>
+        /// <param name="orderBy"> Order by property (createdtime | modifiedtime | name). </param>
+        /// <param name="orderByAsc"> Order by property in ascending order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatastorePropertiesResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<DatastorePropertiesResource> ListAsync(int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<DatastorePropertiesResource> ListAsync(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DatastorePropertiesResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -303,21 +303,10 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="DatastorePropertiesResource" /> for this resource group. Makes an additional network call to retrieve the full data model for each resource group. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An async collection of <see cref="DatastorePropertiesResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<DatastorePropertiesResource> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
-        {
-            var results = ListAsGenericResourceAsync(null, top, cancellationToken);
-            return new PhWrappingAsyncPageable<GenericResource, DatastorePropertiesResource>(results, genericResource => new DatastorePropertiesResourceOperations(genericResource, genericResource.Id as ResourceGroupResourceIdentifier).Get().Value);
-        }
-
         /// <summary> Filters the list of DatastorePropertiesResource for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public Pageable<GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -339,7 +328,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Filters the list of DatastorePropertiesResource for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {

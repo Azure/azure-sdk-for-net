@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class LabelingJobResourceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, LabelingJobResource>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
         internal LabelingJobsRestOperations RestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="LabelingJobResourceOperations"/> class for mocking. </summary>
@@ -33,8 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         protected internal LabelingJobResourceOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _pipeline = Pipeline;
-            RestClient = new LabelingJobsRestOperations(_clientDiagnostics, _pipeline, Id.SubscriptionId, BaseUri);
+            RestClient = new LabelingJobsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/labelingJobs";
@@ -280,7 +278,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await RestClient.ResumeAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new LabelingJobsResumeOperation(_clientDiagnostics, _pipeline, RestClient.CreateResumeRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new LabelingJobsResumeOperation(_clientDiagnostics, Pipeline, RestClient.CreateResumeRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -298,7 +296,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = RestClient.Resume(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new LabelingJobsResumeOperation(_clientDiagnostics, _pipeline, RestClient.CreateResumeRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new LabelingJobsResumeOperation(_clientDiagnostics, Pipeline, RestClient.CreateResumeRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -373,7 +371,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await RestClient.ExportLabelsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                return new LabelingJobsExportLabelsOperation(_clientDiagnostics, _pipeline, RestClient.CreateExportLabelsRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
+                return new LabelingJobsExportLabelsOperation(_clientDiagnostics, Pipeline, RestClient.CreateExportLabelsRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
             }
             catch (Exception e)
             {
@@ -398,7 +396,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = RestClient.ExportLabels(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                return new LabelingJobsExportLabelsOperation(_clientDiagnostics, _pipeline, RestClient.CreateExportLabelsRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
+                return new LabelingJobsExportLabelsOperation(_clientDiagnostics, Pipeline, RestClient.CreateExportLabelsRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
             }
             catch (Exception e)
             {
