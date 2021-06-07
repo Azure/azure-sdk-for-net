@@ -7,8 +7,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: MachineLearningServices
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ecc8630f732fe34ef6bd963ef0834a6b85307582/specification/machinelearningservices/resource-manager/readme.md
+use: C:\Users\yeliu\code\autorest.csharp\artifacts\bin\AutoRest.CSharp\Debug\netcoreapp3.1
 tag: package-2021-03-01-preview
 clear-output-folder: true
+skip-csproj: true
 namespace: Azure.ResourceManager.MachineLearningServices
 modelerfour:
   lenient-model-deduplication: true
@@ -29,19 +31,19 @@ operation-group-to-resource-type:
   StorageAccount: Microsoft.MachineLearningServices/workspaces/storageAccounts
 operation-group-to-resource:
   Operations: NonResource
-  WorkspaceFeatures: NonResource # no PUT
-  Usages: NonResource
-  VirtualMachineSizes: NonResource
-  Quotas: NonResource
-  WorkspaceSkus: NonResource # no PUT, Sub level
-  PrivateLinkResources: NonResource # no PUT
-  StorageAccount: NonResource
+  # WorkspaceFeatures: NonResource # no PUT
+  # Usages: NonResource
+  VirtualMachineSizes: NonResource # list only, but value is not value
+  Quotas: NonResource # POST and GET
+  # WorkspaceSkus: NonResource # no PUT, Sub level
+  # PrivateLinkResources: NonResource # no PUT
 operation-group-to-parent:
-  Usages: Locations
+  Operations: tenant
+  WorkspaceFeatures: Workspaces
+  Usages: Subscriptions
   VirtualMachineSizes: Locations
   Quotas: Locations
   Notebooks: Workspaces
-  StorageAccount: Workspaces
   WorkspaceSkus: Workspaces
   PrivateLinkResources: Workspaces
 directive:

@@ -339,6 +339,40 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
+        /// <summary> Gets the private link resources that need to be created for a workspace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PrivateLinkResourceListResult>> ListAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.List");
+            scope.Start();
+            try
+            {
+                return await RestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the private link resources that need to be created for a workspace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PrivateLinkResourceListResult> List(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.List");
+            scope.Start();
+            try
+            {
+                return RestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Resync all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> ResyncKeysAsync(CancellationToken cancellationToken = default)
