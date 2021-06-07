@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1c9b1fa19834be47ac78fee9b7e92aa5-2cbfd130ed8de741-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-28112fe9ad79804882caf3a6fd7c5b78-3b3bf4c54fd61c41-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210604.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "a3e55567032ead2e96e9e43aca4ac158",
         "x-ms-return-client-request-id": "true"
@@ -15,18 +15,19 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "808d0e93-9c89-4731-ba92-fd9d2bf98264",
-        "Content-Length": "6744",
+        "apim-request-id": "b0369f9c-189a-4920-b23e-6dd792e9a19f",
+        "Content-Length": "7524",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 May 2021 23:59:15 GMT",
+        "Date": "Fri, 04 Jun 2021 12:14:29 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "430",
-        "x-request-id": "808d0e93-9c89-4731-ba92-fd9d2bf98264"
+        "x-envoy-upstream-service-time": "499",
+        "x-request-id": "b0369f9c-189a-4920-b23e-6dd792e9a19f"
       },
       "ResponseBody": {
         "value": [
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "0f099f2089162cab683d305ad1a9cba8-17571a77000",
@@ -45,6 +46,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "15ee0a88ee90d2b7580b07acac9b5f1b-17571a77000",
@@ -64,6 +66,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "2b03e492fd98f311dac5754867352e2f-17571a77000",
@@ -83,6 +86,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "2dfaa266fcd69f2019345aee741a23a4-17571a77000",
@@ -102,6 +106,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "323c79b4e6fc7e6aef0a75852c909fde-17571a77000",
@@ -121,6 +126,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "39545810eabd039e3c5bca795889e4d5-17571a77000",
@@ -140,6 +146,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "596c3ea953875e9e69bfe44b2f9c6d9c-17571a77000",
@@ -158,6 +165,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "5a0692283edccf37ce825b3a8d475f4e-17571a77000",
@@ -177,6 +185,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "740e015e72e8de201191854db904421b-17571a77000",
@@ -195,6 +204,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "ade81d2ff75a21ac9f496133d1484c89-17571a77000",
@@ -213,6 +223,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "c3b1690cc5c7a724cb728eb74c084a4c-17571a77000",
@@ -231,6 +242,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "c87ace3b9f582c6a6142026c80f2de44-17571a77000",
@@ -250,6 +262,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "ca46ba86922052929ece3d4c8794c442-17571a77000",
@@ -269,6 +282,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "dd1566e6ab95777eab6d996389dba73d-17571a77000",
@@ -287,6 +301,7 @@
             }
           },
           {
+            "dataFeedId": "9860df01-e740-40ec-94a2-6351813552ba",
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
             "incidentId": "f0b8fda3844b8d12d646fadbad496347-17571a77000",

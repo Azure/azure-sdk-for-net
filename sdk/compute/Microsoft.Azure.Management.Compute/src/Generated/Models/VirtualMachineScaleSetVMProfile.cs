@@ -75,7 +75,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2019-03-01.</param>
         /// <param name="scheduledEventsProfile">Specifies Scheduled Event
         /// related configurations.</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile))
+        /// <param name="userData">UserData for the virtual machines in the
+        /// scale set, which must be base-64 encoded. Customer should not pass
+        /// any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version:
+        /// 2021-03-01</param>
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -88,6 +92,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             EvictionPolicy = evictionPolicy;
             BillingProfile = billingProfile;
             ScheduledEventsProfile = scheduledEventsProfile;
+            UserData = userData;
             CustomInit();
         }
 
@@ -196,6 +201,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "scheduledEventsProfile")]
         public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets userData for the virtual machines in the scale set,
+        /// which must be base-64 encoded. Customer should not pass any secrets
+        /// in here. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2021-03-01
+        /// </summary>
+        [JsonProperty(PropertyName = "userData")]
+        public string UserData { get; set; }
 
         /// <summary>
         /// Validate the object.

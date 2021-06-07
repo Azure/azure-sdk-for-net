@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
+using System.Net.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -169,6 +170,25 @@ namespace Azure.Messaging.EventHubs.Amqp
         private IWebProxy Proxy { get; }
 
         /// <summary>
+        ///   The size of the buffer used for sending information via the active transport.
+        /// </summary>
+        ///
+        private int SendBufferSizeInBytes { get; }
+
+        /// <summary>
+        ///   The size of the buffer used for receiving information via the active transport.
+        /// </summary>
+        ///
+        private int ReceiveBufferSizeInBytes { get; }
+
+        /// <summary>
+        ///   A <see cref="RemoteCertificateValidationCallback" /> delegate allowing custom logic to be considered for
+        ///   validation of the remote certificate responsible for encrypting communication.
+        /// </summary>
+        ///
+        private RemoteCertificateValidationCallback CertificateValidationCallback { get; }
+
+        /// <summary>
         ///   The AMQP connection that is active for the current scope.
         /// </summary>
         ///
@@ -185,6 +205,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="identifier">The identifier to assign this scope; if not provided, one will be generated.</param>
+        /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
+        /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
+        /// <param name="certificateValidationCallback">The validation callback to register for participation in the SSL handshake.</param>
         ///
         public AmqpConnectionScope(Uri serviceEndpoint,
                                    Uri connectionEndpoint,
@@ -192,7 +215,10 @@ namespace Azure.Messaging.EventHubs.Amqp
                                    EventHubTokenCredential credential,
                                    EventHubsTransportType transport,
                                    IWebProxy proxy,
-                                   string identifier = default)
+                                   string identifier = default,
+                                   int sendBufferSizeBytes = AmqpConstants.TransportBufferSize,
+                                   int receiveBufferSizeBytes = AmqpConstants.TransportBufferSize,
+                                   RemoteCertificateValidationCallback certificateValidationCallback = default)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(connectionEndpoint, nameof(connectionEndpoint));
@@ -205,10 +231,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             EventHubName = eventHubName;
             Transport = transport;
             Proxy = proxy;
+            SendBufferSizeInBytes = sendBufferSizeBytes;
+            ReceiveBufferSizeInBytes = receiveBufferSizeBytes;
+            CertificateValidationCallback = certificateValidationCallback;
             TokenProvider = new CbsTokenProvider(new EventHubTokenCredential(credential), OperationCancellationSource.Token);
             Id = identifier ?? $"{ eventHubName }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
 
-            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, ConnectionEndpoint, Transport, Proxy, Id, timeout);
+            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, ConnectionEndpoint, Transport, Proxy, SendBufferSizeInBytes, ReceiveBufferSizeInBytes, CertificateValidationCallback, Id, timeout);
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(connectionFactory, CloseConnection);
         }
 
@@ -423,6 +452,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="connectionEndpoint">The endpoint to used establishing a connection to the Event Hubs service to which the scope is associated.</param>
         /// <param name="transportType">The type of transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
+        /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
+        /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
+        /// <param name="certificateValidationCallback">The validation callback to register for participation in the SSL handshake.</param>
         /// <param name="scopeIdentifier">The unique identifier for the associated scope.</param>
         /// <param name="timeout">The timeout to consider when creating the connection.</param>
         ///
@@ -433,6 +465,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                   Uri connectionEndpoint,
                                                                                   EventHubsTransportType transportType,
                                                                                   IWebProxy proxy,
+                                                                                  int sendBufferSizeBytes,
+                                                                                  int receiveBufferSizeBytes,
+                                                                                  RemoteCertificateValidationCallback certificateValidationCallback,
                                                                                   string scopeIdentifier,
                                                                                   TimeSpan timeout)
         {
@@ -447,8 +482,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var connectionSetings = CreateAmqpConnectionSettings(serviceEndpoint.Host, scopeIdentifier);
 
                 var transportSettings = transportType.IsWebSocketTransport()
-                    ? CreateTransportSettingsForWebSockets(connectionEndpoint.Host, proxy)
-                    : CreateTransportSettingsforTcp(connectionEndpoint.Host, connectionEndpoint.Port);
+                    ? CreateTransportSettingsForWebSockets(connectionEndpoint.Host, proxy, sendBufferSizeBytes, receiveBufferSizeBytes)
+                    : CreateTransportSettingsforTcp(connectionEndpoint.Host, connectionEndpoint.Port, sendBufferSizeBytes, receiveBufferSizeBytes, certificateValidationCallback);
 
                 // Create and open the connection, respecting the timeout constraint
                 // that was received.
@@ -1062,23 +1097,30 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
         /// <param name="port">The port to use for connecting to the endpoint.</param>
+        /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
+        /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
+        /// <param name="certificateValidationCallback">The validation callback to register for participation in the SSL handshake.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
         ///
         private static TransportSettings CreateTransportSettingsforTcp(string hostName,
-                                                                       int port)
+                                                                       int port,
+                                                                       int sendBufferSizeBytes,
+                                                                       int receiveBufferSizeBytes,
+                                                                       RemoteCertificateValidationCallback certificateValidationCallback)
         {
             var tcpSettings = new TcpTransportSettings
             {
                 Host = hostName,
                 Port = port < 0 ? AmqpConstants.DefaultSecurePort : port,
-                ReceiveBufferSize = AmqpConstants.TransportBufferSize,
-                SendBufferSize = AmqpConstants.TransportBufferSize
+                SendBufferSize = sendBufferSizeBytes,
+                ReceiveBufferSize = receiveBufferSizeBytes,
             };
 
             return new TlsTransportSettings(tcpSettings)
             {
                 TargetHost = hostName,
+                CertificateValidationCallback = certificateValidationCallback
             };
         }
 
@@ -1088,11 +1130,15 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
         /// <param name="proxy">The proxy to use for connecting to the endpoint.</param>
+        /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
+        /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
         ///
         private static TransportSettings CreateTransportSettingsForWebSockets(string hostName,
-                                                                              IWebProxy proxy)
+                                                                              IWebProxy proxy,
+                                                                              int sendBufferSizeBytes,
+                                                                              int receiveBufferSizeBytes)
         {
             var uriBuilder = new UriBuilder(hostName)
             {
@@ -1104,7 +1150,9 @@ namespace Azure.Messaging.EventHubs.Amqp
             return new WebSocketTransportSettings
             {
                 Uri = uriBuilder.Uri,
-                Proxy = proxy ?? (default)
+                Proxy = proxy,
+                SendBufferSize = sendBufferSizeBytes,
+                ReceiveBufferSize = receiveBufferSizeBytes
             };
         }
 

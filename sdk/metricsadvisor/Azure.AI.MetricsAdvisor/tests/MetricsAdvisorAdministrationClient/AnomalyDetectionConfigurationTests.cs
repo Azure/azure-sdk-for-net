@@ -80,37 +80,33 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateDetectionConfigurationValidatesArguments()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var config = new AnomalyDetectionConfiguration();
 
-            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(null, config), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync("", config), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync("configId", config), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDetectionConfiguration(null), Throws.InstanceOf<ArgumentNullException>());
 
-            Assert.That(() => adminClient.UpdateDetectionConfiguration(null, config), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateDetectionConfiguration("", config), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateDetectionConfiguration("configId", config), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateDetectionConfiguration(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            var configurationWithNullId = new AnomalyDetectionConfiguration();
+
+            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(configurationWithNullId), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDetectionConfiguration(configurationWithNullId), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public void UpdateDetectionConfigurationRespectsTheCancellationToken()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var config = new AnomalyDetectionConfiguration();
+            var config = new AnomalyDetectionConfiguration(FakeGuid, default, default, default, default, new List<MetricSeriesGroupDetectionCondition>(), new List<MetricSingleSeriesDetectionCondition>());
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(FakeGuid, config, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
-            Assert.That(() => adminClient.UpdateDetectionConfiguration(FakeGuid, config, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateDetectionConfigurationAsync(config, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateDetectionConfiguration(config, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]
