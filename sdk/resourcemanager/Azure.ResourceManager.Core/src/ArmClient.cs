@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         internal const string DefaultUri = "https://management.azure.com";
 
+        internal const string Scope = "https://management.core.windows.net/.default";
+
         private TenantOperations _tenant;
         /// <summary>
         /// Get the tenant operations <see cref="TenantOperations"/> class.
@@ -103,7 +105,7 @@ namespace Azure.ResourceManager.Core
             Credential = credential;
             BaseUri = baseUri ?? new Uri(DefaultUri);
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
-            Pipeline = ManagementPipelineBuilder.Build(Credential, scope, ClientOptions);
+            Pipeline = ManagementPipelineBuilder.Build(Credential, scope ?? Scope, ClientOptions);
 
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
