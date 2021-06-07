@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2021-06-07)
 
 ### New Features
 - Added `DatasourceCredential` CRUD operations to the `MetricsAdvisorAdministrationClient`. This API provides new ways of authenticating to a `DataFeedSource`.
