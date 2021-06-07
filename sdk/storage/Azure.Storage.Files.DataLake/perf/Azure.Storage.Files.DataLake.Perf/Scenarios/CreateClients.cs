@@ -40,9 +40,13 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
             new DataLakeDirectoryClient(s_directoryUri, s_tokenCredential);
             new DataLakeDirectoryClient(s_directoryUri, s_testEnvironment.DataLakeCredential);
 
-            new DataLakeDirectoryClient(s_fileUri);
-            new DataLakeDirectoryClient(s_fileUri, s_tokenCredential);
-            new DataLakeDirectoryClient(s_fileUri, s_testEnvironment.DataLakeCredential);
+            new DataLakeFileClient(s_fileUri);
+            new DataLakeFileClient(s_fileUri, s_tokenCredential);
+            new DataLakeFileClient(s_fileUri, s_testEnvironment.DataLakeCredential);
+
+            new DataLakePathClient(s_fileUri);
+            new DataLakePathClient(s_fileUri, s_tokenCredential);
+            new DataLakePathClient(s_fileUri, s_testEnvironment.DataLakeCredential);
 
             serviceClient.GetFileSystemClient("foo");
             fileSystemClient.GetDirectoryClient("foo");
