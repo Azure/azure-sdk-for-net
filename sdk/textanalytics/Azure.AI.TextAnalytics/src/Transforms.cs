@@ -328,7 +328,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     Domain = action.DomainFilter.GetString() ?? (PiiTaskParametersDomain?)null,
                     ModelVersion = action.ModelVersion,
-                    StringIndexType = action.StringIndexType,
+                    StringIndexType = Constants.DefaultStringIndexType,
                     LoggingOptOut = action.DisableServiceLogs
                     // Categories are not enabled because of https://github.com/Azure/azure-sdk-for-net/issues/19237
                 }
@@ -342,7 +342,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new EntityLinkingTaskParameters()
                 {
                     ModelVersion = action.ModelVersion,
-                    StringIndexType = action.StringIndexType,
+                    StringIndexType = Constants.DefaultStringIndexType,
                     LoggingOptOut = action.DisableServiceLogs
                 }
             };
@@ -355,7 +355,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new EntitiesTaskParameters()
                 {
                     ModelVersion = action.ModelVersion,
-                    StringIndexType = action.StringIndexType,
+                    StringIndexType = Constants.DefaultStringIndexType,
                     LoggingOptOut = action.DisableServiceLogs
                 }
             };
@@ -380,7 +380,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new SentimentAnalysisTaskParameters()
                 {
                     ModelVersion = action.ModelVersion,
-                    StringIndexType = action.StringIndexType,
+                    StringIndexType = Constants.DefaultStringIndexType,
                     LoggingOptOut = action.DisableServiceLogs,
                     OpinionMining = action.IncludeOpinionMining
                 }
@@ -515,8 +515,7 @@ namespace Azure.AI.TextAnalytics
                 ConvertToRecognizeEntitiesActionsResults(jobState, map, entitiesRecognitionErrors),
                 ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors),
                 ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
-                ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
-                jobState.Statistics);
+                ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors));
         }
 
         private static IReadOnlyCollection<AnalyzeSentimentActionResult> ConvertToAnalyzeSentimentActionsResults(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, TextAnalyticsErrorInternal> tasksErrors)

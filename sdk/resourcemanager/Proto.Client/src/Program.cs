@@ -11,7 +11,7 @@ namespace Proto.Client
             Scenario scenario = null;
             try
             {
-                scenario = ScenarioFactory.GetScenario(Scenarios.VmImageTests);
+                scenario = ScenarioFactory.GetScenario(Scenarios.ShutdownVmsByLINQ);
                 scenario.Execute();
             }
             finally

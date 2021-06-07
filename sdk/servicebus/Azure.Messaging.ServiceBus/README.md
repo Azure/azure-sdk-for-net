@@ -56,6 +56,34 @@ ServiceBusClient client = new ServiceBusClient(connectionString);
 
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
 
+### ASP.NET Core
+
+To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, register the client in the `Startup.ConfigureServices` method:
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAzureClients(builder =>
+    {
+        builder.AddServiceBusClient(Configuration.GetConnectionString("ServiceBus"));
+    });
+  
+    services.AddControllers();
+}
+```
+
+To use the preceding code, add this to your configuration:
+
+```json
+{
+  "ConnectionStrings": {
+    "ServiceBus": "<connection_string>"
+  }
+}
+```
+
+For more details, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
+
 ## Key concepts
 
 Once you've initialized a `ServiceBusClient`, you can interact with the primary resource types within a Service Bus Namespace, of which multiple can exist and on which actual message transmission takes place, the namespace often serving as an application container:

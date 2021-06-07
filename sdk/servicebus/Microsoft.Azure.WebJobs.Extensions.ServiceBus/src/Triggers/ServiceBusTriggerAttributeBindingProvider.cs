@@ -101,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
         {
             if (attribute.IsAutoCompleteMessagesOptionSet)
             {
-                _logger.LogInformation($"The 'AutoCompleteMessages' option has been overrriden to '{attribute.AutoCompleteMessages}' value for '{functionName}' function.");
+                _logger.LogInformation($"The 'AutoCompleteMessages' option has been overriden to '{attribute.AutoCompleteMessages}' value for '{functionName}' function.");
 
                 return attribute.AutoCompleteMessages;
             }

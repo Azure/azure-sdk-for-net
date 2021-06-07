@@ -100,7 +100,7 @@ namespace Azure.Data.Tables.Tests
             service = InstrumentClient(new TableServiceClient(
                 new Uri(ServiceUri),
                 new TableSharedKeyCredential(AccountName, AccountKey),
-                InstrumentClientOptions(new TablesClientOptions())));
+                InstrumentClientOptions(new TableClientOptions())));
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 

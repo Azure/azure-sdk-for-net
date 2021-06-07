@@ -4,6 +4,8 @@
 using System;
 using System.ComponentModel;
 using System.Net;
+using System.Net.Security;
+using System.Net.Sockets;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -24,12 +26,38 @@ namespace Azure.Messaging.EventHubs
         public EventHubsTransportType TransportType { get; set; } = EventHubsTransportType.AmqpTcp;
 
         /// <summary>
+        ///   The size of the buffer used for sending information via the active transport.
+        /// </summary>
+        ///
+        /// <value>The size of the buffer, in bytes.  The default size is 8,192 bytes.</value>
+        ///
+        /// <remarks>
+        ///   This value is used to configure the <see cref="Socket.SendBufferSize" /> used by
+        ///   the active transport.
+        /// </remarks>
+        ///
+        public int SendBufferSizeInBytes { get; set; } = 8192;
+
+        /// <summary>
+        ///   The size of the buffer used for receiving information via the active transport.
+        /// </summary>
+        ///
+        /// <value>The size of the buffer, in bytes.  The default size is 8,192 bytes.</value>
+        ///
+        /// <remarks>
+        ///   This value is used to configure the <see cref="Socket.ReceiveBufferSize" /> used by
+        ///   the active transport.
+        /// </remarks>
+        ///
+        public int ReceiveBufferSizeInBytes { get; set; } = 8192;
+
+        /// <summary>
         ///   The proxy to use for communication over web sockets.
         /// </summary>
         ///
         /// <remarks>
-        ///   A proxy cannot be used for communication over TCP; if web sockets are not in
-        ///   use, specifying a proxy is an invalid option.
+        ///   A proxy cannot be used for communication over TCP; if the <see cref="TransportType" /> is not set
+        ///   to <see cref="EventHubsTransportType.AmqpWebSockets" />, specifying a proxy is invalid.
         /// </remarks>
         ///
         public IWebProxy Proxy { get; set; }
@@ -46,6 +74,15 @@ namespace Azure.Messaging.EventHubs
         /// </value>
         ///
         public Uri CustomEndpointAddress { get; set; }
+
+        /// <summary>
+        ///   A <see cref="RemoteCertificateValidationCallback" /> delegate allowing custom logic to be considered for
+        ///   validation of the remote certificate responsible for encrypting communication.
+        /// </summary>
+        ///
+        /// <value>The callback will be invoked any time a connection is established, including any reconnect attempts.</value>
+        ///
+        public RemoteCertificateValidationCallback CertificateValidationCallback { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
