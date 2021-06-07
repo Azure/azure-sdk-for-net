@@ -83,6 +83,12 @@ namespace Azure.Data.Tables
 
         internal static string EscapeStringValue(string s) => s.Replace("'", "''");
         internal static StringBuilder EscapeStringValue(StringBuilder s) => s.Replace("'", "''");
-        internal static string EscapeStringValue(char s) => s.ToString().Replace("'", "''");
+
+        internal static string EscapeStringValue(char s) =>
+            s switch
+            {
+                _ when s == '\'' => "''",
+                _ => s.ToString()
+            };
     }
 }
