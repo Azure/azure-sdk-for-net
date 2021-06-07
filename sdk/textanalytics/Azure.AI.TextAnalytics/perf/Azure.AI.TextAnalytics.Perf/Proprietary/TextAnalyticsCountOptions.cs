@@ -6,9 +6,7 @@ using CommandLine;
 
 namespace Azure.AI.TextAnalytics.Perf
 {
-    public class TextAnalyticsCountOptions
-
-        : PerfOptions
+    public class TextAnalyticsCountOptions : PerfOptions
     {
         [Option('c', "count", Default = 1000, HelpText = "Number of items")]
         public int Count { get; set; }
