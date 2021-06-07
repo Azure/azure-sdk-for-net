@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The results of executing multiple actions in a set of documents.
+    /// The results of executing multiple actions on a set of documents.
     /// </summary>
     public class AnalyzeActionsResult
     {
