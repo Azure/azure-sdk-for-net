@@ -31,7 +31,7 @@ namespace Azure.Monitor.Query.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _testData = new MetricsTestData(this, this.TestEnvironment, this.Recording.UtcNow);
+            _testData = new MetricsTestData(TestEnvironment, Recording.UtcNow);
             await _testData.InitializeAsync();
         }
 
