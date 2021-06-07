@@ -44,10 +44,10 @@ namespace Azure.Monitor.Query.Tests
             _initialized = true;
             var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
 
+            await SendData();
+
             while (!await MetricsPropagated(metricClient))
             {
-                await SendData();
-
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
         }

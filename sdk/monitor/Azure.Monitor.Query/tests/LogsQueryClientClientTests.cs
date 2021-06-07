@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query.Tests
             }));
 
             Assert.AreEqual("wait=600", preferHeader);
-            Assert.AreEqual(TimeSpan.FromMinutes(10), networkOverride);
+            Assert.AreEqual(TimeSpan.FromMinutes(10).Add(TimeSpan.FromSeconds(15)), networkOverride);
         }
     }
 }
