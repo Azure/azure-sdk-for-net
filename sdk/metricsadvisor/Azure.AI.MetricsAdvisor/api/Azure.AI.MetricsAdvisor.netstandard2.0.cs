@@ -506,6 +506,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             ServicePrincipalInKeyVault = 3,
         }
     }
+    public partial class AzureEventHubsDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
+    {
+        public AzureEventHubsDataFeedSource(string connectionString, string consumerGroup) { }
+        public string ConsumerGroup { get { throw null; } set { } }
+        public void UpdateConnectionString(string connectionString) { }
+    }
     public partial class AzureTableDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureTableDataFeedSource(string connectionString, string table, string query) { }
@@ -764,9 +770,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureDataExplorer { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureDataLakeStorageGen2 { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureEventHubs { get { throw null; } }
-        public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureLogAnalytics { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType AzureTable { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType InfluxDb { get { throw null; } }
+        public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType LogAnalytics { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType MongoDb { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType MySql { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceType PostgreSql { get { throw null; } }
@@ -943,6 +949,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static implicit operator Azure.AI.MetricsAdvisor.Models.IngestionStatusType (string value) { throw null; }
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.IngestionStatusType left, Azure.AI.MetricsAdvisor.Models.IngestionStatusType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class LogAnalyticsDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
+    {
+        public LogAnalyticsDataFeedSource(string workspaceId, string query) { }
+        public LogAnalyticsDataFeedSource(string workspaceId, string query, string clientId, string clientSecret, string tenantId) { }
+        public string ClientId { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        public string WorkspaceId { get { throw null; } set { } }
+        public void UpdateClientSecret(string clientSecret) { }
     }
     public partial class MetricAnomalyAlertConditions
     {

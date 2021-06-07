@@ -45,7 +45,7 @@ namespace Azure.Security.ConfidentialLedger
     public partial class ConfidentialLedgerIdentityServiceClient
     {
         protected ConfidentialLedgerIdentityServiceClient() { }
-        public ConfidentialLedgerIdentityServiceClient(System.Uri identityServiceUri, Azure.Core.TokenCredential credential, Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions options = null) { }
+        public ConfidentialLedgerIdentityServiceClient(System.Uri identityServiceUri, Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetLedgerIdentity(string ledgerId, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerIdentityAsync(string ledgerId, Azure.RequestOptions requestOptions = null) { throw null; }
