@@ -10,13 +10,13 @@ namespace Azure.AI.TextAnalytics.Perf
 {
     public sealed class DetectLanguagePerf
 
-        : TextAnalyticsTest<CustomCountOptions>
+        : TextAnalyticsTest<TextAnalyticsCountOptions>
     {
         private readonly TextAnalyticsClient _client;
 
         private List<string> _batchDocuments;
 
-        public DetectLanguagePerf(CustomCountOptions options) : base(options)
+        public DetectLanguagePerf(TextAnalyticsCountOptions options) : base(options)
         {
             // create client
             _client = new TextAnalyticsClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
