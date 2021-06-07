@@ -2,6 +2,9 @@
 
 ## 7.2.0-beta.4 (Unreleased)
 
+### Key Bug Fixes
+
+- The retry policy used by clients will no longer overflow the `TimeSpan` maximum when using an `Exponential` strategy with a large number of retries and long delay set.
 
 ## 7.2.0-beta.3 (2021-05-12)
 

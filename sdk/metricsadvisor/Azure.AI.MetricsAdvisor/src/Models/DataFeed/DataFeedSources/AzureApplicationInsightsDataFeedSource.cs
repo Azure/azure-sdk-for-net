@@ -31,8 +31,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(apiKey, nameof(apiKey));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
-            Parameter = new AzureApplicationInsightsParameter(azureCloud, applicationId, apiKey, query);
-
             ApplicationId = applicationId;
             ApiKey = apiKey;
             AzureCloud = azureCloud;
@@ -44,8 +42,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
-            Parameter = parameter;
-
             ApplicationId = parameter.ApplicationId;
             ApiKey = parameter.ApiKey;
             AzureCloud = parameter.AzureCloud;
@@ -55,17 +51,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The Application ID.
         /// </summary>
-        public string ApplicationId { get; }
+        public string ApplicationId { get; set; }
 
         /// <summary>
         /// The Azure cloud environment.
         /// </summary>
-        public string AzureCloud { get; }
+        public string AzureCloud { get; set; }
 
         /// <summary>
         /// The query used to filter the data to be ingested.
         /// </summary>
-        public string Query { get; }
+        public string Query { get; set; }
 
         /// <summary>
         /// The API key.
@@ -74,6 +70,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             get => Volatile.Read(ref _apiKey);
             private set => Volatile.Write(ref _apiKey, value);
+        }
+
+        /// <summary>
+        /// Updates the API key.
+        /// </summary>
+        /// <param name="apiKey">The new API key to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="apiKey"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="apiKey"/> is empty.</exception>
+        public void UpdateApiKey(string apiKey)
+        {
+            Argument.AssertNotNullOrEmpty(apiKey, nameof(apiKey));
+            ApiKey = apiKey;
         }
     }
 }

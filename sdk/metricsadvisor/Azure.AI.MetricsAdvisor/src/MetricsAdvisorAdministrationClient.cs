@@ -351,78 +351,77 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="DataFeed"/>.
+        /// Updates an existing <see cref="DataFeed"/>. In order to update your data feed, you cannot create a <see cref="DataFeed"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDataFeedAsync"/> or another CRUD operation and update it
+        /// before calling this method.
         /// </summary>
-        /// <param name="dataFeedId">The ID of the existing <see cref="DataFeed"/> to update.</param>
         /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> or <paramref name="dataFeed"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateDataFeedAsync(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> or <paramref name="dataFeed"/>.Id is null.</exception>
+        public virtual async Task<Response<DataFeed>> UpdateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            /*
-            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
-            if (!string.IsNullOrEmpty(dataFeed.Id) && !dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
+
+            if (dataFeed.Id == null)
             {
-                throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
+                throw new ArgumentNullException(nameof(dataFeed), $"{nameof(dataFeed)}.Id not available. Call {nameof(GetDataFeedAsync)} and update the returned model before calling this method.");
             }
+
+            Guid dataFeedGuid = new Guid(dataFeed.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
             scope.Start();
             try
             {
                 DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
-                return await _serviceRestClient.UpdateDataFeedAsync(dataFeedGuid, patchModel, cancellationToken).ConfigureAwait(false);
+                Response<DataFeedDetail> response = await _serviceRestClient.UpdateDataFeedAsync(dataFeedGuid, patchModel, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DataFeed(response.Value), response.GetRawResponse());
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
-            */
-            await Task.CompletedTask.ConfigureAwait(false);
-            return default;
         }
 
         /// <summary>
-        /// Updates an existing <see cref="DataFeed"/>.
+        /// Updates an existing <see cref="DataFeed"/>. In order to update your data feed, you cannot create a <see cref="DataFeed"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDataFeedAsync"/> or another CRUD operation and update it
+        /// before calling this method.
         /// </summary>
-        /// <param name="dataFeedId">The ID of the existing <see cref="DataFeed"/> to update.</param>
         /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> or <paramref name="dataFeed"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateDataFeed(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> or <paramref name="dataFeed"/>.Id is null.</exception>
+        public virtual Response<DataFeed> UpdateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            /*
-            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
-            if (!string.IsNullOrEmpty(dataFeed.Id) && !dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
+
+            if (dataFeed.Id == null)
             {
-                throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
+                throw new ArgumentNullException(nameof(dataFeed), $"{nameof(dataFeed)}.Id not available. Call {nameof(GetDataFeed)} and update the returned model before calling this method.");
             }
+
+            Guid dataFeedGuid = new Guid(dataFeed.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
             scope.Start();
             try
             {
                 DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
-                return _serviceRestClient.UpdateDataFeed(dataFeedGuid, patchModel, cancellationToken);
+                Response<DataFeedDetail> response = _serviceRestClient.UpdateDataFeed(dataFeedGuid, patchModel, cancellationToken);
+                return Response.FromValue(new DataFeed(response.Value), response.GetRawResponse());
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
-            */
-            return default;
         }
 
         /// <summary>
@@ -1583,21 +1582,26 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="NotificationHook"/>.
+        /// Updates an existing <see cref="NotificationHook"/>. In order to update your hook, you cannot create a <see cref="NotificationHook"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetHookAsync"/> or another CRUD operation and update it
+        /// before calling this method.
         /// </summary>
-        /// <param name="hookId">The ID of the existing <see cref="NotificationHook"/> to update.</param>
         /// <param name="hook">The <see cref="NotificationHook"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hookId"/> or <paramref name="hook"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateHookAsync(string hookId, NotificationHook hook, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="hook"/> or <paramref name="hook"/>.Id is null.</exception>
+        public virtual async Task<Response<NotificationHook>> UpdateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
         {
-            /*
-            Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
+
+            if (hook.Id == null)
+            {
+                throw new ArgumentNullException(nameof(hook), $"{nameof(hook)}.Id not available. Call {nameof(GetHookAsync)} and update the returned model before calling this method.");
+            }
+
+            Guid hookGuid = new Guid(hook.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
             scope.Start();
@@ -1613,28 +1617,29 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
-            */
-
-            await Task.CompletedTask.ConfigureAwait(false);
-            return default;
         }
 
         /// <summary>
-        /// Updates an existing <see cref="NotificationHook"/>.
+        /// Updates an existing <see cref="NotificationHook"/>. In order to update your hook, you cannot create a <see cref="NotificationHook"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetHook"/> or another CRUD operation and update it
+        /// before calling this method.
         /// </summary>
-        /// <param name="hookId">The ID of the existing <see cref="NotificationHook"/> to update.</param>
         /// <param name="hook">The <see cref="NotificationHook"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hookId"/> or <paramref name="hook"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateHook(string hookId, NotificationHook hook, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="hook"/> or <paramref name="hook"/>.Id is null.</exception>
+        public virtual Response<NotificationHook> UpdateHook(NotificationHook hook, CancellationToken cancellationToken = default)
         {
-            /*
-            Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
+
+            if (hook.Id == null)
+            {
+                throw new ArgumentNullException(nameof(hook), $"{nameof(hook)}.Id not available. Call {nameof(GetHook)} and update the returned model before calling this method.");
+            }
+
+            Guid hookGuid = new Guid(hook.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
             scope.Start();
@@ -1650,9 +1655,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 scope.Failed(e);
                 throw;
             }
-            */
-
-            return default;
         }
 
         /// <summary>

@@ -46,7 +46,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
             IdentityClient = InstrumentClient(
                 new ConfidentialLedgerIdentityServiceClient(
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
-                    Credential,
                     InstrumentClientOptions(Options)));
         }
 
