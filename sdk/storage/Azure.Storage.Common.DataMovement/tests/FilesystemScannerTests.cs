@@ -186,28 +186,18 @@ namespace Azure.Storage.Tests
                 dynamic fsInfo = isDirectory ? new DirectoryInfo(path) : new FileInfo(path);
                 dynamic fsSec = FileSystemAclExtensions.GetAccessControl(fsInfo);
 
-                if (allowRead)
-                {
-                    fsSec.RemoveAccessRule(_winAcl);
-                }
-                else
-                {
-                    fsSec.AddAccessRule(_winAcl);
-                }
+                fsSec.ModifyAccessRule(allowRead ? AccessControlModification.Remove : AccessControlModification.Add, _winAcl, out bool result);
 
                 FileSystemAclExtensions.SetAccessControl(fsInfo, fsSec);
             }
 #if !NETFRAMEWORK
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                if (allowRead)
-                {
-                    Syscall.chmod(path, FilePermissions.S_IRWXO);
-                }
-                else
-                {
-                    Syscall.chmod(path, FilePermissions.S_IWUSR);
-                }
+                FilePermissions permissions = (allowRead ?
+                    (FilePermissions.S_IRWXU | FilePermissions.S_IRWXG | FilePermissions.S_IRWXO) :
+                    (FilePermissions.S_IWUSR | FilePermissions.S_IWGRP | FilePermissions.S_IWOTH));
+
+                Syscall.chmod(path, permissions);
             }
 #endif
         }
