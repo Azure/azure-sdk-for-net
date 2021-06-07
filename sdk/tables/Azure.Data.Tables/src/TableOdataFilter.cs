@@ -68,9 +68,9 @@ namespace Azure.Data.Tables
                     DateTime x => $"{XmlConstants.LiteralPrefixDateTime}'{XmlConvert.ToString(x.ToUniversalTime(), XmlDateTimeSerializationMode.RoundtripKind)}'",
 
                     // Text
-                    string x => $"'{x.Replace("'", "''")}'",
-                    char x => $"'{x.ToString().Replace("'", "''")}'",
-                    StringBuilder x => $"'{x.Replace("'", "''")}'",
+                    string x => $"'{escapeStringValue(x)}'",
+                    char x => $"'{escapeStringValue(x)}'",
+                    StringBuilder x => $"'{escapeStringValue(x)}'",
 
                     // Everything else
                     object x => throw new ArgumentException(
@@ -80,5 +80,9 @@ namespace Azure.Data.Tables
 
             return string.Format(CultureInfo.InvariantCulture, filter.Format, args);
         }
+
+        internal static string escapeStringValue(string s) => s.Replace("'", "''");
+        internal static StringBuilder escapeStringValue(StringBuilder s) => s.Replace("'", "''");
+        internal static string escapeStringValue(char s) => s.ToString().Replace("'", "''");
     }
 }

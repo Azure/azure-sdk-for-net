@@ -321,7 +321,7 @@ namespace Azure.Data.Tables
             try
             {
                 var response = _tableOperations.Create(
-                    new TableProperties() { TableName = Name },
+                    new TableProperties { TableName = Name },
                     null,
                     _defaultQueryOptions,
                     cancellationToken);
@@ -347,7 +347,7 @@ namespace Azure.Data.Tables
             try
             {
                 var response = await _tableOperations.CreateAsync(
-                        new TableProperties() { TableName = Name },
+                        new TableProperties { TableName = Name },
                         null,
                         _defaultQueryOptions,
                         cancellationToken)
@@ -374,7 +374,7 @@ namespace Azure.Data.Tables
             try
             {
                 var response = _tableOperations.Create(
-                    new TableProperties() { TableName = Name },
+                    new TableProperties { TableName = Name },
                     null,
                     _defaultQueryOptions,
                     cancellationToken);
@@ -404,7 +404,7 @@ namespace Azure.Data.Tables
             try
             {
                 var response = await _tableOperations.CreateAsync(
-                        new TableProperties() { TableName = Name },
+                        new TableProperties { TableName = Name },
                         null,
                         _defaultQueryOptions,
                         cancellationToken)
@@ -577,7 +577,7 @@ namespace Azure.Data.Tables
                     Name,
                     partitionKey,
                     rowKey,
-                    queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Select = selectArg },
+                    queryOptions: new QueryOptions { Format = _defaultQueryOptions.Format, Select = selectArg },
                     cancellationToken: cancellationToken);
 
                 var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
@@ -620,7 +620,7 @@ namespace Azure.Data.Tables
                         Name,
                         partitionKey,
                         rowKey,
-                        queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Select = selectArg },
+                        queryOptions: new QueryOptions { Format = _defaultQueryOptions.Format, Select = selectArg },
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -660,16 +660,16 @@ namespace Azure.Data.Tables
                 {
                     TableUpdateMode.Replace => await _tableOperations.UpdateEntityAsync(
                             Name,
-                            entity!.PartitionKey,
-                            entity.RowKey,
+                            TableOdataFilter.escapeStringValue(entity!.PartitionKey),
+                            TableOdataFilter.escapeStringValue(entity.RowKey),
                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                             queryOptions: _defaultQueryOptions,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false),
                     TableUpdateMode.Merge => await _tableOperations.MergeEntityAsync(
                             Name,
-                            entity!.PartitionKey,
-                            entity.RowKey,
+                            TableOdataFilter.escapeStringValue(entity!.PartitionKey),
+                            TableOdataFilter.escapeStringValue(entity.RowKey),
                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                             queryOptions: _defaultQueryOptions,
                             cancellationToken: cancellationToken)
@@ -708,15 +708,15 @@ namespace Azure.Data.Tables
                 {
                     TableUpdateMode.Replace => _tableOperations.UpdateEntity(
                         Name,
-                        entity!.PartitionKey,
-                        entity.RowKey,
+                        TableOdataFilter.escapeStringValue(entity!.PartitionKey),
+                        TableOdataFilter.escapeStringValue(entity.RowKey),
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken),
                     TableUpdateMode.Merge => _tableOperations.MergeEntity(
                         Name,
-                        entity!.PartitionKey,
-                        entity.RowKey,
+                        TableOdataFilter.escapeStringValue(entity!.PartitionKey),
+                        TableOdataFilter.escapeStringValue(entity.RowKey),
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken),
@@ -770,8 +770,8 @@ namespace Azure.Data.Tables
                 {
                     return await _tableOperations.UpdateEntityAsync(
                             Name,
-                            entity.PartitionKey,
-                            entity.RowKey,
+                            TableOdataFilter.escapeStringValue(entity.PartitionKey),
+                            TableOdataFilter.escapeStringValue(entity.RowKey),
                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                             ifMatch: ifMatch.ToString(),
                             queryOptions: _defaultQueryOptions,
@@ -782,8 +782,8 @@ namespace Azure.Data.Tables
                 {
                     return await _tableOperations.MergeEntityAsync(
                             Name,
-                            entity!.PartitionKey,
-                            entity.RowKey,
+                            TableOdataFilter.escapeStringValue(entity!.PartitionKey),
+                            TableOdataFilter.escapeStringValue(entity.RowKey),
                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                             ifMatch: ifMatch.ToString(),
                             queryOptions: _defaultQueryOptions,
@@ -836,8 +836,8 @@ namespace Azure.Data.Tables
                 {
                     return _tableOperations.UpdateEntity(
                         Name,
-                        entity!.PartitionKey,
-                        entity!.RowKey,
+                        TableOdataFilter.escapeStringValue(entity!.PartitionKey),
+                        TableOdataFilter.escapeStringValue(entity!.RowKey),
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         ifMatch: ifMatch.ToString(),
                         queryOptions: _defaultQueryOptions,
@@ -847,8 +847,8 @@ namespace Azure.Data.Tables
                 {
                     return _tableOperations.MergeEntity(
                         Name,
-                        entity.PartitionKey,
-                        entity.RowKey,
+                        TableOdataFilter.escapeStringValue(entity.PartitionKey),
+                        TableOdataFilter.escapeStringValue(entity.RowKey),
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         ifMatch: ifMatch.ToString(),
                         queryOptions: _defaultQueryOptions,
@@ -975,7 +975,7 @@ namespace Azure.Data.Tables
                     {
                         var response = await _tableOperations.QueryEntitiesAsync(
                                 Name,
-                                queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                                queryOptions: new QueryOptions { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
                                 cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
@@ -1000,7 +1000,7 @@ namespace Azure.Data.Tables
 
                         var response = await _tableOperations.QueryEntitiesAsync(
                                 Name,
-                                queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                                queryOptions: new QueryOptions { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
                                 nextPartitionKey: NextPartitionKey,
                                 nextRowKey: NextRowKey,
                                 cancellationToken: cancellationToken)
@@ -1054,7 +1054,7 @@ namespace Azure.Data.Tables
                     scope.Start();
                     try
                     {
-                        var queryOptions = new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg };
+                        var queryOptions = new QueryOptions { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg };
 
                         var response = _tableOperations.QueryEntities(
                             Name,
@@ -1080,7 +1080,7 @@ namespace Azure.Data.Tables
                     {
                         var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                        var queryOptions = new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg };
+                        var queryOptions = new QueryOptions { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg };
 
                         var response = _tableOperations.QueryEntities(
                             Name,
@@ -1422,8 +1422,8 @@ namespace Azure.Data.Tables
                         new QueryOptions { Format = _defaultQueryOptions.Format!.Value }),
                     TableTransactionActionType.Delete => batchOperations.CreateDeleteEntityRequest(
                         Name,
-                        item.Entity.PartitionKey,
-                        item.Entity.RowKey,
+                        TableOdataFilter.escapeStringValue(item.Entity.PartitionKey),
+                        TableOdataFilter.escapeStringValue(item.Entity.RowKey),
                         item.ETag == default ? ETag.All.ToString() : item.ETag.ToString(),
                         null,
                         new QueryOptions { Format = _defaultQueryOptions.Format!.Value }),
@@ -1445,16 +1445,16 @@ namespace Azure.Data.Tables
             {
                 TableUpdateMode.Replace => batchOperations.CreateUpdateEntityRequest(
                     Name,
-                    entity.PartitionKey,
-                    entity.RowKey,
+                    TableOdataFilter.escapeStringValue(entity.PartitionKey),
+                    TableOdataFilter.escapeStringValue(entity.RowKey),
                     null,
                     ifMatch == default ? null : ifMatch.ToString(),
                     entity.ToOdataAnnotatedDictionary(),
                     new QueryOptions { Format = _defaultQueryOptions.Format!.Value }),
                 TableUpdateMode.Merge => batchOperations.CreateMergeEntityRequest(
                     Name,
-                    entity.PartitionKey,
-                    entity.RowKey,
+                    TableOdataFilter.escapeStringValue(entity.PartitionKey),
+                    TableOdataFilter.escapeStringValue(entity.RowKey),
                     null,
                     ifMatch == default ? null : ifMatch.ToString(),
                     entity.ToOdataAnnotatedDictionary(),
