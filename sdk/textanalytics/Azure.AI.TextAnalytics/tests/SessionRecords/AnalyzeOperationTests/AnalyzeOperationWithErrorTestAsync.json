@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/analyze",
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1/analyze",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "276",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-932f4d95d9fca6469de2b3a58a8b1571-798e2eebe009ef48-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210527.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-dd4166bd96fc624b988319cbce8d3fb1-32dbb2a92d847a45-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210610.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "ac619f24e6117d0afaa59ef96ef473c7",
         "x-ms-return-client-request-id": "true"
       },
@@ -39,9 +39,9 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "adfc2018-12a8-4c11-9f1c-36e50ba6938f",
+        "apim-request-id": "47c2ee5d-0a8f-40c7-aa06-542ffd2a7404",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 27 May 2021 14:18:56 GMT",
+        "Date": "Thu, 10 Jun 2021 17:56:30 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
@@ -53,7 +53,7 @@
           "message": "Invalid parameter in request",
           "innererror": {
             "code": "InvalidParameterValue",
-            "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2019-10-01,2020-07-01."
+            "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2019-10-01,2020-07-01,2021-05-01."
           }
         }
       }
@@ -62,6 +62,6 @@
   "Variables": {
     "RandomSeed": "1285200460",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
   }
 }

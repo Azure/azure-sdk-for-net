@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1)]
     public class RecognizeHealthcareEntitiesTests : TextAnalyticsClientLiveTestBase
     {
         public RecognizeHealthcareEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -92,7 +92,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (entity.Text == "100mg")
                 {
                     Assert.AreEqual(18, entity.Offset);
-                    Assert.AreEqual("Dosage", entity.Category);
+                    Assert.AreEqual(HealthcareEntityCategory.Dosage, entity.Category);
                     Assert.AreEqual(5, entity.Length);
                 }
             }
@@ -108,13 +108,14 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual("Dosage", role.Name);
                     Assert.AreEqual("100mg", role.Entity.Text);
                     Assert.AreEqual(18, role.Entity.Offset);
-                    Assert.AreEqual("Dosage", role.Entity.Category);
+                    Assert.AreEqual(HealthcareEntityCategory.Dosage, role.Entity.Category);
                     Assert.AreEqual(5, role.Entity.Length);
                 }
             }
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21796")]
         public async Task RecognizeHealthcareEntitiesTestWithAssertions()
         {
             TextAnalyticsClient client = GetClient();
@@ -163,7 +164,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (entity.Text == "Meningitis")
                 {
                     Assert.AreEqual(24, entity.Offset);
-                    Assert.AreEqual("Diagnosis", entity.Category);
+                    Assert.AreEqual(HealthcareEntityCategory.Diagnosis, entity.Category);
                     Assert.AreEqual(10, entity.Length);
                     Assert.IsNotNull(entity.Assertion);
                     Assert.AreEqual(EntityCertainty.NegativePossible, entity.Assertion.Certainty.Value);
@@ -171,7 +172,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 if (entity.Text == "Penicillin")
                 {
-                    Assert.AreEqual("MedicationName", entity.Category);
+                    Assert.AreEqual(HealthcareEntityCategory.MedicationName, entity.Category);
                     Assert.AreEqual(10, entity.Length);
                     Assert.IsNotNull(entity.Assertion);
                     Assert.AreEqual(EntityCertainty.NeutralPossible, entity.Assertion.Certainty.Value);
