@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    public partial class NotebooksPrepareOperation : Operation<NotebookResourceInfo>, IOperationSource<NotebookResourceInfo>
+    public partial class WorkspacesPrepareNotebookOperation : Operation<NotebookResourceInfo>, IOperationSource<NotebookResourceInfo>
     {
         private readonly OperationInternals<NotebookResourceInfo> _operation;
 
-        /// <summary> Initializes a new instance of NotebooksPrepareOperation for mocking. </summary>
-        protected NotebooksPrepareOperation()
+        /// <summary> Initializes a new instance of WorkspacesPrepareNotebookOperation for mocking. </summary>
+        protected WorkspacesPrepareNotebookOperation()
         {
         }
 
-        internal NotebooksPrepareOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WorkspacesPrepareNotebookOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<NotebookResourceInfo>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebooksPrepareOperation");
+            _operation = new OperationInternals<NotebookResourceInfo>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkspacesPrepareNotebookOperation");
         }
 
         /// <inheritdoc />

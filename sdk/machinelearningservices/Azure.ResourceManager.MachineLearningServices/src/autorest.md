@@ -33,9 +33,8 @@ operation-group-to-resource:
   Usages: NonResource
   VirtualMachineSizes: NonResource
   Quotas: NonResource
-  WorkspaceSkus: NonResource # no PUT
+  WorkspaceSkus: NonResource # no PUT, Sub level
   PrivateLinkResources: NonResource # no PUT
-  Notebooks: NonResource
   StorageAccount: NonResource
   MachineLearningServices: ServiceResource # PUT req/res mismatch
   WorkspaceConnections: WorkspaceConnection # PUT req/res mismatch
@@ -45,7 +44,6 @@ operation-group-to-parent:
   Quotas: Locations
   Notebooks: Workspaces
   StorageAccount: Workspaces
-  WorkspaceFeatures: Workspaces
   WorkspaceSkus: Workspaces
   PrivateLinkResources: Workspaces
 directive:
@@ -56,4 +54,10 @@ directive:
   - rename-model:
       from: Operation
       to: RestApi
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/prepareNotebook'].post.operationId
+    transform: return "Workspaces_PrepareNotebook";
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/listNotebookKeys'].post.operationId
+    transform: return "Workspaces_ListNotebookKeys";
 ```

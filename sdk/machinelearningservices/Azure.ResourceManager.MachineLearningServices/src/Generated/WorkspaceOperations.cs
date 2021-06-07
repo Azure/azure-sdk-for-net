@@ -309,6 +309,38 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ListNotebookKeysResult>> ListNotebookKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListNotebookKeys");
+            scope.Start();
+            try
+            {
+                return await RestClient.ListNotebookKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ListNotebookKeysResult> ListNotebookKeys(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListNotebookKeys");
+            scope.Start();
+            try
+            {
+                return RestClient.ListNotebookKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Resync all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> ResyncKeysAsync(CancellationToken cancellationToken = default)
@@ -373,6 +405,74 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = RestClient.ResyncKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return new WorkspacesResyncKeysOperation(_clientDiagnostics, _pipeline, RestClient.CreateResyncKeysRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<NotebookResourceInfo>> PrepareNotebookAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.PrepareNotebook");
+            scope.Start();
+            try
+            {
+                var operation = await StartPrepareNotebookAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<NotebookResourceInfo> PrepareNotebook(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.PrepareNotebook");
+            scope.Start();
+            try
+            {
+                var operation = StartPrepareNotebook(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<WorkspacesPrepareNotebookOperation> StartPrepareNotebookAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.StartPrepareNotebook");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.PrepareNotebookAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new WorkspacesPrepareNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreatePrepareNotebookRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public WorkspacesPrepareNotebookOperation StartPrepareNotebook(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.StartPrepareNotebook");
+            scope.Start();
+            try
+            {
+                var response = RestClient.PrepareNotebook(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new WorkspacesPrepareNotebookOperation(_clientDiagnostics, _pipeline, RestClient.CreatePrepareNotebookRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
