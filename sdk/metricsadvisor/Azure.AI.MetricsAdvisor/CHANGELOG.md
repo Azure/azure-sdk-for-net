@@ -10,6 +10,7 @@
 - `GetDetectionConfigurations` and `GetAlertConfigurations` in the `MetricsAdvisorAdministrationClient` can now take a set of options with `Skip` and `MaxPageSize` properties to configure paging behavior.
 - Added setters to models that use the Update APIs to make updating easier.
 - Added property `DataFeedId` to `DataPointAnomaly` and `AnomalyIncident`.
+- Added two new data feed sources: `AzureEventHubsDataFeedSource` and `LogAnalyticsDataFeedSource`.
 
 ### Breaking Changes
 - Update methods will now return the updated entity instead of an empty response. For example, `UpdateDataFeed` now returns a `Response<DataFeed>`.

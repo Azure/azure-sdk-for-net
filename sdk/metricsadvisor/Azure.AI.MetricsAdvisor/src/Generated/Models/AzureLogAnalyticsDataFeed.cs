@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
 
             DataSourceParameter = dataSourceParameter;
-            DataSourceType = DataFeedSourceType.AzureLogAnalytics;
+            DataSourceType = DataFeedSourceType.LogAnalytics;
         }
 
         /// <summary> Initializes a new instance of AzureLogAnalyticsDataFeed. </summary>

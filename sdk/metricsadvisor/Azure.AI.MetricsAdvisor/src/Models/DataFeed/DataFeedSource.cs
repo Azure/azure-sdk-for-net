@@ -24,14 +24,16 @@ namespace Azure.AI.MetricsAdvisor.Models
                 AzureApplicationInsightsDataFeed d => new AzureApplicationInsightsDataFeedSource(d.DataSourceParameter),
                 AzureBlobDataFeed d => new AzureBlobDataFeedSource(d.DataSourceParameter),
                 AzureCosmosDBDataFeed d => new AzureCosmosDbDataFeedSource(d.DataSourceParameter),
+                AzureDataExplorerDataFeed d => new AzureDataExplorerDataFeedSource(d.DataSourceParameter),
                 AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageGen2DataFeedSource(d.DataSourceParameter),
+                AzureEventHubsDataFeed d => new AzureEventHubsDataFeedSource(d.DataSourceParameter),
+                AzureLogAnalyticsDataFeed d => new LogAnalyticsDataFeedSource(d.DataSourceParameter),
                 AzureTableDataFeed d => new AzureTableDataFeedSource(d.DataSourceParameter),
                 InfluxDBDataFeed d => new InfluxDbDataFeedSource(d.DataSourceParameter),
-                AzureDataExplorerDataFeed d => new AzureDataExplorerDataFeedSource(d.DataSourceParameter),
+                MongoDBDataFeed d => new MongoDbDataFeedSource(d.DataSourceParameter),
                 MySqlDataFeed d => new MySqlDataFeedSource(d.DataSourceParameter),
                 PostgreSqlDataFeed d => new PostgreSqlDataFeedSource(d.DataSourceParameter),
                 SQLServerDataFeed d => new SqlServerDataFeedSource(d.DataSourceParameter),
-                MongoDBDataFeed d => new MongoDbDataFeedSource(d.DataSourceParameter),
                 _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
             };
 
@@ -54,10 +56,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
                 AzureDataLakeStorageGen2DataFeedSource d => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new AzureDataLakeStorageGen2Parameter(d.FileSystemName, d.DirectoryTemplate, d.FileTemplate) { AccountKey = d.AccountKey, AccountName = d.AccountName }),
+                AzureEventHubsDataFeedSource d => new AzureEventHubsDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                    new AzureEventHubsParameter(d.ConsumerGroup) { ConnectionString = d.ConnectionString }),
                 AzureTableDataFeedSource d => new AzureTableDataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new AzureTableParameter(d.Table, d.Query) { ConnectionString = d.ConnectionString }),
                 InfluxDbDataFeedSource d => new InfluxDBDataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new InfluxDBParameter(d.Query) { UserName = d.Username, Password = d.Password, Database = d.Database, ConnectionString = d.ConnectionString }),
+                LogAnalyticsDataFeedSource d => new AzureLogAnalyticsDataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                    new AzureLogAnalyticsParameter(d.WorkspaceId, d.Query) { ClientId = d.ClientId, ClientSecret = d.ClientSecret, TenantId = d.TenantId }),
                 MongoDbDataFeedSource d => new MongoDBDataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new MongoDBParameter(d.Command) { Database = d.Database, ConnectionString = d.ConnectionString }),
                 MySqlDataFeedSource d => new MySqlDataFeed(name, granularityType, metricColumns, ingestionStartTime,
@@ -85,10 +91,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                 { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
             AzureDataLakeStorageGen2DataFeedSource d => new AzureDataLakeStorageGen2DataFeedPatch()
                 { DataSourceParameter = new() { FileSystemName = d.FileSystemName, DirectoryTemplate = d.DirectoryTemplate, FileTemplate = d.FileTemplate, AccountKey = d.AccountKey, AccountName = d.AccountName } },
+            AzureEventHubsDataFeedSource d => new AzureEventHubsDataFeedPatch()
+                { DataSourceParameter = new() { ConnectionString = d.ConnectionString, ConsumerGroup = d.ConsumerGroup } },
             AzureTableDataFeedSource d => new AzureTableDataFeedPatch()
                 { DataSourceParameter = new() { Table = d.Table, Query = d.Query, ConnectionString = d.ConnectionString } },
             InfluxDbDataFeedSource d => new InfluxDBDataFeedPatch()
                 { DataSourceParameter = new() { Query = d.Query, UserName = d.Username, Password = d.Password, Database = d.Database, ConnectionString = d.ConnectionString } },
+            LogAnalyticsDataFeedSource d => new AzureLogAnalyticsDataFeedPatch()
+                { DataSourceParameter = new() { WorkspaceId = d.WorkspaceId, Query = d.Query, ClientId = d.ClientId, ClientSecret = d.ClientSecret, TenantId = d.TenantId } },
             MongoDbDataFeedSource d => new MongoDBDataFeedPatch()
                 { DataSourceParameter = new() { Command = d.Command, Database = d.Database, ConnectionString = d.ConnectionString } },
             MySqlDataFeedSource d => new MySqlDataFeedPatch()
