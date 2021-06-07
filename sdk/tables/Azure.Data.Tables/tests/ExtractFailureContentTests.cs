@@ -20,7 +20,7 @@ namespace Azure.Data.Tables.Tests
         private static string TableBeingDeleted = "{\"odata.error\":{\"code\":\"TableBeingDeleted\",\"message\":{\"lang\":\"en-US\",\"value\":\"" + messageValue + "\"}}}";
         private static string BatchError = "{\"odata.error\":{\"code\":\"EntityAlreadyExists\",\"message\":{\"lang\":\"en-us\",\"value\":\"" + failedEntityIndex + batchMessage + "\"}}}";
 
-        private static TablesClientDiagnostics diagnostic = new(new TablesClientOptions());
+        private static TablesClientDiagnostics diagnostic = new(new TableClientOptions());
 
         // Incoming Exception, Expected Exception, Expected TableErrorCode
         public static IEnumerable<object[]> OdataErrorTestInputs()

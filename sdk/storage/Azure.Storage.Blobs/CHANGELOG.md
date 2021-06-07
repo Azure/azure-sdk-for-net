@@ -4,6 +4,8 @@
 - Fixed bug where BlobClient.DownloadStreaming or BlobClient.DownloadData could corrupt data on retry.
 - Fixed bug where specifying "*" as IfMatch condition could lead to inconsistend read in BlobClient.DownloadTo.
 - Fixed bug where specifying conditions in BlobBaseClient.OpenRead could override allowModifications flag in BlobOpenReadOptions leading to inconsistent read.
+- Fixed bug where BlobProperties.IsLatestVersion from BlobBaseClient.GetProperties did not set the value (defaulted to false).
+- Fixed bug where reading blob with Client Side Encryption enabled results in high CPU.
 
 ## 12.8.4 (2021-05-20)
 - Fixed bug where Client Side Encryption during large transactions (greater than max int value) would throw an exception.
