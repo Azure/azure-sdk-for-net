@@ -51,7 +51,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
         public async Task GetUser(string objId)
         {
-            // string objId = TestEnvironment.ConfidentialLedgerAdminOid;
             var result = await Client.GetUserAsync(objId);
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 

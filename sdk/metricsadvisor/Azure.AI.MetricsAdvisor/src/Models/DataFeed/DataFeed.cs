@@ -198,6 +198,8 @@ namespace Azure.AI.MetricsAdvisor.Models
                 detail.Viewers.Add(viewer);
             }
 
+            SetAuthenticationProperties(detail, DataSource);
+
             return detail;
         }
 
@@ -247,7 +249,53 @@ namespace Azure.AI.MetricsAdvisor.Models
             patch.Admins = AdministratorsEmails;
             patch.Viewers = ViewersEmails;
 
+            SetAuthenticationProperties(patch, DataSource);
+
             return patch;
+        }
+
+        private static void SetAuthenticationProperties(DataFeedDetail detail, DataFeedSource dataSource)
+        {
+            switch (dataSource)
+            {
+                case AzureBlobDataFeedSource s:
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    break;
+                case AzureDataExplorerDataFeedSource s:
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    detail.CredentialId = s.DatasourceCredentialId;
+                    break;
+                case AzureDataLakeStorageGen2DataFeedSource s:
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    detail.CredentialId = s.DatasourceCredentialId;
+                    break;
+                case SqlServerDataFeedSource s:
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    detail.CredentialId = s.DatasourceCredentialId;
+                    break;
+            }
+        }
+
+        private static void SetAuthenticationProperties(DataFeedDetailPatch patch, DataFeedSource dataSource)
+        {
+            switch (dataSource)
+            {
+                case AzureBlobDataFeedSource s:
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    break;
+                case AzureDataExplorerDataFeedSource s:
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    patch.CredentialId = s.DatasourceCredentialId;
+                    break;
+                case AzureDataLakeStorageGen2DataFeedSource s:
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    patch.CredentialId = s.DatasourceCredentialId;
+                    break;
+                case SqlServerDataFeedSource s:
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
+                    patch.CredentialId = s.DatasourceCredentialId;
+                    break;
+            }
         }
     }
 }

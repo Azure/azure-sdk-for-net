@@ -58,7 +58,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             BlobTemplate = blobTemplate;
         }
 
-        internal AzureBlobDataFeedSource(AzureBlobParameter parameter)
+        internal AzureBlobDataFeedSource(AzureBlobParameter parameter, AuthenticationTypeEnum? authentication)
             : base(DataFeedSourceType.AzureBlob)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
@@ -66,7 +66,33 @@ namespace Azure.AI.MetricsAdvisor.Models
             ConnectionString = parameter.ConnectionString;
             Container = parameter.Container;
             BlobTemplate = parameter.BlobTemplate;
+
+            SetAuthentication(authentication);
         }
+
+        /// <summary>
+        /// The different ways of authenticating to an <see cref="AzureBlobDataFeedSource"/>.
+        /// Defaults to <see cref="Basic"/>.
+        /// </summary>
+        public enum AuthenticationType
+        {
+            /// <summary>
+            /// Only uses the <see cref="ConnectionString"/> present in this <see cref="AzureBlobDataFeedSource"/>
+            /// instance for authentication.
+            /// </summary>
+            Basic,
+
+            /// <summary>
+            /// Uses Managed Identity authentication.
+            /// </summary>
+            ManagedIdentity
+        };
+
+        /// <summary>
+        /// The method used to authenticate to this <see cref="AzureDataExplorerDataFeedSource"/>. Defaults to
+        /// <see cref="AuthenticationType.Basic"/>.
+        /// </summary>
+        public AuthenticationType? Authentication { get; set; }
 
         /// <summary>
         /// The name of the blob container.
@@ -119,6 +145,26 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             ConnectionString = connectionString;
+        }
+
+        internal AuthenticationTypeEnum? GetAuthenticationTypeEnum() => Authentication switch
+        {
+            null => default(AuthenticationTypeEnum?),
+            AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
+            AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
+            _ => throw new InvalidOperationException($"Unknown authentication type: {Authentication}")
+        };
+
+        internal void SetAuthentication(AuthenticationTypeEnum? authentication)
+        {
+            if (authentication == AuthenticationTypeEnum.Basic)
+            {
+                Authentication = AuthenticationType.Basic;
+            }
+            else if (authentication == AuthenticationTypeEnum.ManagedIdentity)
+            {
+                Authentication = AuthenticationType.ManagedIdentity;
+            }
         }
     }
 }

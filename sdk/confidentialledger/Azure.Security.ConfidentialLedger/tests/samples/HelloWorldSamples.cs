@@ -104,6 +104,18 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             Console.WriteLine($"Transaction status: {status}");
 
+            // Wait for the entry to be committed
+            while (status == "Pending")
+            {
+                statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+                status = JsonDocument.Parse(statusResponse.Content)
+                    .RootElement
+                    .GetProperty("state")
+                    .GetString();
+            }
+
+            Console.WriteLine($"Transaction status: {status}");
+
             #endregion
 
             #region Snippet:GetReceipt
@@ -141,18 +153,45 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #else
             postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out transactionId);
 #endif
-            string subLedgerId = JsonDocument.Parse(statusResponse.Content)
+            string subLedgerId = JsonDocument.Parse(postResponse.Content)
                 .RootElement
                 .GetProperty("subLedgerId")
                 .GetString();
 
+            // Wait for the entry to be available.
+            status = "Pending";
+            while (status == "Pending")
+            {
+                statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+                status = JsonDocument.Parse(statusResponse.Content)
+                    .RootElement
+                    .GetProperty("state")
+                    .GetString();
+            }
+
+            Console.WriteLine($"Transaction status: {status}");
+
             // Provide both the transactionId and subLedgerId.
             Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
 
-            string contents = JsonDocument.Parse(getBySubledgerResponse.Content)
-                .RootElement
-                .GetProperty("contents")
-                .GetString();
+            // Try until the entry is available.
+            bool loaded = false;
+            JsonElement element = default;
+            string contents = null;
+            while (!loaded)
+            {
+                loaded = JsonDocument.Parse(getBySubledgerResponse.Content)
+                    .RootElement
+                    .TryGetProperty("entry", out element);
+                if (loaded)
+                {
+                    contents = element.GetProperty("contents").GetString();
+                }
+                else
+                {
+                    getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+                }
+            }
 
             Console.WriteLine(contents); // "Hello world!"
 
@@ -161,6 +200,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             string subLedgerId2 = JsonDocument.Parse(getBySubledgerResponse.Content)
                 .RootElement
+                .GetProperty("entry")
                 .GetProperty("subLedgerId")
                 .GetString();
 
@@ -187,10 +227,42 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out transactionId);
 #endif
 
+            // Wait for the entry to be committed
+            status = "Pending";
+            while (status == "Pending")
+            {
+                statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+                status = JsonDocument.Parse(statusResponse.Content)
+                    .RootElement
+                    .GetProperty("state")
+                    .GetString();
+            }
+
             // The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
             Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
+
+            // Try until the entry is available.
+            loaded = false;
+            element = default;
+            contents = null;
+            while (!loaded)
+            {
+                loaded = JsonDocument.Parse(getResponse.Content)
+                    .RootElement
+                    .TryGetProperty("entry", out element);
+                if (loaded)
+                {
+                    contents = element.GetProperty("contents").GetString();
+                }
+                else
+                {
+                    getResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+                }
+            }
+
             string firstEntryContents = JsonDocument.Parse(getResponse.Content)
                 .RootElement
+                .GetProperty("entry")
                 .GetProperty("contents")
                 .GetString();
 
@@ -198,20 +270,61 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             // This will return the latest entry available in the default sub-ledger.
             getResponse = ledgerClient.GetCurrentLedgerEntry();
-            string latestDefaultSubLedger = JsonDocument.Parse(getResponse.Content)
-                .RootElement
-                .GetProperty("contents")
-                .GetString();
+
+            // Try until the entry is available.
+            loaded = false;
+            element = default;
+            string latestDefaultSubLedger = null;
+            while (!loaded)
+            {
+                loaded = JsonDocument.Parse(getResponse.Content)
+                    .RootElement
+                    .TryGetProperty("contents", out element);
+                if (loaded)
+                {
+                    latestDefaultSubLedger = element.GetString();
+                }
+                else
+                {
+                    getResponse = ledgerClient.GetCurrentLedgerEntry();
+                }
+            }
 
             Console.WriteLine($"The latest ledger entry from the default sub-ledger is {latestDefaultSubLedger}"); //"Hello world 1"
 
             // The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
             subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string subLedgerTransactionId);
+
+            // Wait for the entry to be committed
+            status = "Pending";
+            while (status == "Pending")
+            {
+                statusResponse = ledgerClient.GetTransactionStatus(subLedgerTransactionId);
+                status = JsonDocument.Parse(statusResponse.Content)
+                    .RootElement
+                    .GetProperty("state")
+                    .GetString();
+            }
+
             getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
-            string subLedgerEntry = JsonDocument.Parse(getResponse.Content)
-                .RootElement
-                .GetProperty("contents")
-                .GetString();
+            // Try until the entry is available.
+            loaded = false;
+            element = default;
+            string subLedgerEntry = null;
+            while (!loaded)
+            {
+                loaded = JsonDocument.Parse(getResponse.Content)
+                    .RootElement
+                    .TryGetProperty("entry", out element);
+                if (loaded)
+                {
+                    subLedgerEntry = element.GetProperty("contents").GetString();
+                }
+                else
+                {
+                    getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
+                }
+            }
 
             Console.WriteLine(subLedgerEntry); // "Hello world sub-ledger 0"
 
@@ -228,13 +341,16 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #region Snippet:RangedQuery
 
-            ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: "4.5");
+            ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
 
             #endregion
 
             #region Snippet:NewUser
-
+#if SNIPPET
             string newUserAadObjectId = "<some AAD user or service princpal object Id>";
+#else
+            string newUserAadObjectId = Guid.NewGuid().ToString();
+#endif
             ledgerClient.CreateOrUpdateUser(
                 newUserAadObjectId,
                 RequestContent.Create(new { assignedRole = "Reader" }));

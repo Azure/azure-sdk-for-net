@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for ServerPublicNetworkAccess.
+    /// Defines values for ServerNetworkAccessFlag.
     /// </summary>
-    public static class ServerPublicNetworkAccess
+    public static class ServerNetworkAccessFlag
     {
         public const string Enabled = "Enabled";
         public const string Disabled = "Disabled";
