@@ -21,14 +21,17 @@ namespace Azure.DigitalTwins.Core.Tests
         public void SelectMultiplePropertyTests()
         {
             new AdtQueryBuilder().Select("Room", "Factory").From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT Room, Factory FROM DIGITALTWINS");
+            new AdtQueryBuilder().Select("Room", "Factory", "Temperature", "Humidity").From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT Room, Factory, Temperature, Humidity FROM DIGITALTWINS");
         }
 
         [Test]
         public void SelectAggregateTests()
         {
-            // TODO -- look into if we can pass parameters into TOP and COUNT like property names
+            // TODO -- update TOP with param
             new AdtQueryBuilder().SelectTop(5).From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT TOP(5) FROM DIGITALTWINS");
             new AdtQueryBuilder().SelectCount("*").From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT COUNT() FROM DIGITALTWINS");
+            new AdtQueryBuilder().SelectTop(3, "Temperature", "Humidity").From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT TOP(3) Temperature, Humidity FROM DIGITALTWINS");
+            new AdtQueryBuilder().SelectTop(3, "Temperature").From(AdtCollection.DigitalTwins).Build().ToString().Should().Be("SELECT TOP(3) Temperature FROM DIGITALTWINS");
         }
     }
 }

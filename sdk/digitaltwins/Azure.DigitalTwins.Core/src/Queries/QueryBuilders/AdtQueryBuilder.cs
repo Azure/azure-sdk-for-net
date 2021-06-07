@@ -40,10 +40,11 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// but inserts TOP() into the query structure as well.
         /// </summary>
         /// <param name="count"> The argument for TOP(), i.e the number of instances to return. </param>
+        /// <param name="args"> The arguments that can be optionally passed with top (eg property name). </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectTop(int count)
+        public FromQuery SelectTop(int count, params string[] args)
         {
-            return _selectQuery.SelectTop(count);
+            return _selectQuery.SelectTop(count, args);
         }
 
         /// <summary>

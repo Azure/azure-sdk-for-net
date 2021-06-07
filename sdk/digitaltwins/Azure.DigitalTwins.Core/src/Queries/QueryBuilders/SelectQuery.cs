@@ -45,14 +45,27 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// but inserts TOP() into the query structure as well.
         /// </summary>
         /// <param name="count"> The argument for TOP(), ie the number of instances to return. </param>
+        /// <param name="args"> The arguments that can be optionally passed with top (eg property name). </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectTop(int count)
+        public FromQuery SelectTop(int count, params string[] args)
         {
-            // TODO -- can we also have arguments? like property names?
             // turn into correct format -- eg. SELECT TOP(3)
-            string topArg = new StringBuilder().Append("TOP").Append('(').Append(count).Append(')').ToString();
+            StringBuilder topArg = new StringBuilder().Append("TOP").Append('(').Append(count).Append(')');
 
-            _clause = new SelectClause(new string[] { topArg });
+            // account for optional arguments
+            if (args.Length != 0)
+            {
+                // append first argument manually since no comma needed
+                topArg.Append(' ').Append(args[0]);
+
+                // append other arguments separated by commas
+                for (int i = 1; i < args.Length; i++)
+                {
+                    topArg.Append(", ").Append(args[i]);
+                }
+            }
+
+            _clause = new SelectClause(new string[] { topArg.ToString() });
             return _innerQuery;
         }
 
@@ -63,7 +76,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectCount(params string[] args)
         {
-            // TODO -- can we take in arguments? like a property name?
             Console.WriteLine(args);
             string countArg = new StringBuilder().Append("COUNT").Append('(').Append(')').ToString();
 
@@ -72,12 +84,15 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Parses the Query object into a string representation.
+        /// Called when overriding the query builder with the literal query string.
         /// </summary>
-        /// <returns> The query in string format. </returns>
-        public override string ToString()
+        /// <param name="literalQuery"> Query in string format. </param>
+        /// <returns> Query that contains a select clause. </returns>
+        public FromQuery SelectOverride(string literalQuery)
         {
-            return "";
+            // TODO
+            Console.WriteLine(literalQuery);
+            return _innerQuery;
         }
 
         /// <inheritdoc/>
