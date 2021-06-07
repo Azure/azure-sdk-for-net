@@ -176,7 +176,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateEmailNotificationHookWithMinimumSetupAndGetInstance(bool useTokenCredential)
         {
             // Create a hook.
@@ -199,11 +198,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             hookToUpdate.EmailsToAlert.Add("fake3@email.com");
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            var updatedEmailHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as EmailNotificationHook;
 
-            // Get the hook and check if updates are in place.
-
-            var updatedEmailHook = (await adminClient.GetHookAsync(disposableHook.Id)).Value as EmailNotificationHook;
+            // Check if updates are in place.
 
             Assert.That(updatedEmailHook.Id, Is.EqualTo(disposableHook.Id));
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
@@ -240,11 +237,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             hookToUpdate.EmailsToAlert.Add("fake3@email.com");
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            var updatedEmailHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as EmailNotificationHook;
 
-            // Get the hook and check if updates are in place.
-
-            var updatedEmailHook = (await adminClient.GetHookAsync(disposableHook.Id)).Value as EmailNotificationHook;
+            // Check if updates are in place.
 
             Assert.That(updatedEmailHook.Id, Is.EqualTo(disposableHook.Id));
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
@@ -256,7 +251,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
         public async Task UpdateEmailNotificationHookWithEveryMemberAndGetInstance()
         {
             // Create a hook.
@@ -282,11 +276,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
             hookToUpdate.ExternalLink = new Uri("http://fake.endpoint.com/");
             hookToUpdate.EmailsToAlert.Add("fake3@email.com");
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            var updatedEmailHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as EmailNotificationHook;
 
-            // Get the hook and check if updates are in place.
-
-            var updatedEmailHook = (await adminClient.GetHookAsync(disposableHook.Id)).Value as EmailNotificationHook;
+            // Check if updates are in place.
 
             Assert.That(updatedEmailHook.Id, Is.EqualTo(disposableHook.Id));
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
@@ -328,11 +320,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             hookToUpdate.EmailsToAlert.Add("fake3@email.com");
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            var updatedEmailHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as EmailNotificationHook;
 
-            // Get the hook and check if updates are in place.
-
-            var updatedEmailHook = (await adminClient.GetHookAsync(disposableHook.Id)).Value as EmailNotificationHook;
+            // Check if updates are in place.
 
             Assert.That(updatedEmailHook.Id, Is.EqualTo(disposableHook.Id));
             Assert.That(updatedEmailHook.Name, Is.EqualTo(hookName));
@@ -344,7 +334,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task UpdateWebNotificationHookWithMinimumSetupAndGetInstance()
         {
             // Create a hook.
@@ -363,11 +353,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             hookToUpdate.Username = "fakeUsername";
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            var updatedWebHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as WebNotificationHook;
 
-            // Get the hook and check if updates are in place.
-
-            var updatedWebHook = (await adminClient.GetHookAsync(disposableHook.Id)).Value as WebNotificationHook;
+            // Check if updates are in place.
 
             Assert.That(updatedWebHook.Id, Is.EqualTo(disposableHook.Id));
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
@@ -385,7 +373,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task UpdateWebNotificationHookWithMinimumSetupAndNewInstance()
         {
             // Create a hook.
@@ -403,11 +391,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var hookToUpdate = new WebNotificationHook() { Endpoint = endpoint, Username = "fakeUsername" };
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            var updatedWebHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as WebNotificationHook;
 
-            // Get the hook and check if updates are in place.
-
-            var updatedWebHook = (await adminClient.GetHookAsync(disposableHook.Id)).Value as WebNotificationHook;
+            // Check if updates are in place.
 
             Assert.That(updatedWebHook.Id, Is.EqualTo(disposableHook.Id));
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
@@ -425,7 +411,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task UpdateWebNotificationHookWithEveryMemberAndGetInstance()
         {
             // Create a hook.
@@ -461,11 +447,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 hookToUpdate.Headers.Add(header);
             }
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            var updatedWebHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as WebNotificationHook;
 
-            // Get the hook and check if updates are in place.
-
-            var updatedWebHook = (await adminClient.GetHookAsync(disposableHook.Id)).Value as WebNotificationHook;
+            // Check if updates are in place.
 
             Assert.That(updatedWebHook.Id, Is.EqualTo(disposableHook.Id));
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));
@@ -483,7 +467,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21504")]
         public async Task UpdateWebNotificationHookWithEveryMemberAndNewInstance()
         {
             // Create a hook.
@@ -521,11 +505,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 hookToUpdate.Headers.Add(header);
             }
 
-            await adminClient.UpdateHookAsync(disposableHook.Id, hookToUpdate);
+            var updatedWebHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as WebNotificationHook;
 
-            // Get the hook and check if updates are in place.
-
-            var updatedWebHook = (await adminClient.GetHookAsync(disposableHook.Id)).Value as WebNotificationHook;
+            // Check if updates are in place.
 
             Assert.That(updatedWebHook.Id, Is.EqualTo(disposableHook.Id));
             Assert.That(updatedWebHook.Name, Is.EqualTo(hookName));

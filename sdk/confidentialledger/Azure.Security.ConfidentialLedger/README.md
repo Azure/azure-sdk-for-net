@@ -49,7 +49,7 @@ Because Confidential Ledgers use self-signed certificates securely generated and
 
 ```C# Snippet:GetIdentity
 Uri identityServiceUri = "<the identity service uri>";
-var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri, new Identity.DefaultAzureCredential());
+var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceUri);
 
 // Get the ledger's  TLS certificate for our ledger.
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
@@ -123,6 +123,18 @@ string status = JsonDocument.Parse(statusResponse.Content)
     .GetString();
 
 Console.WriteLine($"Transaction status: {status}");
+
+// Wait for the entry to be committed
+while (status == "Pending")
+{
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+    status = JsonDocument.Parse(statusResponse.Content)
+        .RootElement
+        .GetProperty("state")
+        .GetString();
+}
+
+Console.WriteLine($"Transaction status: {status}");
 ```
 
 #### Receipts
@@ -157,18 +169,45 @@ Response postResponse = ledgerClient.PostLedgerEntry(
     RequestContent.Create(
         new { contents = "Hello world!" }));
 postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
-string subLedgerId = JsonDocument.Parse(statusResponse.Content)
+string subLedgerId = JsonDocument.Parse(postResponse.Content)
     .RootElement
     .GetProperty("subLedgerId")
     .GetString();
 
+// Wait for the entry to be available.
+status = "Pending";
+while (status == "Pending")
+{
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+    status = JsonDocument.Parse(statusResponse.Content)
+        .RootElement
+        .GetProperty("state")
+        .GetString();
+}
+
+Console.WriteLine($"Transaction status: {status}");
+
 // Provide both the transactionId and subLedgerId.
 Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
 
-string contents = JsonDocument.Parse(getBySubledgerResponse.Content)
-    .RootElement
-    .GetProperty("contents")
-    .GetString();
+// Try until the entry is available.
+bool loaded = false;
+JsonElement element = default;
+string contents = null;
+while (!loaded)
+{
+    loaded = JsonDocument.Parse(getBySubledgerResponse.Content)
+        .RootElement
+        .TryGetProperty("entry", out element);
+    if (loaded)
+    {
+        contents = element.GetProperty("contents").GetString();
+    }
+    else
+    {
+        getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+    }
+}
 
 Console.WriteLine(contents); // "Hello world!"
 
@@ -177,6 +216,7 @@ getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId);
 
 string subLedgerId2 = JsonDocument.Parse(getBySubledgerResponse.Content)
     .RootElement
+    .GetProperty("entry")
     .GetProperty("subLedgerId")
     .GetString();
 
@@ -199,10 +239,42 @@ ledgerClient.PostLedgerEntry(
 
 firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
 
+// Wait for the entry to be committed
+status = "Pending";
+while (status == "Pending")
+{
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+    status = JsonDocument.Parse(statusResponse.Content)
+        .RootElement
+        .GetProperty("state")
+        .GetString();
+}
+
 // The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
 Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
+
+// Try until the entry is available.
+loaded = false;
+element = default;
+contents = null;
+while (!loaded)
+{
+    loaded = JsonDocument.Parse(getResponse.Content)
+        .RootElement
+        .TryGetProperty("entry", out element);
+    if (loaded)
+    {
+        contents = element.GetProperty("contents").GetString();
+    }
+    else
+    {
+        getResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
+    }
+}
+
 string firstEntryContents = JsonDocument.Parse(getResponse.Content)
     .RootElement
+    .GetProperty("entry")
     .GetProperty("contents")
     .GetString();
 
@@ -210,20 +282,61 @@ Console.WriteLine(firstEntryContents); // "Hello world 0"
 
 // This will return the latest entry available in the default sub-ledger.
 getResponse = ledgerClient.GetCurrentLedgerEntry();
-string latestDefaultSubLedger = JsonDocument.Parse(getResponse.Content)
-    .RootElement
-    .GetProperty("contents")
-    .GetString();
+
+// Try until the entry is available.
+loaded = false;
+element = default;
+string latestDefaultSubLedger = null;
+while (!loaded)
+{
+    loaded = JsonDocument.Parse(getResponse.Content)
+        .RootElement
+        .TryGetProperty("contents", out element);
+    if (loaded)
+    {
+        latestDefaultSubLedger = element.GetString();
+    }
+    else
+    {
+        getResponse = ledgerClient.GetCurrentLedgerEntry();
+    }
+}
 
 Console.WriteLine($"The latest ledger entry from the default sub-ledger is {latestDefaultSubLedger}"); //"Hello world 1"
 
 // The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
 subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string subLedgerTransactionId);
+
+// Wait for the entry to be committed
+status = "Pending";
+while (status == "Pending")
+{
+    statusResponse = ledgerClient.GetTransactionStatus(subLedgerTransactionId);
+    status = JsonDocument.Parse(statusResponse.Content)
+        .RootElement
+        .GetProperty("state")
+        .GetString();
+}
+
 getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
-string subLedgerEntry = JsonDocument.Parse(getResponse.Content)
-    .RootElement
-    .GetProperty("contents")
-    .GetString();
+// Try until the entry is available.
+loaded = false;
+element = default;
+string subLedgerEntry = null;
+while (!loaded)
+{
+    loaded = JsonDocument.Parse(getResponse.Content)
+        .RootElement
+        .TryGetProperty("entry", out element);
+    if (loaded)
+    {
+        subLedgerEntry = element.GetProperty("contents").GetString();
+    }
+    else
+    {
+        getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
+    }
+}
 
 Console.WriteLine(subLedgerEntry); // "Hello world sub-ledger 0"
 
@@ -242,7 +355,7 @@ Console.WriteLine($"The latest ledger entry from the sub-ledger is {latestSubLed
 Ledger entries in a sub-ledger may be retrieved over a range of transaction ids.
 
 ```C# Snippet:RangedQuery
-ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: "4.5");
+ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
 ```
 
 ### User management

@@ -31,6 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(DetectionConfigurationId, options))
             {
                 Assert.That(anomaly, Is.Not.Null);
+                Assert.That(anomaly.DataFeedId, Is.Null);
                 Assert.That(anomaly.MetricId, Is.Null);
                 Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Null);
                 Assert.That(anomaly.CreatedTime, Is.Null);
@@ -76,6 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(DetectionConfigurationId, options))
             {
                 Assert.That(anomaly, Is.Not.Null);
+                Assert.That(anomaly.DataFeedId, Is.Null);
                 Assert.That(anomaly.MetricId, Is.Null);
                 Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Null);
                 Assert.That(anomaly.CreatedTime, Is.Null);
@@ -117,6 +119,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (AnomalyIncident incident in client.GetIncidentsAsync(DetectionConfigurationId, options))
             {
                 Assert.That(incident, Is.Not.Null);
+                Assert.That(incident.DataFeedId, Is.Null);
                 Assert.That(incident.MetricId, Is.Null);
 
                 Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
@@ -159,6 +162,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (AnomalyIncident incident in client.GetIncidentsAsync(DetectionConfigurationId, options))
             {
                 Assert.That(incident, Is.Not.Null);
+                Assert.That(incident.DataFeedId, Is.Null);
                 Assert.That(incident.MetricId, Is.Null);
 
                 Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);

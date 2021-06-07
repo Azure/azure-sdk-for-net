@@ -35,7 +35,7 @@ parameters:
 # When that occurs, provide a name other than the default value.
 - name: GenerateJobName
   type: string
-  default: 'generate_matrix'
+  default: 'generate_job_matrix'
 
 jobs:
 - job: ${{ parameters.GenerateJobName }}
@@ -44,7 +44,6 @@ jobs:
   pool:
     name: ${{ parameters.Pool }}
     vmImage: ${{ parameters.OsVmImage }}
-  displayName: Generate Job Matrix
   ${{ if parameters.DependsOn }}:
     dependsOn: ${{ parameters.DependsOn }}
   steps:

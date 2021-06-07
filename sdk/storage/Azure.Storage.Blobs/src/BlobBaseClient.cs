@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The blob's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        private readonly Uri _uri;
+        private protected readonly Uri _uri;
 
         /// <summary>
         /// Gets the blob's primary <see cref="Uri"/> endpoint.
@@ -166,10 +166,6 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBaseClient(string connectionString, string blobContainerName, string blobName)
             : this(connectionString, blobContainerName, blobName, null)
         {
-            _blobRestClient = BuildBlobRestClient(
-                connectionString,
-                blobContainerName,
-                blobName);
         }
 
         /// <summary>
@@ -217,10 +213,7 @@ namespace Azure.Storage.Blobs.Specialized
                 encryptionScope: options.EncryptionScope);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _blobRestClient = BuildBlobRestClient(
-                connectionString,
-                blobContainerName,
-                blobName);
+            _blobRestClient = BuildBlobRestClient(_uri);
 
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
@@ -425,35 +418,12 @@ namespace Azure.Storage.Blobs.Specialized
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
 
-        private BlobRestClient BuildBlobRestClient(Uri uri)
-            => BuildBlobRestClient(new BlobUriBuilder(uri));
-
-        private BlobRestClient BuildBlobRestClient(
-            string connectionString,
-            string blobContainerName,
-            string blobName)
+        private BlobRestClient BuildBlobRestClient(Uri blobUri)
         {
-            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName,
-            };
-            return BuildBlobRestClient(uriBuilder);
-        }
-
-        private BlobRestClient BuildBlobRestClient(BlobUriBuilder uriBuilder)
-        {
-            string containerName = uriBuilder.BlobContainerName;
-            string blobName = uriBuilder.BlobName;
-            uriBuilder.BlobContainerName = null;
-            uriBuilder.BlobName = null;
             return new BlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToUri().ToString(),
-                containerName: containerName,
-                blob: blobName.EscapePath(),
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors

@@ -16,7 +16,7 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 Install the Azure Metrics Advisor client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.3
+dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.4
 ```
 
 ### Prerequisites
@@ -406,6 +406,7 @@ int anomalyCount = 0;
 await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(alertConfigurationId, alertId, options))
 {
     Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
+    Console.WriteLine($"Data feed ID: {anomaly.DataFeedId}");
     Console.WriteLine($"Metric ID: {anomaly.MetricId}");
     Console.WriteLine($"Anomaly value: {anomaly.Value}");
 

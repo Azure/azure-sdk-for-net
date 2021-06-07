@@ -404,11 +404,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Or;
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
-
-            AnomalyAlertConfiguration updatedConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
@@ -519,11 +517,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.Or
             };
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
-
-            AnomalyAlertConfiguration updatedConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
@@ -658,11 +654,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             metricAlertConfigToUpdate.AlertSnoozeCondition = null;
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
-
-            AnomalyAlertConfiguration updatedConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
@@ -800,11 +794,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             metricAlertConfigToUpdate.AlertSnoozeCondition = null;
 
-            await adminClient.UpdateAlertConfigurationAsync(disposableConfig.Id, configToUpdate);
+            AnomalyAlertConfiguration updatedConfig = await adminClient.UpdateAlertConfigurationAsync(configToUpdate);
 
-            // Get the updated configuration and validate top-level members.
-
-            AnomalyAlertConfiguration updatedConfig = await adminClient.GetAlertConfigurationAsync(disposableConfig.Id);
+            // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));

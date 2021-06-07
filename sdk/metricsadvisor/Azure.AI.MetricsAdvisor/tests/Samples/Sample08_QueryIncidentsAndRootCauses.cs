@@ -94,6 +94,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await foreach (AnomalyIncident incident in client.GetIncidentsAsync(alertConfigurationId, alertId, options))
             {
                 Console.WriteLine($"Incident ID: {incident.Id}");
+                Console.WriteLine($"Data feed ID: {incident.DataFeedId}");
                 Console.WriteLine($"Metric ID: {incident.MetricId}");
                 Console.WriteLine($"Detection configuration ID: {incident.DetectionConfigurationId}");
                 Console.WriteLine($"First associated anomaly occurred at: {incident.StartTime}");
