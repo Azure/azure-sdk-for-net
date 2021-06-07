@@ -14,6 +14,17 @@ namespace Azure.Containers.ContainerRegistry
         internal string Version { get; }
 
         /// <summary>
+        /// Gets or sets the authentication scope to use for authentication with AAD.
+        /// This defaults to the Azure Resource Manager "Azure Global" scope.  To
+        /// connect to a different cloud, set this value to "&lt;resource-id&gt;/.default",
+        /// where &lt;resource-id&gt; is one of the Resource IDs listed at
+        /// https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities#azure-resource-manager.
+        /// For example, to connect to the Azure Germany cloud, create a client with
+        /// <see cref="AuthenticationScope"/> set to "https://management.microsoftazure.de/.default".
+        /// </summary>
+        public string AuthenticationScope { get; set; } = "https://management.azure.com/.default";
+
+        /// <summary>
         /// </summary>
         /// <param name="version"></param>
         public ContainerRegistryClientOptions(ServiceVersion version = ServiceVersion.V1_0)

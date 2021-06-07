@@ -19,15 +19,15 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
-        /// <param name="translateTo"> To language. </param>
+        /// <param name="translatedTo"> To language. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
         /// <param name="progress"> Progress of the translation if available. </param>
         /// <param name="documentId"> Document Id. </param>
         /// <param name="charactersCharged"> Character charged by the API. </param>
         /// <returns> A new <see cref="Document.DocumentStatusResult"/> instance for mocking. </returns>
-        public static DocumentStatusResult DocumentStatusResult(Uri translatedDocumentUri = default, Uri sourceDocumentUri = default, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default, TranslationStatus status = default, string translateTo = default, DocumentTranslationError error = default, float progress = default, string documentId = default, long charactersCharged = default)
+        public static DocumentStatusResult DocumentStatusResult(Uri translatedDocumentUri = default, Uri sourceDocumentUri = default, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default, TranslationStatus status = default, string translatedTo = default, DocumentTranslationError error = default, float progress = default, string documentId = default, long charactersCharged = default)
         {
-            return new DocumentStatusResult(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translateTo, error, progress, documentId, charactersCharged);
+            return new DocumentStatusResult(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translatedTo, error, progress, documentId, charactersCharged);
         }
 
         /// <summary> Initializes new instance of FileFormat class. </summary>

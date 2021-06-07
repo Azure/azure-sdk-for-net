@@ -1,6 +1,6 @@
 # Release History
 
-## 5.5.0-beta.1 (Unreleased)
+## 5.5.0-beta.1 (2021-06-08)
 
 ### Acknowledgments
 
@@ -15,6 +15,10 @@ Thank you to our developer community members who helped to make the Event Hubs c
 -  When stopping, the `EventProcessorClient` will now attempt to force-close the connection to the Event Hubs service to abort in-process read operations blocked on their timeout.  This should significantly help reduce the amount of time the processor takes to stop in many scenarios. _(Based on a community prototype contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_  
 
 - When the `EventProcessorClient` detects a partition being stolen outside of a load balancing cycle, it will immediately surrender ownership rather than waiting for a load balancing cycle to confirm the ownership change.  This will help reduce event duplication from overlapping ownership of processors.
+
+- The `ConnectionOptions` available when creating a processor now support registering a callback delegate for participating in the validation of SSL certificates when connections are established.  This delegate may override the built-in validation and allow or deny certificates based on application-specific logic.
+
+- The `ConnectionOptions` available when creating a processor now support setting a custom size for the send and receive buffers of the transport.
 
 #### Key Bug Fixes
 

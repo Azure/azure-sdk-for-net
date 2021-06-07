@@ -15,4 +15,8 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Messaging.WebPubSub" />
+  </ItemGroup>
 </Project>

@@ -217,7 +217,6 @@ namespace Azure.Monitor.Query.Tests
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
             }
             #endregion
         }

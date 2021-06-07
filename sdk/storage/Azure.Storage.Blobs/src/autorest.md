@@ -98,7 +98,7 @@ directive:
     delete $.EncryptionScope["x-ms-parameter-grouping"];
 ```
 
-### Add containerName and blob as a parameter
+### Remove Container_GetAccountInfo and Blob_GetAccountInfo. Unused and clashes with Service_GetAccountInfo after removal of path params.
 ``` yaml
 directive:
 - from: swagger-document
@@ -106,26 +106,63 @@ directive:
   transform: >
     for (const property in $)
     {
-        if (property.includes('{containerName}'))
+        if (property.includes('/{containerName}?restype=account&comp=properties'))
         {
-            if (!$[property].parameters)
-            {
-                $[property].parameters = [];
-            }
-            $[property].parameters.push({
-                "$ref": "#/parameters/ContainerName"
-            });
-        };
-        if (property.includes('{blob}'))
+            delete $[property];
+        }
+        if (property.includes('/{containerName}/{blob}?restype=account&comp=properties'))
         {
-            if (!$[property].parameters)
-            {
-                $[property].parameters = [];
-            }
-            $[property].parameters.push({
-                "$ref": "#/parameters/Blob"
-            });
-        };
+            delete $[property];
+        }
+    }
+```
+
+### Fix 304s
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}"]
+  transform: >
+    $.get.responses["304"] = {
+      "description": "The condition specified using HTTP conditional header(s) is not met.",
+      "x-az-response-name": "ConditionNotMetError",
+      "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
+```
+
+### Don't include container or blob in path - we have direct URIs.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
+        if (property.includes('/{containerName}/{blob}'))
+        {
+            var oldName = property;
+            var newName = property.replace('/{containerName}/{blob}', '');
+            $[newName] = $[oldName];
+            delete $[oldName];
+        } 
+        else if (property.includes('/{containerName}'))
+        {
+            var oldName = property;
+            var newName = property.replace('/{containerName}', '');
+            $[newName] = $[oldName];
+            delete $[oldName];
+        }
+    }
+```
+
+### Remove DataLake stuff.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
         if (property.includes('filesystem'))
         {
             delete $[property];
@@ -265,19 +302,6 @@ directive:
       "None",
       "AES256"
     ];
-```
-
-### Fix 304s
-``` yaml
-directive:
-- from: swagger-document
-  where: $["x-ms-paths"]["/{containerName}/{blob}"]
-  transform: >
-    $.get.responses["304"] = {
-      "description": "The condition specified using HTTP conditional header(s) is not met.",
-      "x-az-response-name": "ConditionNotMetError",
-      "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
-    };
 ```
 
 ### Don't buffer downloads and query

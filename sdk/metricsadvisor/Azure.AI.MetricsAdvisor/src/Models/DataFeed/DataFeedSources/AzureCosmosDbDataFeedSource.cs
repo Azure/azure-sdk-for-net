@@ -31,8 +31,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(database, nameof(database));
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Parameter = new AzureCosmosDBParameter(connectionString, sqlQuery, database, collectionId);
-
             ConnectionString = connectionString;
             SqlQuery = sqlQuery;
             Database = database;
@@ -44,8 +42,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
-            Parameter = parameter;
-
             ConnectionString = parameter.ConnectionString;
             SqlQuery = parameter.SqlQuery;
             Database = parameter.Database;
@@ -55,17 +51,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The SQL query to retrieve the data to be ingested.
         /// </summary>
-        public string SqlQuery { get; }
+        public string SqlQuery { get; set; }
 
         /// <summary>
         /// The name of the database.
         /// </summary>
-        public string Database { get; }
+        public string Database { get; set; }
 
         /// <summary>
         /// The collection ID.
         /// </summary>
-        public string CollectionId { get; }
+        public string CollectionId { get; set; }
 
         /// <summary>
         /// The connection string.
@@ -74,6 +70,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             get => Volatile.Read(ref _connectionString);
             private set => Volatile.Write(ref _connectionString, value);
+        }
+
+        /// <summary>
+        /// Updates the connection string.
+        /// </summary>
+        /// <param name="connectionString">The new connection string to be used for authentication.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/> is empty.</exception>
+        public void UpdateConnectionString(string connectionString)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+            ConnectionString = connectionString;
         }
     }
 }
