@@ -18,6 +18,7 @@ namespace Azure.Core
             Scopes = scopes;
             ParentRequestId = parentRequestId;
             Claims = default;
+            TenantId = default;
         }
 
         /// <summary>
@@ -31,6 +32,19 @@ namespace Azure.Core
             Scopes = scopes;
             ParentRequestId = parentRequestId;
             Claims = claims;
+            TenantId = default;
+        }
+
+        /// <summary>
+        /// Creates a new TokenRequest with the specified scopes.
+        /// </summary>
+        /// <param name="options"> The options to initialized the <see cref="TokenRequestContext"/> </param>
+        public TokenRequestContext(TokenRequestContextOptions options)
+        {
+            Scopes = options.Scopes;
+            ParentRequestId = options.ParentRequestId;
+            Claims = options.Claims;
+            TenantId = options.TenantId;
         }
 
         /// <summary>
@@ -47,5 +61,10 @@ namespace Azure.Core
         /// Additional claims to be included in the token. See <see href="https://openid.net/specs/openid-connect-core-1_0-final.html#ClaimsParameter">https://openid.net/specs/openid-connect-core-1_0-final.html#ClaimsParameter</see> for more information on format and content.
         /// </summary>
         public string? Claims { get; }
+
+        /// <summary>
+        /// A hint to indicate which tenantId is preferred.
+        /// </summary>
+        public string? TenantId { get; }
     }
 }
