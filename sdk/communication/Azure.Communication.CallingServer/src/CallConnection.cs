@@ -535,5 +535,47 @@ namespace Azure.Communication.CallingServer
                 throw;
             }
         }
+
+        /// <summary> Keep the call connection active by sending ping to the service. </summary>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> KeepAliveAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipantsAsync)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.KeepAliveAsync(
+                     callConnectionId: CallConnectionId,
+                     cancellationToken: cancellationToken
+                     ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Keep the call connection active by sending ping to the service. </summary>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response KeepAlive(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetParticipants)}");
+            scope.Start();
+            try
+            {
+                return RestClient.KeepAlive(
+                     callConnectionId: CallConnectionId,
+                     cancellationToken: cancellationToken
+                     );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }
