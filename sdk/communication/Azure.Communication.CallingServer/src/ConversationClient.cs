@@ -106,6 +106,7 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
+                Argument.AssertNotNull(source, nameof(source));
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
                 return await RestClient.JoinCallAsync(
@@ -140,6 +141,7 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
+                Argument.AssertNotNull(source, nameof(source));
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
                 return RestClient.JoinCall(
