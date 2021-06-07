@@ -9,15 +9,14 @@ namespace Azure.Storage.Blobs.Perf
 {
     public abstract class BlobTest<TOptions> : ContainerTest<TOptions> where TOptions : SizeOptions
     {
+        protected static string BlobName { get; } = $"Azure.Storage.Blobs.Perf.BlobTest-{Guid.NewGuid()}";
         protected BlobClient BlobClient { get; private set; }
         protected BlockBlobClient BlockBlobClient { get; private set; }
 
         public BlobTest(TOptions options) : base(options)
         {
-            var blobName = $"Azure.Storage.Blobs.Perf.BlobTest-{Guid.NewGuid()}";
-
-            BlobClient = BlobContainerClient.GetBlobClient(blobName);
-            BlockBlobClient = BlobContainerClient.GetBlockBlobClient(blobName);
+            BlobClient = BlobContainerClient.GetBlobClient(BlobName);
+            BlockBlobClient = BlobContainerClient.GetBlockBlobClient(BlobName);
         }
     }
 }

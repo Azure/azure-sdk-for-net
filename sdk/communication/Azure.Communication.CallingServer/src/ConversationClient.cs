@@ -102,7 +102,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
         public virtual async Task<Response<JoinCallResponse>> JoinCallAsync(string conversationId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(JoinCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(JoinCall)}");
             scope.Start();
             try
             {
@@ -314,7 +314,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual async Task<Response> AddParticipantAsync(string conversationId, CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipant)}");
             scope.Start();
             try
             {
@@ -371,7 +371,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual async Task<Response> RemoveParticipantAsync(string conversationId, string participantId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(RemoveParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(RemoveParticipant)}");
             scope.Start();
             try
             {
@@ -396,7 +396,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual async Task<Response<StartCallRecordingResponse>> StartRecordingAsync(string conversationId, Uri recordingStateCallbackUri, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StartRecordingAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StartRecording)}");
             scope.Start();
             try
             {
@@ -446,7 +446,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual async Task<Response<GetCallRecordingStateResponse>> GetRecordingStateAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(GetRecordingStateAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(GetRecordingState)}");
             scope.Start();
             try
             {
@@ -496,7 +496,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual async Task<Response> StopRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StopRecordingAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StopRecording)}");
             scope.Start();
             try
             {
@@ -546,7 +546,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual async Task<Response> PauseRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PauseRecordingAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PauseRecording)}");
             scope.Start();
             try
             {
@@ -596,7 +596,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual async Task<Response> ResumeRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(ResumeRecordingAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(ResumeRecording)}");
             scope.Start();
             try
             {
