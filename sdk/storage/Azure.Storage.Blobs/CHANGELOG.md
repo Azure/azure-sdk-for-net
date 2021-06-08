@@ -1,6 +1,7 @@
 # Release History
 
-## 12.9.0-beta.5 (Unreleased)
+## 12.9.0 (2021-06-08)
+- Includes all features from 12.9.0-beta.4.
 - Fixed bug where BlobClient.DownloadStreaming or BlobClient.DownloadData could corrupt data on retry.
 - Fixed bug where specifying "*" as IfMatch condition could lead to inconsistend read in BlobClient.DownloadTo.
 - Fixed bug where specifying conditions in BlobBaseClient.OpenRead could override allowModifications flag in BlobOpenReadOptions leading to inconsistent read.

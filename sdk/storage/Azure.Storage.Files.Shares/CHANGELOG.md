@@ -1,6 +1,7 @@
 # Release History
 
-## 12.7.0-beta.5 (Unreleased)
+## 12.7.0 (2021-06-08)
+- Includes all features from 12.7.0-beta.4.
 - Fixed bug where specifying conditions in ShareFileClient.OpenRead could override allowModifications flag in ShareFileOpenReadOptions leading to inconsistent read.
 - Fixed bug where retry during streaming of ShareFileClient.Download result could lead to inconsistent read.
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
