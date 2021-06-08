@@ -11,9 +11,9 @@ using Azure.Core.Pipeline;
 namespace Azure.Storage.Shared
 {
     /// <summary>
-    ///
+    /// The storage authorization policy which supports challenges including tenantId discovery.
     /// </summary>
-    public class StorageBearerTokenChallengeAuthorizationPolicy : BearerTokenAuthenticationPolicy
+    internal class StorageBearerTokenChallengeAuthorizationPolicy : BearerTokenAuthenticationPolicy
     {
         private readonly string[] _scopes;
         private volatile string tenantId;

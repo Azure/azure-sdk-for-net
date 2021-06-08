@@ -41,7 +41,6 @@
     <Compile Include="Shared\SasExtensions.cs" />
     <Compile Include="Shared\SasQueryParametersInternals.cs" />
     <Compile Include="Shared\SharedAccessSignatureCredentials.cs" />
-    <Compile Include="Shared\StorageBearerTokenChallengeAuthorizationPolicy.cs" />
     <Compile Include="Shared\StorageExceptionExtensions.cs" />
     <Compile Include="Shared\StorageConnectionString.cs" />
     <Compile Include="Shared\StorageResponseClassifier.cs" />
