@@ -24,3 +24,11 @@ directive:
   transform: >
     $.properties.AccessPolicy["x-nullable"] = true;
 ```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AccessPolicy
+  transform: >
+    $.properties.Permission["x-nullable"] = true;
+```
