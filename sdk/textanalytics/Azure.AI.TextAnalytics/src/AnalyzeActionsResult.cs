@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults { get; }
 
         /// <summary>
-        /// Determines the collection of AnalyzeSentimentActionResult.
+        /// Determines the collection of <see cref="AnalyzeSentimentActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentActionsResults { get; }
     }
