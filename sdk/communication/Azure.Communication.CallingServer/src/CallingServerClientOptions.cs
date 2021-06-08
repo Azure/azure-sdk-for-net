@@ -7,25 +7,25 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The options for communication <see cref="CallClient"/>.
+    /// The options for communication <see cref="CallConnection"/> and <see cref="ServerCall"/>.
     /// </summary>
-    public class CallClientOptions : ClientOptions
+    public class CallingServerClientOptions : ClientOptions
     {
         /// <summary>
         /// The latest version of the CallingServer service.
         /// </summary>
-        public const ServiceVersion LatestVersion = ServiceVersion.V2021_04_15_Preview1;
+        public const ServiceVersion LatestVersion = ServiceVersion.V2021_06_15_Preview;
 
         internal string ApiVersion { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CallClientOptions"/>.
+        /// Initializes a new instance of the <see cref="CallingServerClientOptions"/>.
         /// </summary>
-        public CallClientOptions(ServiceVersion version = LatestVersion)
+        public CallingServerClientOptions(ServiceVersion version = LatestVersion)
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2021_04_15_Preview1 => "2021-04-15-preview1",
+                ServiceVersion.V2021_06_15_Preview => "2021-06-15-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallingServer
             /// The Beta of the CallingServer service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-            V2021_04_15_Preview1 = 0
+            V2021_06_15_Preview = 0
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

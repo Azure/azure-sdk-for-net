@@ -16,13 +16,13 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of JoinCallResponse. </summary>
-        /// <param name="callLegId"> Call leg id of the call. </param>
-        internal JoinCallResponse(string callLegId)
+        /// <param name="callConnectionId"> The call connection id. </param>
+        internal JoinCallResponse(string callConnectionId)
         {
-            CallLegId = callLegId;
+            CallConnectionId = callConnectionId;
         }
 
-        /// <summary> Call leg id of the call. </summary>
-        public string CallLegId { get; }
+        /// <summary> The call connection id. </summary>
+        public string CallConnectionId { get; }
     }
 }

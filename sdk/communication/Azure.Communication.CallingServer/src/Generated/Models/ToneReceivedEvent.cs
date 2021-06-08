@@ -17,16 +17,16 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of ToneReceivedEvent. </summary>
         /// <param name="toneInfo"> The tone info. </param>
-        /// <param name="callLegId"> The call leg.id. </param>
-        internal ToneReceivedEvent(ToneInfo toneInfo, string callLegId)
+        /// <param name="callConnectionId"> The call connection id. </param>
+        internal ToneReceivedEvent(ToneInfo toneInfo, string callConnectionId)
         {
             ToneInfo = toneInfo;
-            CallLegId = callLegId;
+            CallConnectionId = callConnectionId;
         }
 
         /// <summary> The tone info. </summary>
         public ToneInfo ToneInfo { get; set; }
-        /// <summary> The call leg.id. </summary>
-        public string CallLegId { get; set; }
+        /// <summary> The call connection id. </summary>
+        public string CallConnectionId { get; set; }
     }
 }

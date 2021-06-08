@@ -20,10 +20,10 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("toneInfo");
                 writer.WriteObjectValue(ToneInfo);
             }
-            if (Optional.IsDefined(CallLegId))
+            if (Optional.IsDefined(CallConnectionId))
             {
-                writer.WritePropertyName("callLegId");
-                writer.WriteStringValue(CallLegId);
+                writer.WritePropertyName("callConnectionId");
+                writer.WriteStringValue(CallConnectionId);
             }
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.Communication.CallingServer
         internal static ToneReceivedEvent DeserializeToneReceivedEvent(JsonElement element)
         {
             Optional<ToneInfo> toneInfo = default;
-            Optional<string> callLegId = default;
+            Optional<string> callConnectionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("toneInfo"))
@@ -44,13 +44,13 @@ namespace Azure.Communication.CallingServer
                     toneInfo = ToneInfo.DeserializeToneInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("callLegId"))
+                if (property.NameEquals("callConnectionId"))
                 {
-                    callLegId = property.Value.GetString();
+                    callConnectionId = property.Value.GetString();
                     continue;
                 }
             }
-            return new ToneReceivedEvent(toneInfo.Value, callLegId.Value);
+            return new ToneReceivedEvent(toneInfo.Value, callConnectionId.Value);
         }
     }
 }

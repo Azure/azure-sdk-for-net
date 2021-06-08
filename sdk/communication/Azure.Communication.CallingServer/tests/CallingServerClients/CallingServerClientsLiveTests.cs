@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Azure.Communication.CallingServer.Tests
 {
     /// <summary>
-    /// The suite of tests for the <see cref="CallClient"/> class.
+    /// The suite of tests for the <see cref="CallConnection"/> class.
     /// </summary>
     /// <remarks>
     /// These tests have a dependency on live Azure services and may incur costs for the associated
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task CreateCallTest()
         {
-            CallClient client = CreateInstrumentedCallingServerClient();
+            CallingServerClient client = CreateInstrumentedCallingServerClient();
             try
             {
                 await CreateCallOperation(client).ConfigureAwait(false);
@@ -53,13 +53,12 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task DeteleCallTest()
         {
-            CallClient client = CreateInstrumentedCallingServerClient();
+            CallingServerClient client = CreateInstrumentedCallingServerClient();
             try
             {
-                var createCallResponse = await CreateCallOperation(client).ConfigureAwait(false);
-                var callLegId = createCallResponse.Value.CallLegId;
+                var callConnection = await CreateCallOperation(client).ConfigureAwait(false);
 
-                await DeteleCallOperation(client, callLegId).ConfigureAwait(false);
+                await DeteleCallOperation(callConnection).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -75,16 +74,15 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task PlayAudioTest()
         {
-            CallClient client = CreateInstrumentedCallingServerClient();
+            CallingServerClient client = CreateInstrumentedCallingServerClient();
             try
             {
-                var createCallResponse = await CreateCallOperation(client).ConfigureAwait(false);
-                var callLegId = createCallResponse.Value.CallLegId;
+                var callConnection = await CreateCallOperation(client).ConfigureAwait(false);
 
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                await PlayAudioOperation(client, callLegId).ConfigureAwait(false);
+                await PlayAudioOperation(callConnection).ConfigureAwait(false);
 
-                await DeteleCallOperation(client, callLegId).ConfigureAwait(false);
+                await DeteleCallOperation(callConnection).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -100,14 +98,13 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task HangupCallTest()
         {
-            CallClient client = CreateInstrumentedCallingServerClient();
+            CallingServerClient client = CreateInstrumentedCallingServerClient();
             try
             {
-                var createCallResponse = await CreateCallOperation(client).ConfigureAwait(false);
-                var callLegId = createCallResponse.Value.CallLegId;
+                var callConnection = await CreateCallOperation(client).ConfigureAwait(false);
 
                 // There is one call leg in this test case, hangup the call will also delete the call as the result.
-                await HangupOperation(client, callLegId).ConfigureAwait(false);
+                await HangupOperation(callConnection).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -123,19 +120,18 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task CancelAllMediaOperationsTest()
         {
-            CallClient client = CreateInstrumentedCallingServerClient();
+            CallingServerClient client = CreateInstrumentedCallingServerClient();
             try
             {
-                var createCallResponse = await CreateCallOperation(client).ConfigureAwait(false);
-                var callLegId = createCallResponse.Value.CallLegId;
+                var callConnection = await CreateCallOperation(client).ConfigureAwait(false);
 
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                await PlayAudioOperation(client, callLegId).ConfigureAwait(false);
+                await PlayAudioOperation(callConnection).ConfigureAwait(false);
 
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                await CancelAllMediaOperationsOperation(client, callLegId).ConfigureAwait(false);
+                await CancelAllMediaOperationsOperation(callConnection).ConfigureAwait(false);
 
-                await DeteleCallOperation(client, callLegId).ConfigureAwait(false);
+                await DeteleCallOperation(callConnection).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -150,7 +146,7 @@ namespace Azure.Communication.CallingServer.Tests
 
         #region Support functions
         #region Snippet:Azure_Communication_ServerCalling_Tests_CreateCallOperation
-        private async Task<Response<CreateCallResponse>> CreateCallOperation(CallClient client)
+        private async Task<Response<CallConnection>> CreateCallOperation(CallingServerClient client)
         {
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var source = await CreateUserAsync(communicationIdentityClient).ConfigureAwait(false);
@@ -164,21 +160,21 @@ namespace Azure.Communication.CallingServer.Tests
 
             Console.WriteLine("Performing CreateCall operation");
 
-            var createCallResponse = await client.CreateCallAsync(source: source, targets: targets, options: createCallOption).ConfigureAwait(false);
+            var callConnection = await client.CreateCallConnectionAsync(source: source, targets: targets, options: createCallOption).ConfigureAwait(false);
 
-            Console.WriteLine("Call initiated with Call Leg id: {0}", createCallResponse.Value.CallLegId);
+            Console.WriteLine("Call initiated with Call connection id: {0}", callConnection.Value.CallConnectionId);
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(createCallResponse.Value.CallLegId));
-            return createCallResponse;
+            Assert.IsFalse(string.IsNullOrWhiteSpace(callConnection.Value.CallConnectionId));
+            return callConnection;
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_CreateCallOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_DeteleCallOperation
-        private async Task DeteleCallOperation(CallClient client, string callLegId)
+        private async Task DeteleCallOperation(CallConnection callConnection)
         {
-            var response = await client.DeleteCallAsync(callLegId: callLegId).ConfigureAwait(false);
+            var response = await callConnection.DeleteAsync().ConfigureAwait(false);
 
-            Console.WriteLine("Delete Call with Call Leg id: {0}", callLegId);
+            Console.WriteLine("Delete Call with Call connection id: {0}", callConnection.CallConnectionId);
 
             Assert.AreEqual(202, response.Status);
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.ClientRequestId));
@@ -186,7 +182,7 @@ namespace Azure.Communication.CallingServer.Tests
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_DeteleCallOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_PlayAudioOperation
-        private async Task PlayAudioOperation(CallClient client, string callLegId)
+        private async Task PlayAudioOperation(CallConnection callConnection)
         {
             var playAudioOptions = new PlayAudioOptions()
             {
@@ -198,29 +194,29 @@ namespace Azure.Communication.CallingServer.Tests
 
             Console.WriteLine("Performing PlayAudio operation");
 
-            var response = await client.PlayAudioAsync(callLegId, playAudioOptions).ConfigureAwait(false);
+            var response = await callConnection.PlayAudioAsync(playAudioOptions).ConfigureAwait(false);
 
             Assert.AreEqual(response.Value.Status, OperationStatus.Running);
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_PlayAudioOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_HangupCallOperation
-        private async Task HangupOperation(CallClient client, string callLegId)
+        private async Task HangupOperation(CallConnection callConnection)
         {
             Console.WriteLine("Performing Hangup operation");
 
-            var response = await client.HangupCallAsync(callLegId).ConfigureAwait(false);
+            var response = await callConnection.HangupAsync().ConfigureAwait(false);
 
             Assert.AreEqual(202, response.Status);
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_HangupCallOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaOperationsOperation
-        private async Task CancelAllMediaOperationsOperation(CallClient client, string callLegId)
+        private async Task CancelAllMediaOperationsOperation(CallConnection callConnection)
         {
             Console.WriteLine("Performing cancel media processing operation to stop playing audio");
 
-            var response = await client.CancelAllMediaOperationsAsync(callLegId).ConfigureAwait(false);
+            var response = await callConnection.CancelAllMediaOperationsAsync().ConfigureAwait(false);
 
             Assert.AreEqual(OperationStatus.Completed, response.Value.Status);
         }

@@ -9,7 +9,7 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Class to represent entry in roster. </summary>
+    /// <summary> A participant in a call. </summary>
     internal partial class CommunicationParticipantInternal
     {
         /// <summary> Initializes a new instance of CommunicationParticipantInternal. </summary>
@@ -18,8 +18,8 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CommunicationParticipantInternal. </summary>
-        /// <param name="identifier"> ACS communication identifier. </param>
-        /// <param name="participantId"> Participant Id. </param>
+        /// <param name="identifier"> Communication identifier of the participant. </param>
+        /// <param name="participantId"> Participant id. </param>
         /// <param name="isMuted"> Is participant muted. </param>
         internal CommunicationParticipantInternal(CommunicationIdentifierModel identifier, string participantId, bool? isMuted)
         {
@@ -28,9 +28,9 @@ namespace Azure.Communication.CallingServer
             IsMuted = isMuted;
         }
 
-        /// <summary> ACS communication identifier. </summary>
+        /// <summary> Communication identifier of the participant. </summary>
         public CommunicationIdentifierModel Identifier { get; }
-        /// <summary> Participant Id. </summary>
+        /// <summary> Participant id. </summary>
         public string ParticipantId { get; }
         /// <summary> Is participant muted. </summary>
         public bool? IsMuted { get; }

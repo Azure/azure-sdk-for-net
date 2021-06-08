@@ -25,13 +25,13 @@ namespace Azure.Communication.CallingServer.Tests
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         /// <summary>
-        /// Creates a <see cref="CallClient" />
+        /// Creates a <see cref="CallConnection" />
         /// </summary>
-        /// <returns>The instrumented <see cref="CallClient" />.</returns>
-        protected CallClient CreateInstrumentedCallingServerClient()
+        /// <returns>The instrumented <see cref="CallConnection" />.</returns>
+        protected CallingServerClient CreateInstrumentedCallingServerClient()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
-            CallClient client = new CallClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+            CallingServerClient client = new CallingServerClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
 
             #region Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
             //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
@@ -46,9 +46,9 @@ namespace Azure.Communication.CallingServer.Tests
                 await Task.Delay(10000);
         }
 
-        private CallClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs()
+        private CallingServerClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs()
         {
-            CallClientOptions callClientOptions = new CallClientOptions();
+            CallingServerClientOptions callClientOptions = new CallingServerClientOptions();
             callClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(callClientOptions);
         }

@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The response payload of the cancel media processing operation. </summary>
+    /// <summary> The response payload of the cancel all media operations. </summary>
     public partial class CancelAllMediaOperationsResponse
     {
         /// <summary> Initializes a new instance of CancelAllMediaOperationsResponse. </summary>

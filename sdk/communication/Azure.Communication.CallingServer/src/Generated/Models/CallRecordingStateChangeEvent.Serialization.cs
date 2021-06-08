@@ -31,10 +31,10 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("startDateTime");
                 writer.WriteStringValue(StartDateTime.Value, "O");
             }
-            if (Optional.IsDefined(ConversationId))
+            if (Optional.IsDefined(ServerCallId))
             {
-                writer.WritePropertyName("conversationId");
-                writer.WriteStringValue(ConversationId);
+                writer.WritePropertyName("serverCallId");
+                writer.WriteStringValue(ServerCallId);
             }
             writer.WriteEndObject();
         }
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallingServer
             Optional<string> recordingId = default;
             Optional<CallRecordingState> state = default;
             Optional<DateTimeOffset> startDateTime = default;
-            Optional<string> conversationId = default;
+            Optional<string> serverCallId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingId"))
@@ -72,13 +72,13 @@ namespace Azure.Communication.CallingServer
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("conversationId"))
+                if (property.NameEquals("serverCallId"))
                 {
-                    conversationId = property.Value.GetString();
+                    serverCallId = property.Value.GetString();
                     continue;
                 }
             }
-            return new CallRecordingStateChangeEvent(recordingId.Value, Optional.ToNullable(state), Optional.ToNullable(startDateTime), conversationId.Value);
+            return new CallRecordingStateChangeEvent(recordingId.Value, Optional.ToNullable(state), Optional.ToNullable(startDateTime), serverCallId.Value);
         }
     }
 }

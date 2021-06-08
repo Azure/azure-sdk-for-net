@@ -16,13 +16,13 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CreateCallResponse. </summary>
-        /// <param name="callLegId"> Call leg id of the call. </param>
-        internal CreateCallResponse(string callLegId)
+        /// <param name="callConnectionId"> The call connection id. </param>
+        internal CreateCallResponse(string callConnectionId)
         {
-            CallLegId = callLegId;
+            CallConnectionId = callConnectionId;
         }
 
-        /// <summary> Call leg id of the call. </summary>
-        public string CallLegId { get; }
+        /// <summary> The call connection id. </summary>
+        public string CallConnectionId { get; }
     }
 }

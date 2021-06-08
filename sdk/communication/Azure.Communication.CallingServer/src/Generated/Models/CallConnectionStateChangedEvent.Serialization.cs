@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallLegStateChangedEvent : IUtf8JsonSerializable
+    public partial class CallConnectionStateChangedEvent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConversationId))
+            if (Optional.IsDefined(ServerCallId))
             {
-                writer.WritePropertyName("conversationId");
-                writer.WriteStringValue(ConversationId);
+                writer.WritePropertyName("serverCallId");
+                writer.WriteStringValue(ServerCallId);
             }
-            if (Optional.IsDefined(CallLegId))
+            if (Optional.IsDefined(CallConnectionId))
             {
-                writer.WritePropertyName("callLegId");
-                writer.WriteStringValue(CallLegId);
+                writer.WritePropertyName("callConnectionId");
+                writer.WriteStringValue(CallConnectionId);
             }
             if (Optional.IsDefined(CallState))
             {
@@ -33,21 +33,21 @@ namespace Azure.Communication.CallingServer
             writer.WriteEndObject();
         }
 
-        internal static CallLegStateChangedEvent DeserializeCallLegStateChangedEvent(JsonElement element)
+        internal static CallConnectionStateChangedEvent DeserializeCallConnectionStateChangedEvent(JsonElement element)
         {
-            Optional<string> conversationId = default;
-            Optional<string> callLegId = default;
+            Optional<string> serverCallId = default;
+            Optional<string> callConnectionId = default;
             Optional<CallState> callState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("conversationId"))
+                if (property.NameEquals("serverCallId"))
                 {
-                    conversationId = property.Value.GetString();
+                    serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callLegId"))
+                if (property.NameEquals("callConnectionId"))
                 {
-                    callLegId = property.Value.GetString();
+                    callConnectionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("callState"))
@@ -61,7 +61,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallLegStateChangedEvent(conversationId.Value, callLegId.Value, Optional.ToNullable(callState));
+            return new CallConnectionStateChangedEvent(serverCallId.Value, callConnectionId.Value, Optional.ToNullable(callState));
         }
     }
 }

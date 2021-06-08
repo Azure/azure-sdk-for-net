@@ -37,7 +37,7 @@
       }
     },
     {
-      "RequestUri": "https://acstestbot3.communication.azure.com/calling/calls?api-version=2021-04-15-preview1",
+      "RequestUri": "https://acstestbot3.communication.azure.com/calling/callConnections?api-version=2021-06-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -51,31 +51,31 @@
         "x-ms-content-sha256": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "sourceAlternateIdentity": {
-          "value": "Sanitized"
+        "RequestBody": {
+            "sourceAlternateIdentity": {
+                "value": "Sanitized"
+            },
+            "targets": [
+                {
+                    "phoneNumber": {
+                        "value": "Sanitized"
+                    }
+                }
+            ],
+            "source": {
+                "communicationUser": {
+                    "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-878e-5b53-63b2-a43a0d00c523"
+                }
+            },
+            "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
+            "requestedMediaTypes": [
+                "audio"
+            ],
+            "requestedCallEvents": [
+                "participantsUpdated",
+                "dtmfReceived"
+            ]
         },
-        "targets": [
-          {
-            "phoneNumber": {
-              "value": "Sanitized"
-            }
-          }
-        ],
-        "source": {
-          "communicationUser": {
-            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_0000000a-878e-5b53-63b2-a43a0d00c523"
-          }
-        },
-        "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
-        "requestedModalities": [
-          "audio"
-        ],
-        "requestedCallEvents": [
-          "participantsUpdated",
-          "dtmfReceived"
-        ]
-      },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Client-Request-Id": "e62c5ba7-847d-4131-be89-05077fa07cd4",
@@ -86,9 +86,9 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Microsoft-Skype-Chain-ID": "8fcef782-32fb-4bbe-aa88-1461e3c446e8"
       },
-      "ResponseBody": {
-        "callLegId": "421f0b00-18fe-42e3-bf56-c7b21b1e5ddb"
-      }
+        "ResponseBody": {
+            "callConnectionId": "421f0b00-18fe-42e3-bf56-c7b21b1e5ddb"
+        }
     }
   ],
   "Variables": {

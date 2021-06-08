@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public class ParticipantsUpdatedEvent : CallingServerEventBase
     {
-        /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
+        /// <summary> Initializes a new instance of ParticipantsUpdatedEvent. </summary>
         public ParticipantsUpdatedEvent()
         {
         }
@@ -31,13 +31,13 @@ namespace Azure.Communication.CallingServer
 
             return new ParticipantsUpdatedEvent
             {
-                CallLegId = participantsUpdatedEventInternal.CallLegId,
+                CallConnectionId = participantsUpdatedEventInternal.CallConnectionId,
                 Participants = participantsUpdatedEventInternal.Participants?.Select(x => new CommunicationParticipant { Identifier = CommunicationIdentifierSerializer.Deserialize(x.Identifier), IsMuted = x.IsMuted, ParticipantId = x.ParticipantId })
             };
         }
 
-        /// <summary> The call leg.id. </summary>
-        public string CallLegId { get; set; }
+        /// <summary> The call connection id. </summary>
+        public string CallConnectionId { get; set; }
 
         /// <summary> The list of participants. </summary>
         public IEnumerable<CommunicationParticipant> Participants { get; set; }

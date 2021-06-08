@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Class to represent roster update. </summary>
+    /// <summary> The participant update event. </summary>
     internal partial class ParticipantsUpdatedEventInternal
     {
         /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
@@ -20,16 +20,16 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
-        /// <param name="callLegId"> The call leg.id. </param>
+        /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="participants"> The list of participants. </param>
-        internal ParticipantsUpdatedEventInternal(string callLegId, IReadOnlyList<CommunicationParticipantInternal> participants)
+        internal ParticipantsUpdatedEventInternal(string callConnectionId, IReadOnlyList<CommunicationParticipantInternal> participants)
         {
-            CallLegId = callLegId;
+            CallConnectionId = callConnectionId;
             Participants = participants;
         }
 
-        /// <summary> The call leg.id. </summary>
-        public string CallLegId { get; }
+        /// <summary> The call connection id. </summary>
+        public string CallConnectionId { get; }
         /// <summary> The list of participants. </summary>
         public IReadOnlyList<CommunicationParticipantInternal> Participants { get; }
     }

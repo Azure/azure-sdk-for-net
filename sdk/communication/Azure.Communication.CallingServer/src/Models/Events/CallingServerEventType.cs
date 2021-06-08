@@ -22,7 +22,7 @@ namespace Azure.Communication.CallingServer
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal const string CallLegStateChangedEventValue = "Microsoft.Communication.CallLegStateChanged";
+        internal const string CallConnectionStateChangedEventValue = "Microsoft.Communication.CallConnectionStateChanged";
         internal const string ToneReceivedEventValue = "Microsoft.Communication.DtmfReceived";
         internal const string PlayAudioResultEventValue = "Microsoft.Communication.PlayAudioResult";
         internal const string CallRecordingStateChangeEventValue = "Microsoft.Communication.CallRecordingStateChanged";
@@ -30,9 +30,9 @@ namespace Azure.Communication.CallingServer
         internal const string ParticipantsUpdatedEventValue = "Microsoft.Communication.ParticipantsUpdated";
 
         /// <summary>
-        /// The call leg state change event type.
+        /// The call connection state change event type.
         /// </summary>
-        public static CallingServerEventType CallLegStateChangedEvent { get; } = new CallingServerEventType(CallLegStateChangedEventValue);
+        public static CallingServerEventType CallConnectionStateChangedEvent { get; } = new CallingServerEventType(CallConnectionStateChangedEventValue);
 
         /// <summary>
         /// The subscribe to tone event type.

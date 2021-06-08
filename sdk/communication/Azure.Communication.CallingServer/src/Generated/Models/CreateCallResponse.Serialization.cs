@@ -14,16 +14,16 @@ namespace Azure.Communication.CallingServer
     {
         internal static CreateCallResponse DeserializeCreateCallResponse(JsonElement element)
         {
-            Optional<string> callLegId = default;
+            Optional<string> callConnectionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callLegId"))
+                if (property.NameEquals("callConnectionId"))
                 {
-                    callLegId = property.Value.GetString();
+                    callConnectionId = property.Value.GetString();
                     continue;
                 }
             }
-            return new CreateCallResponse(callLegId.Value);
+            return new CreateCallResponse(callConnectionId.Value);
         }
     }
 }

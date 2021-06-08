@@ -11,11 +11,11 @@ namespace Azure.Communication.CallingServer
     public static partial class AzureCommunicationCallingServerServiceModelFactory
     {
         /// <summary> Initializes new instance of CreateCallResponse class. </summary>
-        /// <param name="callLegId"> Call leg id of the call. </param>
+        /// <param name="callConnectionId"> The call connection id. </param>
         /// <returns> A new <see cref="CallingServer.CreateCallResponse"/> instance for mocking. </returns>
-        public static CreateCallResponse CreateCallResponse(string callLegId = default)
+        public static CreateCallResponse CreateCallResponse(string callConnectionId = default)
         {
-            return new CreateCallResponse(callLegId);
+            return new CreateCallResponse(callConnectionId);
         }
 
         /// <summary> Initializes new instance of PlayAudioResponse class. </summary>
@@ -62,14 +62,6 @@ namespace Azure.Communication.CallingServer
             return new CancelAllMediaOperationsResponse(id, status, operationContext, resultInfo);
         }
 
-        /// <summary> Initializes new instance of JoinCallResponse class. </summary>
-        /// <param name="callLegId"> Call leg id of the call. </param>
-        /// <returns> A new <see cref="CallingServer.JoinCallResponse"/> instance for mocking. </returns>
-        public static JoinCallResponse JoinCallResponse(string callLegId = default)
-        {
-            return new JoinCallResponse(callLegId);
-        }
-
         /// <summary> Initializes new instance of StartCallRecordingResponse class. </summary>
         /// <param name="recordingId"> The recording id of the started recording. </param>
         /// <returns> A new <see cref="CallingServer.StartCallRecordingResponse"/> instance for mocking. </returns>
@@ -84,6 +76,14 @@ namespace Azure.Communication.CallingServer
         public static GetCallRecordingStateResponse GetCallRecordingStateResponse(CallRecordingState? recordingState = default)
         {
             return new GetCallRecordingStateResponse(recordingState);
+        }
+
+        /// <summary> Initializes new instance of JoinCallResponse class. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <returns> A new <see cref="CallingServer.JoinCallResponse"/> instance for mocking. </returns>
+        public static JoinCallResponse JoinCallResponse(string callConnectionId = default)
+        {
+            return new JoinCallResponse(callConnectionId);
         }
     }
 }

@@ -21,13 +21,13 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"> The recording state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        /// <param name="conversationId"> The conversation id from a out call start recording request. </param>
-        internal CallRecordingStateChangeEvent(string recordingId, CallRecordingState? state, DateTimeOffset? startDateTime, string conversationId)
+        /// <param name="serverCallId"> The server call.id. </param>
+        internal CallRecordingStateChangeEvent(string recordingId, CallRecordingState? state, DateTimeOffset? startDateTime, string serverCallId)
         {
             RecordingId = recordingId;
             State = state;
             StartDateTime = startDateTime;
-            ConversationId = conversationId;
+            ServerCallId = serverCallId;
         }
 
         /// <summary> The call recording id. </summary>
@@ -36,7 +36,7 @@ namespace Azure.Communication.CallingServer
         public CallRecordingState? State { get; set; }
         /// <summary> The time of the recording started. </summary>
         public DateTimeOffset? StartDateTime { get; set; }
-        /// <summary> The conversation id from a out call start recording request. </summary>
-        public string ConversationId { get; set; }
+        /// <summary> The server call.id. </summary>
+        public string ServerCallId { get; set; }
     }
 }
