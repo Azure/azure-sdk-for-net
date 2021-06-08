@@ -15,16 +15,12 @@ namespace Azure.Data.Tables.Models
         /// <summary> Initializes a new instance of TableSignedIdentifier. </summary>
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accessPolicy"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public TableSignedIdentifier(string id, TableAccessPolicy accessPolicy)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
-            }
-            if (accessPolicy == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicy));
             }
 
             Id = id;
