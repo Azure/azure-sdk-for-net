@@ -24,9 +24,9 @@
   },
   "OperationGroupToParent": {
     "Deployments": "tenant",
-    "PolicyAssignments": "subscriptions",
-    "PolicyDefinitions": "subscriptions",
-    "PolicySetDefinitions": "subscriptions",
+    "PolicyAssignments": "tenant",
+    "PolicyDefinitions": "tenant",
+    "PolicySetDefinitions": "tenant",
     "DeploymentScripts": "resourceGroups",
     "ManagementLocks": "resourceGroups",
     "ResourceLinks": "tenant"

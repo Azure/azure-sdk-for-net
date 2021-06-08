@@ -17,17 +17,17 @@ using Azure.ResourceManager.Core.Resources;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of PolicySetDefinition and their operations over a Subscription. </summary>
-    public partial class PolicySetDefinitionSubscriptionsContainer : ResourceContainerBase<SubscriptionResourceIdentifier, PolicySetDefinition, PolicySetDefinitionData>
+    /// <summary> A class representing collection of PolicySetDefinition and their operations over a Tenant. </summary>
+    public partial class PolicySetDefinitionTenantContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, PolicySetDefinition, PolicySetDefinitionData>
     {
-        /// <summary> Initializes a new instance of the <see cref="PolicySetDefinitionSubscriptionsContainer"/> class for mocking. </summary>
-        protected PolicySetDefinitionSubscriptionsContainer()
+        /// <summary> Initializes a new instance of the <see cref="PolicySetDefinitionTenantContainer"/> class for mocking. </summary>
+        protected PolicySetDefinitionTenantContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionSubscriptionsContainer class. </summary>
+        /// <summary> Initializes a new instance of PolicySetDefinitionTenantContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PolicySetDefinitionSubscriptionsContainer(ResourceOperationsBase parent) : base(parent)
+        internal PolicySetDefinitionTenantContainer(ResourceOperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
         public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
+        protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
 
         // Container level operations.
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public Response<PolicySetDefinition> CreateOrUpdate(string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<Response<PolicySetDefinition>> CreateOrUpdateAsync(string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public PolicySetDefinitionsCreateOrUpdateOperation StartCreateOrUpdate(string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async Task<PolicySetDefinitionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public override Response<PolicySetDefinition> Get(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.Get");
             scope.Start();
             try
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async override Task<Response<PolicySetDefinition>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.Get");
             scope.Start();
             try
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<PolicySetDefinition> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.List");
                 scope.Start();
                 try
                 {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<PolicySetDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.List");
                 scope.Start();
                 try
                 {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<PolicySetDefinition>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.List");
                 scope.Start();
                 try
                 {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<PolicySetDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.List");
                 scope.Start();
                 try
                 {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
         public Pageable<Core.GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.ListAsGenericResource");
             scope.Start();
             try
             {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<Core.GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionSubscriptionsContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionTenantContainer.ListAsGenericResource");
             scope.Start();
             try
             {
@@ -329,6 +329,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<SubscriptionResourceIdentifier, PolicySetDefinition, PolicySetDefinitionData> Construct() { }
+        // public ArmBuilder<ResourceGroupResourceIdentifier, PolicySetDefinition, PolicySetDefinitionData> Construct() { }
     }
 }

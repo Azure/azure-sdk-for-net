@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static PolicyDefinitionData DeserializePolicyDefinitionData(JsonElement element)
         {
-            SubscriptionResourceIdentifier id = default;
+            ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<PolicyType> policyType = default;

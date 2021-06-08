@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the PolicyAssignment data model. </summary>
-    public partial class PolicyAssignmentData : Resource<SubscriptionResourceIdentifier>
+    public partial class PolicyAssignmentData : Resource<ResourceGroupResourceIdentifier>
     {
         /// <summary> Initializes a new instance of PolicyAssignmentData. </summary>
         public PolicyAssignmentData()
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="description"> This message will be part of response in case of policy violation. </param>
         /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
-        internal PolicyAssignmentData(SubscriptionResourceIdentifier id, string name, ResourceType type, PolicySku sku, string location, Identity identity, string displayName, string policyDefinitionId, string scope, IList<string> notScopes, IDictionary<string, ParameterValuesValue> parameters, string description, object metadata, EnforcementMode? enforcementMode) : base(id, name, type)
+        internal PolicyAssignmentData(ResourceGroupResourceIdentifier id, string name, ResourceType type, PolicySku sku, string location, Identity identity, string displayName, string policyDefinitionId, string scope, IList<string> notScopes, IDictionary<string, ParameterValuesValue> parameters, string description, object metadata, EnforcementMode? enforcementMode) : base(id, name, type)
         {
             Sku = sku;
             Location = location;

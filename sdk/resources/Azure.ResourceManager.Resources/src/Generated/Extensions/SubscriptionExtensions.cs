@@ -19,33 +19,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary> Extension methods for convenient access on SubscriptionOperations in a client. </summary>
     public static partial class SubscriptionExtensions
     {
-        #region PolicyAssignment
-        /// <summary> Gets an object representing a PolicyAssignmentSubscriptionsContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        public static PolicyAssignmentSubscriptionsContainer GetPolicyAssignmentSubscriptionsContainer(this SubscriptionOperations subscription)
-        {
-            return new PolicyAssignmentSubscriptionsContainer(subscription);
-        }
-        #endregion
-
-        #region PolicyDefinition
-        /// <summary> Gets an object representing a PolicyDefinitionSubscriptionsContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        public static PolicyDefinitionSubscriptionsContainer GetPolicyDefinitionSubscriptionsContainer(this SubscriptionOperations subscription)
-        {
-            return new PolicyDefinitionSubscriptionsContainer(subscription);
-        }
-        #endregion
-
-        #region PolicySetDefinition
-        /// <summary> Gets an object representing a PolicySetDefinitionSubscriptionsContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        public static PolicySetDefinitionSubscriptionsContainer GetPolicySetDefinitionSubscriptionsContainer(this SubscriptionOperations subscription)
-        {
-            return new PolicySetDefinitionSubscriptionsContainer(subscription);
-        }
-        #endregion
-
         #region DeploymentScript
         private static DeploymentScriptsRestOperations GetDeploymentScriptsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {

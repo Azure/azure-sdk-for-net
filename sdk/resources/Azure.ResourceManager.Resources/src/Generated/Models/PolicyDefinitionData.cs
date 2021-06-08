@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the PolicyDefinition data model. </summary>
-    public partial class PolicyDefinitionData : Resource<SubscriptionResourceIdentifier>
+    public partial class PolicyDefinitionData : Resource<ResourceGroupResourceIdentifier>
     {
         /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
         public PolicyDefinitionData()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyRule"> The policy rule. </param>
         /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
-        internal PolicyDefinitionData(SubscriptionResourceIdentifier id, string name, ResourceType type, PolicyType? policyType, string mode, string displayName, string description, object policyRule, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters) : base(id, name, type)
+        internal PolicyDefinitionData(ResourceGroupResourceIdentifier id, string name, ResourceType type, PolicyType? policyType, string mode, string displayName, string description, object policyRule, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters) : base(id, name, type)
         {
             PolicyType = policyType;
             Mode = mode;

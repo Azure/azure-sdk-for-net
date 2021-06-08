@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources
             Optional<PolicySku> sku = default;
             Optional<string> location = default;
             Optional<Identity> identity = default;
-            SubscriptionResourceIdentifier id = default;
+            ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<string> displayName = default;

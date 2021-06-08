@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the PolicySetDefinition data model. </summary>
-    public partial class PolicySetDefinitionData : Resource<SubscriptionResourceIdentifier>
+    public partial class PolicySetDefinitionData : Resource<ResourceGroupResourceIdentifier>
     {
         /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
         public PolicySetDefinitionData()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
         /// <param name="policyDefinitions"> An array of policy definition references. </param>
         /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
-        internal PolicySetDefinitionData(SubscriptionResourceIdentifier id, string name, ResourceType type, PolicyType? policyType, string displayName, string description, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups) : base(id, name, type)
+        internal PolicySetDefinitionData(ResourceGroupResourceIdentifier id, string name, ResourceType type, PolicyType? policyType, string displayName, string description, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups) : base(id, name, type)
         {
             PolicyType = policyType;
             DisplayName = displayName;

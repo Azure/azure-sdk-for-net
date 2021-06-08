@@ -16,20 +16,20 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the operations that can be performed over a specific PolicyAssignment. </summary>
-    public partial class PolicyAssignmentSubscriptionsOperations : ResourceOperationsBase<SubscriptionResourceIdentifier, PolicyAssignment>
+    public partial class PolicyAssignmentTenantOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, PolicyAssignment>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal PolicyAssignmentsRestOperations RestClient { get; }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentSubscriptionsOperations"/> class for mocking. </summary>
-        protected PolicyAssignmentSubscriptionsOperations()
+        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentTenantOperations"/> class for mocking. </summary>
+        protected PolicyAssignmentTenantOperations()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentSubscriptionsOperations"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentTenantOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal PolicyAssignmentSubscriptionsOperations(ResourceOperationsBase options, SubscriptionResourceIdentifier id) : base(options, id)
+        protected internal PolicyAssignmentTenantOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             RestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Resources
         /// <inheritdoc />
         public async override Task<Response<PolicyAssignment>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentSubscriptionsOperations.Get");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantOperations.Get");
             scope.Start();
             try
             {
-                var response = await RestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.GetAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Resources
         /// <inheritdoc />
         public override Response<PolicyAssignment> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentSubscriptionsOperations.Get");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantOperations.Get");
             scope.Start();
             try
             {
-                var response = RestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = RestClient.Get(Id.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<PolicyAssignmentData>> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentSubscriptionsOperations.Delete");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantOperations.Delete");
             scope.Start();
             try
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<PolicyAssignmentData> Delete(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentSubscriptionsOperations.Delete");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantOperations.Delete");
             scope.Start();
             try
             {
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<PolicyAssignmentsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentSubscriptionsOperations.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantOperations.StartDelete");
             scope.Start();
             try
             {
-                var response = await RestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.DeleteAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return new PolicyAssignmentsDeleteOperation(this, response);
             }
             catch (Exception e)
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public PolicyAssignmentsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentSubscriptionsOperations.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantOperations.StartDelete");
             scope.Start();
             try
             {
-                var response = RestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = RestClient.Delete(Id.Name, Id.Name, cancellationToken);
                 return new PolicyAssignmentsDeleteOperation(this, response);
             }
             catch (Exception e)
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PolicyAssignmentData>> DeleteByIdAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentSubscriptionsOperations.DeleteById");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantOperations.DeleteById");
             scope.Start();
             try
             {
-                return await RestClient.DeleteByIdAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteByIdAsync(Id.Name, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PolicyAssignmentData> DeleteById(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentSubscriptionsOperations.DeleteById");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantOperations.DeleteById");
             scope.Start();
             try
             {
-                return RestClient.DeleteById(Id.SubscriptionId, cancellationToken);
+                return RestClient.DeleteById(Id.Name, cancellationToken);
             }
             catch (Exception e)
             {
@@ -197,11 +197,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PolicyAssignmentData>> GetByIdAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentSubscriptionsOperations.GetById");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantOperations.GetById");
             scope.Start();
             try
             {
-                return await RestClient.GetByIdAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetByIdAsync(Id.Name, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PolicyAssignmentData> GetById(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentSubscriptionsOperations.GetById");
+            using var scope = _clientDiagnostics.CreateScope("PolicyAssignmentTenantOperations.GetById");
             scope.Start();
             try
             {
-                return RestClient.GetById(Id.SubscriptionId, cancellationToken);
+                return RestClient.GetById(Id.Name, cancellationToken);
             }
             catch (Exception e)
             {

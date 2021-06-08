@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 version: 3.4.1
-use: https://github.com/Azure/autorest.csharp/releases/download/v3.0.0-beta.20210601.1/autorest-csharp-3.0.0-beta.20210601.1.tgz
+use: https://github.com/Azure/autorest.csharp/releases/download/v3.0.0-beta.20210604.5/autorest-csharp-3.0.0-beta.20210604.5.tgz
 azure-arm: true
 title: ResourceManagementClient
 library-name: ResourcesManagementClient
@@ -41,9 +41,9 @@ operation-group-to-resource:
   ApplicationDefinitions: ApplicationDefinition
 operation-group-to-parent:
   Deployments: tenant
-  PolicyAssignments: subscriptions
-  PolicyDefinitions: subscriptions
-  PolicySetDefinitions: subscriptions
+  PolicyAssignments: tenant
+  PolicyDefinitions: tenant
+  PolicySetDefinitions: tenant
   DeploymentScripts: resourceGroups
   ManagementLocks: resourceGroups
   ResourceLinks: tenant
