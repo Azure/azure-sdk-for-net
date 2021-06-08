@@ -168,9 +168,8 @@ namespace Azure.Storage.Shared
 {
     public partial class StorageBearerTokenChallengeAuthorizationPolicy : Azure.Core.Pipeline.BearerTokenAuthenticationPolicy
     {
-        public StorageBearerTokenChallengeAuthorizationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes, bool disableTenantDiscovery) : base (default(Azure.Core.TokenCredential), default(string)) { }
-        public StorageBearerTokenChallengeAuthorizationPolicy(Azure.Core.TokenCredential credential, string scope, bool disableTenantDiscovery) : base (default(Azure.Core.TokenCredential), default(string)) { }
-        public bool DisableTenantDiscovery { get { throw null; } }
+        public StorageBearerTokenChallengeAuthorizationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes, bool enableTenantDiscovery) : base (default(Azure.Core.TokenCredential), default(string)) { }
+        public StorageBearerTokenChallengeAuthorizationPolicy(Azure.Core.TokenCredential credential, string scope, bool enableTenantDiscovery) : base (default(Azure.Core.TokenCredential), default(string)) { }
         protected override void AuthorizeRequest(Azure.Core.HttpMessage message) { }
         protected override System.Threading.Tasks.ValueTask AuthorizeRequestAsync(Azure.Core.HttpMessage message) { throw null; }
         protected override bool AuthorizeRequestOnChallenge(Azure.Core.HttpMessage message) { throw null; }

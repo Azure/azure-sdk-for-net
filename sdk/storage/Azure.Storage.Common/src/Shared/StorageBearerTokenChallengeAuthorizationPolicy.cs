@@ -13,13 +13,11 @@ namespace Azure.Storage.Shared
     /// <summary>
     ///
     /// </summary>
-    public class StorageBearerTokenChallengeAuthorizationPolicy : BearerTokenAuthenticationPolicy, ISupportsTenantIdChallenges
+    public class StorageBearerTokenChallengeAuthorizationPolicy : BearerTokenAuthenticationPolicy
     {
         private readonly string[] _scopes;
         private volatile string tenantId;
-
-        /// <inheritdoc />
-        public bool EnableTenantDiscovery { get; }
+        private readonly bool _enableTenantDiscovery;
 
         /// <summary>
         ///
@@ -31,7 +29,7 @@ namespace Azure.Storage.Shared
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             _scopes = new[] { scope };
-            EnableTenantDiscovery = enableTenantDiscovery;
+            _enableTenantDiscovery = enableTenantDiscovery;
         }
 
         /// <summary>
@@ -46,13 +44,13 @@ namespace Azure.Storage.Shared
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
             _scopes = scopes.ToArray();
-            EnableTenantDiscovery = enableTenantDiscovery;
+            _enableTenantDiscovery = enableTenantDiscovery;
         }
 
         /// <inheritdoc />
         protected override void AuthorizeRequest(HttpMessage message)
         {
-            if (tenantId != null && !EnableTenantDiscovery)
+            if (tenantId != null && !_enableTenantDiscovery)
             {
                 base.AuthorizeRequest(message);
             }
@@ -61,7 +59,7 @@ namespace Azure.Storage.Shared
         /// <inheritdoc />
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
-            if (tenantId != null && !EnableTenantDiscovery)
+            if (tenantId != null && !_enableTenantDiscovery)
             {
                 return base.AuthorizeRequestAsync(message);
             }

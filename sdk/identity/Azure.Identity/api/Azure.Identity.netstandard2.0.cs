@@ -250,8 +250,8 @@ namespace Azure.Identity
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
+        public bool AllowMultiTenantAuthentication { get { throw null; } set { } }
         public System.Uri AuthorityHost { get { throw null; } set { } }
-        public bool PreferClientConfiguredTenantId { get { throw null; } set { } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {

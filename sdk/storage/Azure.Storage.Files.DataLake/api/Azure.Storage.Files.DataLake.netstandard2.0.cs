@@ -1,9 +1,9 @@
 namespace Azure.Storage.Files.DataLake
 {
-    public partial class DataLakeClientOptions : Azure.Core.ClientOptions
+    public partial class DataLakeClientOptions : Azure.Core.ClientOptions, Azure.Core.ISupportsTenantIdChallenges
     {
         public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2020_08_04) { }
-        public bool DisableTenantDiscovery { get { throw null; } set { } }
+        public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion

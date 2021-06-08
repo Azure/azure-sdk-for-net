@@ -160,7 +160,7 @@ namespace Azure.Identity.Tests
             [Values(true, false)] bool preferHint)
         {
             TestSetup();
-            options.PreferClientConfiguredTenantId = preferHint;
+            options.AllowMultiTenantAuthentication = preferHint;
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");

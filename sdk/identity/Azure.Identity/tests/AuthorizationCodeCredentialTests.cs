@@ -93,7 +93,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithAuthCodeHonorsTenantId([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
         {
-            options = new TokenCredentialOptions { PreferClientConfiguredTenantId = preferHint };
+            options = new TokenCredentialOptions { AllowMultiTenantAuthentication = preferHint };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options) ;
 

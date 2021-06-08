@@ -16,7 +16,7 @@ namespace Azure.Identity
         /// <returns></returns>
         public static string Resolve(string explicitTenantId, TokenRequestContext context, TokenCredentialOptions options)
         {
-            return options?.PreferClientConfiguredTenantId switch
+            return options?.AllowMultiTenantAuthentication switch
             {
                 true => explicitTenantId ?? context.TenantId,
                 _ => context.TenantId ?? explicitTenantId

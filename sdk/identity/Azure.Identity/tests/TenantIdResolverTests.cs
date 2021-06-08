@@ -13,8 +13,8 @@ namespace Azure.Identity.Tests
         private const string TenantId = "clientTenant";
         private static TokenRequestContext Context_Hint = new(Array.Empty<string>(), tenantId: "hint" );
         private static TokenRequestContext Context_NoHint = new(Array.Empty<string>());
-        private static TokenCredentialOptions Options_True = new() { PreferClientConfiguredTenantId = true };
-        private static TokenCredentialOptions Options_False = new() { PreferClientConfiguredTenantId = false };
+        private static TokenCredentialOptions Options_True = new() { AllowMultiTenantAuthentication = true };
+        private static TokenCredentialOptions Options_False = new() { AllowMultiTenantAuthentication = false };
 
         public static IEnumerable<object[]> ResolveInputs()
         {
