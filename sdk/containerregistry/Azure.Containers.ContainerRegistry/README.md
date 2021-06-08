@@ -37,9 +37,9 @@ az acr create --name myregistry --resource-group myresourcegroup --location west
 
 ### Authenticate the client
 
-For your application to connect to your registry, you'll need to create a `ContainerRegistryClient` that can authenticate with the registry service.  The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.  
+For your application to connect to your registry, you'll need to create a `ContainerRegistryClient` that can authenticate with it.  The [Azure Identity library][identity] provides easy Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.  
 
-When you're developing and debugging your application locally, you can use your own user account to authenticate with your registry.  One approach to accomplish this is to [authenticate with the Azure CLI](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#authenticating-via-the-azure-cli) and run your application from this environment.  If your application is using a client that has been constructed to authenticate with `DefaultAzureCredential`, it will correctly authenticate with the registry at the specified endpoint.  
+When you're developing and debugging your application locally, you can use your own user to authenticate with your registry.  One way to accomplish this is to [authenticate your user with the Azure CLI](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#authenticating-via-the-azure-cli) and run your application from this environment.  If your application is using a client that has been constructed to authenticate with `DefaultAzureCredential`, it will correctly authenticate with the registry at the specified endpoint.  
 
 ```C#
 // Create a ContainerRegistryClient that will authenticate to your registry through Azure Active Directory
