@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Shared
+namespace Azure.Storage
 {
     /// <summary>
     /// The storage authorization policy which supports challenges including tenantId discovery.
