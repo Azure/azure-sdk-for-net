@@ -14,6 +14,6 @@ namespace Azure.AI.TextAnalytics
         /// Gets or sets a value that, if set to true, indicates that the service
         /// should return statistics with the results of the operation.
         /// </summary>
-        public bool IncludeStatistics { get; set; }
+        public bool? IncludeStatistics { get; set; }
     }
 }

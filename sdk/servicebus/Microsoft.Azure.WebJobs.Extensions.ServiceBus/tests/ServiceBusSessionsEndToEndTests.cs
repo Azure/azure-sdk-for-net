@@ -372,7 +372,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 builder.ConfigureWebJobs(b =>
                     b.AddServiceBus(sbOptions =>
                     {
-                        // Will be disabled for drain mode validation as messages are completed by functoin code to validate draining allows completion
+                        // Will be disabled for drain mode validation as messages are completed by function code to validate draining allows completion
                         sbOptions.AutoCompleteMessages = autoComplete;
                         sbOptions.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
                         sbOptions.MaxConcurrentSessions = 1;
@@ -464,7 +464,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static void SBQueue1Trigger(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
-                ServiceBusReceivedMessage message, int deliveryCount,
+                ServiceBusReceivedMessage message,
+                int deliveryCount,
                 ServiceBusSessionMessageActions messageSession,
                 ILogger log,
                 string lockToken)
@@ -477,7 +478,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void SBSub1Trigger(
                 [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey, IsSessionsEnabled = true)]
-                ServiceBusReceivedMessage message, int deliveryCount,
+                ServiceBusReceivedMessage message,
+                int deliveryCount,
                 ServiceBusSessionMessageActions messageSession,
                 ILogger log,
                 string lockToken)
@@ -773,7 +775,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     internal class ServiceBusSessionsTestHelper
 #pragma warning restore SA1402 // File may only contain a single type
     {
-        public static void ProcessMessage(ServiceBusReceivedMessage message, ILogger log, EventWaitHandle waitHandle1,
+        public static void ProcessMessage(
+            ServiceBusReceivedMessage message,
+            ILogger log,
+            EventWaitHandle waitHandle1,
             EventWaitHandle waitHandle2)
         {
             string messageString = message.Body.ToString();
@@ -792,17 +797,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public static string GetLogsAsString(List<LogMessage> messages)
         {
-            if (messages.Count() != 5 && messages.Count() != 10)
-            {
-            }
-
-            string reuslt = string.Empty;
+            string result = string.Empty;
             foreach (LogMessage message in messages)
             {
-                reuslt += message.FormattedMessage + System.Environment.NewLine;
+                result += message.FormattedMessage + System.Environment.NewLine;
             }
 
-            return reuslt;
+            return result;
         }
     }
 }

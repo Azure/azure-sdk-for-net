@@ -65,8 +65,8 @@ namespace Azure.AI.TextAnalytics
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
 
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, DefaultCognitiveScope));
-            _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+            _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 
         /// <summary>
@@ -104,8 +104,8 @@ namespace Azure.AI.TextAnalytics
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
 
-            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
-            _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
+            _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 
         #region Detect Language
@@ -433,7 +433,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntitiesResult> result = await _serviceRestClient.EntitiesRecognitionGeneralAsync(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: StringIndexType.Utf16CodeUnit,
+                    stringIndexType: Constants.DefaultStringIndexType,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -491,7 +491,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntitiesResult> result = _serviceRestClient.EntitiesRecognitionGeneral(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: StringIndexType.Utf16CodeUnit,
+                    stringIndexType: Constants.DefaultStringIndexType,
                     cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -819,7 +819,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.StringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -846,7 +846,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.StringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -877,6 +877,9 @@ namespace Azure.AI.TextAnalytics
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
@@ -910,8 +913,8 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
-                    options.StringIndexType,
+                    options.DomainFilter.GetString(),
+                    Constants.DefaultStringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
@@ -944,6 +947,9 @@ namespace Azure.AI.TextAnalytics
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
@@ -977,8 +983,8 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
-                    options.StringIndexType,
+                    options.DomainFilter.GetString(),
+                    Constants.DefaultStringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
@@ -1011,6 +1017,9 @@ namespace Azure.AI.TextAnalytics
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
@@ -1047,6 +1056,9 @@ namespace Azure.AI.TextAnalytics
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
@@ -1083,6 +1095,9 @@ namespace Azure.AI.TextAnalytics
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
         /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
@@ -1114,6 +1129,9 @@ namespace Azure.AI.TextAnalytics
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
         /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
@@ -1145,8 +1163,8 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
-                    options.StringIndexType,
+                    options.DomainFilter.GetString(),
+                    Constants.DefaultStringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
@@ -1174,8 +1192,8 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
-                    options.StringIndexType,
+                    options.DomainFilter.GetString(),
+                    Constants.DefaultStringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
                     cancellationToken);
                 var response = result.GetRawResponse();
@@ -1291,7 +1309,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.IncludeOpinionMining,
-                    options.StringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -1352,7 +1370,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.IncludeOpinionMining,
-                    options.StringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -1629,7 +1647,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.IncludeOpinionMining,
-                    options.StringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -1657,7 +1675,7 @@ namespace Azure.AI.TextAnalytics
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
                     options.IncludeOpinionMining,
-                    options.StringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -2160,7 +2178,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: StringIndexType.Utf16CodeUnit,
+                    stringIndexType: Constants.DefaultStringIndexType,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 Response response = result.GetRawResponse();
 
@@ -2216,7 +2234,7 @@ namespace Azure.AI.TextAnalytics
 
                 Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(
                     new MultiLanguageBatchInput(documents),
-                    stringIndexType: StringIndexType.Utf16CodeUnit,
+                    stringIndexType: Constants.DefaultStringIndexType,
                     cancellationToken: cancellationToken);
                 Response response = result.GetRawResponse();
 
@@ -2524,7 +2542,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.StringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -2550,7 +2568,7 @@ namespace Azure.AI.TextAnalytics
                     options.ModelVersion,
                     options.IncludeStatistics,
                     options.DisableServiceLogs,
-                    options.StringIndexType,
+                    Constants.DefaultStringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -2577,11 +2595,14 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// <remarks><para>
+        /// <remarks>
+        /// <para>Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.</para>
+        /// <para>
         /// Note: In order to use this functionality, request to access public preview is required.
         /// Azure Active Directory (AAD) is not currently supported. For more information see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
-        /// </para></remarks>
+        /// </para>
+        /// </remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2607,11 +2628,14 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// <remarks><para>
+        /// <remarks>
+        /// <para>Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.</para>
+        /// <para>
         /// Note: In order to use this functionality, request to access public preview is required.
         /// Azure Active Directory (AAD) is not currently supported. For more information see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
-        /// </para></remarks>
+        /// </para>
+        /// </remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -2644,11 +2668,14 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// <remarks><para>
+        /// <remarks>
+        /// <para>Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.</para>
+        /// <para>
         /// Note: In order to use this functionality, request to access public preview is required.
         /// Azure Active Directory (AAD) is not currently supported. For more information see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
-        /// </para></remarks>
+        /// </para>
+        /// </remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
@@ -2674,11 +2701,14 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// <remarks><para>
+        /// <remarks>
+        /// <para>Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.</para>
+        /// <para>
         /// Note: In order to use this functionality, request to access public preview is required.
         /// Azure Active Directory (AAD) is not currently supported. For more information see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview"/>.
-        /// </para></remarks>
+        /// </para>
+        /// </remarks>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
@@ -2708,7 +2738,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(
                     batchInput,
                     options.ModelVersion,
-                    options.StringIndexType,
+                    Constants.DefaultStringIndexType,
                     options.DisableServiceLogs,
                     cancellationToken);
                 string location = response.Headers.OperationLocation;
@@ -2736,7 +2766,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(
                     batchInput,
                     options.ModelVersion,
-                    options.StringIndexType,
+                    Constants.DefaultStringIndexType,
                     options.DisableServiceLogs,
                     cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
@@ -2763,6 +2793,9 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
         /// <param name="actions"> The different actions to pass as arguments. <see cref="TextAnalyticsActions"/>
@@ -2788,6 +2821,9 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="actions"> The different actions to pass as arguments. <see cref="TextAnalyticsActions"/>
         /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
@@ -2813,6 +2849,9 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="actions"> The different actions to pass as arguments. <see cref="TextAnalyticsActions"/>
         /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.
@@ -2837,6 +2876,9 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
+        /// <remarks>
+        /// Method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="actions"> The different actions to pass as arguments. <see cref="TextAnalyticsActions"/>
         /// You can use it to have multiple actions to analyze as well as multiple action item per each individual action.

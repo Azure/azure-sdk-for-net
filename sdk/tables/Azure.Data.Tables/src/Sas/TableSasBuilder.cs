@@ -49,13 +49,13 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared acccess signature.
         /// </summary>
-        /// <param name="uri">The Uri to parse.</param>
+        /// <param name="sasUri">The Uri containing a SAS token to parse.</param>
         /// <returns></returns>
-        public TableSasBuilder(Uri uri)
+        public TableSasBuilder(Uri sasUri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(sasUri, nameof(sasUri));
 
-            var uriBuilder = new TableUriBuilder(uri);
+            var uriBuilder = new TableUriBuilder(sasUri);
 
             TableName = uriBuilder.Tablename;
             ExpiresOn = uriBuilder.Sas?.ExpiresOn ?? default;

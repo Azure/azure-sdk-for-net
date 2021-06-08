@@ -12,7 +12,10 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class RecognizeEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizeEntitiesTests(bool isAsync) : base(isAsync) { }
+        public RecognizeEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+        }
 
         private const string EnglishDocument1 = "Microsoft was founded by Bill Gates and Paul Allen.";
         private const string EnglishDocument2 = "My cat and my dog might need to see a veterinarian.";
@@ -99,7 +102,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.IsFalse(options.IncludeStatistics);
             Assert.AreEqual("2020-04-01", options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [RecordedTest]
@@ -125,7 +127,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.IsFalse(options.IncludeStatistics);
             Assert.AreEqual("2020-04-01", options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [RecordedTest]
@@ -203,7 +204,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.IsTrue(options.IncludeStatistics);
             Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [RecordedTest]
@@ -224,7 +224,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.IsTrue(options.IncludeStatistics);
             Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [RecordedTest]
@@ -260,7 +259,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.IsTrue(options.IncludeStatistics);
             Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [RecordedTest]
@@ -281,7 +279,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
             Assert.IsTrue(options.IncludeStatistics);
             Assert.IsNull(options.ModelVersion);
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [RecordedTest]

@@ -27,12 +27,15 @@ namespace Azure.Monitor.Query.Tests
             await _logsTestData.InitializeAsync();
         }
 
-        private LogsClient CreateClient()
+        private LogsQueryClient CreateClient()
         {
-            return InstrumentClient(new LogsClient(
+            return InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new LogsClientOptions())
+                InstrumentClientOptions(new LogsQueryClientOptions()
+                {
+                    Diagnostics = { IsLoggingContentEnabled = true }
+                })
             ));
         }
 
@@ -73,6 +76,21 @@ namespace Azure.Monitor.Query.Tests
                 _logsTestData.DataTimeRange);
 
             CollectionAssert.AreEqual(new[] {"a", "b", "c"}, results.Value);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryAdditionalWorkspace()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId,
+                $"{_logsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
+                _logsTestData.DataTimeRange, new LogsQueryOptions()
+                {
+                    AdditionalWorkspaces = { TestEnvironment.SecondaryWorkspaceId }
+                });
+
+            CollectionAssert.AreEqual(new[] {"a", "a", "b", "b", "c", "c"}, results.Value);
         }
 
         [RecordedTest]
@@ -429,6 +447,7 @@ namespace Azure.Monitor.Query.Tests
 
             LogsBatchQuery batch = new LogsBatchQuery();
             batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange);
+
             var batchResult = await client.QueryBatchAsync(batch);
 
             var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
@@ -491,12 +510,31 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var response = await client.QueryAsync(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange, options: new LogsQueryOptions()
+            // Sometimes the service doesn't abort the query quickly enough
+            // and the request gets aborted instead
+            // Retry until we get the service to abort
+            while (true)
             {
-                Timeout = TimeSpan.FromMinutes(10)
-            });
-
-            CollectionAssert.IsNotEmpty(response.Value.PrimaryTable.Rows);
+                // Punch through caching
+                var cnt = 100000000000 + Recording.Random.Next(10000);
+                try
+                {
+                    await client.QueryAsync(TestEnvironment.WorkspaceId, $"range x from 1 to {cnt} step 1 | count", _logsTestData.DataTimeRange, options: new LogsQueryOptions()
+                    {
+                        ServerTimeout = TimeSpan.FromSeconds(1)
+                    });
+                }
+                catch (TaskCanceledException)
+                {
+                    // The client cancelled, retry.
+                    continue;
+                }
+                catch (RequestFailedException exception)
+                {
+                    Assert.AreEqual(504, exception.Status);
+                    return;
+                }
+            }
         }
 
         private record TestModel

@@ -44,6 +44,9 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
         public const string DefaultConsumerGroupName = "$Default";
 
+        /// <summary>Indicates whether or not the consumer should consider itself invalid when a partition is stolen by another consumer, as determined by the Event Hubs service.</summary>
+        private const bool InvalidateConsumerWhenPartitionIsStolen = false;
+
         /// <summary>The maximum wait time for receiving an event batch for the background publishing operation used for subscriptions.</summary>
         private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
 
@@ -455,7 +458,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
                 try
                 {
-                    transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, readOptions.TrackLastEnqueuedEventProperties, readOptions.OwnerLevel, (uint)readOptions.PrefetchCount);
+                    transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, readOptions.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, readOptions.OwnerLevel, (uint)readOptions.PrefetchCount);
                     partitionContext = new PartitionContext(partitionId, transportConsumer);
                     emptyPartitionEvent = new PartitionEvent(partitionContext, null);
                 }
@@ -917,7 +920,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
             try
             {
-                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
+                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, ownerLevel, prefetchCount);
 
                 if (!ActiveConsumers.TryAdd(publisherId, transportConsumer))
                 {
