@@ -70,12 +70,12 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
         int docNumber = 1;
         foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesActionsResults)
         {
-            foreach (RecognizeEntitiesResult documentsResults in entitiesActionResults.DocumentResults)
+            foreach (RecognizeEntitiesResult documentResults in entitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {documentsResults.Entities.Count} entities:");
+                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
 
-                foreach (CategorizedEntity entity in documentsResults.Entities)
+                foreach (CategorizedEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -92,12 +92,12 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
         docNumber = 1;
         foreach (RecognizePiiEntitiesActionResult piiActionResults in piiActionsResults)
         {
-            foreach (RecognizePiiEntitiesResult documentsResults in piiActionResults.DocumentsResults)
+            foreach (RecognizePiiEntitiesResult documentResults in piiActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {documentsResults.Entities.Count} PII entities:");
+                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} PII entities:");
 
-                foreach (PiiEntity entity in documentsResults.Entities)
+                foreach (PiiEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -114,12 +114,12 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
         docNumber = 1;
         foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesActionsResults)
         {
-            foreach (ExtractKeyPhrasesResult documentsResults in keyPhrasesActionResult.DocumentResults)
+            foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {documentsResults.KeyPhrases.Count} Keyphrases:");
+                Console.WriteLine($"  Recognized the following {documentResults.KeyPhrases.Count} Keyphrases:");
 
-                foreach (string keyphrase in documentsResults.KeyPhrases)
+                foreach (string keyphrase in documentResults.KeyPhrases)
                 {
                     Console.WriteLine($"  {keyphrase}");
                 }
@@ -131,12 +131,12 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
         docNumber = 1;
         foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingActionsResults)
         {
-            foreach (RecognizeLinkedEntitiesResult documentsResults in linkedEntitiesActionResults.DocumentsResults)
+            foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {documentsResults.Entities.Count} linked entities:");
+                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} linked entities:");
 
-                foreach (LinkedEntity entity in documentsResults.Entities)
+                foreach (LinkedEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Name}");
                     Console.WriteLine($"  DataSource: {entity.DataSource}");
@@ -162,13 +162,13 @@ To run multiple actions in multiple documents, call `StartAnalyzeActionsAsync` o
         docNumber = 1;
         foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentActionsResults)
         {
-            foreach (AnalyzeSentimentResult documentsResults in analyzeSentimentActionsResult.DocumentsResults)
+            foreach (AnalyzeSentimentResult documentResults in analyzeSentimentActionsResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Sentiment is {documentsResults.DocumentSentiment.Sentiment}, with confidence scores: ");
-                Console.WriteLine($"    Positive confidence score: {documentsResults.DocumentSentiment.ConfidenceScores.Positive}.");
-                Console.WriteLine($"    Neutral confidence score: {documentsResults.DocumentSentiment.ConfidenceScores.Neutral}.");
-                Console.WriteLine($"    Negative confidence score: {documentsResults.DocumentSentiment.ConfidenceScores.Negative}.");
+                Console.WriteLine($"  Sentiment is {documentResults.DocumentSentiment.Sentiment}, with confidence scores: ");
+                Console.WriteLine($"    Positive confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Positive}.");
+                Console.WriteLine($"    Neutral confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Neutral}.");
+                Console.WriteLine($"    Negative confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Negative}.");
                 Console.WriteLine("");
             }
         }

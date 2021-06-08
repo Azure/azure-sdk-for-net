@@ -7,7 +7,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the execution of a <see cref="AnalyzeSentimentAction"/> on the input documents.
+    /// The result of the execution of an <see cref="AnalyzeSentimentAction"/> on the input documents.
     /// </summary>
     public class AnalyzeSentimentActionResult : TextAnalyticsActionResult
     {
@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the result of the execution of a <see cref="AnalyzeSentimentAction"/> per each input document.
+        /// Gets the result of the execution of an <see cref="AnalyzeSentimentAction"/> per each input document.
         /// </summary>
         public AnalyzeSentimentResultCollection DocumentsResults
         {
@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics
             {
                 if (HasError)
                 {
-                    throw new InvalidOperationException($"Cannot access result this action, due to error {Error.ErrorCode}: {Error.Message}");
+                    throw new InvalidOperationException($"Cannot access the results of this action, due to error {Error.ErrorCode}: {Error.Message}");
                 }
                 return _documentsResults;
             }

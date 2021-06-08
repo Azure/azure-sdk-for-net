@@ -230,7 +230,7 @@ namespace Azure.AI.TextAnalytics
     public partial class ExtractKeyPhrasesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal ExtractKeyPhrasesActionResult() { }
-        public Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection DocumentResults { get { throw null; } }
+        public Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection DocumentsResults { get { throw null; } }
     }
     public partial class ExtractKeyPhrasesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {
@@ -569,7 +569,7 @@ namespace Azure.AI.TextAnalytics
     public partial class RecognizeEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal RecognizeEntitiesActionResult() { }
-        public Azure.AI.TextAnalytics.RecognizeEntitiesResultCollection DocumentResults { get { throw null; } }
+        public Azure.AI.TextAnalytics.RecognizeEntitiesResultCollection DocumentsResults { get { throw null; } }
     }
     public partial class RecognizeEntitiesOptions : Azure.AI.TextAnalytics.TextAnalyticsRequestOptions
     {

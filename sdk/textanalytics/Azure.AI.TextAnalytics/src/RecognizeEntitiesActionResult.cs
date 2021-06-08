@@ -22,14 +22,14 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the result of the execution of a <see cref="RecognizeEntitiesAction"/> per each input document.
         /// </summary>
-        public RecognizeEntitiesResultCollection DocumentResults
+        public RecognizeEntitiesResultCollection DocumentsResults
         {
             get
             {
                 if (HasError)
                 {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException($"Cannot access result this action, due to error {Error.ErrorCode}: {Error.Message}");
+                    throw new InvalidOperationException($"Cannot access the results of this action, due to error {Error.ErrorCode}: {Error.Message}");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 return _documentsResults;

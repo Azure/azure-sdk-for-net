@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesActionsResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.AreEqual(2, keyPhrasesActionsResults.FirstOrDefault().DocumentResults.Count);
+            Assert.AreEqual(2, keyPhrasesActionsResults.FirstOrDefault().DocumentsResults.Count);
         }
 
         [RecordedTest]
@@ -91,7 +91,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
 
-            ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentResults;
+            ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
             Assert.AreEqual(2, keyPhrasesDocumentsResults.Count);
 
             foreach (string keyphrase in keyPhrasesDocumentsResults[0].KeyPhrases)
@@ -139,7 +139,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(keyPhrasesActionsResults);
 
-            ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentResults;
+            ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
             Assert.AreEqual(2, keyPhrasesDocumentsResults.Count);
 
             Assert.AreEqual("AnalyzeOperationWithLanguageTest", operation.DisplayName);
@@ -218,7 +218,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
 
             // Keyphrases
-            ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentResults;
+            ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
             Assert.AreEqual(2, keyPhrasesDocumentsResults.Count);
 
             var keyPhrasesListId1 = new List<string> { "Bill Gates", "Paul Allen", "Microsoft" };
@@ -235,7 +235,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
 
             // Entities
-            RecognizeEntitiesResultCollection entitiesDocumentsResults = entitiesActionsResults.FirstOrDefault().DocumentResults;
+            RecognizeEntitiesResultCollection entitiesDocumentsResults = entitiesActionsResults.FirstOrDefault().DocumentsResults;
             Assert.AreEqual(2, entitiesDocumentsResults.Count);
 
             Assert.AreEqual(3, entitiesDocumentsResults[0].Entities.Count);
@@ -327,10 +327,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, asyncPages.Count);
 
             // First page should have 20 results
-            Assert.AreEqual(20, asyncPages[0].ExtractKeyPhrasesActionsResults.FirstOrDefault().DocumentResults.Count);
+            Assert.AreEqual(20, asyncPages[0].ExtractKeyPhrasesActionsResults.FirstOrDefault().DocumentsResults.Count);
 
             // Second page should have remaining 3 results
-            Assert.AreEqual(3, asyncPages[1].ExtractKeyPhrasesActionsResults.FirstOrDefault().DocumentResults.Count);
+            Assert.AreEqual(3, asyncPages[1].ExtractKeyPhrasesActionsResults.FirstOrDefault().DocumentsResults.Count);
 
             // try sync
             //There most be 2 pages as service limit is 20 documents per page
@@ -338,10 +338,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(2, pages.Count);
 
             // First page should have 20 results
-            Assert.AreEqual(20, pages[0].ExtractKeyPhrasesActionsResults.FirstOrDefault().DocumentResults.Count);
+            Assert.AreEqual(20, pages[0].ExtractKeyPhrasesActionsResults.FirstOrDefault().DocumentsResults.Count);
 
             // Second page should have remaining 3 results
-            Assert.AreEqual(3, pages[1].ExtractKeyPhrasesActionsResults.FirstOrDefault().DocumentResults.Count);
+            Assert.AreEqual(3, pages[1].ExtractKeyPhrasesActionsResults.FirstOrDefault().DocumentsResults.Count);
         }
 
         [RecordedTest]
@@ -400,7 +400,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual(1, keyPhrasesActions.Count);
 
-            ExtractKeyPhrasesResultCollection documentsResults = keyPhrasesActions[0].DocumentResults;
+            ExtractKeyPhrasesResultCollection documentsResults = keyPhrasesActions[0].DocumentsResults;
             Assert.IsFalse(documentsResults[0].HasError);
             Assert.IsTrue(documentsResults[1].HasError);
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, documentsResults[1].Error.ErrorCode.ToString());
@@ -482,7 +482,7 @@ namespace Azure.AI.TextAnalytics.Tests
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
-            ExtractKeyPhrasesResultCollection documentsResults = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).DocumentResults;
+            ExtractKeyPhrasesResultCollection documentsResults = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).DocumentsResults;
 
             Assert.IsNotNull(documentsResults);
 
@@ -525,10 +525,10 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentActionsResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
-            Assert.AreEqual(2, keyPhrasesActionsResults.FirstOrDefault().DocumentResults.Count);
+            Assert.AreEqual(2, keyPhrasesActionsResults.FirstOrDefault().DocumentsResults.Count);
 
             Assert.IsNotNull(entitiesActionsResults);
-            Assert.AreEqual(2, entitiesActionsResults.FirstOrDefault().DocumentResults.Count);
+            Assert.AreEqual(2, entitiesActionsResults.FirstOrDefault().DocumentsResults.Count);
 
             Assert.IsNotNull(piiActionsResults);
             Assert.AreEqual(2, piiActionsResults.FirstOrDefault().DocumentsResults.Count);

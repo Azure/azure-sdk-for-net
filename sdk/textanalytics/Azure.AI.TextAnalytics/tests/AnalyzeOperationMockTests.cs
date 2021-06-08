@@ -292,19 +292,19 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentActionsResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentResults.GetType());
+            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
 
             Assert.IsTrue(keyPhrasesActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentResults.GetType());
+            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
 
             Assert.IsTrue(piiActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentResults.GetType());
+            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
 
             Assert.IsTrue(entityLinkingActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentResults.GetType());
+            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
 
             Assert.IsTrue(analyzeSentimentActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentResults.GetType());
+            Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
         }
 
         private static string GetString(RequestContent content)
