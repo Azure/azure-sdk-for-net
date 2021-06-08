@@ -612,12 +612,12 @@ This functionality allows running multiple actions in one or more documents. Act
         int docNumber = 1;
         foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesActionsResults)
         {
-            foreach (RecognizeEntitiesResult result in entitiesActionResults.Result)
+            foreach (RecognizeEntitiesResult documentsResults in entitiesActionResults.DocumentResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} entities:");
+                Console.WriteLine($"  Recognized the following {documentsResults.Entities.Count} entities:");
 
-                foreach (CategorizedEntity entity in result.Entities)
+                foreach (CategorizedEntity entity in documentsResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -634,12 +634,12 @@ This functionality allows running multiple actions in one or more documents. Act
         docNumber = 1;
         foreach (RecognizePiiEntitiesActionResult piiActionResults in piiActionsResults)
         {
-            foreach (RecognizePiiEntitiesResult result in piiActionResults.Result)
+            foreach (RecognizePiiEntitiesResult documentsResults in piiActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} PII entities:");
+                Console.WriteLine($"  Recognized the following {documentsResults.Entities.Count} PII entities:");
 
-                foreach (PiiEntity entity in result.Entities)
+                foreach (PiiEntity entity in documentsResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -656,12 +656,12 @@ This functionality allows running multiple actions in one or more documents. Act
         docNumber = 1;
         foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesActionsResults)
         {
-            foreach (ExtractKeyPhrasesResult result in keyPhrasesActionResult.Result)
+            foreach (ExtractKeyPhrasesResult documentsResults in keyPhrasesActionResult.DocumentResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+                Console.WriteLine($"  Recognized the following {documentsResults.KeyPhrases.Count} Keyphrases:");
 
-                foreach (string keyphrase in result.KeyPhrases)
+                foreach (string keyphrase in documentsResults.KeyPhrases)
                 {
                     Console.WriteLine($"  {keyphrase}");
                 }
@@ -673,12 +673,12 @@ This functionality allows running multiple actions in one or more documents. Act
         docNumber = 1;
         foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingActionsResults)
         {
-            foreach (RecognizeLinkedEntitiesResult result in linkedEntitiesActionResults.Result)
+            foreach (RecognizeLinkedEntitiesResult documentsResults in linkedEntitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {result.Entities.Count} linked entities:");
+                Console.WriteLine($"  Recognized the following {documentsResults.Entities.Count} linked entities:");
 
-                foreach (LinkedEntity entity in result.Entities)
+                foreach (LinkedEntity entity in documentsResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Name}");
                     Console.WriteLine($"  DataSource: {entity.DataSource}");
@@ -704,13 +704,13 @@ This functionality allows running multiple actions in one or more documents. Act
         docNumber = 1;
         foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentActionsResults)
         {
-            foreach (AnalyzeSentimentResult result in analyzeSentimentActionsResult.Result)
+            foreach (AnalyzeSentimentResult documentsResults in analyzeSentimentActionsResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
-                Console.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
-                Console.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
-                Console.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
+                Console.WriteLine($"  Sentiment is {documentsResults.DocumentSentiment.Sentiment}, with confidence scores: ");
+                Console.WriteLine($"    Positive confidence score: {documentsResults.DocumentSentiment.ConfidenceScores.Positive}.");
+                Console.WriteLine($"    Neutral confidence score: {documentsResults.DocumentSentiment.ConfidenceScores.Neutral}.");
+                Console.WriteLine($"    Negative confidence score: {documentsResults.DocumentSentiment.ConfidenceScores.Negative}.");
                 Console.WriteLine("");
             }
         }
