@@ -14,27 +14,27 @@ namespace Azure.AI.TextAnalytics
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// The set of "Extract KeyPhrases Actions" that will get executed on the input documents.
+        /// The set of <see cref="ExtractKeyPhrasesAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<ExtractKeyPhrasesAction> ExtractKeyPhrasesActions { get; set; }
 
         /// <summary>
-        /// The set of "Recognize Entities Actions" that will get executed on the input documents.
+        /// The set of <see cref="RecognizeEntitiesAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<RecognizeEntitiesAction> RecognizeEntitiesActions { get; set; }
 
         /// <summary>
-        /// The set of "Recognize PII Entities Actions" that will get executed on the input documents.
+        /// The set of <see cref="RecognizePiiEntitiesAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<RecognizePiiEntitiesAction> RecognizePiiEntitiesActions { get; set; }
 
         /// <summary>
-        /// The set of "Recognize Linked Entities Actions" that will get executed on the input documents.
+        /// The set of <see cref="RecognizeLinkedEntitiesAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<RecognizeLinkedEntitiesAction> RecognizeLinkedEntitiesActions { get; set; }
 
         /// <summary>
-        /// The set of "Analyze Sentiment Actions" that will get executed on the input documents.
+        /// The set of <see cref="AnalyzeSentimentAction"/> that will get executed on the input documents.
         /// </summary>
         public IReadOnlyCollection<AnalyzeSentimentAction> AnalyzeSentimentActions { get; set; }
     }
