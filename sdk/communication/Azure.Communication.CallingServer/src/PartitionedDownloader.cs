@@ -60,7 +60,7 @@ namespace Azure.Communication.CallingServer
             {
                 initialResponse = await initialResponseTask.ConfigureAwait(false);
             }
-            catch (RequestFailedException ex) when (ex.ErrorCode == "Invalid Range")
+            catch (RequestFailedException ex) when (ex.Status == 416) //Invalid Range
             {
                 initialResponseTask = _client.DownloadStreamingAsync(
                     endpoint,
@@ -139,7 +139,7 @@ namespace Azure.Communication.CallingServer
                     initialRange,
                     cancellationToken);
             }
-            catch (RequestFailedException ex) when (ex.ErrorCode == "Invalid Range")
+            catch (RequestFailedException ex) when (ex.Status == 416) // Invalid Range
             {
                 initialResponse = _client.DownloadStreaming(
                     endpoint,
@@ -184,14 +184,14 @@ namespace Azure.Communication.CallingServer
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
 
-        private static async Task CopyToAsync(
+        private async Task CopyToAsync(
             Stream result,
             Stream destination,
             CancellationToken cancellationToken)
         {
             await result.CopyToAsync(
                 destination,
-                100000,
+                (int)_rangeSize,
                 cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -202,7 +202,7 @@ namespace Azure.Communication.CallingServer
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            result.CopyTo(destination, 1000000);
+            result.CopyTo(destination);
             result.Dispose();
         }
 

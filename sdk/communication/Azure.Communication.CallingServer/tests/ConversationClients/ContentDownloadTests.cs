@@ -10,6 +10,7 @@ using NUnit.Framework;
 using System.Linq;
 using Azure.Core.Pipeline;
 using Azure.Communication.CallingServer.Tests.ConversationClients;
+using Azure.Core.TestFramework;
 
 namespace Azure.Communication.CallingServer.Tests.ContentDownloadTests
 {
@@ -130,14 +131,90 @@ namespace Azure.Communication.CallingServer.Tests.ContentDownloadTests
         public void DownloadNotExistentContent_Failure_Test()
         {
             ConversationClient _convClient = CreateMockConversationClient(404);
-            Assert.Throws<RequestFailedException>(() => _convClient.DownloadStreaming(_dummyMetadataLocation));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _convClient.DownloadStreaming(_dummyMetadataLocation));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
         }
 
         [Test]
         public void DownloadNotExistentContentAsync_Failure_Test()
         {
             ConversationClient _convClient = CreateMockConversationClient(404);
-            Assert.ThrowsAsync<RequestFailedException>(async () => await _convClient.DownloadStreamingAsync(_dummyMetadataLocation));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _convClient.DownloadStreamingAsync(_dummyMetadataLocation));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [Test]
+        public void AccessDenied_Failure_Test()
+        {
+            ConversationClient _convClient = CreateMockConversationClient(401);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _convClient.DownloadStreaming(_dummyMetadataLocation));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 401);
+        }
+
+        [Test]
+        public void AccessDeniedAsync_Failure_Test()
+        {
+            ConversationClient _convClient = CreateMockConversationClient(401);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _convClient.DownloadStreamingAsync(_dummyMetadataLocation));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 401);
+        }
+
+        [Test]
+        public void ParallelDownloadWithInvalidRangeFirst()
+        {
+            MockResponse invalidResponse = new(416); // Invalid range
+            invalidResponse.AddHeader(new HttpHeader("Content-Range", "bytes */10"));
+            MockResponse validResponse1 = new(206);
+            validResponse1.AddHeader(new HttpHeader("Content-Length", "5"));
+            validResponse1.AddHeader(new HttpHeader("Content-Range", "bytes 0-4/10"));
+            validResponse1.SetContent(new byte[] { 0, 1, 2, 3, 4 });
+            MockResponse validResponse2 = new(206);
+            validResponse2.AddHeader(new HttpHeader("Content-Length", "5"));
+            validResponse2.AddHeader(new HttpHeader("Content-Range", "bytes 5-9/10"));
+            validResponse2.SetContent(new byte[] { 5, 6, 7, 8, 9 });
+
+            ContentTransferOptions options = new()
+            {
+                InitialTransferSize = 5,
+                MaximumTransferSize = 5
+            };
+
+            ConversationClient _convClient = CreateMockConversationClient(new MockResponse[] { invalidResponse, validResponse1, validResponse2 });
+            Stream destination = new MemoryStream();
+            _convClient.DownloadTo(_dummyRecordingLocation, destination, options);
+
+            Assert.AreEqual(10, destination.Length);
+        }
+
+        [Test]
+        public async Task ParallelDownloadWithInvalidRangeFirstAsync()
+        {
+            MockResponse invalidResponse = new(416); // Invalid range
+            invalidResponse.AddHeader(new HttpHeader("Content-Range", "bytes */10"));
+            MockResponse validResponse1 = new(206);
+            validResponse1.AddHeader(new HttpHeader("Content-Length", "5"));
+            validResponse1.AddHeader(new HttpHeader("Content-Range", "bytes 0-4/10"));
+            validResponse1.SetContent(new byte[] { 0, 1, 2, 3, 4 });
+            MockResponse validResponse2 = new(206);
+            validResponse2.AddHeader(new HttpHeader("Content-Length", "5"));
+            validResponse2.AddHeader(new HttpHeader("Content-Range", "bytes 5-9/10"));
+            validResponse2.SetContent(new byte[] { 5, 6, 7, 8, 9 });
+
+            ContentTransferOptions options = new()
+            {
+                InitialTransferSize = 5,
+                MaximumTransferSize = 5
+            };
+
+            ConversationClient _convClient = CreateMockConversationClient(new MockResponse[] { invalidResponse, validResponse1, validResponse2 });
+            Stream destination = new MemoryStream();
+            await _convClient.DownloadToAsync(_dummyRecordingLocation, destination, options);
+
+            Assert.AreEqual(10, destination.Length);
         }
 
         private static void VerifyExpectedMetadata(Stream metadata)
