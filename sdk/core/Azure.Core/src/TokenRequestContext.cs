@@ -66,7 +66,7 @@ namespace Azure.Core
         public string? Claims { get; }
 
         /// <summary>
-        /// A hint to indicate which tenantId is preferred.
+        /// The tenantId to be included in the token request.
         /// </summary>
         public string? TenantId { get; }
     }
