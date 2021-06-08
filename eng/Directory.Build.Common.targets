@@ -44,24 +44,18 @@
   </Target>
 
   <PropertyGroup>
-    <_PackageReadmeMd>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))README.md</_PackageReadmeMd>
+    <OriginalReadmeMdPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))README.md</OriginalReadmeMdPath>
+    <ProcessedReadmeMdPath>$(OriginalReadmeMdPath)</ProcessedReadmeMdPath>
+    <ProcessedReadmeMdPath Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true'">$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
+    <PackageReadmeFile Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true'">README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <!-- Process and pack README.md  -->
-  <Target Name="ProcessReadmeMd" BeforeTargets="GenerateNuspec" Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true' and Exists('$(_PackageReadmeMd)')" >
+  <Target Name="ProcessReadmeMd" BeforeTargets="GenerateNuspec" Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true'" >
     <PropertyGroup>
       <ProcessReadmeMdScriptPath Condition=" '$(ProcessReadmeMdScriptPath)'=='' ">$(MSBuildThisFileDirectory)/scripts/Process-ReadmeMd.ps1</ProcessReadmeMdScriptPath>
-      <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
     </PropertyGroup>
-    <Exec ConsoleToMSBuild="true" StandardOutputImportance="Low" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ProcessReadmeMdScriptPath) -InputMd $(_PackageReadmeMd) -OutputMd $(ProcessedReadmeMdPath)" />
-
-    <PropertyGroup>
-      <PackageReadmeMd>README.md</PackageReadmeMd>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <None Include="$(ProcessedReadmeMdPath)" Pack="true" PackagePath="/"/>
-    </ItemGroup>
+    <Exec ConsoleToMSBuild="true" StandardOutputImportance="Low" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ProcessReadmeMdScriptPath) -InputMd $(OriginalReadmeMdPath) -OutputMd $(ProcessedReadmeMdPath)" />
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
@@ -89,6 +83,7 @@
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
     <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
+    <None Condition="Exists('$(ProcessedReadmeMdPath)')" Include="$(ProcessedReadmeMdPath)" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <!-- Add App.config to enable server GC in net461 perf and stress projects -->
