@@ -2,12 +2,8 @@
 
 ## 11.3.0 (2021-06-08)
 
-### Changed
-- This is a GA release to match the features that are currently available out of preview by the service.
-
-### Breaking Changes
-- Removed [`LexicalNormalizer`](https://docs.microsoft.com/azure/search/search-normalizers#predefined-normalizers) and the `Normalizer` [`SearchField`](https://docs.microsoft.com/dotnet/api/azure.search.documents.indexes.models.searchfield) from index definitions.
-- Removed support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview).
+### Added
+- Adds stable features and bug fixes from the [11.3.0-beta.1](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Search.Documents_11.3.0-beta.1/sdk/search/Azure.Search.Documents/CHANGELOG.md#1130-beta1-2021-04-06) and [11.3.0-beta.2](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Search.Documents_11.3.0-beta.2/sdk/search/Azure.Search.Documents/CHANGELOG.md#1130-beta2-2021-05-11) releases. Preview service features not generally available yet, like Semantic Search and Normalizers, are not included in this GA release.
 
 ## 11.3.0-beta.2 (2021-05-11)
 
