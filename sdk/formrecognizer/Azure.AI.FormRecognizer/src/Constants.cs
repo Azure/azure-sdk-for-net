@@ -10,15 +10,15 @@ namespace Azure.AI.FormRecognizer
         private const string AzurePublicCloud = "72f988bf-86f1-41af-91ab-2d7cd011db47";
         private const string AzureChina = "3d0a72e2-8b06-4528-98df-1391c6f12c11";
         private const string AzureGovernment = "63296244-ce2c-46d8-bc36-3e558792fbee";
-        private static TestEnvironment _testEnvironment;
+        public static TestEnvironment _testEnvironment;
         public const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
         public const string OperationLocationHeader = "Operation-Location";
 
-        public static string DefaultCognitiveScope = getDefaultCognitiveScope();
+        public static string DefaultCognitiveScope = getDefaultCognitiveScope(_testEnvironment);
 
         public const float DefaultConfidenceValue = 1.0f;
-        internal static string getDefaultCognitiveScope()
+        internal static string getDefaultCognitiveScope(TestEnvironment _testEnvironment)
         {
             switch (_testEnvironment.TenantId)
             {
