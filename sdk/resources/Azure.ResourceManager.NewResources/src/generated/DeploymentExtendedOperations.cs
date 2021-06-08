@@ -705,37 +705,37 @@ namespace Azure.ResourceManager.NewResources
 
         /// <summary> Gets a deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentExtendedData>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.Get");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        // public virtual async Task<Response<DeploymentExtendedData>> GetAsync(CancellationToken cancellationToken = default)
+        // {
+        //     using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.Get");
+        //     scope.Start();
+        //     try
+        //     {
+        //         return await RestClient.GetAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         scope.Failed(e);
+        //         throw;
+        //     }
+        // }
 
         /// <summary> Gets a deployment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentExtendedData> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.Get");
-            scope.Start();
-            try
-            {
-                return RestClient.Get(Id.Name, Id.Name, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        // public virtual Response<DeploymentExtendedData> Get(CancellationToken cancellationToken = default)
+        // {
+        //     using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.Get");
+        //     scope.Start();
+        //     try
+        //     {
+        //         return RestClient.Get(Id.Name, Id.Name, cancellationToken);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         scope.Failed(e);
+        //         throw;
+        //     }
+        // }
 
         /// <summary> You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resource group partially deployed. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

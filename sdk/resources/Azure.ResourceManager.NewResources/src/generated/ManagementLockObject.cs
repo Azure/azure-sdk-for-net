@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> A Class representing a ManagementLockObject along with the instance operations that can be performed on it. </summary>
-    public class ManagementLockObject : ManagementLockObjectOperations
+    public class ManagementLockObject : ManagementLockObjectResourceGroupsOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "ManagementLockObject"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>

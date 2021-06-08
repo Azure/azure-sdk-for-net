@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NewResources
             try
             {
                 var response = await RestClient.DeleteAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new PolicyAssignmentsDeleteOperation(this, response);
+                return new PolicyAssignmentsDeleteOperation(response);
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NewResources
             try
             {
                 var response = RestClient.Delete(Id.Name, Id.Name, cancellationToken);
-                return new PolicyAssignmentsDeleteOperation(this, response);
+                return new PolicyAssignmentsDeleteOperation(response);
             }
             catch (Exception e)
             {

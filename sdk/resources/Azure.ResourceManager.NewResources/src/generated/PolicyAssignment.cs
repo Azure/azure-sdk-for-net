@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> A Class representing a PolicyAssignment along with the instance operations that can be performed on it. </summary>
-    public class PolicyAssignment : PolicyAssignmentOperations
+    public class PolicyAssignment : PolicyAssignmentTenantOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "PolicyAssignment"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
