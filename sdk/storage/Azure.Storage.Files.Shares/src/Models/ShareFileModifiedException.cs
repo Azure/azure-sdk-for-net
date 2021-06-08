@@ -41,18 +41,18 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="message">The message that describes the error.</param>
         /// <param name="resourceUri">The URI of the resource that has been modified.</param>
         /// <param name="expectedETag">The ETag value that was expected during the read.</param>
-        /// <param name="actualEtag">The ETag value that was received from the service.</param>
+        /// <param name="actualETag">The ETag value that was received from the service.</param>
         /// <param name="range">The range that was requested for the service.</param>
         public ShareFileModifiedException(
             string message,
             Uri resourceUri,
             ETag expectedETag,
-            ETag actualEtag,
+            ETag actualETag,
             HttpRange range) : base(message)
         {
             ResourceUri = resourceUri;
             ExpectedETag = expectedETag;
-            ActualETag = actualEtag;
+            ActualETag = actualETag;
             Range = range;
         }
 
