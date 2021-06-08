@@ -15,7 +15,6 @@ namespace Azure.Test.Perf
     {
         private readonly HttpClient _httpClient;
         private readonly TestProxyTransport _transport;
-        private string _recordingFile;
         private string _recordingId;
 
         protected TOptions Options { get; private set; }
@@ -88,9 +87,6 @@ namespace Azure.Test.Perf
 
             await _httpClient.SendAsync(message);
 
-            // TODO: Remove when test proxy supports file-less recordings
-            File.Delete(_recordingFile);
-
             // Stop redirecting requests to test proxy
             _transport.Mode = null;
             _transport.RecordingId = null;
@@ -142,11 +138,7 @@ namespace Azure.Test.Perf
 
         private async Task StartRecording()
         {
-            // TODO: Remove when test proxy supports file-less recordings
-            _recordingFile = Path.Combine(Path.GetTempPath(), "test-proxy", Guid.NewGuid().ToString());
-
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/record/start"));
-            message.Headers.Add("x-recording-file", _recordingFile);
 
             var response = await _httpClient.SendAsync(message);
             _recordingId = response.Headers.GetValues("x-recording-id").Single();
@@ -156,7 +148,6 @@ namespace Azure.Test.Perf
         {
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/record/stop"));
             message.Headers.Add("x-recording-id", _recordingId);
-            message.Headers.Add("x-recording-save", bool.TrueString);
 
             await _httpClient.SendAsync(message);
         }
@@ -164,7 +155,7 @@ namespace Azure.Test.Perf
         private async Task StartPlayback()
         {
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/playback/start"));
-            message.Headers.Add("x-recording-file", _recordingFile);
+            message.Headers.Add("x-recording-id", _recordingId);
 
             var response = await _httpClient.SendAsync(message);
             _recordingId = response.Headers.GetValues("x-recording-id").Single();
