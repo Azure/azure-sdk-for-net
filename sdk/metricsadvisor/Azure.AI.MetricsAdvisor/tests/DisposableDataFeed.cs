@@ -48,9 +48,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public static async Task<DisposableDataFeed> CreateDataFeedAsync(MetricsAdvisorAdministrationClient adminClient, DataFeed dataFeed)
         {
             DataFeed createdDataFeed = await adminClient.CreateDataFeedAsync(dataFeed);
-
-            Assert.That(createdDataFeed, Is.Not.Null);
-
             return new DisposableDataFeed(adminClient, createdDataFeed);
         }
 
