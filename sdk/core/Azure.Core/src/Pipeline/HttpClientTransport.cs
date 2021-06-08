@@ -51,7 +51,11 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// A shared instance of <see cref="HttpClientTransport"/> with default parameters.
         /// </summary>
-        public static readonly HttpClientTransport Shared = new HttpClientTransport();
+        // This should be considered a readonly field, but needs to be not initonly for
+        // fault injection workarounds for .NET Core.
+#pragma warning disable CA2211 // Non-constant fields should not be visible
+        public static HttpClientTransport Shared = new HttpClientTransport();
+#pragma warning restore CA2211 // Non-constant fields should not be visible
 
         /// <inheritdoc />
         public sealed override Request CreateRequest()
