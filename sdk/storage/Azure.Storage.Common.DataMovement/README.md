@@ -38,6 +38,10 @@ Here's an example using the Azure CLI:
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
+### Authenticate the Client
+
+Authentication details to be written.
+
 ## Key concepts
 
 The Azure Storage Common client library contains shared infrastructure like
