@@ -541,19 +541,19 @@ namespace Azure.AI.FormRecognizer.Tests
             var sourceClient = CreateFormTrainingClient();
             var targetClient = CreateFormTrainingClient();
             var resourceId = TestEnvironment.TargetResourceId;
-            var regionA = "regionA";
-            var regionB = "regionB";
-            switch (TestEnvironment.AuthorityHostUrl)
+            var regionA = "eastus2";
+            var regionB = "westcentralus";
+            switch (TestEnvironment.TenantId)
             {
-                case "https://login.microsoftonline.com/":
+                case "72f988bf-86f1-41af-91ab-2d7cd011db47":
                     regionA = "westcentralus";
                     regionB = "eastus2";
                     break;
-                case "https://login.microsoftonline.us/":
+                case "63296244-ce2c-46d8-bc36-3e558792fbee":
                     regionA = "usgovarizona";
                     regionB = "usgovvirginia";
                     break;
-                case "https://login.microsoftonline.cn/":
+                case "3d0a72e2-8b06-4528-98df-1391c6f12c11":
                     regionA = "chinaeast2";
                     regionB = "chinanorth";
                     break;
