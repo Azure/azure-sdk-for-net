@@ -1,0 +1,34 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.NewResources",
+  "LibraryName": "ResourcesManagementClient",
+  "SharedSourceFolders": [
+    "..\\Generator.Shared",
+    "..\\Azure.Core.Shared"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "model-namespace": false,
+  "skip-csproj-packagereference": true,
+  "OperationGroupToResourceType": {
+    "DeploymentOperations": "Microsoft.Resources/deployments/operations",
+    "ResourceLinks": "NonResource",
+    "Deployments": "Microsoft.Resources/deployments"
+  },
+  "OperationGroupToResource": {
+    "DeploymentOperations": "NonResource",
+    "ResourceLinks": "NonResource",
+    "Deployments": "DeploymentExtended",
+    "DeploymentScripts": "DeploymentScript",
+    "ApplicationDefinitions": "ApplicationDefinition"
+  },
+  "OperationGroupToParent": {
+    "Deployments": "tenant",
+    "PolicyAssignments": "tenant",
+    "PolicyDefinitions": "tenant",
+    "PolicySetDefinitions": "tenant",
+    "DeploymentScripts": "resourceGroups",
+    "ManagementLocks": "resourceGroups",
+    "ResourceLinks": "tenant"
+  }
+}
