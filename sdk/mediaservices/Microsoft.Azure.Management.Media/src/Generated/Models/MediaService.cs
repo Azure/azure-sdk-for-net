@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// account.</param>
         /// <param name="systemData">The system metadata relating to this
         /// resource.</param>
-        public MediaService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid mediaServiceId = default(System.Guid), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), StorageAuthentication? storageAuthentication = default(StorageAuthentication?), AccountEncryption encryption = default(AccountEncryption), MediaServiceIdentity identity = default(MediaServiceIdentity), SystemData systemData = default(SystemData), KeyDelivery keyDelivery = default(KeyDelivery))
+        public MediaService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid mediaServiceId = default(System.Guid), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), StorageAuthentication? storageAuthentication = default(StorageAuthentication?), AccountEncryption encryption = default(AccountEncryption), KeyDelivery keyDelivery = default(KeyDelivery), MediaServiceIdentity identity = default(MediaServiceIdentity), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             MediaServiceId = mediaServiceId;
