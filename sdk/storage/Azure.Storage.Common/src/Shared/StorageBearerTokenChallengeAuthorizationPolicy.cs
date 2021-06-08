@@ -50,7 +50,7 @@ namespace Azure.Storage.Shared
         /// <inheritdoc />
         protected override void AuthorizeRequest(HttpMessage message)
         {
-            if (tenantId != null && !_enableTenantDiscovery)
+            if (tenantId != null || !_enableTenantDiscovery)
             {
                 base.AuthorizeRequest(message);
             }
@@ -59,7 +59,7 @@ namespace Azure.Storage.Shared
         /// <inheritdoc />
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
-            if (tenantId != null && !_enableTenantDiscovery)
+            if (tenantId != null || !_enableTenantDiscovery)
             {
                 return base.AuthorizeRequestAsync(message);
             }
