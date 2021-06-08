@@ -7,9 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 
@@ -21,6 +23,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly ClientDiagnostics _clientDiagnostics;
         internal WorkspacesRestOperations RestClient { get; }
         internal PrivateLinkResourcesRestOperations PrivateLinkResourcesRestClient { get; }
+        internal WorkspaceFeaturesRestOperations WorkspaceFeaturesRestClient { get; }
+        internal WorkspaceSkusRestOperations WorkspaceSkusRestClient { get; }
 
         /// <summary> Initializes a new instance of the <see cref="WorkspaceOperations"/> class for mocking. </summary>
         protected WorkspaceOperations()
@@ -34,6 +38,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             RestClient = new WorkspacesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            PrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            WorkspaceFeaturesRestClient = new WorkspaceFeaturesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            WorkspaceSkusRestClient = new WorkspaceSkusRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces";
@@ -372,6 +379,158 @@ namespace Azure.ResourceManager.MachineLearningServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Lists all enabled features for a workspace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AmlUserFeature" /> that may take multiple service requests to iterate over. </returns>
+        public Pageable<AmlUserFeature> ListWorkspaceFeatures(CancellationToken cancellationToken = default)
+        {
+            Page<AmlUserFeature> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListWorkspaceFeatures");
+                scope.Start();
+                try
+                {
+                    var response = WorkspaceFeaturesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<AmlUserFeature> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListWorkspaceFeatures");
+                scope.Start();
+                try
+                {
+                    var response = WorkspaceFeaturesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists all enabled features for a workspace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AmlUserFeature" /> that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<AmlUserFeature> ListWorkspaceFeaturesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<AmlUserFeature>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListWorkspaceFeatures");
+                scope.Start();
+                try
+                {
+                    var response = await WorkspaceFeaturesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<AmlUserFeature>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListWorkspaceFeatures");
+                scope.Start();
+                try
+                {
+                    var response = await WorkspaceFeaturesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists all skus with associated features. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkspaceSku" /> that may take multiple service requests to iterate over. </returns>
+        public Pageable<WorkspaceSku> ListWorkspaceSkus(CancellationToken cancellationToken = default)
+        {
+            Page<WorkspaceSku> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListWorkspaceSkus");
+                scope.Start();
+                try
+                {
+                    var response = WorkspaceSkusRestClient.List(cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<WorkspaceSku> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListWorkspaceSkus");
+                scope.Start();
+                try
+                {
+                    var response = WorkspaceSkusRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists all skus with associated features. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="WorkspaceSku" /> that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<WorkspaceSku> ListWorkspaceSkusAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<WorkspaceSku>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListWorkspaceSkus");
+                scope.Start();
+                try
+                {
+                    var response = await WorkspaceSkusRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<WorkspaceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.ListWorkspaceSkus");
+                scope.Start();
+                try
+                {
+                    var response = await WorkspaceSkusRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Resync all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
