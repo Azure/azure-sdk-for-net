@@ -14,6 +14,8 @@ namespace Azure.AI.FormRecognizer
     public class FormRecognizerClientOptions : ClientOptions
     {
         internal const ServiceVersion LatestVersion = ServiceVersion.V2_1;
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public string AuthenticationScope { get; set; } = "https://management.azure.com/.default";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientOptions"/> class which allows

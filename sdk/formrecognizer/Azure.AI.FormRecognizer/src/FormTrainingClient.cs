@@ -105,7 +105,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             Diagnostics = new ClientDiagnostics(options);
             ServiceVersion = options.Version;
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.AuthenticationScope));
             ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri, FormRecognizerClientOptions.GetVersionString(ServiceVersion));
         }
 
