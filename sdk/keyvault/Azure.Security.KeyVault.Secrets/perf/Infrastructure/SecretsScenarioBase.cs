@@ -18,7 +18,10 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Infrastructure
 
             Client = new SecretClient(
                 PerfTestEnvironment.Instance.VaultUri,
-                PerfTestEnvironment.Instance.Credential);
+                PerfTestEnvironment.Instance.Credential,
+                new SecretClientOptions() {
+                    Transport = Transport
+                });
         }
 
         protected SecretClient Client { get; }
@@ -37,23 +40,23 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Infrastructure
                     try
                     {
                         operation = await Client.StartDeleteSecretAsync(name);
-                        await operation.WaitForCompletionAsync();
+                        // await operation.WaitForCompletionAsync();
                     }
                     catch (RequestFailedException ex) when (ex.Status == 404)
                     {
                     }
 
                     // Purge deleted Secrets if soft delete is enabled.
-                    if (operation.Value.RecoveryId != null)
-                    {
-                        try
-                        {
-                            await Client.PurgeDeletedSecretAsync(name);
-                        }
-                        catch (RequestFailedException ex) when (ex.Status == 404)
-                        {
-                        }
-                    }
+                    //if (operation.Value.RecoveryId != null)
+                    //{
+                    //    try
+                    //    {
+                    //        await Client.PurgeDeletedSecretAsync(name);
+                    //    }
+                    //    catch (RequestFailedException ex) when (ex.Status == 404)
+                    //    {
+                    //    }
+                    //}
                 });
 
                 tasks.Add(t);
