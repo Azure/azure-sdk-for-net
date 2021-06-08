@@ -39,18 +39,18 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new instance of <see cref="ShareFileModificationException"/>.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        /// <param name="resurceUri">The URI of the resurce that has been modified.</param>
+        /// <param name="resourceUri">The URI of the resource that has been modified.</param>
         /// <param name="expectedETag">The ETag value that was expected during the read.</param>
         /// <param name="actualEtag">The ETag value that was received from the service.</param>
         /// <param name="range">The range that was requested for the service.</param>
         public ShareFileModificationException(
             string message,
-            Uri resurceUri,
+            Uri resourceUri,
             ETag expectedETag,
             ETag actualEtag,
             HttpRange range) : base(message)
         {
-            ResourceUri = resurceUri;
+            ResourceUri = resourceUri;
             ExpectedETag = expectedETag;
             ActualETag = actualEtag;
             Range = range;
