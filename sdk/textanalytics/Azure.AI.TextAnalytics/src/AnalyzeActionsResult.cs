@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The results of executing multiple actions in a set of documents.
+    /// The results of executing multiple actions on a set of documents.
     /// </summary>
     public class AnalyzeActionsResult
     {
@@ -25,27 +25,27 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Determines the collection of ExtractKeyPhrasesActionResult.
+        /// Determines the collection of <see cref="ExtractKeyPhrasesActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<ExtractKeyPhrasesActionResult> ExtractKeyPhrasesActionsResults { get; }
 
         /// <summary>
-        /// Determines the collection of RecognizeEntitiesActionResult.
+        /// Determines the collection of <see cref="RecognizeEntitiesActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<RecognizeEntitiesActionResult> RecognizeEntitiesActionsResults { get; }
 
         /// <summary>
-        /// Determines the collection of RecognizePiiEntitiesActionResult.
+        /// Determines the collection of <see cref="RecognizePiiEntitiesActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults { get; }
 
         /// <summary>
-        /// Determines the collection of RecognizeLinkedEntitiesActionsResult.
+        /// Determines the collection of <see cref="RecognizeLinkedEntitiesActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults { get; }
 
         /// <summary>
-        /// Determines the collection of AnalyzeSentimentActionsResults.
+        /// Determines the collection of <see cref="AnalyzeSentimentActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentActionsResults { get; }
     }
