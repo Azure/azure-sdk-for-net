@@ -675,7 +675,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileModificationException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         protected ShareFileModificationException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext streamingContext) { }
-        public ShareFileModificationException(string message, System.Uri resurceUri, Azure.ETag expectedETag, Azure.ETag actualEtag, Azure.HttpRange range) { }
+        public ShareFileModificationException(string message, System.Uri resourceUri, Azure.ETag expectedETag, Azure.ETag actualEtag, Azure.HttpRange range) { }
         public Azure.ETag ActualETag { get { throw null; } }
         public Azure.ETag ExpectedETag { get { throw null; } }
         public Azure.HttpRange Range { get { throw null; } }
