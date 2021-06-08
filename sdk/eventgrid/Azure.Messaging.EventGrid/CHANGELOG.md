@@ -4,21 +4,6 @@
 
 ### New Features
 * Added the following new system events:
-  - AgriFoodFarmingApplicationDataChangedEventData
-  - AgriFoodFarmingBoundaryChangedEventData
-  - AgriFoodFarmingCropChangedEventData
-  - AgriFoodFarmingCropVarietyChangedEventData
-  - AgriFoodFarmingFarmChangedEventData
-  - AgriFoodFarmingFarmerChangedEventData
-  - AgriFoodFarmingFarmOperationDataIngestionJobStatusChangedEventData 
-  - AgriFoodFarmingFieldChangedEventData
-  - AgriFoodFarmingHarvestDataChangedEventData
-  - AgriFoodFarmingPlantingDataChangedEventData
-  - AgriFoodFarmingSatelliteDataIngestionJobStatusChangedEventData
-  - AgriFoodFarmingSeasonalFieldChangedEventData
-  - AgriFoodFarmingSeasonChangedEventData
-  - AgriFoodFarmingTillageDataChangedEventData
-  - AgriFoodFarmingWeatherDataIngestionJobStatusChangedEventData
   - StorageBlobInventoryPolicyCompletedEventData
     
 * Updated existing system events:
