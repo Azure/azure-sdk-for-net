@@ -202,6 +202,7 @@
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.7, 2.0.0)" />
     <PackageReference Update="Microsoft.ServiceFabric.Data" Version="3.3.624" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
+		<PackageReference Update="Mono.Posix" Version="7.0.0-alpha8.21302.6" />
     <PackageReference Update="Moq" Version="4.10.1" />
     <PackageReference Update="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Update="MSTest.TestFramework" Version="1.3.2" />
@@ -217,6 +218,7 @@
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
+		<PackageReference Update="System.IO.FileSystem.AccessControl" Version="5.0.0" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />

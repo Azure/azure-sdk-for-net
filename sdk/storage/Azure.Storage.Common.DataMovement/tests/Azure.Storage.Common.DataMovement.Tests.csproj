@@ -1,20 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common.DataMovement client library tests</AssemblyTitle>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Azure.Storage.Tests</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
+    <PackageReference Include="Mono.Posix" />
+    <PackageReference Include="System.IO.FileSystem.AccessControl" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Common.DataMovement.csproj" />
-    <ProjectReference Include="..\..\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj" />
   </ItemGroup>
-  <!-- Ensure an empty TestConfigurations.xml is always present so the build can copy it -->
-  <Target Name="TouchTestConfigurationsFile" BeforeTargets="PreBuildEvent">
-    <Touch Files="$(MSBuildThisFileDirectory)Shared\TestConfigurations.xml" AlwaysCreate="True" ContinueOnError="WarnAndContinue" />
-  </Target>
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+    <None Include="$(AzureStorageSharedTestSources)\*.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
