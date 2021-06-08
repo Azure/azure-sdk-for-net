@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using System;
+using Azure.Core.TestFramework;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -17,9 +18,9 @@ namespace Azure.AI.TextAnalytics
         /// The latest service version supported by this client library.
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V3_1_Preview_5;
-        private const string AzurePublicCloud = "https://login.microsoftonline.com/";
-        private const string AzureChina = "https://login.microsoftonline.cn/";
-        private const string AzureGovernment = "https://login.microsoftonline.us/";
+        private const string AzurePublicCloud = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+        private const string AzureChina = "3d0a72e2-8b06-4528-98df-1391c6f12c11";
+        private const string AzureGovernment = "63296244-ce2c-46d8-bc36-3e558792fbee";
         /// <summary>
         /// The versions of the Text Analytics service supported by this client library.
         /// </summary>
@@ -82,9 +83,9 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
-        internal static string GetDefaultCognitiveScope(string authorityHost)
+        internal static string GetDefaultCognitiveScope(TestEnvironment _testEnvironment)
         {
-            switch (authorityHost)
+            switch (_testEnvironment.TenantId)
             {
                 case AzurePublicCloud:
                     return "https://cognitiveservices.azure.com/.default";

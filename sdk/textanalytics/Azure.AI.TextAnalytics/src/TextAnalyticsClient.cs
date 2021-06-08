@@ -4,6 +4,7 @@
 using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +23,8 @@ namespace Azure.AI.TextAnalytics
         internal readonly TextAnalyticsRestClient _serviceRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
         private readonly TextAnalyticsClientOptions _options;
-        private readonly string DefaultCognitiveScope = TextAnalyticsClientOptions.GetDefaultCognitiveScope(Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST"));
+        internal static readonly TestEnvironment _testEnvironment;
+        private readonly string DefaultCognitiveScope = TextAnalyticsClientOptions.GetDefaultCognitiveScope(_testEnvironment);
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
         /// <summary>
