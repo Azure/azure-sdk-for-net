@@ -17,9 +17,7 @@ namespace Azure.AI.TextAnalytics
         /// The latest service version supported by this client library.
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V3_1_Preview_5;
-        private const string AzurePublicCloud = "https://login.microsoftonline.com/";
-        private const string AzureChina = "https://login.microsoftonline.cn/";
-        private const string AzureGovernment = "https://login.microsoftonline.us/";
+
         /// <summary>
         /// The versions of the Text Analytics service supported by this client library.
         /// </summary>
@@ -80,21 +78,6 @@ namespace Azure.AI.TextAnalytics
 
                 _ => throw new ArgumentException($"Version {version} not supported."),
             };
-        }
-
-        internal static string GetDefaultCognitiveScope(string authorityHost)
-        {
-            switch (authorityHost)
-            {
-                case AzurePublicCloud:
-                    return "https://cognitiveservices.azure.com/.default";
-                case AzureChina:
-                    return "https://cognitiveservices.azure.cn/.default";
-                case AzureGovernment:
-                    return "https://cognitiveservices.azure.us/.default";
-                default:
-                    return "https://cognitiveservices.azure.com/.default";
-            }
         }
     }
 }

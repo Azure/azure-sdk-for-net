@@ -22,8 +22,6 @@ namespace Azure.AI.TextAnalytics
         internal readonly TextAnalyticsRestClient _serviceRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
         private readonly TextAnalyticsClientOptions _options;
-        private readonly string DefaultCognitiveScope = TextAnalyticsClientOptions.GetDefaultCognitiveScope(Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST"));
-        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
         /// <summary>
         /// Protected constructor to allow mocking.
