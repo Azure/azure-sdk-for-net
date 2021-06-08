@@ -1012,7 +1012,7 @@
             ],
             "type": "object",
             "properties": {
-                "sourceAlternateIdentity": {
+                "alternateCallerId": {
                     "$ref": "#/definitions/PhoneNumberIdentifier",
                     "description": "The alternate identity of the source of the call if dialing out to a pstn number"
                 },
@@ -1306,8 +1306,8 @@
                 }
             }
         },
-        "CallState": {
-            "description": "The call state.",
+        "CallConnectionState": {
+            "description": "The call connection state.",
             "enum": [
                 "unknown",
                 "idle",
@@ -1323,7 +1323,7 @@
             ],
             "type": "string",
             "x-ms-enum": {
-                "name": "CallState",
+                "name": "CallConnectionState",
                 "modelAsString": true
             }
         },
@@ -1339,8 +1339,8 @@
                     "description": "The call connection id.",
                     "type": "string"
                 },
-                "callState": {
-                    "$ref": "#/definitions/CallState"
+                "callConnectionState": {
+                    "$ref": "#/definitions/CallConnectionState"
                 }
             }
         },

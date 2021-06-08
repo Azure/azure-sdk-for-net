@@ -25,10 +25,10 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("callConnectionId");
                 writer.WriteStringValue(CallConnectionId);
             }
-            if (Optional.IsDefined(CallState))
+            if (Optional.IsDefined(CallConnectionState))
             {
-                writer.WritePropertyName("callState");
-                writer.WriteStringValue(CallState.Value.ToString());
+                writer.WritePropertyName("callConnectionState");
+                writer.WriteStringValue(CallConnectionState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -37,7 +37,7 @@ namespace Azure.Communication.CallingServer
         {
             Optional<string> serverCallId = default;
             Optional<string> callConnectionId = default;
-            Optional<CallState> callState = default;
+            Optional<CallConnectionState> callConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverCallId"))
@@ -50,18 +50,18 @@ namespace Azure.Communication.CallingServer
                     callConnectionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callState"))
+                if (property.NameEquals("callConnectionState"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    callState = new CallState(property.Value.GetString());
+                    callConnectionState = new CallConnectionState(property.Value.GetString());
                     continue;
                 }
             }
-            return new CallConnectionStateChangedEvent(serverCallId.Value, callConnectionId.Value, Optional.ToNullable(callState));
+            return new CallConnectionStateChangedEvent(serverCallId.Value, callConnectionId.Value, Optional.ToNullable(callConnectionState));
         }
     }
 }

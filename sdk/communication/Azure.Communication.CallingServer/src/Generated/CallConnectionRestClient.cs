@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateCallRequest(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel sourceAlternateIdentity, string subject, IEnumerable<CallModality> requestedMediaTypes, IEnumerable<EventSubscriptionType> requestedCallEvents)
+        internal HttpMessage CreateCreateCallRequest(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId, string subject, IEnumerable<CallModality> requestedMediaTypes, IEnumerable<EventSubscriptionType> requestedCallEvents)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,7 +62,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Content-Type", "application/json");
             CreateCallRequestInternal createCallRequestInternal = new CreateCallRequestInternal(targets.ToList(), source, callbackUri)
             {
-                SourceAlternateIdentity = sourceAlternateIdentity,
+                AlternateCallerId = alternateCallerId,
                 Subject = subject
             };
             if (requestedMediaTypes != null)
@@ -90,13 +90,13 @@ namespace Azure.Communication.CallingServer
         /// <param name="targets"> The targets of the call. </param>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <param name="sourceAlternateIdentity"> The alternate identity of the source of the call if dialing out to a pstn number. </param>
+        /// <param name="alternateCallerId"> The alternate identity of the source of the call if dialing out to a pstn number. </param>
         /// <param name="subject"> The subject. </param>
         /// <param name="requestedMediaTypes"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
-        public async Task<Response<CreateCallResponse>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel sourceAlternateIdentity = null, string subject = null, IEnumerable<CallModality> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateCallResponse>> CreateCallAsync(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<CallModality> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (targets == null)
             {
@@ -111,7 +111,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(callbackUri));
             }
 
-            using var message = CreateCreateCallRequest(targets, source, callbackUri, sourceAlternateIdentity, subject, requestedMediaTypes, requestedCallEvents);
+            using var message = CreateCreateCallRequest(targets, source, callbackUri, alternateCallerId, subject, requestedMediaTypes, requestedCallEvents);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -131,13 +131,13 @@ namespace Azure.Communication.CallingServer
         /// <param name="targets"> The targets of the call. </param>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <param name="sourceAlternateIdentity"> The alternate identity of the source of the call if dialing out to a pstn number. </param>
+        /// <param name="alternateCallerId"> The alternate identity of the source of the call if dialing out to a pstn number. </param>
         /// <param name="subject"> The subject. </param>
         /// <param name="requestedMediaTypes"> The requested modalities. </param>
         /// <param name="requestedCallEvents"> The requested call events to subscribe to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/>, or <paramref name="callbackUri"/> is null. </exception>
-        public Response<CreateCallResponse> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel sourceAlternateIdentity = null, string subject = null, IEnumerable<CallModality> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
+        public Response<CreateCallResponse> CreateCall(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel source, string callbackUri, PhoneNumberIdentifierModel alternateCallerId = null, string subject = null, IEnumerable<CallModality> requestedMediaTypes = null, IEnumerable<EventSubscriptionType> requestedCallEvents = null, CancellationToken cancellationToken = default)
         {
             if (targets == null)
             {
@@ -152,7 +152,7 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(callbackUri));
             }
 
-            using var message = CreateCreateCallRequest(targets, source, callbackUri, sourceAlternateIdentity, subject, requestedMediaTypes, requestedCallEvents);
+            using var message = CreateCreateCallRequest(targets, source, callbackUri, alternateCallerId, subject, requestedMediaTypes, requestedCallEvents);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

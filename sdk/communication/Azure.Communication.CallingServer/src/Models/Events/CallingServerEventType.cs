@@ -88,7 +88,7 @@ namespace Azure.Communication.CallingServer
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
-            return obj is CallState && Equals((CallingServerEventType)obj);
+            return obj is CallingServerEventType && Equals((CallingServerEventType)obj);
         }
 
         /// <inheritdoc/>

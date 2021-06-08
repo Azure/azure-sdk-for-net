@@ -106,7 +106,7 @@ namespace Azure.Communication.CallingServer
                 Argument.AssertNotNullOrEmpty(targets, nameof(targets));
                 Argument.AssertNotNull(options, nameof(options));
 
-                var sourceAlternateIdentity = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                var alternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
 
                 var createCallResponse = await CallConnectionRestClient.CreateCallAsync(
                     targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
@@ -114,7 +114,7 @@ namespace Azure.Communication.CallingServer
                     callbackUri: options.CallbackUri?.AbsoluteUri,
                     requestedMediaTypes: options.RequestedMediaTypes,
                     requestedCallEvents: options.RequestedCallEvents,
-                    sourceAlternateIdentity: sourceAlternateIdentity,
+                    alternateCallerId: alternateCallerId,
                     subject: options.Subject,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -149,7 +149,7 @@ namespace Azure.Communication.CallingServer
                 Argument.AssertNotNullOrEmpty(targets, nameof(targets));
                 Argument.AssertNotNull(options, nameof(options));
 
-                var sourceAlternateIdentity = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                var alternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
 
                 var createCallResponse = CallConnectionRestClient.CreateCall(
                     targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
@@ -157,7 +157,7 @@ namespace Azure.Communication.CallingServer
                     callbackUri: options.CallbackUri?.AbsoluteUri,
                     requestedMediaTypes: options.RequestedMediaTypes,
                     requestedCallEvents: options.RequestedCallEvents,
-                    sourceAlternateIdentity: sourceAlternateIdentity,
+                    alternateCallerId: alternateCallerId,
                     subject: options.Subject,
                     cancellationToken: cancellationToken
                     );

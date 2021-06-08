@@ -44,7 +44,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The alternate identity of the source of the call if dialing out to a pstn number. </summary>
-        public PhoneNumberIdentifierModel SourceAlternateIdentity { get; set; }
+        public PhoneNumberIdentifierModel AlternateCallerId { get; set; }
         /// <summary> The targets of the call. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
         /// <summary> The source of the call. </summary>

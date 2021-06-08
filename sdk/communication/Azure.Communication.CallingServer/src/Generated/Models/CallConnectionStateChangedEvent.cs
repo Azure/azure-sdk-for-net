@@ -18,19 +18,19 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
         /// <param name="serverCallId"> The server call.id. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="callState"> The call state. </param>
-        internal CallConnectionStateChangedEvent(string serverCallId, string callConnectionId, CallState? callState)
+        /// <param name="callConnectionState"> The call connection state. </param>
+        internal CallConnectionStateChangedEvent(string serverCallId, string callConnectionId, CallConnectionState? callConnectionState)
         {
             ServerCallId = serverCallId;
             CallConnectionId = callConnectionId;
-            CallState = callState;
+            CallConnectionState = callConnectionState;
         }
 
         /// <summary> The server call.id. </summary>
         public string ServerCallId { get; set; }
         /// <summary> The call connection id. </summary>
         public string CallConnectionId { get; set; }
-        /// <summary> The call state. </summary>
-        public CallState? CallState { get; set; }
+        /// <summary> The call connection state. </summary>
+        public CallConnectionState? CallConnectionState { get; set; }
     }
 }
