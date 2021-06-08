@@ -25,9 +25,9 @@ namespace Azure.Communication.CallingServer.Tests
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         /// <summary>
-        /// Creates a <see cref="CallConnection" />
+        /// Creates a <see cref="CallingServerClient" />
         /// </summary>
-        /// <returns>The instrumented <see cref="CallConnection" />.</returns>
+        /// <returns>The instrumented <see cref="CallingServerClient" />.</returns>
         protected CallingServerClient CreateInstrumentedCallingServerClient()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;

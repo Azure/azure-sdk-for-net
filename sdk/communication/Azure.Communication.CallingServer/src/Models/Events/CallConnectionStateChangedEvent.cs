@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The call leg state change event.
+    /// The call connection state change event.
     /// </summary>
     [CodeGenModel("CallConnectionStateChangedEvent", Usage = new string[] { "input, output" }, Formats = new string[] { "json" })]
     public partial class CallConnectionStateChangedEvent : CallingServerEventBase

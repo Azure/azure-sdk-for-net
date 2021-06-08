@@ -38,7 +38,7 @@ namespace Azure.Communication.CallingServer.Tests
                    });
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallOptions
             CallingServerClient callClient = CreateInstrumentedCallingServerClient();
-            Console.WriteLine("Performing CreateCall operation");
+            Console.WriteLine("Performing CreateCallConnection operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCallAsync
             var callConnection = await callClient.CreateCallConnectionAsync(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer.Tests
                 /*@@*/ targets: targets,
                 /*@@*/ options: createCallOption
                 );
-            Console.WriteLine($"Call Leg id: {callConnection.Value.CallConnectionId}");
+            Console.WriteLine($"Call connection id: {callConnection.Value.CallConnectionId}");
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallAsync
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Communication.CallingServer.Tests
                        EventSubscriptionType.DtmfReceived
                    });
             CallingServerClient callClient = CreateInstrumentedCallingServerClient();
-            Console.WriteLine("Performing CreateCall operation");
+            Console.WriteLine("Performing CreateCallConnection operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCall
             var callConnection = callClient.CreateCallConnection(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
@@ -78,7 +78,7 @@ namespace Azure.Communication.CallingServer.Tests
                 /*@@*/ targets: targets,
                 /*@@*/ options: createCallOption
                 );
-            Console.WriteLine($"Call Leg id: {callConnection.Value.CallConnectionId}");
+            Console.WriteLine($"Call connection id: {callConnection.Value.CallConnectionId}");
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCall
         }
     }

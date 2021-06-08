@@ -21,7 +21,7 @@ namespace Azure.Communication.CallingServer
         internal CallConnectionRestClient RestClient { get; }
 
         /// <summary>
-        /// The call connection id. This is the call leg id associated with the current call.
+        /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
