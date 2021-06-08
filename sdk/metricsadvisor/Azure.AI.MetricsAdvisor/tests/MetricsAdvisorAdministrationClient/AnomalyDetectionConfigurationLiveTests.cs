@@ -14,8 +14,39 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class AnomalyDetectionConfigurationLiveTests : MetricsAdvisorLiveTestBase
     {
+        private DisposableDataFeed _disposableDataFeed;
+
         public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [OneTimeSetUp]
+        public async Task CreateDataFeedAsync()
+        {
+            if (Recording.Mode == RecordedTestMode.Live || Recording.Mode == RecordedTestMode.Record)
+            {
+                string accountName = Environment.GetEnvironmentVariable(MetricsAdvisorTestEnvironment.MetricsAdvisorAccountNameVariableName);
+                string apiKey = Environment.GetEnvironmentVariable(MetricsAdvisorTestEnvironment.MetricsAdvisorApiKeyVariableName);
+                string subscriptionKey = Environment.GetEnvironmentVariable(MetricsAdvisorTestEnvironment.MetricsAdvisoSubscriptionKeyVariableName);
+
+                var endpoint = new Uri($"https://{accountName}.cognitiveservices.azure.com");
+                var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
+                var adminClient = new MetricsAdvisorAdministrationClient(endpoint, credential);
+
+                var dataFeed = new DataFeed()
+                {
+                    Name = $"dataFeed{Guid.NewGuid()}",
+                    DataSource = new SqlServerDataFeedSource("connString", "query"),
+                    Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
+                    Schema = new DataFeedSchema()
+                    {
+                        MetricColumns = { new DataFeedMetric("metric") }
+                    },
+                    IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = SamplingStartTime }
+                };
+
+                _disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeed);
+            }
         }
 
         [RecordedTest]
@@ -26,7 +57,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            var description = "This hook was created to test the .NET client.";
+            var description = "This configuration was created to test the .NET client.";
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -581,7 +612,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            var description = "This hook was created to test the .NET client.";
+            var description = "This configuration was created to test the .NET client.";
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -722,7 +753,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            var description = "This hook was created to test the .NET client.";
+            var description = "This configuration was created to test the .NET client.";
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
