@@ -2,12 +2,19 @@
 param(
   [Parameter()]
   [ValidateNotNullOrEmpty()]
-  [string] $Input,
+  [string] $InputMd,
 
   [Parameter()]
   [ValidateNotNullOrEmpty()]
-  [string] $Output,
+  [string] $OutputMd
 )
 
+$text = (Get-Content $InputMd -Raw);
 
-Get-Content $input -Raw
+#remove comments
+$text = $text -replace '\<\!--.*?-->'
+
+#remove impressions
+$text = $text -replace '\!\[Impressions\]\(.*?\)'
+
+$text | Out-File $OutputMd

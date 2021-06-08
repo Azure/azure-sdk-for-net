@@ -44,24 +44,24 @@
   </Target>
 
   <PropertyGroup>
-    <_PackageReadmeMd>$(MSBuildProjectDirectory)README.md</_PackageReadmeMd>
+    <_PackageReadmeMd>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))README.md</_PackageReadmeMd>
   </PropertyGroup>
 
   <!-- Process and pack README.md  -->
   <Target Name="ProcessReadmeMd" BeforeTargets="GenerateNuspec" Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true' and Exists('$(_PackageReadmeMd)')" >
     <PropertyGroup>
       <ProcessReadmeMdScriptPath Condition=" '$(ProcessReadmeMdScriptPath)'=='' ">$(MSBuildThisFileDirectory)/scripts/Process-ReadmeMd.ps1</ProcessReadmeMdScriptPath>
-      <ProcessedReadmeMdPath>$(IntermediateOutputPath)/README.md<ProcessedReadmeMdPath>
+      <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
     </PropertyGroup>
-    <Exec ConsoleToMSBuild="true" StandardOutputImportance="Low" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted $(ProcessReadmeMdScriptPath) $(_PackageReadmeMd) $(ProcessedReadmeMdPath)" />
+    <Exec ConsoleToMSBuild="true" StandardOutputImportance="Low" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ProcessReadmeMdScriptPath) -InputMd $(_PackageReadmeMd) -OutputMd $(ProcessedReadmeMdPath)" />
 
     <PropertyGroup>
-      <PackageReadmeMd>README.md<PackageReadmeMd>
+      <PackageReadmeMd>README.md</PackageReadmeMd>
     </PropertyGroup>
 
     <ItemGroup>
       <None Include="$(ProcessedReadmeMdPath)" Pack="true" PackagePath="/"/>
-    <ItemGroup>
+    </ItemGroup>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
