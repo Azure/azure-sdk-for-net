@@ -39,8 +39,12 @@ namespace Azure.Security.KeyVault.Secrets
         public System.Uri VaultUri { get { throw null; } }
         public string Version { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Secrets.KeyVaultSecretIdentifier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
     }
     public partial class RecoverDeletedSecretOperation : Azure.Operation<Azure.Security.KeyVault.Secrets.SecretProperties>
     {
