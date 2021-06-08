@@ -1875,7 +1875,7 @@ namespace Azure.Storage.Files.Shares
                                 .EnsureCompleted();
                             if (etag != Response.GetRawResponse().Headers.ETag)
                             {
-                                throw new ShareFileModificationException(
+                                throw new ShareFileModifiedException(
                                     "File has been modified concurrently",
                                     Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
                             }
@@ -1893,7 +1893,7 @@ namespace Azure.Storage.Files.Shares
                                 .ConfigureAwait(false);
                             if (etag != Response.GetRawResponse().Headers.ETag)
                             {
-                                throw new ShareFileModificationException(
+                                throw new ShareFileModifiedException(
                                     "File has been modified concurrently",
                                     Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
                             }
@@ -2014,7 +2014,7 @@ namespace Azure.Storage.Files.Shares
         /// is read from.
         /// </returns>
         /// <remarks>
-        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -2046,7 +2046,7 @@ namespace Azure.Storage.Files.Shares
         /// is read from.
         /// </returns>
         /// <remarks>
-        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
@@ -2087,7 +2087,7 @@ namespace Azure.Storage.Files.Shares
         /// is read from.
         /// </returns>
         /// <remarks>
-        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2130,7 +2130,7 @@ namespace Azure.Storage.Files.Shares
         /// is read from.
         /// </returns>
         /// <remarks>
-        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2172,7 +2172,7 @@ namespace Azure.Storage.Files.Shares
         /// is read from.
         /// </returns>
         /// <remarks>
-        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2215,7 +2215,7 @@ namespace Azure.Storage.Files.Shares
         /// is read from.
         /// </returns>
         /// <remarks>
-        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2263,7 +2263,7 @@ namespace Azure.Storage.Files.Shares
         /// is read from.
         /// </returns>
         /// <remarks>
-        /// The stream returned might throw <see cref="ShareFileModificationException"/>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
         /// if the file is concurrently modified and allowModifications is false.
         /// </remarks>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -2303,7 +2303,7 @@ namespace Azure.Storage.Files.Shares
 
                         if (!allowModifications && etag != response.GetRawResponse().Headers.ETag)
                         {
-                            throw new ShareFileModificationException(
+                            throw new ShareFileModifiedException(
                                 "File has been modified concurrently",
                                 Uri, etag, response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
                         }
