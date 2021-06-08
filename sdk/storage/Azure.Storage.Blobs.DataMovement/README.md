@@ -32,6 +32,10 @@ Here's an example using the Azure CLI:
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
+### Authenticate the Client
+
+Authentication works the same as in [Azure.Storage.Blobs][authenticating_with_blobs].
+
 ## Key concepts
 
 Blob storage is designed for:

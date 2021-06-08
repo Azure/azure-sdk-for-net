@@ -4,7 +4,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Blobs client library</AssemblyTitle>
-    <Version>0.1.0-beta.1</Version>
+    <Version>12.0.0-preview.1</Version>
     <DefineConstants>BlobSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Blobs DataMovement;Microsoft;Azure;Blobs;Blob;Storage;DataMovement;StorageScalable;$(PackageCommonTags)</PackageTags>
     <Description>

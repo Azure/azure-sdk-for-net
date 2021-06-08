@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using NUnit.Framework;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,7 +22,7 @@ namespace Azure.Storage.Tests
     public abstract class DataMovementTestBase : CommonTestBase
     {
         public DataMovementTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, mode /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0-preview.1 (Unreleased)
+## 12.0.0-preview.1 (Unreleased)
 This preview is the first release of a ground-up rewrite of our client
 libraries to ensure consistency, idiomatic design, productivity, and an
 excellent developer experience.  It was created following the Azure SDK Design
