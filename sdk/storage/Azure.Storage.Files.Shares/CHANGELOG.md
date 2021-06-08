@@ -2,6 +2,7 @@
 
 ## 12.7.0-beta.5 (Unreleased)
 - Fixed bug where specifying conditions in ShareFileClient.OpenRead could override allowModifications flag in ShareFileOpenReadOptions leading to inconsistent read.
+- Fixed bug where retry during streaming of ShareFileClient.Download result could lead to inconsistent read.
 
 ## 12.6.2 (2021-05-20)
 - This release contains bug fixes to improve quality.
