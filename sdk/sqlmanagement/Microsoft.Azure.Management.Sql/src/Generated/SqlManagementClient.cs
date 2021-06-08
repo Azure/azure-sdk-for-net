@@ -558,11 +558,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerOperations ServerOperations { get; private set; }
 
         /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        public virtual IServersOperations Servers { get; private set; }
-
-        /// <summary>
         /// Gets the IServerSecurityAlertPoliciesOperations.
         /// </summary>
         public virtual IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; private set; }
@@ -666,6 +661,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IRestorableDroppedManagedDatabasesOperations.
         /// </summary>
         public virtual IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        public virtual IServersOperations Servers { get; private set; }
 
         /// <summary>
         /// Gets the IUsagesOperations.
@@ -1010,7 +1010,6 @@ namespace Microsoft.Azure.Management.Sql
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
             ServerKeys = new ServerKeysOperations(this);
             ServerOperations = new ServerOperations(this);
-            Servers = new ServersOperations(this);
             ServerSecurityAlertPolicies = new ServerSecurityAlertPoliciesOperations(this);
             ServerTrustGroups = new ServerTrustGroupsOperations(this);
             ServerVulnerabilityAssessments = new ServerVulnerabilityAssessmentsOperations(this);
@@ -1032,6 +1031,7 @@ namespace Microsoft.Azure.Management.Sql
             OutboundFirewallRules = new OutboundFirewallRulesOperations(this);
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
             RestorableDroppedManagedDatabases = new RestorableDroppedManagedDatabasesOperations(this);
+            Servers = new ServersOperations(this);
             Usages = new UsagesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

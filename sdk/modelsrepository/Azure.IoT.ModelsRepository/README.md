@@ -2,7 +2,7 @@
 
 This library provides functionality for interacting with the [Azure IoT Models Repository][modelsrepository_iot_endpoint]. It also aims to provide a consistent experience working with digital twin model repositories following Azure IoT conventions.
 
-[Source code][source] | Package (nuget)
+[Source code][source] | [Package (nuget)](https://www.nuget.org/packages/Azure.IoT.ModelsRepository)
 
 ## Getting started
 

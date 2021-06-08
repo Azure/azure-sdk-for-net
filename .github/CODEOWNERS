@@ -138,7 +138,7 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/            @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                             @annelo-msft @maririos @suhas92
+/sdk/textanalytics/                             @annelo-msft @maririos
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/            @assafi
@@ -277,7 +277,7 @@
 
 # PRLabel: %TimeSeriesInsights
 # ServiceLabel: %TimeSeriesInsights %Service Attention
-/sdk/timeseriesinsights/                        @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi @yeskarthik @rasidhan @dmdenmsft
+/sdk/timeseriesinsights/                        @yeskarthik @rasidhan @dmdenmsft
 
 # ServiceLabel: %Event Grid %Service Attention
 # PRLabel: %Event Grid
@@ -385,6 +385,9 @@ sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamat
 
 # ServiceLabel: %Monitor %Service Attention
 sdk/monitor/           @SameergMS @dadunl
+
+# PRLabel: %Monitor
+sdk/monitor/Azure.Monitor.Query            @pakrym
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
@@ -605,13 +608,19 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/tables/                                    @christothes
 
 # ServiceLabel: %Tables %Service Attention
-#/<NotInRepo>/            @klaaslanghout
+#/<NotInRepo>/            @sakash279, @sivethe, @ThomasWeiss, @PaulCheng
 
 # ServiceLabel: %TimeseriesInsights %Service Attention
 #/<NotInRepo>/            @Shipra1Mishra
 
 # ServiceLabel: %vFXT %Service Attention
 #/<NotInRepo>/            @zhusijia26
+
+# ServiceLabel: %VideoAnalyzer %Service Attention
+#/<NotInRepo>/            @giakas
+
+# PRLabel: %VideoAnalyzer
+/sdk/videoanalyzer/       @giakas @heaths
 
 # ServiceLabel: %Web Apps %Service Attention
 #/<NotInRepo>/            @AzureAppServiceCLI @antcp

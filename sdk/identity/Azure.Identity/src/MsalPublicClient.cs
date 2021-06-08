@@ -100,7 +100,7 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, bool async, CancellationToken cancellationToken)
         {
 #pragma warning disable AZC0109 // Misuse of 'async' parameter.
             if (!async && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
@@ -114,24 +114,33 @@ namespace Azure.Identity
                 AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingOnThreadPool();
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-                return Task.Run(async () => await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, true, cancellationToken).ConfigureAwait(false)).GetAwaiter().GetResult();
+                return Task.Run(async () => await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, true, cancellationToken).ConfigureAwait(false)).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 
             AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingInline();
 
-            return await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, async, cancellationToken).ConfigureAwait(false);
+            return await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, async, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
-            return await client.AcquireTokenInteractive(scopes)
-                .WithPrompt(prompt)
-                .WithClaims(claims)
-                .ExecuteAsync(async, cancellationToken)
-                .ConfigureAwait(false);
+            return loginHint switch
+            {
+                null => await client.AcquireTokenInteractive(scopes)
+                    .WithPrompt(prompt)
+                    .WithClaims(claims)
+                    .ExecuteAsync(async, cancellationToken)
+                    .ConfigureAwait(false),
+                _ => await client.AcquireTokenInteractive(scopes)
+                    .WithPrompt(prompt)
+                    .WithClaims(claims)
+                    .WithLoginHint(loginHint)
+                    .ExecuteAsync(async, cancellationToken)
+                    .ConfigureAwait(false)
+            };
         }
 
         public async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, SecureString password, bool async, CancellationToken cancellationToken)

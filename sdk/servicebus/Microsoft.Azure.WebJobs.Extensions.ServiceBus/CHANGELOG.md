@@ -1,5 +1,14 @@
 # Release History
 
+## 5.0.0-beta.4 (2021-06-08)
+
+### Added
+- Added `AutoCompleteMessages` property to `ServiceBusTriggerAttribute` which allows configuring autocompletion at the function level.
+
+### Key Bug Fixes
+- Avoid exception that occurred when a function settles messages and `AutoCompleteMessages` is true for multiple dispatch functions.
+- Avoid null reference exception that could occur when no messages are available for a multiple dispatch function.
+
 ## 5.0.0-beta.3 (2021-05-18)
 
 ### Added

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
@@ -10,7 +11,8 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// A factory class which constructs model classes for mocking purposes.
     /// </summary>
-    public static class KeyVaultAdministrationModelFactory
+    [CodeGenType("AzureSecurityKeyVaultAdministrationModelFactory")]
+    public static partial class KeyVaultAdministrationModelFactory
     {
         /// <summary>
         /// Initializes a new instance of RoleDefinition.

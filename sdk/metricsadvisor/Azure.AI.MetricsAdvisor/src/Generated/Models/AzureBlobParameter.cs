@@ -11,21 +11,30 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AzureBlobParameter
     {
         /// <summary> Initializes a new instance of AzureBlobParameter. </summary>
-        /// <param name="connectionString"> Azure Blob connection string. </param>
-        /// <param name="container"> Container. </param>
-        /// <param name="blobTemplate"> Blob Template. </param>
-        public AzureBlobParameter(string connectionString, string container, string blobTemplate)
+        /// <param name="container"> The container name in this Azure Blob. </param>
+        /// <param name="blobTemplate"> The path template in this container. </param>
+        public AzureBlobParameter(string container, string blobTemplate)
+        {
+            Container = container;
+            BlobTemplate = blobTemplate;
+        }
+
+        /// <summary> Initializes a new instance of AzureBlobParameter. </summary>
+        /// <param name="connectionString"> The connection string of this Azure Blob. </param>
+        /// <param name="container"> The container name in this Azure Blob. </param>
+        /// <param name="blobTemplate"> The path template in this container. </param>
+        internal AzureBlobParameter(string connectionString, string container, string blobTemplate)
         {
             ConnectionString = connectionString;
             Container = container;
             BlobTemplate = blobTemplate;
         }
 
-        /// <summary> Azure Blob connection string. </summary>
+        /// <summary> The connection string of this Azure Blob. </summary>
         public string ConnectionString { get; set; }
-        /// <summary> Container. </summary>
+        /// <summary> The container name in this Azure Blob. </summary>
         public string Container { get; set; }
-        /// <summary> Blob Template. </summary>
+        /// <summary> The path template in this container. </summary>
         public string BlobTemplate { get; set; }
     }
 }

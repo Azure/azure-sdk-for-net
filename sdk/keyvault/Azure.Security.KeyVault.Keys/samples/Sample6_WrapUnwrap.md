@@ -1,7 +1,7 @@
 # Wrapping and unwrap a key
 
 This sample demonstrates how to wrap and unwrap a symmetric key with an RSA key.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault or Managed HSM. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) for links and instructions.
 
 ## Creating a KeyClient
 
