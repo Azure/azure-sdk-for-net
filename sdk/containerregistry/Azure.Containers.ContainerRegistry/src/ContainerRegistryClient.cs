@@ -19,7 +19,6 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
         private readonly AuthenticationRestClient _acrAuthClient;
-        private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts,
@@ -80,7 +79,7 @@ namespace Azure.Containers.ContainerRegistry
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
             _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, AcrAadScope, _acrAuthClient));
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, options.AuthenticationScope, _acrAuthClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
@@ -93,16 +92,6 @@ namespace Azure.Containers.ContainerRegistry
         /// Gets the registry service endpoint for this client.
         /// </summary>
         public virtual Uri Endpoint => _endpoint;
-
-        /// <summary>
-        /// Gets the name of this container registry.
-        /// </summary>
-        public virtual string Name => _registryName;
-
-        /// <summary>
-        /// Gets the login server name for this container registry.
-        /// </summary>
-        public virtual string LoginServer => _endpoint.Host;
 
         /// <summary> List repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -206,7 +195,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string repositoryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteRepositoryAsync(string repositoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
 
@@ -229,7 +218,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<DeleteRepositoryResult> DeleteRepository(string repositoryName, CancellationToken cancellationToken = default)
+        public virtual Response DeleteRepository(string repositoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
 

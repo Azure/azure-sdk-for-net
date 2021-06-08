@@ -21,12 +21,14 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task SingleSourceSingleTargetTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SingleSourceSingleTargetTest(bool usetokenCredential)
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = await CreateTargetContainerAsync();
 
-            DocumentTranslationClient client = GetClient();
+            DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
@@ -217,7 +219,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(documentsFromOperationList[0].SourceDocumentUri, documentsFromGetAllList[0].SourceDocumentUri);
             Assert.AreEqual(documentsFromOperationList[0].TranslatedDocumentUri, documentsFromGetAllList[0].TranslatedDocumentUri);
             Assert.AreEqual(documentsFromOperationList[0].TranslationProgressPercentage, documentsFromGetAllList[0].TranslationProgressPercentage);
-            Assert.AreEqual(documentsFromOperationList[0].TranslateTo, documentsFromGetAllList[0].TranslateTo);
+            Assert.AreEqual(documentsFromOperationList[0].TranslatedTo, documentsFromGetAllList[0].TranslatedTo);
             Assert.AreEqual(documentsFromOperationList[0].CreatedOn, documentsFromGetAllList[0].CreatedOn);
             // Ignore because of flaky behavior. Service issue has been created.
             // https://github.com/Azure/azure-sdk-for-net/issues/20116
@@ -411,7 +413,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.IsNotNull(document.SourceDocumentUri);
             Assert.IsNotNull(document.TranslatedDocumentUri);
             Assert.AreEqual(100f, document.TranslationProgressPercentage);
-            Assert.AreEqual(translateTo, document.TranslateTo);
+            Assert.AreEqual(translateTo, document.TranslatedTo);
             Assert.AreNotEqual(new DateTimeOffset(), document.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), document.LastModified);
         }

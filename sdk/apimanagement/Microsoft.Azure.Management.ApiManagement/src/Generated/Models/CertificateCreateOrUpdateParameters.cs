@@ -37,10 +37,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="data">Base 64 encoded certificate using the
         /// application/x-pkcs12 representation.</param>
         /// <param name="password">Password for the Certificate</param>
-        public CertificateCreateOrUpdateParameters(string data, string password)
+        /// <param name="keyVault">KeyVault location details of the
+        /// certificate.</param>
+        public CertificateCreateOrUpdateParameters(string data = default(string), string password = default(string), KeyVaultContractCreateProperties keyVault = default(KeyVaultContractCreateProperties))
         {
             Data = data;
             Password = password;
+            KeyVault = keyVault;
             CustomInit();
         }
 
@@ -63,21 +66,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string Password { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets keyVault location details of the certificate.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Data == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Data");
-            }
-            if (Password == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
-            }
-        }
+        [JsonProperty(PropertyName = "properties.keyVault")]
+        public KeyVaultContractCreateProperties KeyVault { get; set; }
+
     }
 }

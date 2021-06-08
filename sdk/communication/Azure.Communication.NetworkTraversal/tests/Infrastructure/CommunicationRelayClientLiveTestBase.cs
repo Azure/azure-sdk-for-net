@@ -49,7 +49,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         private CommunicationRelayClientOptions CreateNetworkingClientOptionsWithCorrelationVectorLogs()
         {

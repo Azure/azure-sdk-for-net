@@ -28,5 +28,5 @@ extends:
     ServiceDirectory: timeseriesinsights
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Iot.TimeSeriesInsights
+    - name: Azure.IoT.TimeSeriesInsights
       safeName: AzureTimeSeriesInsights
