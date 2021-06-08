@@ -16,7 +16,7 @@ The following are the settings for generating this API with AutoRest.
 
 ```yaml
 tag: beta
-input-file: swagger.json
+input-file: https://github.com/Azure/azure-rest-api-specs/blob/37acfb43a99ac90f6cb986f227a34bcfbccd6c5b/specification/communication/data-plane/CallingServer/preview/2021-06-15-preview/communicationservicescallingserver.json
 payload-flattening-threshold: 10
 clear-output-folder: true
 directive:

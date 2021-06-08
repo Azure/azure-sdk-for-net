@@ -40,48 +40,6 @@ namespace Azure.Communication.CallingServer
             CallConnectionId = null;
         }
 
-        /// <summary> Deletes the call. </summary>
-        /// <param name="cancellationToken"> The cancellation token . </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Delete)}");
-            scope.Start();
-            try
-            {
-                return await RestClient.DeleteCallAsync(
-                    callConnectionId: CallConnectionId,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the call. </summary>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Delete)}");
-            scope.Start();
-            try
-            {
-                return RestClient.DeleteCall(
-                    callConnectionId: CallConnectionId,
-                    cancellationToken: cancellationToken
-                    );
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
         /// <summary> Disconnect the current caller in a group-call or end a p2p-call.</summary>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>

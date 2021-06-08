@@ -51,27 +51,6 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
-        public async Task DeteleCallTest()
-        {
-            CallingServerClient client = CreateInstrumentedCallingServerClient();
-            try
-            {
-                var callConnection = await CreateCallOperation(client).ConfigureAwait(false);
-
-                await DeteleCallOperation(callConnection).ConfigureAwait(false);
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-        }
-
-        [Test]
         public async Task PlayAudioTest()
         {
             CallingServerClient client = CreateInstrumentedCallingServerClient();
@@ -82,7 +61,7 @@ namespace Azure.Communication.CallingServer.Tests
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
                 await PlayAudioOperation(callConnection).ConfigureAwait(false);
 
-                await DeteleCallOperation(callConnection).ConfigureAwait(false);
+                await HangupOperation(callConnection).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -131,7 +110,7 @@ namespace Azure.Communication.CallingServer.Tests
                 await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
                 await CancelAllMediaOperationsOperation(callConnection).ConfigureAwait(false);
 
-                await DeteleCallOperation(callConnection).ConfigureAwait(false);
+                await HangupOperation(callConnection).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -168,18 +147,6 @@ namespace Azure.Communication.CallingServer.Tests
             return callConnection;
         }
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_CreateCallOperation
-
-        #region Snippet:Azure_Communication_ServerCalling_Tests_DeteleCallOperation
-        private async Task DeteleCallOperation(CallConnection callConnection)
-        {
-            var response = await callConnection.DeleteAsync().ConfigureAwait(false);
-
-            Console.WriteLine("Delete Call with Call connection id: {0}", callConnection.CallConnectionId);
-
-            Assert.AreEqual(202, response.Status);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(response.ClientRequestId));
-        }
-        #endregion Snippet:Azure_Communication_ServerCalling_Tests_DeteleCallOperation
 
         #region Snippet:Azure_Communication_ServerCalling_Tests_PlayAudioOperation
         private async Task PlayAudioOperation(CallConnection callConnection)

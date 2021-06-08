@@ -128,8 +128,8 @@
       }
     },
     {
-      "RequestUri": "https://acstestbot3.communication.azure.com/calling/callConnections/02000480-322f-4618-83fc-fa0e5e93a6e7?api-version=2021-06-15-preview",
-      "RequestMethod": "DELETE",
+      "RequestUri": "https://acstestbot3.communication.azure.com/calling/callConnections/02000480-322f-4618-83fc-fa0e5e93a6e7/:hangup?api-version=2021-06-15-preview",
+      "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",

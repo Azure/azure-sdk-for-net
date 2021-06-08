@@ -60,26 +60,6 @@ namespace Azure.Communication.CallingServer.Tests
         private const string GetParticipantPayload2 = "{ \"identifier\": {\"rawId\": \"4:+14251234567\",  \"phoneNumber\": {\"value\":\"+14251234567\"}}, \"participantId\": \"e44ca273-079f-4759-8d6e-284ee8322625\", \"isMuted\": false }";
 
         [TestCaseSource(nameof(TestData_CallConnectionId))]
-        public async Task DeleteCallAsync_Passes(string callConnectionId)
-        {
-            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
-
-            var response = await callConnection.DeleteAsync().ConfigureAwait(false);
-
-            Assert.AreEqual((int)response.Status, 202);
-        }
-
-        [TestCaseSource(nameof(TestData_CallConnectionId))]
-        public void DeleteCall_Passes(string callConnectionId)
-        {
-            var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
-
-            var response = callConnection.Delete();
-
-            Assert.AreEqual((int)response.Status, 202);
-        }
-
-        [TestCaseSource(nameof(TestData_CallConnectionId))]
         public async Task HangupCallAsync_Passes(string callConnectionId)
         {
             var callConnection = CreateMockCallConnection(202, callConnectionId: callConnectionId);
