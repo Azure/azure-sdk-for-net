@@ -98,7 +98,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="conversationId"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
         public virtual async Task<Response<JoinCallResponse>> JoinCallAsync(string conversationId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
         {
@@ -133,7 +132,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="conversationId"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
         public virtual Response<JoinCallResponse> JoinCall(string conversationId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
         {
@@ -169,42 +167,20 @@ namespace Azure.Communication.CallingServer
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="audioFileUri"/> is null. </exception>
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
-            => await PlayAudioAsync(
-                conversationId: conversationId,
-                options: new PlayAudioOptions
-                {
-                    AudioFileUri = audioFileUri,
-                    AudioFileId = audioFileId,
-                    CallbackUri = callbackUri,
-                    OperationContext = operationContext
-                },
-                cancellationToken: cancellationToken
-                ).ConfigureAwait(false);
-
-        /// <summary> Play audio in the call. </summary>
-        /// <param name="conversationId"> The call leg id. </param>
-        /// <param name="options"> Play audio request. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string conversationId, PlayAudioOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(options, nameof(options));
-
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
                 return await RestClient.PlayAudioAsync(
                     conversationId: conversationId,
-                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
+                    audioFileUri: audioFileUri?.AbsoluteUri,
                     loop: false,
-                    audioFileId: options.AudioFileId,
-                    callbackUri: options.CallbackUri?.AbsoluteUri,
-                    operationContext: options.OperationContext,
+                    audioFileId: audioFileId,
+                    callbackUri: callbackUri?.AbsoluteUri,
+                    operationContext: operationContext,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -222,42 +198,21 @@ namespace Azure.Communication.CallingServer
         /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="operationContext">The operation context. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
-        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
-            => PlayAudio(
-                conversationId: conversationId,
-                options: new PlayAudioOptions
-                {
-                    AudioFileUri = audioFileUri,
-                    AudioFileId = audioFileId,
-                    CallbackUri = callbackUri,
-                    OperationContext = operationContext
-                },
-                cancellationToken: cancellationToken
-                );
-
-        /// <summary> Play audio in the call. </summary>
-        /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
-        /// <param name="options"> Play audio request. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, PlayAudioOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<PlayAudioResponse> PlayAudio(string conversationId, Uri audioFileUri, string audioFileId, Uri callbackUri, string operationContext = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(options, nameof(options));
-
                 // Currently looping media is not supported for out-call scenarios, thus setting it to false.
                 return RestClient.PlayAudio(
                     conversationId: conversationId,
-                    audioFileUri: options.AudioFileUri?.AbsoluteUri,
+                    audioFileUri: audioFileUri?.AbsoluteUri,
                     loop: false,
-                    audioFileId: options.AudioFileId,
-                    callbackUri: options.CallbackUri?.AbsoluteUri,
-                    operationContext: options.OperationContext,
+                    audioFileId: audioFileId,
+                    callbackUri: callbackUri?.AbsoluteUri,
+                    operationContext: operationContext,
                     cancellationToken: cancellationToken
                     );
             }
@@ -277,6 +232,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
         /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
         public virtual Response AddParticipant(string conversationId, CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipant)}");
@@ -312,6 +269,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="alternateCallerId">The phone number to use when adding a pstn participant.</param>
         /// <param name="operationContext">The operation context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
         public virtual async Task<Response> AddParticipantAsync(string conversationId, CommunicationIdentifier participant, Uri callbackUri, string alternateCallerId = default, string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipant)}");
@@ -344,6 +303,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="participantId">The participant id.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response RemoveParticipant(string conversationId, string participantId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(RemoveParticipant)}");
@@ -369,6 +329,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="participantId">The participant id.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> RemoveParticipantAsync(string conversationId, string participantId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(RemoveParticipant)}");
@@ -394,6 +355,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<StartCallRecordingResponse>> StartRecordingAsync(string conversationId, Uri recordingStateCallbackUri, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StartRecording)}");
@@ -419,6 +381,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<StartCallRecordingResponse> StartRecording(string conversationId, Uri recordingStateCallbackUri, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StartRecording)}");
@@ -444,6 +407,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<GetCallRecordingStateResponse>> GetRecordingStateAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(GetRecordingState)}");
@@ -469,6 +433,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<GetCallRecordingStateResponse> GetRecordingState(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(GetRecordingState)}");
@@ -494,6 +459,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="recordingId">The recording id to stop.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> StopRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StopRecording)}");
@@ -519,6 +485,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="recordingId">The recording id to stop.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response StopRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(StopRecording)}");
@@ -544,6 +511,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="recordingId">The recording id to pause.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> PauseRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PauseRecording)}");
@@ -569,6 +537,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="recordingId">The recording id to pause.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response PauseRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(PauseRecording)}");
@@ -594,6 +563,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="recordingId">The recording id to pause.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> ResumeRecordingAsync(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(ResumeRecording)}");
@@ -619,6 +589,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="conversationId"> The conversation id that can be a group id or a encoded conversation url retrieve from client. </param>
         /// <param name="recordingId">The recording id to resume.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response ResumeRecording(string conversationId, string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(ResumeRecording)}");
