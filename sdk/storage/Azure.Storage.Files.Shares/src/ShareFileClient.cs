@@ -1848,7 +1848,7 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
 
                     // Start downloading the file
-                    (Response<ShareFileDownloadInfo> response, Stream stream) = await StartDownloadAsync(
+                    (Response<ShareFileDownloadInfo> initialResponse, Stream stream) = await StartDownloadAsync(
                         range,
                         rangeGetContentHash,
                         conditions: conditions,
@@ -1856,35 +1856,53 @@ namespace Azure.Storage.Files.Shares
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
+                    ETag etag = initialResponse.GetRawResponse().Headers.ETag.GetValueOrDefault();
+
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    response.Value.Content = RetriableStream.Create(
+                    initialResponse.Value.Content = RetriableStream.Create(
                         stream,
                         startOffset =>
-                            StartDownloadAsync(
+                        {
+                            (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = StartDownloadAsync(
                                 range,
                                 rangeGetContentHash,
                                 startOffset,
                                 conditions,
                                 async,
                                 cancellationToken)
-                                .EnsureCompleted()
-                                .ContentStream,
+                                .EnsureCompleted();
+                            if (etag != Response.GetRawResponse().Headers.ETag)
+                            {
+                                throw new ShareFileModificationException(
+                                    "File has been modified concurrently",
+                                    Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
+                            }
+                            return ContentStream;
+                        },
                         async startOffset =>
-                            (await StartDownloadAsync(
+                        {
+                            (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = await StartDownloadAsync(
                                 range,
                                 rangeGetContentHash,
                                 startOffset,
                                 conditions,
                                 async,
                                 cancellationToken)
-                                .ConfigureAwait(false))
-                                .ContentStream,
+                                .ConfigureAwait(false);
+                            if (etag != Response.GetRawResponse().Headers.ETag)
+                            {
+                                throw new ShareFileModificationException(
+                                    "File has been modified concurrently",
+                                    Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
+                            }
+                            return ContentStream;
+                        },
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
-                    return response;
+                    return initialResponse;
                 }
                 catch (Exception ex)
                 {
