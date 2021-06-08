@@ -161,7 +161,7 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             options.PreferClientConfiguredTenantId = preferHint;
-            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantId = tenantId });
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");

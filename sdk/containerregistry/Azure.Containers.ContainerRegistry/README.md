@@ -35,15 +35,37 @@ az acr create --name MyContainerRegistry --resource-group MyResourceGroup --loca
 
 ### Authenticate the client
 
-The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.
+The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.  You can [authenticate with the Azure CLI](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#authenticating-via-the-azure-cli) when developing and debugging locally.  Please see the [Azure Identity README][identity] for more approaches to authenticating with `DefaultAzureCredential`.
 
 ```C#
-// Create a ContainerRegistryClient that will authenticate through Active Directory
+// Create a ContainerRegistryClient that will authenticate through Azure Active Directory
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 ```
 
-Note that these samples assume you have a `REGISTRY_ENDPOINT` environment variable set, which is the URL including the name of the login server and the `https://` prefix.
+Note that this samples assume you have a `REGISTRY_ENDPOINT` environment variable set.  This would be set to a string containing the `https://` prefix and the name of the login server, for example "https://myregistry.azurecr.io".
+
+#### National Clouds
+
+To authenticate with a registry in a [National Cloud](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
+
+- Set the `AuthorityHost` in the credential options or via the `AZURE_AUTHORITY_HOST` environment variable
+- Set the `AuthenticationScope` in `ContainerRegistryClientOptions`
+
+```C#
+// Create a ContainerRegistryClient that will authenticate through AAD in the China national cloud
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint,
+    new DefaultAzureCredential(
+        new DefaultAzureCredentialOptions()
+        {
+            AuthorityHost = AzureAuthorityHosts.AzureChina
+        }),
+    new ContainerRegistryClientOptions()
+    {
+        AuthenticationScope = "https://management.chinacloudapi.cn/.default"
+    });
+```
 
 For more information on using AAD with Azure Container Registry, please see the service's [Authentication Overview](https://docs.microsoft.com/azure/container-registry/container-registry-authentication).
 

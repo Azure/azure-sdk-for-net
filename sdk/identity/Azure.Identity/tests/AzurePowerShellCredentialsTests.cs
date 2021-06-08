@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithAzurePowerShellCredential([Values(null, TenantIdHint)] string tenantId, [Values(true, false)] bool preferHint)
         {
-            var context = new TokenRequestContext(new TokenRequestContextOptions { Scopes = new[] { Scope }, TenantId = tenantId });
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             string expectedTenantId = TenantIdResolver.Resolve(null, context, null) ;
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
 

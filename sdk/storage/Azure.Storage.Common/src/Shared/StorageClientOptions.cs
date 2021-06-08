@@ -66,13 +66,13 @@ namespace Azure.Storage
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credential">Credential to use.</param>
-        /// <param name="options"> The <see cref="IBearerTokenChallengeOptions"/> to apply to the credential. </param>
+        /// <param name="options"> The <see cref="ISupportsTenantIdChallenges"/> to apply to the credential. </param>
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, ClientOptions options) =>
             new StorageBearerTokenChallengeAuthorizationPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)),
                 StorageScope,
-                options is not IBearerTokenChallengeOptions btcp || btcp.DisableTenantDiscovery);
+                options is ISupportsTenantIdChallenges { EnableTenantDiscovery: true });
 
         /// <summary>
         /// Get an optional authentication policy to sign Storage requests.

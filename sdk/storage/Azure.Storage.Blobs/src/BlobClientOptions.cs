@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs
     /// Provides the client configuration options for connecting to Azure Blob
     /// Storage.
     /// </summary>
-    public class BlobClientOptions : ClientOptions, IBearerTokenChallengeOptions
+    public class BlobClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -264,6 +264,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <inheritdoc />
-        public bool DisableTenantDiscovery { get; set; } = true;
+        public bool EnableTenantDiscovery { get; set; }
     }
 }

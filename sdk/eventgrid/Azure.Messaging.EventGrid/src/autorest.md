@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/bc4391862c3b5375acdef9439a09fa576b79702e/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/822c826ef1e1594d74e097d5d4ff2d15ab6ff499/specification/eventgrid/data-plane/readme.md
 
 ```
 

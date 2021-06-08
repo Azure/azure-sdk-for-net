@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.WebPubSub;
@@ -55,7 +56,7 @@ namespace Azure.Template.Tests.Samples
             #region Snippet:WebPubSubSendJson
             var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
-            serviceClient.SendToAll(
+            serviceClient.SendToAll("application/json",
                 RequestContent.Create(
                     new
                     {
@@ -74,9 +75,7 @@ namespace Azure.Template.Tests.Samples
             var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
             Stream stream = BinaryData.FromString("Hello World!").ToStream();
-            serviceClient.SendToAll(
-                RequestContent.Create(stream),
-                HttpHeader.Common.OctetStreamContentType.Value);
+            serviceClient.SendToAll("application/octet-stream", RequestContent.Create(stream));
             #endregion
         }
 
@@ -91,7 +90,7 @@ namespace Azure.Template.Tests.Samples
             client.AddUserToGroup("some_group", "some_user");
 
             // Avoid sending messages to users who do not exist.
-            if (client.UserExists("some_user"))
+            if (client.UserExists("some_user", CancellationToken.None).Value)
             {
                 client.SendToUser("some_user", "Hi, I am glad you exist!");
             }

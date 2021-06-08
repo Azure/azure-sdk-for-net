@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +18,7 @@ namespace Azure.Identity
         /// For mocking purposes only.
         /// </summary>
         protected MsalConfidentialClient()
+            : base()
         { }
 
         public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions)
@@ -85,6 +85,7 @@ namespace Azure.Identity
             string[] scopes,
             AuthenticationAccount account,
             string tenantId,
+            string redirectUri,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -104,6 +105,7 @@ namespace Azure.Identity
             string[] scopes,
             string code,
             string tenantId,
+            string redirectUri,
             bool async,
             CancellationToken cancellationToken)
         {

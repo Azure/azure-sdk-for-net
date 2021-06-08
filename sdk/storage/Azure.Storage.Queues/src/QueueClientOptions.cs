@@ -13,7 +13,7 @@ namespace Azure.Storage.Queues
     /// Provides the client configuration options for connecting to Azure Queue
     /// Storage
     /// </summary>
-    public class QueueClientOptions : ClientOptions, IBearerTokenChallengeOptions
+    public class QueueClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -124,7 +124,7 @@ namespace Azure.Storage.Queues
         public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.None;
 
         /// <inheritdoc />
-        public bool DisableTenantDiscovery { get; set; } = true;
+        public bool EnableTenantDiscovery { get; set; }
 
         /// <summary>
         /// Optional. Performs the tasks needed when a message is received or peaked from the queue but cannot be decoded.

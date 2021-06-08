@@ -13,25 +13,25 @@ namespace Azure.Storage.Shared
     /// <summary>
     ///
     /// </summary>
-    public class StorageBearerTokenChallengeAuthorizationPolicy : BearerTokenAuthenticationPolicy, IBearerTokenChallengeOptions
+    public class StorageBearerTokenChallengeAuthorizationPolicy : BearerTokenAuthenticationPolicy, ISupportsTenantIdChallenges
     {
         private readonly string[] _scopes;
         private volatile string tenantId;
 
         /// <inheritdoc />
-        public bool DisableTenantDiscovery { get; }
+        public bool EnableTenantDiscovery { get; }
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="credential"></param>
         /// <param name="scope"></param>
-        /// <param name="disableTenantDiscovery"> </param>
-        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, string scope, bool disableTenantDiscovery) : base(credential, scope)
+        /// <param name="enableTenantDiscovery"> </param>
+        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, string scope, bool enableTenantDiscovery) : base(credential, scope)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             _scopes = new[] { scope };
-            DisableTenantDiscovery = disableTenantDiscovery;
+            EnableTenantDiscovery = enableTenantDiscovery;
         }
 
         /// <summary>
@@ -39,18 +39,20 @@ namespace Azure.Storage.Shared
         /// </summary>
         /// <param name="credential"></param>
         /// <param name="scopes"></param>
-        /// <param name="disableTenantDiscovery"> </param>
-        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, IEnumerable<string> scopes, bool disableTenantDiscovery) : base(credential, scopes)
+        /// <param name="enableTenantDiscovery"> </param>
+        public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, IEnumerable<string> scopes, bool enableTenantDiscovery) : base(
+            credential,
+            scopes)
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
             _scopes = scopes.ToArray();
-            DisableTenantDiscovery = disableTenantDiscovery;
+            EnableTenantDiscovery = enableTenantDiscovery;
         }
 
         /// <inheritdoc />
         protected override void AuthorizeRequest(HttpMessage message)
         {
-            if (tenantId != null || DisableTenantDiscovery)
+            if (tenantId != null && !EnableTenantDiscovery)
             {
                 base.AuthorizeRequest(message);
             }
@@ -59,7 +61,7 @@ namespace Azure.Storage.Shared
         /// <inheritdoc />
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
-            if (tenantId != null || DisableTenantDiscovery)
+            if (tenantId != null && !EnableTenantDiscovery)
             {
                 return base.AuthorizeRequestAsync(message);
             }
@@ -81,8 +83,7 @@ namespace Azure.Storage.Shared
                 // tenantId should be the guid as seen in this example: https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize
                 tenantId = new Uri(authUri).Segments[1].Trim('/');
 
-                var context = new TokenRequestContext(
-                    new TokenRequestContextOptions { Scopes = _scopes, TenantIdHint = tenantId, ParentRequestId = message.Request.ClientRequestId });
+                var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, tenantId: tenantId);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);

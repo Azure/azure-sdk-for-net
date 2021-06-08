@@ -12,7 +12,7 @@ namespace Azure.Storage.Files.DataLake
     /// <summary>
     /// Provides the client configuration options for connecting to Azure Data Lake service.
     /// </summary>
-    public class DataLakeClientOptions : ClientOptions, IBearerTokenChallengeOptions
+    public class DataLakeClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -114,7 +114,7 @@ namespace Azure.Storage.Files.DataLake
         public Uri GeoRedundantSecondaryUri { get; set; }
 
         /// <inheritdoc />
-        public bool DisableTenantDiscovery { get; set; } = true;
+        public bool EnableTenantDiscovery { get; set; }
 
         /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>

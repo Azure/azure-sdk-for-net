@@ -27,7 +27,7 @@ namespace Azure.Core
         /// <param name="scopes">The scopes required for the token.</param>
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default)
+        public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
@@ -38,13 +38,16 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new TokenRequest with the specified scopes.
         /// </summary>
-        /// <param name="options"> The options to initialized the <see cref="TokenRequestContext"/> </param>
-        public TokenRequestContext(TokenRequestContextOptions options)
+        /// <param name="scopes">The scopes required for the token.</param>
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        /// <param name="claims">Additional claims to be included in the token.</param>
+        /// <param name="tenantId"> The tenantId to be included in the token request. </param>
+        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default)
         {
-            Scopes = options.Scopes;
-            ParentRequestId = options.ParentRequestId;
-            Claims = options.Claims;
-            TenantId = options.TenantId;
+            Scopes = scopes;
+            ParentRequestId = parentRequestId;
+            Claims = claims;
+            TenantId = tenantId;
         }
 
         /// <summary>
@@ -63,7 +66,7 @@ namespace Azure.Core
         public string? Claims { get; }
 
         /// <summary>
-        /// A hint to indicate which tenantId is preferred.
+        /// The tenantId to be included in the token request.
         /// </summary>
         public string? TenantId { get; }
     }

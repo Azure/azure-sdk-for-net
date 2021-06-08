@@ -24,6 +24,7 @@
         /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine.
+        /// </param>
         public static async Task DeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
         {
             await DeleteAsync(operations, resourceGroupName, vmName, false, default(CancellationToken));

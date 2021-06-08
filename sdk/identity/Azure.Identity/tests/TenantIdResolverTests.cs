@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using NUnit.Framework;
@@ -10,8 +11,8 @@ namespace Azure.Identity.Tests
     public class TenantIdResolverTests
     {
         private const string TenantId = "clientTenant";
-        private static TokenRequestContext Context_Hint = new(new TokenRequestContextOptions { TenantId = "hint" });
-        private static TokenRequestContext Context_NoHint = new(new TokenRequestContextOptions());
+        private static TokenRequestContext Context_Hint = new(Array.Empty<string>(), tenantId: "hint" );
+        private static TokenRequestContext Context_NoHint = new(Array.Empty<string>());
         private static TokenCredentialOptions Options_True = new() { PreferClientConfiguredTenantId = true };
         private static TokenCredentialOptions Options_False = new() { PreferClientConfiguredTenantId = false };
 
