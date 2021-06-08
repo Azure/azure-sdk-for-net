@@ -7,8 +7,8 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Mono.Posix" />
-    <PackageReference Include="System.IO.FileSystem.AccessControl" />
+    <PackageReference Include="Mono.Posix" VersionOverride="7.0.0-alpha8.21302.6" />
+    <PackageReference Include="System.IO.FileSystem.AccessControl" VersionOverride="5.0.0" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Common.DataMovement.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj" />
   </ItemGroup>
