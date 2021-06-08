@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Condition specifically for comparisons using the SQL-like comparison operators.
     /// </summary>
-    internal class ComparisonCondition : BaseCondition
+    internal class ComparisonCondition : ConditionBase
     {
         /// <summary>
         /// The field that we're checking against a certain value.

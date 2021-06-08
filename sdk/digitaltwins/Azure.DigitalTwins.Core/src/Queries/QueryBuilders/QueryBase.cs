@@ -7,18 +7,18 @@ using Azure.DigitalTwins.Core.QueryBuilder;
 namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
 {
     /// <summary>
-    ///
+    /// Parent class for all query clauses.
     /// </summary>
     public abstract class QueryBase
     {
         /// <summary>
-        ///
+        /// Finalizes query.
         /// </summary>
         /// <returns></returns>
         public abstract AdtQueryBuilder Build();
 
         /// <summary>
-        ///
+        /// Represents a query clause in string format.
         /// </summary>
         /// <returns></returns>
         public abstract string Stringify();

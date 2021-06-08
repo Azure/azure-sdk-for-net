@@ -13,10 +13,9 @@ namespace Azure.DigitalTwins.Core.Tests
         [Test]
         public void SelectSinglePropertyTests()
         {
-            // TODO -- make onto seperate lines
             new AdtQueryBuilder()
                 .Select("*")
-                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.DIGITALTWINS)
                 .Build()
                 .ToString()
                 .Should()
@@ -24,7 +23,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             new AdtQueryBuilder()
                 .Select("Room")
-                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.DIGITALTWINS)
                 .Build()
                 .ToString()
                 .Should()
@@ -36,7 +35,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             new AdtQueryBuilder()
                 .Select("Room", "Factory")
-                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.DIGITALTWINS)
                 .Build()
                 .ToString()
                 .Should()
@@ -44,7 +43,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             new AdtQueryBuilder()
                 .Select("Room", "Factory", "Temperature", "Humidity")
-                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.DIGITALTWINS)
                 .Build()
                 .ToString()
                 .Should()
@@ -54,10 +53,9 @@ namespace Azure.DigitalTwins.Core.Tests
         [Test]
         public void SelectAggregateTests()
         {
-            // TODO -- get rid of param on count
             new AdtQueryBuilder()
                 .SelectTop(5)
-                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.DIGITALTWINS)
                 .Build()
                 .ToString()
                 .Should()
@@ -65,7 +63,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             new AdtQueryBuilder()
                 .SelectCount()
-                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.DIGITALTWINS)
                 .Build()
                 .ToString()
                 .Should()
@@ -73,7 +71,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             new AdtQueryBuilder()
                 .SelectTop(3, "Temperature", "Humidity")
-                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.DIGITALTWINS)
                 .Build()
                 .ToString()
                 .Should()
@@ -81,7 +79,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             new AdtQueryBuilder()
                 .SelectTop(3, "Temperature")
-                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.DIGITALTWINS)
                 .Build()
                 .ToString()
                 .Should()
@@ -93,7 +91,7 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             new AdtQueryBuilder()
                 .SelectOverride("TOP(3) Room, Temperature")
-                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.DIGITALTWINS)
                 .Build()
                 .ToString()
                 .Should()

@@ -15,17 +15,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public sealed class SelectQuery : QueryBase
     {
-        private readonly FromQuery _innerQuery;
+        private readonly FromQuery _delegationClause;
         private readonly AdtQueryBuilder _parent;
         private SelectClause _clause;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectQuery"/> class.
         /// </summary>
-        internal SelectQuery(AdtQueryBuilder parent, FromQuery select)
+        internal SelectQuery(AdtQueryBuilder parent, FromQuery fromQueryUpstream)
         {
             _parent = parent;
-            _innerQuery = select;
+            _delegationClause = fromQueryUpstream;
         }
 
         /// <summary>
@@ -35,9 +35,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery Select(params string[] args)
         {
-            Console.WriteLine(args);
             _clause = new SelectClause(args);
-            return _innerQuery;
+            return _delegationClause;
         }
 
         /// <summary>
@@ -50,24 +49,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public FromQuery SelectTop(int count, params string[] args)
         {
             // turn into correct format -- eg. SELECT TOP(3)
-            StringBuilder topArg = new StringBuilder().Append("TOP").Append('(').Append(count).Append(')');
+            StringBuilder topArg = new StringBuilder().Append($"TOP({count})").Append(' ');
 
-            // account for optional arguments
-            if (args.Length != 0)
-            {
-                // TODO -- topargs.append.string.format.... (way around loop)
-                // append first argument manually since no comma needed
-                topArg.Append(' ').Append(args[0]);
-
-                // append other arguments separated by commas
-                for (int i = 1; i < args.Length; i++)
-                {
-                    topArg.Append(", ").Append(args[i]);
-                }
-            }
+            // append optional arguments separated by commas
+            topArg.Append(string.Join(", ", args));
 
             _clause = new SelectClause(new string[] { topArg.ToString() });
-            return _innerQuery;
+            return _delegationClause;
         }
 
         /// <summary>
@@ -76,10 +64,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectCount()
         {
-            string countArg = new StringBuilder().Append("COUNT").Append('(').Append(')').ToString();
+            string countArg = new StringBuilder().Append("COUNT()").Append(' ').ToString();
 
             _clause = new SelectClause(new string[] { countArg });
-            return _innerQuery;
+            return _delegationClause;
         }
 
         /// <summary>
@@ -94,40 +82,21 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             // approach 2 - seperate method
             _clause = new SelectClause(new string[] { literalQuery });
 
-            return _innerQuery;
+            return _delegationClause;
         }
 
         /// <inheritdoc/>
         public override AdtQueryBuilder Build()
         {
-            throw new InvalidOperationException("You can't just have a select statement");
+            throw new InvalidOperationException("Queries that contain just a SELECT statement are not valid.");
         }
 
         /// <inheritdoc/>
         public override string Stringify()
         {
             StringBuilder selectComponents = new StringBuilder();
-            selectComponents.Append("SELECT ");
-
-            // one argument
-            if (_clause.ClauseArgs.Length == 1)
-            {
-                selectComponents.Append(_clause.ClauseArgs[0]);
-            }
-            // multiple arguments
-            else
-            {
-                // instantiate i outside loop to access later
-                int i;
-                for (i = 0; i < _clause.ClauseArgs.Length - 1; i++)
-                {
-                    selectComponents.Append(_clause.ClauseArgs[i]);
-                    selectComponents.Append(", ");
-                }
-
-                // don't put a comma after the last argument
-                selectComponents.Append(_clause.ClauseArgs[i]);
-            }
+            selectComponents.Append(QueryKeywords.Select).Append(' ');
+            selectComponents.Append(string.Join(", ", _clause.ClauseArgs));
 
             return selectComponents.ToString().Trim();
         }

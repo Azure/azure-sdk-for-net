@@ -8,15 +8,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Custom object for a FROM clause. Only meant to be used when adding FROM to a query. Hidden from user.
     /// </summary>
-    internal class FromClause : BaseClause
+    internal class FromClause : ClauseBase
     {
-        private string _collection;
-
         /// <summary>
         /// The collection to query from. Stored in an enum to give user some intellisense since there are only two possible collection types,
         /// ADT instances or relationships.
         /// </summary>
-        public AdtCollection Collection { get; set; }
+        public string Collection { get; private set; }
 
         /// <summary>
         /// Constructor for a FROM clause.
@@ -25,12 +23,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         internal FromClause(AdtCollection collection)
         {
             Type = ClauseType.FROM;
-            Collection = collection;
+            Collection = collection.ToString();
         }
 
-        internal FromClause(string collection)
+        internal FromClause(string literalCollection)
         {
-            _collection = collection;
+            Type = ClauseType.FROM;
+            Collection = literalCollection;
         }
     }
 }

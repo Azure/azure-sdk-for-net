@@ -29,7 +29,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="condition"> A custom object that encodes the logical statement nested within the WHERE clause. </param>
         /// <returns> ADT query that already contains SELECT and FROM. </returns>
-        internal WhereQuery Where(BaseCondition condition)
+        internal WhereQuery Where(ConditionBase condition)
         {
             Console.WriteLine(condition);
             return this;
@@ -120,7 +120,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             if (_clauses.Count > 0)
             {
                 StringBuilder whereComponents = new StringBuilder();
-                whereComponents.Append("WHERE ");
+                whereComponents.Append(QueryKeywords.Where).Append(' ');
 
                 // TODO -- turn condition into a string
                 // add where arguments (conditions)

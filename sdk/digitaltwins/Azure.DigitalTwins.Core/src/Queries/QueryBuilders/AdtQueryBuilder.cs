@@ -8,7 +8,7 @@ using Azure.DigitalTwins.Core.QueryBuilder;
 namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
 {
     /// <summary>
-    ///
+    /// Used to instantiate an ADT query.
     /// </summary>
     public class AdtQueryBuilder
     {
@@ -17,7 +17,7 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         private readonly WhereQuery _whereQuery;
 
         /// <summary>
-        ///
+        /// Initializes the clauses that make up a standard query.
         /// </summary>
         public AdtQueryBuilder()
         {
@@ -27,9 +27,10 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         }
 
         /// <summary>
-        ///
+        /// Used to select one or multiple collections or properties.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="args"> The arguments that can be queried (eg *, somePropertyName, etc.) </param>
+        /// <returns> Query that contains a select clause. </returns>
         public FromQuery Select(params string[] args)
         {
             return _selectQuery.Select(args);
@@ -77,12 +78,11 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
 
             // build the from string
             string fromString = _fromQuery.Stringify();
-            finalQuery.Append(fromString);
+            finalQuery.Append(' ').Append(fromString);
 
             // build the where string
-            // TODO -- how to see if we need a where clause?
             string whereString = _whereQuery.Stringify();
-            finalQuery.Append(whereString);
+            finalQuery.Append(' ').Append(whereString);
 
             return finalQuery.ToString().Trim();
         }

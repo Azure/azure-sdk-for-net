@@ -6,7 +6,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Custom child class for conditions that use the contains operators, IN and NIN.
     /// </summary>
-    internal class ContainsCondition : BaseCondition
+    internal class ContainsCondition : ConditionBase
     {
         /// <summary>
         /// The value being searched for within some list of objects.

@@ -16,45 +16,32 @@ namespace Azure.DigitalTwins.Core.Samples
         /// </summary>
         public static void main()
         {
-            //"SELECT * FROM DIGITALTWINS";
-            AdtQueryBuilder query1 = new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build();
+            // SELECT * FROM DIGITALTWINS
+            AdtQueryBuilder query1 = new AdtQueryBuilder().Select("*").From(AdtCollection.DIGITALTWINS).Build();
 
-            ////"SELECT * FROM DIGITALTWINS WHERE Temperature <= 50";
-            //ADTQuery query2 = new ADTQuery().Select("*").From(ADTCollection.DigitalTwins).Where(new ComparisonCondition("Temperature", "<=", "50"));
-
-            ////"SELECT Room FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1', exact)";
-            //ADTQuery query3 = new ADTQuery()
-            //    .Select("Room")
-            //    .From(ADTCollection.DigitalTwins)
-            //    .WhereIsOfModel("dtmi:example:room;1", true);
-
-            ////"SELECT * FROM DIGITALTWINS WHERE IS_BOOL(Occupied)";
-            //ADTQuery query4 = new ADTQuery()
-            //    .Select("*")
-            //    .From(ADTCollection.DigitalTwins)
-            //    .Where(new IsCondition(IsType.BOOL, "Occupied"));
-
-            ////"SELECT * FROM Relationships WHERE STARTSWITH(T.$dtId, 'small-')";
-            //ADTQuery query5 = new ADTQuery()
-            //    .Select("*")
-            //    .From(ADTCollection.Relationship)
-            //    .Where(new StartsEndsWithCondition(WithType.STARTSWTIH, "T.$dtId", "small-"));
-
-            //ADTQuery query6 = new ADTQuery()
-            //    .Select("*")
-            //    .From(ADTCollection.Relationship)
-            //    .WhereStartsWith("T.$dtId", "small-");
-
-            ////"SELECT TOP(3) FROM DIGITALTWINS WHERE Location IN ['London', 'Madrid', 'Singapore']";
-            //ADTQuery query7 = new ADTQuery()
-            //    .SelectTop(3)
-            //    .From(ADTCollection.DigitalTwins)
-            //    .Where(new ContainsCondition("Location", new string[] { "London", "Madrid", "Singapore" }));
-
-            AdtQueryBuilder query8 = new AdtQueryBuilder()
+            // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("Room")
+            AdtQueryBuilder query2 = new AdtQueryBuilder()
                 .Select("*")
-                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.DIGITALTWINS)
                 .WhereIsOfModel("Room")
+                .Build();
+
+            // SELECT TOP(3) FROM DIGITALTWINS
+            AdtQueryBuilder query3 = new AdtQueryBuilder()
+                .SelectTop(3)
+                .From(AdtCollection.DIGITALTWINS)
+                .Build();
+
+            // SELECT COUNT() FROM RELATIONSHIPS
+            AdtQueryBuilder query4 = new AdtQueryBuilder()
+                .SelectCount()
+                .From(AdtCollection.RELATIONSHIPS)
+                .Build();
+
+            // SELECT Room, Temperature From DIGTIALTWINS
+            AdtQueryBuilder query5 = new AdtQueryBuilder()
+                .Select("Room", "Temperature")
+                .From(AdtCollection.DIGITALTWINS)
                 .Build();
         }
     }

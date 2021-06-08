@@ -13,17 +13,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public class FromQuery : QueryBase
     {
-        private WhereQuery _innerQuery;
+        private WhereQuery _delegationClause;
         private AdtQueryBuilder _parent;
-        private IList<FromClause> _clauses;
+        private FromClause _clause;
 
-        internal FromQuery(AdtQueryBuilder parent, WhereQuery selectPart)
+        internal FromQuery(AdtQueryBuilder parent, WhereQuery whereQueryUpstream)
         {
             _parent = parent;
-
-            // TODO -- change to just a singular from clause
-            _clauses = new List<FromClause>();
-            _innerQuery = selectPart;
+            _delegationClause = whereQueryUpstream;
         }
 
         /// <summary>
@@ -33,9 +30,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> ADT query with select and from clause. </returns>
         public WhereQuery From(AdtCollection collection)
         {
-            Console.WriteLine(collection);
-            _clauses.Add(new FromClause(collection));
-            return _innerQuery;
+            _clause = new FromClause(collection);
+            return _delegationClause;
         }
 
         /// <summary>
@@ -44,11 +40,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection"> The name of the collection. </param>
         /// <returns> ADT query with select and from clause. </returns>
-        public WhereQuery From(string collection)
+        public WhereQuery FromOverride(string collection)
         {
-            Console.WriteLine(collection);
-            _clauses.Add(new FromClause(collection));
-            return _innerQuery;
+            _clause = new FromClause(collection);
+            return _delegationClause;
         }
 
         /// <inheritdoc/>
@@ -61,16 +56,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public override string Stringify()
         {
             StringBuilder fromComponents = new StringBuilder();
-            fromComponents.Append(" FROM ");
-
-            if (_clauses[0].Collection == AdtCollection.DigitalTwins)
-            {
-                fromComponents.Append("DIGITALTWINS ");
-            }
-            else
-            {
-                fromComponents.Append("RELATIONSHIPS ");
-            }
+            fromComponents.Append(QueryKeywords.From).Append(' ').Append(_clause.Collection).Append(' ');
 
             return fromComponents.ToString();
         }
