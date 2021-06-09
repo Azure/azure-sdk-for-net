@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Core
             : base(new ResourceType(providerNamespace, typeName), resourceName)
         {
             Parent = parent;
+            Provider = parent.Provider;
             IsChild = true;
         }
 
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Core
             : base(new ResourceType(parent.ResourceType, typeName), resourceName)
         {
             Parent = parent;
+            Provider = parent.Provider;
             IsChild = true;
         }
 
