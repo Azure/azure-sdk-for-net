@@ -63,7 +63,7 @@ await client.DeleteQueueAsync(queueName);
 ```C# Snippet:CreateTopicAndSubscription
 string connectionString = "<connection_string>";
 string topicName = "<topic_name>";
-var client = new ServiceBusManagementClient(connectionString);
+var client = new ServiceBusAdministrationClient(connectionString);
 var topicOptions = new CreateTopicOptions(topicName)
 {
     AutoDeleteOnIdle = TimeSpan.FromDays(7),
