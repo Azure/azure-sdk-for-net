@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.NewResources
 {
     internal partial class PolicyAssignmentsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -25,18 +24,11 @@ namespace Azure.ResourceManager.NewResources
         /// <summary> Initializes a new instance of PolicyAssignmentsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public PolicyAssignmentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        public PolicyAssignmentsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
             endpoint ??= new Uri("https://management.azure.com");
 
-            this.subscriptionId = subscriptionId;
             this.endpoint = endpoint;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -303,7 +295,7 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListForResourceGroupRequest(string resourceGroupName, string filter)
+        internal Azure.Core.HttpMessage CreateListForResourceGroupRequest(string subscriptionId, string resourceGroupName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -329,15 +321,22 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="resourceGroupName"> The name of the resource group that contains policy assignments. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<PolicyAssignmentListResult>> ListForResourceGroupAsync(string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignmentListResult>> ListForResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListForResourceGroupRequest(resourceGroupName, filter);
+            using var message = CreateListForResourceGroupRequest(subscriptionId, resourceGroupName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -357,15 +356,21 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="resourceGroupName"> The name of the resource group that contains policy assignments. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<PolicyAssignmentListResult> ListForResourceGroup(string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignmentListResult> ListForResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListForResourceGroupRequest(resourceGroupName, filter);
+            using var message = CreateListForResourceGroupRequest(subscriptionId, resourceGroupName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -381,7 +386,7 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListForResourceRequest(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter)
+        internal Azure.Core.HttpMessage CreateListForResourceRequest(string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -419,9 +424,15 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<PolicyAssignmentListResult>> ListForResourceAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAssignmentListResult>> ListForResourceAsync(string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -443,7 +454,7 @@ namespace Azure.ResourceManager.NewResources
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var message = CreateListForResourceRequest(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter);
+            using var message = CreateListForResourceRequest(subscriptionId, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -467,9 +478,15 @@ namespace Azure.ResourceManager.NewResources
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, or <paramref name="resourceName"/> is null. </exception>
-        public Response<PolicyAssignmentListResult> ListForResource(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<PolicyAssignmentListResult> ListForResource(string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -491,7 +508,7 @@ namespace Azure.ResourceManager.NewResources
                 throw new ArgumentNullException(nameof(resourceName));
             }
 
-            using var message = CreateListForResourceRequest(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter);
+            using var message = CreateListForResourceRequest(subscriptionId, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -588,7 +605,7 @@ namespace Azure.ResourceManager.NewResources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListRequest(string filter)
+        internal Azure.Core.HttpMessage CreateListRequest(string subscriptionId, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -611,9 +628,15 @@ namespace Azure.ResourceManager.NewResources
         /// <summary> This operation retrieves the list of all policy assignments associated with the given subscription that match the optional given $filter. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy assignments associated with the subscription, including those that apply directly or from management groups that contain the given subscription, as well as any applied to objects contained within the subscription. If $filter=atScope() is provided, the returned list includes all policy assignments that apply to the subscription, which is everything in the unfiltered list except those applied to objects contained within the subscription. If $filter=policyDefinitionId eq &apos;{value}&apos; is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PolicyAssignmentListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<PolicyAssignmentListResult>> ListAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            using var message = CreateListRequest(subscriptionId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -632,9 +655,15 @@ namespace Azure.ResourceManager.NewResources
         /// <summary> This operation retrieves the list of all policy assignments associated with the given subscription that match the optional given $filter. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy assignments associated with the subscription, including those that apply directly or from management groups that contain the given subscription, as well as any applied to objects contained within the subscription. If $filter=atScope() is provided, the returned list includes all policy assignments that apply to the subscription, which is everything in the unfiltered list except those applied to objects contained within the subscription. If $filter=policyDefinitionId eq &apos;{value}&apos; is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PolicyAssignmentListResult> List(string filter = null, CancellationToken cancellationToken = default)
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<PolicyAssignmentListResult> List(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            using var message = CreateListRequest(subscriptionId, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

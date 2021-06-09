@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NewResources
             Optional<PolicySku> sku = default;
             Optional<string> location = default;
             Optional<Identity> identity = default;
-            ResourceGroupResourceIdentifier id = default;
+            TenantResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<string> displayName = default;

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Core" VersionOverride="1.0.0-alpha.20210526.3" />
+    <!-- <ProjectReference Include="../../../resourcemanager/Azure.ResourceManager.Core/src/Azure.ResourceManager.Core.csproj" /> -->
   </ItemGroup>
 
   <!-- <ItemGroup>

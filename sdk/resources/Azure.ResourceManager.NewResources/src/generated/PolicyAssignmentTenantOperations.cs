@@ -16,7 +16,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.NewResources
 {
     /// <summary> A class representing the operations that can be performed over a specific PolicyAssignment. </summary>
-    public partial class PolicyAssignmentTenantOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, PolicyAssignment>
+    public partial class PolicyAssignmentTenantOperations : ResourceOperationsBase<TenantResourceIdentifier, PolicyAssignment>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal PolicyAssignmentsRestOperations RestClient { get; }
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.NewResources
         /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentTenantOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal PolicyAssignmentTenantOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal PolicyAssignmentTenantOperations(ResourceOperationsBase options, TenantResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            RestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            RestClient = new PolicyAssignmentsRestOperations(_clientDiagnostics, Pipeline, endpoint: BaseUri);
         }
 
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyAssignments";
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = await RestClient.GetAsync(Id.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NewResources
             scope.Start();
             try
             {
-                var response = RestClient.Get(Id.Name, Id.Name, cancellationToken);
+                var response = RestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 return Response.FromValue(new PolicyAssignment(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
