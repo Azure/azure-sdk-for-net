@@ -96,6 +96,33 @@ string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 AzureKeyCredential credential = new AzureKeyCredential(key);
 SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
+### ASP.NET Core
+To inject `SearchClient` as a dependency in an ASP.NET Core app, first install the package `Microsoft.Extensions.Azure`. Then register the client in the `Startup.ConfigureServices` method:
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAzureClients(builder =>
+    {
+        builder.AddSearchClient(Configuration.GetSection("Search"));
+    });
+  
+    services.AddControllers();
+}
+```
+To use the preceding code, add this to your configuration:
+
+```json
+{
+    "Search": {
+      "endpoint": "https://<resource-name>.search.windows.net",
+      "credential": { "key": "resource key" },
+      "indexname": "nycjobs"
+    }
+}
+```
+
+For more details, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
 ## Key concepts
 
