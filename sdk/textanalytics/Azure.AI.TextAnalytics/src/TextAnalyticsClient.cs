@@ -1804,29 +1804,6 @@ namespace Azure.AI.TextAnalytics
         /// <para>For example, for the document "The food was delicious and there
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".</para>
-        /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
-        /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
-        /// select the version of the predictive model to run, and whether
-        /// statistics are returned in the response.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of key phrases identified
-        /// in each of the documents.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default) =>
-            await ExtractKeyPhrasesBatchAsync(documents, null, options, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in documents.
-        /// <para>For example, for the document "The food was delicious and there
-        /// were wonderful staff", the API returns the main talking points: "food"
-        /// and "wonderful staff".</para>
         /// <para>For a list of languages supported by this operation, see
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
@@ -1847,67 +1824,14 @@ namespace Azure.AI.TextAnalytics
         /// in each of the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new ExtractKeyPhrasesOptions();
+            options ??= new TextAnalyticsRequestOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
-
-        /// <summary>
-        /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in documents.
-        /// <para>For example, for the document "The food was delicious and there
-        /// were wonderful staff", the API returns the main talking points: "food"
-        /// and "wonderful staff".</para>
-        /// <para>For a list of languages supported by this operation, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
-        /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
-        /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="language">The language that all the documents are
-        /// written in. If unspecified, this value will be set to the default
-        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
-        /// sent to the service.  If set to an empty string, the service will apply a model
-        /// where the language is explicitly set to "None".</param>
-        /// <param name="options"><see cref="ExtractKeyPhrasesOptions"/> used to
-        /// select the version of the predictive model to run, and whether
-        /// statistics are returned in the response.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of key phrases identified
-        /// in each of the documents.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language = default, ExtractKeyPhrasesOptions options = default, CancellationToken cancellationToken = default) =>
-            await ExtractKeyPhrasesBatchAsync(documents, language, (TextAnalyticsRequestOptions)options, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in documents.
-        /// <para>For example, for the document "The food was delicious and there
-        /// were wonderful staff", the API returns the main talking points: "food"
-        /// and "wonderful staff".</para>
-        /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
-        /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
-        /// select the version of the predictive model to run, and whether
-        /// statistics are returned in the response.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of key phrases identified
-        /// in each of the documents.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default) =>
-            ExtractKeyPhrasesBatch(documents, null, options, cancellationToken);
 
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
@@ -1935,11 +1859,10 @@ namespace Azure.AI.TextAnalytics
         /// in each of the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new ExtractKeyPhrasesOptions();
+            options ??= new TextAnalyticsRequestOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
@@ -1957,35 +1880,6 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="language">The language that all the documents are
-        /// written in. If unspecified, this value will be set to the default
-        /// language in <see cref="TextAnalyticsClientOptions"/> in the request
-        /// sent to the service.  If set to an empty string, the service will apply a model
-        /// where the language is explicitly set to "None".</param>
-        /// <param name="options"><see cref="ExtractKeyPhrasesOptions"/> used to
-        /// select the version of the predictive model to run, and whether
-        /// statistics are returned in the response.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of key phrases identified
-        /// in each of the documents.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language = default, ExtractKeyPhrasesOptions options = default, CancellationToken cancellationToken = default) =>
-            ExtractKeyPhrasesBatch(documents, language, (TextAnalyticsRequestOptions)options, cancellationToken);
-
-        /// <summary>
-        /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in documents.
-        /// <para>For example, for the document "The food was delicious and there
-        /// were wonderful staff", the API returns the main talking points: "food"
-        /// and "wonderful staff".</para>
-        /// <para>For a list of languages supported by this operation, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
-        /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
-        /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
@@ -1995,11 +1889,10 @@ namespace Azure.AI.TextAnalytics
         /// in each of the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new ExtractKeyPhrasesOptions();
+            options ??= new TextAnalyticsRequestOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -2017,30 +1910,6 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options"><see cref="ExtractKeyPhrasesOptions"/> used to
-        /// select the version of the predictive model to run, and whether
-        /// statistics are returned in the response.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of key phrases identified
-        /// in each of the documents.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, ExtractKeyPhrasesOptions options = default, CancellationToken cancellationToken = default) =>
-            await ExtractKeyPhrasesBatchAsync(documents, (TextAnalyticsRequestOptions)options, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in documents.
-        /// <para>For example, for the document "The food was delicious and there
-        /// were wonderful staff", the API returns the main talking points: "food"
-        /// and "wonderful staff".</para>
-        /// <para>For a list of languages supported by this operation, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
-        /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
-        /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
@@ -2051,38 +1920,14 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new ExtractKeyPhrasesOptions();
+            options ??= new TextAnalyticsRequestOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
         }
-
-        /// <summary>
-        /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in documents.
-        /// <para>For example, for the document "The food was delicious and there
-        /// were wonderful staff", the API returns the main talking points: "food"
-        /// and "wonderful staff".</para>
-        /// <para>For a list of languages supported by this operation, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support"/>.</para>
-        /// <para>For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.</para>
-        /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options"><see cref="ExtractKeyPhrasesOptions"/> used to
-        /// select the version of the predictive model to run, and whether
-        /// statistics are returned in the response.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of key phrases identified
-        /// in each of the documents.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, ExtractKeyPhrasesOptions options = default, CancellationToken cancellationToken = default) =>
-            ExtractKeyPhrasesBatch(documents, (TextAnalyticsRequestOptions)options, cancellationToken);
 
         private async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(MultiLanguageBatchInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {

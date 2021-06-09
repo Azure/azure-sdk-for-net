@@ -46,7 +46,7 @@ az ad signed-in-user show --query objectId
 string definitionIdToAssign = "<roleDefinitionId>";
 string servicePrincipalObjectId = "<objectId>";
 
-KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectI);
+KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 ```
 
 ## Getting a Role Assignment
@@ -61,7 +61,7 @@ KeyVaultRoleAssignment fetchedAssignment = client.GetRoleAssignment(KeyVaultRole
 To remove a role assignment from a service principal, the role assignment must be deleted. Let's delete the `createdAssignment` from the previous example.
 
 ```C# Snippet:DeleteRoleAssignment
-KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
+client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
 ```
 
 <!-- LINKS -->

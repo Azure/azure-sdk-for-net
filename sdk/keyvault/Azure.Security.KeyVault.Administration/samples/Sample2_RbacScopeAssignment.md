@@ -19,7 +19,7 @@ A role definition Id can be obtained from the `Id` property of one of the role d
 string definitionIdToAssign = "<roleDefinitionId>";
 string servicePrincipalObjectId = "<objectId>";
 
-RoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectId);
+KeyVaultRoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 ```
 
 ## Assigning a Role to a specific Key Scope
@@ -31,5 +31,5 @@ We'll also need the name of an existing `KeyVaultKey` to get it from the service
 string keyName = "<your-key-name>";
 KeyVaultKey key = await keyClient.GetKeyAsync(keyName);
 
-RoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new RoleAssignmentScope(key.Id), definitionIdToAssign, servicePrincipalObjectId);
+KeyVaultRoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new KeyVaultRoleScope(key.Id), definitionIdToAssign, servicePrincipalObjectId);
 ```
