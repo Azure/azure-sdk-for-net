@@ -14,26 +14,27 @@ namespace Microsoft.Azure.Management.Authorization.Models
     using System.Linq;
 
     /// <summary>
-    /// Role Assignments filter
+    /// The resource management error additional info.
     /// </summary>
-    public partial class RoleAssignmentFilter
+    public partial class ErrorAdditionalInfo
     {
         /// <summary>
-        /// Initializes a new instance of the RoleAssignmentFilter class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        public RoleAssignmentFilter()
+        public ErrorAdditionalInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RoleAssignmentFilter class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        /// <param name="principalId">Returns role assignment of the specific
-        /// principal.</param>
-        public RoleAssignmentFilter(string principalId = default(string))
+        /// <param name="type">The additional info type.</param>
+        /// <param name="info">The additional info.</param>
+        public ErrorAdditionalInfo(string type = default(string), object info = default(object))
         {
-            PrincipalId = principalId;
+            Type = type;
+            Info = info;
             CustomInit();
         }
 
@@ -43,10 +44,16 @@ namespace Microsoft.Azure.Management.Authorization.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets returns role assignment of the specific principal.
+        /// Gets the additional info type.
         /// </summary>
-        [JsonProperty(PropertyName = "principalId")]
-        public string PrincipalId { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets the additional info.
+        /// </summary>
+        [JsonProperty(PropertyName = "info")]
+        public object Info { get; private set; }
 
     }
 }

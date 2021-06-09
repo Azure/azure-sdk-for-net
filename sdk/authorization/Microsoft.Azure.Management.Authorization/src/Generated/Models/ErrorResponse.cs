@@ -14,26 +14,30 @@ namespace Microsoft.Azure.Management.Authorization.Models
     using System.Linq;
 
     /// <summary>
-    /// Role Assignments filter
+    /// Error response
     /// </summary>
-    public partial class RoleAssignmentFilter
+    /// <remarks>
+    /// Common error response for all Azure Resource Manager APIs to return
+    /// error details for failed operations. (This also follows the OData error
+    /// response format.).
+    /// </remarks>
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the RoleAssignmentFilter class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public RoleAssignmentFilter()
+        public ErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RoleAssignmentFilter class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="principalId">Returns role assignment of the specific
-        /// principal.</param>
-        public RoleAssignmentFilter(string principalId = default(string))
+        /// <param name="error">The error object.</param>
+        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
         {
-            PrincipalId = principalId;
+            Error = error;
             CustomInit();
         }
 
@@ -43,10 +47,10 @@ namespace Microsoft.Azure.Management.Authorization.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets returns role assignment of the specific principal.
+        /// Gets or sets the error object.
         /// </summary>
-        [JsonProperty(PropertyName = "principalId")]
-        public string PrincipalId { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public ErrorDetail Error { get; set; }
 
     }
 }

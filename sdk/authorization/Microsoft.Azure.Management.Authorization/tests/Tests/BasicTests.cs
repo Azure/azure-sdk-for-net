@@ -88,8 +88,7 @@ namespace Authorization.Tests
                 var newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString(),
-                    CanDelegate = true
+                    PrincipalId = principalId.ToString()
                 };
 
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
@@ -111,14 +110,13 @@ namespace Authorization.Tests
                 Assert.NotNull(getResult);
                 Assert.Equal(createResult.Id, getResult.Id);
                 Assert.Equal(createResult.Name, getResult.Name);
-                Assert.Equal(createResult.CanDelegate, getResult.CanDelegate);
 
 
                 //Delete
                 var deleteResult = client.RoleAssignments.DeleteById(assignmentId);
                 Assert.NotNull(deleteResult);
 
-                var allRoleAssignments = client.RoleAssignments.List(null);
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",null);
                 var createdAssignment = allRoleAssignments.FirstOrDefault(
                                             a => a.Name == assignmentName.ToString());
 
@@ -128,8 +126,7 @@ namespace Authorization.Tests
                 newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString(),
-                    CanDelegate = false
+                    PrincipalId = principalId.ToString()
                 };
 
                 assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestByIdNew");
@@ -151,14 +148,13 @@ namespace Authorization.Tests
                 Assert.NotNull(getResult);
                 Assert.Equal(createResult.Id, getResult.Id);
                 Assert.Equal(createResult.Name, getResult.Name);
-                Assert.Equal(createResult.CanDelegate, getResult.CanDelegate);
 
 
                 //Delete
                 deleteResult = client.RoleAssignments.DeleteById(assignmentId);
                 Assert.NotNull(deleteResult);
 
-                allRoleAssignments = client.RoleAssignments.List(null);
+                allRoleAssignments = client.RoleAssignments.ListForScope("/",null);
                 createdAssignment = allRoleAssignments.FirstOrDefault(
                                             a => a.Name == assignmentName.ToString());
 
@@ -185,8 +181,7 @@ namespace Authorization.Tests
                 {
                     RoleDefinitionId = roleDefinition.Id,
                     PrincipalId = principalId.ToString(),
-                    PrincipalType = "ServicePrincipal",
-                    CanDelegate = false
+                    PrincipalType = "ServicePrincipal"
                 };
 
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestByIdNew");
@@ -198,7 +193,7 @@ namespace Authorization.Tests
                 Assert.NotNull(deleteResult);
                 Assert.Equal(deleteResult.Id, createResult.Id);
 
-                var allRoleAssignments = client.RoleAssignments.List(null);
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",null);
                 var createdAssignment = allRoleAssignments.FirstOrDefault(
                                             a => a.Name == assignmentName.ToString());
 
@@ -236,7 +231,7 @@ namespace Authorization.Tests
                 var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
                 Assert.NotNull(createResult);
 
-                var allRoleAssignments = client.RoleAssignments.List(new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
 
                 Assert.NotNull(allRoleAssignments);
 
@@ -294,7 +289,7 @@ namespace Authorization.Tests
                 Assert.NotNull(deletedRoleAssignment);
                 Assert.Equal(deletedRoleAssignment.Id, createResult.Id);
 
-                var allRoleAssignments = client.RoleAssignments.List(null);
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",null);
                 var createdAssignment = allRoleAssignments.FirstOrDefault(
                                             a => a.Name == assignmentName.ToString());
 
@@ -314,8 +309,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
 
                 Assert.NotNull(allRoleAssignments);
 
@@ -354,13 +348,11 @@ namespace Authorization.Tests
                 var newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString(),
-                    CanDelegate = false
+                    PrincipalId = principalId.ToString()
                 };
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_FalseCanDelegate");
                 var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
-                var allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.PrincipalId == principalId));
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",new ODataQuery<RoleAssignmentFilter>(f => f.PrincipalId == principalId));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() == 1);
@@ -373,7 +365,6 @@ namespace Authorization.Tests
                 Assert.NotNull(assignment.RoleDefinitionId);
                 Assert.NotNull(assignment.Scope);
                 Assert.Equal(principalId.ToString(), assignment.PrincipalId);
-                Assert.False(assignment.CanDelegate);
 
                 //delete the RA
                 client.RoleAssignments.Delete(scope, assignmentName.ToString());
@@ -381,14 +372,12 @@ namespace Authorization.Tests
                 newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString(),
-                    CanDelegate = true
+                    PrincipalId = principalId.ToString()
                 };
                 assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_TrueCanDelegate");
                 createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
 
-                allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.PrincipalId == principalId));
+                allRoleAssignments = client.RoleAssignments.ListForScope("/",new ODataQuery<RoleAssignmentFilter>(f => f.PrincipalId == principalId));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() == 1);
@@ -401,7 +390,6 @@ namespace Authorization.Tests
                 Assert.NotNull(assignment.RoleDefinitionId);
                 Assert.NotNull(assignment.Scope);
                 Assert.Equal(principalId.ToString(), assignment.PrincipalId);
-                Assert.True(assignment.CanDelegate);
 
             }
         }
@@ -469,12 +457,12 @@ namespace Authorization.Tests
                     // Validate
 
                     // Get the first page of assignments
-                    var firstPage = client.RoleAssignments.List(null);
+                    var firstPage = client.RoleAssignments.ListForScope("/",null);
                     Assert.NotNull(firstPage);
                     Assert.NotNull(firstPage.NextPageLink);
 
                     // Get the next page of assignments
-                    var nextPage = client.RoleAssignments.ListNext(firstPage.NextPageLink);
+                    var nextPage = client.RoleAssignments.ListForScopeNext(firstPage.NextPageLink);
 
                     Assert.NotNull(nextPage);
                     Assert.NotEmpty(nextPage);
@@ -576,8 +564,7 @@ namespace Authorization.Tests
                     newRoleAssignmentToUserParams);
 
                 // List role assignments with AssignedTo filter = user id
-                var allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(userId)));
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(userId)));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() >= 1);
@@ -593,8 +580,7 @@ namespace Authorization.Tests
                     Assert.NotNull(assignment.Scope);
                 }
 
-                allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(groupId)));
+                allRoleAssignments = client.RoleAssignments.ListForScope("/",new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(groupId)));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() >= 1);
@@ -660,14 +646,13 @@ namespace Authorization.Tests
                 Assert.NotNull(getResult);
                 Assert.Equal(createResult.Id, getResult.Id);
                 Assert.Equal(createResult.Name, getResult.Name);
-                Assert.Equal(createResult.CanDelegate, getResult.CanDelegate);
 
 
                 //Delete
                 var deleteResult = client.RoleAssignments.DeleteById(assignmentId);
                 Assert.NotNull(deleteResult);
 
-                var allRoleAssignments = client.RoleAssignments.List(null);
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",null);
                 var createdAssignment = allRoleAssignments.FirstOrDefault(
                                             a => a.Name == assignmentName.ToString());
 
@@ -721,14 +706,13 @@ namespace Authorization.Tests
                 Assert.NotNull(getResult);
                 Assert.Equal(createResult.Id, getResult.Id);
                 Assert.Equal(createResult.Name, getResult.Name);
-                Assert.Equal(createResult.CanDelegate, getResult.CanDelegate);
 
 
                 //Delete
                 var deleteResult = client.RoleAssignments.DeleteById(assignmentId);
                 Assert.NotNull(deleteResult);
 
-                var allRoleAssignments = client.RoleAssignments.List(null);
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",null);
                 var createdAssignment = allRoleAssignments.FirstOrDefault(
                                             a => a.Name == assignmentName.ToString());
 
@@ -846,7 +830,7 @@ namespace Authorization.Tests
                 //var allRoleAssignments = client.RoleAssignments.ListForScope(
                 //  "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup,
                 //new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
-                var allRoleAssignments = client.RoleAssignments.List(new ODataQuery<RoleAssignmentFilter>("maxSupportedConditionVersion eq '1.0'"));
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",new ODataQuery<RoleAssignmentFilter>("maxSupportedConditionVersion eq '1.0'"));
 
 
                 Assert.NotNull(allRoleAssignments);
@@ -881,7 +865,7 @@ namespace Authorization.Tests
                 //var allRoleAssignments = client.RoleAssignments.ListForScope(
                 //  "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup,
                 //new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
-                var allRoleAssignments = client.RoleAssignments.List(new ODataQuery<RoleAssignmentFilter>("maxSupportedConditionVersion eq '2.0'"));
+                var allRoleAssignments = client.RoleAssignments.ListForScope("/",new ODataQuery<RoleAssignmentFilter>("maxSupportedConditionVersion eq '2.0'"));
 
 
                 Assert.NotNull(allRoleAssignments);
@@ -1492,8 +1476,9 @@ namespace Authorization.Tests
                 {
                     var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("InvalidProvider");
                 }
-                catch (CloudException ex)
+                catch (ErrorResponseException ex)
                 {
+
                     Assert.Equal("Provider 'InvalidProvider' not found.", ex.Message);
                 }
             }

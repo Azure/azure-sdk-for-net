@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.Authorization.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
@@ -19,7 +20,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
     /// Role Assignments
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RoleAssignment
+    public partial class RoleAssignment : IResource
     {
         /// <summary>
         /// Initializes a new instance of the RoleAssignment class.
@@ -32,24 +33,33 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Initializes a new instance of the RoleAssignment class.
         /// </summary>
+        /// <param name="roleDefinitionId">The role definition ID.</param>
+        /// <param name="principalId">The principal ID.</param>
         /// <param name="id">The role assignment ID.</param>
         /// <param name="name">The role assignment name.</param>
         /// <param name="type">The role assignment type.</param>
         /// <param name="scope">The role assignment scope.</param>
-        /// <param name="roleDefinitionId">The role definition ID.</param>
-        /// <param name="principalId">The principal ID.</param>
         /// <param name="principalType">The principal type of the assigned
         /// principal ID. Possible values include: 'User', 'Group',
         /// 'ServicePrincipal', 'Unknown', 'DirectoryRoleTemplate',
         /// 'ForeignGroup', 'Application', 'MSI', 'DirectoryObjectOrGroup',
         /// 'Everyone'</param>
-        /// <param name="canDelegate">The Delegation flag for the role
-        /// assignment</param>
         /// <param name="description">Description of role assignment</param>
-        /// <param name="condition">The conditions on the role
+        /// <param name="condition">The conditions on the role assignment. This
+        /// limits the resources it can be assigned to. e.g.:
+        /// @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName]
+        /// StringEqualsIgnoreCase 'foo_storage_container'</param>
+        /// <param name="conditionVersion">Version of the condition. Currently
+        /// accepted value is '2.0'</param>
+        /// <param name="createdOn">Time it was created</param>
+        /// <param name="updatedOn">Time it was updated</param>
+        /// <param name="createdBy">Id of the user who created the
         /// assignment</param>
-        /// <param name="conditionVersion">Version of the condition</param>
-        public RoleAssignment(string id = default(string), string name = default(string), string type = default(string), string scope = default(string), string roleDefinitionId = default(string), string principalId = default(string), string principalType = default(string), bool? canDelegate = default(bool?), string description = default(string), string condition = default(string), string conditionVersion = default(string))
+        /// <param name="updatedBy">Id of the user who updated the
+        /// assignment</param>
+        /// <param name="delegatedManagedIdentityResourceId">Id of the
+        /// delegated managed identity resource</param>
+        public RoleAssignment(string roleDefinitionId, string principalId, string id = default(string), string name = default(string), string type = default(string), string scope = default(string), string principalType = default(string), string description = default(string), string condition = default(string), string conditionVersion = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? updatedOn = default(System.DateTime?), string createdBy = default(string), string updatedBy = default(string), string delegatedManagedIdentityResourceId = default(string))
         {
             Id = id;
             Name = name;
@@ -58,10 +68,14 @@ namespace Microsoft.Azure.Management.Authorization.Models
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
             PrincipalType = principalType;
-            CanDelegate = canDelegate;
             Description = description;
             Condition = condition;
             ConditionVersion = conditionVersion;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
+            CreatedBy = createdBy;
+            UpdatedBy = updatedBy;
+            DelegatedManagedIdentityResourceId = delegatedManagedIdentityResourceId;
             CustomInit();
         }
 
@@ -89,10 +103,10 @@ namespace Microsoft.Azure.Management.Authorization.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the role assignment scope.
+        /// Gets the role assignment scope.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scope")]
-        public string Scope { get; set; }
+        public string Scope { get; private set; }
 
         /// <summary>
         /// Gets or sets the role definition ID.
@@ -116,28 +130,73 @@ namespace Microsoft.Azure.Management.Authorization.Models
         public string PrincipalType { get; set; }
 
         /// <summary>
-        /// Gets or sets the Delegation flag for the role assignment
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.canDelegate")]
-        public bool? CanDelegate { get; set; }
-
-        /// <summary>
         /// Gets or sets description of role assignment
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the conditions on the role assignment
+        /// Gets or sets the conditions on the role assignment. This limits the
+        /// resources it can be assigned to. e.g.:
+        /// @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName]
+        /// StringEqualsIgnoreCase 'foo_storage_container'
         /// </summary>
         [JsonProperty(PropertyName = "properties.condition")]
         public string Condition { get; set; }
 
         /// <summary>
-        /// Gets or sets version of the condition
+        /// Gets or sets version of the condition. Currently accepted value is
+        /// '2.0'
         /// </summary>
         [JsonProperty(PropertyName = "properties.conditionVersion")]
         public string ConditionVersion { get; set; }
 
+        /// <summary>
+        /// Gets time it was created
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdOn")]
+        public System.DateTime? CreatedOn { get; private set; }
+
+        /// <summary>
+        /// Gets time it was updated
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.updatedOn")]
+        public System.DateTime? UpdatedOn { get; private set; }
+
+        /// <summary>
+        /// Gets id of the user who created the assignment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdBy")]
+        public string CreatedBy { get; private set; }
+
+        /// <summary>
+        /// Gets id of the user who updated the assignment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.updatedBy")]
+        public string UpdatedBy { get; private set; }
+
+        /// <summary>
+        /// Gets or sets id of the delegated managed identity resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.delegatedManagedIdentityResourceId")]
+        public string DelegatedManagedIdentityResourceId { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RoleDefinitionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RoleDefinitionId");
+            }
+            if (PrincipalId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PrincipalId");
+            }
+        }
     }
 }
