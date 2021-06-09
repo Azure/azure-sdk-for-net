@@ -15,8 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
     public class AnomalyDetectionConfigurationLiveTests : MetricsAdvisorLiveTestBase
     {
         private const string MetricName = "metric";
+        private const string DimensionNameA = "DimensionA";
+        private const string DimensionNameB = "dimensionB";
 
-        public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -147,14 +149,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
 
-            groupConditions0.SeriesGroupKey.AddDimensionColumn("city", "Delhi");
+            groupConditions0.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Delhi");
 
             var groupConditions1 = new MetricSeriesGroupDetectionCondition()
             {
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
 
-            groupConditions1.SeriesGroupKey.AddDimensionColumn("city", "Koltaka");
+            groupConditions1.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions0);
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions1);
@@ -193,12 +195,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdGroupConditions0, Is.Not.Null);
 
-            ValidateGroupKey(createdGroupConditions0.SeriesGroupKey);
-
-            Dictionary<string, string> dimensionColumns = createdGroupConditions0.SeriesGroupKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
+            ValidateDimensionKey(createdGroupConditions0.SeriesGroupKey, "Delhi");
 
             Assert.That(createdGroupConditions0.CrossConditionsOperator, Is.Null);
             Assert.That(createdGroupConditions0.HardThresholdCondition, Is.Null);
@@ -212,12 +209,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdGroupConditions1, Is.Not.Null);
 
-            ValidateGroupKey(createdGroupConditions1.SeriesGroupKey);
-
-            dimensionColumns = createdGroupConditions1.SeriesGroupKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
+            ValidateDimensionKey(createdGroupConditions1.SeriesGroupKey, "Koltaka");
 
             Assert.That(createdGroupConditions1.CrossConditionsOperator, Is.Null);
             Assert.That(createdGroupConditions1.HardThresholdCondition, Is.Null);
@@ -260,16 +252,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
 
-            seriesConditions0.SeriesKey.AddDimensionColumn("city", "Delhi");
-            seriesConditions0.SeriesKey.AddDimensionColumn("category", "Handmade");
+            seriesConditions0.SeriesKey.AddDimensionColumn(DimensionNameA, "Delhi");
+            seriesConditions0.SeriesKey.AddDimensionColumn(DimensionNameB, "Handmade");
 
             var seriesConditions1 = new MetricSingleSeriesDetectionCondition()
             {
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
 
-            seriesConditions1.SeriesKey.AddDimensionColumn("city", "Koltaka");
-            seriesConditions1.SeriesKey.AddDimensionColumn("category", "Grocery & Gourmet Food");
+            seriesConditions1.SeriesKey.AddDimensionColumn(DimensionNameA, "Koltaka");
+            seriesConditions1.SeriesKey.AddDimensionColumn(DimensionNameB, "Grocery & Gourmet Food");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions0);
             configToCreate.SeriesDetectionConditions.Add(seriesConditions1);
@@ -308,12 +300,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdSeriesConditions0, Is.Not.Null);
 
-            ValidateSeriesKey(createdSeriesConditions0.SeriesKey);
-
-            Dictionary<string, string> dimensionColumns = createdSeriesConditions0.SeriesKey.AsDictionary();
-
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
-            Assert.That(dimensionColumns["category"], Is.EqualTo("Handmade"));
+            ValidateDimensionKey(createdSeriesConditions0.SeriesKey, "Delhi", "Handmade");
 
             Assert.That(createdSeriesConditions0.CrossConditionsOperator, Is.Null);
             Assert.That(createdSeriesConditions0.HardThresholdCondition, Is.Null);
@@ -327,12 +314,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdSeriesConditions1, Is.Not.Null);
 
-            ValidateSeriesKey(createdSeriesConditions1.SeriesKey);
-
-            dimensionColumns = createdSeriesConditions1.SeriesKey.AsDictionary();
-
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
-            Assert.That(dimensionColumns["category"], Is.EqualTo("Grocery & Gourmet Food"));
+            ValidateDimensionKey(createdSeriesConditions1.SeriesKey, "Koltaka", "Grocery & Gourmet Food");
 
             Assert.That(createdSeriesConditions1.CrossConditionsOperator, Is.Null);
             Assert.That(createdSeriesConditions1.HardThresholdCondition, Is.Null);
@@ -378,7 +360,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
 
-            groupConditions.SeriesGroupKey.AddDimensionColumn("city", "Koltaka");
+            groupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
@@ -389,8 +371,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
 
-            seriesConditions.SeriesKey.AddDimensionColumn("city", "Delhi");
-            seriesConditions.SeriesKey.AddDimensionColumn("category", "Handmade");
+            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameA, "Delhi");
+            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameB, "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -430,12 +412,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions, Is.Not.Null);
 
-            ValidateGroupKey(updatedGroupConditions.SeriesGroupKey);
-
-            Dictionary<string, string> dimensionColumns = updatedGroupConditions.SeriesGroupKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
+            ValidateDimensionKey(updatedGroupConditions.SeriesGroupKey, "Koltaka");
 
             Assert.That(updatedGroupConditions.CrossConditionsOperator, Is.Null);
             Assert.That(updatedGroupConditions.HardThresholdCondition, Is.Null);
@@ -449,12 +426,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var updatedSeriesConditions = updatedConfig.SeriesDetectionConditions.Single();
 
-            ValidateSeriesKey(updatedSeriesConditions.SeriesKey);
-
-            dimensionColumns = updatedSeriesConditions.SeriesKey.AsDictionary();
-
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
-            Assert.That(dimensionColumns["category"], Is.EqualTo("Handmade"));
+            ValidateDimensionKey(updatedSeriesConditions.SeriesKey, "Delhi", "Handmade");
 
             Assert.That(updatedSeriesConditions, Is.Not.Null);
             Assert.That(updatedSeriesConditions.CrossConditionsOperator, Is.Null);
@@ -500,7 +472,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
 
-            groupConditions.SeriesGroupKey.AddDimensionColumn("city", "Koltaka");
+            groupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
@@ -511,8 +483,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
 
-            seriesConditions.SeriesKey.AddDimensionColumn("city", "Delhi");
-            seriesConditions.SeriesKey.AddDimensionColumn("category", "Handmade");
+            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameA, "Delhi");
+            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameB, "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -552,12 +524,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions, Is.Not.Null);
 
-            ValidateGroupKey(updatedGroupConditions.SeriesGroupKey);
-
-            Dictionary<string, string> dimensionColumns = updatedGroupConditions.SeriesGroupKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
+            ValidateDimensionKey(updatedGroupConditions.SeriesGroupKey, "Koltaka");
 
             Assert.That(updatedGroupConditions.CrossConditionsOperator, Is.Null);
             Assert.That(updatedGroupConditions.HardThresholdCondition, Is.Null);
@@ -571,12 +538,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var updatedSeriesConditions = updatedConfig.SeriesDetectionConditions.Single();
 
-            ValidateSeriesKey(updatedSeriesConditions.SeriesKey);
-
-            dimensionColumns = updatedSeriesConditions.SeriesKey.AsDictionary();
-
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
-            Assert.That(dimensionColumns["category"], Is.EqualTo("Handmade"));
+            ValidateDimensionKey(updatedSeriesConditions.SeriesKey, "Delhi", "Handmade");
 
             Assert.That(updatedSeriesConditions, Is.Not.Null);
             Assert.That(updatedSeriesConditions.CrossConditionsOperator, Is.Null);
@@ -624,7 +586,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
 
-            groupConditions.SeriesGroupKey.AddDimensionColumn("city", "Koltaka");
+            groupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
@@ -635,8 +597,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
 
-            seriesConditions.SeriesKey.AddDimensionColumn("city", "Delhi");
-            seriesConditions.SeriesKey.AddDimensionColumn("category", "Handmade");
+            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameA, "Delhi");
+            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameB, "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -658,7 +620,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new(95.0, AnomalyDetectorDirection.Both, new(25, 26.0))
             };
 
-            newGroupConditions.SeriesGroupKey.AddDimensionColumn("city", "Delhi");
+            newGroupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Delhi");
 
             configToUpdate.SeriesGroupDetectionConditions.Add(newGroupConditions);
 
@@ -696,12 +658,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions0, Is.Not.Null);
 
-            ValidateGroupKey(updatedGroupConditions0.SeriesGroupKey);
-
-            Dictionary<string, string> dimensionColumns = updatedGroupConditions0.SeriesGroupKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
+            ValidateDimensionKey(updatedGroupConditions0.SeriesGroupKey, "Koltaka");
 
             Assert.That(updatedGroupConditions0.CrossConditionsOperator, Is.Null);
             Assert.That(updatedGroupConditions0.HardThresholdCondition, Is.Null);
@@ -715,12 +672,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions1, Is.Not.Null);
 
-            ValidateGroupKey(updatedGroupConditions1.SeriesGroupKey);
-
-            dimensionColumns = updatedGroupConditions1.SeriesGroupKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
+            ValidateDimensionKey(updatedGroupConditions1.SeriesGroupKey, "Delhi");
 
             Assert.That(updatedGroupConditions1.CrossConditionsOperator, Is.Null);
             Assert.That(updatedGroupConditions1.HardThresholdCondition, Is.Null);
@@ -767,7 +719,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
 
-            groupConditions.SeriesGroupKey.AddDimensionColumn("city", "Koltaka");
+            groupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
@@ -778,8 +730,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
 
-            seriesConditions.SeriesKey.AddDimensionColumn("city", "Delhi");
-            seriesConditions.SeriesKey.AddDimensionColumn("category", "Handmade");
+            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameA, "Delhi");
+            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameB, "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -803,7 +755,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 SmartDetectionCondition = new(95.0, AnomalyDetectorDirection.Both, new(25, 26.0))
             };
 
-            newGroupConditions.SeriesGroupKey.AddDimensionColumn("city", "Delhi");
+            newGroupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Delhi");
 
             configToUpdate.SeriesGroupDetectionConditions.Add(groupConditions);
             configToUpdate.SeriesGroupDetectionConditions.Add(newGroupConditions);
@@ -842,12 +794,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions0, Is.Not.Null);
 
-            ValidateGroupKey(updatedGroupConditions0.SeriesGroupKey);
-
-            Dictionary<string, string> dimensionColumns = updatedGroupConditions0.SeriesGroupKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Koltaka"));
+            ValidateDimensionKey(updatedGroupConditions0.SeriesGroupKey, "Koltaka");
 
             Assert.That(updatedGroupConditions0.CrossConditionsOperator, Is.Null);
             Assert.That(updatedGroupConditions0.HardThresholdCondition, Is.Null);
@@ -861,12 +808,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions1, Is.Not.Null);
 
-            ValidateGroupKey(updatedGroupConditions1.SeriesGroupKey);
-
-            dimensionColumns = updatedGroupConditions1.SeriesGroupKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns["city"], Is.EqualTo("Delhi"));
+            ValidateDimensionKey(updatedGroupConditions1.SeriesGroupKey, "Delhi");
 
             Assert.That(updatedGroupConditions1.CrossConditionsOperator, Is.Null);
             Assert.That(updatedGroupConditions1.HardThresholdCondition, Is.Null);
@@ -962,6 +904,30 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(async () => await adminClient.GetDetectionConfigurationAsync(configId), Throws.InstanceOf<RequestFailedException>().With.Message.Contains(errorCause));
                 }
             }
+        }
+
+        private void ValidateDimensionKey(DimensionKey dimensionKey, string expectedDimensionA)
+        {
+            Assert.That(dimensionKey, Is.Not.Null);
+
+            Dictionary<string, string> dimensionColumns = dimensionKey.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
+            Assert.That(dimensionColumns.ContainsKey(DimensionNameA));
+            Assert.That(dimensionColumns[DimensionNameA], Is.EqualTo(expectedDimensionA));
+        }
+
+        private void ValidateDimensionKey(DimensionKey dimensionKey, string expectedDimensionA, string expectedDimensionB)
+        {
+            Assert.That(dimensionKey, Is.Not.Null);
+
+            Dictionary<string, string> dimensionDictionary = dimensionKey.AsDictionary();
+
+            Assert.That(dimensionDictionary.Count, Is.EqualTo(2));
+            Assert.That(dimensionDictionary.ContainsKey(DimensionNameA));
+            Assert.That(dimensionDictionary.ContainsKey(DimensionNameB));
+            Assert.That(dimensionDictionary[DimensionNameA], Is.EqualTo(expectedDimensionA));
+            Assert.That(dimensionDictionary[DimensionNameB], Is.EqualTo(expectedDimensionB));
         }
 
         private void ValidateHardThresholdCondition(HardThresholdCondition condition, AnomalyDetectorDirection direction, double? upperBound, double? lowerBound, int minimumNumber, double minimumRatio)
@@ -1070,7 +1036,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
                 Schema = new DataFeedSchema()
                 {
-                    MetricColumns = { new DataFeedMetric(MetricName) }
+                    MetricColumns = { new DataFeedMetric(MetricName) },
+                    DimensionColumns = { new DataFeedDimension(DimensionNameA), new DataFeedDimension(DimensionNameB) }
                 },
                 IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = SamplingStartTime }
             };
