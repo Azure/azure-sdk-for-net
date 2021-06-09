@@ -11,11 +11,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// DigitalTwins collection in an ADT instance.
         /// </summary>
-        DIGITALTWINS = 0,
+        DigitalTwins = 0,
 
         /// <summary>
         /// Relationships in an ADT instance.
         /// </summary>
-        RELATIONSHIPS = 1,
+        Relationships = 1,
     }
 }

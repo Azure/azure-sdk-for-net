@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 
@@ -11,7 +12,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Query that already contains a SELECT and FROM clause.
     /// </summary>
-    public class WhereQuery : QueryBase
+    public sealed class WhereQuery : QueryBase
     {
         private AdtQueryBuilder _parent;
         private IList<WhereClause> _clauses;
@@ -117,10 +118,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public override string Stringify()
         {
             // TODO -- make this cleaner? design problem?
-            if (_clauses.Count > 0)
+            if (_clauses.Any())
             {
                 StringBuilder whereComponents = new StringBuilder();
-                whereComponents.Append(QueryKeywords.Where).Append(' ');
+                whereComponents.Append(QueryConstants.Where).Append(' ');
 
                 // TODO -- turn condition into a string
                 // add where arguments (conditions)
@@ -128,7 +129,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 return whereComponents.ToString();
             }
 
-            return "";
+            return string.Empty;
         }
 
         /*

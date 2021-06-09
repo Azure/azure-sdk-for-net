@@ -17,31 +17,31 @@ namespace Azure.DigitalTwins.Core.Samples
         public static void main()
         {
             // SELECT * FROM DIGITALTWINS
-            AdtQueryBuilder query1 = new AdtQueryBuilder().Select("*").From(AdtCollection.DIGITALTWINS).Build();
+            AdtQueryBuilder query1 = new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build();
 
-            // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("Room")
+            // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
             AdtQueryBuilder query2 = new AdtQueryBuilder()
                 .Select("*")
-                .From(AdtCollection.DIGITALTWINS)
-                .WhereIsOfModel("Room")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsOfModel("dtmi:example:room;1")
                 .Build();
 
             // SELECT TOP(3) FROM DIGITALTWINS
             AdtQueryBuilder query3 = new AdtQueryBuilder()
                 .SelectTop(3)
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build();
 
             // SELECT COUNT() FROM RELATIONSHIPS
             AdtQueryBuilder query4 = new AdtQueryBuilder()
                 .SelectCount()
-                .From(AdtCollection.RELATIONSHIPS)
+                .From(AdtCollection.Relationships)
                 .Build();
 
             // SELECT Room, Temperature From DIGTIALTWINS
             AdtQueryBuilder query5 = new AdtQueryBuilder()
                 .Select("Room", "Temperature")
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build();
         }
     }

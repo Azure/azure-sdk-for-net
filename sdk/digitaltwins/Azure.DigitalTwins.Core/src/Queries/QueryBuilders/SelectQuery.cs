@@ -9,9 +9,8 @@ using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
-    // NOTE -- accessibility internal for now to bypass needing static.
     /// <summary>
-    /// Custom ADT query builder class that facilitates building queries against an ADT instance.
+    /// Query object without any clauses.
     /// </summary>
     public sealed class SelectQuery : QueryBase
     {
@@ -22,14 +21,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectQuery"/> class.
         /// </summary>
-        internal SelectQuery(AdtQueryBuilder parent, FromQuery fromQueryUpstream)
+        internal SelectQuery(AdtQueryBuilder parent, FromQuery upstreamFromQuery)
         {
             _parent = parent;
-            _delegationClause = fromQueryUpstream;
+            _delegationClause = upstreamFromQuery;
         }
 
         /// <summary>
-        /// Called to add a select clause (and its corresponding argument) to the query.
+        /// Used to add a select clause (and its corresponding argument) to the query.
         /// </summary>
         /// <param name="args"> The arguments that define what we select (eg. *). </param>
         /// <returns> Query that contains a select clause. </returns>
@@ -49,7 +48,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public FromQuery SelectTop(int count, params string[] args)
         {
             // turn into correct format -- eg. SELECT TOP(3)
-            StringBuilder topArg = new StringBuilder().Append($"TOP({count})").Append(' ');
+            StringBuilder topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})").Append(' ');
 
             // append optional arguments separated by commas
             topArg.Append(string.Join(", ", args));
@@ -64,14 +63,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectCount()
         {
-            string countArg = new StringBuilder().Append("COUNT()").Append(' ').ToString();
+            string countArg = new StringBuilder().Append($"{QueryConstants.Count}()").Append(' ').ToString();
 
             _clause = new SelectClause(new string[] { countArg });
             return _delegationClause;
         }
 
         /// <summary>
-        /// Called when overriding the query builder with the literal query string.
+        /// Used when overriding the query builder with the literal query string.
         /// </summary>
         /// <param name="literalQuery"> Query in string format. </param>
         /// <returns> Query that contains a select clause. </returns>
@@ -95,7 +94,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public override string Stringify()
         {
             StringBuilder selectComponents = new StringBuilder();
-            selectComponents.Append(QueryKeywords.Select).Append(' ');
+            selectComponents.Append(QueryConstants.Select).Append(' ');
             selectComponents.Append(string.Join(", ", _clause.ClauseArgs));
 
             return selectComponents.ToString().Trim();

@@ -8,7 +8,7 @@ using Azure.DigitalTwins.Core.QueryBuilder;
 namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
 {
     /// <summary>
-    /// Used to instantiate an ADT query.
+    /// Azure DigitalTwins Query builder that facilitates writing queries against ADT instances.
     /// </summary>
     public class AdtQueryBuilder
     {
@@ -17,7 +17,7 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         private readonly WhereQuery _whereQuery;
 
         /// <summary>
-        /// Initializes the clauses that make up a standard query.
+        /// Initializes an instance of an AdtQueryBuilder object.
         /// </summary>
         public AdtQueryBuilder()
         {
@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         }
 
         /// <summary>
-        /// Used to select one or multiple collections or properties.
+        /// Specifies the list of columns that the query will return
         /// </summary>
         /// <param name="args"> The arguments that can be queried (eg *, somePropertyName, etc.) </param>
         /// <returns> Query that contains a select clause. </returns>
@@ -37,8 +37,7 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         }
 
         /// <summary>
-        /// Used when applying the TOP() aggregate from the ADT query language. Same functionality as select
-        /// but inserts TOP() into the query structure as well.
+        /// Used to return only a certain number of top items that meet the query requirements.
         /// </summary>
         /// <param name="count"> The argument for TOP(), i.e the number of instances to return. </param>
         /// <param name="args"> The arguments that can be optionally passed with top (eg property name). </param>
@@ -49,7 +48,7 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         }
 
         /// <summary>
-        /// Used when applying the COUNT() aggregate from the ADT query language. Similar to SelectTop().
+        /// Used to return the number of items that meet the query requirements.
         /// </summary>
         /// <returns> Query that contains a select clause. </returns>
         public FromQuery SelectCount()
@@ -58,7 +57,7 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         }
 
         /// <summary>
-        /// Called when overriding the query builder with the literal query string.
+        /// Used to provide the entire SELECT clause as opposed to providing individual field (column) names.
         /// </summary>
         /// <param name="literalQuery"> Query in string format. </param>
         /// <returns> Query that contains a select clause. </returns>
@@ -73,16 +72,13 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
             StringBuilder finalQuery = new StringBuilder();
 
             // build the select string
-            string selectString = _selectQuery.Stringify();
-            finalQuery.Append(selectString);
+            finalQuery.Append(_selectQuery.Stringify());
 
             // build the from string
-            string fromString = _fromQuery.Stringify();
-            finalQuery.Append(' ').Append(fromString);
+            finalQuery.Append(' ').Append(_fromQuery.Stringify());
 
             // build the where string
-            string whereString = _whereQuery.Stringify();
-            finalQuery.Append(' ').Append(whereString);
+            finalQuery.Append(' ').Append(_whereQuery.Stringify());
 
             return finalQuery.ToString().Trim();
         }

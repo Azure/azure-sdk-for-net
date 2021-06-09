@@ -11,16 +11,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Query object that already contains a select clause.
     /// </summary>
-    public class FromQuery : QueryBase
+    public sealed class FromQuery : QueryBase
     {
         private WhereQuery _delegationClause;
         private AdtQueryBuilder _parent;
         private FromClause _clause;
 
-        internal FromQuery(AdtQueryBuilder parent, WhereQuery whereQueryUpstream)
+        internal FromQuery(AdtQueryBuilder parent, WhereQuery upstreamWhereQuery)
         {
             _parent = parent;
-            _delegationClause = whereQueryUpstream;
+            _delegationClause = upstreamWhereQuery;
         }
 
         /// <summary>
@@ -56,7 +56,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public override string Stringify()
         {
             StringBuilder fromComponents = new StringBuilder();
-            fromComponents.Append(QueryKeywords.From).Append(' ').Append(_clause.Collection).Append(' ');
+            fromComponents.Append(QueryConstants.From)
+                .Append(' ')
+                .Append(_clause.Collection);
 
             return fromComponents.ToString();
         }

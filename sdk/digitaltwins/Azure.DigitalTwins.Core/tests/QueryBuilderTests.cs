@@ -15,19 +15,19 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             new AdtQueryBuilder()
                 .Select("*")
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build()
                 .ToString()
                 .Should()
-                .Be("SELECT * FROM DIGITALTWINS");
+                .Be("SELECT * FROM DigitalTwins");
 
             new AdtQueryBuilder()
                 .Select("Room")
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build()
                 .ToString()
                 .Should()
-                .Be("SELECT Room FROM DIGITALTWINS");
+                .Be("SELECT Room FROM DigitalTwins");
         }
 
         [Test]
@@ -35,19 +35,19 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             new AdtQueryBuilder()
                 .Select("Room", "Factory")
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build()
                 .ToString()
                 .Should()
-                .Be("SELECT Room, Factory FROM DIGITALTWINS");
+                .Be("SELECT Room, Factory FROM DigitalTwins");
 
             new AdtQueryBuilder()
                 .Select("Room", "Factory", "Temperature", "Humidity")
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build()
                 .ToString()
                 .Should()
-                .Be("SELECT Room, Factory, Temperature, Humidity FROM DIGITALTWINS");
+                .Be("SELECT Room, Factory, Temperature, Humidity FROM DigitalTwins");
         }
 
         [Test]
@@ -55,35 +55,35 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             new AdtQueryBuilder()
                 .SelectTop(5)
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build()
                 .ToString()
                 .Should()
-                .Be("SELECT TOP(5) FROM DIGITALTWINS");
+                .Be("SELECT TOP(5) FROM DigitalTwins");
 
             new AdtQueryBuilder()
                 .SelectCount()
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build()
                 .ToString()
                 .Should()
-                .Be("SELECT COUNT() FROM DIGITALTWINS");
+                .Be("SELECT COUNT() FROM DigitalTwins");
 
             new AdtQueryBuilder()
                 .SelectTop(3, "Temperature", "Humidity")
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build()
                 .ToString()
                 .Should()
-                .Be("SELECT TOP(3) Temperature, Humidity FROM DIGITALTWINS");
+                .Be("SELECT TOP(3) Temperature, Humidity FROM DigitalTwins");
 
             new AdtQueryBuilder()
                 .SelectTop(3, "Temperature")
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build()
                 .ToString()
                 .Should()
-                .Be("SELECT TOP(3) Temperature FROM DIGITALTWINS");
+                .Be("SELECT TOP(3) Temperature FROM DigitalTwins");
         }
 
         [Test]
@@ -91,11 +91,11 @@ namespace Azure.DigitalTwins.Core.Tests
         {
             new AdtQueryBuilder()
                 .SelectOverride("TOP(3) Room, Temperature")
-                .From(AdtCollection.DIGITALTWINS)
+                .From(AdtCollection.DigitalTwins)
                 .Build()
                 .ToString()
                 .Should()
-                .Be("SELECT TOP(3) Room, Temperature FROM DIGITALTWINS");
+                .Be("SELECT TOP(3) Room, Temperature FROM DigitalTwins");
         }
     }
 }

@@ -14,13 +14,13 @@ namespace Azure.DigitalTwins.Core.Queries.QueryBuilders
         /// <summary>
         /// Finalizes query.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> Parent querybuilder class. </returns>
         public abstract AdtQueryBuilder Build();
 
         /// <summary>
         /// Represents a query clause in string format.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> Query in string format. </returns>
         public abstract string Stringify();
     }
 }
