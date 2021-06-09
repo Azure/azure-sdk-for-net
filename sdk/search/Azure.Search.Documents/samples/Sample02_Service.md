@@ -186,7 +186,7 @@ SearchIndexerSkillset skillset = new SearchIndexerSkillset(
         Environment.GetEnvironmentVariable("COGNITIVE_SERVICES_KEY")),
     KnowledgeStore = new SearchIndexerKnowledgeStore(
         Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
-        new List<SearchIndexerKnowledgeStoreProjection>()),
+        new List<KnowledgeStoreProjection>()),
 };
 
 await indexerClient.CreateSkillsetAsync(skillset);

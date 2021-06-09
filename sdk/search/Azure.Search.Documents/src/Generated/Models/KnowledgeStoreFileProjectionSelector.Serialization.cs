@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerKnowledgeStoreBlobProjectionSelector : IUtf8JsonSerializable
+    public partial class KnowledgeStoreFileProjectionSelector : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static SearchIndexerKnowledgeStoreBlobProjectionSelector DeserializeSearchIndexerKnowledgeStoreBlobProjectionSelector(JsonElement element)
+        internal static KnowledgeStoreFileProjectionSelector DeserializeKnowledgeStoreFileProjectionSelector(JsonElement element)
         {
             string storageContainer = default;
             Optional<string> referenceKeyName = default;
@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerKnowledgeStoreBlobProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), storageContainer);
+            return new KnowledgeStoreFileProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), storageContainer);
         }
     }
 }

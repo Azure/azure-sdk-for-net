@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerKnowledgeStore : IUtf8JsonSerializable
+    public partial class KnowledgeStore : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,10 +28,10 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static SearchIndexerKnowledgeStore DeserializeSearchIndexerKnowledgeStore(JsonElement element)
+        internal static KnowledgeStore DeserializeKnowledgeStore(JsonElement element)
         {
             string storageConnectionString = default;
-            IList<SearchIndexerKnowledgeStoreProjection> projections = default;
+            IList<KnowledgeStoreProjection> projections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageConnectionString"))
@@ -41,16 +41,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("projections"))
                 {
-                    List<SearchIndexerKnowledgeStoreProjection> array = new List<SearchIndexerKnowledgeStoreProjection>();
+                    List<KnowledgeStoreProjection> array = new List<KnowledgeStoreProjection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndexerKnowledgeStoreProjection.DeserializeSearchIndexerKnowledgeStoreProjection(item));
+                        array.Add(KnowledgeStoreProjection.DeserializeKnowledgeStoreProjection(item));
                     }
                     projections = array;
                     continue;
                 }
             }
-            return new SearchIndexerKnowledgeStore(storageConnectionString, projections);
+            return new KnowledgeStore(storageConnectionString, projections);
         }
     }
 }

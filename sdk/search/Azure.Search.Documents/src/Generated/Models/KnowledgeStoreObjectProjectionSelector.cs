@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Projection definition for what data to store in Azure Files. </summary>
-    public partial class SearchIndexerKnowledgeStoreFileProjectionSelector : SearchIndexerKnowledgeStoreBlobProjectionSelector
+    /// <summary> Projection definition for what data to store in Azure Blob. </summary>
+    public partial class KnowledgeStoreObjectProjectionSelector : KnowledgeStoreStorageProjectionSelector
     {
-        /// <summary> Initializes a new instance of SearchIndexerKnowledgeStoreFileProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of KnowledgeStoreObjectProjectionSelector. </summary>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainer"/> is null. </exception>
-        public SearchIndexerKnowledgeStoreFileProjectionSelector(string storageContainer) : base(storageContainer)
+        public KnowledgeStoreObjectProjectionSelector(string storageContainer) : base(storageContainer)
         {
             if (storageContainer == null)
             {
@@ -24,14 +24,14 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerKnowledgeStoreFileProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of KnowledgeStoreObjectProjectionSelector. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
-        internal SearchIndexerKnowledgeStoreFileProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, string storageContainer) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, storageContainer)
+        internal KnowledgeStoreObjectProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, string storageContainer) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, storageContainer)
         {
         }
     }

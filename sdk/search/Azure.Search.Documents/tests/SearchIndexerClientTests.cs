@@ -492,31 +492,31 @@ namespace Azure.Search.Documents.Tests
                 Context = "/document",
             };
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table1 = new("hotelReviewsDocument")
+            KnowledgeStoreTableProjectionSelector table1 = new("hotelReviewsDocument")
             {
                 GeneratedKeyName = "Documentid",
                 Source = "/document/tableprojection",
                 SourceContext = null,
             };
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table2 = new("hotelReviewsPages")
+            KnowledgeStoreTableProjectionSelector table2 = new("hotelReviewsPages")
             {
                 GeneratedKeyName = "Pagesid",
                 Source = "/document/tableprojection/pages/*",
                 SourceContext = null,
             };
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table3 = new("hotelReviewsKeyPhrases")
+            KnowledgeStoreTableProjectionSelector table3 = new("hotelReviewsKeyPhrases")
             {
                 GeneratedKeyName = "KeyPhrasesid",
                 Source = "/document/tableprojection/pages/*/keyphrase/*",
                 SourceContext = null,
             };
 
-            SearchIndexerKnowledgeStoreProjection projection1 = new()
+            KnowledgeStoreProjection projection1 = new()
             { Tables = { table1, table2, table3 } };
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table4 = new("hotelReviewsInlineDocument")
+            KnowledgeStoreTableProjectionSelector table4 = new("hotelReviewsInlineDocument")
             {
                 GeneratedKeyName = "Documentid",
                 Source = null,
@@ -529,7 +529,7 @@ namespace Azure.Search.Documents.Tests
             table4.Inputs.Add(new("reviews_title") { Source = "/document/reviews_title", SourceContext = null });
             table4.Inputs.Add(new("AzureSearch_DocumentKey") { Source = "/document/AzureSearch_DocumentKey", SourceContext = null });
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table5 = new("hotelReviewsInlinePages")
+            KnowledgeStoreTableProjectionSelector table5 = new("hotelReviewsInlinePages")
             {
                 GeneratedKeyName = "Pagesid",
                 Source = null,
@@ -539,7 +539,7 @@ namespace Azure.Search.Documents.Tests
             table5.Inputs.Add(new("LanguageCode") { Source = "/document/Language", SourceContext = null });
             table5.Inputs.Add(new("Page") { Source = "/document/reviews_text/pages/*", SourceContext = null });
 
-            SearchIndexerKnowledgeStoreTableProjectionSelector table6 = new("hotelReviewsInlineKeyPhrases")
+            KnowledgeStoreTableProjectionSelector table6 = new("hotelReviewsInlineKeyPhrases")
             {
                 GeneratedKeyName = "kpidv2",
                 Source = null,
@@ -547,15 +547,15 @@ namespace Azure.Search.Documents.Tests
             };
             table6.Inputs.Add(new("Keyphrases") { Source = "/document/reviews_text/pages/*/Keyphrases/*", SourceContext = null });
 
-            SearchIndexerKnowledgeStoreProjection projection2 = new()
+            KnowledgeStoreProjection projection2 = new()
             { Tables = { table4, table5, table6 } };
 
-            List<SearchIndexerKnowledgeStoreProjection> projections = new() { projection1, projection2 };
+            List<KnowledgeStoreProjection> projections = new() { projection1, projection2 };
 
             SearchIndexerSkillset skillset = new SearchIndexerSkillset(skillsetName, new[] { skill1, skill2, skill3, skill4, skill5 })
             {
                 CognitiveServicesAccount = new DefaultCognitiveServicesAccount(),
-                KnowledgeStore = new SearchIndexerKnowledgeStore(resources.StorageAccountConnectionString, projections),
+                KnowledgeStore = new KnowledgeStore(resources.StorageAccountConnectionString, projections),
             };
 
             return skillset;
@@ -583,7 +583,7 @@ namespace Azure.Search.Documents.Tests
                 // Check the projections in the knowledge store of the skillset.
                 Assert.AreEqual(2, skillset.KnowledgeStore.Projections.Count);
 
-                SearchIndexerKnowledgeStoreProjection p1 = skillset.KnowledgeStore.Projections[0];
+                KnowledgeStoreProjection p1 = skillset.KnowledgeStore.Projections[0];
                 Assert.AreEqual(3, p1.Tables.Count);
                 Assert.AreEqual("hotelReviewsDocument", p1.Tables[0].TableName);
                 Assert.AreEqual(0, p1.Tables[0].Inputs.Count);
@@ -591,10 +591,10 @@ namespace Azure.Search.Documents.Tests
                 Assert.AreEqual(0, p1.Tables[1].Inputs.Count);
                 Assert.AreEqual("hotelReviewsKeyPhrases", p1.Tables[2].TableName);
                 Assert.AreEqual(0, p1.Tables[2].Inputs.Count);
-                Assert.AreEqual(0, p1.Objects.Count);
+                Assert.AreEqual(0, p1.Blobs.Count);
                 Assert.AreEqual(0, p1.Files.Count);
 
-                SearchIndexerKnowledgeStoreProjection p2 = skillset.KnowledgeStore.Projections[1];
+                KnowledgeStoreProjection p2 = skillset.KnowledgeStore.Projections[1];
                 Assert.AreEqual(3, p2.Tables.Count);
                 Assert.AreEqual("hotelReviewsInlineDocument", p2.Tables[0].TableName);
                 Assert.AreEqual(6, p2.Tables[0].Inputs.Count);
@@ -602,7 +602,7 @@ namespace Azure.Search.Documents.Tests
                 Assert.AreEqual(3, p2.Tables[1].Inputs.Count);
                 Assert.AreEqual("hotelReviewsInlineKeyPhrases", p2.Tables[2].TableName);
                 Assert.AreEqual(1, p2.Tables[2].Inputs.Count);
-                Assert.AreEqual(0, p2.Objects.Count);
+                Assert.AreEqual(0, p2.Blobs.Count);
                 Assert.AreEqual(0, p2.Files.Count);
 
                 // Delete the skillset.
@@ -676,7 +676,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndexerSkillset specifiedSkillset = new SearchIndexerSkillset(skillsetName, skills)
             {
                 CognitiveServicesAccount = new DefaultCognitiveServicesAccount(),
-                KnowledgeStore = new SearchIndexerKnowledgeStore(resources.StorageAccountConnectionString, new List<SearchIndexerKnowledgeStoreProjection>()),
+                KnowledgeStore = new KnowledgeStore(resources.StorageAccountConnectionString, new List<KnowledgeStoreProjection>()),
             };
 
             try

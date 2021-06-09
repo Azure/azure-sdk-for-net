@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerKnowledgeStoreFileProjectionSelector : IUtf8JsonSerializable
+    public partial class KnowledgeStoreTableProjectionSelector : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageContainer");
-            writer.WriteStringValue(StorageContainer);
+            writer.WritePropertyName("tableName");
+            writer.WriteStringValue(TableName);
             if (Optional.IsDefined(ReferenceKeyName))
             {
                 writer.WritePropertyName("referenceKeyName");
@@ -51,9 +51,9 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static SearchIndexerKnowledgeStoreFileProjectionSelector DeserializeSearchIndexerKnowledgeStoreFileProjectionSelector(JsonElement element)
+        internal static KnowledgeStoreTableProjectionSelector DeserializeKnowledgeStoreTableProjectionSelector(JsonElement element)
         {
-            string storageContainer = default;
+            string tableName = default;
             Optional<string> referenceKeyName = default;
             Optional<string> generatedKeyName = default;
             Optional<string> source = default;
@@ -61,9 +61,9 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IList<InputFieldMappingEntry>> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageContainer"))
+                if (property.NameEquals("tableName"))
                 {
-                    storageContainer = property.Value.GetString();
+                    tableName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("referenceKeyName"))
@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerKnowledgeStoreFileProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), storageContainer);
+            return new KnowledgeStoreTableProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), tableName);
         }
     }
 }

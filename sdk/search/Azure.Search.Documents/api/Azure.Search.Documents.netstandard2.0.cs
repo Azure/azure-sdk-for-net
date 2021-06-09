@@ -887,6 +887,46 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? BufferSize { get { throw null; } set { } }
         public int? MaxTokenLength { get { throw null; } set { } }
     }
+    public partial class KnowledgeStore
+    {
+        public KnowledgeStore(string storageConnectionString, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection> projections) { }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjection> Projections { get { throw null; } }
+        public string StorageConnectionString { get { throw null; } set { } }
+    }
+    public partial class KnowledgeStoreFileProjectionSelector : Azure.Search.Documents.Indexes.Models.KnowledgeStoreStorageProjectionSelector
+    {
+        public KnowledgeStoreFileProjectionSelector(string storageContainer) : base (default(string)) { }
+    }
+    public partial class KnowledgeStoreObjectProjectionSelector : Azure.Search.Documents.Indexes.Models.KnowledgeStoreStorageProjectionSelector
+    {
+        public KnowledgeStoreObjectProjectionSelector(string storageContainer) : base (default(string)) { }
+    }
+    public partial class KnowledgeStoreProjection
+    {
+        public KnowledgeStoreProjection() { }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector> Blobs { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeStoreFileProjectionSelector> Files { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeStoreTableProjectionSelector> Tables { get { throw null; } }
+    }
+    public abstract partial class KnowledgeStoreProjectionSelector
+    {
+        public KnowledgeStoreProjectionSelector() { }
+        public string GeneratedKeyName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> Inputs { get { throw null; } }
+        public string ReferenceKeyName { get { throw null; } set { } }
+        public string Source { get { throw null; } set { } }
+        public string SourceContext { get { throw null; } set { } }
+    }
+    public abstract partial class KnowledgeStoreStorageProjectionSelector : Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjectionSelector
+    {
+        public KnowledgeStoreStorageProjectionSelector(string storageContainer) { }
+        public string StorageContainer { get { throw null; } set { } }
+    }
+    public partial class KnowledgeStoreTableProjectionSelector : Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjectionSelector
+    {
+        public KnowledgeStoreTableProjectionSelector(string tableName) { }
+        public string TableName { get { throw null; } set { } }
+    }
     public partial class LanguageDetectionSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
         public LanguageDetectionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
@@ -1616,46 +1656,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get { throw null; } }
         public int StatusCode { get { throw null; } }
     }
-    public partial class SearchIndexerKnowledgeStore
-    {
-        public SearchIndexerKnowledgeStore(string storageConnectionString, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreProjection> projections) { }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreProjection> Projections { get { throw null; } }
-        public string StorageConnectionString { get { throw null; } set { } }
-    }
-    public partial class SearchIndexerKnowledgeStoreBlobProjectionSelector : Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreProjectionSelector
-    {
-        public SearchIndexerKnowledgeStoreBlobProjectionSelector(string storageContainer) { }
-        public string StorageContainer { get { throw null; } set { } }
-    }
-    public partial class SearchIndexerKnowledgeStoreFileProjectionSelector : Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreBlobProjectionSelector
-    {
-        public SearchIndexerKnowledgeStoreFileProjectionSelector(string storageContainer) : base (default(string)) { }
-    }
-    public partial class SearchIndexerKnowledgeStoreObjectProjectionSelector : Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreBlobProjectionSelector
-    {
-        public SearchIndexerKnowledgeStoreObjectProjectionSelector(string storageContainer) : base (default(string)) { }
-    }
-    public partial class SearchIndexerKnowledgeStoreProjection
-    {
-        public SearchIndexerKnowledgeStoreProjection() { }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreFileProjectionSelector> Files { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreObjectProjectionSelector> Objects { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreTableProjectionSelector> Tables { get { throw null; } }
-    }
-    public partial class SearchIndexerKnowledgeStoreProjectionSelector
-    {
-        public SearchIndexerKnowledgeStoreProjectionSelector() { }
-        public string GeneratedKeyName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> Inputs { get { throw null; } }
-        public string ReferenceKeyName { get { throw null; } set { } }
-        public string Source { get { throw null; } set { } }
-        public string SourceContext { get { throw null; } set { } }
-    }
-    public partial class SearchIndexerKnowledgeStoreTableProjectionSelector : Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreProjectionSelector
-    {
-        public SearchIndexerKnowledgeStoreTableProjectionSelector(string tableName) { }
-        public string TableName { get { throw null; } set { } }
-    }
     public partial class SearchIndexerLimits
     {
         internal SearchIndexerLimits() { }
@@ -1679,7 +1679,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Description { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey EncryptionKey { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStore KnowledgeStore { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.KnowledgeStore KnowledgeStore { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerSkill> Skills { get { throw null; } }
     }
