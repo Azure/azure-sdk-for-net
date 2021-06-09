@@ -130,8 +130,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 deliveryCounts[i] = messages[i].DeliveryCount;
                 deadLetterSources[i] = messages[i].DeadLetterSource;
                 lockTokens[i] = messages[i].LockToken;
-                //this is temporary until the Service Bus SDK addresses the missing timezone issue in case DateTime.MaxValue, github.com/Azure/azure-sdk-for-net/issues/15343
-                expiresAtUtcs[i] = messages[i].ExpiresAt.DateTime.ToUniversalTime();
+                expiresAtUtcs[i] = messages[i].ExpiresAt.DateTime;
                 enqueuedTimeUtcs[i] = messages[i].EnqueuedTime.DateTime;
                 messageIds[i] = messages[i].MessageId;
                 contentTypes[i] = messages[i].ContentType;
@@ -150,9 +149,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add(nameof(value.DeliveryCount), value.DeliveryCount));
             SafeAddValue(() => bindingData.Add(nameof(value.DeadLetterSource), value.DeadLetterSource));
             SafeAddValue(() => bindingData.Add(nameof(value.LockToken), value.LockToken));
-            //this is temporary until the Service Bus SDK addresses the missing timezone issue in case DateTime.MaxValue, github.com/Azure/azure-sdk-for-net/issues/15343
-            SafeAddValue(() => bindingData.Add("ExpiresAtUtc", value.ExpiresAt.ToUniversalTime()));
-            SafeAddValue(() => bindingData.Add("EnqueuedTimeUtc", value.EnqueuedTime));
+            SafeAddValue(() => bindingData.Add("ExpiresAtUtc", value.ExpiresAt.DateTime));
+            SafeAddValue(() => bindingData.Add("EnqueuedTimeUtc", value.EnqueuedTime.DateTime));
             SafeAddValue(() => bindingData.Add(nameof(value.MessageId), value.MessageId));
             SafeAddValue(() => bindingData.Add(nameof(value.ContentType), value.ContentType));
             SafeAddValue(() => bindingData.Add(nameof(value.ReplyTo), value.ReplyTo));
