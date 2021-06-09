@@ -106,15 +106,13 @@ namespace Azure.Communication.CallingServer
                 Argument.AssertNotNullOrEmpty(targets, nameof(targets));
                 Argument.AssertNotNull(options, nameof(options));
 
-                var alternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
-
                 var createCallResponse = await CallConnectionRestClient.CreateCallAsync(
-                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                     source: CommunicationIdentifierSerializer.Serialize(source),
+                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                     callbackUri: options.CallbackUri?.AbsoluteUri,
                     requestedMediaTypes: options.RequestedMediaTypes,
                     requestedCallEvents: options.RequestedCallEvents,
-                    alternateCallerId: alternateCallerId,
+                    alternateCallerId: options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber),
                     subject: options.Subject,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -149,15 +147,13 @@ namespace Azure.Communication.CallingServer
                 Argument.AssertNotNullOrEmpty(targets, nameof(targets));
                 Argument.AssertNotNull(options, nameof(options));
 
-                var alternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
-
                 var createCallResponse = CallConnectionRestClient.CreateCall(
-                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                     source: CommunicationIdentifierSerializer.Serialize(source),
+                    targets: targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                     callbackUri: options.CallbackUri?.AbsoluteUri,
                     requestedMediaTypes: options.RequestedMediaTypes,
                     requestedCallEvents: options.RequestedCallEvents,
-                    alternateCallerId: alternateCallerId,
+                    alternateCallerId: options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber),
                     subject: options.Subject,
                     cancellationToken: cancellationToken
                     );

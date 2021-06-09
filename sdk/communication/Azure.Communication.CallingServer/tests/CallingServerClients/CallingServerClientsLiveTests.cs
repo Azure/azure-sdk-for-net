@@ -32,7 +32,6 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
-        [Ignore("fix later")]
         public async Task CreateCallTest()
         {
             CallingServerClient client = CreateInstrumentedCallingServerClient();
