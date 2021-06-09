@@ -591,7 +591,7 @@ namespace Azure.Search.Documents.Tests
                 Assert.AreEqual(0, p1.Tables[1].Inputs.Count);
                 Assert.AreEqual("hotelReviewsKeyPhrases", p1.Tables[2].TableName);
                 Assert.AreEqual(0, p1.Tables[2].Inputs.Count);
-                Assert.AreEqual(0, p1.Blobs.Count);
+                Assert.AreEqual(0, p1.Objects.Count);
                 Assert.AreEqual(0, p1.Files.Count);
 
                 KnowledgeStoreProjection p2 = skillset.KnowledgeStore.Projections[1];
@@ -602,7 +602,7 @@ namespace Azure.Search.Documents.Tests
                 Assert.AreEqual(3, p2.Tables[1].Inputs.Count);
                 Assert.AreEqual("hotelReviewsInlineKeyPhrases", p2.Tables[2].TableName);
                 Assert.AreEqual(1, p2.Tables[2].Inputs.Count);
-                Assert.AreEqual(0, p2.Blobs.Count);
+                Assert.AreEqual(0, p2.Objects.Count);
                 Assert.AreEqual(0, p2.Files.Count);
 
                 // Delete the skillset.

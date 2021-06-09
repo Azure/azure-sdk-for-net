@@ -9,8 +9,5 @@ namespace Azure.Search.Documents.Indexes.Models
     [CodeGenModel("SearchIndexerKnowledgeStoreProjection")]
     public partial class KnowledgeStoreProjection
     {
-        /// <summary> Projections to Azure Blob storage. </summary>
-        [CodeGenMember("Objects")]
-        public IList<KnowledgeStoreObjectProjectionSelector> Blobs { get; }
     }
 }

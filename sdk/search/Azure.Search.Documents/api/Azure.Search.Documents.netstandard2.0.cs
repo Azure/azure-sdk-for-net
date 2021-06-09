@@ -904,8 +904,8 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KnowledgeStoreProjection
     {
         public KnowledgeStoreProjection() { }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector> Blobs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeStoreFileProjectionSelector> Files { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeStoreObjectProjectionSelector> Objects { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.KnowledgeStoreTableProjectionSelector> Tables { get { throw null; } }
     }
     public abstract partial class KnowledgeStoreProjectionSelector

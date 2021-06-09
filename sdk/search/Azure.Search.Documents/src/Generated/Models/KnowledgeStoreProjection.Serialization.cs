@@ -26,11 +26,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Blobs))
+            if (Optional.IsCollectionDefined(Objects))
             {
                 writer.WritePropertyName("objects");
                 writer.WriteStartArray();
-                foreach (var item in Blobs)
+                foreach (var item in Objects)
                 {
                     writer.WriteObjectValue(item);
                 }

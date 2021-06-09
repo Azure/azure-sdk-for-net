@@ -17,23 +17,25 @@ namespace Azure.Search.Documents.Indexes.Models
         public KnowledgeStoreProjection()
         {
             Tables = new ChangeTrackingList<KnowledgeStoreTableProjectionSelector>();
-            Blobs = new ChangeTrackingList<KnowledgeStoreObjectProjectionSelector>();
+            Objects = new ChangeTrackingList<KnowledgeStoreObjectProjectionSelector>();
             Files = new ChangeTrackingList<KnowledgeStoreFileProjectionSelector>();
         }
 
         /// <summary> Initializes a new instance of KnowledgeStoreProjection. </summary>
         /// <param name="tables"> Projections to Azure Table storage. </param>
-        /// <param name="blobs"> Projections to Azure Blob storage. </param>
+        /// <param name="objects"> Projections to Azure Blob storage. </param>
         /// <param name="files"> Projections to Azure File storage. </param>
-        internal KnowledgeStoreProjection(IList<KnowledgeStoreTableProjectionSelector> tables, IList<KnowledgeStoreObjectProjectionSelector> blobs, IList<KnowledgeStoreFileProjectionSelector> files)
+        internal KnowledgeStoreProjection(IList<KnowledgeStoreTableProjectionSelector> tables, IList<KnowledgeStoreObjectProjectionSelector> objects, IList<KnowledgeStoreFileProjectionSelector> files)
         {
             Tables = tables;
-            Blobs = blobs;
+            Objects = objects;
             Files = files;
         }
 
         /// <summary> Projections to Azure Table storage. </summary>
         public IList<KnowledgeStoreTableProjectionSelector> Tables { get; }
+        /// <summary> Projections to Azure Blob storage. </summary>
+        public IList<KnowledgeStoreObjectProjectionSelector> Objects { get; }
         /// <summary> Projections to Azure File storage. </summary>
         public IList<KnowledgeStoreFileProjectionSelector> Files { get; }
     }
