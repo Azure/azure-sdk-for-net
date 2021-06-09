@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Infrastructure
 
         protected SecretClient Client { get; }
 
-        protected string GetRandomName(string prefix = null) => $"{prefix}{Guid.NewGuid():n}";
+        protected static string GetRandomName(string prefix = null) => $"{prefix}{Guid.NewGuid():n}";
 
         protected async Task DeleteSecretsAsync(params string[] names)
         {
