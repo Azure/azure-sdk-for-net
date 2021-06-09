@@ -283,6 +283,49 @@ await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.As
 }
 ```
 
+### Build ADT Queries
+
+Build an ADT query using an `AdtQueryBuilder`:
+
+```C# Snippet:DigitalTwinsQueryBuilder
+// SELECT * FROM DIGITALTWINS
+AdtQueryBuilder sample1 = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Build();
+
+// SELECT TOP(3) FROM DIGITALTWINS
+AdtQueryBuilder sample2 = new AdtQueryBuilder()
+                .SelectTop(3)
+                .From(AdtCollection.DigitalTwins)
+                .Build();
+
+// SELECT COUNT() FROM RELATIONSHIPS
+AdtQueryBuilder sample3 = new AdtQueryBuilder()
+                .SelectCount()
+                .From(AdtCollection.Relationships)
+                .Build();
+
+// SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
+AdtQueryBuilder query2 = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsOfModel("dtmi:example:room;1")
+                .Build();
+```
+
+Turn an `AdtQueryBuilder` to a string by calling `ToString()` after `Build()`:
+
+```C# Snippet:DigitalTwinsQueryBuilderToString
+// SELECT * FROM DIGITALTWINS
+string sample1 = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Build()
+                .ToString();
+```
+
+
 ### Delete digital twins
 
 Delete a digital twin simply by providing Id of a digital twin as below.
