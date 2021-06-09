@@ -488,7 +488,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public CustomEntityLookupSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
         public Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
-        public string EntitiesDefinitionUri { get { throw null; } set { } }
+        public System.Uri EntitiesDefinitionUri { get { throw null; } set { } }
         public bool? GlobalDefaultAccentSensitive { get { throw null; } set { } }
         public bool? GlobalDefaultCaseSensitive { get { throw null; } set { } }
         public int? GlobalDefaultFuzzyEditDistance { get { throw null; } set { } }
@@ -555,8 +555,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public DocumentExtractionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
         public System.Collections.Generic.IDictionary<string, object> Configuration { get { throw null; } }
-        public string DataToExtract { get { throw null; } set { } }
-        public string ParsingMode { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract? DataToExtract { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.BlobIndexerParsingMode? ParsingMode { get { throw null; } set { } }
     }
     public partial class EdgeNGramTokenFilter : Azure.Search.Documents.Indexes.Models.TokenFilter
     {
