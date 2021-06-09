@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Core.Tests
 
             Assert.AreEqual("myVmName", z.Name);
             Assert.AreEqual("Microsoft.Compute/virtualMachines", z.ResourceType.ToString());
-            Assert.IsNull(null);
+            Assert.IsNull(z.Provider);
             Assert.AreEqual("Microsoft.Insights", (z.Parent as TenantProviderIdentifier).Provider);
             Assert.IsNull((z.Parent as TenantProviderIdentifier).ResourceType);
 
