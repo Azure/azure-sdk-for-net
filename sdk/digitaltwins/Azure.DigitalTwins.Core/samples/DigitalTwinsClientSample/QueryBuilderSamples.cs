@@ -16,27 +16,41 @@ namespace Azure.DigitalTwins.Core.Samples
         /// </summary>
         public static void main()
         {
-            // SELECT * FROM DIGITALTWINS
-            AdtQueryBuilder query1 = new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build();
+            #region Snippet:DigitalTwinsQueryBuilder
 
-            // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
-            AdtQueryBuilder query2 = new AdtQueryBuilder()
-                .Select("*")
-                .From(AdtCollection.DigitalTwins)
-                .WhereIsOfModel("dtmi:example:room;1")
-                .Build();
+            // SELECT * FROM DIGITALTWINS
+            AdtQueryBuilder sample1 = new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build();
 
             // SELECT TOP(3) FROM DIGITALTWINS
-            AdtQueryBuilder query3 = new AdtQueryBuilder()
+            AdtQueryBuilder sample2 = new AdtQueryBuilder()
                 .SelectTop(3)
                 .From(AdtCollection.DigitalTwins)
                 .Build();
 
             // SELECT COUNT() FROM RELATIONSHIPS
-            AdtQueryBuilder query4 = new AdtQueryBuilder()
+            AdtQueryBuilder sample3 = new AdtQueryBuilder()
                 .SelectCount()
                 .From(AdtCollection.Relationships)
                 .Build();
+
+            // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
+            AdtQueryBuilder sample4 = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsOfModel("dtmi:example:room;1")
+                .Build();
+
+            #endregion Snippet:DigitalTwinsQueryBuilder
+
+            #region Snippet:DigitalTwinsQueryBuilderToString
+
+            string string1 = new AdtQueryBuilder()
+                .Select("*")
+                .From(AdtCollection.DigitalTwins)
+                .Build()
+                .ToString();
+
+            #endregion Snippet:DigitalTwinsQueryBuilderToString
 
             // SELECT Room, Temperature From DIGTIALTWINS
             AdtQueryBuilder query5 = new AdtQueryBuilder()
