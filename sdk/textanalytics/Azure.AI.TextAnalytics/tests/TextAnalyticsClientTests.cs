@@ -56,17 +56,9 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync((TextDocumentInput[])null));
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesBatchAsync(Array.Empty<string>()));
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesBatchAsync(Array.Empty<TextDocumentInput>()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync((string[])null, new TextAnalyticsRequestOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync((TextDocumentInput[])null, new TextAnalyticsRequestOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync((string[])null, new RecognizeEntitiesOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync(null, new RecognizeEntitiesOptions()));
-
-            // Variations to ensure call-compatibility after adding method-specific options class to parameters.
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync((string[])null, options: new TextAnalyticsRequestOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync((TextDocumentInput[])null, options: new TextAnalyticsRequestOptions()));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync(null, null, new TextAnalyticsRequestOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync(null, new RecognizeEntitiesOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync(null, null, new RecognizeEntitiesOptions()));
         }
 
         [Test]
