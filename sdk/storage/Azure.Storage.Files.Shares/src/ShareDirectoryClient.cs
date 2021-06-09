@@ -1652,7 +1652,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ShareFileItem> GetFilesAndDirectories(
             string prefix,
             CancellationToken cancellationToken = default) =>
@@ -1689,7 +1688,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ShareFileItem> GetFilesAndDirectoriesAsync(
             string prefix,
             CancellationToken cancellationToken = default) =>
