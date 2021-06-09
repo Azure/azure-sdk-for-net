@@ -80,9 +80,12 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
-    public partial class AnalyzeSentimentAction : Azure.AI.TextAnalytics.AnalyzeSentimentOptions
+    public partial class AnalyzeSentimentAction
     {
         public AnalyzeSentimentAction() { }
+        public bool? DisableServiceLogs { get { throw null; } set { } }
+        public bool? IncludeOpinionMining { get { throw null; } set { } }
+        public string ModelVersion { get { throw null; } set { } }
     }
     public partial class AnalyzeSentimentActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
@@ -604,9 +607,13 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
     }
-    public partial class RecognizePiiEntitiesAction : Azure.AI.TextAnalytics.RecognizePiiEntitiesOptions
+    public partial class RecognizePiiEntitiesAction
     {
         public RecognizePiiEntitiesAction() { }
+        public System.Collections.Generic.IList<Azure.AI.TextAnalytics.PiiEntityCategory> CategoriesFilter { get { throw null; } }
+        public bool? DisableServiceLogs { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.PiiEntityDomain DomainFilter { get { throw null; } set { } }
+        public string ModelVersion { get { throw null; } set { } }
     }
     public partial class RecognizePiiEntitiesActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
