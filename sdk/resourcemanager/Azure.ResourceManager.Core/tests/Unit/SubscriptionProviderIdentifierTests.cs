@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual("Microsoft.Network/virtualNetworks", z.ResourceType.ToString());
             Assert.AreEqual("testvnet", z.Name);
             Assert.AreEqual("Microsoft.Insights", (z.Parent as SubscriptionProviderIdentifier).Provider);
-            Assert.IsNull(z.Parent.ResourceType.ToString());
+            Assert.IsNull(z.Parent.ResourceType);
             Assert.IsNull(z.Parent.Name);
             Assert.AreEqual("Microsoft.Resources/subscriptions", z.Parent.Parent.ResourceType.ToString());
             Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", z.Parent.Parent.Name);
