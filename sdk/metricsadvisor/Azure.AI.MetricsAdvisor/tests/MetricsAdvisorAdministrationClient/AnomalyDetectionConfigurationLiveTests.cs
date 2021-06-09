@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [TestCase(false)]
         public async Task CreateAndGetDetectionConfigurationWithHardCondition(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
             await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
