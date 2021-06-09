@@ -86,11 +86,10 @@ namespace Azure.AI.TextAnalytics
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        /// <param name="scope"></param>
-        public TextAnalyticsClientOptions(ServiceVersion version = LatestVersion, ServiceScopeCloud scope = AuthenticationScope)
+        public TextAnalyticsClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
-            CognitiveScope = scope;
+            CognitiveScope = AuthenticationScope;
             this.ConfigureLogging();
         }
 
