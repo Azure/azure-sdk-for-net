@@ -1,4 +1,7 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="Versioning.targets" />
+
   <Target Name="ValidateTargetFrameworks" BeforeTargets="Build">
     <ItemGroup>
       <RequiredTargetFrameworks Include="$(RequiredTargetFrameworks)" />
@@ -45,6 +48,7 @@
 
   <PropertyGroup>
     <OriginalReadmeMdPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))README.md</OriginalReadmeMdPath>
+    <EnableExperimentalNuGetReadmeMd Condition="'$(HasReleaseVersion)' == 'false' and Exists('$(OriginalReadmeMdPath)')">true</EnableExperimentalNuGetReadmeMd>
     <ProcessedReadmeMdPath>$(OriginalReadmeMdPath)</ProcessedReadmeMdPath>
     <ProcessedReadmeMdPath Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true'">$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
     <PackageReadmeFile Condition="'$(EnableExperimentalNuGetReadmeMd)' == 'true'">README.md</PackageReadmeFile>
@@ -117,8 +121,6 @@
   </PropertyGroup>
 
   <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
-
-  <Import Project="Versioning.targets" />
 
   <Import Project="ApiListing.targets" />
 
