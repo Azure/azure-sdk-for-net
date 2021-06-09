@@ -14,39 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class AnomalyDetectionConfigurationLiveTests : MetricsAdvisorLiveTestBase
     {
-        private DisposableDataFeed _disposableDataFeed;
+        private const string MetricName = "metric";
 
-        public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync)
+        public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
-        }
-
-        [OneTimeSetUp]
-        public async Task CreateDataFeedAsync()
-        {
-            if (Recording.Mode == RecordedTestMode.Live || Recording.Mode == RecordedTestMode.Record)
-            {
-                string accountName = Environment.GetEnvironmentVariable(MetricsAdvisorTestEnvironment.MetricsAdvisorAccountNameVariableName);
-                string apiKey = Environment.GetEnvironmentVariable(MetricsAdvisorTestEnvironment.MetricsAdvisorApiKeyVariableName);
-                string subscriptionKey = Environment.GetEnvironmentVariable(MetricsAdvisorTestEnvironment.MetricsAdvisoSubscriptionKeyVariableName);
-
-                var endpoint = new Uri($"https://{accountName}.cognitiveservices.azure.com");
-                var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
-                var adminClient = new MetricsAdvisorAdministrationClient(endpoint, credential);
-
-                var dataFeed = new DataFeed()
-                {
-                    Name = $"dataFeed{Guid.NewGuid()}",
-                    DataSource = new SqlServerDataFeedSource("connString", "query"),
-                    Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
-                    Schema = new DataFeedSchema()
-                    {
-                        MetricColumns = { new DataFeedMetric("metric") }
-                    },
-                    IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = SamplingStartTime }
-                };
-
-                _disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeed);
-            }
         }
 
         [RecordedTest]
@@ -54,9 +25,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [TestCase(false)]
         public async Task CreateAndGetDetectionConfigurationWithHardCondition(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
             var description = "This configuration was created to test the .NET client.";
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
@@ -69,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var configToCreate = new AnomalyDetectionConfiguration()
             {
-                MetricId = MetricId,
+                MetricId = metricId,
                 Name = configName,
                 WholeSeriesDetectionConditions = wholeConditions,
                 // This is the only test that validates description during creation. Please don't remove it!
@@ -81,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             AnomalyDetectionConfiguration createdConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
 
             Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
-            Assert.That(createdConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.EqualTo(description));
             Assert.That(createdConfig.SeriesGroupDetectionConditions, Is.Not.Null.And.Empty);
@@ -101,8 +74,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task CreateAndGetDetectionConfigurationWithChangeAndSmartConditions()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -113,7 +88,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var configToCreate = new AnomalyDetectionConfiguration()
             {
-                MetricId = MetricId,
+                MetricId = metricId,
                 Name = configName,
                 WholeSeriesDetectionConditions = wholeConditions
             };
@@ -123,7 +98,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             AnomalyDetectionConfiguration createdConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
 
             Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
-            Assert.That(createdConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.SeriesGroupDetectionConditions, Is.Not.Null.And.Empty);
@@ -145,8 +120,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Set required parameters of the configuration to be created.
 
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -158,7 +135,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var configToCreate = new AnomalyDetectionConfiguration()
             {
-                MetricId = MetricId,
+                MetricId = metricId,
                 Name = configName,
                 WholeSeriesDetectionConditions = wholeConditions
             };
@@ -189,7 +166,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             AnomalyDetectionConfiguration createdConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
 
             Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
-            Assert.That(createdConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
@@ -255,8 +232,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Set required parameters of the configuration to be created.
 
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -269,7 +248,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var configToCreate = new AnomalyDetectionConfiguration()
             {
-                MetricId = MetricId,
+                MetricId = metricId,
                 Name = configName,
                 WholeSeriesDetectionConditions = wholeConditions
             };
@@ -302,7 +281,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             AnomalyDetectionConfiguration createdConfig = await adminClient.GetDetectionConfigurationAsync(disposableConfig.Id);
 
             Assert.That(createdConfig.Id, Is.EqualTo(disposableConfig.Id));
-            Assert.That(createdConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(createdConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(createdConfig.Name, Is.EqualTo(configName));
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.SeriesGroupDetectionConditions, Is.Not.Null.And.Empty);
@@ -369,9 +348,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             // Set required parameters of the configuration to be created.
 
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -385,7 +366,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var configToCreate = new AnomalyDetectionConfiguration()
             {
-                MetricId = MetricId,
+                MetricId = metricId,
                 Name = configName,
                 WholeSeriesDetectionConditions = wholeConditions
             };
@@ -426,7 +407,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
-            Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.Empty);
 
@@ -490,8 +471,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Set required parameters of the configuration to be created.
 
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -505,7 +488,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var configToCreate = new AnomalyDetectionConfiguration()
             {
-                MetricId = MetricId,
+                MetricId = metricId,
                 Name = configName,
                 WholeSeriesDetectionConditions = wholeConditions
             };
@@ -546,7 +529,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
-            Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.Empty);
 
@@ -610,8 +593,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Set parameters of the configuration to be created.
 
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
             var description = "This configuration was created to test the .NET client.";
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
@@ -627,7 +612,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var configToCreate = new AnomalyDetectionConfiguration()
             {
-                MetricId = MetricId,
+                MetricId = metricId,
                 Name = configName,
                 WholeSeriesDetectionConditions = wholeConditions
             };
@@ -684,7 +669,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
-            Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.EqualTo(description));
             Assert.That(updatedConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
@@ -751,8 +736,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Set parameters of the configuration to be created.
 
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
             var description = "This configuration was created to test the .NET client.";
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
@@ -768,7 +755,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var configToCreate = new AnomalyDetectionConfiguration()
             {
-                MetricId = MetricId,
+                MetricId = metricId,
                 Name = configName,
                 WholeSeriesDetectionConditions = wholeConditions
             };
@@ -828,7 +815,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Validate top-level members.
 
             Assert.That(updatedConfig.Id, Is.EqualTo(disposableConfig.Id));
-            Assert.That(updatedConfig.MetricId, Is.EqualTo(MetricId));
+            Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
             Assert.That(updatedConfig.Name, Is.EqualTo(configName));
             Assert.That(updatedConfig.Description, Is.EqualTo(description));
             Assert.That(updatedConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
@@ -935,9 +922,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [TestCase(false)]
         public async Task DeleteDetectionConfiguration(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -949,7 +938,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var configToCreate = new AnomalyDetectionConfiguration()
             {
-                MetricId = MetricId,
+                MetricId = metricId,
                 Name = configName,
                 WholeSeriesDetectionConditions = wholeConditions
             };
@@ -1070,6 +1059,23 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 Assert.That(conditions.CrossConditionsOperator, Is.Null);
             }
+        }
+
+        private async Task<DisposableDataFeed> CreateDisposableDataFeedAsync(MetricsAdvisorAdministrationClient adminClient)
+        {
+            var dataFeed = new DataFeed()
+            {
+                Name = Recording.GenerateAlphaNumericId("dataFeed"),
+                DataSource = new SqlServerDataFeedSource("connString", "query"),
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
+                Schema = new DataFeedSchema()
+                {
+                    MetricColumns = { new DataFeedMetric(MetricName) }
+                },
+                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = SamplingStartTime }
+            };
+
+            return await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeed);
         }
     }
 }
