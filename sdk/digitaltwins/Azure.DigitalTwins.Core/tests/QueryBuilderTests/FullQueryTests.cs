@@ -6,9 +6,9 @@ using Azure.DigitalTwins.Core.Queries.QueryBuilders;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Azure.DigitalTwins.Core.Tests
+namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
 {
-    public class QueryBuilderTests
+    public class FullQueryTests
     {
         [Test]
         public void SelectSinglePropertyTests()
