@@ -556,5 +556,133 @@ namespace Azure.AI.TextAnalytics
         }
 
         #endregion Linked Entities
+
+        #region Result Models
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="extractKeyPhrasesActionResult">Sets the collection of <see cref="ExtractKeyPhrasesActionResult"/> property.</param>
+        /// <param name="recognizeEntitiesActionResults">Sets the collection of <see cref="RecognizeEntitiesActionResult"/> property.</param>
+        /// <param name="recognizePiiEntitiesActionResults">Sets the collection of <see cref="RecognizePiiEntitiesActionResult"/> property.</param>
+        /// <param name="recognizeLinkedEntitiesActionsResults">Sets the collection of <see cref="RecognizeLinkedEntitiesActionResult"/> property.</param>
+        /// <param name="analyzeSentimentActionsResults">Sets the collection of <see cref="AnalyzeSentimentActionResult"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
+        public static AnalyzeActionsResult AnalyzeActionsResult(
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
+            IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults)
+        {
+            return new AnalyzeActionsResult(extractKeyPhrasesActionResult, recognizeEntitiesActionResults, recognizePiiEntitiesActionResults, recognizeLinkedEntitiesActionsResults, analyzeSentimentActionsResults);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the id property.</param>
+        /// <param name="statistics">Sets the <see cref="TextDocumentStatistics"/> property.</param>
+        /// <param name="healthcareEntities">Sets the collection of <see cref="HealthcareEntity"/> property.</param>
+        /// <param name="entityRelations">Sets the collection of <see cref="HealthcareEntityRelation"/> property.</param>
+        /// <param name="warnings">Sets the collection of <see cref="TextAnalyticsWarning"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.</returns>
+        public static AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            IList<HealthcareEntity> healthcareEntities,
+            IList<HealthcareEntityRelation> entityRelations,
+            IList<TextAnalyticsWarning> warnings)
+        {
+            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities, entityRelations, warnings);
+        }
+
+        public static ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(
+            ExtractKeyPhrasesResultCollection result,
+            DateTimeOffset completedOn,
+            TextAnalyticsErrorInternal error)
+        {
+            return new ExtractKeyPhrasesActionResult(result, completedOn, error);
+        }
+
+        public static AnalyzeSentimentActionResult AnalyzeSentimentActionResult(
+            AnalyzeSentimentResultCollection result,
+            DateTimeOffset completedOn,
+            TextAnalyticsErrorInternal error)
+        {
+            return new AnalyzeSentimentActionResult(result, completedOn, error);
+        }
+
+        public static TextAnalyticsActionResult TextAnalyticsActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+        {
+            return new TextAnalyticsActionResult(completedOn, error);
+        }
+
+        public static RecognizeLinkedEntitiesActionResult RecognizeLinkedEntitiesActionResult(
+            RecognizeLinkedEntitiesResultCollection result,
+            DateTimeOffset completedOn,
+            TextAnalyticsErrorInternal error)
+        {
+            return new RecognizeLinkedEntitiesActionResult(result, completedOn, error);
+        }
+
+        public static RecognizeEntitiesActionResult RecognizeEntitiesActionResult(
+            RecognizeEntitiesResultCollection result,
+            DateTimeOffset completedOn,
+            TextAnalyticsErrorInternal error)
+        {
+            return new RecognizeEntitiesActionResult(result, completedOn, error);
+        }
+
+        public static AnalyzeHealthcareEntitiesResultCollection AnalyzeHealthcareEntitiesResultCollection(
+            IList<AnalyzeHealthcareEntitiesResult> list,
+            TextDocumentBatchStatistics statistics,
+            string modelVersion)
+        {
+            return new AnalyzeHealthcareEntitiesResultCollection(list, statistics, modelVersion);
+        }
+        #endregion Result Models
+
+        #region Action Models
+        public static RecognizeEntitiesAction RecognizeEntitiesAction()
+        {
+            return new RecognizeEntitiesAction();
+        }
+        public static RecognizePiiEntitiesAction RecognizePiiEntitiesAction()
+        {
+            return new RecognizePiiEntitiesAction();
+        }
+        public static ExtractKeyPhrasesAction ExtractKeyPhrasesAction()
+        {
+            return new ExtractKeyPhrasesAction();
+        }
+        #endregion Action Models
+
+        #region Model Classes
+        public static EntityDataSource EntityDataSource()
+        {
+            return new EntityDataSource();
+        }
+        public static HealthcareEntity HealthcareEntity()
+        {
+            return new HealthcareEntity();
+        }
+        public static HealthcareEntityAssertion HealthcareEntityAssertion()
+        {
+            return new HealthcareEntityAssertion();
+        }
+        public static HealthcareEntityRelation HealthcareEntityRelation()
+        {
+            return new HealthcareEntityRelation();
+        }
+        public static HealthcareEntityRelationRole HealthcareEntityRelationRole()
+        {
+            return new HealthcareEntityRelationRole();
+        }
+        public static PiiEntityCategory PiiEntityCategory()
+        {
+            return new PiiEntityCategory();
+        }
+        #endregion Model Classes
+
     }
 }
