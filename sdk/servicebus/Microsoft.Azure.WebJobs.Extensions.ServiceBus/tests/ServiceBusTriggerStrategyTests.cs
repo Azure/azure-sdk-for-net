@@ -10,7 +10,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
     public class ServiceBusTriggerStrategyTests
     {
-        private const int BindingContractCount = 17;
+        private const int BindingContractCount = 19;
 
         [Test]
         public void GetStaticBindingContract_ReturnsExpectedValue()
