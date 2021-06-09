@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing a sub-resource that contains only the read-only ID.
     /// </summary>
-    [ReferenceType]
+    [ReferenceType(typeof(ResourceIdentifier))]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Types differ by type argument only")]
     public partial class WritableSubResource <TIdentifier> : IEquatable<WritableSubResource<TIdentifier>>, IEquatable<string>,
         IComparable<WritableSubResource<TIdentifier>>, IComparable<string> 
