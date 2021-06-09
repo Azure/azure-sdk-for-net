@@ -7,18 +7,31 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Action result class for analyze sentiment result.
+    /// The result of the execution of an <see cref="AnalyzeSentimentAction"/> on the input documents.
     /// </summary>
     public class AnalyzeSentimentActionResult : TextAnalyticsActionResult
     {
-        internal AnalyzeSentimentActionResult(AnalyzeSentimentResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error) : base(completedOn, error)
+        private readonly AnalyzeSentimentResultCollection _documentsResults;
+
+        internal AnalyzeSentimentActionResult(AnalyzeSentimentResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+            : base(completedOn, error)
         {
-            Result = result;
+            _documentsResults = result;
         }
 
         /// <summary>
-        /// Gets the result collection for analyze sentiment.
+        /// Gets the result of the execution of an <see cref="AnalyzeSentimentAction"/> per each input document.
         /// </summary>
-        public AnalyzeSentimentResultCollection Result { get; }
+        public AnalyzeSentimentResultCollection DocumentsResults
+        {
+            get
+            {
+                if (HasError)
+                {
+                    throw new InvalidOperationException($"Cannot access the results of this action, due to error {Error.ErrorCode}: {Error.Message}");
+                }
+                return _documentsResults;
+            }
+        }
     }
 }

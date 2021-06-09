@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// observed that a file content has been modified during the read.
     /// </summary>
     [Serializable]
-    public class ShareFileModificationException : Exception, ISerializable
+    public class ShareFileModifiedException : Exception, ISerializable
     {
         /// <summary>
         /// Gets the URI of the resurce that has been modified.
@@ -36,28 +36,28 @@ namespace Azure.Storage.Files.Shares.Models
         public HttpRange Range { get; }
 
         /// <summary>
-        /// Creates a new instance of <see cref="ShareFileModificationException"/>.
+        /// Creates a new instance of <see cref="ShareFileModifiedException"/>.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        /// <param name="resurceUri">The URI of the resurce that has been modified.</param>
+        /// <param name="resourceUri">The URI of the resource that has been modified.</param>
         /// <param name="expectedETag">The ETag value that was expected during the read.</param>
-        /// <param name="actualEtag">The ETag value that was received from the service.</param>
+        /// <param name="actualETag">The ETag value that was received from the service.</param>
         /// <param name="range">The range that was requested for the service.</param>
-        public ShareFileModificationException(
+        public ShareFileModifiedException(
             string message,
-            Uri resurceUri,
+            Uri resourceUri,
             ETag expectedETag,
-            ETag actualEtag,
+            ETag actualETag,
             HttpRange range) : base(message)
         {
-            ResourceUri = resurceUri;
+            ResourceUri = resourceUri;
             ExpectedETag = expectedETag;
-            ActualETag = actualEtag;
+            ActualETag = actualETag;
             Range = range;
         }
 
         /// <inheritdoc />
-        protected ShareFileModificationException(SerializationInfo info, StreamingContext streamingContext)
+        protected ShareFileModifiedException(SerializationInfo info, StreamingContext streamingContext)
         {
             ResourceUri = (Uri)info.GetValue(nameof(ResourceUri), typeof(Uri));
             ExpectedETag = (ETag)info.GetValue(nameof(ExpectedETag), typeof(ETag));
