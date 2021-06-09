@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the resource type definition for a ResourceType.
         /// </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions/resourceGroups";
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupOperations"/> class for mocking.

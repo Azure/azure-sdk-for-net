@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceName"> The name of this resource. </param>
         /// <returns> The resource identifier for the given child resource. </returns>
         internal TenantProviderIdentifier(TenantProviderIdentifier parent, string typeName, string resourceName)
-            : base(typeName, resourceName)
+            : base(new ResourceType(parent.ResourceType, typeName), resourceName)
         {
             Parent = parent;
             IsChild = true;

@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.Core.Tests
             SubscriptionProviderIdentifier z = x;
             y = z;
 
-            Assert.AreEqual(z.Provider, "Microsoft.Insights");
-            Assert.AreEqual(z.ResourceType, null);
-            Assert.AreEqual(z.Parent.ResourceType, "Microsoft.Resources/subscriptions");
-            Assert.AreEqual(z.Parent.Name, "db1ab6f0-4769-4b27-930e-01e2ef9c123c");
+            Assert.AreEqual("Microsoft.Insights", z.Provider);
+            Assert.IsNull(z.ResourceType);
+            Assert.AreEqual("Microsoft.Resources/subscriptions", z.Parent.ResourceType);
+            Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", z.Parent.Name);
 
             if (resourceProviderID is null)
             {
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.Core.Tests
             SubscriptionProviderIdentifier z = x;
             y = z;
 
-            Assert.AreEqual(z.Provider, null);
-            Assert.AreEqual(z.ResourceType, "Microsoft.Network/virtualNetworks/subnets");
-            Assert.AreEqual(z.Parent.ResourceType, "Microsoft.Network/virtualNetworks");
-            Assert.AreEqual(z.Parent.Name, "testvnet");
-            Assert.AreEqual(z.Parent.Parent.ResourceType, null);
-            Assert.AreEqual(z.Parent.Parent.Parent.ResourceType, "Microsoft.Resources/subscriptions");
-            Assert.AreEqual(z.Parent.Parent.Parent.Name, "db1ab6f0-4769-4b27-930e-01e2ef9c123c");
+            Assert.IsNull(z.Provider);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks/subnets", z.ResourceType);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks", z.Parent.ResourceType);
+            Assert.AreEqual("testvnet", z.Parent.Name);
+            Assert.IsNull(z.Parent.Parent.ResourceType);
+            Assert.AreEqual("Microsoft.Resources/subscriptions", z.Parent.Parent.Parent.ResourceType);
+            Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", z.Parent.Parent.Parent.Name);
 
             if (resourceProviderID is null)
             {
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.Core.Tests
             SubscriptionProviderIdentifier z = x;
             y = z;
 
-            Assert.AreEqual(z.Provider, null);
-            Assert.AreEqual(z.ResourceType, "Microsoft.Network/virtualNetworks");
-            Assert.AreEqual(z.Name, "testvnet");
-            //Assert.AreEqual(z.Parent.Provider, "Microsoft.Insights");
+            Assert.IsNull(z.Provider);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks", z.ResourceType);
+            Assert.AreEqual("testvnet", z.Name);
+            Assert.AreEqual("Microsoft.Insights", (z.Parent as SubscriptionProviderIdentifier).Provider);
             Assert.IsNull(z.Parent.ResourceType);
             Assert.IsNull(z.Parent.Name);
-            Assert.AreEqual(z.Parent.Parent.ResourceType, "Microsoft.Resources/subscriptions");
-            Assert.AreEqual(z.Parent.Parent.Name, "db1ab6f0-4769-4b27-930e-01e2ef9c123c");
+            Assert.AreEqual("Microsoft.Resources/subscriptions", z.Parent.Parent.ResourceType);
+            Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", z.Parent.Parent.Name);
 
             if (resourceProviderID is null)
             {

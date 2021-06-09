@@ -14,7 +14,8 @@ namespace Azure.ResourceManager.Core.Tests
             y = z;
 
             Assert.IsNotNull(z.Parent);
-            Assert.AreEqual(z.Parent.Name, null);
+            Assert.AreEqual("Microsoft.Insights", z.Provider);
+            Assert.IsNull(z.Parent.Name);
 
             if (resourceProviderID is null)
             {
@@ -36,8 +37,11 @@ namespace Azure.ResourceManager.Core.Tests
             TenantProviderIdentifier z = x;
             y = z;
 
-            Assert.AreEqual(z.Name, "myVmName");
-            Assert.AreEqual(z.ResourceType, "Microsoft.Compute/virtualMachines");
+            Assert.AreEqual("myVmName", z.Name);
+            Assert.AreEqual("Microsoft.Compute/virtualMachines", z.ResourceType.ToString());
+            Assert.IsNull(null);
+            Assert.AreEqual("Microsoft.Insights", (z.Parent as TenantProviderIdentifier).Provider);
+            Assert.IsNull((z.Parent as TenantProviderIdentifier).ResourceType);
 
             if (resourceProviderID is null)
             {
@@ -59,13 +63,13 @@ namespace Azure.ResourceManager.Core.Tests
             TenantProviderIdentifier z = x;
             y = z;
 
-            Assert.AreEqual(z.Name, "testsubnet");
-            Assert.AreEqual(z.ResourceType, "Microsoft.Resources/subnets");
+            Assert.AreEqual("testsubnet", z.Name);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks/subnets", z.ResourceType.ToString());
 
-            Assert.AreEqual(z.Parent.Name, "testvnet");
-            Assert.AreEqual(z.Parent.ResourceType, "Microsoft.Network/virtualNetworks");
+            Assert.AreEqual("testvnet", z.Parent.Name);
+            Assert.AreEqual("Microsoft.Network/virtualNetworks", z.Parent.ResourceType.ToString());
 
-            Assert.AreEqual(z.Parent.Parent.Name, null);
+            Assert.IsNull(z.Parent.Parent.Name);
 
             if (resourceProviderID is null)
             {
