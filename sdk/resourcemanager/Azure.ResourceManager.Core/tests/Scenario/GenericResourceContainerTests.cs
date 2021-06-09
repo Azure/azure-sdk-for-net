@@ -92,6 +92,25 @@ namespace Azure.ResourceManager.Core.Tests
                 var createOp = await StartCreateGenericAvailabilitySetAsync(rg.Id);
                 _ = await createOp.WaitForCompletionAsync();
             });
+
+            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var resourceId = rg.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var createOp = await genericResources.StartCreateOrUpdateAsync(resourceId, null);
+                _ = await createOp.WaitForCompletionAsync();
+            });
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var createOp = await genericResources.StartCreateOrUpdateAsync(null, ConstructGenericAvailabilitySet());
+                _ = await createOp.WaitForCompletionAsync();
+            });
+            var rgId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                var createOp = await StartCreateGenericAvailabilitySetAsync(rgId);
+                _ = await createOp.WaitForCompletionAsync();
+            });
         }
     }
 }
