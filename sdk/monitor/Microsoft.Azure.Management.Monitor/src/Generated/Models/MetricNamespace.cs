@@ -29,16 +29,19 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Initializes a new instance of the MetricNamespace class.
         /// </summary>
-        /// <param name="id">The ID of the metricNamespace.</param>
+        /// <param name="id">The ID of the metric namespace.</param>
         /// <param name="type">The type of the namespace.</param>
-        /// <param name="name">The name of the namespace.</param>
+        /// <param name="name">The escaped name of the namespace.</param>
+        /// <param name="classification">Kind of namespace. Possible values
+        /// include: 'Platform', 'Custom', 'Qos'</param>
         /// <param name="properties">Properties which include the fully
         /// qualified namespace name.</param>
-        public MetricNamespace(string id = default(string), string type = default(string), string name = default(string), MetricNamespaceName properties = default(MetricNamespaceName))
+        public MetricNamespace(string id = default(string), string type = default(string), string name = default(string), NamespaceClassification? classification = default(NamespaceClassification?), MetricNamespaceName properties = default(MetricNamespaceName))
         {
             Id = id;
             Type = type;
             Name = name;
+            Classification = classification;
             Properties = properties;
             CustomInit();
         }
@@ -49,7 +52,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the metricNamespace.
+        /// Gets or sets the ID of the metric namespace.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -61,10 +64,17 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the namespace.
+        /// Gets or sets the escaped name of the namespace.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets kind of namespace. Possible values include:
+        /// 'Platform', 'Custom', 'Qos'
+        /// </summary>
+        [JsonProperty(PropertyName = "classification")]
+        public NamespaceClassification? Classification { get; set; }
 
         /// <summary>
         /// Gets or sets properties which include the fully qualified namespace

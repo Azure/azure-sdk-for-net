@@ -80,6 +80,13 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
+            }
             string apiVersion = "2019-10-17-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -262,6 +269,13 @@ namespace Microsoft.Azure.Management.Monitor
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             string apiVersion = "2019-10-17-preview";
             // Tracing
@@ -473,6 +487,13 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
+            }
             if (scopeName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scopeName");
@@ -672,6 +693,13 @@ namespace Microsoft.Azure.Management.Monitor
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (scopeName == null)
             {
@@ -904,6 +932,13 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
+            }
             if (scopeName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scopeName");
@@ -1106,6 +1141,13 @@ namespace Microsoft.Azure.Management.Monitor
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (scopeName == null)
             {

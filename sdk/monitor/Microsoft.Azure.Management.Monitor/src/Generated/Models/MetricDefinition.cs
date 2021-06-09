@@ -39,6 +39,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// to.</param>
         /// <param name="name">the name and the display name of the metric,
         /// i.e. it is a localizable string.</param>
+        /// <param name="displayDescription">Detailed description of this
+        /// metric.</param>
+        /// <param name="category">Custom category name for this
+        /// metric.</param>
         /// <param name="unit">the unit of the metric. Possible values include:
         /// 'Count', 'Bytes', 'Seconds', 'CountPerSecond', 'BytesPerSecond',
         /// 'Percent', 'MilliSeconds', 'ByteSeconds', 'Unspecified', 'Cores',
@@ -55,12 +59,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// definition.</param>
         /// <param name="dimensions">the name and the display name of the
         /// dimension, i.e. it is a localizable string.</param>
-        public MetricDefinition(bool? isDimensionRequired = default(bool?), string resourceId = default(string), string namespaceProperty = default(string), LocalizableString name = default(LocalizableString), Unit? unit = default(Unit?), AggregationType? primaryAggregationType = default(AggregationType?), IList<AggregationType?> supportedAggregationTypes = default(IList<AggregationType?>), IList<MetricAvailability> metricAvailabilities = default(IList<MetricAvailability>), string id = default(string), IList<LocalizableString> dimensions = default(IList<LocalizableString>))
+        public MetricDefinition(bool? isDimensionRequired = default(bool?), string resourceId = default(string), string namespaceProperty = default(string), LocalizableString name = default(LocalizableString), string displayDescription = default(string), string category = default(string), Unit? unit = default(Unit?), AggregationType? primaryAggregationType = default(AggregationType?), IList<AggregationType?> supportedAggregationTypes = default(IList<AggregationType?>), IList<MetricAvailability> metricAvailabilities = default(IList<MetricAvailability>), string id = default(string), IList<LocalizableString> dimensions = default(IList<LocalizableString>))
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
             NamespaceProperty = namespaceProperty;
             Name = name;
+            DisplayDescription = displayDescription;
+            Category = category;
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;
             SupportedAggregationTypes = supportedAggregationTypes;
@@ -100,6 +106,18 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public LocalizableString Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets detailed description of this metric.
+        /// </summary>
+        [JsonProperty(PropertyName = "displayDescription")]
+        public string DisplayDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets custom category name for this metric.
+        /// </summary>
+        [JsonProperty(PropertyName = "category")]
+        public string Category { get; set; }
 
         /// <summary>
         /// Gets or sets the unit of the metric. Possible values include:

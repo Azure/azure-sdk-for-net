@@ -103,12 +103,9 @@ namespace Monitor.Tests.Scenarios
                 var dcr = CreateDcr(insightsClient, dcrName);
                 Assert.NotNull(dcr);
 
-                dcr = insightsClient.DataCollectionRules.Update(ResourceGroupName, dcrName, new ResourceForUpdate
+                dcr = insightsClient.DataCollectionRules.Update(ResourceGroupName, dcrName, new Dictionary<string, string>
                 {
-                    Tags = new Dictionary<string, string>
-                    {
-                        { "TagUpdated", "ValueUpdate" }
-                    }
+                    { "TagUpdated", "ValueUpdate" }
                 });
                 Assert.NotNull(dcr);
 
@@ -134,7 +131,7 @@ namespace Monitor.Tests.Scenarios
 
                 var dcrWithBadStream = new DataCollectionRuleResource
                 {
-                    Location = "eastus2euap",
+                    Location = "eastus",
                     DataSources = new DataCollectionRuleDataSources
                     {
                         PerformanceCounters = new List<PerfCounterDataSource>
@@ -172,7 +169,7 @@ namespace Monitor.Tests.Scenarios
                     insightsClient.DataCollectionRules.Create(ResourceGroupName, dcrName, dcrWithBadStream);
                     Assert.True(false, "ErrorResponseException expected.");
                 }
-                catch (ErrorResponseException monitorError) 
+                catch (ErrorResponseCommonV2Exception monitorError) 
                 {
                     Assert.NotNull(monitorError.Body?.Error);
                     Assert.Equal("Operation returned an invalid status code 'BadRequest'", monitorError.Message);
@@ -316,12 +313,9 @@ namespace Monitor.Tests.Scenarios
                 var dce = CreateDce(insightsClient, dceName);
                 Assert.NotNull(dce);
 
-                dce = insightsClient.DataCollectionEndpoints.Update(ResourceGroupName, dceName, new ResourceForUpdate
+                dce = insightsClient.DataCollectionEndpoints.Update(ResourceGroupName, dceName, new Dictionary<string, string>
                 {
-                    Tags = new Dictionary<string, string>
-                    {
-                        { "TagUpdated", "ValueUpdate" }
-                    }
+                    { "TagUpdated", "ValueUpdate" }
                 });
                 Assert.NotNull(dce);
 
@@ -345,7 +339,7 @@ namespace Monitor.Tests.Scenarios
                     dataCollectionRuleName: dcrName,
                     new DataCollectionRuleResource
                     {
-                        Location = "eastus2euap",
+                        Location = "eastus",
                         Tags = new Dictionary<string, string>
                         {
                             { "tagOne", "valueOne" },

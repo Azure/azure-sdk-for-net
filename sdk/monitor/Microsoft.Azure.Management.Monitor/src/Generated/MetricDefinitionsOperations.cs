@@ -86,6 +86,13 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceUri");
             }
+            if (resourceUri != null)
+            {
+                if (resourceUri.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceUri", 1);
+                }
+            }
             string apiVersion = "2018-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

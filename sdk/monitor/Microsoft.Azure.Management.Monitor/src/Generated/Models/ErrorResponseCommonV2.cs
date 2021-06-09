@@ -15,24 +15,36 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
     /// <summary>
     /// Error response
-    /// https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v2/types.json
     /// </summary>
     /// <remarks>
     /// Common error response for all Azure Resource Manager APIs to return
     /// error details for failed operations. (This also follows the OData error
     /// response format.).
     /// </remarks>
-    public partial class ErrorResponse
+    public partial class ErrorResponseCommonV2
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ErrorResponseCommonV2 class.
+        /// </summary>
+        public ErrorResponseCommonV2()
+        {
+            CustomInit();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ErrorResponseCommonV2 class.
         /// </summary>
         /// <param name="error">The error object.</param>
-        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
+        public ErrorResponseCommonV2(ErrorDetail error = default(ErrorDetail))
         {
             Error = error;
             CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the error object.
