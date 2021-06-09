@@ -6,7 +6,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
     /// an Extract KeyPhrases action in a set of documents.
-    /// For example, set model version, disable service logging, and more.
+    /// For example, set model version and disable service logging.
     /// </summary>
     public class ExtractKeyPhrasesAction
     {
@@ -14,11 +14,12 @@ namespace Azure.AI.TextAnalytics
         /// Initializes a new instance of the <see cref="ExtractKeyPhrasesAction"/>
         /// class which allows callers to specify details about how to execute
         /// an Extract KeyPhrases action in a set of documents.
-        /// For example, set model version, disable service logging, and more.
+        /// For example, set model version and disable service logging.
         /// </summary>
         public ExtractKeyPhrasesAction()
         {
         }
+
         /// <summary>
         /// Gets or sets a value that, if set, indicates the version of the text
         /// analytics model that will be used to generate the result.  For supported
