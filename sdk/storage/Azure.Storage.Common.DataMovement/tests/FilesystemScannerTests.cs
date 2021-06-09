@@ -50,7 +50,7 @@ namespace Azure.Storage.Tests
             AllowReadData(lockedChild, false, false);
             AllowReadData(lockedSubfolder, true, false);
 
-            FileSystemScanner scanner = new FileSystemScanner(folder);
+            FilesystemScanner scanner = new FilesystemScanner(folder);
 
             // Act
             IEnumerable<string> result = scanner.Scan();
@@ -80,7 +80,7 @@ namespace Azure.Storage.Tests
 
             AllowReadData(folder, true, false);
 
-            FileSystemScanner scanner = new FileSystemScanner(folder);
+            FilesystemScanner scanner = new FilesystemScanner(folder);
 
             // Act
             IEnumerable<string> result = scanner.Scan();
@@ -102,7 +102,7 @@ namespace Azure.Storage.Tests
             // Arrange
             string file = CreateRandomFile(_temp);
 
-            FileSystemScanner scanner = new FileSystemScanner(file);
+            FilesystemScanner scanner = new FilesystemScanner(file);
 
             // Act
             IEnumerable<string> result = scanner.Scan();
@@ -123,7 +123,7 @@ namespace Azure.Storage.Tests
             // Act/Assert
             Assert.IsFalse(File.Exists(file));
             Assert.Throws<FileNotFoundException>(() => {
-                FileSystemScanner scanner = new FileSystemScanner(file);
+                FilesystemScanner scanner = new FilesystemScanner(file);
             });
         }
 
@@ -146,8 +146,8 @@ namespace Azure.Storage.Tests
 
             string file = CreateRandomFile(_temp);
 
-            FileSystemScanner scanFolder = new FileSystemScanner(folder);
-            FileSystemScanner scanFile = new FileSystemScanner(file);
+            FilesystemScanner scanFolder = new FilesystemScanner(folder);
+            FilesystemScanner scanFile = new FilesystemScanner(file);
 
             // Act
             IEnumerable<string> result = scanFolder.Scan().Concat(scanFile.Scan());
