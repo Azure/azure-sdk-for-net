@@ -110,17 +110,9 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync((TextDocumentInput[])null));
             Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesBatchAsync(Array.Empty<string>()));
             Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesBatchAsync(Array.Empty<TextDocumentInput>()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync((string[])null, new TextAnalyticsRequestOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync((TextDocumentInput[])null, new TextAnalyticsRequestOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync((string[])null, new ExtractKeyPhrasesOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync(null, new ExtractKeyPhrasesOptions()));
-
-            // Variations to ensure call-compatibility after adding method-specific options class to parameters.
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync((string[])null, options: new TextAnalyticsRequestOptions()));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync((TextDocumentInput[])null, options: new TextAnalyticsRequestOptions()));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync(null, null, new TextAnalyticsRequestOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync(null, new ExtractKeyPhrasesOptions()));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync(null, null, new ExtractKeyPhrasesOptions()));
         }
 
         [Test]
