@@ -178,6 +178,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     };
 
                     await _executor.TryExecuteAsync(input, _cts.Token).ConfigureAwait(false);
+                    eventToCheckpoint = events.LastOrDefault();
                 }
 
                 // Checkpoint if we processed any events.
