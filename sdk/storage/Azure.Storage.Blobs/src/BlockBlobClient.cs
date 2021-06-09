@@ -171,10 +171,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(string connectionString, string containerName, string blobName)
             : base(connectionString, containerName, blobName)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(
-                connectionString,
-                containerName,
-                blobName);
+            _blockBlobRestClient = BuildBlockBlobRestClient(_uri);
         }
 
         /// <summary>
@@ -204,10 +201,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
-            _blockBlobRestClient = BuildBlockBlobRestClient(
-                connectionString,
-                blobContainerName,
-                blobName);
+            _blockBlobRestClient = BuildBlockBlobRestClient(_uri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -372,35 +366,12 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
 
-        private BlockBlobRestClient BuildBlockBlobRestClient(
-            string connectionString,
-            string blobContainerName,
-            string blobName)
+        private BlockBlobRestClient BuildBlockBlobRestClient(Uri blobUri)
         {
-            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return BuildBlockBlobRestClient(uriBuilder);
-        }
-
-        private BlockBlobRestClient BuildBlockBlobRestClient(Uri uri)
-            => BuildBlockBlobRestClient(new BlobUriBuilder(uri));
-
-        private BlockBlobRestClient BuildBlockBlobRestClient(BlobUriBuilder uriBuilder)
-        {
-            string containerName = uriBuilder.BlobContainerName;
-            string blobName = uriBuilder.BlobName;
-            uriBuilder.BlobContainerName = null;
-            uriBuilder.BlobName = null;
             return new BlockBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToUri().ToString(),
-                containerName: containerName,
-                blob: blobName.EscapePath(),
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
