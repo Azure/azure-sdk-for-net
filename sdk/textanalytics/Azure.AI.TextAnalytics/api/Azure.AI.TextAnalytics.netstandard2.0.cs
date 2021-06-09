@@ -799,9 +799,15 @@ namespace Azure.AI.TextAnalytics
     }
     public partial class TextAnalyticsClientOptions : Azure.Core.ClientOptions
     {
-        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5) { }
+        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5, Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceScopeCloud scope = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceScopeCloud.AzurePublicCloud) { }
         public string DefaultCountryHint { get { throw null; } set { } }
         public string DefaultLanguage { get { throw null; } set { } }
+        public enum ServiceScopeCloud
+        {
+            AzurePublicCloud = 1,
+            AzureChinaCloud = 2,
+            AzureGovernmentCloud = 3,
+        }
         public enum ServiceVersion
         {
             V3_0 = 1,

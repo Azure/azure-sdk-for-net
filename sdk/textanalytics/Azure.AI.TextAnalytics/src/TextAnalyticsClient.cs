@@ -4,7 +4,6 @@
 using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -64,7 +63,7 @@ namespace Azure.AI.TextAnalytics
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
 
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, TextAnalyticsClientOptions.GetScopeValue(options.CognitiveScope)));
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 

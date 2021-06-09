@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using System;
-using Azure.Core.TestFramework;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -18,9 +17,8 @@ namespace Azure.AI.TextAnalytics
         /// The latest service version supported by this client library.
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V3_1_Preview_5;
-        private const string AzurePublicCloud = "72f988bf-86f1-41af-91ab-2d7cd011db47";
-        private const string AzureChina = "3d0a72e2-8b06-4528-98df-1391c6f12c11";
-        private const string AzureGovernment = "63296244-ce2c-46d8-bc36-3e558792fbee";
+        internal const ServiceScopeCloud AuthenticationScope = ServiceScopeCloud.AzurePublicCloud;
+
         /// <summary>
         /// The versions of the Text Analytics service supported by this client library.
         /// </summary>
@@ -40,10 +38,32 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// The scope in different clouds of the Text Analytics service.
+        /// </summary>
+        public enum ServiceScopeCloud
+        {
+            /// <summary>
+            /// AzurePublicCloud
+            /// </summary>
+            AzurePublicCloud = 1,
+
+            /// <summary>
+            /// AzureChinaCloud
+            /// </summary>
+            AzureChinaCloud = 2,
+
+            /// <summary>
+            /// AzureGovernmentCloud
+            /// </summary>
+            AzureGovernmentCloud = 3,
+        }
+
+        /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </summary>
         internal ServiceVersion Version { get; }
+        internal ServiceScopeCloud CognitiveScope { get; }
 
         /// <summary>
         /// Default country hint value to use in all client calls.
@@ -66,9 +86,11 @@ namespace Azure.AI.TextAnalytics
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public TextAnalyticsClientOptions(ServiceVersion version = LatestVersion)
+        /// <param name="scope"></param>
+        public TextAnalyticsClientOptions(ServiceVersion version = LatestVersion, ServiceScopeCloud scope = AuthenticationScope)
         {
             Version = version;
+            CognitiveScope = scope;
             this.ConfigureLogging();
         }
 
@@ -83,19 +105,16 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
-        internal static string GetDefaultCognitiveScope(TestEnvironment _testEnvironment)
+        internal static string GetScopeValue(ServiceScopeCloud scope)
         {
-            switch (_testEnvironment.TenantId)
+            return scope switch
             {
-                case AzurePublicCloud:
-                    return "https://cognitiveservices.azure.com/.default";
-                case AzureChina:
-                    return "https://cognitiveservices.azure.cn/.default";
-                case AzureGovernment:
-                    return "https://cognitiveservices.azure.us/.default";
-                default:
-                    return "https://cognitiveservices.azure.com/.default";
-            }
+                ServiceScopeCloud.AzurePublicCloud => "https://cognitiveservices.azure.com/.default",
+                ServiceScopeCloud.AzureChinaCloud => "https://cognitiveservices.azure.cn/.default",
+                ServiceScopeCloud.AzureGovernmentCloud => "https://cognitiveservices.azure.us/.default",
+
+                _ => throw new ArgumentException($"Scope {scope} not supported."),
+            };
         }
     }
 }
