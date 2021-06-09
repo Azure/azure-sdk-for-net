@@ -59,14 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    var receiveTasks = new List<Task>();
-                    int batchSize = 10;
-                    // There is no guarantee that we can receive 5010 messages in one batch, so splitting them to different batches.
-                    for (var i = 0; i < messageCount / batchSize; i++)
-                    {
-                        receiveTasks.Add(this.ReceiveDeleteTestCase(sender, receiver, batchSize));
-                    }
-                    await Task.WhenAll(receiveTasks);
+                    await this.ReceiveDeleteTestCase(sender, receiver, messageCount, TimeSpan.FromMinutes(2));
                 }
                 finally
                 {
