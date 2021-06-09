@@ -11,7 +11,7 @@ namespace Azure.Storage.Common.DataMovement
     /// <summary>
     /// FilesystemScanner class.
     /// </summary>
-    public class FilesystemScanner
+    public class FileSystemScanner
     {
         /// <summary>
         /// The fully qualified path to be scanned.
@@ -27,7 +27,7 @@ namespace Azure.Storage.Common.DataMovement
         /// Constructor for FilesystemScanner.
         /// </summary>
         /// <param name="path"></param>
-        public FilesystemScanner(string path)
+        public FileSystemScanner(string path)
         {
             try
             {
