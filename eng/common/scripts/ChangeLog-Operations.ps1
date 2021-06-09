@@ -13,35 +13,66 @@ function Get-ChangeLogEntries {
     [String]$ChangeLogLocation
   )
 
-  $changeLogEntries = [Ordered]@{}
   if (!(Test-Path $ChangeLogLocation)) {
     LogError "ChangeLog[${ChangeLogLocation}] does not exist"
     return $null
   }
+  LogDebug "Extracting entries from [${ChangeLogLocation}]."
+  return Get-ChangeLogEntriesFromContent (Get-Content -Path $ChangeLogLocation)
+}
 
+function Get-ChangeLogEntriesFromContent {
+  param (
+    [Parameter(Mandatory = $true)]
+    $changeLogContent
+  )
+
+  if ($changeLogContent -is [string])
+  {
+    $changeLogContent = $changeLogContent.Split("`n")
+  }
+  elseif($changeLogContent -isnot [array])
+  {
+    LogError "Invalid ChangelogContent passed"
+    return $null
+  }
+
+  $changeLogEntries = [Ordered]@{}
   try {
-    $contents = Get-Content $ChangeLogLocation
     # walk the document, finding where the version specifiers are and creating lists
-    $changeLogEntry = $null
-    foreach ($line in $contents) {
+    foreach ($line in $changeLogContent) {
       if ($line -match $RELEASE_TITLE_REGEX) {
         $changeLogEntry = [pscustomobject]@{ 
           ReleaseVersion = $matches["version"]
           ReleaseStatus  =  $matches["releaseStatus"]
           ReleaseTitle   = "## {0} {1}" -f $matches["version"], $matches["releaseStatus"]
           ReleaseContent = @()
+          Sections = @{}
         }
         $changeLogEntries[$changeLogEntry.ReleaseVersion] = $changeLogEntry
       }
       else {
         if ($changeLogEntry) {
+          if ($line.Trim() -match "^###\s(?<sectionName>.*)")
+          {
+            $sectionName = $matches["sectionName"].Trim()
+            $changeLogEntry.Sections[$sectionName] = @()
+            $changeLogEntry.ReleaseContent += $line
+            continue
+          }
+
+          if ($sectionName)
+          {
+            $changeLogEntry.Sections[$sectionName] += $line
+          }
+
           $changeLogEntry.ReleaseContent += $line
         }
       }
     }
   }
   catch {
-    Write-Host "Error parsing $ChangeLogLocation."
+    Write-Host "Error parsing Changelog."
     Write-Host $_.Exception.Message
   }
   return $changeLogEntries
@@ -177,7 +208,19 @@ function New-ChangeLogEntry {
     return $null
   }
 
-  if (!$Content) { $Content = @() }
+  if (!$Content) { 
+    $Content = @()
+    $Content += ""
+    $Content += "### Features Added"
+    $Content += ""
+    $Content += "### Breaking Changes"
+    $Content += ""
+    $Content += "### Key Bugs Fixed"
+    $Content += ""
+    $Content += "### Fixed"
+    $Content += ""
+    $Content += ""
+  }
 
   $newChangeLogEntry = [pscustomobject]@{ 
     ReleaseVersion = $Version

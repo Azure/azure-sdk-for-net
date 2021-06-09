@@ -30,8 +30,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task ServiceBusSessionQueue_OrderGuaranteed()
         {
-            var (jobHost, host) = BuildSessionHost<ServiceBusSessionsTestJobs1>();
-            using (jobHost)
+            var host = BuildSessionHost<ServiceBusSessionsTestJobs1>();
+            using (host)
             {
                 await WriteQueueMessage("message1", "test-session1");
                 await WriteQueueMessage("message2", "test-session1");
@@ -50,15 +50,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     StringAssert.StartsWith("message" + i++, logMessage.FormattedMessage);
                 }
 
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
         [Test]
         public async Task ServiceBusSessionTopicSubscription_OrderGuaranteed()
         {
-            var (jobHost, host) = BuildSessionHost<ServiceBusSessionsTestJobs1>();
-            using (jobHost)
+            var host = BuildSessionHost<ServiceBusSessionsTestJobs1>();
+            using (host)
             {
                 await WriteTopicMessage("message1", "test-session1");
                 await WriteTopicMessage("message2", "test-session1");
@@ -77,17 +77,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     StringAssert.StartsWith("message" + i++, logMessage.FormattedMessage);
                 }
 
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
         [Test]
         public async Task ServiceBusSessionQueue_DifferentHosts_DifferentSessions()
         {
-            var (jobHost1, host1) = BuildSessionHost<ServiceBusSessionsTestJobs1>(true);
-            var (jobHost2, host2) = BuildSessionHost<ServiceBusSessionsTestJobs2>(true);
-            using (jobHost1)
-            using (jobHost2)
+            var host1 = BuildSessionHost<ServiceBusSessionsTestJobs1>(true);
+            var host2 = BuildSessionHost<ServiceBusSessionsTestJobs2>(true);
+            using (host1)
+            using (host2)
             {
                 await WriteQueueMessage("message1", "test-session1");
                 await WriteQueueMessage("message1", "test-session2");
@@ -137,18 +137,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.AreEqual(sessionId2, m.FormattedMessage[m.FormattedMessage.Length - 1]);
                 }
 
-                await jobHost1.StopAsync();
-                await jobHost2.StopAsync();
+                await host1.StopAsync();
+                await host2.StopAsync();
             }
         }
 
         [Test]
         public async Task ServiceBusSessionSub_DifferentHosts_DifferentSessions()
         {
-            var (jobHost1, host1) = BuildSessionHost<ServiceBusSessionsTestJobs1>(true);
-            var (jobHost2, host2) = BuildSessionHost<ServiceBusSessionsTestJobs2>(true);
-            using (jobHost1)
-            using (jobHost2)
+            var host1 = BuildSessionHost<ServiceBusSessionsTestJobs1>(true);
+            var host2 = BuildSessionHost<ServiceBusSessionsTestJobs2>(true);
+            using (host1)
+            using (host2)
             {
                 await WriteTopicMessage("message1", "test-session1");
                 await WriteTopicMessage("message1", "test-session2");
@@ -199,16 +199,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.AreEqual(sessionId2, m.FormattedMessage[m.FormattedMessage.Length - 1]);
                 }
 
-                await jobHost1.StopAsync();
-                await jobHost2.StopAsync();
+                await host1.StopAsync();
+                await host2.StopAsync();
             }
         }
 
         [Test]
         public async Task ServiceBusSessionQueue_SessionLocks()
         {
-            var (jobHost, host) = BuildSessionHost<ServiceBusSessionsTestJobs1>(addCustomProvider: true);
-            using (jobHost)
+            var host = BuildSessionHost<ServiceBusSessionsTestJobs1>(addCustomProvider: true);
+            using (host)
             {
                 await WriteQueueMessage("message1", "test-session1");
                 await WriteQueueMessage("message1", "test-session2");
@@ -247,15 +247,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                             logMessages[5].FormattedMessage[logMessages[0].FormattedMessage.Length - 1]);
                     }
                 }
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
         [Test]
         public async Task ServiceBusSessionSub_SessionLocks()
         {
-            var (jobHost, host) = BuildSessionHost<ServiceBusSessionsTestJobs1>(addCustomProvider: true);
-            using (jobHost)
+            var host = BuildSessionHost<ServiceBusSessionsTestJobs1>(addCustomProvider: true);
+            using (host)
             {
                 await WriteTopicMessage("message1", "test-session1");
                 await WriteTopicMessage("message1", "test-session2");
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     }
                 }
 
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
@@ -366,13 +366,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
          * Helper functions
          */
 
-        private (JobHost JobHost, IHost Host) BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true)
+        private IHost BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true)
         {
             return BuildHost<T>(builder =>
                 builder.ConfigureWebJobs(b =>
                     b.AddServiceBus(sbOptions =>
                     {
-                        // Will be disabled for drain mode validation as messages are completed by functoin code to validate draining allows completion
+                        // Will be disabled for drain mode validation as messages are completed by function code to validate draining allows completion
                         sbOptions.AutoCompleteMessages = autoComplete;
                         sbOptions.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
                         sbOptions.MaxConcurrentSessions = 1;
@@ -397,8 +397,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await WriteTopicMessage(DrainingTopicMessageBody, _drainModeSessionId);
             }
-            var (jobHost, host) = BuildSessionHost<T>(false, false);
-            using (jobHost)
+            var host = BuildSessionHost<T>(false, false);
+            using (host)
             {
                 // Wait to ensure function invocatoin has started before draining messages
                 Assert.True(_drainValidationPreDelay.WaitOne(SBTimeoutMills));
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
@@ -425,12 +425,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId");
                 await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}", "sessionId");
             }
-            var (jobHost, _) = BuildSessionHost<T>(true);
-            using (jobHost)
+            var host = BuildSessionHost<T>(true);
+            using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
@@ -444,8 +444,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await WriteTopicMessage(DrainingTopicMessageBody, _drainModeSessionId);
             }
-            var (jobHost, host) = BuildSessionHost<T>(false, false);
-            using (jobHost)
+            var host = BuildSessionHost<T>(false, false);
+            using (host)
             {
                 // Wait to ensure function invocatoin has started before draining messages
                 Assert.True(_drainValidationPreDelay.WaitOne(SBTimeoutMills));
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
-                await jobHost.StopAsync();
+                await host.StopAsync();
             }
         }
 
@@ -464,7 +464,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static void SBQueue1Trigger(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
-                ServiceBusReceivedMessage message, int deliveryCount,
+                ServiceBusReceivedMessage message,
+                int deliveryCount,
                 ServiceBusSessionMessageActions messageSession,
                 ILogger log,
                 string lockToken)
@@ -477,7 +478,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void SBSub1Trigger(
                 [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey, IsSessionsEnabled = true)]
-                ServiceBusReceivedMessage message, int deliveryCount,
+                ServiceBusReceivedMessage message,
+                int deliveryCount,
                 ServiceBusSessionMessageActions messageSession,
                 ILogger log,
                 string lockToken)
@@ -704,45 +706,46 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public const string CustomMessagingCategory = "CustomMessagingProvider";
             private readonly ILogger _logger;
-            private readonly ServiceBusOptions _options;
 
             public CustomMessagingProvider(
                 IOptions<ServiceBusOptions> serviceBusOptions,
                 ILoggerFactory loggerFactory)
                 : base(serviceBusOptions)
             {
-                _options = serviceBusOptions.Value;
-                _options.SessionIdleTimeout = TimeSpan.FromSeconds(90);
-                _options.MaxConcurrentSessions = 1;
                 _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);
             }
 
-            public override SessionMessageProcessor CreateSessionMessageProcessor(ServiceBusClient client,
-                string entityPath)
+            protected internal override SessionMessageProcessor CreateSessionMessageProcessor(
+                ServiceBusClient client,
+                string entityPath,
+                ServiceBusSessionProcessorOptions options)
             {
                 ServiceBusSessionProcessor processor;
+                // override the options computed from ServiceBusOptions
+                options.SessionIdleTimeout = TimeSpan.FromSeconds(90);
+                options.MaxConcurrentSessions = 1;
                 if (entityPath == _firstQueueScope.QueueName)
                 {
-                    processor = client.CreateSessionProcessor(entityPath, _options.ToSessionProcessorOptions());
+                    processor = client.CreateSessionProcessor(entityPath, options);
                 }
                 else
                 {
                     string[] arr = entityPath.Split('/');
-                    processor = client.CreateSessionProcessor(arr[0], arr[2], _options.ToSessionProcessorOptions());
+                    processor = client.CreateSessionProcessor(arr[0], arr[2], options);
                 }
 
                 processor.ProcessErrorAsync += args => Task.CompletedTask;
-                return new CustomSessionMessageProcessor(client, processor, _logger);
+                return new CustomSessionMessageProcessor(processor, _logger);
             }
 
             private class CustomSessionMessageProcessor : SessionMessageProcessor
             {
                 private readonly ILogger _logger;
 
-                public CustomSessionMessageProcessor(ServiceBusClient client,
+                public CustomSessionMessageProcessor(
                     ServiceBusSessionProcessor sessionProcessor,
                     ILogger logger)
-                    : base(client, sessionProcessor)
+                    : base(sessionProcessor)
                 {
                     _logger = logger;
                 }
@@ -757,7 +760,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 public override async Task CompleteProcessingMessageAsync(
                     ServiceBusSessionMessageActions sessionActions,
-                    ServiceBusReceivedMessage message, Executors.FunctionResult result,
+                    ServiceBusReceivedMessage message,
+                    Executors.FunctionResult result,
                     CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor End called!" + message.Body.ToString());
@@ -771,7 +775,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     internal class ServiceBusSessionsTestHelper
 #pragma warning restore SA1402 // File may only contain a single type
     {
-        public static void ProcessMessage(ServiceBusReceivedMessage message, ILogger log, EventWaitHandle waitHandle1,
+        public static void ProcessMessage(
+            ServiceBusReceivedMessage message,
+            ILogger log,
+            EventWaitHandle waitHandle1,
             EventWaitHandle waitHandle2)
         {
             string messageString = message.Body.ToString();
@@ -790,17 +797,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public static string GetLogsAsString(List<LogMessage> messages)
         {
-            if (messages.Count() != 5 && messages.Count() != 10)
-            {
-            }
-
-            string reuslt = string.Empty;
+            string result = string.Empty;
             foreach (LogMessage message in messages)
             {
-                reuslt += message.FormattedMessage + System.Environment.NewLine;
+                result += message.FormattedMessage + System.Environment.NewLine;
             }
 
-            return reuslt;
+            return result;
         }
     }
 }

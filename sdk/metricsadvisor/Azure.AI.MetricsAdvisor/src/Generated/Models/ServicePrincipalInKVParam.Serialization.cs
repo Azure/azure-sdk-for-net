@@ -19,8 +19,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(KeyVaultEndpoint);
             writer.WritePropertyName("keyVaultClientId");
             writer.WriteStringValue(KeyVaultClientId);
-            writer.WritePropertyName("keyVaultClientSecret");
-            writer.WriteStringValue(KeyVaultClientSecret);
+            if (Optional.IsDefined(KeyVaultClientSecret))
+            {
+                writer.WritePropertyName("keyVaultClientSecret");
+                writer.WriteStringValue(KeyVaultClientSecret);
+            }
             writer.WritePropertyName("servicePrincipalIdNameInKV");
             writer.WriteStringValue(ServicePrincipalIdNameInKV);
             writer.WritePropertyName("servicePrincipalSecretNameInKV");
@@ -34,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             string keyVaultEndpoint = default;
             string keyVaultClientId = default;
-            string keyVaultClientSecret = default;
+            Optional<string> keyVaultClientSecret = default;
             string servicePrincipalIdNameInKV = default;
             string servicePrincipalSecretNameInKV = default;
             string tenantId = default;
@@ -71,7 +74,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new ServicePrincipalInKVParam(keyVaultEndpoint, keyVaultClientId, keyVaultClientSecret, servicePrincipalIdNameInKV, servicePrincipalSecretNameInKV, tenantId);
+            return new ServicePrincipalInKVParam(keyVaultEndpoint, keyVaultClientId, keyVaultClientSecret.Value, servicePrincipalIdNameInKV, servicePrincipalSecretNameInKV, tenantId);
         }
     }
 }

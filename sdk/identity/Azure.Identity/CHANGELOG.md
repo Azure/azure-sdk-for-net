@@ -1,7 +1,14 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.2 (Unreleased)
 
+
+## 1.5.0-beta.1 (2021-06-08)
+
+### Fixes and improvements
+
+- Added `LoginHint` property to `InteractiveBrowserCredentialOptions` which allows a user name to be pre-selected for interactive logins. Setting this option skips the account selection prompt and immediately attempts to login with the specified account.
+- Added `AuthorizationCodeCredentialOptions` which allows for configuration of a ReplyUri.
 
 ## 1.4.0 (2021-05-12)
 

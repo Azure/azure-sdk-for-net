@@ -21,6 +21,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21305")]
         public void ClientCannotAuthenticateWithFakeApiKey()
         {
             DocumentTranslationClient client = GetClient(credential: new AzureKeyCredential("fakeKey"));
@@ -31,9 +32,11 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetDocumentFormatsTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetDocumentFormatsTest(bool usetokenCredential)
         {
-            DocumentTranslationClient client = GetClient();
+            DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
             var documentFormats = await client.GetDocumentFormatsAsync();
 
@@ -47,9 +50,11 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetGlossaryFormatsTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetGlossaryFormatsTest(bool usetokenCredential)
         {
-            DocumentTranslationClient client = GetClient();
+            DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
             var glossaryFormats = await client.GetGlossaryFormatsAsync();
 
@@ -68,17 +73,19 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetTranslationsTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetAllTranslationStatusesTest(bool usetokenCredential)
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = await CreateTargetContainerAsync();
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
             var input = new DocumentTranslationInput(source, target, "fr");
             await client.StartTranslationAsync(input);
 
-            List<TranslationStatusResult> translations = await client.GetTranslationsAsync().ToEnumerableAsync();
+            List<TranslationStatusResult> translations = await client.GetAllTranslationStatusesAsync().ToEnumerableAsync();
 
             Assert.GreaterOrEqual(translations.Count, 1);
             TranslationStatusResult oneTranslation = translations[0];

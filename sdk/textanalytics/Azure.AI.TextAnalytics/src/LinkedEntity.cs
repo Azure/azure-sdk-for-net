@@ -62,8 +62,10 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary> Bing Entity Search API unique identifier of the recognized entity.
         /// Use in conjunction with the Bing Entity Search API to fetch additional relevant information.
-        /// This property is only available for service v3.1-preview and up.
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// </remarks>
         [CodeGenMember("BingId")]
         public string BingEntitySearchApiId { get; }
     }

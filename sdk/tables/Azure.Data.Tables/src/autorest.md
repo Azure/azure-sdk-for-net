@@ -14,3 +14,13 @@ require:
 namespace: Azure.Data.Tables
 include-csproj: disable
 ```
+
+### Add nullable annotations
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SignedIdentifier
+  transform: >
+    $.properties.AccessPolicy["x-nullable"] = true;
+```

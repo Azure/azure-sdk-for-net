@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
-    <Version>5.0.0-beta.3</Version>
+    <Version>5.0.0-beta.4</Version>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;CA1507</NoWarn>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
@@ -14,8 +14,8 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Sources" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
-<!--    Uncomment once ServiceBus version containing https://github.com/Azure/azure-sdk-for-net/pull/20940 is released-->
-<!--    <PackageReference Include="Azure.Messaging.ServiceBus" />-->
+      <!--Revert after Service Bus release-->
+      <!--<PackageReference Include="Azure.Messaging.ServiceBus" />-->
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-<!--    Remove once ServiceBus version containing https://github.com/Azure/azure-sdk-for-net/pull/20940 is released-->
+    <!--Revert after Service Bus release-->
     <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
   </ItemGroup>
 </Project>

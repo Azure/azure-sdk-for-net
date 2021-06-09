@@ -140,8 +140,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // TODO: create AnomalyIncident using model factory instead. We're currently using an internal constructor.
             var seriesIdentity = new SeriesIdentity(new Dictionary<string, string>());
-            var incidentProperty = new IncidentProperty(default, default);
-            var incident = new AnomalyIncident(default, FakeGuid, "incidentId", default, default, seriesIdentity, incidentProperty);
+            var incidentProperty = new IncidentProperty(default, default, default);
+            var incident = new AnomalyIncident(default, default, FakeGuid, "incidentId", default, default, seriesIdentity, incidentProperty);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
@@ -154,41 +154,41 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
-        public void GetValuesOfDimensionsWithAnomaliesValidatesArguments()
+        public void GetAnomalyDimensionValuesValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var options = new GetValuesOfDimensionWithAnomaliesOptions(default, default);
+            var options = new GetAnomalyDimensionValuesOptions(default, default);
 
-            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync(null, "dimensionName", options), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync("", "dimensionName", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync("configId", "dimensionName", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync(FakeGuid, null, options), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync(FakeGuid, "", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomaliesAsync(FakeGuid, "dimensionName", null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomalyDimensionValuesAsync(null, "dimensionName", options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomalyDimensionValuesAsync("", "dimensionName", options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAnomalyDimensionValuesAsync("configId", "dimensionName", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetAnomalyDimensionValuesAsync(FakeGuid, null, options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomalyDimensionValuesAsync(FakeGuid, "", options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAnomalyDimensionValuesAsync(FakeGuid, "dimensionName", null), Throws.InstanceOf<ArgumentNullException>());
 
-            Assert.That(() => client.GetValuesOfDimensionWithAnomalies(null, "dimensionName", options), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomalies("", "dimensionName", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomalies("configId", "dimensionName", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => client.GetValuesOfDimensionWithAnomalies(FakeGuid, null, options), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomalies(FakeGuid, "", options), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetValuesOfDimensionWithAnomalies(FakeGuid, "dimensionName", null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomalyDimensionValues(null, "dimensionName", options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomalyDimensionValues("", "dimensionName", options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAnomalyDimensionValues("configId", "dimensionName", options), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetAnomalyDimensionValues(FakeGuid, null, options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetAnomalyDimensionValues(FakeGuid, "", options), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetAnomalyDimensionValues(FakeGuid, "dimensionName", null), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
-        public void GetValuesOfDimensionWithAnomaliesRespectsTheCancellationToken()
+        public void GetAnomalyDimensionValuesRespectsTheCancellationToken()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var options = new GetValuesOfDimensionWithAnomaliesOptions(default, default);
+            var options = new GetAnomalyDimensionValuesOptions(default, default);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            IAsyncEnumerator<string> asyncEnumerator = client.GetValuesOfDimensionWithAnomaliesAsync(FakeGuid, "dimensionName", options, cancellationSource.Token).GetAsyncEnumerator();
+            IAsyncEnumerator<string> asyncEnumerator = client.GetAnomalyDimensionValuesAsync(FakeGuid, "dimensionName", options, cancellationSource.Token).GetAsyncEnumerator();
             Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
 
-            IEnumerator<string> enumerator = client.GetValuesOfDimensionWithAnomalies(FakeGuid, "dimensionName", options, cancellationSource.Token).GetEnumerator();
+            IEnumerator<string> enumerator = client.GetAnomalyDimensionValues(FakeGuid, "dimensionName", options, cancellationSource.Token).GetEnumerator();
             Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 

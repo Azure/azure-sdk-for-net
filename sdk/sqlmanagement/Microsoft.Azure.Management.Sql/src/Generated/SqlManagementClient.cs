@@ -148,11 +148,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerUsagesOperations ServerUsages { get; private set; }
 
         /// <summary>
-        /// Gets the IUsagesOperations.
-        /// </summary>
-        public virtual IUsagesOperations Usages { get; private set; }
-
-        /// <summary>
         /// Gets the IBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
@@ -193,16 +188,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabaseColumnsOperations DatabaseColumns { get; private set; }
 
         /// <summary>
-        /// Gets the IDatabaseExtensionsOperations.
-        /// </summary>
-        public virtual IDatabaseExtensionsOperations DatabaseExtensions { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatabaseOperations.
-        /// </summary>
-        public virtual IDatabaseOperations DatabaseOperations { get; private set; }
-
-        /// <summary>
         /// Gets the IDatabaseRecommendedActionsOperations.
         /// </summary>
         public virtual IDatabaseRecommendedActionsOperations DatabaseRecommendedActions { get; private set; }
@@ -221,11 +206,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IDatabaseTablesOperations.
         /// </summary>
         public virtual IDatabaseTablesOperations DatabaseTables { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatabaseUsagesOperations.
-        /// </summary>
-        public virtual IDatabaseUsagesOperations DatabaseUsages { get; private set; }
 
         /// <summary>
         /// Gets the IDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
@@ -523,16 +503,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRecoverableManagedDatabasesOperations RecoverableManagedDatabases { get; private set; }
 
         /// <summary>
-        /// Gets the IRestorableDroppedDatabasesOperations.
-        /// </summary>
-        public virtual IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; private set; }
-
-        /// <summary>
-        /// Gets the IRestorableDroppedManagedDatabasesOperations.
-        /// </summary>
-        public virtual IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; private set; }
-
-        /// <summary>
         /// Gets the IRestorePointsOperations.
         /// </summary>
         public virtual IRestorePointsOperations RestorePoints { get; private set; }
@@ -586,11 +556,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerOperations.
         /// </summary>
         public virtual IServerOperations ServerOperations { get; private set; }
-
-        /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        public virtual IServersOperations Servers { get; private set; }
 
         /// <summary>
         /// Gets the IServerSecurityAlertPoliciesOperations.
@@ -661,6 +626,51 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IWorkloadGroupsOperations.
         /// </summary>
         public virtual IWorkloadGroupsOperations WorkloadGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseExtensionsOperations.
+        /// </summary>
+        public virtual IDatabaseExtensionsOperations DatabaseExtensions { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseOperations.
+        /// </summary>
+        public virtual IDatabaseOperations DatabaseOperations { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseUsagesOperations.
+        /// </summary>
+        public virtual IDatabaseUsagesOperations DatabaseUsages { get; private set; }
+
+        /// <summary>
+        /// Gets the ILedgerDigestUploadsOperations.
+        /// </summary>
+        public virtual ILedgerDigestUploadsOperations LedgerDigestUploads { get; private set; }
+
+        /// <summary>
+        /// Gets the IOutboundFirewallRulesOperations.
+        /// </summary>
+        public virtual IOutboundFirewallRulesOperations OutboundFirewallRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedDatabasesOperations.
+        /// </summary>
+        public virtual IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedManagedDatabasesOperations.
+        /// </summary>
+        public virtual IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        public virtual IServersOperations Servers { get; private set; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        public virtual IUsagesOperations Usages { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -918,7 +928,6 @@ namespace Microsoft.Azure.Management.Sql
             TransparentDataEncryptions = new TransparentDataEncryptionsOperations(this);
             TransparentDataEncryptionActivities = new TransparentDataEncryptionActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
-            Usages = new UsagesOperations(this);
             BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
             ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
@@ -927,13 +936,10 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseAdvisors = new DatabaseAdvisorsOperations(this);
             DatabaseAutomaticTuning = new DatabaseAutomaticTuningOperations(this);
             DatabaseColumns = new DatabaseColumnsOperations(this);
-            DatabaseExtensions = new DatabaseExtensionsOperations(this);
-            DatabaseOperations = new DatabaseOperations(this);
             DatabaseRecommendedActions = new DatabaseRecommendedActionsOperations(this);
             DatabaseSchemas = new DatabaseSchemasOperations(this);
             DatabaseSecurityAlertPolicies = new DatabaseSecurityAlertPoliciesOperations(this);
             DatabaseTables = new DatabaseTablesOperations(this);
-            DatabaseUsages = new DatabaseUsagesOperations(this);
             DatabaseVulnerabilityAssessmentRuleBaselines = new DatabaseVulnerabilityAssessmentRuleBaselinesOperations(this);
             DatabaseVulnerabilityAssessments = new DatabaseVulnerabilityAssessmentsOperations(this);
             DatabaseVulnerabilityAssessmentScans = new DatabaseVulnerabilityAssessmentScansOperations(this);
@@ -993,8 +999,6 @@ namespace Microsoft.Azure.Management.Sql
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             RecoverableManagedDatabases = new RecoverableManagedDatabasesOperations(this);
-            RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
-            RestorableDroppedManagedDatabases = new RestorableDroppedManagedDatabasesOperations(this);
             RestorePoints = new RestorePointsOperations(this);
             SensitivityLabels = new SensitivityLabelsOperations(this);
             RecommendedSensitivityLabels = new RecommendedSensitivityLabelsOperations(this);
@@ -1006,7 +1010,6 @@ namespace Microsoft.Azure.Management.Sql
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
             ServerKeys = new ServerKeysOperations(this);
             ServerOperations = new ServerOperations(this);
-            Servers = new ServersOperations(this);
             ServerSecurityAlertPolicies = new ServerSecurityAlertPoliciesOperations(this);
             ServerTrustGroups = new ServerTrustGroupsOperations(this);
             ServerVulnerabilityAssessments = new ServerVulnerabilityAssessmentsOperations(this);
@@ -1021,6 +1024,15 @@ namespace Microsoft.Azure.Management.Sql
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             WorkloadClassifiers = new WorkloadClassifiersOperations(this);
             WorkloadGroups = new WorkloadGroupsOperations(this);
+            DatabaseExtensions = new DatabaseExtensionsOperations(this);
+            DatabaseOperations = new DatabaseOperations(this);
+            DatabaseUsages = new DatabaseUsagesOperations(this);
+            LedgerDigestUploads = new LedgerDigestUploadsOperations(this);
+            OutboundFirewallRules = new OutboundFirewallRulesOperations(this);
+            RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
+            RestorableDroppedManagedDatabases = new RestorableDroppedManagedDatabasesOperations(this);
+            Servers = new ServersOperations(this);
+            Usages = new UsagesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

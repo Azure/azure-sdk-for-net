@@ -22,6 +22,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private readonly AzureComponentFactory _componentFactory;
         private readonly EventHubOptions _options;
         private readonly INameResolver _nameResolver;
+        private readonly CheckpointClientProvider _checkpointClientProvider;
         private readonly ConcurrentDictionary<string, EventHubProducerClient> _producerCache;
         private readonly ConcurrentDictionary<string, IEventHubConsumerClient> _consumerCache = new();
 
@@ -30,13 +31,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             AzureComponentFactory componentFactory,
             IOptions<EventHubOptions> options,
             INameResolver nameResolver,
-            AzureEventSourceLogForwarder forwarder)
+            AzureEventSourceLogForwarder forwarder,
+            CheckpointClientProvider checkpointClientProvider)
         {
             forwarder.Start();
             _configuration = configuration;
             _componentFactory = componentFactory;
             _options = options.Value;
             _nameResolver = nameResolver;
+            _checkpointClientProvider = checkpointClientProvider;
             _producerCache = new ConcurrentDictionary<string, EventHubProducerClient>();
         }
 
@@ -166,11 +169,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal BlobContainerClient GetCheckpointStoreClient()
         {
-            var section = _configuration.GetWebJobsConnectionStringSection(ConnectionStringNames.Storage);
-            var options = _componentFactory.CreateClientOptions(typeof(BlobClientOptions), null, section);
-            var credential = _componentFactory.CreateTokenCredential(section);
-            var client = (BlobServiceClient)_componentFactory.CreateClient(typeof(BlobServiceClient), section, credential, options);
-
+            var client =  _checkpointClientProvider.Get(ConnectionStringNames.Storage);
             return client.GetBlobContainerClient(_options.CheckpointContainer);
         }
 

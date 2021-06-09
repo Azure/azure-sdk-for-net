@@ -143,11 +143,6 @@ namespace Microsoft.Azure.Management.Sql
         IServerUsagesOperations ServerUsages { get; }
 
         /// <summary>
-        /// Gets the IUsagesOperations.
-        /// </summary>
-        IUsagesOperations Usages { get; }
-
-        /// <summary>
         /// Gets the IBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
@@ -188,16 +183,6 @@ namespace Microsoft.Azure.Management.Sql
         IDatabaseColumnsOperations DatabaseColumns { get; }
 
         /// <summary>
-        /// Gets the IDatabaseExtensionsOperations.
-        /// </summary>
-        IDatabaseExtensionsOperations DatabaseExtensions { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseOperations.
-        /// </summary>
-        IDatabaseOperations DatabaseOperations { get; }
-
-        /// <summary>
         /// Gets the IDatabaseRecommendedActionsOperations.
         /// </summary>
         IDatabaseRecommendedActionsOperations DatabaseRecommendedActions { get; }
@@ -216,11 +201,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IDatabaseTablesOperations.
         /// </summary>
         IDatabaseTablesOperations DatabaseTables { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseUsagesOperations.
-        /// </summary>
-        IDatabaseUsagesOperations DatabaseUsages { get; }
 
         /// <summary>
         /// Gets the IDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
@@ -518,16 +498,6 @@ namespace Microsoft.Azure.Management.Sql
         IRecoverableManagedDatabasesOperations RecoverableManagedDatabases { get; }
 
         /// <summary>
-        /// Gets the IRestorableDroppedDatabasesOperations.
-        /// </summary>
-        IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
-
-        /// <summary>
-        /// Gets the IRestorableDroppedManagedDatabasesOperations.
-        /// </summary>
-        IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
-
-        /// <summary>
         /// Gets the IRestorePointsOperations.
         /// </summary>
         IRestorePointsOperations RestorePoints { get; }
@@ -581,11 +551,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerOperations.
         /// </summary>
         IServerOperations ServerOperations { get; }
-
-        /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        IServersOperations Servers { get; }
 
         /// <summary>
         /// Gets the IServerSecurityAlertPoliciesOperations.
@@ -656,6 +621,51 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IWorkloadGroupsOperations.
         /// </summary>
         IWorkloadGroupsOperations WorkloadGroups { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseExtensionsOperations.
+        /// </summary>
+        IDatabaseExtensionsOperations DatabaseExtensions { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseOperations.
+        /// </summary>
+        IDatabaseOperations DatabaseOperations { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseUsagesOperations.
+        /// </summary>
+        IDatabaseUsagesOperations DatabaseUsages { get; }
+
+        /// <summary>
+        /// Gets the ILedgerDigestUploadsOperations.
+        /// </summary>
+        ILedgerDigestUploadsOperations LedgerDigestUploads { get; }
+
+        /// <summary>
+        /// Gets the IOutboundFirewallRulesOperations.
+        /// </summary>
+        IOutboundFirewallRulesOperations OutboundFirewallRules { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedDatabasesOperations.
+        /// </summary>
+        IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedManagedDatabasesOperations.
+        /// </summary>
+        IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        IServersOperations Servers { get; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        IUsagesOperations Usages { get; }
 
     }
 }

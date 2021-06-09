@@ -2,6 +2,11 @@
 
 ## 4.0.0-beta.6 (Unreleased)
 
+### Breaking Changes
+
+- Changed `KeyVaultBackupClient.StartSelectiveRestore` and `StartSelectiveRestoreAsync` to `StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`.
+- Return only a `Response` from `KeyVaultAccessControlClient.DeleteRoleAssignment` and `DeleteRoleAssignmentAsync`. HTTP 404 responses no longer throw a `RequestFailedException`.
+- Return only a `Response` from `KeyVaultAccessControlClient.DeleteRoleDefinition` and `DeleteRoleDefinitionAsync`. HTTP 404 responses no longer throw a `RequestFailedException`.
 
 ## 4.0.0-beta.5 (2021-05-11)
 

@@ -100,17 +100,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataFeed = new DataFeed();
+            Assert.That(() => adminClient.UpdateDataFeedAsync(null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDataFeed(null), Throws.InstanceOf<ArgumentNullException>());
 
-            Assert.That(() => adminClient.UpdateDataFeedAsync(null, dataFeed), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateDataFeedAsync("", dataFeed), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateDataFeedAsync("dataFeedId", dataFeed), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateDataFeedAsync(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            var dataFeedWithNullId = new DataFeed();
 
-            Assert.That(() => adminClient.UpdateDataFeed(null, dataFeed), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateDataFeed("", dataFeed), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateDataFeed("dataFeedId", dataFeed), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateDataFeed(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDataFeedAsync(dataFeedWithNullId), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateDataFeed(dataFeedWithNullId), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -118,13 +114,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var dataFeed = new DataFeed();
+            var dataFeed = new DataFeed() { Id = FakeGuid };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => adminClient.UpdateDataFeedAsync(FakeGuid, dataFeed, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
-            Assert.That(() => adminClient.UpdateDataFeed(FakeGuid, dataFeed, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateDataFeedAsync(dataFeed, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateDataFeed(dataFeed, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]

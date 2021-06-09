@@ -5,9 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,20 +16,25 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsQueryResult
     {
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        internal LogsQueryResult()
+        /// <param name="tables"> The list of tables, columns and rows. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tables"/> is null. </exception>
+        internal LogsQueryResult(IEnumerable<LogsQueryResultTable> tables)
         {
-            Tables = new ChangeTrackingList<LogsQueryResultTable>();
+            if (tables == null)
+            {
+                throw new ArgumentNullException(nameof(tables));
+            }
+
+            Tables = tables.ToList();
         }
 
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
         /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <param name="statistics"> Any object. </param>
-        /// <param name="error"> . </param>
-        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement statistics, ErrorDetails error)
+        /// <param name="Statistics"> Statistics represented in JSON format. </param>
+        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement Statistics)
         {
             Tables = tables;
-            Statistics = statistics;
-            Error = error;
+            _statistics = Statistics;
         }
 
         /// <summary> The list of tables, columns and rows. </summary>

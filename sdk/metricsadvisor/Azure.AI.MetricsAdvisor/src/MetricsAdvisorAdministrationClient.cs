@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     {
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        private readonly AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient _serviceRestClient;
+        private readonly MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2RestClient _serviceRestClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class.
@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
 
-            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
 
-            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _serviceRestClient = new MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataFeedDetail, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataFeedDetail, cancellationToken).ConfigureAwait(false);
 
                 string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
 
@@ -328,7 +328,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataFeedDetail, cancellationToken);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataFeedDetail, cancellationToken);
 
                 string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
 
@@ -351,31 +351,34 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="DataFeed"/>.
+        /// Updates an existing <see cref="DataFeed"/>. In order to update your data feed, you cannot create a <see cref="DataFeed"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDataFeedAsync"/> or another CRUD operation and update it
+        /// before calling this method.
         /// </summary>
-        /// <param name="dataFeedId">The ID of the existing <see cref="DataFeed"/> to update.</param>
         /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> or <paramref name="dataFeed"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateDataFeedAsync(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> or <paramref name="dataFeed"/>.Id is null.</exception>
+        public virtual async Task<Response<DataFeed>> UpdateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
-            if (!string.IsNullOrEmpty(dataFeed.Id) && !dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
+
+            if (dataFeed.Id == null)
             {
-                throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
+                throw new ArgumentNullException(nameof(dataFeed), $"{nameof(dataFeed)}.Id not available. Call {nameof(GetDataFeedAsync)} and update the returned model before calling this method.");
             }
+
+            Guid dataFeedGuid = new Guid(dataFeed.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
             scope.Start();
             try
             {
                 DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
-                return await _serviceRestClient.UpdateDataFeedAsync(dataFeedGuid, patchModel, cancellationToken).ConfigureAwait(false);
+                Response<DataFeedDetail> response = await _serviceRestClient.UpdateDataFeedAsync(dataFeedGuid, patchModel, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DataFeed(response.Value), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -385,31 +388,34 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="DataFeed"/>.
+        /// Updates an existing <see cref="DataFeed"/>. In order to update your data feed, you cannot create a <see cref="DataFeed"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDataFeedAsync"/> or another CRUD operation and update it
+        /// before calling this method.
         /// </summary>
-        /// <param name="dataFeedId">The ID of the existing <see cref="DataFeed"/> to update.</param>
         /// <param name="dataFeed">The <see cref="DataFeed"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> or <paramref name="dataFeed"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateDataFeed(string dataFeedId, DataFeed dataFeed, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> or <paramref name="dataFeed"/>.Id is null.</exception>
+        public virtual Response<DataFeed> UpdateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
-            if (!string.IsNullOrEmpty(dataFeed.Id) && !dataFeedId.Equals(dataFeed.Id, StringComparison.OrdinalIgnoreCase))
+
+            if (dataFeed.Id == null)
             {
-                throw new ArgumentException($"{nameof(dataFeedId)} does not match {nameof(dataFeed.Id)}");
+                throw new ArgumentNullException(nameof(dataFeed), $"{nameof(dataFeed)}.Id not available. Call {nameof(GetDataFeed)} and update the returned model before calling this method.");
             }
+
+            Guid dataFeedGuid = new Guid(dataFeed.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
             scope.Start();
             try
             {
                 DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
-                return _serviceRestClient.UpdateDataFeed(dataFeedGuid, patchModel, cancellationToken);
+                Response<DataFeedDetail> response = _serviceRestClient.UpdateDataFeed(dataFeedGuid, patchModel, cancellationToken);
+                return Response.FromValue(new DataFeed(response.Value), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -735,7 +741,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyDetectionConfigurationAsync(detectionConfiguration, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyDetectionConfigurationAsync(detectionConfiguration, cancellationToken).ConfigureAwait(false);
                 string detectionConfigurationId = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
                 try
@@ -776,7 +782,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = _serviceRestClient.CreateAnomalyDetectionConfiguration(detectionConfiguration, cancellationToken);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = _serviceRestClient.CreateAnomalyDetectionConfiguration(detectionConfiguration, cancellationToken);
                 string detectionConfigurationId = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
                 try
@@ -856,24 +862,27 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="AnomalyDetectionConfiguration"/> in this resource.
+        /// Updates an existing <see cref="AnomalyDetectionConfiguration"/>. In order to update your configuration, you cannot create an <see cref="AnomalyDetectionConfiguration"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDetectionConfigurationAsync"/> or another CRUD operation and update
+        /// it before calling this method.
         /// </summary>
-        /// <param name="detectionConfigurationId">The ID of the existing <see cref="AnomalyDetectionConfiguration"/> to update.</param>
         /// <param name="detectionConfiguration">The <see cref="AnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyDetectionConfiguration"/>
+        /// instance containing information about the updated configuration.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateDetectionConfigurationAsync(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/> or <paramref name="detectionConfiguration"/>.Id is null.</exception>
+        public virtual async Task<Response<AnomalyDetectionConfiguration>> UpdateDetectionConfigurationAsync(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
-            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
-            if (!string.IsNullOrEmpty(detectionConfiguration.Id) && !detectionConfigurationId.Equals(detectionConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+
+            if (detectionConfiguration.Id == null)
             {
-                throw new ArgumentException($"{nameof(detectionConfigurationId)} does not match {nameof(detectionConfiguration.Id)}");
+                throw new ArgumentNullException(nameof(detectionConfiguration), $"{nameof(detectionConfiguration)}.Id not available. Call {nameof(GetDetectionConfigurationAsync)} and update the returned model before calling this method.");
             }
+
+            Guid detectionConfigurationGuid = new Guid(detectionConfiguration.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDetectionConfiguration)}");
             scope.Start();
@@ -891,24 +900,27 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="AnomalyDetectionConfiguration"/> in this resource.
+        /// Updates an existing <see cref="AnomalyDetectionConfiguration"/>. In order to update your configuration, you cannot create an <see cref="AnomalyDetectionConfiguration"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDetectionConfiguration"/> or another CRUD operation and update
+        /// it before calling this method.
         /// </summary>
-        /// <param name="detectionConfigurationId">The ID of the existing <see cref="AnomalyDetectionConfiguration"/> to update.</param>
         /// <param name="detectionConfiguration">The <see cref="AnomalyDetectionConfiguration"/> instance containing the desired updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyDetectionConfiguration"/>
+        /// instance containing information about the updated configuration.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateDetectionConfiguration(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/> or <paramref name="detectionConfiguration"/>.Id is null.</exception>
+        public virtual Response<AnomalyDetectionConfiguration> UpdateDetectionConfiguration(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
-            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
-            if (!string.IsNullOrEmpty(detectionConfiguration.Id) && !detectionConfigurationId.Equals(detectionConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+
+            if (detectionConfiguration.Id == null)
             {
-                throw new ArgumentException($"{nameof(detectionConfigurationId)} does not match {nameof(detectionConfiguration.Id)}");
+                throw new ArgumentNullException(nameof(detectionConfiguration), $"{nameof(detectionConfiguration)}.Id not available. Call {nameof(GetDetectionConfiguration)} and update the returned model before calling this method.");
             }
+
+            Guid detectionConfigurationGuid = new Guid(detectionConfiguration.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDetectionConfiguration)}");
             scope.Start();
@@ -930,13 +942,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Advisor resource.
         /// </summary>
         /// <param name="metricId">Filters the result. The unique identifier of the metric to which the returned <see cref="AnomalyDetectionConfiguration"/>s apply.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyDetectionConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
-        public virtual AsyncPageable<AnomalyDetectionConfiguration> GetDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnomalyDetectionConfiguration> GetDetectionConfigurationsAsync(string metricId, GetDetectionConfigurationsOptions options = default, CancellationToken cancellationToken = default)
         {
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<AnomalyDetectionConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
@@ -945,8 +961,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricGuid, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricGuid, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -955,7 +971,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
 
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            async Task<Page<AnomalyDetectionConfiguration>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDetectionConfigurations)}");
+                scope.Start();
+
+                try
+                {
+                    Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricNextPageAsync(nextLink, metricGuid, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -963,13 +996,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Advisor resource.
         /// </summary>
         /// <param name="metricId">Filters the result. The unique identifier of the metric to which the returned <see cref="AnomalyDetectionConfiguration"/>s apply.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="AnomalyDetectionConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
-        public virtual Pageable<AnomalyDetectionConfiguration> GetDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnomalyDetectionConfiguration> GetDetectionConfigurations(string metricId, GetDetectionConfigurationsOptions options = default, CancellationToken cancellationToken = default)
         {
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             Page<AnomalyDetectionConfiguration> FirstPageFunc(int? pageSizeHint)
             {
@@ -978,8 +1015,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricGuid, cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricGuid, skip, maxPageSize, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -988,7 +1025,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
 
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Page<AnomalyDetectionConfiguration> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDetectionConfigurations)}");
+                scope.Start();
+
+                try
+                {
+                    Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricNextPage(nextLink, metricGuid, skip, maxPageSize, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -1080,7 +1134,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyAlertingConfigurationAsync(alertConfiguration, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyAlertingConfigurationAsync(alertConfiguration, cancellationToken).ConfigureAwait(false);
                 string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
                 try
@@ -1122,7 +1176,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = _serviceRestClient.CreateAnomalyAlertingConfiguration(alertConfiguration, cancellationToken);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = _serviceRestClient.CreateAnomalyAlertingConfiguration(alertConfiguration, cancellationToken);
                 string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
                 try
@@ -1144,24 +1198,27 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="AnomalyAlertConfiguration"/>.
+        /// Updates an existing <see cref="AnomalyAlertConfiguration"/>. In order to update your configuration, you cannot create an <see cref="AnomalyAlertConfiguration"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetAlertConfigurationAsync"/> or another CRUD operation and update
+        /// it before calling this method.
         /// </summary>
-        /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="alertConfiguration">The <see cref="AnomalyAlertConfiguration"/> containing the updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/>
+        /// instance containing information about the updated configuration.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateAlertConfigurationAsync(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.Id is null.</exception>
+        public virtual async Task<Response<AnomalyAlertConfiguration>> UpdateAlertConfigurationAsync(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
-            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
-            if (!string.IsNullOrEmpty(alertConfiguration.Id) && !alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+
+            if (alertConfiguration.Id == null)
             {
-                throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
+                throw new ArgumentNullException(nameof(alertConfiguration), $"{nameof(alertConfiguration)}.Id not available. Call {nameof(GetAlertConfigurationAsync)} and update the returned model before calling this method.");
             }
+
+            Guid alertConfigurationGuid = new Guid(alertConfiguration.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAlertConfiguration)}");
             scope.Start();
@@ -1179,24 +1236,27 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="AnomalyAlertConfiguration"/>.
+        /// Updates an existing <see cref="AnomalyAlertConfiguration"/>. In order to update your configuration, you cannot create an <see cref="AnomalyAlertConfiguration"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetAlertConfiguration"/> or another CRUD operation and update
+        /// it before calling this method.
         /// </summary>
-        /// <param name="alertConfigurationId">The unique identifier of the <see cref="AnomalyAlertConfiguration"/>.</param>
         /// <param name="alertConfiguration">The <see cref="AnomalyAlertConfiguration"/> containing the updates.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response"/> containing the result of the operation.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/>
+        /// instance containing information about the updated configuration.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateAlertConfiguration(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.Id is null.</exception>
+        public virtual Response<AnomalyAlertConfiguration> UpdateAlertConfiguration(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
-            Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
-            if (!string.IsNullOrEmpty(alertConfiguration.Id) && !alertConfigurationId.Equals(alertConfiguration.Id, StringComparison.OrdinalIgnoreCase))
+
+            if (alertConfiguration.Id == null)
             {
-                throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
+                throw new ArgumentNullException(nameof(alertConfiguration), $"{nameof(alertConfiguration)}.Id not available. Call {nameof(GetAlertConfiguration)} and update the returned model before calling this method.");
             }
+
+            Guid alertConfigurationGuid = new Guid(alertConfiguration.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAlertConfiguration)}");
             scope.Start();
@@ -1276,13 +1336,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Advisor resource.
         /// </summary>
         /// <param name="detectionConfigurationId">Filters the result. The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual AsyncPageable<AnomalyAlertConfiguration> GetAlertConfigurationsAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnomalyAlertConfiguration> GetAlertConfigurationsAsync(string detectionConfigurationId, GetAlertConfigurationsOptions options = default, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
+
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<AnomalyAlertConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1291,8 +1355,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1301,7 +1365,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
 
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            async Task<Page<AnomalyAlertConfiguration>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAlertConfigurations)}");
+                scope.Start();
+
+                try
+                {
+                    Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationNextPageAsync(nextLink, detectionConfigurationGuid, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -1309,13 +1390,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Advisor resource.
         /// </summary>
         /// <param name="detectionConfigurationId">Filters the result. The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Pageable<AnomalyAlertConfiguration> GetAlertConfigurations(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnomalyAlertConfiguration> GetAlertConfigurations(string detectionConfigurationId, GetAlertConfigurationsOptions options = default, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
+
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
 
             Page<AnomalyAlertConfiguration> FirstPageFunc(int? pageSizeHint)
             {
@@ -1324,8 +1409,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(detectionConfigurationGuid, cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(detectionConfigurationGuid, skip, maxPageSize, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1334,7 +1419,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
 
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Page<AnomalyAlertConfiguration> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAlertConfigurations)}");
+                scope.Start();
+
+                try
+                {
+                    Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationNextPage(nextLink, detectionConfigurationGuid, skip, maxPageSize, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -1417,7 +1519,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = await _serviceRestClient.CreateHookAsync(hook, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = await _serviceRestClient.CreateHookAsync(hook, cancellationToken).ConfigureAwait(false);
                 string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
                 try
@@ -1458,7 +1560,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = _serviceRestClient.CreateHook(hook, cancellationToken);
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = _serviceRestClient.CreateHook(hook, cancellationToken);
                 string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
                 try
@@ -1480,20 +1582,26 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="NotificationHook"/>.
+        /// Updates an existing <see cref="NotificationHook"/>. In order to update your hook, you cannot create a <see cref="NotificationHook"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetHookAsync"/> or another CRUD operation and update it
+        /// before calling this method.
         /// </summary>
-        /// <param name="hookId">The ID of the existing <see cref="NotificationHook"/> to update.</param>
         /// <param name="hook">The <see cref="NotificationHook"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hookId"/> or <paramref name="hook"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateHookAsync(string hookId, NotificationHook hook, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="hook"/> or <paramref name="hook"/>.Id is null.</exception>
+        public virtual async Task<Response<NotificationHook>> UpdateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
         {
-            Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
+
+            if (hook.Id == null)
+            {
+                throw new ArgumentNullException(nameof(hook), $"{nameof(hook)}.Id not available. Call {nameof(GetHookAsync)} and update the returned model before calling this method.");
+            }
+
+            Guid hookGuid = new Guid(hook.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
             scope.Start();
@@ -1512,20 +1620,26 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="NotificationHook"/>.
+        /// Updates an existing <see cref="NotificationHook"/>. In order to update your hook, you cannot create a <see cref="NotificationHook"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetHook"/> or another CRUD operation and update it
+        /// before calling this method.
         /// </summary>
-        /// <param name="hookId">The ID of the existing <see cref="NotificationHook"/> to update.</param>
         /// <param name="hook">The <see cref="NotificationHook"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hookId"/> or <paramref name="hook"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateHook(string hookId, NotificationHook hook, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="hook"/> or <paramref name="hook"/>.Id is null.</exception>
+        public virtual Response<NotificationHook> UpdateHook(NotificationHook hook, CancellationToken cancellationToken = default)
         {
-            Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
+
+            if (hook.Id == null)
+            {
+                throw new ArgumentNullException(nameof(hook), $"{nameof(hook)}.Id not available. Call {nameof(GetHook)} and update the returned model before calling this method.");
+            }
+
+            Guid hookGuid = new Guid(hook.Id);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
             scope.Start();
@@ -1758,7 +1872,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
             else if (hook is WebNotificationHook webHook)
             {
-                Argument.AssertNotNullOrEmpty(webHook.Endpoint, $"{paramName}.{nameof(WebNotificationHook.Endpoint)}");
+                Argument.AssertNotNull(webHook.Endpoint, $"{paramName}.{nameof(WebNotificationHook.Endpoint)}");
             }
             else
             {
@@ -1767,5 +1881,383 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         #endregion NotificationHook
+
+        #region Credential
+
+        /// <summary>
+        /// Creates a <see cref="DatasourceCredential"/> and assigns it a unique ID. This API provides different ways of
+        /// authenticating to a <see cref="DataFeedSource"/> for data ingestion when the default authentication method does not suffice.
+        /// Please see <see cref="DatasourceCredential"/> for a list of supported credentials.
+        /// </summary>
+        /// <param name="datasourceCredential">Specifies how the created <see cref="DatasourceCredential"/> should be configured.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
+        /// instance containing information about the created datasource credential.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredential"/> is null.</exception>
+        public virtual async Task<Response<DatasourceCredential>> CreateDatasourceCredentialAsync(DatasourceCredential datasourceCredential, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(datasourceCredential, nameof(datasourceCredential));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDatasourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> response = await _serviceRestClient.CreateCredentialAsync(datasourceCredential, cancellationToken).ConfigureAwait(false);
+                string credentialId = ClientCommon.GetCredentialId(response.Headers.Location);
+
+                try
+                {
+                    var createdCredential = await GetDatasourceCredentialAsync(credentialId, cancellationToken).ConfigureAwait(false);
+
+                    return Response.FromValue(createdCredential, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The datasource credential has been created successfully, but the client failed to fetch its data. Datasource Credential ID: {credentialId}", ex);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="DatasourceCredential"/> and assigns it a unique ID. This API provides different ways of
+        /// authenticating to a <see cref="DataFeedSource"/> for data ingestion when the default authentication method does not suffice.
+        /// Please see <see cref="DatasourceCredential"/> for a list of supported credentials.
+        /// </summary>
+        /// <param name="datasourceCredential">Specifies how the created <see cref="DatasourceCredential"/> should be configured.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
+        /// instance containing information about the created datasource credential.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredential"/> is null.</exception>
+        public virtual Response<DatasourceCredential> CreateDatasourceCredential(DatasourceCredential datasourceCredential, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(datasourceCredential, nameof(datasourceCredential));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDatasourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> response = _serviceRestClient.CreateCredential(datasourceCredential, cancellationToken);
+                string credentialId = ClientCommon.GetCredentialId(response.Headers.Location);
+
+                try
+                {
+                    var createdCredential = GetDatasourceCredential(credentialId, cancellationToken);
+
+                    return Response.FromValue(createdCredential, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The datasource credential has been created successfully, but the client failed to fetch its data. Datasource Credential ID: {credentialId}", ex);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing <see cref="DatasourceCredential"/>. In order to update your credential, you cannot create a <see cref="DatasourceCredential"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDatasourceCredentialAsync"/> or another CRUD operation and update
+        /// it before calling this method.
+        /// </summary>
+        /// <param name="datasourceCredential">The <see cref="DatasourceCredential"/> model containing the updates to be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
+        /// instance containing information about the updated credential.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredential"/> or <paramref name="datasourceCredential"/>.Id is null.</exception>
+        public virtual async Task<Response<DatasourceCredential>> UpdateDatasourceCredentialAsync(DatasourceCredential datasourceCredential, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(datasourceCredential, nameof(datasourceCredential));
+
+            if (datasourceCredential.Id == null)
+            {
+                throw new ArgumentNullException(nameof(datasourceCredential), $"{nameof(datasourceCredential)}.Id not available. Call {nameof(GetDatasourceCredentialAsync)} and update the returned model before calling this method.");
+            }
+
+            Guid credentialGuid = new Guid(datasourceCredential.Id);
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDatasourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                DataSourceCredentialPatch patch = datasourceCredential.GetPatchModel();
+
+                return await _serviceRestClient.UpdateCredentialAsync(credentialGuid, patch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing <see cref="DatasourceCredential"/>. In order to update your credential, you cannot create a <see cref="DatasourceCredential"/>
+        /// directly from its constructor. You need to obtain an instance via <see cref="GetDatasourceCredentialAsync"/> or another CRUD operation and update
+        /// it before calling this method.
+        /// </summary>
+        /// <param name="datasourceCredential">The <see cref="DatasourceCredential"/> model containing the updates to be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
+        /// instance containing information about the updated credential.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredential"/> or <paramref name="datasourceCredential"/>.Id is null.</exception>
+        public virtual Response<DatasourceCredential> UpdateDatasourceCredential(DatasourceCredential datasourceCredential, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(datasourceCredential, nameof(datasourceCredential));
+
+            if (datasourceCredential.Id == null)
+            {
+                throw new ArgumentNullException(nameof(datasourceCredential), $"{nameof(datasourceCredential)}.Id not available. Call {nameof(GetDatasourceCredential)} and update the returned model before calling this method.");
+            }
+
+            Guid credentialGuid = new Guid(datasourceCredential.Id);
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDatasourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                DataSourceCredentialPatch patch = datasourceCredential.GetPatchModel();
+
+                return _serviceRestClient.UpdateCredential(credentialGuid, patch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets an existing <see cref="DatasourceCredential"/>.
+        /// </summary>
+        /// <param name="datasourceCredentialId">The unique identifier of the <see cref="DatasourceCredential"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
+        /// instance containing the requested information.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="datasourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual async Task<Response<DatasourceCredential>> GetDatasourceCredentialAsync(string datasourceCredentialId, CancellationToken cancellationToken = default)
+        {
+            Guid credentialGuid = ClientCommon.ValidateGuid(datasourceCredentialId, nameof(datasourceCredentialId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                return await _serviceRestClient.GetCredentialAsync(credentialGuid, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets an existing <see cref="DatasourceCredential"/>.
+        /// </summary>
+        /// <param name="datasourceCredentialId">The unique identifier of the <see cref="DatasourceCredential"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DatasourceCredential"/>
+        /// instance containing the requested information.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="datasourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual Response<DatasourceCredential> GetDatasourceCredential(string datasourceCredentialId, CancellationToken cancellationToken = default)
+        {
+            Guid credentialGuid = ClientCommon.ValidateGuid(datasourceCredentialId, nameof(datasourceCredentialId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                return _serviceRestClient.GetCredential(credentialGuid, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of items describing the existing <see cref="DatasourceCredential"/> instances in this Metrics
+        /// Advisor resource.
+        /// </summary>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DatasourceCredential"/> instances.</returns>
+        public virtual AsyncPageable<DatasourceCredential> GetDatasourceCredentialsAsync(GetDatasourceCredentialsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
+
+            async Task<Page<DatasourceCredential>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredentials)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = await _serviceRestClient.ListCredentialsAsync(skip, maxPageSize, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<DatasourceCredential>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredentials)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = await _serviceRestClient.ListCredentialsNextPageAsync(nextLink, skip, maxPageSize, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a collection of items describing the existing <see cref="DatasourceCredential"/> instances in this Metrics
+        /// Advisor resource.
+        /// </summary>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DatasourceCredential"/> instances.</returns>
+        public virtual Pageable<DatasourceCredential> GetDatasourceCredentials(GetDatasourceCredentialsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
+
+            Page<DatasourceCredential> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredentials)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = _serviceRestClient.ListCredentials(skip, maxPageSize, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<DatasourceCredential> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDatasourceCredentials)}");
+                scope.Start();
+
+                try
+                {
+                    Response<DataSourceCredentialList> response = _serviceRestClient.ListCredentialsNextPage(nextLink, skip, maxPageSize, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Deletes an existing <see cref="DatasourceCredential"/>.
+        /// </summary>
+        /// <param name="datasourceCredentialId">The unique identifier of the <see cref="DatasourceCredential"/> to be deleted.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="datasourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual async Task<Response> DeleteDatasourceCredentialAsync(string datasourceCredentialId, CancellationToken cancellationToken = default)
+        {
+            Guid credentialGuid = ClientCommon.ValidateGuid(datasourceCredentialId, nameof(datasourceCredentialId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDatasourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                return await _serviceRestClient.DeleteCredentialAsync(credentialGuid, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an existing <see cref="DatasourceCredential"/>.
+        /// </summary>
+        /// <param name="datasourceCredentialId">The unique identifier of the <see cref="DatasourceCredential"/> to be deleted.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="datasourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="datasourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual Response DeleteDatasourceCredential(string datasourceCredentialId, CancellationToken cancellationToken = default)
+        {
+            Guid credentialGuid = ClientCommon.ValidateGuid(datasourceCredentialId, nameof(datasourceCredentialId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDatasourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                return _serviceRestClient.DeleteCredential(credentialGuid, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion Credential
     }
 }
