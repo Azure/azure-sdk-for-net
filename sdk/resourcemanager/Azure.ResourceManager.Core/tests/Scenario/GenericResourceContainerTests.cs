@@ -23,6 +23,9 @@ namespace Azure.ResourceManager.Core.Tests
             GenericResource aset2 = await genericResources.GetAsync(aset.Data.Id);
 
             AssertAreEqual(aset, aset2);
+
+            var resourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1/providers/Microsoft.Compute/availabilitySets/foo-1";
+            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await genericResources.GetAsync(resourceId));
         }
 
         [TestCase]
