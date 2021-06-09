@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Core.Tests
             var count = await GetResourceCountAsync(Client.DefaultSubscription.GetGenericResources(), rg1);
             Assert.AreEqual(2, count);
 
-            count = await GetResourceCountAsync (Client.DefaultSubscription.GetGenericResources(), rg2);
+            count = await GetResourceCountAsync(Client.DefaultSubscription.GetGenericResources(), rg2);
             Assert.AreEqual(1, count);
         }
 
@@ -71,6 +72,13 @@ namespace Azure.ResourceManager.Core.Tests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             Assert.DoesNotThrowAsync(async () => _ = await CreateGenericAvailabilitySetAsync(rg.Id));
+
+            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var resourceId = rg.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(resourceId, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await genericResources.CreateOrUpdateAsync(null, ConstructGenericAvailabilitySet()));
+            var rgId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
+            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await CreateGenericAvailabilitySetAsync(rgId));
         }
 
         [TestCase]
@@ -79,7 +87,8 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             ResourceGroup rg = await rgOp.WaitForCompletionAsync();
-            Assert.DoesNotThrowAsync(async () => {
+            Assert.DoesNotThrowAsync(async () =>
+            {
                 var createOp = await StartCreateGenericAvailabilitySetAsync(rg.Id);
                 _ = await createOp.WaitForCompletionAsync();
             });
