@@ -16,8 +16,12 @@
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
-
+  
   <ItemGroup>
+    <PackageReference Include="System.Memory.Data" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net5.0' ">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Buffers" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
