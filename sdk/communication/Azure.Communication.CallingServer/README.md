@@ -32,7 +32,7 @@ Calling server client can be authenticated using the connection string acquired 
 
 ```C# Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-CallingServerClient client = new CallingServerClient(connectionString);
+CallingServerClient callingServerClient = new CallingServerClient(connectionString);
 ```
 
 ## Examples
@@ -49,12 +49,12 @@ var createCallOption = new CreateCallOptions(
        });
 ```
 ```C# Snippet:Azure_Communication_Call_Tests_CreateCallAsync
-var callConnection = await callClient.CreateCallConnectionAsync(
+var callConnection = await callingServerClient.CreateCallConnectionAsync(
     source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
     options: createCallOption // The options for creating a call.
     );
-Console.WriteLine($"Call Leg id: {callConnection.Value.CallConnectionId}");
+Console.WriteLine($"Call connection id: {callConnection.Value.CallConnectionId}");
 ```
 
 ## Troubleshooting
