@@ -558,6 +558,7 @@ namespace Azure.AI.TextAnalytics
         #endregion Linked Entities
 
         #region Result Models
+
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.
         /// </summary>
@@ -596,44 +597,38 @@ namespace Azure.AI.TextAnalytics
             return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities, entityRelations, warnings);
         }
 
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="result">Sets the collection of <see cref="TextAnalytics.ExtractKeyPhrasesResultCollection"/> property.</param>
-        /// <param name="completedOn">Sets the collection of <see cref="DateTimeOffset"/> property.</param>
-        /// <param name="error">Sets the collection of <see cref="TextAnalyticsErrorInternal"/> property.</param>
+        /// <param name="result">Sets the <see cref="TextAnalytics.ExtractKeyPhrasesResultCollection"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="DateTimeOffset"/> property.</param>
+        /// <param name="code">Sets the code property.</param>
+        /// <param name="message">Sets the message property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.</returns>
         public static ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(
             ExtractKeyPhrasesResultCollection result,
             DateTimeOffset completedOn,
-            TextAnalyticsErrorInternal error)
+            string code,
+            string message)
         {
-            return new ExtractKeyPhrasesActionResult(result, completedOn, error);
+            return new ExtractKeyPhrasesActionResult(result, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="result">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentResultCollection"/> property.</param>
-        /// <param name="completedOn">Sets the collection of <see cref="DateTimeOffset"/> property.</param>
-        /// <param name="error">Sets the collection of <see cref="TextAnalyticsErrorInternal"/> property.</param>
+        /// <param name="result">Sets the <see cref="TextAnalytics.AnalyzeSentimentResultCollection"/> property.</param>
+        /// <param name="completedOn">Sets the <see cref="DateTimeOffset"/> property.</param>
+        /// <param name="code">Sets the code property.</param>
+        /// <param name="message">Sets the message property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.</returns>
         public static AnalyzeSentimentActionResult AnalyzeSentimentActionResult(
             AnalyzeSentimentResultCollection result,
             DateTimeOffset completedOn,
-            TextAnalyticsErrorInternal error)
+            string code,
+            string message)
         {
-            return new AnalyzeSentimentActionResult(result, completedOn, error);
+            return new AnalyzeSentimentActionResult(result, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
         /// <summary>
@@ -755,6 +750,5 @@ namespace Azure.AI.TextAnalytics
             return new HealthcareEntityRelationRole(new HealthcareEntityInternal(text, category, offset, length, confidenceScore), entityName);
         }
         #endregion Model Classes
-
     }
 }
