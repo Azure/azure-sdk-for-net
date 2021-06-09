@@ -21,6 +21,8 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary>
         /// Optional.  Specified that extended info should be included in the <see cref="ShareFileItem"/>.
+        /// If set to true, the Content-Length property will be up to date.  Implicitly set to true
+        /// if any <see cref="ShareFileTraits"/> are set.
         /// </summary>
         public bool? IncludeExtendedInfo { get; set; }
     }
