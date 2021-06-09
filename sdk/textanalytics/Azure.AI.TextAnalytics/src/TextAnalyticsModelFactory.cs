@@ -557,7 +557,7 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Linked Entities
 
-        #region Result Models
+        #region Action Result Models
 
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.
@@ -576,25 +576,6 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults)
         {
             return new AnalyzeActionsResult(extractKeyPhrasesActionResult, recognizeEntitiesActionResults, recognizePiiEntitiesActionResults, recognizeLinkedEntitiesActionsResults, analyzeSentimentActionsResults);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.
-        /// </summary>
-        /// <param name="id">Sets the id property.</param>
-        /// <param name="statistics">Sets the <see cref="TextAnalytics.TextDocumentStatistics"/> property.</param>
-        /// <param name="healthcareEntities">Sets the collection of <see cref="TextAnalytics.HealthcareEntity"/> property.</param>
-        /// <param name="entityRelations">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelation"/> property.</param>
-        /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.</returns>
-        public static AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(
-            string id,
-            TextDocumentStatistics statistics,
-            IList<HealthcareEntity> healthcareEntities,
-            IList<HealthcareEntityRelation> entityRelations,
-            IList<TextAnalyticsWarning> warnings)
-        {
-            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities, entityRelations, warnings);
         }
 
         /// <summary>
@@ -680,6 +661,29 @@ namespace Azure.AI.TextAnalytics
             return new RecognizeEntitiesActionResult(result, completedOn, new TextAnalyticsErrorInternal(code, message));
         }
 
+        #endregion Action Result Models
+
+        #region Healthcare
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the id property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalytics.TextDocumentStatistics"/> property.</param>
+        /// <param name="healthcareEntities">Sets the collection of <see cref="TextAnalytics.HealthcareEntity"/> property.</param>
+        /// <param name="entityRelations">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelation"/> property.</param>
+        /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.</returns>
+        public static AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            IList<HealthcareEntity> healthcareEntities,
+            IList<HealthcareEntityRelation> entityRelations,
+            IList<TextAnalyticsWarning> warnings)
+        {
+            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities, entityRelations, warnings);
+        }
+
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResultCollection"/> for mocking purposes.
         /// </summary>
@@ -694,9 +698,7 @@ namespace Azure.AI.TextAnalytics
         {
             return new AnalyzeHealthcareEntitiesResultCollection(list, statistics, modelVersion);
         }
-        #endregion Result Models
 
-        #region Model Classes
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.HealthcareEntity"/> for mocking purposes.
         /// </summary>
@@ -714,19 +716,6 @@ namespace Azure.AI.TextAnalytics
             double confidenceScore)
         {
             return new HealthcareEntity(new HealthcareEntityInternal(text, category, offset, length, confidenceScore));
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.HealthcareEntityRelation"/> for mocking purposes.
-        /// </summary>
-        /// <param name="relationType">Sets the <see cref="HealthcareEntityRelationType"/> property.</param>
-        /// <param name="roles">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelationRole"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.HealthcareEntityRelation"/> for mocking purposes.</returns>
-        public static HealthcareEntityRelation HealthcareEntityRelation(
-            HealthcareEntityRelationType relationType,
-            IReadOnlyCollection<HealthcareEntityRelationRole> roles)
-        {
-            return new HealthcareEntityRelation(relationType, roles);
         }
 
         /// <summary>
@@ -749,6 +738,19 @@ namespace Azure.AI.TextAnalytics
         {
             return new HealthcareEntityRelationRole(new HealthcareEntityInternal(text, category, offset, length, confidenceScore), entityName);
         }
-        #endregion Model Classes
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.HealthcareEntityRelation"/> for mocking purposes.
+        /// </summary>
+        /// <param name="relationType">Sets the <see cref="HealthcareEntityRelationType"/> property.</param>
+        /// <param name="roles">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelationRole"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.HealthcareEntityRelation"/> for mocking purposes.</returns>
+        public static HealthcareEntityRelation HealthcareEntityRelation(
+            HealthcareEntityRelationType relationType,
+            IReadOnlyCollection<HealthcareEntityRelationRole> roles)
+        {
+            return new HealthcareEntityRelation(relationType, roles);
+        }
+        #endregion Healthcare
     }
 }
