@@ -31,14 +31,14 @@ namespace Azure.Communication.CallingServer.Tests
         protected CallingServerClient CreateInstrumentedCallingServerClient()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
-            CallingServerClient client = new CallingServerClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+            CallingServerClient callingServerClient = new CallingServerClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
 
             #region Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
             //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-            //@@CallClient client = new CallClient(connectionString);
+            //@@CallingServerClient callingServerClient = new CallingServerClient(connectionString);
             #endregion Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
 
-            return InstrumentClient(client);
+            return InstrumentClient(callingServerClient);
         }
         protected async Task SleepIfNotInPlaybackModeAsync()
         {

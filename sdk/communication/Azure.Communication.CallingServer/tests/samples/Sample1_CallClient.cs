@@ -37,10 +37,10 @@ namespace Azure.Communication.CallingServer.Tests
                        EventSubscriptionType.DtmfReceived
                    });
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallOptions
-            CallingServerClient callClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
             Console.WriteLine("Performing CreateCallConnection operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCallAsync
-            var callConnection = await callClient.CreateCallConnectionAsync(
+            var callConnection = await callingServerClient.CreateCallConnectionAsync(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
                 //@@ options: createCallOption // The options for creating a call.
@@ -67,10 +67,10 @@ namespace Azure.Communication.CallingServer.Tests
                        EventSubscriptionType.ParticipantsUpdated,
                        EventSubscriptionType.DtmfReceived
                    });
-            CallingServerClient callClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
             Console.WriteLine("Performing CreateCallConnection operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCall
-            var callConnection = callClient.CreateCallConnection(
+            var callConnection = callingServerClient.CreateCallConnection(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
                 //@@ options: createCallOption // The options for creating a call.
