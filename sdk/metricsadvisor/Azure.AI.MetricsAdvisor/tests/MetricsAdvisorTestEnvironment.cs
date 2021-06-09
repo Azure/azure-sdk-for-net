@@ -8,14 +8,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class MetricsAdvisorTestEnvironment : TestEnvironment
     {
-        public const string MetricsAdvisorApiKeyVariableName = "METRICSADVISOR_PRIMARY_API_KEY";
-        public const string MetricsAdvisoSubscriptionKeyVariableName = "METRICSADVISOR_SUBSCRIPTION_KEY";
-        public const string MetricsAdvisorAccountNameVariableName = "METRICSADVISOR_ACCOUNT_NAME";
-
-        public string MetricsAdvisorApiKey => GetRecordedVariable(MetricsAdvisorApiKeyVariableName, options => options.IsSecret());
-        public string MetricsAdvisorSubscriptionKey => GetRecordedVariable(MetricsAdvisoSubscriptionKeyVariableName, options => options.IsSecret());
-        public string MetricsAdvisorAccountName => GetRecordedVariable(MetricsAdvisorAccountNameVariableName);
-        public string MetricsAdvisorUri => $"https://{MetricsAdvisorAccountName}.cognitiveservices.azure.com";
+        public const string DefaultEndpointSuffix = "azure.com";
+        public string MetricsAdvisorApiKey => GetRecordedVariable("METRICSADVISOR_PRIMARY_API_KEY", options => options.IsSecret());
+        public string MetricsAdvisorSubscriptionKey => GetRecordedVariable("METRICSADVISOR_SUBSCRIPTION_KEY", options => options.IsSecret());
+        public string MetricsAdvisorAccountName => GetRecordedVariable("METRICSADVISOR_ACCOUNT_NAME");
+        public string MetricsAdvisorEndpointSuffix => GetRecordedOptionalVariable("METRICSADVISOR_ENDPOINT_SUFFIX") ?? DefaultEndpointSuffix;
+        public string MetricsAdvisorUri => $"https://{MetricsAdvisorAccountName}.cognitiveservices.{MetricsAdvisorEndpointSuffix}";
 
         // Data feed sources
         public string SqlServerConnectionString => GetRecordedVariable("METRICSADVISOR_SQL_SERVER_CONNECTION_STRING", options => options.IsSecret(SanitizedValue.Base64));
