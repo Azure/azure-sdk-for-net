@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
     public class AnomalyDetectionConfigurationLiveTests : MetricsAdvisorLiveTestBase
     {
         private const string MetricName = "metric";
-        private const string DimensionNameA = "DimensionA";
+        private const string DimensionNameA = "dimensionA";
         private const string DimensionNameB = "dimensionB";
 
         public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync)
