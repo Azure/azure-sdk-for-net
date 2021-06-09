@@ -16,7 +16,7 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 Install the Azure Metrics Advisor client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.3
+dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.4
 ```
 
 ### Prerequisites
@@ -225,7 +225,7 @@ Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
 Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
 Console.WriteLine($"Data feed administrators:");
-foreach (string admin in createdDataFeed.Administrators)
+foreach (string admin in createdDataFeed.AdministratorsEmails)
 {
     Console.WriteLine($" - {admin}");
 }
@@ -233,13 +233,13 @@ foreach (string admin in createdDataFeed.Administrators)
 Console.WriteLine($"Metric IDs:");
 foreach (DataFeedMetric metric in createdDataFeed.Schema.MetricColumns)
 {
-    Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
+    Console.WriteLine($" - {metric.Name}: {metric.Id}");
 }
 
 Console.WriteLine($"Dimension columns:");
 foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
 {
-    Console.WriteLine($" - {dimension.DimensionName}");
+    Console.WriteLine($" - {dimension.Name}");
 }
 ```
 
@@ -406,6 +406,7 @@ int anomalyCount = 0;
 await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(alertConfigurationId, alertId, options))
 {
     Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
+    Console.WriteLine($"Data feed ID: {anomaly.DataFeedId}");
     Console.WriteLine($"Metric ID: {anomaly.MetricId}");
     Console.WriteLine($"Anomaly value: {anomaly.Value}");
 

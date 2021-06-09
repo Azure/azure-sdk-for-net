@@ -105,12 +105,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
             Console.WriteLine(fetchedAssignment.Properties.PrincipalId);
             Console.WriteLine(fetchedAssignment.Properties.RoleDefinitionId);
 
-            KeyVaultRoleAssignment deletedAssignment = client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
-
-            Console.WriteLine(deletedAssignment.Name);
-            Console.WriteLine(deletedAssignment.Properties.PrincipalId);
-            Console.WriteLine(deletedAssignment.Properties.RoleDefinitionId);
-
+            client.DeleteRoleAssignment(KeyVaultRoleScope.Global, createdAssignment.Name);
             #endregion
         }
 

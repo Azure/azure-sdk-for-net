@@ -28,7 +28,7 @@ This table shows the relationship between SDK versions and supported API version
 |-|-
 |3.0.0 | 2.0
 |3.0.1 | 2.0
-|3.1.0 | 2.0, 2.1
+|3.1.X | 2.0, 2.1
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].

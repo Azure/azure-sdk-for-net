@@ -164,6 +164,20 @@ namespace Azure.Messaging.EventGrid
             return new StorageAsyncOperationInitiatedEventData(api, clientRequestId, requestId, contentType, contentLength, blobType, url, sequencer, identity, storageDiagnostics);
         }
 
+        /// <summary> Initializes new instance of StorageBlobInventoryPolicyCompletedEventData class. </summary>
+        /// <param name="scheduleDateTime"> The time at which inventory policy was scheduled. </param>
+        /// <param name="accountName"> The account name for which inventory policy is registered. </param>
+        /// <param name="ruleName"> The rule name for inventory policy. </param>
+        /// <param name="policyRunStatus"> The status of inventory run, it can be Succeeded/PartiallySucceeded/Failed. </param>
+        /// <param name="policyRunStatusMessage"> The status message for inventory run. </param>
+        /// <param name="policyRunId"> The policy run id for inventory run. </param>
+        /// <param name="manifestBlobUrl"> The blob URL for manifest file for inventory run. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageBlobInventoryPolicyCompletedEventData"/> instance for mocking. </returns>
+        public static StorageBlobInventoryPolicyCompletedEventData StorageBlobInventoryPolicyCompletedEventData(DateTimeOffset? scheduleDateTime = default, string accountName = default, string ruleName = default, string policyRunStatus = default, string policyRunStatusMessage = default, string policyRunId = default, string manifestBlobUrl = default)
+        {
+            return new StorageBlobInventoryPolicyCompletedEventData(scheduleDateTime, accountName, ruleName, policyRunStatus, policyRunStatusMessage, policyRunId, manifestBlobUrl);
+        }
+
         /// <summary> Initializes new instance of EventHubCaptureFileCreatedEventData class. </summary>
         /// <param name="fileurl"> The path to the capture file. </param>
         /// <param name="fileType"> The file type of the capture file. </param>
@@ -1805,10 +1819,12 @@ namespace Azure.Messaging.EventGrid
         /// <param name="documentId"> The documentId of the recording chunk. </param>
         /// <param name="index"> The index of the recording chunk. </param>
         /// <param name="endReason"> The reason for ending the recording chunk. </param>
+        /// <param name="metadataLocation"> The location of the metadata for this chunk. </param>
+        /// <param name="contentLocation"> The location of the content for this chunk. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingChunkInfoProperties"/> instance for mocking. </returns>
-        public static AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = default, long? index = default, string endReason = default)
+        public static AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = default, long? index = default, string endReason = default, string metadataLocation = default, string contentLocation = default)
         {
-            return new AcsRecordingChunkInfoProperties(documentId, index, endReason);
+            return new AcsRecordingChunkInfoProperties(documentId, index, endReason, metadataLocation, contentLocation);
         }
 
         /// <summary> Initializes new instance of PolicyInsightsPolicyStateCreatedEventData class. </summary>

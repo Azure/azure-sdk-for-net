@@ -282,7 +282,8 @@ namespace Compute.Tests
             int? capacity = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            string userData = null)
         {
             try
             {
@@ -312,7 +313,8 @@ namespace Compute.Tests
                                                                                      capacity: capacity,
                                                                                      dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                                                                                      dedicatedHostGroupName: dedicatedHostGroupName,
-                                                                                     dedicatedHostName: dedicatedHostName);
+                                                                                     dedicatedHostName: dedicatedHostName,
+                                                                                     userData: userData);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -402,7 +404,8 @@ namespace Compute.Tests
             int? capacity = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            string userData = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -442,6 +445,8 @@ namespace Compute.Tests
                     EncryptionAtHost = encryptionAtHostEnabled.Value
                 };
             }
+            
+            inputVMScaleSet.VirtualMachineProfile.UserData = userData;
 
             if (hasDiffDisks)
             {
@@ -623,7 +628,7 @@ namespace Compute.Tests
                 }
             }
 
-            if (vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy != null)
+            if (vmScaleSet.UpgradePolicy?.AutomaticOSUpgradePolicy != null)
             {
                 bool expectedDisableAutomaticRollbackValue = vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback ?? false;
                 Assert.True(vmScaleSetOut.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback == expectedDisableAutomaticRollbackValue);

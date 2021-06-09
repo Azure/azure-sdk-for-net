@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -37,15 +38,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Gateway entity identifier. Must be unique in the current API Management
             /// service instance. Must not have value 'managed'
             /// </param>
-            /// <param name='top'>
-            /// Number of records to return.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
-            /// <param name='skip'>
-            /// Number of records to skip.
-            /// </param>
-            public static IPage<GatewayHostnameConfigurationContract> ListByService(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, int? top = default(int?), int? skip = default(int?))
+            public static IPage<GatewayHostnameConfigurationContract> ListByService(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, ODataQuery<GatewayHostnameConfigurationContract> odataQuery = default(ODataQuery<GatewayHostnameConfigurationContract>))
             {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, gatewayId, top, skip).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, gatewayId, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -64,18 +62,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Gateway entity identifier. Must be unique in the current API Management
             /// service instance. Must not have value 'managed'
             /// </param>
-            /// <param name='top'>
-            /// Number of records to return.
-            /// </param>
-            /// <param name='skip'>
-            /// Number of records to skip.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<GatewayHostnameConfigurationContract>> ListByServiceAsync(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, int? top = default(int?), int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GatewayHostnameConfigurationContract>> ListByServiceAsync(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, ODataQuery<GatewayHostnameConfigurationContract> odataQuery = default(ODataQuery<GatewayHostnameConfigurationContract>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, gatewayId, top, skip, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, gatewayId, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -140,8 +135,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the details of the Gateway hostname configuration specified by its
-            /// identifier.
+            /// Get details of a hostname configuration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -166,8 +160,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the details of the Gateway hostname configuration specified by its
-            /// identifier.
+            /// Get details of a hostname configuration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -219,9 +212,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// </param>
             /// <param name='parameters'>
             /// </param>
-            public static GatewayHostnameConfigurationContract CreateOrUpdate(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, string hcId, GatewayHostnameConfigurationContract parameters)
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            public static GatewayHostnameConfigurationContract CreateOrUpdate(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, string hcId, GatewayHostnameConfigurationContract parameters, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, gatewayId, hcId, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, gatewayId, hcId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -246,12 +243,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// </param>
             /// <param name='parameters'>
             /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GatewayHostnameConfigurationContract> CreateOrUpdateAsync(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, string hcId, GatewayHostnameConfigurationContract parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GatewayHostnameConfigurationContract> CreateOrUpdateAsync(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, string hcId, GatewayHostnameConfigurationContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, gatewayId, hcId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, gatewayId, hcId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -277,9 +278,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Gateway hostname configuration identifier. Must be unique in the scope of
             /// parent Gateway entity.
             /// </param>
-            public static void Delete(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, string hcId)
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            public static void Delete(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, string hcId, string ifMatch)
             {
-                operations.DeleteAsync(resourceGroupName, serviceName, gatewayId, hcId).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serviceName, gatewayId, hcId, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -302,12 +308,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Gateway hostname configuration identifier. Must be unique in the scope of
             /// parent Gateway entity.
             /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, string hcId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IGatewayHostnameConfigurationOperations operations, string resourceGroupName, string serviceName, string gatewayId, string hcId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, gatewayId, hcId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, gatewayId, hcId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -18,6 +18,7 @@ namespace Azure.Data.Tables.Tests
         /// The table account name.
         /// </summary>
         private readonly string _accountName = "someaccount";
+        private const string Secret = "Kg==";
 
         /// <summary>
         /// The table endpoint.
@@ -93,6 +94,22 @@ namespace Azure.Data.Tables.Tests
             Assert.That(sas.Permissions, Is.EqualTo(permissions.ToPermissionsString()));
             Assert.That(sas.ExpiresOn, Is.EqualTo(expiry));
             Assert.That(sas.ResourceTypes, Is.EqualTo(resourceTypes));
+        }
+
+        [Test]
+        public void GenerateSasUri()
+        {
+            TableAccountSasPermissions permissions = TableAccountSasPermissions.Add;
+            TableAccountSasResourceTypes resourceTypes = TableAccountSasResourceTypes.Container;
+            var expires = DateTime.Now.AddDays(1);
+            var cred = new TableSharedKeyCredential(_accountName, Secret);
+            var client = new TableServiceClient(_url, cred);
+
+            var expectedSas = new TableAccountSasBuilder(permissions, resourceTypes, expires).Sign(cred);
+
+            var actualSas = client.GenerateSasUri(permissions, resourceTypes, expires);
+
+            Assert.AreEqual("?" + expectedSas, actualSas.Query);
         }
     }
 }

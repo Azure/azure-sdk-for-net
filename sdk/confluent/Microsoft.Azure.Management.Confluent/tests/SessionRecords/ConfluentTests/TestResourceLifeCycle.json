@@ -67,8 +67,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlR3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDE=",
+      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlR3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n   \"location\": \"westus2\",\r\n   \"properties\":{\r\n     \"offerDetail\":{\r\n       \"publisherId\": \"isvtestuklegacy\",\r\n       \"id\": \"liftr_cf_dev\",\r\n       \"planId\": \"payg\",\r\n       \"planName\": \"Pay as you go\",\r\n       \"termUnit\": \"P1M\"\r\n},\r\n     \"userDetail\":{\r\n       \"firstName\": \"Srinivas\",\r\n       \"lastName\": \"Alluri\",\r\n       \"emailAddress\": \"sralluri@microsoft.com\"\r\n}  \r\n},\r\n     \"tags\":{\r\n       \"Environment\": \"Dev\" \r\n}   \r\n}",
       "RequestHeaders": {
@@ -111,7 +111,7 @@
           "1199"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.Confluent/locations/WESTUS2/operationStatuses/5e2bd0bf-aba7-4790-8df8-d992dc82f129?api-version=2020-03-01"
+          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.Confluent/locations/WESTUS2/operationStatuses/5e2bd0bf-aba7-4790-8df8-d992dc82f129?api-version=2021-03-01-preview"
         ],
         "x-ms-request-id": [
           "5e2bd0bf-aba7-4790-8df8-d992dc82f129"
@@ -142,8 +142,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.Confluent/locations/WESTUS2/operationStatuses/5e2bd0bf-aba7-4790-8df8-d992dc82f129?api-version=2020-03-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29uZmx1ZW50L2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzLzVlMmJkMGJmLWFiYTctNDc5MC04ZGY4LWQ5OTJkYzgyZjEyOT9hcGktdmVyc2lvbj0yMDIwLTAzLTAx",
+      "RequestUri": "/providers/Microsoft.Confluent/locations/WESTUS2/operationStatuses/5e2bd0bf-aba7-4790-8df8-d992dc82f129?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29uZmx1ZW50L2xvY2F0aW9ucy9XRVNUVVMyL29wZXJhdGlvblN0YXR1c2VzLzVlMmJkMGJmLWFiYTctNDc5MC04ZGY4LWQ5OTJkYzgyZjEyOT9hcGktdmVyc2lvbj0yMDIxLTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -202,8 +202,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlR3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDE=",
+      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlR3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -262,8 +262,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlZ3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDE=",
+      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlR3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -328,8 +328,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlR3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDE==",
+      "RequestUri": "/subscriptions/ece8c848-58d2-4f46-90d6-541a94c36349/resourcegroups/confluent-sdk-test-rg1630/providers/Microsoft.Confluent/organizations/confluent-sdk-test-resource8350?api-version=2021-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWNlOGM4NDgtNThkMi00ZjQ2LTkwZDYtNTQxYTk0YzM2MzQ5L3Jlc291cmNlZ3JvdXBzL2NvbmZsdWVudC1zZGstdGVzdC1yZzE2MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25mbHVlbnQvb3JnYW5pemF0aW9ucy9jb25mbHVlbnQtc2RrLXRlc3QtcmVzb3VyY2U4MzUwP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
