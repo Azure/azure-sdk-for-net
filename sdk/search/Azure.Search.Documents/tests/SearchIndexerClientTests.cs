@@ -640,7 +640,7 @@ namespace Azure.Search.Documents.Tests
 
                 return t switch
                 {
-                    Type _ when t == typeof(CustomEntityLookupSkill) => new CustomEntityLookupSkill(inputs, outputs) { EntitiesDefinitionUri = "https://microsoft.com" },
+                    Type _ when t == typeof(CustomEntityLookupSkill) => new CustomEntityLookupSkill(inputs, outputs) { EntitiesDefinitionUri = new Uri("https://microsoft.com") },
 
                     // TODO: Should TextSplitMode be added to constructor (required input)?
                     Type _ when t == typeof(SplitSkill) => new SplitSkill(inputs, outputs) { TextSplitMode = TextSplitMode.Pages },
