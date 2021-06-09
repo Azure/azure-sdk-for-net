@@ -78,8 +78,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(message.SequenceNumber, bindingData["SequenceNumber"]);
             Assert.AreEqual(message.DeliveryCount, bindingData["DeliveryCount"]);
             Assert.AreSame(message.DeadLetterSource, bindingData["DeadLetterSource"]);
-            Assert.AreEqual(message.ExpiresAt, bindingData["ExpiresAtUtc"]);
-            Assert.AreEqual(message.EnqueuedTime, bindingData["EnqueuedTimeUtc"]);
+            Assert.AreEqual(message.ExpiresAt.DateTime, bindingData["ExpiresAtUtc"]);
+            Assert.AreEqual(message.EnqueuedTime.DateTime, bindingData["EnqueuedTimeUtc"]);
             Assert.AreSame(message.MessageId, bindingData["MessageId"]);
             Assert.AreSame(message.ContentType, bindingData["ContentType"]);
             Assert.AreSame(message.ReplyTo, bindingData["ReplyTo"]);

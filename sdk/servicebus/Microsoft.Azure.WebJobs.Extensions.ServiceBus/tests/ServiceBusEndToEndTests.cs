@@ -935,7 +935,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 logger.LogInformation($"Input({input})");
                 _waitHandle1.Set();
-                Assert.IsNotNull(messageId);
             }
         }
 
