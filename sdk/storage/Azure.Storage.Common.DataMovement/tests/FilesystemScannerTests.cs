@@ -120,15 +120,10 @@ namespace Azure.Storage.Tests
             // Arrange
             string file = Path.Combine(_temp, Path.GetRandomFileName());
 
-            FilesystemScanner scanner = new FilesystemScanner(file);
-
-            // Act
-            IEnumerable<string> result = scanner.Scan();
-
-            // Assert
+            // Act/Assert
             Assert.IsFalse(File.Exists(file));
             Assert.Throws<FileNotFoundException>(() => {
-                result.GetEnumerator().MoveNext();
+                FilesystemScanner scanner = new FilesystemScanner(file);
             });
         }
 
@@ -150,12 +145,12 @@ namespace Azure.Storage.Tests
             AllowReadData(lockedSubfolder, true, false);
 
             string file = CreateRandomFile(_temp);
-            string[] paths = { folder, file };
 
-            FilesystemScanner scanner = new FilesystemScanner(paths);
+            FilesystemScanner scanFolder = new FilesystemScanner(folder);
+            FilesystemScanner scanFile = new FilesystemScanner(file);
 
             // Act
-            IEnumerable<string> result = scanner.Scan();
+            IEnumerable<string> result = scanFolder.Scan().Concat(scanFile.Scan());
 
             // Assert
             Assert.Multiple(() =>
