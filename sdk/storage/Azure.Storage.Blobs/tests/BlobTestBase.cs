@@ -72,7 +72,7 @@ namespace Azure.Storage.Test.Shared
             return blob;
         }
 
-        public BlobClientOptions GetOptions(bool parallelRange = false)
+        public BlobClientOptions GetOptions(bool parallelRange = false, bool enableTenantDiscovery = false)
         {
             var options = new BlobClientOptions(_serviceVersion)
             {
@@ -80,11 +80,12 @@ namespace Azure.Storage.Test.Shared
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = Storage.Constants.MaxReliabilityRetries,
+                    MaxRetries = Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60),
                     NetworkTimeout = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 100 : 400),
                 },
+                EnableTenantDiscovery = enableTenantDiscovery
             };
             if (Mode != RecordedTestMode.Live)
             {
@@ -159,12 +160,12 @@ namespace Azure.Storage.Test.Shared
             return options;
         }
 
-        private BlobServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config) =>
+        private BlobServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config, bool enableTenantDiscovery) =>
             InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
                     GetOAuthCredential(config),
-                    GetOptions()));
+                    GetOptions(enableTenantDiscovery: enableTenantDiscovery)));
 
         public BlobServiceClient GetServiceClient_SharedKey(BlobClientOptions options = default)
             => GetServiceClientFromSharedKeyConfig(TestConfigDefault, options);
@@ -187,8 +188,8 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_PremiumBlobAccount_SharedKey()
             => GetServiceClientFromSharedKeyConfig(TestConfigPremiumBlob);
 
-        public BlobServiceClient GetServiceClient_OauthAccount() =>
-            GetServiceClientFromOauthConfig(TestConfigOAuth);
+        public BlobServiceClient GetServiceClient_OauthAccount(bool enableTenantDiscovery = false) =>
+            GetServiceClientFromOauthConfig(TestConfigOAuth, enableTenantDiscovery);
 
         public BlobServiceClient GetServiceClient_ManagedDisk() =>
             GetServiceClientFromSharedKeyConfig(TestConfigManagedDisk);
@@ -278,11 +279,10 @@ namespace Azure.Storage.Test.Shared
             string containerName = default,
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
-            bool premium = default,
-            BlobClientOptions options = default)
+            bool premium = default)
         {
             containerName ??= GetNewContainerName();
-            service ??= GetServiceClient_SharedKey(options);
+            service ??= GetServiceClient_SharedKey();
 
             if (publicAccessType == default)
             {

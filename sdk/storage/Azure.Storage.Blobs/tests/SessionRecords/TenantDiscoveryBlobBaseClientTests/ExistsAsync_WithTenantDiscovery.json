@@ -1,0 +1,192 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://chrissstorageprim.blob.core.windows.net/test-container-e920b8d1-2959-36f3-cc0f-dd260d29088c?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "traceparent": "00-0c6c8947c89a40448a7dfda4e364afac-bcb2493b4eb86f40-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210609.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-blob-public-access": "container",
+        "x-ms-client-request-id": "a4066e04-612c-f9ec-cb2a-f3739dda6c96",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-08-04"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Content-Length": "302",
+        "Content-Type": "application/xml",
+        "Date": "Wed, 09 Jun 2021 22:02:23 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": "Bearer authorization_uri=https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize resource_id=https://storage.azure.com",
+        "x-ms-client-request-id": "a4066e04-612c-f9ec-cb2a-f3739dda6c96",
+        "x-ms-error-code": "NoAuthenticationInformation",
+        "x-ms-request-id": "4076be77-a01e-00a7-3d7b-5d0090000000",
+        "x-ms-version": "2020-08-04"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ENoAuthenticationInformation\u003C/Code\u003E\u003CMessage\u003EServer failed to authenticate the request. Please refer to the information in the www-authenticate header.\n",
+        "RequestId:4076be77-a01e-00a7-3d7b-5d0090000000\n",
+        "Time:2021-06-09T22:02:24.1440863Z\u003C/Message\u003E\u003C/Error\u003E"
+      ]
+    },
+    {
+      "RequestUri": "https://chrissstorageprim.blob.core.windows.net/test-container-e920b8d1-2959-36f3-cc0f-dd260d29088c?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0c6c8947c89a40448a7dfda4e364afac-bcb2493b4eb86f40-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210609.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-blob-public-access": "container",
+        "x-ms-client-request-id": "a4066e04-612c-f9ec-cb2a-f3739dda6c96",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-08-04"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 09 Jun 2021 22:02:25 GMT",
+        "ETag": "\u00220x8D92B92440CBED7\u0022",
+        "Last-Modified": "Wed, 09 Jun 2021 22:02:25 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "a4066e04-612c-f9ec-cb2a-f3739dda6c96",
+        "x-ms-request-id": "4076c299-a01e-00a7-207b-5d0090000000",
+        "x-ms-version": "2020-08-04"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://chrissstorageprim.blob.core.windows.net/test-container-e920b8d1-2959-36f3-cc0f-dd260d29088c/test-blob-7cd17349-5ed5-74da-8a61-69439c304e6d",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "Content-Length": "1024",
+        "Content-Type": "application/octet-stream",
+        "traceparent": "00-8525ee834d99a842b3f7cdfb5dc34b80-986d2af86511324e-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210609.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-blob-type": "BlockBlob",
+        "x-ms-client-request-id": "26483e47-1b1f-ee49-212d-5d239a6e1b62",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-08-04"
+      },
+      "RequestBody": "QlYhnyJjYO5\u002BqhNTabohpan2eHOOULGmk5Iay/ioXZvbhjBHuM105RPi/itKhgrQQMOaprfb3vKleguPSZX21U14eOKJ2uzcgZJgrFKFWw2HSYo0DbbjAKg\u002BoT7B5Jx\u002B6yjd0g4oR2bWviQkejKgHx7\u002BCAAKwceWlHc6SziuGp324sApqIn\u002BXwIkXk\u002BSvoV2nYEfw9ybcypgRj6W7fstJ6SGLphxdneV/6j\u002B5WN4BNXxxK22j1bBWm6WyGJKaHIG9jaqDJDtBCcKicQ0nY7G6EJppChOd5hOxdMp260USpY19\u002B4szfhEBMCGqwaRjb3gz\u002BAg4cNJuH\u002BeXEa9xCl59j4t/qafmRtKJKBox8uRvDgWSQvN9GnS7D5ujnCxh0CXDLXHZI4WQDXF1b0j4fC0DKAOp3odqwHVWhJnMAuqmJxg0bsWylep/wjVCB6rrwpNuoLQouDFeWCz8Ql8rw8qGj0gwxA1nkJIZKhxR6PiKqsHGnWJ2fW8mldaYthOLVD5q\u002B3hiuv6GBxAhz44VDK90cdddZSaoUBHZCm42jxp\u002BjdXeJy1AZ/ADAFZSVK3hEYknZAR8Li7XgmsmibBQT3g1owG4NuWB88onWiTQFjuj\u002BDjlD2rWAp/nBmSCGZ5/srEeHLGsaNqjpXB6FNPKB6xvgtF3q0ANX6Ch0PCA/9orp6dzsflKN48eAan6W\u002B2L3T74UlbMx8dxEP0QylgqIqWWDq0sllWy5YtCWWnWEsOy1fOxiK1DXt/fwqE8eS03NB7EZE0An0bpRWzLiq5dmv45XfSkeFn4Eq/NTJO0dmxeC2VK0a52cnZsyENAt5QxQmejAxt4UrvFDFGdc1LzdM7AbX8JEolPguu\u002BN6/Wt5sbm8or0XNRJfipRYUcmT8juZO0QApVKC\u002BeE0Bv\u002BhsMLpT2gddIh2NbrweGn8zEMumsWn3cIjdQhrPaTb3zIWudXRcwZhdn2zJwGJDCjkgimeCWg1\u002BdL8xdZftjbjmlqI3b6QK108zSRL9LrAlmTjgrt/OdXF3LwC1K0wAcBGz4irADJqUFrMYTxD7gUYPC9tfDN7ZFyAwv0CkVasCMtkASUyGZY2dTJgrtiZhfK66ph9woGMy2ssJj0xa8MAHFhw2\u002Bzf6iaZNwr9GrmH6z0OS6a\u002BMkZF2zW\u002BAfNVAQlzXI58KKoB2wB15I96j7CxqD8AJyAYRe4SKwC7HeQzQDH9jb4rB8KXCGymSEm6z0uBDFm0VN3pVxacbf2lSr0cQqRZfP3yhqB4bRqzdf2kV1u5NhGOeutUEDqnipXA7cGzhgWlYVJJkoW1O\u002BvHNd0U\u002BBal7BCvkce5AWjHSvwKu39VA\u002B/4AvYJc6eL1T8DjNpZko6DHvw==",
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Content-MD5": "7e40j/ghmi0nRzPfuMltBg==",
+        "Date": "Wed, 09 Jun 2021 22:02:25 GMT",
+        "ETag": "\u00220x8D92B9244261153\u0022",
+        "Last-Modified": "Wed, 09 Jun 2021 22:02:25 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "26483e47-1b1f-ee49-212d-5d239a6e1b62",
+        "x-ms-content-crc64": "k1ArWCxhhgE=",
+        "x-ms-request-id": "4076c448-a01e-00a7-2d7b-5d0090000000",
+        "x-ms-request-server-encrypted": "true",
+        "x-ms-version": "2020-08-04",
+        "x-ms-version-id": "2021-06-09T22:02:25.8200915Z"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://chrissstorageprim.blob.core.windows.net/test-container-e920b8d1-2959-36f3-cc0f-dd260d29088c/test-blob-7cd17349-5ed5-74da-8a61-69439c304e6d",
+      "RequestMethod": "HEAD",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "traceparent": "00-303db5e5c5e57b45aa30b8befaed11e5-4c858abf220b2b48-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210609.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "651c1aa9-a057-50a0-f80f-ed4dbad6c622",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-08-04"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Accept-Ranges": "bytes",
+        "Content-Length": "1024",
+        "Content-MD5": "7e40j/ghmi0nRzPfuMltBg==",
+        "Content-Type": "application/octet-stream",
+        "Date": "Wed, 09 Jun 2021 22:02:25 GMT",
+        "ETag": "\u00220x8D92B9244261153\u0022",
+        "Last-Modified": "Wed, 09 Jun 2021 22:02:25 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-access-tier": "Hot",
+        "x-ms-access-tier-inferred": "true",
+        "x-ms-blob-type": "BlockBlob",
+        "x-ms-client-request-id": "651c1aa9-a057-50a0-f80f-ed4dbad6c622",
+        "x-ms-creation-time": "Wed, 09 Jun 2021 22:02:25 GMT",
+        "x-ms-is-current-version": "true",
+        "x-ms-last-access-time": "Wed, 09 Jun 2021 22:02:25 GMT",
+        "x-ms-lease-state": "available",
+        "x-ms-lease-status": "unlocked",
+        "x-ms-request-id": "4076c484-a01e-00a7-667b-5d0090000000",
+        "x-ms-server-encrypted": "true",
+        "x-ms-version": "2020-08-04",
+        "x-ms-version-id": "2021-06-09T22:02:25.8200915Z"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://chrissstorageprim.blob.core.windows.net/test-container-e920b8d1-2959-36f3-cc0f-dd260d29088c?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a08df38acd582f49bbc00608f57066c9-0f774f4a0c5c9d41-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210609.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "807a9687-b552-460a-7e18-07ed0138eab1",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-08-04"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 09 Jun 2021 22:02:25 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "807a9687-b552-460a-7e18-07ed0138eab1",
+        "x-ms-request-id": "4076c4d9-a01e-00a7-387b-5d0090000000",
+        "x-ms-version": "2020-08-04"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1852432794",
+    "Storage_TestConfigOAuth": "OAuthTenant\nchrissstorageprim\nU2FuaXRpemVk\nhttps://chrissstorageprim.blob.core.windows.net\nhttps://chrissstorageprim.file.core.windows.net\nhttps://chrissstorageprim.queue.core.windows.net\nhttps://chrissstorageprim.table.core.windows.net\n\n\n\n\nhttps://chrissstorageprim-secondary.blob.core.windows.net\nhttps://chrissstorageprim-secondary.file.core.windows.net\nhttps://chrissstorageprim-secondary.queue.core.windows.net\nhttps://chrissstorageprim-secondary.table.core.windows.net\nfaf28b7c-a386-4110-a10c-ba1a2adc8cce\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://chrissstorageprim.blob.core.windows.net/;QueueEndpoint=https://chrissstorageprim.queue.core.windows.net/;FileEndpoint=https://chrissstorageprim.file.core.windows.net/;BlobSecondaryEndpoint=https://chrissstorageprim-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://chrissstorageprim-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://chrissstorageprim-secondary.file.core.windows.net/;AccountName=chrissstorageprim;AccountKey=Sanitized\n"
+  }
+}
